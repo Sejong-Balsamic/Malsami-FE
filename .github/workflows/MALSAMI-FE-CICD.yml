@@ -39,8 +39,8 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-fe-container:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-fe-container:cache
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:latest
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:cache
           cache-to: type=inline
 
   deploy:
