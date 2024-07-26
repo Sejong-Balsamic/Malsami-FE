@@ -33,6 +33,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
@@ -40,8 +48,8 @@ jobs:
           file: ./Dockerfile
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:latest
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:cache
-          cache-to: type=inline
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
 
   deploy:
     needs: build
@@ -60,5 +68,5 @@ jobs:
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:latest
             echo $PW | sudo -S docker stop sejong-malsami-front || true
             echo $PW | sudo -S docker rm sejong-malsami-front || true
-            echo $PW | sudo -S docker run -d -p 3000:3002 --name sejong-malsami-front \
+            echo $PW | sudo -S docker run -d -p 3000:3003 --name sejong-malsami-front \
               ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:latest
