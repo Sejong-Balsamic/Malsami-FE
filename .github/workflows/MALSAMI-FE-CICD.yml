@@ -68,5 +68,5 @@ jobs:
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:latest
             echo $PW | sudo -S docker stop sejong-malsami-front || true
             echo $PW | sudo -S docker rm sejong-malsami-front || true
-            echo $PW | sudo -S docker run -d -p 3000:3003 --name sejong-malsami-front \
+            echo $PW | sudo -S docker run -d -p 3003:3000 --name sejong-malsami-front \
               ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:latest
