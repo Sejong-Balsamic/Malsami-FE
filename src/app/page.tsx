@@ -3,8 +3,8 @@ import React from 'react';
 export default function Home() {
   return (
     <div>
-      <div className="font-pretendard">안녕하십니까 hi</div>
-      <div>안녕하십니까 hi</div>
+      <div className="font-pretendard-bold">안녕하십니까 hi</div>
+      <div className="font-pretendard font-bold">안녕하십니까 hi</div>
     </div>
     // <main className="flex min-h-screen flex-col items-center justify-between p-24">
     //   <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">

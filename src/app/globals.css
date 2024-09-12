@@ -22,7 +22,13 @@ body {
 }
 
 @layer utilities {
-  .text-balance {
-    text-wrap: balance;
+  .font-pretendard-light {
+    @apply font-pretendard font-light;
+  }
+  .font-pretendard-regular {
+    @apply font-pretendard font-regular;
+  }
+  .font-pretendard-bold {
+    @apply font-pretendard font-bold;
   }
 }
