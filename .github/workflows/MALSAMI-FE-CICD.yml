@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - test
   workflow_dispatch:
 
 jobs:
@@ -47,7 +48,7 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${{ github.ref_name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
 
@@ -65,8 +66,17 @@ jobs:
           script: |
             export PATH=$PATH:/usr/local/bin
             export PW=${{ secrets.SERVER_PASSWORD }}
-            echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:latest
-            echo $PW | sudo -S docker stop sejong-malsami-front || true
-            echo $PW | sudo -S docker rm sejong-malsami-front || true
-            echo $PW | sudo -S docker run -d -p 3003:3000 --name sejong-malsami-front \
-              ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:latest
+            BRANCH=${{ github.ref_name }}
+            PORT=3000
+            CONTAINER_NAME="sejong-malsami-front"
+            if [ "$BRANCH" == "main" ]; then
+              PORT=3004
+            elif [ "$BRANCH" == "test" ]; then
+              CONTAINER_NAME="sejong-malsami-front-test"
+              PORT=3003
+            fi
+            echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
+            echo $PW | sudo -S docker stop $CONTAINER_NAME || true
+            echo $PW | sudo -S docker rm $CONTAINER_NAME || true
+            echo $PW | sudo -S docker run -d -p ${PORT}:3000 --name $CONTAINER_NAME \
+              ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
