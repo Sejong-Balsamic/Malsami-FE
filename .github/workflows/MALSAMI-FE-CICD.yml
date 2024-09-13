@@ -1,4 +1,4 @@
-name: MALSAMI FE CICD
+name: MALSAMI-FE-INTEGRATION-CICD
 
 on:
   push:
