@@ -14,22 +14,25 @@ const config: Config = {
       },
       colors: {
         'custom-blue': {
-          '100': '#74D7CB',
-          '200': '#55CDBB',
-          '300': '#09BBA2',
-          '400': '#03B89E',
+          '100': '#95E4DA',
+          '200': '#74D7CB',
+          '300': '#55CDBB',
+          '400': '#09BBA2',
+          '500': '#03B89E',
         },
         'custom-green': {
-          '100': '#95DF64',
-          '200': '#75D837',
-          '300': '#68D723',
-          '400': '#5ED513',
+          '100': '#AAE483',
+          '200': '#95DF64',
+          '300': '#75D837',
+          '400': '#68D723',
+          '500': '#5ED513',
         },
         'custom-orange': {
-          '100': '#F59B55',
-          '200': '#F47F24',
-          '300': '#F4710D',
-          '400': '#F46B02',
+          '100': '#F2AB75',
+          '200': '#F59B55',
+          '300': '#F47F24',
+          '400': '#F4710D',
+          '500': '#F46B02',
         },
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
@@ -86,6 +89,7 @@ const config: Config = {
       },
     },
   },
+  // eslint-disable-next-line global-require
   plugins: [require('tailwindcss-animate')],
 };
 export default config;
