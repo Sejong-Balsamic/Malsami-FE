@@ -13,11 +13,7 @@ export const login = async (id: string, password: string) => {
   formData.append("sejongPortalPassword", password);
 
   try {
-    const response = await axios.post("https://api.sejong-malsami.co.kr/api/member/signin", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    const response = await axios.post("https://api.sejong-malsami.co.kr/api/member/signin", formData, {});
 
     // 성공 처리
     sessionStorage.setItem("accessToken", response.data.accessToken);
