@@ -3,13 +3,13 @@ import NavigationButton from './NavigationButton';
 
 function HotQuestion() {
   return (
-    <div className="relative w-[1280px] h-[720px] mx-auto">
+    <div className="relative w-full h-[720px] mx-auto">
       <div className="absolute w-[433px] h-[88px] left-[417px] top-[43px]">
         <div className="absolute left-0 top-[59px] text-black text-2xl font-medium font-pretendard">
           세종말싸미에서 오늘의 인기질문을 만나보세요
         </div>
         <div className="absolute left-[66px] top-0 text-black text-4xl font-bold font-pretendard">
-          <span className="font-semibold">🔥</span> HOT! 인기 질문
+          <span className="font-semibold">🔥</span> HOT! 인기질문
         </div>
       </div>
 
@@ -44,7 +44,7 @@ function HotQuestion() {
           <div className="absolute left-[34px] top-[80px] text-[28px] font-bold text-black font-pretendard">
             질문 제목
           </div>
-          <div className="absolute left-[34px] top-[167px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
+          <div className="absolute left-[34px] top-[184.83px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
             <div>#해시태그1 #해시태그2 #해시태그3</div>
           </div>
           <div className="absolute left-[34px] top-[260px] text-[#636262] text-[32px] font-bold font-pretendard">
@@ -65,7 +65,7 @@ function HotQuestion() {
           <div className="absolute left-[34px] top-[81px] text-[28px] font-bold text-black font-pretendard">
             질문 제목
           </div>
-          <div className="absolute left-[34px] top-[167px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
+          <div className="absolute left-[34px] top-[184.83px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
             <div>#해시태그1 #해시태그2 #해시태그3</div>
           </div>
           <div className="absolute left-[34px] top-[255px] text-[#636262] text-[32px] font-bold font-pretendard">
@@ -86,7 +86,7 @@ function HotQuestion() {
           <div className="absolute left-[44px] top-[79.53px] text-[28px] font-bold text-black font-pretendard">
             질문 제목
           </div>
-          <div className="absolute left-[34px] top-[167px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
+          <div className="absolute left-[34px] top-[184.83px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
             <div>#해시태그1 #해시태그2 #해시태그3</div>
           </div>
           <div className="absolute left-[44px] top-[249px] flex justify-center items-center gap-3">

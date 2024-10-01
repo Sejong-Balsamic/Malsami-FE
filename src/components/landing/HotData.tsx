@@ -3,7 +3,7 @@ import NavigationButton from './NavigationButton';
 
 function HotData() {
   return (
-    <div className="relative w-[1280px] h-[720px] mx-auto">
+    <div className="relative w-full h-[720px] mx-auto">
       <div className="absolute w-[433px] h-[88px] left-[417px] top-[43px]">
         <div className="absolute left-0 top-[59px] text-black text-2xl font-medium font-pretendard">
           세종말싸미에서 오늘의 인기자료를 만나보세요
@@ -48,7 +48,7 @@ function HotData() {
           <div className="absolute left-[34px] top-[80px] text-[28px] font-bold text-black font-pretendard">
             꼼꼼한, 2주차 <br /> 굿노트 필기정리본
           </div>
-          <div className="absolute left-[34px] top-[167px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
+          <div className="absolute left-[34px] top-[184.83px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
             <div>#솔루션 #아이패드 필기 #요약정리 #강의자료</div>
           </div>
           <div className="absolute left-[34px] top-[260px] text-[#636262] text-[32px] font-bold font-pretendard">
@@ -71,7 +71,7 @@ function HotData() {
           <div className="absolute left-[34px] top-[81px] text-[28px] font-bold text-black font-pretendard">
             꼼꼼한, 2주차 <br /> 굿노트 필기정리본
           </div>
-          <div className="absolute left-[34px] top-[167px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
+          <div className="absolute left-[34px] top-[184.83px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
             <div>#솔루션 #아이패드 필기 #요약정리 #강의자료</div>
           </div>
           <div className="absolute left-[34px] top-[255px] text-[#636262] text-[32px] font-bold font-pretendard">
@@ -94,7 +94,7 @@ function HotData() {
           <div className="absolute left-[44px] top-[79.53px] text-[28px] font-bold text-black font-pretendard">
             꼼꼼한, 2주차 <br /> 굿노트 필기정리본
           </div>
-          <div className="absolute left-[34px] top-[167px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
+          <div className="absolute left-[34px] top-[184.83px] space-y-2 text-sm text-[#b3b3b3] font-semibold font-pretendard">
             <div>#솔루션 #아이패드 필기 #요약정리 #강의자료</div>
           </div>
           <div className="absolute left-[44px] top-[249px] flex justify-center items-center gap-3">
