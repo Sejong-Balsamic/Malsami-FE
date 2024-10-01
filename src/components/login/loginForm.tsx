@@ -1,26 +1,32 @@
 "use client";
 
 import { useState, FormEvent } from "react";
-// import { login } from "@/apis/auth";
+import { useRouter } from "next/navigation";
+import { login } from "@/apis/auth/auth";
 
 export default function LoginForm() {
   const [id, setId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const router = useRouter(); // useRouter 사용
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
-    setLoading(true);
+    setIsLoading(true);
 
     try {
-      // const response = await login(id, password);
-      // console.log("로그인 성공:", response.data);
+      const response = await login(id, password);
+      //개발 시에만
+      console.log("로그인 성공:", response);
+      //여기까지
       setErrorMessage(null);
+      router.push("/");
     } catch (error) {
       setErrorMessage("로그인에 실패했습니다. 다시 시도해주세요.");
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -59,13 +65,13 @@ export default function LoginForm() {
       {/* 에러 메시지 */}
       {errorMessage && <p className="text-red-500 text-center text-sm mb-4">{errorMessage}</p>}
 
-      {/* 제출 버튼 */}
+      {/* 로그인 제출 버튼 */}
       <button
         type="submit"
         className="w-full bg-custom-orange-100 text-white py-2 px-4 rounded hover:bg-custom-orange-200 focus:outline-none focus:ring-2 focus:ring-custom-orange-200"
-        disabled={loading}
+        disabled={isLoading}
       >
-        {loading ? "로그인 중..." : "로그인"}
+        {isLoading ? "로그인 중..." : "로그인"}
       </button>
     </form>
   );
