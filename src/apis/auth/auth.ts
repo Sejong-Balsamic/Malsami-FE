@@ -8,12 +8,13 @@ export const login = async (id: string, password: string) => {
   // form-data 객체 생성
   const formData = new FormData();
 
-  // id와 password 추가
   formData.append("sejongPortalId", id);
   formData.append("sejongPortalPassword", password);
 
   try {
-    const response = await axios.post("https://api.sejong-malsami.co.kr/api/member/signin", formData, {});
+    const response = await axios.post("https://api.sejong-malsami.co.kr/api/member/signin", formData, {
+      withCredentials: true, //http-only로 Cookie에 refeshToken 저장하기 위해
+    });
 
     // 성공 처리
     sessionStorage.setItem("accessToken", response.data.accessToken);

@@ -18,9 +18,6 @@ export default function LoginForm() {
 
     try {
       const response = await login(id, password);
-      //개발 시에만
-      console.log("로그인 성공:", response);
-      //여기까지
       setErrorMessage(null);
       router.push("/");
     } catch (error) {
