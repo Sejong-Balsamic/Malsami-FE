@@ -16,8 +16,14 @@ export const refreshAccessToken = async (): Promise<string> => {
     return newAccessToken;
   } catch (error) {
     const axiosError = error as AxiosError;
-    console.error("Error refreshing access token:", axiosError.response?.data || axiosError.message);
+    // 400 오류 발생 시 로그인 페이지로 리디렉션
+    if (axiosError.response?.status === 400) {
+      alert("로그아웃 되었습니다. 다시 로그인해주세요");
+      window.location.href = "/login"; // 간단하게 페이지 이동
+    }
+    console.error("Error refreshing access token:", axiosError.response?.data || axiosError.message); //항상 오류 메시지를 출력
     if (axiosError.response) {
+      //응답이 있는 경우에만 상세한 응답 데이터를 출력
       console.error("Response data:", axiosError.response.data);
     }
     return Promise.reject(axiosError);

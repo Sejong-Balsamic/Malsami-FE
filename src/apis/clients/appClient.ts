@@ -1,5 +1,4 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
-import { useRouter } from "next/navigation";
 import { refreshAccessToken } from "../auth/refresh";
 
 //사용법: axios 대신 apiClient import해서 사용
@@ -28,14 +27,13 @@ apiClient.interceptors.response.use(
     return response;
   },
   async (error: AxiosError) => {
-    // originalRequest를 AxiosRequestConfig으로 단언
+    // originalRequest 저장
     const originalRequest = error.config as AxiosRequestConfig;
-    const router = useRouter(); // useRouter 사용
 
     // 400 오류 발생 시 로그인 페이지로 리디렉션
     if (error.response?.status === 400) {
       alert("로그아웃 되었습니다. 다시 로그인해주세요");
-      router.push("/login");
+      window.location.href = "/login"; // 전체 페이지를 새로고침하면서 이동하기 때문에, 상태나 데이터가 모두 초기화
     }
 
     // 401 오류가 발생 시 refreshAccessToken 후 재시도
