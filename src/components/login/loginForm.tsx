@@ -17,7 +17,7 @@ export default function LoginForm() {
     setIsLoading(true);
 
     try {
-      const response = await login(id, password);
+      await login(id, password);
       setErrorMessage(null);
       router.push("/");
     } catch (error) {

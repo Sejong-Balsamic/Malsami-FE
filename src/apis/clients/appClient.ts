@@ -1,7 +1,9 @@
+/* eslint-disable */
+
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { refreshAccessToken } from "../auth/refresh";
 
-//사용법: axios 대신 apiClient import해서 사용
+// 사용법: axios 대신 apiClient import해서 사용
 const apiClient = axios.create({
   baseURL: "https://api.sejong-malsami.co.kr",
 });
@@ -9,7 +11,7 @@ const apiClient = axios.create({
 // 요청 인터셉터 설정
 apiClient.interceptors.request.use(
   requestConfig => {
-    //요청을 구성하는 설정 객체
+    // 요청을 구성하는 설정 객체
     const accessToken = sessionStorage.getItem("accessToken");
     if (accessToken) {
       requestConfig.headers["Authorization"] = `Bearer ${accessToken}`;

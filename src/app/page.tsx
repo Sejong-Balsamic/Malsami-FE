@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import { refreshAccessToken } from "@/apis/auth/refresh";
 
@@ -12,9 +13,11 @@ export default function Home() {
   return (
     <div>
       <div className="font-pretendard-bold">
-        sejong-malsami <br></br>home page
+        sejong-malsami
+        <br />
+        home page
       </div>
-      <button className="bg-gray-400 rounded-lg" onClick={handleBtnClick}>
+      <button type="button" className="bg-gray-400 rounded-lg" onClick={handleBtnClick}>
         refreshAccessTokenButton
       </button>
     </div>
