@@ -19,26 +19,29 @@ jobs:
         with:
           node-version: '18'
 
+      - name: Log - Installing dependencies
+        run: echo "의존성을 설치 중입니다..."
+
       - name: Install dependencies
-        run: |
-          echo "의존성을 설치 중입니다..."
-          npm install
+        run: npm install
+
+      - name: Log - Building project
+        run: echo "프로젝트를 빌드 중입니다..."
 
       - name: Build with npm
-        run: |
-          echo "프로젝트를 빌드 중입니다..."
-          npm run build
+        run: npm run build
 
       - name: Docker setup
         uses: docker/setup-buildx-action@v3
-        # 'uses' 단계에는 로깅 추가 불필요
 
       - name: Docker login
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-        # 'uses' 단계에는 로깅 추가 불필요
+
+      - name: Log - Setting up Docker cache
+        run: echo "Docker 레이어 캐시를 설정 중입니다..."
 
       - name: Cache Docker layers
         uses: actions/cache@v3
@@ -47,8 +50,9 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-        run: |
-          echo "Docker 레이어 캐시를 설정 중입니다..."
+
+      - name: Log - Building and pushing Docker image
+        run: echo "Docker 이미지를 빌드하고 푸시 중입니다..."
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
@@ -59,8 +63,6 @@ jobs:
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${{ github.ref_name }}
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
-        run: |
-          echo "Docker 이미지를 빌드하고 푸시 중입니다..."
 
   deploy:
     needs: build
