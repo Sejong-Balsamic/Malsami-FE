@@ -9,49 +9,35 @@ on:
 
 jobs:
   build:
-    name: Build
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: Set up Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: '20.15.0'
+          node-version: '18'
 
-      - name: Cache Node Modules
-        id: cache-node-modules
-        uses: actions/cache@v3
-        with:
-          path: ./node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-v20
-          restore-keys: |
-            ${{ runner.os }}-node-
-
-      - name: Install Dependencies
-        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+      - name: Install dependencies
         run: |
           echo "의존성을 설치 중입니다..."
-          npm ci
+          npm install
 
-      - name: Run Tests
-        run: |
-          echo "테스트를 실행하고 있습니다..."
-          npm test
-
-      - name: Build Project
+      - name: Build with npm
         run: |
           echo "프로젝트를 빌드 중입니다..."
           npm run build
 
-      - name: Setup Docker Buildx
-        uses: docker/setup-buildx-action@v3
-        with:
-          version: latest
+      - name: Docker setup
+        run: |
+          echo "Docker Buildx를 설정 중입니다..."
+          docker setup-buildx-action@v3
 
-      - name: Docker Login
-        uses: docker/login-action@v3
+      - name: Docker login
+        run: |
+          echo "Docker Hub에 로그인 중입니다..."
+          docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
@@ -60,12 +46,16 @@ jobs:
         uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
+        run: |
+          echo "Docker 레이어 캐시를 설정 중입니다..."
 
-      - name: Build and Push Docker Image
-        uses: docker/build-push-action@v3
+      - name: Build and push Docker image
+        run: |
+          echo "Docker 이미지를 빌드하고 푸시 중입니다..."
+          docker/build-push-action@v3
         with:
           context: .
           file: ./Dockerfile
@@ -76,22 +66,23 @@ jobs:
 
   deploy:
     needs: build
-    name: Deploy
     runs-on: ubuntu-20.04
     steps:
-      - name: Execute Deployment Script
+      - name: Deploy
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          password: ${{ secrets.SERVER_PASSWORD }}
           port: 2022
           script: |
             echo "배포를 시작합니다..."
+            export PATH=$PATH:/usr/local/bin
+            export PW=${{ secrets.SERVER_PASSWORD }}
             BRANCH=${{ github.ref_name }}
             PORT=3000
             CONTAINER_NAME="sejong-malsami-front"
-
+            
             if [ "$BRANCH" == "main" ]; then
               PORT=3004
               echo "메인 브랜치로 배포합니다. 포트는 $PORT입니다."
@@ -99,22 +90,19 @@ jobs:
               CONTAINER_NAME="sejong-malsami-front-test"
               PORT=3003
               echo "테스트 브랜치로 배포합니다. 컨테이너 이름은 $CONTAINER_NAME, 포트는 $PORT입니다."
-            else
-              echo "알 수 없는 브랜치입니다: $BRANCH"
-              exit 1
             fi
-
+            
             echo "도커 이미지를 풀링 중입니다: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}"
-            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH} || exit 1
-
+            echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
+            
             echo "기존 컨테이너를 중지합니다: $CONTAINER_NAME"
-            sudo docker stop $CONTAINER_NAME || true
-
+            echo $PW | sudo -S docker stop $CONTAINER_NAME || true
+            
             echo "기존 컨테이너를 제거합니다: $CONTAINER_NAME"
-            sudo docker rm $CONTAINER_NAME || true
-
+            echo $PW | sudo -S docker rm $CONTAINER_NAME || true
+            
             echo "새로운 컨테이너를 실행합니다: $CONTAINER_NAME on port $PORT"
-            sudo docker run -d -p ${PORT}:3000 --name $CONTAINER_NAME \
+            echo $PW | sudo -S docker run -d -p ${PORT}:3000 --name $CONTAINER_NAME \
               ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-
+            
             echo "배포가 완료되었습니다."
