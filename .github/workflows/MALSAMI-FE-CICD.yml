@@ -9,26 +9,48 @@ on:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js 18
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
+          node-version: '20.15.0'
 
-      - name: Install dependencies
-        run: npm install
+      - name: Cache Node Modules
+        id: cache-node-modules
+        uses: actions/cache@v3
+        with:
+          path: ./node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-v20
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-      - name: Build with npm
-        run: npm run build
+      - name: Install Dependencies
+        if: steps.cache-node-modules.outputs.cache-hit != 'true'
+        run: |
+          echo "의존성을 설치 중입니다..."
+          npm ci
 
-      - name: Docker setup
+      - name: Run Tests
+        run: |
+          echo "테스트를 실행하고 있습니다..."
+          npm test
+
+      - name: Build Project
+        run: |
+          echo "프로젝트를 빌드 중입니다..."
+          npm run build
+
+      - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
+        with:
+          version: latest
 
-      - name: Docker login
+      - name: Docker Login
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -38,11 +60,11 @@ jobs:
         uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Build and push Docker image
+      - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
           context: .
@@ -54,29 +76,45 @@ jobs:
 
   deploy:
     needs: build
+    name: Deploy
     runs-on: ubuntu-20.04
     steps:
-      - name: Deploy
+      - name: Execute Deployment Script
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USER }}
-          password: ${{ secrets.SERVER_PASSWORD }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 2022
           script: |
-            export PATH=$PATH:/usr/local/bin
-            export PW=${{ secrets.SERVER_PASSWORD }}
+            echo "배포를 시작합니다..."
             BRANCH=${{ github.ref_name }}
             PORT=3000
             CONTAINER_NAME="sejong-malsami-front"
+
             if [ "$BRANCH" == "main" ]; then
               PORT=3004
+              echo "메인 브랜치로 배포합니다. 포트는 $PORT입니다."
             elif [ "$BRANCH" == "test" ]; then
               CONTAINER_NAME="sejong-malsami-front-test"
               PORT=3003
+              echo "테스트 브랜치로 배포합니다. 컨테이너 이름은 $CONTAINER_NAME, 포트는 $PORT입니다."
+            else
+              echo "알 수 없는 브랜치입니다: $BRANCH"
+              exit 1
             fi
-            echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-            echo $PW | sudo -S docker stop $CONTAINER_NAME || true
-            echo $PW | sudo -S docker rm $CONTAINER_NAME || true
-            echo $PW | sudo -S docker run -d -p ${PORT}:3000 --name $CONTAINER_NAME \
+
+            echo "도커 이미지를 풀링 중입니다: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}"
+            sudo docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH} || exit 1
+
+            echo "기존 컨테이너를 중지합니다: $CONTAINER_NAME"
+            sudo docker stop $CONTAINER_NAME || true
+
+            echo "기존 컨테이너를 제거합니다: $CONTAINER_NAME"
+            sudo docker rm $CONTAINER_NAME || true
+
+            echo "새로운 컨테이너를 실행합니다: $CONTAINER_NAME on port $PORT"
+            sudo docker run -d -p ${PORT}:3000 --name $CONTAINER_NAME \
               ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
+
+            echo "배포가 완료되었습니다."
