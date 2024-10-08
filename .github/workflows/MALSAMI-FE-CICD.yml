@@ -106,3 +106,4 @@ jobs:
               ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
             
             echo "배포가 완료되었습니다."
+            
