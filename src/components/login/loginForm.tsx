@@ -31,30 +31,33 @@ export default function LoginForm() {
     <form onSubmit={handleLogin} className="space-y-6">
       {/* 아이디 입력 */}
       <div>
-        <label htmlFor="id" className="block text-sm font-medium text-gray-700">
-          아이디
+        <label htmlFor="id" className="block text-sm font-medium text-black">
+          학번
           <input
             type="text"
             id="id"
             value={id}
             onChange={e => setId(e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            placeholder="아이디를 입력하세요"
+            required
+            className="mt-1 block w-full px-3 py-2 ring-2 ring-gray-300 rounded-lg shadow-sm focus:ring-custom-orange-100
+            outline-none caret-custom-orange-400 invalid:ring-gray-300 valid:ring-custom-orange-400"
+            placeholder="학번을 입력해주세요"
           />
         </label>
       </div>
-
       {/* 비밀번호 입력 */}
       <div>
-        <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="password" className="block text-sm font-medium text-black">
           비밀번호
           <input
             type="password"
             id="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
-            className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            placeholder="비밀번호를 입력하세요"
+            required
+            className="mt-1 block w-full px-3 py-2 ring-2 ring-gray-300 rounded-lg shadow-sm focus:ring-custom-orange-100
+            outline-none caret-custom-orange-400 invalid:ring-gray-300 valid:ring-custom-orange-400"
+            placeholder="비밀번호를 입력해주세요"
           />
         </label>
       </div>
@@ -65,7 +68,7 @@ export default function LoginForm() {
       {/* 로그인 제출 버튼 */}
       <button
         type="submit"
-        className="w-full bg-custom-orange-100 text-white py-2 px-4 rounded hover:bg-custom-orange-200 focus:outline-none focus:ring-2 focus:ring-custom-orange-200"
+        className="w-full mt-10 bg-custom-orange-100 text-white py-2 px-4 rounded-lg hover:bg-custom-orange-400 focus:outline-none focus:ring-2 focus:ring-custom-orange-400"
         disabled={isLoading}
       >
         {isLoading ? "로그인 중..." : "로그인"}
