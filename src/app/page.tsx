@@ -1,22 +1,27 @@
-import React from 'react';
-import Nav from '@/components/common/Nav';
-import Search from '@/components/landing/Search';
-import HotData from '@/components/landing/HotData';
-import HotQuestion from '@/components/landing/HotQuestion';
-import Footer from '@/components/common/Footer';
+
+"use client";
+
+import React from "react";
+import { refreshAccessToken } from "@/apis/auth/refresh";
+
+const handleBtnClick = () => {
+  refreshAccessToken()
+    .then(token => console.log("Token refreshed:", token))
+    .catch(error => console.error("Failed to refresh token:", error));
+};
 
 function Page() {
   return (
-    <div className="w-full h-[2274px] bg-white flex flex-col justify-center items-start inline-flex">
-      <header className="w-full h-[475px] flex flex-col justify-center items-start">
-        <Nav />
-        <Search />
-      </header>
-      <main className="w-full h-[1679px] relative flex flex-col justify-start items-start inline-flex bg-gray-50">
-        <HotData />
-        <HotQuestion />
-      </main>
-      <Footer />
+
+    <div>
+      <div className="font-pretendard-bold">
+        sejong-malsami
+        <br />
+        home page
+      </div>
+      <button type="button" className="bg-gray-400 rounded-lg" onClick={handleBtnClick}>
+        refreshAccessTokenButton
+      </button>
     </div>
   );
 }
