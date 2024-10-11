@@ -26,7 +26,7 @@ function LoginSuccessModal({ onClose, userName }: LoginSuccessModalProps) {
         <button
           type="button"
           onClick={onClose}
-          className="bg-custom-orange-400 text-[16px] font-pretendard-semibold text-white py-3 px-6 rounded-3xl"
+          className="bg-custom-orange-300 text-[16px] font-pretendard-semibold text-white py-3 px-6 rounded-3xl hover:bg-custom-orange-400"
         >
           100 포인트 받기
         </button>
