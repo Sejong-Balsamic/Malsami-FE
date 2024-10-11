@@ -20,8 +20,8 @@
   .font-pretendard-light {
     @apply font-pretendard font-light;
   }
-  .font-pretendard-regular {
-    @apply font-pretendard font-regular;
+  .font-pretendard-semibold {
+    @apply font-pretendard font-semibold;
   }
   .font-pretendard-bold {
     @apply font-pretendard font-bold;
