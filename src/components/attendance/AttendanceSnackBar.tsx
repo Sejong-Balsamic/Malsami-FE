@@ -6,11 +6,11 @@ export default function AttendanceSnackBar() {
   const { toast } = useToast();
 
   const handleCheckAttendance = () => {
-    toast({
-      description: "출석체크 완료 10포인트 획득",
-    });
     setIsVisible(false);
     sessionStorage.setItem("lastAttendance", new Date().toString()); // 출석 시간 저장
+    toast({
+      description: "출석체크 완료! 10포인트 획득",
+    });
   };
 
   useEffect(() => {
@@ -28,7 +28,7 @@ export default function AttendanceSnackBar() {
 
   return isVisible ? (
     <button
-      type="button"
+      type="submit"
       onClick={handleCheckAttendance}
       className="fixed bottom-5 right-5 bg-custom-orange-300 text-white w-[45px] h-[45px] rounded-full text-sm hover:bg-custom-orange-400"
     >
