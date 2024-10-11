@@ -24,7 +24,7 @@ export default function LoginForm() {
       setErrorMessage(null);
       setUserName(getUserInfo.member.studentName);
       setIsModalOpen(true);
-      //추가 작업 필요: 최초 로그인 시 로그인성공모달 열리게
+      // 추가 작업 필요: 최초 로그인 시 로그인성공모달 열리게
     } catch (error) {
       setErrorMessage("로그인에 실패했습니다. 다시 시도해주세요.");
     } finally {

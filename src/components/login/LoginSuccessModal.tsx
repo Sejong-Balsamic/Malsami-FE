@@ -1,17 +1,21 @@
+import Image from "next/image";
+
 interface LoginSuccessModalProps {
   onClose: () => void;
   userName: string;
 }
 
-const LoginSuccessModal: React.FC<LoginSuccessModalProps> = ({ onClose, userName }) => {
+function LoginSuccessModal({ onClose, userName }: LoginSuccessModalProps) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
       <div className="bg-white p-10 rounded-3xl shadow-lg max-w-sm w-full text-center">
         {/* 이미지 */}
-        <img
+        <Image
           src="/image/PartyPopper.jpg" // 이미지 경로
           alt="Success"
-          className="mx-auto mb-10 w-[160px]"
+          width={160}
+          height={160}
+          className="mx-auto mb-10"
         />
         {/* 성공 메시지 */}
         <h2 className="text-[20px] font-pretendard-bold mb-2">{userName}님 반가워요!</h2>
@@ -20,6 +24,7 @@ const LoginSuccessModal: React.FC<LoginSuccessModalProps> = ({ onClose, userName
         </p>
         {/* 확인 버튼 */}
         <button
+          type="button"
           onClick={onClose}
           className="bg-custom-orange-400 text-[16px] font-pretendard-semibold text-white py-3 px-6 rounded-3xl"
         >
@@ -28,6 +33,6 @@ const LoginSuccessModal: React.FC<LoginSuccessModalProps> = ({ onClose, userName
       </div>
     </div>
   );
-};
+}
 
 export default LoginSuccessModal;
