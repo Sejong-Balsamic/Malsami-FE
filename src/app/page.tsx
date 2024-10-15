@@ -2,7 +2,7 @@
 
 import React from "react";
 import { refreshAccessToken } from "@/apis/auth/refresh";
-import AttendanceSnackBar from "@/components/attendance/AttendanceSnackBar";
+// import AttendanceSnackBar from "@/components/attendance/AttendanceSnackBar";
 import { Toaster } from "@/components/ui/toaster";
 
 const handleBtnClick = () => {
@@ -22,7 +22,7 @@ export default function Home() {
       <button type="button" className="bg-gray-400 rounded-lg" onClick={handleBtnClick}>
         refreshAccessTokenButton
       </button>
-      <AttendanceSnackBar />
+      {/* <AttendanceSnackBar /> */}
       <Toaster />
     </div>
   );
