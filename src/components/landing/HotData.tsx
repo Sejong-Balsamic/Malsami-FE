@@ -1,5 +1,4 @@
-import React from 'react';
-import NavigationButton from './NavigationButton';
+import React from "react";
 
 function HotData() {
   return (
@@ -107,10 +106,6 @@ function HotData() {
             alt="thumbnail"
           />
         </div>
-      </div>
-
-      <div className="absolute left-[119px] top-[621px] flex space-x-4">
-        <NavigationButton />
       </div>
     </div>
   );
