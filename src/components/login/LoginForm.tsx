@@ -25,7 +25,8 @@ export default function LoginForm() {
       setErrorMessage(null);
       setUserName(getUserInfo.member.studentName);
       setIsFirstLogin(getUserInfo.member.isFirstLogin);
-      setIsModalOpen(true);
+      if (isFirstLogin) setIsModalOpen(true);
+      else router.push("/");
     } catch (error) {
       setErrorMessage("로그인에 실패했습니다. 다시 시도해주세요.");
     } finally {
@@ -88,7 +89,7 @@ export default function LoginForm() {
       </form>
 
       {/* 로그인 성공 모달 */}
-      {isModalOpen && isFirstLogin && <LoginSuccessModal onClose={handleModalClose} userName={userName} />}
+      {isModalOpen && <LoginSuccessModal onClose={handleModalClose} userName={userName} />}
     </div>
   );
 }
