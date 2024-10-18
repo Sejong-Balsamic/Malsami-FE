@@ -11,6 +11,7 @@ export default function LoginForm() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isFirstLogin, setIsFirstLogin] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>(""); // 사용자 이름 상태 추가
 
   const router = useRouter(); // useRouter 사용
@@ -23,8 +24,8 @@ export default function LoginForm() {
       const getUserInfo = await login(id, password);
       setErrorMessage(null);
       setUserName(getUserInfo.member.studentName);
+      setIsFirstLogin(getUserInfo.member.isFirstLogin);
       setIsModalOpen(true);
-      // 추가 작업 필요: 최초 로그인 시 로그인성공모달 열리게
     } catch (error) {
       setErrorMessage("로그인에 실패했습니다. 다시 시도해주세요.");
     } finally {
@@ -87,7 +88,7 @@ export default function LoginForm() {
       </form>
 
       {/* 로그인 성공 모달 */}
-      {isModalOpen && <LoginSuccessModal onClose={handleModalClose} userName={userName} />}
+      {isModalOpen && isFirstLogin && <LoginSuccessModal onClose={handleModalClose} userName={userName} />}
     </div>
   );
 }
