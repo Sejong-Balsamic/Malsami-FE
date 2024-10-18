@@ -2,6 +2,8 @@
 
 import React from "react";
 import { refreshAccessToken } from "@/apis/auth/refresh";
+// import AttendanceSnackBar from "@/components/attendance/AttendanceSnackBar";
+import { Toaster } from "@/components/ui/toaster";
 
 const handleBtnClick = () => {
   refreshAccessToken()
@@ -20,6 +22,8 @@ export default function Home() {
       <button type="button" className="bg-gray-400 rounded-lg" onClick={handleBtnClick}>
         refreshAccessTokenButton
       </button>
+      {/* <AttendanceSnackBar /> */}
+      <Toaster />
     </div>
   );
 }
