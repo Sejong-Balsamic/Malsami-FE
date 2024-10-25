@@ -28,7 +28,13 @@ function QuestionCard({
   return (
     <div className="flex border p-4 rounded-lg shadow-md">
       <div className="w-1/4">
-        <Image src={thumbnail} alt="썸네일" className="w-full h-auto rounded-lg" />
+        <Image
+          src={thumbnail} // 이미지 썸네일 경로로 나중에 바꿔야 함
+          alt="썸네일"
+          width={100}
+          height={100}
+          className="mx-auto mb-10"
+        />
       </div>
       <div className="w-3/4 pl-4">
         <div className="mb-2">
