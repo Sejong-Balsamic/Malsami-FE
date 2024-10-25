@@ -15,6 +15,7 @@ export default function QuestionCardList() {
           viewCount={question.viewCount}
           likeCount={question.likeCount}
           commentCount={question.commentCount}
+          rewardYeopjeon={question.rewardYeopjeon}
         />
       ))}
     </div>

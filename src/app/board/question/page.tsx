@@ -1,17 +1,24 @@
 "use client";
 
-import getDateDiff from "@/utils/getDateDiff";
+import { useState } from "react";
+
+import QuestionNavBar from "@/components/nav/QuestionNavBar";
 import QuestionCardList from "@/components/board/tags/question/QuestionCardList";
 
 export default function QuestionBoardPage() {
+  const [faculty, setFaculty] = useState("전체");
+
+  const handleSelect = (selection: string) => {
+    setFaculty(selection);
+    // 여기서 선택된 필터에 따라 API를 호출
+  };
   return (
-    <div>
-      <div>quesiton board page</div>
-      <span>{getDateDiff("2024-10-25T01:59:43.934Z")}</span>
+    <div className="bg-gray-200">
+      <div className="bg-white">질문 게시판</div>
+      <QuestionNavBar onSelect={handleSelect} />
       <br />
-      <br />
-      <div className="p-4">
-        <h1 className="text-2xl font-bold mb-4">질문 목록</h1>
+      <div className="p-2">
+        <div className="text-2xl font-pretendard-semibold ml-2 mb-4">전체글</div>
         <QuestionCardList />
       </div>
       );
