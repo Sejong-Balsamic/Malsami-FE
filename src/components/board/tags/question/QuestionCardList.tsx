@@ -1,5 +1,5 @@
-import QuestionCard from "./QuestionCard";
 import questionData from "@/apis/question/getAllQuestions";
+import QuestionCard from "./QuestionCard";
 
 export default function QuestionCardList() {
   return (
