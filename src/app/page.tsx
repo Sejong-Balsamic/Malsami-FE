@@ -1,8 +1,8 @@
-
 "use client";
 
 import React from "react";
 import { refreshAccessToken } from "@/apis/auth/refresh";
+import FabButton from "@/components/common/FAB";
 
 const handleBtnClick = () => {
   refreshAccessToken()
@@ -12,7 +12,6 @@ const handleBtnClick = () => {
 
 function Page() {
   return (
-
     <div>
       <div className="font-pretendard-bold">
         sejong-malsami
@@ -22,6 +21,9 @@ function Page() {
       <button type="button" className="bg-gray-400 rounded-lg" onClick={handleBtnClick}>
         refreshAccessTokenButton
       </button>
+      <div className="fixed bottom-5 right-5">
+        <FabButton />
+      </div>
     </div>
   );
 }
