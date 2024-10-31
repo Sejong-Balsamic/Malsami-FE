@@ -1,31 +1,43 @@
-import React from 'react';
-import Link from 'next/link';
+"use client";
+
+import React from "react";
+import { useRouter } from "next/navigation";
+import MyIcon from "../../../public/icons/My.svg";
 
 function Nav() {
+  const router = useRouter();
+
+  const handleLandingPageClick = () => {
+    router.push("/");
+  };
+
+  const handleMyPageClick = () => {
+    router.push("/mypage");
+  };
+
   return (
-    <div className="w-full h-[120px] px-36 py-8 flex items-center bg-[#ff0000]/10">
-      <div className="relative w-full h-[57px]">
-        <div className="absolute w-28 m-auto left-0 top-[13px]">
-          <div className="absolute w-28 h-[31px] bg-[#d9d9d9]" />
-        </div>
+    <div className="w-full h-[68px] fixed top-0 left-0 z-50">
+      <div className="w-full h-full bg-white absolute top-0 left-0" />
 
-        {/* 질문게시판 링크 */}
-        <Link href="/qna" className="absolute right-80 top-[16px] text-[#c7c7c7] text-xl font-bold font-pretendard">
-          질문게시판
-        </Link>
+      <div
+        className="absolute top-[37px] left-[18px] cursor-pointer"
+        onClick={handleLandingPageClick}
+        onKeyDown={e => e.key === "Enter" && handleLandingPageClick()} // Enter 키로 접근
+        role="button"
+        tabIndex={0} // Tab 키로 접근
+        aria-label="랜딩페이지"
+      >
+        <div className="w-[30px] h-7 bg-[#d9d9d9]" />
+      </div>
 
-        {/* 마이페이지 링크 */}
-        <Link href="/mypage" className="absolute right-52 top-[16px] text-black text-xl font-bold font-pretendard">
-          마이페이지
-        </Link>
-
-        {/* 지금 질문하기 링크 */}
-        <Link href="/qna/question" className="absolute right-0 top-0 w-[162px] h-[57px]">
-          <div className="absolute w-[162px] h-[57px] bg-[#f46b02] rounded-xl" />
-          <div className="absolute left-[26px] top-[16px] text-white text-xl font-medium font-pretendard">
-            지금 질문하기
-          </div>
-        </Link>
+      <div
+        className="absolute right-[18px] top-[48px] w-[13px] h-[13px] cursor-pointer"
+        onClick={handleMyPageClick}
+        onKeyDown={e => e.key === "Enter" && handleMyPageClick()}
+        role="button"
+        tabIndex={0}
+      >
+        <MyIcon />
       </div>
     </div>
   );

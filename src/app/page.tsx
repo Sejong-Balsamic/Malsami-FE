@@ -2,6 +2,7 @@
 
 import React from "react";
 import { refreshAccessToken } from "@/apis/auth/refresh";
+import Nav from "@/components/common/Nav";
 import FabButton from "@/components/common/FAB";
 
 const handleBtnClick = () => {
@@ -13,6 +14,7 @@ const handleBtnClick = () => {
 function Page() {
   return (
     <div>
+      <Nav />
       <div className="font-pretendard-bold">
         sejong-malsami
         <br />
