@@ -15,7 +15,7 @@
 
 // 목 데이터 생성
 
-const questionData = [
+const questionDatas = [
   {
     questionPostId: 1,
     assignedTags: ["지정태그", "지정태그12"],
@@ -90,4 +90,4 @@ const questionData = [
   },
 ];
 
-export default questionData;
+export default questionDatas;
