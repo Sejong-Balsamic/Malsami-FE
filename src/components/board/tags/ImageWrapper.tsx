@@ -7,8 +7,8 @@ const ImageWrapper = ({ src }: { src: string }) => {
     <Image
       src={src}
       alt="Image" // 기본 alt 텍스트
-      width={16}
-      height={14}
+      width={12}
+      height={12}
       className="inline-block"
     />
   );

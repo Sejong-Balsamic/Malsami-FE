@@ -1,9 +1,9 @@
 import React from "react";
-import ImageWrapper from "./ImageWrapper";
+import ImageWrapper from "@/components/board/tags/ImageWrapper";
 
 function YeopjeonTag({ point }: { point: number }) {
   return (
-    <span className="inline-block bg-black text-white px-2.5 py-0.5 mr-[2px] rounded-[33px] text-[11px] font-pretendard-semibold">
+    <span className="inline-block text-black text-[12px] font-pretendard-semibold">
       <ImageWrapper src="/icons/Yeopjeon.png" />
       <span className="ml-1">{point}</span>
     </span>
