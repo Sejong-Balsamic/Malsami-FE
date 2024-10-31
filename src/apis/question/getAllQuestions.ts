@@ -62,7 +62,7 @@ const questionData = [
     viewCount: 200,
     likeCount: 50,
     commentCount: 10,
-    rewardYeopjeon: 1000,
+    rewardYeopjeon: 150,
   },
   {
     questionPostId: 5,
