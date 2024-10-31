@@ -1,10 +1,10 @@
 import React from "react";
 import Image from "next/image";
 import getDateDiff from "@/utils/getDateDiff";
-import ImageWrapper from "../ImageWrapper";
-import ResolvedTag from "../ResolvedTag";
-import AssignedTag from "../AssignedTag";
-import YeopjeonTag from "../YeopjeonTag";
+import ImageWrapper from "../tags/ImageWrapper";
+import ChaeTakTag from "../tags/ChaeTakTag";
+import JiJeongTag from "../tags/JiJeongTag";
+import YeopjeonTag from "../tags/YeopjeonTag";
 
 interface QuestionCardProps {
   assignedTags: string[];
@@ -33,9 +33,9 @@ function QuestionCard({
     <div className="flex flex-col bg-white p-3 rounded-[26px] mb-3">
       <div className="mb-2">
         {rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
-        <ResolvedTag />
+        <ChaeTakTag />
         {assignedTags.map(tag => (
-          <AssignedTag key={tag} label={tag} />
+          <JiJeongTag key={tag} label={tag} />
         ))}
       </div>
       <div className="flex flex-row justify-between">
