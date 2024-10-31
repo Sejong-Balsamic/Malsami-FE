@@ -23,6 +23,9 @@
   .font-pretendard-semibold {
     @apply font-pretendard font-semibold;
   }
+  .font-pretendard-medium {
+    @apply font-pretendard font-medium;
+  }
   .font-pretendard-bold {
     @apply font-pretendard font-bold;
   }
