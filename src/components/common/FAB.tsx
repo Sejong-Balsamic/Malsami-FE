@@ -31,9 +31,13 @@ function FabButton() {
       tabIndex={0}
       aria-expanded={isExpanded}
     >
+      <div className="absolute top-0 left-0 w-[50px] h-[50px] bg-white rounded-full shadow-md shadow-gray" />
+
+      <FABIcon width="50px" height="50px" className="absolute top-0 left-0" />
+
       {isExpanded && (
         <>
-          <div className="absolute w-[50px] h-[147px] bottom-[25px] bg-black rounded-t-full" />
+          <div className="absolute w-[50px] h-[147px] bottom-[25px] bg-white shadow-md shadow-gray rounded-t-full" />
 
           <FABIcon width="50px" height="50px" className="absolute top-0 left-0" />
 
@@ -52,7 +56,6 @@ function FabButton() {
           />
         </>
       )}
-      {!isExpanded && <FABIcon width="50px" height="50px" className="absolute top-0 left-0" />}
     </div>
   );
 }
