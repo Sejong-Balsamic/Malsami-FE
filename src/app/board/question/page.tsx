@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 import QuestionNavBar from "@/components/nav/QuestionNavBar";
-import QuestionCardList from "@/components/board/tags/question/QuestionCardList";
+import QuestionCardList from "@/components/board/question/QuestionCardList";
 
 export default function QuestionBoardPage() {
   const [faculty, setFaculty] = useState("전체");
