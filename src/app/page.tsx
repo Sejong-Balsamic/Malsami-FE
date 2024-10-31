@@ -1,9 +1,11 @@
 "use client";
 
 import React from "react";
+import { useState } from "react";
 import { refreshAccessToken } from "@/apis/auth/refresh";
 // import AttendanceSnackBar from "@/components/attendance/AttendanceSnackBar";
 import { Toaster } from "@/components/ui/toaster";
+import BottomSheetModal from "@/components/common/BottomSheetModal";
 
 const handleBtnClick = () => {
   refreshAccessToken()
@@ -12,6 +14,10 @@ const handleBtnClick = () => {
 };
 
 export default function Home() {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+
+  const openModal = () => setIsModalVisible(true);
+  const closeModal = () => setIsModalVisible(false);
   return (
     <div>
       <div className="font-pretendard-bold">
@@ -24,6 +30,13 @@ export default function Home() {
       </button>
       {/* <AttendanceSnackBar /> */}
       <Toaster />
+
+      <div>
+        <button onClick={openModal}>Open Modal</button>
+        <BottomSheetModal isVisible={isModalVisible} onClose={closeModal}>
+          <h1>Hello, World!asdfsadfsafasfasdfaasdfsafsfsafasfas</h1>
+        </BottomSheetModal>
+      </div>
     </div>
   );
 }
