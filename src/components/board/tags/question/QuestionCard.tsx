@@ -15,7 +15,7 @@ interface QuestionCardProps {
   viewCount: number;
   likeCount: number;
   commentCount: number;
-  rewardYeopjeon?: number;
+  rewardYeopjeon: number;
 }
 
 function QuestionCard({
@@ -27,7 +27,7 @@ function QuestionCard({
   viewCount,
   likeCount,
   commentCount,
-  rewardYeopjeon = 0,
+  rewardYeopjeon,
 }: QuestionCardProps) {
   return (
     <div className="flex flex-col bg-white p-3 rounded-[26px] mb-3">

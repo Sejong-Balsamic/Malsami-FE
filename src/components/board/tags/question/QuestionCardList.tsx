@@ -1,7 +1,8 @@
 import questionData from "@/apis/question/getAllQuestions";
 import QuestionCard from "./QuestionCard";
 
-export default function QuestionCardList() {
+export default function QuestionCardList({ faculty }: { faculty: string }) {
+  console.log(faculty); // 지워야함
   return (
     <div>
       {questionData.map(question => (

@@ -19,7 +19,7 @@ export default function QuestionBoardPage() {
       <br />
       <div className="p-2">
         <div className="text-2xl font-pretendard-semibold ml-2 mb-4">전체글</div>
-        <QuestionCardList />
+        <QuestionCardList faculty={faculty} />
       </div>
       );
     </div>
