@@ -16,8 +16,8 @@ function Nav() {
   };
 
   return (
-    <div className="w-full h-[68px] fixed top-0 left-0 z-50">
-      <div className="w-full h-full bg-white absolute top-0 left-0" />
+    <div className="w-full max-w-[640px] h-[68px] fixed top-0 z-50">
+      <div className="w-full h-full bg-gradient-to-b from-white/100 to-white/50 absolute top-0 left-0" />
 
       <div
         className="absolute top-[37px] left-[18px] cursor-pointer"
