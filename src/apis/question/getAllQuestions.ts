@@ -38,6 +38,7 @@ const questionData = [
     viewCount: 200,
     likeCount: 50,
     commentCount: 10,
+    rewardYeopjeon: 150,
   },
   {
     questionPostId: 3,
@@ -61,6 +62,7 @@ const questionData = [
     viewCount: 200,
     likeCount: 50,
     commentCount: 10,
+    rewardYeopjeon: 150,
   },
   {
     questionPostId: 5,
@@ -72,6 +74,7 @@ const questionData = [
     viewCount: 100,
     likeCount: 20,
     commentCount: 5,
+    rewardYeopjeon: 150,
   },
   {
     questionPostId: 6,
@@ -83,6 +86,7 @@ const questionData = [
     viewCount: 200,
     likeCount: 50,
     commentCount: 10,
+    rewardYeopjeon: 150,
   },
 ];
 

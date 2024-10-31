@@ -15,7 +15,7 @@ interface QuestionCardProps {
   viewCount: number;
   likeCount: number;
   commentCount: number;
-  rewardYeopjeon?: number;
+  rewardYeopjeon: number;
 }
 
 function QuestionCard({

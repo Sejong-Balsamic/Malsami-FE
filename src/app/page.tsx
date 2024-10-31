@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { useState } from "react";
 import { refreshAccessToken } from "@/apis/auth/refresh";
 // import AttendanceSnackBar from "@/components/attendance/AttendanceSnackBar";
@@ -14,10 +13,9 @@ const handleBtnClick = () => {
 };
 
 export default function Home() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalVisible(true);
-  const closeModal = () => setIsModalVisible(false);
+  const switchModal = () => setIsModalOpen(prev => !prev); // 모달 열기/닫기 토글
   return (
     <div>
       <div className="font-pretendard-bold">
@@ -32,8 +30,10 @@ export default function Home() {
       <Toaster />
 
       <div>
-        <button onClick={openModal}>Open Modal</button>
-        <BottomSheetModal isVisible={isModalVisible} onClose={closeModal}>
+        <button type="button" onClick={switchModal}>
+          Open Modal
+        </button>
+        <BottomSheetModal isVisible={isModalOpen} onClose={switchModal}>
           <h1>Hello, World!asdfsadfsafasfasdfaasdfsafsfsafasfas</h1>
         </BottomSheetModal>
       </div>
