@@ -1,8 +1,8 @@
 import { useState } from "react";
-import ImageWrapper from "../board/tags/ImageWrapper";
-import QnaSelectFacultyModal from "../board/question/QnaSelectFacultyModal";
+import ImageWrapper from "../tags/ImageWrapper";
+import QnaSelectFacultyModal from "./QnaSelectFacultyModal";
 
-function QuestionNavBar({ onSelect }: { onSelect: (selection: string) => void }) {
+function QnaFilterFacultyCategory({ onSelect }: { onSelect: (selection: string) => void }) {
   const [selected, setSelected] = useState("전체");
   const [lastSelected, setLastSelected] = useState("학부 선택"); // 직전 선택한 항목
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -56,4 +56,4 @@ function QuestionNavBar({ onSelect }: { onSelect: (selection: string) => void })
   );
 }
 
-export default QuestionNavBar;
+export default QnaFilterFacultyCategory;
