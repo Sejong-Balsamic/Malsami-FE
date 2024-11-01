@@ -29,6 +29,18 @@ const questionDatas = [
     rewardYeopjeon: 150,
   },
   {
+    questionPostId: 10,
+    assignedTags: ["지정태그", "지정태그12"],
+    title: "React에서 상태 관리하는 법",
+    content: "React에서 상태 관리는 어떻게 하나요?",
+    thumbnail: "/image/PartyPopper.jpg",
+    createdDate: "2024-10-25T02:53:43.934Z",
+    viewCount: 100,
+    likeCount: 20,
+    commentCount: 5,
+    rewardYeopjeon: 0,
+  },
+  {
     questionPostId: 2,
     assignedTags: ["지정태그2", "지정태그"],
     title: "Next.js로 SEO 최적화하기",

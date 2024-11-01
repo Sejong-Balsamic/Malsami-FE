@@ -24,14 +24,14 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
     <>
       {showModal && (
         <div
-          className={`fixed inset-0 flex items-end justify-center transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}
+          className={`fixed inset-0 z-50 flex items-end justify-center transition-opacity duration-300 ${isVisible ? "opacity-100" : "opacity-0"}`}
         >
           {/* 반투명한 배경 오버레이 */}
           <div className="absolute inset-0 bg-black opacity-50" onClick={onClose} />
 
           {/* 모달 컨텐츠 */}
           <div
-            className="bg-white w-full  mx-auto rounded-t-[20px] shadow-lg pt-9 px-[18px] pb-5 transition-transform duration-300 transform"
+            className="bg-white w-full  mx-auto rounded-t-[20px] shadow-lg pt-8 px-[18px] pb-[22px] transition-transform duration-300 transform"
             style={{
               transform: isVisible ? "translateY(0)" : "translateY(100%)",
             }}
