@@ -1,20 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import QuestionNavBar from "@/components/nav/QuestionNavBar";
+import QnaFilterFacultyCategory from "@/components/board/question/QnaFilterFacultyCategory";
 import QuestionCardList from "@/components/board/question/QuestionCardList";
-import CategoryCardList from "@/components/common/CategoryCardList";
-import categoryCardDatas from "@/lib/categoryCardDats";
+import MovingCard from "@/components/common/MovingCard";
 import FilterControlBar from "@/components/board/question/FilterControlBar";
+import QnaPageNav from "@/components/nav/QnaPageNav";
 
 export default function QuestionBoardPage() {
   const [faculty, setFaculty] = useState("전체");
-  const [categoryCardDatass, setCategoryCardDatas] = useState(categoryCardDatas);
-
-  useEffect(() => {
-    setCategoryCardDatas(categoryCardDatas);
-  }, []); // eslint에러 때문에 이유없이 사용
 
   const handleSelect = (selection: string) => {
     setFaculty(selection);
@@ -22,11 +17,11 @@ export default function QuestionBoardPage() {
   };
   return (
     <div className="bg-gray-white">
-      <h1 className="bg-white text-center text-lg font-pretendard-bold p-2 h-[90px]">질문 게시판</h1>
-      <QuestionNavBar onSelect={handleSelect} />
+      <QnaPageNav />
+      <QnaFilterFacultyCategory onSelect={handleSelect} />
       <div className="text-custom-blue-500 px-5 pt-4 pb-3 text-lg font-pretendard-semibold">아직 답변 안 했어요!</div>
       <div className="bg-[#EEEEEE]">
-        <CategoryCardList categoryCardDatas={categoryCardDatass} />
+        <MovingCard />
       </div>
       <FilterControlBar />
       <div className="h-0.5 bg-[#EEEEEE]" />
