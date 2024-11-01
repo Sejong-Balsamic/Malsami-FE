@@ -10,7 +10,6 @@ module.exports = {
     project: "./tsconfig.json", // TypeScript 구성 파일의 경로를 명시
   },
   rules: {
-
     'linebreak-style': 0,
     "prettier/prettier": [
       "error",

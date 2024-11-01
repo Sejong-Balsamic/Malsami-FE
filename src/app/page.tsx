@@ -3,21 +3,22 @@
 import React, { useEffect, useState } from "react";
 import Nav from "@/components/common/Nav";
 import HotDocument from "@/components/landing/HotDocument";
-import AllDocument from "@/components/landing/AllDocument";
-import HotQuestion from "@/components/landing/HotQuestion";
-import AllQuestion from "@/components/landing/AllQuestion";
 import FabButton from "@/components/common/FAB";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);
+  const [searchVisible, setSearchVisible] = useState(true);
 
   // 스크롤 이벤트
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY);
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      setSearchVisible(currentScrollY < 1200);
     };
+
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -29,12 +30,12 @@ function Page() {
         <div className="flex justify-center">
           <Nav />
         </div>
-        <div className="w-full max-w-[640px] h-[1000px]">
+        <div className="w-full max-w-[640px] min-w-[386px] h-[2100px]">
           <Image
             src="/landing/LandingBackgroundImage.png"
             alt="배경"
             width={640}
-            height={824}
+            height={2310}
             className="w-full max-w-[640px] h-auto"
             priority
           />
@@ -101,7 +102,11 @@ function Page() {
           />
         </div>
         {/* 검색 */}
-        <div className="fixed top-[318px] left-1/2 transform -translate-x-1/2 w-full max-w-[340px] z-30">
+        <div
+          className={`fixed top-[318px] left-1/2 transform -translate-x-1/2 w-full max-w-[340px] z-30 transition-opacity duration-2000 ${
+            searchVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
           <span className="text-black text-sm font-extrabold font-pretendard leading-[11px]">종이</span>
           <span className="text-black text-sm font-semibold font-pretendard leading-[11px]">
             님, 환영해요!
@@ -109,7 +114,11 @@ function Page() {
             학습 자료를 찾고, 업로드 해보세요!
           </span>
         </div>
-        <div className="fixed top-[383px] left-1/2 transform -translate-x-1/2 w-full max-w-[340px] z-30">
+        <div
+          className={`fixed top-[383px] left-1/2 transform -translate-x-1/2 w-full max-w-[340px] z-30 transition-opacity duration-2000 ${
+            searchVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+          }`}
+        >
           <div className="relative w-full">
             <Image
               src="/icons/Search.svg"
@@ -131,18 +140,7 @@ function Page() {
         <div className="flex justify-center">
           <HotDocument />
         </div>
-        {/* 전체자료 */}
-        <div className="flex justify-center">
-          <AllDocument />
-        </div>
-        {/* 인기질문 */}
-        <div className="flex justify-center">
-          <HotQuestion />
-        </div>
-        {/* 전체자료 */}
-        <div className="flex justify-center">
-          <AllQuestion />
-        </div>
+
         {/* FAB */}
         <div className="fixed bottom-5 right-5 z-50">
           <FabButton />
