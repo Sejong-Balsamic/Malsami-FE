@@ -63,11 +63,11 @@ function CategoryCard({
             <YeopjeonTag point={rewardYeopjeon} />
             <div>
               <span className="mr-1.5">
-                <ImageWrapper src="/icons/LikeIcon.png" />
+                <ImageWrapper src="/icons/LikeIcon.svg" />
                 <span className="ml-1 text-xs font-pretendard-medium">{likeCount}</span>
               </span>
               <span>
-                <ImageWrapper src="/icons/CommentIcon.png" />
+                <ImageWrapper src="/icons/CommentIcon.svg" />
                 <span className=" ml-1 text-xs font-pretendard-medium">{commentCount}</span>
               </span>
             </div>

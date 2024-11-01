@@ -18,7 +18,7 @@ function FilterControlBar() {
       <ToggleSwitch isChaeTak={isChaeTak} toggleSwitch={toggleSwitch} />
       <span className="mr-2.5 text-xs font-pretendard-semibold text-[#737373]">채택됨</span>
       <Image
-        src="/icons/FilterIcon.png" // 이미지 경로
+        src="/icons/FilterIcon.svg" // 이미지 경로
         alt="filter"
         width={16}
         height={16}

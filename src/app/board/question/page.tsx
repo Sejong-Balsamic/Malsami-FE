@@ -22,7 +22,7 @@ export default function QuestionBoardPage() {
   };
   return (
     <div className="bg-gray-white">
-      <h1 className="bg-white text-center text-lg font-pretendard-bold p-2">질문 게시판</h1>
+      <h1 className="bg-white text-center text-lg font-pretendard-bold p-2 h-[90px]">질문 게시판</h1>
       <QuestionNavBar onSelect={handleSelect} />
       <div className="text-custom-blue-500 px-5 pt-4 pb-3 text-lg font-pretendard-semibold">아직 답변 안 했어요!</div>
       <div className="bg-[#EEEEEE]">
