@@ -44,11 +44,11 @@ function QuestionCard({
           <p className="text-sm font-pretendard-medium text-[#737373] mb-4 line-clamp-1">{content}</p>
           <div className="flex items-center text-[#BCBCBC] text-xs font-pretendard-medium">
             <span className="mr-[3px]">
-              <ImageWrapper src="/icons/LikeIcon.png" />
+              <ImageWrapper src="/icons/LikeIcon.svg" />
               <span className="ml-1 text-xs">{likeCount}</span>
             </span>
             <span className="mr-[6px]">
-              <ImageWrapper src="/icons/CommentIcon.png" />
+              <ImageWrapper src="/icons/CommentIcon.svg" />
               <span className="ml-1 text-xs">{commentCount}</span>
             </span>
             · <span className="ml-[6px] mr-[6px] text-[11px]"> 조회 {viewCount} </span> ·{" "}

@@ -1,8 +1,8 @@
 import { useState } from "react";
-import ImageWrapper from "../board/tags/ImageWrapper";
-import QnaSelectFacultyModal from "../board/question/QnaSelectFacultyModal";
+import ImageWrapper from "../tags/ImageWrapper";
+import QnaSelectFacultyModal from "./QnaSelectFacultyModal";
 
-function QuestionNavBar({ onSelect }: { onSelect: (selection: string) => void }) {
+function QnaFilterFacultyCategory({ onSelect }: { onSelect: (selection: string) => void }) {
   const [selected, setSelected] = useState("전체");
   const [lastSelected, setLastSelected] = useState("학부 선택"); // 직전 선택한 항목
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -47,7 +47,7 @@ function QuestionNavBar({ onSelect }: { onSelect: (selection: string) => void })
           >
             {selected === "전체" ? lastSelected : selected}{" "}
             {/* selected가 "전체"인 경우에는 lastSelected 값을 표시하고, 그렇지 않은 경우에는 selected 값을 표시 */}
-            <ImageWrapper src="/icons/ToggleIcon.png" />
+            <ImageWrapper src="/icons/ToggleIcon.svg" />
           </button>
           <QnaSelectFacultyModal isVisible={isModalOpen} onClose={switchModal} onSelect={handleSelect} />
         </div>
@@ -56,4 +56,4 @@ function QuestionNavBar({ onSelect }: { onSelect: (selection: string) => void })
   );
 }
 
-export default QuestionNavBar;
+export default QnaFilterFacultyCategory;

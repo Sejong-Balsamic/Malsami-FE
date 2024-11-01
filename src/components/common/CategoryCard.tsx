@@ -40,7 +40,7 @@ function CategoryCard({
 }: CategoryCardProps) {
   return (
     <div>
-      <div className="w-[166px] h-[166px]  flex flex-col m-3">
+      <div className="w-[166px] h-[166px] flex flex-col m-3">
         {/* 상단 학과 제목 영역 */}
         <div className="h-[52px] rounded-t-[20px] flex items-end px-3.5 pb-2 pt-2" style={{ backgroundColor: color }}>
           <span className="text-white text-sm font-pretendard-semibold leading-tight line-clamp-2">{subject}</span>
@@ -63,11 +63,11 @@ function CategoryCard({
             <YeopjeonTag point={rewardYeopjeon} />
             <div>
               <span className="mr-1.5">
-                <ImageWrapper src="/icons/LikeIcon.png" />
+                <ImageWrapper src="/icons/LikeIcon.svg" />
                 <span className="ml-1 text-xs font-pretendard-medium">{likeCount}</span>
               </span>
               <span>
-                <ImageWrapper src="/icons/CommentIcon.png" />
+                <ImageWrapper src="/icons/CommentIcon.svg" />
                 <span className=" ml-1 text-xs font-pretendard-medium">{commentCount}</span>
               </span>
             </div>
