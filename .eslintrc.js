@@ -11,6 +11,12 @@ module.exports = {
   },
   rules: {
     'linebreak-style': 0,
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   },
   ignorePatterns: ['.eslintrc.js'],
 };
