@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import categoryCardDatas from "@/lib/categoryCardDats";
-import CategoryCard from "../common/CategoryCard";
+import CategoryCard from "./CategoryCard";
 
 function MovingCard() {
   return (
