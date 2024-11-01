@@ -40,7 +40,7 @@ function CategoryCard({
 }: CategoryCardProps) {
   return (
     <div>
-      <div className="w-[166px] h-[166px]  flex flex-col m-3">
+      <div className="w-[166px] h-[166px] flex flex-col m-3">
         {/* 상단 학과 제목 영역 */}
         <div className="h-[52px] rounded-t-[20px] flex items-end px-3.5 pb-2 pt-2" style={{ backgroundColor: color }}>
           <span className="text-white text-[12px] font-pretendard-bold leading-tight">{subject}</span>
