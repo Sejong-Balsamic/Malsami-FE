@@ -30,7 +30,7 @@ function QuestionCard({
   rewardYeopjeon = 0,
 }: QuestionCardProps) {
   return (
-    <div className="flex flex-col bg-white p-3 rounded-[26px] mb-3">
+    <div className="flex flex-col bg-white p-[14px] rounded-[26px] mb-3 shadow-[0_4px_8px_0_rgba(0,0,0,0.2)] ...">
       <div className="mb-2">
         {rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
         <ChaeTakTag />
@@ -40,28 +40,28 @@ function QuestionCard({
       </div>
       <div className="flex flex-row justify-between">
         <div>
-          <h2 className="text-base font-pretendard-medium mb-1">{title}</h2>
-          <p className="text-sm font-pretendard-medium text-[#ABABAB] mb-4">{content}</p>
+          <h2 className="text-sm font-pretendard-bold mb-1">{title}</h2>
+          <p className="text-sm font-pretendard-medium text-[#737373] mb-4 line-clamp-1">{content}</p>
+          <div className="flex items-center text-[#BCBCBC] text-xs font-pretendard-medium">
+            <span className="mr-[3px]">
+              <ImageWrapper src="/icons/LikeIcon.png" />
+              <span className="ml-1 text-xs">{likeCount}</span>
+            </span>
+            <span className="mr-[6px]">
+              <ImageWrapper src="/icons/CommentIcon.png" />
+              <span className="ml-1 text-xs">{commentCount}</span>
+            </span>
+            · <span className="ml-[6px] mr-[6px] text-[11px]"> 조회 {viewCount} </span> ·{" "}
+            <span className="ml-[6px] text-[11px]">{getDateDiff(createdDate)}</span>
+          </div>
         </div>
         <Image
           src={thumbnail} // 이미지 썸네일 경로로 나중에 바꿔야 함
           alt="썸네일"
-          width={80}
-          height={80}
-          className="border rounded-sm ml-[1px]"
+          width={74}
+          height={74}
+          className="border rounded-sm ml-4"
         />
-      </div>
-      <div className="flex items-center text-[#D9D9D9] text-xs font-pretendard-medium">
-        <span className="mr-3">
-          <ImageWrapper src="/icons/LikeIcon.png" />
-          <span className="text-[#09BBA2] ml-1">{likeCount}</span>
-        </span>
-        <span className="mr-3">
-          <ImageWrapper src="/icons/CommentIcon.png" />
-          <span className="text-[#09BBA2] ml-1">{commentCount}</span>
-        </span>
-        | <span className="ml-1 mr-1"> 조회 {viewCount} </span> |{" "}
-        <span className="ml-1">{getDateDiff(createdDate)}</span>
       </div>
     </div>
   );

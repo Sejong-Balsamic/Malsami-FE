@@ -5,7 +5,7 @@ type JiJeongTagProps = {
 
 function JiJeongTag({ title, color }: JiJeongTagProps) {
   return (
-    <span className="font-pretendard-medium text-[10px]" style={{ color }}>
+    <span className="font-pretendard-medium text-xs" style={{ color }}>
       #{title}
     </span>
   );
