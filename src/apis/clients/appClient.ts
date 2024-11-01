@@ -4,7 +4,7 @@ import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { refreshAccessToken } from "../auth/refresh";
 
 // 사용법: axios 대신 apiClient import해서 사용
-const apiClient = axios.create({
+export const apiClient = axios.create({
   baseURL: "https://api.sejong-malsami.co.kr",
 });
 
