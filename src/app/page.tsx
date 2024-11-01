@@ -2,6 +2,10 @@
 
 import React, { useEffect, useState } from "react";
 import Nav from "@/components/common/Nav";
+import HotDocument from "@/components/landing/HotDocument";
+import AllDocument from "@/components/landing/AllDocument";
+import HotQuestion from "@/components/landing/HotQuestion";
+import AllQuestion from "@/components/landing/AllQuestion";
 import FabButton from "@/components/common/FAB";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -123,6 +127,22 @@ function Page() {
           </div>
         </div>
 
+        {/* 인기자료 */}
+        <div className="flex justify-center">
+          <HotDocument />
+        </div>
+        {/* 전체자료 */}
+        <div className="flex justify-center">
+          <AllDocument />
+        </div>
+        {/* 인기질문 */}
+        <div className="flex justify-center">
+          <HotQuestion />
+        </div>
+        {/* 전체자료 */}
+        <div className="flex justify-center">
+          <AllQuestion />
+        </div>
         {/* FAB */}
         <div className="fixed bottom-5 right-5 z-50">
           <FabButton />

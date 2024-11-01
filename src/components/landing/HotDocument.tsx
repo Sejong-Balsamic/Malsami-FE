@@ -1,6 +1,6 @@
 import React from "react";
 
-function HotData() {
+function HotDocument() {
   return (
     <div className="relative w-full h-[720px] mx-auto">
       <div className="absolute w-[433px] h-[88px] left-[417px] top-[43px]">
@@ -111,4 +111,4 @@ function HotData() {
   );
 }
 
-export default HotData;
+export default HotDocument;
