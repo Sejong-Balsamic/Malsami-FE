@@ -17,7 +17,7 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
   };
 
   return (
-    <BottomSheetModal isVisible={isVisible} onClose={onClose}>
+    <BottomSheetModal isVisible={isVisible} onClose={onClose} onSubmit={() => {}}>
       <div className="text-sm mb-[30px] font-pretendard-bold">단과대 선택</div>
       <ul className="space-y-3">
         {facultys.map(faculty => (
