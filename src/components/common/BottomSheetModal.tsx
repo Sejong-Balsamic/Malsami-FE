@@ -8,10 +8,9 @@ interface BottomSheetModalProps {
   isVisible: boolean;
   children: ReactNode;
   onClose: () => void;
-  onSubmit: () => void;
 }
 
-const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children, onClose, onSubmit }) => {
+const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children, onClose }) => {
   const [showModal, setShowModal] = useState(false);
 
   useEffect(() => {
@@ -44,13 +43,13 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
               <Image
                 src="/icons/CloseIcon.svg" // 이미지 경로
                 alt="Close"
-                width={13}
-                height={13}
+                width={16}
+                height={16}
               />
             </button>
             {/* 바텀 시트 메인 내용들 */}
             {children}
-            <SubmitFormBtn onClick={onSubmit} />
+            <SubmitFormBtn onClick={onClose} />
           </div>
         </div>
       )}
@@ -63,12 +62,11 @@ export default BottomSheetModal;
 // 사용법. 바텀시트모달 쓰고 싶은 페이지에 아래의 코드 넣어 사용
 // const [isModalOpen, setIsModalOpen] = useState(false);
 // const switchModal = () => setIsModalOpen(prev => !prev); // 모달 열기, 닫기 토글
-// const handleSubmit = async () =>  //api호출하는 코드 작성, 각 페이지의 각 버튼의 기능에 맞추어.
 
 // // 선택하면 모달 오픈 하고 싶은 곳에 onClick={switchModal} 코드 사용
 // <button type="button" onClick={switchModal}></button>
 
 // // 아래에 코드 형식으로 바텀시트 사용
-// <BottomSheetModal isVisible={isModalOpen} onClose={switchModal} onSubmit={handleSubmit}>
+// <BottomSheetModal isVisible={isModalOpen} onClose={switchModal} >
 //   <h1>넣고 싶은 내용 내용 내용</h1>
 // </BottomSheetModal>
