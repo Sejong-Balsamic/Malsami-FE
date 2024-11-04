@@ -32,9 +32,9 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
                 {selectedFaculty === faculty ? (
                   <>
                     {/* 바깥 주황색 원 */}
-                    <div className="absolute inset-0 w-4 h-4 rounded-full border-2 border-orange-500" />
+                    <div className="absolute inset-0 w-4 h-4 rounded-full border-2 border-custom-blue-500" />
                     {/* 안쪽 주황색 원 */}
-                    <div className="absolute inset-1 w-2 h-2 rounded-full bg-orange-500" />
+                    <div className="absolute inset-1 w-2 h-2 rounded-full bg-custom-blue-500" />
                   </>
                 ) : (
                   // 회색 단일 원 (선택되지 않은 경우)

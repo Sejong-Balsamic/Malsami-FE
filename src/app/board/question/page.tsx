@@ -13,6 +13,7 @@ export default function QuestionBoardPage() {
 
   const handleSelect = (selection: string) => {
     setFaculty(selection);
+    console.log(faculty);
     // 여기서 선택된 필터에 따라 API를 호출
   };
   return (
