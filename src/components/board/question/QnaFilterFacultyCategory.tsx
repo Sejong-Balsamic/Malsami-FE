@@ -11,8 +11,6 @@ function QnaFilterFacultyCategory({ onSelect }: { onSelect: (selection: string) 
   const handleSelect = (option: string) => {
     if (option !== "전체") {
       setLastSelected(option); // "전체"가 아닌 경우에만 lastSelected를 업데이트
-      switchModal();
-      console.log(setLastSelected);
     }
     setSelected(option); // 항상 selected는 업데이트
     onSelect(option); // 부모 컴포넌트에 option을 전달
