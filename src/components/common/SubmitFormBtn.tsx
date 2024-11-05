@@ -2,10 +2,10 @@ export default function SubmitFormBtn({ onClick }: { onClick: () => void }) {
   return (
     <button
       type="button"
-      className="w-full h-10 py-[13px] mt-5 bg-custom-blue-500 text-white text-xs font-pretendard-bold rounded-[8px]"
+      className="w-full h-10 py-[10px] bg-custom-blue-400 hover:bg-custom-blue-500 text-white text-base font-pretendard-semibold rounded-[10px]"
       onClick={onClick}
     >
-      작성완료
+      적용하기
     </button>
   );
 }
