@@ -8,6 +8,7 @@ import FabButton from "@/components/common/FAB";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import AllDocument from "@/components/landing/AllDocument";
+import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);
@@ -27,6 +28,7 @@ function Page() {
 
   return (
     <div className="flex justify-center bg-gray-100">
+      <ScrollToTopOnLoad />
       <div className="w-full max-w-[640px] h-[3000px] bg-white relative mx-auto">
         {/* Nav */}
         <div className="flex justify-center">
