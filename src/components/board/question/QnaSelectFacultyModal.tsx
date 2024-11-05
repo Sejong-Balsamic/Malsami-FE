@@ -31,9 +31,9 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
               <div className="relative w-4 h-4 mr-1.5">
                 {selectedFaculty === faculty ? (
                   <>
-                    {/* 바깥 주황색 원 */}
+                    {/* 바깥 파랑색 원 */}
                     <div className="absolute inset-0 w-4 h-4 rounded-full border-2 border-custom-blue-500" />
-                    {/* 안쪽 주황색 원 */}
+                    {/* 안쪽 파랑색 원 */}
                     <div className="absolute inset-1 w-2 h-2 rounded-full bg-custom-blue-500" />
                   </>
                 ) : (

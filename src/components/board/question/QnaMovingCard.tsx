@@ -1,0 +1,55 @@
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/autoplay";
+import { Autoplay } from "swiper/modules";
+import CategoryCard from "@/components/common/CategoryCard";
+
+interface QnaMovingCardProps {
+  facultyQNAs: {
+    postId: string;
+    title: string;
+    subject: string;
+    questionPresetTagSet: string[];
+    rewardYeopjeon: number;
+    likeCount: number;
+    commentCount: number;
+  }[];
+}
+
+function QnaMovingCard({ facultyQNAs }: QnaMovingCardProps) {
+  return (
+    <Swiper
+      modules={[Autoplay]}
+      slidesPerView={2}
+      spaceBetween={0}
+      loop
+      autoplay={{
+        delay: 2000,
+        disableOnInteraction: false,
+      }}
+    >
+      {facultyQNAs.map((category, index) => {
+        let color;
+        if (index % 3 === 0) color = "#F46B02";
+        else if (index % 3 === 1) color = "#03B89E";
+        else color = "#5ED513";
+
+        return (
+          <SwiperSlide key={index}>
+            <CategoryCard
+              title={category.title}
+              color={color}
+              subject={category.subject}
+              JiJeongTags={category.questionPresetTagSet}
+              rewardYeopjeon={category.rewardYeopjeon}
+              likeCount={category.likeCount}
+              commentCount={category.commentCount}
+            />
+          </SwiperSlide>
+        );
+      })}
+    </Swiper>
+  );
+}
+
+export default QnaMovingCard;
