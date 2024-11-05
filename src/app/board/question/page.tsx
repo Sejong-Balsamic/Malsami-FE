@@ -12,20 +12,8 @@ import getFacultyQNAs from "@/apis/question/getFacultyQNAs";
 export default function QuestionBoardPage() {
   const [faculty, setFaculty] = useState("전체");
   const [facultyQNAs, setFacultyQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
-  const [categoryQNAs, setCategoryQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
+  // const [categoryQNAs, setCategoryQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
 
-  // const handleSelect = async (selection: string) => {
-  //   setFaculty(selection);
-  //   console.log(faculty);
-  //   // 여기서 선택된 필터에 따라 API를 호출
-  //   try {
-  //     const datas = await getFacultyQNAs();
-  //     console.log(datas);
-  //     setFacultyQNAs(datas);
-  //   } catch (error) {
-  //     console.error("데이터 가져오기 실패:", error);
-  //   }
-  // };
   const handleSelect = async () => {
     console.log(`선택된 학과: ${faculty}`);
     try {

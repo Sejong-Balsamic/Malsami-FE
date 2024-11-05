@@ -35,7 +35,7 @@ function QnaMovingCard({ facultyQNAs }: QnaMovingCardProps) {
         else color = "#5ED513";
 
         return (
-          <SwiperSlide key={index}>
+          <SwiperSlide key={category.postId}>
             <CategoryCard
               title={category.title}
               color={color}
