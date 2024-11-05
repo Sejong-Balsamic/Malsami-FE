@@ -1,47 +1,53 @@
 import React, { useState } from "react";
+import Image from "next/image";
 import subjects from "@/lib/subjects";
-import Autosuggest from "react-autosuggest";
 
-// 저장된 검색어 리스트
 const savedSearchTerms: string[] = subjects;
 
-// 검색어 필터 함수
-const getSuggestions = (value: string): string[] => {
-  const inputValue = value.trim().toLowerCase();
-  return savedSearchTerms.filter(term => term.toLowerCase().includes(inputValue));
-};
-
 function SearchComponent() {
-  const [value, setValue] = useState<string>("");
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [searchValue, setSearchValue] = useState(""); // 현재 입력된 검색어 저장 변수
+  const [filteredTerms, setFilteredTerms] = useState<string[]>([]); // getSuggestions 함수를 통해 얻어진 자동완성 제안 목록을 저장하는 변수
 
-  const onChange = (event: React.ChangeEvent<HTMLInputElement>, { newValue }: { newValue: string }) => {
-    setValue(newValue);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearchValue(value);
+    setFilteredTerms(savedSearchTerms.filter(term => term.toLowerCase().includes(value.toLowerCase())));
   };
 
-  const onSuggestionsFetchRequested = ({ value }: { value: string }) => {
-    setSuggestions(getSuggestions(value));
-  };
-
-  const onSuggestionsClearRequested = () => {
-    setSuggestions([]);
-  };
-
-  const inputProps = {
-    placeholder: "검색어를 입력하세요",
-    value,
-    onChange,
+  const handleSuggestionClick = (term: string) => {
+    setSearchValue(term); // 선택된 검색어를 input에 채우기
+    setFilteredTerms([]); // 선택 후 필터링된 목록을 초기화
   };
 
   return (
-    <Autosuggest
-      suggestions={suggestions}
-      onSuggestionsFetchRequested={onSuggestionsFetchRequested}
-      onSuggestionsClearRequested={onSuggestionsClearRequested}
-      getSuggestionValue={(suggestion: string) => suggestion}
-      renderSuggestion={(suggestion: string) => <div>{suggestion}</div>}
-      inputProps={inputProps}
-    />
+    <div className="flex flex-col items-center w-full py-2 px-4 bg-slate-400">
+      {/* 검색 입력 필드 */}
+      <div className="flex items-center w-full bg-gray-100 rounded-lg p-2">
+        <Image src="/icons/Search.svg" alt="Search" width={16} height={16} />
+        <input
+          type="text"
+          placeholder="검색어를 입력해 주세요."
+          value={searchValue}
+          onChange={handleChange}
+          className="w-full ml-3 text-sm font-pretendard-medium bg-transparent outline-none placeholder-gray-400 text-black"
+        />
+      </div>
+
+      {/* 검색어 제안 목록 */}
+      {filteredTerms.length > 0 && (
+        <div className="w-full bg-white border border-gray-200 rounded-md shadow-md mt-2">
+          {filteredTerms.map((term, index) => (
+            <div
+              key={index}
+              onClick={() => handleSuggestionClick(term)}
+              className="px-4 py-2 text-sm cursor-pointer hover:bg-custom-orange-100"
+            >
+              {term}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 

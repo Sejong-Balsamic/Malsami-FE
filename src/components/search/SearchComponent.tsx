@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import SearchInput from "./SearchInput";
 
 export default function SearchComponent() {
   const router = useRouter();
   const [searchTerm, setSearchTerm] = useState("");
   const [recentSearches, setRecentSearches] = useState(["검색기록", "검색기록1", "검색기록2"]);
-  const [suggestedResults, setSuggestedResults] = useState(["인터렉티브", "인터렉티브 디자인", "인터렉티브 미디어"]);
 
   const handleSearch = (term: string) => {
     setSearchTerm(term);
@@ -26,28 +26,7 @@ export default function SearchComponent() {
       </div>
 
       {/* 검색 입력 */}
-      <div className="flex items-center bg-gray-100 rounded-lg m-4 p-2">
-        <Image src="/icons/Search.svg" alt="Search" width={20} height={20} />
-        <input
-          type="text"
-          value={searchTerm}
-          onChange={e => handleSearch(e.target.value)}
-          placeholder="검색어를 입력해 주세요."
-          className="ml-2 w-full bg-transparent outline-none"
-        />
-      </div>
-
-      {/* 검색어 제안 목록 */}
-      {searchTerm && (
-        <div className="px-4">
-          {suggestedResults.map((result, index) => (
-            <div key={index} className="flex items-center py-2 border-b cursor-pointer">
-              <Image src="/icons/Search.svg" alt="Search" width={20} height={20} className="mr-2" />
-              <span>{result}</span>
-            </div>
-          ))}
-        </div>
-      )}
+      <SearchInput />
 
       {/* 최근 검색어 */}
       {!searchTerm && (
