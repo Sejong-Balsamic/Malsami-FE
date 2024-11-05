@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import MovingCard from "./MovingCardQuestion";
+// import MovingCard from "./MovingCardQuestion";
 
 function HotDocument() {
   return (
@@ -26,9 +26,7 @@ function HotDocument() {
               세종말싸미에서 이번 주의 인기자료를 만나보세요.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex justify-center space-y-2">
-            <MovingCard />
-          </CardContent>
+          <CardContent className="flex justify-center space-y-2">{/* <MovingCard /> */}</CardContent>
           <CardFooter>
             <Button className="w-[340px] max-w-[376px] h-[30px] bg-[#03b8a3] rounded-[10px] text-white text-[12px] font-pretendard-semibold">
               더보기
@@ -46,9 +44,7 @@ function HotDocument() {
               세종말싸미에서 오늘의 인기자료를 만나보세요.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">
-            <MovingCard />
-          </CardContent>
+          <CardContent className="space-y-2">{/* <MovingCard /> */} </CardContent>
           <CardFooter>
             <Button className="w-[340px] max-w-[376px] h-[30px] bg-[#03b8a3] rounded-[10px] text-white text-[12px] font-pretendard-semibold">
               더보기
