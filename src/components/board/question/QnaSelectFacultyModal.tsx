@@ -18,7 +18,7 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
 
   return (
     <BottomSheetModal isVisible={isVisible} onClose={onClose}>
-      <div className="text-sm mb-[30px] font-pretendard-bold">단과대 선택</div>
+      <div className="text-xl mb-[30px] font-pretendard-bold">단과대 선택</div>
       <ul className="space-y-3">
         {facultys.map(faculty => (
           <li key={faculty} className="flex items-center">
@@ -28,12 +28,12 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
               onClick={() => handleSelect(faculty)}
               onKeyDown={e => e.key === "Enter" && handleSelect(faculty)}
             >
-              <div className="relative w-4 h-4 mr-1.5">
+              <div className="relative w-4 h-4 mr-3">
                 {selectedFaculty === faculty ? (
                   <>
-                    {/* 바깥 주황색 원 */}
+                    {/* 바깥 파랑색 원 */}
                     <div className="absolute inset-0 w-4 h-4 rounded-full border-2 border-custom-blue-500" />
-                    {/* 안쪽 주황색 원 */}
+                    {/* 안쪽 파랑색 원 */}
                     <div className="absolute inset-1 w-2 h-2 rounded-full bg-custom-blue-500" />
                   </>
                 ) : (
@@ -41,7 +41,7 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
                   <div className="w-4 h-4 rounded-full bg-gray-300" />
                 )}
               </div>
-              <span className="text-xs font-pretendard-semibold">{faculty}</span>
+              <span className="text-base font-pretendard-medium">{faculty}</span>
             </button>
           </li>
         ))}
