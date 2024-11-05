@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import Nav from "@/components/common/Nav";
 import HotDocument from "@/components/landing/HotDocument";
+import HotQuestion from "@/components/landing/HotQuestion";
 import FabButton from "@/components/common/FAB";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
@@ -26,12 +27,12 @@ function Page() {
 
   return (
     <div className="flex justify-center bg-gray-100">
-      <div className="w-full max-w-[640px] h-[2847px] bg-white relative mx-auto">
+      <div className="w-full max-w-[640px] h-[3000px] bg-white relative mx-auto">
         {/* Nav */}
         <div className="flex justify-center">
           <Nav />
         </div>
-        <div className="w-full max-w-[640px] min-w-[386px] h-[2100px]">
+        <div className="w-full max-w-[640px] min-w-[386px] h-[2400px]">
           <Image
             src="/landing/LandingBackgroundImage.png"
             alt="배경"
@@ -233,6 +234,18 @@ function Page() {
               className="w-full h-[40px] pl-8 bg-gray-50 rounded-md text-[#aaaaaa] text-[16px]] font-medium font-pretendard"
             />
           </div>
+        </div>
+        {/* 인기자료 */}
+        <div className="flex justify-center">
+          <HotDocument />
+        </div>
+        {/* 전체자료 */}
+        <div>
+          <AllDocument />
+        </div>
+        {/* 인기질문 */}
+        <div className="flex justify-center">
+          <HotQuestion />
         </div>
         {/* FAB */}
         <div className="fixed bottom-5 right-5 z-50">
