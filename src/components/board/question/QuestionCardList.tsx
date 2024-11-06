@@ -4,7 +4,7 @@ import QuestionCard from "./QuestionCard";
 
 interface Question {
   questionPostId: string;
-  questionPresetTagSet: string[];
+  questionPresetTags: string[];
   title: string;
   content: string;
   thumbnail: string;
@@ -36,7 +36,7 @@ export default function QuestionCardList() {
       {questions.map(question => (
         <QuestionCard
           key={question.questionPostId} // 질문 ID를 키로 사용
-          JiJeongTags={question.questionPresetTagSet}
+          JiJeongTags={question.questionPresetTags}
           title={question.title}
           content={question.content}
           thumbnail={question.thumbnail}

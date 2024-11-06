@@ -9,7 +9,7 @@ interface QnaMovingCardProps {
     postId: string;
     title: string;
     subject: string;
-    questionPresetTagSet: string[];
+    questionPresetTags: string[];
     rewardYeopjeon: number;
     likeCount: number;
     commentCount: number;
@@ -35,12 +35,12 @@ function QnaMovingCard({ facultyQNAs }: QnaMovingCardProps) {
         else color = "#5ED513";
 
         return (
-          <SwiperSlide key={category.postId}>
+          <SwiperSlide key={`${category.postId}`}>
             <CategoryCard
               title={category.title}
               color={color}
               subject={category.subject}
-              JiJeongTags={category.questionPresetTagSet}
+              JiJeongTags={category.questionPresetTags}
               rewardYeopjeon={category.rewardYeopjeon}
               likeCount={category.likeCount}
               commentCount={category.commentCount}

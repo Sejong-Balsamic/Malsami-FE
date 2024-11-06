@@ -14,11 +14,11 @@ export const fetchWeeklyHotQuestions = async (): Promise<QuestionPost[]> => {
       },
     });
 
-    return response.data.questionPosts.content.map((post: any, index: number) => ({
+    return response.data.questionPostsPage.content.map((post: any, index: number) => ({
       postId: post.questionPostId || index.toString(),
       title: post.title,
       subject: post.subject,
-      JiJeongTags: post.questionPresetTagSet || [],
+      JiJeongTags: post.questionPresetTags || [],
       rewardYeopjeon: post.rewardYeopjeon || 0,
       likeCount: post.likeCount,
       commentCount: post.commentCount,
@@ -40,11 +40,11 @@ export const fetchDailyHotQuestions = async (): Promise<QuestionPost[]> => {
       },
     });
 
-    return response.data.questionPosts.content.map((post: any, index: number) => ({
+    return response.data.questionPostsPage.content.map((post: any, index: number) => ({
       postId: post.questionPostId || index.toString(),
       title: post.title,
       subject: post.subject,
-      JiJeongTags: post.questionPresetTagSet || [],
+      JiJeongTags: post.questionPresetTags || [],
       rewardYeopjeon: post.rewardYeopjeon || 0,
       likeCount: post.likeCount,
       commentCount: post.commentCount,
