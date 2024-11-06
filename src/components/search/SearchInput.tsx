@@ -4,7 +4,7 @@ import subjects from "@/lib/subjects";
 
 const savedSearchTerms: string[] = subjects;
 
-function SearchComponent() {
+function SearchInput() {
   const [searchValue, setSearchValue] = useState(""); // 현재 입력된 검색어 저장 변수
   const [filteredTerms, setFilteredTerms] = useState<string[]>([]); // getSuggestions 함수를 통해 얻어진 자동완성 제안 목록을 저장하는 변수
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1); // 현재 선택된 제안 목록의 인덱스
@@ -74,4 +74,4 @@ function SearchComponent() {
   );
 }
 
-export default SearchComponent;
+export default SearchInput;
