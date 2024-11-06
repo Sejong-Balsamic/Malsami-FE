@@ -1,6 +1,8 @@
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 
 function QnaPageNav() {
+  const router = useRouter();
   return (
     <nav className="h-[90px] flex justify-between items-end px-5 mb-4">
       {/* 뒤로 가기 아이콘 */}
@@ -12,8 +14,8 @@ function QnaPageNav() {
       <h1 className="text-xl font-pretendard-bold">질문 게시판</h1>
 
       {/* 검색 아이콘 */}
-      <button type="button">
-        <Image src="/icons/Search.svg" alt="썸네일" width={20} height={20} />
+      <button type="button" onClick={() => router.push("/search")}>
+        <Image src="/icons/Search.svg" alt="Search" width={20} height={20} />
       </button>
     </nav>
   );
