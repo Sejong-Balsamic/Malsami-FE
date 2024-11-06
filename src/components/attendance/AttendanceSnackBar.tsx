@@ -1,12 +1,6 @@
 // import { useState } from "react";
 // import { useToast } from "@/hooks/use-toast";
-
-// // 오늘 날짜를 YYYY-MM-DD 형식으로 반환하는 함수
-// const getTodayDate = (): string => {
-//   const date = new Date();
-//   const todayDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}`;
-//   return todayDate;
-// };
+// import getTodayDate from "@/utils/getTodateDate";
 
 // // 나중에 api로 출석체크 해야 함. 수정 필요
 // export default function AttendanceSnackBar() {
