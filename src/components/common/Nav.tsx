@@ -20,18 +20,18 @@ function Nav() {
       <div className="w-full h-full bg-gradient-to-b from-white/100 to-white/50 absolute top-0 left-0" />
 
       <div
-        className="absolute top-[37px] left-[18px] cursor-pointer"
+        className="absolute bottom-[12px] left-[18px] cursor-pointer"
         onClick={handleLandingPageClick}
         onKeyDown={e => e.key === "Enter" && handleLandingPageClick()} // Enter 키로 접근
         role="button"
         tabIndex={0} // Tab 키로 접근
         aria-label="랜딩페이지"
       >
-        <div className="w-[30px] h-7 bg-[#d9d9d9]" />
+        <div className="w-[30px] h-[30px] bg-[#d9d9d9]" />
       </div>
 
       <div
-        className="absolute right-[18px] top-[48px] w-[13px] h-[13px] cursor-pointer"
+        className="absolute right-[12px] bottom-[12px] w-[20px] h-[20px] cursor-pointer"
         onClick={handleMyPageClick}
         onKeyDown={e => e.key === "Enter" && handleMyPageClick()}
         role="button"
