@@ -11,7 +11,7 @@ export default async function getCategoryQNAs() {
         "Content-Type": "multipart/form-data",
       },
     });
-    return response.data.questionPosts.content; // API 호출 결과만 반환
+    return response.data.questionPostsPage.content; // API 호출 결과만 반환
   } catch (error) {
     console.error("질문 목록을 가져오는 중 오류 발생:", error);
     throw error; // 오류 발생 시 오류를 그대로 throw
