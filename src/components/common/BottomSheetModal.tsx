@@ -41,7 +41,7 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
             onClick={e => e.stopPropagation()}
           >
             {/* 닫기 버튼 */}
-            <button onClick={onClose} className="absolute top-[38px] right-[18px]">
+            <button onClick={onClose} className="absolute top-[38px] right-[30px]">
               <Image src="/icons/CloseIcon.svg" alt="Close" width={20} height={20} />
             </button>
 
