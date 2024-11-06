@@ -6,12 +6,12 @@ export default async function getFacultyQNAs() {
   formData.append("pageSize", "30"); // 기본값 30
 
   try {
-    const response = await apiClient.post("/api/questions/get/all/no-answer", formData, {
+    const response = await apiClient.post("/api/questions/get/unanswered", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    return response.data.questionPosts.content; // API 호출 결과만 반환
+    return response.data.questionPostsPage.content; // API 호출 결과만 반환
   } catch (error) {
     console.error("질문 목록을 가져오는 중 오류 발생:", error);
     throw error; // 오류 발생 시 오류를 그대로 throw
