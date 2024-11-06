@@ -28,7 +28,7 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
               onClick={() => handleSelect(faculty)}
               onKeyDown={e => e.key === "Enter" && handleSelect(faculty)}
             >
-              <div className="relative w-4 h-4 mr-3">
+              <div className="relative w-4 h-4">
                 {selectedFaculty === faculty ? (
                   <>
                     {/* 바깥 파랑색 원 */}
@@ -41,7 +41,7 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
                   <div className="w-4 h-4 rounded-full bg-gray-300" />
                 )}
               </div>
-              <span className="text-base font-pretendard-medium">{faculty}</span>
+              <span className="text-base font-pretendard-medium ml-3">{faculty}</span>
             </button>
           </li>
         ))}
