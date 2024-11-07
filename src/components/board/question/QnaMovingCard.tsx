@@ -6,7 +6,7 @@ import CategoryCard from "@/components/common/CategoryCard";
 
 interface QnaMovingCardProps {
   facultyQNAs: {
-    postId: string;
+    questionPostId: string;
     title: string;
     subject: string;
     questionPresetTags: string[];
@@ -35,7 +35,7 @@ function QnaMovingCard({ facultyQNAs }: QnaMovingCardProps) {
         else color = "#5ED513";
 
         return (
-          <SwiperSlide key={`${category.postId}`}>
+          <SwiperSlide key={`${category.questionPostId}`}>
             <CategoryCard
               title={category.title}
               color={color}
