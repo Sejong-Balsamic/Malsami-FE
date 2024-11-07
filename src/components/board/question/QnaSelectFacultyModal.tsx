@@ -1,6 +1,7 @@
 import { useState } from "react";
 import facultys from "@/lib/facultys";
 import BottomSheetModal from "@/components/common/BottomSheetModal";
+import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 
 interface QnaBottomSheetModalProps {
   isVisible: boolean;
@@ -13,7 +14,13 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
 
   const handleSelect = (faculty: string) => {
     setSelectedFaculty(faculty);
-    onSelect(faculty);
+  };
+
+  const handleSubmit = () => {
+    if (selectedFaculty) {
+      onSelect(selectedFaculty); // 최종 선택된 학부를 부모로 전달
+    }
+    onClose(); // 모달 닫기
   };
 
   return (
@@ -46,6 +53,10 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
           </li>
         ))}
       </ul>
+      {/* 고정된 SubmitFormBtn */}
+      <div className="absolute bottom-0 left-0 w-full px-[30px] py-4  bg-white">
+        <SubmitFormBtn onClick={handleSubmit} />
+      </div>
     </BottomSheetModal>
   );
 }
