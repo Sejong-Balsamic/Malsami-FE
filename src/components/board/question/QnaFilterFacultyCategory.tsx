@@ -6,14 +6,16 @@ function QnaFilterFacultyCategory({ onSelect }: { onSelect: (selection: string) 
   const [selected, setSelected] = useState("전체");
   const [lastSelected, setLastSelected] = useState("학부 선택"); // 직전 선택한 항목
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const switchModal = () => setIsModalOpen(prev => !prev); // 모달 열기, 닫기 토글
 
-  const handleSelect = (option: string) => {
-    if (option !== "전체") {
-      setLastSelected(option); // "전체"가 아닌 경우에만 lastSelected를 업데이트
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleSelect = (faculty: string) => {
+    if (faculty !== "전체") {
+      setLastSelected(faculty); // "전체"가 아닌 경우에만 lastSelected를 업데이트
     }
-    setSelected(option); // 항상 selected는 업데이트
-    onSelect(option); // 부모 컴포넌트에 option을 전달
+    setSelected(faculty); // 항상 selected는 업데이트
+    onSelect(faculty); // 부모 컴포넌트에 option을 전달
   };
 
   return (
@@ -40,14 +42,14 @@ function QnaFilterFacultyCategory({ onSelect }: { onSelect: (selection: string) 
                 : "border-b-2 border-custom-blue-500 text-black font-pretendard-semibold"
             }`}
             onClick={() => {
-              switchModal();
+              openModal();
             }}
           >
             {selected === "전체" ? lastSelected : selected}{" "}
             {/* selected가 "전체"인 경우에는 lastSelected 값을 표시하고, 그렇지 않은 경우에는 selected 값을 표시 */}
             <ImageWrapper src="/icons/ToggleIcon.svg" />
           </button>
-          <QnaSelectFacultyModal isVisible={isModalOpen} onClose={switchModal} onSelect={handleSelect} />
+          <QnaSelectFacultyModal isVisible={isModalOpen} onClose={closeModal} onSelect={handleSelect} />
         </div>
       </div>
     </div>

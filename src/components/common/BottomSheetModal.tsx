@@ -2,7 +2,6 @@
 
 import React, { ReactNode, useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import SubmitFormBtn from "./SubmitFormBtn";
 
 interface BottomSheetModalProps {
   isVisible: boolean;
@@ -20,7 +19,7 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
       setShowModal(true);
       document.body.style.overflow = "hidden"; // 배경 스크롤 비활성화
     } else {
-      setTimeout(() => setShowModal(false), 300); // 애니메이션 후 숨김 처리
+      setTimeout(() => setShowModal(false), 300); // 300ms 애니메이션 후 showModal을 false로. 없으면 z-index가 높은 모달 배경 오버레이가 여전히 화면에 남아 사용자 인터페이스를 가리는 현상이 생긴다
       document.body.style.overflow = ""; // 스크롤 복구
     }
     return () => {
@@ -28,11 +27,11 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
     };
   }, [isVisible]);
 
-  //스크롤 하면 모달 창 크게하는 함수 (height 50% -> 75%로)
+  // 스크롤 시 모달 창 크기를 50%에서 75%로 확장하는 함수
   const handleScroll = () => {
     const content = contentRef.current;
     if (content) {
-      const scrollThreshold = 100; // 스크롤이 100px 이상 내려가면 모달 크기를 확장
+      const scrollThreshold = 30; // 스크롤이 30px 이상 내려가면 모달 크기를 확장
       if (content.scrollTop > scrollThreshold && modalHeight === "50vh") {
         setModalHeight("75vh");
       }
@@ -56,7 +55,7 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
             style={{
               maxHeight: modalHeight,
               transform: isVisible ? "translateY(0)" : "translateY(100%)",
-              transition: "max-height 0.5s ease", // max-height에 대한 트랜지션 추가
+              transition: "transform 0.5s ease-out, max-height 0.5s ease", // transform에 대한 트랜지션 추가
             }}
             onClick={e => e.stopPropagation()}
           >
@@ -68,16 +67,14 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
             {/* 모달 스크롤 가능한 컨텐츠 */}
             <div
               className="overflow-y-auto"
-              style={{ maxHeight: "calc(75vh - 80px)" }}
+              style={{
+                height: `calc(${modalHeight} - 72px)`, // 72px 하단영역을 제외한 높이 설정
+                paddingBottom: "30px",
+              }}
               onScroll={handleScroll}
               ref={contentRef}
             >
               {children}
-            </div>
-
-            {/* 고정된 SubmitFormBtn */}
-            <div className="absolute bottom-0 left-0 w-full px-[18px] py-4 bg-white">
-              <SubmitFormBtn onClick={onClose} />
             </div>
           </div>
         </div>

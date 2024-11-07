@@ -23,6 +23,9 @@ apiClient.interceptors.request.use(
   },
 );
 
+// 한 페이지에서 apiClient요청을 n번이상 부르면, 로그인 다이렉트 alret창이 n번 나온다. 이를 방지하고자
+let isRedirecting = false;
+
 // 응답 인터셉터 설정
 apiClient.interceptors.response.use(
   (response: AxiosResponse) => {
@@ -32,8 +35,9 @@ apiClient.interceptors.response.use(
     // originalRequest 저장
     const originalRequest = error.config as AxiosRequestConfig;
 
-    // 400 오류 발생 시 로그인 페이지로 리디렉션
-    if (error.response?.status === 400 || error.response?.status === 403) {
+    // 400,403 오류 발생 시 로그인 페이지로 리다이렉션
+    if ((error.response?.status === 400 || error.response?.status === 403) && !isRedirecting) {
+      isRedirecting = true; // 리다이렉트를 설정했음을 표시
       alert("로그아웃 되었습니다. 다시 로그인해주세요");
       window.location.href = "/login"; // 전체 페이지를 새로고침하면서 이동하기 때문에, 상태나 데이터가 모두 초기화
     }
