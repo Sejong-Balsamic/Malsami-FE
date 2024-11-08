@@ -95,3 +95,36 @@
     @apply bg-background text-foreground;
   }
 }
+
+@layer components {
+  .custom-slider {
+    @apply h-1 rounded bg-[#D9D9D9] outline-none; /* 트랙 기본 스타일 */
+    -webkit-appearance: none; /* 기본 스타일 제거 */
+  }
+
+  .custom-slider::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 10px;
+  }
+
+  .custom-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 24px;
+    height: 24px;
+    background: url("/icons/Yeopjeon.svg"); /* public/icons/slider-thumb.png 파일 경로 */
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
+    margin-top: -9px; /* Thumb를 트랙 중앙에 맞춤 */
+  }
+
+  .custom-slider::-moz-range-thumb {
+    width: 24px;
+    height: 24px;
+    background: url("/icons/Yeopjeon.svg"); /* public/icons/slider-thumb.png 파일 경로 */
+    background-size: cover;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+}

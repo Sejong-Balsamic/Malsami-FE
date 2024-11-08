@@ -6,21 +6,22 @@ import QnaFilterOptionsModal from "./QnaFilterOptionsModal";
 
 interface FilterControlBarProps {
   filterOptions: QnaFilterOptions; // 초기 필터 옵션
+  isChaeTak: boolean; // 채택 참/거짓
   onFilterChange: (newFilterOptions: QnaFilterOptions) => void; // 필터 변경 시 호출되는 함수
+  onChaeTakChange: (newIsChaeTak: boolean) => void; // 채택 변경 시 호출되는 함수
 }
 
-function FilterControlBar({ filterOptions, onFilterChange }: FilterControlBarProps) {
-  const [isChaeTak, setIsChaeTak] = useState<boolean>(false);
+function FilterControlBar({ filterOptions, isChaeTak, onFilterChange, onChaeTakChange }: FilterControlBarProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const toggleSwitch = () => setIsChaeTak(!isChaeTak);
+  const toggleSwitch = () => onChaeTakChange(!isChaeTak);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div className="px-5 py-4 flex justify-end">
+    <div className="flex justify-end px-5 py-4">
       <ToggleSwitch isChaeTak={isChaeTak} toggleSwitch={toggleSwitch} />
-      <span className="mr-2.5 text-xs font-pretendard-semibold text-[#737373]">채택됨</span>
+      <span className="font-pretendard-semibold mr-2.5 text-xs text-[#737373]">채택됨</span>
       <Image
         src="/icons/FilterIcon.svg"
         alt="filter"

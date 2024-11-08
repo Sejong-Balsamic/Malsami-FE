@@ -5,6 +5,7 @@ import Image from "next/image";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import jijeongTags from "@/lib/jijeongTags";
+import sortingOptions from "@/lib/sortingOptions";
 
 interface QnaFilterOptionsModalProps {
   isVisible: boolean; // 모달 표시 여부
@@ -27,9 +28,10 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
   const [rewardYeopjeon, setRewardYeopjeon] = useState(initialFilterOptions.rewardYeopjeon);
   const [tags, setTags] = useState(initialFilterOptions.tags);
   const [sortOption, setSortOption] = useState(initialFilterOptions.sortOption);
+  let maxRewardYeopjeon = 100; // 사용자가 설정할 수 있는 최대 엽전 현상금 값
 
   const handleApply = () => {
-    onApplyFilter({ rewardYeopjeon, tags, sortOption }); // 수정된 부분
+    onApplyFilter({ rewardYeopjeon, tags, sortOption });
   };
 
   if (!isVisible) return null;
@@ -71,7 +73,7 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
 
           {/* 모달 컨텐츠 */}
           <div
-            className="bg-white w-full mx-auto rounded-t-[20px] shadow-lg pt-8 px-[18px] pb-4 transition-transform duration-300 transform relative"
+            className="relative mx-auto w-full transform rounded-t-[20px] bg-white px-[18px] pb-4 pt-8 shadow-lg transition-transform duration-300"
             style={{
               maxHeight: modalHeight,
               transform: isVisible ? "translateY(0)" : "translateY(100%)",
@@ -80,7 +82,7 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
             onClick={e => e.stopPropagation()}
           >
             {/* 닫기 버튼 */}
-            <button onClick={onClose} className="absolute top-[38px] right-[30px]">
+            <button onClick={onClose} className="absolute right-[30px] top-[38px]">
               <Image src="/icons/CloseIcon.svg" alt="Close" width={20} height={20} />
             </button>
 
@@ -89,74 +91,46 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
               className="overflow-y-auto"
               style={{
                 height: `calc(${modalHeight} - 72px)`, // 72px 하단영역을 제외한 높이 설정
-                paddingBottom: "30px",
+                paddingBottom: "40px",
               }}
               onScroll={handleScroll}
               ref={contentRef}
             >
               <>
-                <h1 className="text-xl mb-6 font-pretendard-bold">정렬</h1>
-                <div className="flex flex-wrap mb-[40px]">
-                  <label className="mr-4 flex items-center">
-                    <input
-                      type="radio"
-                      name="filterOption"
-                      value="최신순"
-                      checked={sortOption === "최신순"}
-                      onChange={() => setSortOption("최신순")}
-                      className="mr-2"
-                    />
-                    최신순
-                  </label>
-                  <label className="mr-4 flex items-center">
-                    <input
-                      type="radio"
-                      name="filterOption"
-                      value="좋아요"
-                      checked={sortOption === "좋아요"}
-                      onChange={() => setSortOption("좋아요")}
-                      className="mr-2"
-                    />
-                    좋아요
-                  </label>
-                  <label className="mr-4 flex items-center">
-                    <input
-                      type="radio"
-                      name="filterOption"
-                      value="엽전 현상금 순"
-                      checked={sortOption === "엽전 현상금 순"}
-                      onChange={() => setSortOption("엽전 현상금 순")}
-                      className="mr-2"
-                    />
-                    엽전 현상금 순
-                  </label>
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="filterOption"
-                      value="조회수"
-                      checked={sortOption === "조회수"}
-                      onChange={() => setSortOption("조회수")}
-                      className="mr-2"
-                    />
-                    조회수
-                  </label>
+                <h1 className="font-pretendard-bold mb-6 text-xl">정렬</h1>
+                <div className="mb-[40px] flex flex-wrap">
+                  <div className="flex flex-wrap">
+                    {sortingOptions.map(option => (
+                      <label key={option} className="mr-4 flex items-center">
+                        <input
+                          type="radio"
+                          name="filterOption"
+                          value={option}
+                          checked={sortOption === option}
+                          onChange={() => setSortOption(option)}
+                          className="mr-2"
+                        />
+                        {option}
+                      </label>
+                    ))}
+                  </div>
                 </div>
 
-                <h3 className="text-xl mb-6 font-pretendard-bold">
-                  태그 선택 <span className=" ml-1.5 text-sm text-[#A4A4A4] font-pretendard-medium">최대 2개</span>
-                </h3>
-                <div className="flex flex-wrap gap-1.5 mb-[40px]">
+                <h1 className="font-pretendard-bold mb-6 text-xl">
+                  태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-[#A4A4A4]">최대 2개</span>
+                </h1>
+                <div className="mb-[40px] flex flex-wrap gap-x-1.5 gap-y-3">
                   {jijeongTags.map(tag => (
                     <button
                       key={tag}
                       onClick={() =>
-                        setTags(prevTags =>
-                          prevTags.includes(tag) ? prevTags.filter(t => t !== tag) : [...prevTags, tag].slice(0, 2),
+                        setTags(
+                          prevTags =>
+                            prevTags.includes(tag) ? prevTags.filter(t => t !== tag) : [...prevTags, tag].slice(0, 2), // 태그 선택 2개만 가능하게
                         )
                       }
-                      className={`px-1.5 py-[3px] rounded-[40px] border border-custom-blue-500 text-base font-pretendard-medium ${
-                        tags.includes(tag) ? "bg-custom-blue-500 text-white" : " text-custom-blue-500"
+                      className={`font-pretendard-medium rounded-[40px] border border-custom-blue-500 px-1.5 py-1 text-base ${
+                        tags.includes(tag) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
                       }`}
                     >
                       {tag}
@@ -164,23 +138,26 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
                   ))}
                 </div>
 
-                <h1 className="text-xl mb-6 font-pretendard-bold">엽전 현상금</h1>
-                <div className="flex items-center mb-6">
+                <h1 className="font-pretendard-bold mb-6 text-xl">엽전 현상금</h1>
+                <div className="mb-6 flex items-center">
                   <input
                     type="range"
                     min="0"
-                    max="100"
+                    max={maxRewardYeopjeon}
                     value={rewardYeopjeon}
                     onChange={e => setRewardYeopjeon(Number(e.target.value))}
-                    className="w-full mr-4"
+                    className="custom-slider mr-4 w-full"
+                    style={{
+                      background: `linear-gradient(to right, #03B89E ${(rewardYeopjeon / maxRewardYeopjeon) * 100}%, #D9D9D9 ${(rewardYeopjeon / maxRewardYeopjeon) * 100}%)`,
+                    }}
                   />
-                  <span className="text-green-500 font-semibold">{rewardYeopjeon}</span>
+                  <span className="font-semibold text-black">{rewardYeopjeon}</span>
                 </div>
               </>
             </div>
 
             {/* 고정된 SubmitFormBtn */}
-            <div className="absolute bottom-0 left-0 w-full px-[30px] py-4  bg-white">
+            <div className="absolute bottom-0 left-0 w-full bg-white px-[30px] py-4">
               <SubmitFormBtn onClick={handleApply} />
             </div>
           </div>
