@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Nav from "@/components/common/Nav";
+import Nav from "@/components/nav/LandingPageNav";
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
 import FabButton from "@/components/common/FAB";
