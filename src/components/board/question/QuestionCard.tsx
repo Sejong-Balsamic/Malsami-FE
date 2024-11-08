@@ -18,6 +18,16 @@ interface QuestionCardProps {
   rewardYeopjeon: number;
 }
 
+const tagTranslations: { [key: string]: string } = {
+  EXAM_PREPARATION: "시험 대비",
+  OUT_OF_CLASS: "수업 외 내용",
+  UNKNOWN_CONCEPT: "개념 모름",
+  BETTER_SOLUTION: "더 나은 풀이",
+  DOCUMENT_REQUEST: "자료 요청",
+  STUDY_TIPS: "공부 팁",
+  ADVICE_REQUEST: "조언 구함",
+};
+
 function QuestionCard({
   JiJeongTags,
   title,
@@ -37,7 +47,7 @@ function QuestionCard({
         {rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
         <ChaeTakTag />
         {JiJeongTags.map(tag => (
-          <JiJeongTag key={tag} label={tag} />
+          <JiJeongTag key={tag} label={tagTranslations[tag] ?? tag} />
         ))}
       </div>
       <div className="flex flex-row justify-between">
