@@ -5,9 +5,9 @@ function DetailPageNav() {
   const pathname = usePathname();
 
   return (
-    <nav className="mb-4 flex h-[90px] items-end justify-between px-5">
+    <nav className="flex h-[80px] items-end justify-between px-5">
       {/* 뒤로 가기 아이콘 */}
-      <button type="button">
+      <button type="button" className="flex mb-[34px]">
         <Image src="/icons/BackIcon.svg" alt="썸네일" width={10} height={20} />
       </button>
 
@@ -16,7 +16,7 @@ function DetailPageNav() {
         {pathname === "/board/document/detail" ? (
           <>
             <h1 className="font-pretendard-bold text-xl">자료게시판</h1>
-            <div className="text-[#f46b01] font-pretendard-medium text-xs mt-1">양반등급</div>
+            <div className="text-[#f46b01] font-pretendard-medium text-xs mt-1 mb-[10px]">양반등급</div>
           </>
         ) : (
           <h1 className="font-pretendard-bold text-xl">질문게시판</h1>
