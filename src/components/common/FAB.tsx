@@ -22,7 +22,7 @@ function FabButton() {
 
   return (
     <div
-      className={`relative w-[50px] h-[50px] cursor-pointer transition-all duration-300 ${
+      className={`relative h-[50px] w-[50px] cursor-pointer transition-all duration-300 ${
         isExpanded ? "h-[196px]" : ""
       }`}
       onClick={toggleExpand}
@@ -31,27 +31,27 @@ function FabButton() {
       tabIndex={0}
       aria-expanded={isExpanded}
     >
-      <div className="absolute top-0 left-0 w-[50px] h-[50px] bg-white rounded-full shadow-md shadow-gray" />
+      <div className="shadow-gray absolute left-0 top-0 h-[50px] w-[50px] rounded-full bg-white shadow-md" />
 
-      <FABIcon width="50px" height="50px" className="absolute top-0 left-0" />
+      <FABIcon width="50px" height="50px" className="absolute left-0 top-0" />
 
       {isExpanded && (
         <>
-          <div className="absolute w-[50px] h-[147px] bottom-[25px] bg-white shadow-md shadow-gray rounded-t-full" />
+          <div className="shadow-gray absolute bottom-[25px] h-[147px] w-[50px] rounded-t-full bg-white shadow-md" />
 
-          <FABIcon width="50px" height="50px" className="absolute top-0 left-0" />
+          <FABIcon width="50px" height="50px" className="absolute left-0 top-0" />
 
           <DocumentIcon
             width="40px"
             height="40px"
-            className="absolute left-[5px] bottom-[70px] cursor-pointer"
+            className="absolute bottom-[70px] left-[5px] cursor-pointer"
             onClick={handleDocumentClick}
           />
 
           <QuestionIcon
             width="40px"
             height="40px"
-            className="absolute left-[5px] bottom-[125px] cursor-pointer"
+            className="absolute bottom-[125px] left-[5px] cursor-pointer"
             onClick={handleQuestionClick}
           />
         </>

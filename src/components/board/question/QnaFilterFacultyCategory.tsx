@@ -25,8 +25,8 @@ function QnaFilterFacultyCategory({ onSelect }: { onSelect: (selection: string) 
           type="button"
           className={`w-[50%] p-1 text-lg ${
             selected === "전체"
-              ? "border-b-2 border-custom-blue-500 text-black font-pretendard-semibold"
-              : "border-b-2 border-[#EEEEEE] text-[#ABABAB] font-pretendard-medium"
+              ? "font-pretendard-semibold border-b-2 border-custom-blue-500 text-black"
+              : "font-pretendard-medium border-b-2 border-[#EEEEEE] text-[#ABABAB]"
           }`}
           onClick={() => handleSelect("전체")}
         >
@@ -38,8 +38,8 @@ function QnaFilterFacultyCategory({ onSelect }: { onSelect: (selection: string) 
             type="button"
             className={`w-full p-1 text-lg ${
               selected === "전체"
-                ? "border-b-2 border-[#EEEEEE] text-[#ABABAB] font-pretendard-medium"
-                : "border-b-2 border-custom-blue-500 text-black font-pretendard-semibold"
+                ? "font-pretendard-medium border-b-2 border-[#EEEEEE] text-[#ABABAB]"
+                : "font-pretendard-semibold border-b-2 border-custom-blue-500 text-black"
             }`}
             onClick={() => {
               openModal();
