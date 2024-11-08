@@ -5,7 +5,7 @@ import { Autoplay } from "swiper/modules";
 import CategoryCard from "@/components/common/CategoryCard";
 
 interface QnaMovingCardProps {
-  facultyQNAs: {
+  unansweredQNAs: {
     questionPostId: string;
     title: string;
     subject: string;
@@ -16,7 +16,7 @@ interface QnaMovingCardProps {
   }[];
 }
 
-function QnaMovingCard({ facultyQNAs }: QnaMovingCardProps) {
+function QnaMovingCard({ unansweredQNAs }: QnaMovingCardProps) {
   return (
     <Swiper
       modules={[Autoplay]}
@@ -28,7 +28,7 @@ function QnaMovingCard({ facultyQNAs }: QnaMovingCardProps) {
         disableOnInteraction: false,
       }}
     >
-      {facultyQNAs.map((category, index) => {
+      {unansweredQNAs.map((category, index) => {
         let color;
         if (index % 3 === 0) color = "#F46B02";
         else if (index % 3 === 1) color = "#03B89E";
