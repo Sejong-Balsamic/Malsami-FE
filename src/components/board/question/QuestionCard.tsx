@@ -32,7 +32,7 @@ function QuestionCard({
   const displayThumbnail = thumbnail || "/image/PartyPopper.jpg";
 
   return (
-    <div className="flex flex-col bg-white p-[14px] rounded-[26px] mb-3 shadow-[0_4px_8px_0_rgba(0,0,0,0.2)] ...">
+    <div className="... mb-3 flex flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]">
       <div className="mb-2">
         {rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
         <ChaeTakTag />
@@ -42,9 +42,9 @@ function QuestionCard({
       </div>
       <div className="flex flex-row justify-between">
         <div>
-          <h2 className="text-sm font-pretendard-bold mb-1 line-clamp-1">{title}</h2>
-          <p className="text-sm font-pretendard-medium text-[#737373] mb-4 line-clamp-1">{content}</p>
-          <div className="flex items-center text-[#BCBCBC] text-xs font-pretendard-medium">
+          <h2 className="font-pretendard-bold mb-1 line-clamp-1 text-sm">{title}</h2>
+          <p className="font-pretendard-medium mb-4 line-clamp-1 text-sm text-[#737373]">{content}</p>
+          <div className="font-pretendard-medium flex items-center text-xs text-[#BCBCBC]">
             <span className="mr-[3px]">
               <ImageWrapper src="/icons/LikeIcon.svg" />
               <span className="ml-1 text-xs">{likeCount}</span>
@@ -62,7 +62,7 @@ function QuestionCard({
           alt="썸네일"
           width={74}
           height={74}
-          className="border rounded-sm ml-4"
+          className="ml-4 rounded-sm border"
         />
       </div>
     </div>

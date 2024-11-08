@@ -12,15 +12,19 @@ import getFacultyQNAs from "@/apis/question/getFacultyQNAs";
 
 export default function QuestionBoardPage() {
   const [faculty, setFaculty] = useState("전체");
-  const [facultyQNAs, setFacultyQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
   const [filterOptions, setFilterOptions] = useState<QnaFilterOptions>({
     rewardYeopjeon: 0,
     tags: [], // string[]으로 올바르게 추론됩니다.
     sortOption: "",
   });
+  const [isChaeTak, setIsChaeTak] = useState(false); // 채택됨 여부
+  const [facultyQNAs, setFacultyQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
 
   const handleFilterChange = (newFilterOptions: QnaFilterOptions) => {
     setFilterOptions(newFilterOptions);
+  };
+  const handleChaeTakChange = (newIsChaeTak: boolean) => {
+    setIsChaeTak(newIsChaeTak);
   };
 
   // 선택한 학과가 변경되면, api호출해 새로운 QNAs 세팅하는 함수
@@ -38,21 +42,28 @@ export default function QuestionBoardPage() {
   useEffect(() => {
     handleSelect(); // faculty 상태가 변경될 때마다 handleSelect 호출
   }, [faculty]); // faculty가 변경될 때만 실행
-
   useEffect(() => {
-    console.log(filterOptions);
+    console.log(filterOptions); // filterOptions 상태가 변경될 때마다 handleSelect 호출
   }, [filterOptions]);
+  useEffect(() => {
+    console.log(isChaeTak);
+  }, [isChaeTak]);
 
   return (
     <div className="bg-gray-white">
       <ScrollToTopOnLoad />
       <QnaPageNav />
       <QnaFilterFacultyCategory onSelect={setFaculty} />
-      <div className="text-custom-blue-500 px-5 pt-4 pb-3 text-lg font-pretendard-semibold">아직 답변 안 했어요!</div>
+      <div className="font-pretendard-semibold px-5 pb-3 pt-4 text-lg text-custom-blue-500">아직 답변 안 했어요!</div>
       <div className="bg-[#EEEEEE]">
         <QnaMovingCard facultyQNAs={facultyQNAs} />
       </div>
-      <FilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
+      <FilterControlBar
+        filterOptions={filterOptions}
+        isChaeTak={isChaeTak}
+        onFilterChange={handleFilterChange}
+        onChaeTakChange={handleChaeTakChange}
+      />
       <div className="h-0.5 bg-[#EEEEEE]" />
       <div className="px-5 py-4">
         <QuestionCardList />

@@ -2,7 +2,7 @@ import React from "react";
 
 function JiJeongTag({ label }: { label: string }) {
   return (
-    <span className="inline-block bg-custom-blue-500 text-white px-2 py-[3px] mr-1 rounded-[33px] text-xs font-pretendard-semibold">
+    <span className="font-pretendard-semibold mr-1 inline-block rounded-[33px] bg-custom-blue-500 px-2 py-[3px] text-xs text-white">
       {label}
     </span>
   );
