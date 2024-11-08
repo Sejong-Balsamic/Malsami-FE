@@ -39,9 +39,9 @@ function SearchInput() {
   };
 
   return (
-    <div className="flex flex-col items-center w-full py-2 px-4 bg-slate-400">
+    <div className="flex w-full flex-col items-center bg-slate-400 px-4 py-2">
       {/* 검색 입력 필드 */}
-      <div className="flex items-center w-full bg-gray-100 rounded-lg p-2">
+      <div className="flex w-full items-center rounded-lg bg-gray-100 p-2">
         <Image src="/icons/Search.svg" alt="Search" width={16} height={16} />
         <input
           type="text"
@@ -49,19 +49,19 @@ function SearchInput() {
           value={searchValue}
           onChange={handleValueChange}
           onKeyDown={handleKeyDown}
-          className="w-full ml-3 text-sm font-pretendard-medium bg-transparent outline-none placeholder-gray-400 text-black"
+          className="font-pretendard-medium ml-3 w-full bg-transparent text-sm text-black placeholder-gray-400 outline-none"
         />
       </div>
 
       {/* 검색어 제안 목록 */}
       {filteredTerms.length > 0 && (
-        <div className="w-full bg-white border border-gray-200 rounded-md shadow-md mt-2">
+        <div className="mt-2 w-full rounded-md border border-gray-200 bg-white shadow-md">
           {filteredTerms.map((term, index) => (
             <div
               key={term}
               role="presentation"
               onClick={() => handleSuggestionClick(term)}
-              className={`px-4 py-2 text-sm cursor-pointer ${
+              className={`cursor-pointer px-4 py-2 text-sm ${
                 index === activeSuggestionIndex ? "bg-custom-orange-100" : ""
               }`}
             >

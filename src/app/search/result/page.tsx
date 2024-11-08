@@ -1,5 +1,5 @@
 "use client";
 
 export default function SearchResultPage() {
-  return <div className="flex items-center justify-center h-screen">Search Result Page</div>;
+  return <div className="flex h-screen items-center justify-center">Search Result Page</div>;
 }

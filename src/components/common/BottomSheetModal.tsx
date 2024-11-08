@@ -51,7 +51,7 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
 
           {/* 모달 컨텐츠 */}
           <div
-            className="bg-white w-full mx-auto rounded-t-[20px] shadow-lg pt-8 px-[18px] pb-4 transition-transform duration-300 transform relative"
+            className="relative mx-auto w-full transform rounded-t-[20px] bg-white px-[18px] pb-4 pt-8 shadow-lg transition-transform duration-300"
             style={{
               maxHeight: modalHeight,
               transform: isVisible ? "translateY(0)" : "translateY(100%)",
@@ -60,7 +60,7 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
             onClick={e => e.stopPropagation()}
           >
             {/* 닫기 버튼 */}
-            <button onClick={onClose} className="absolute top-[38px] right-[30px]">
+            <button onClick={onClose} className="absolute right-[30px] top-[38px]">
               <Image src="/icons/CloseIcon.svg" alt="Close" width={20} height={20} />
             </button>
 
