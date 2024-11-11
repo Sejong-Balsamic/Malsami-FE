@@ -57,7 +57,7 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
   }
 
   try {
-    const response = await apiClient.post("/api/questions/get/filtered-posts", formData, {
+    const response = await apiClient.post("/api/question/get/filtered-posts", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

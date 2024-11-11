@@ -11,7 +11,7 @@ export default async function getUnansweredQNAs({ faculty }: GetUnansweredQNAsPr
   formData.append("faculty", faculty === "전체" ? "" : faculty); // faculty값 추가
 
   try {
-    const response = await apiClient.post("/api/questions/get/unanswered", formData, {
+    const response = await apiClient.post("/api/question/get/unanswered", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
