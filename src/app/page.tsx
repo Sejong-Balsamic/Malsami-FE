@@ -233,7 +233,7 @@ function Page() {
               type="text"
               id="search"
               placeholder="과목명이나 키워드를 입력하세요"
-              className="text-[16px]] h-[40px] w-full rounded-md bg-gray-50 pl-8 font-pretendard font-medium text-[#aaaaaa]"
+              className="text-[16px]] h-[40px] w-full rounded-md bg-gray-50 pl-8 font-pretendard font-medium text-[#F46B01]"
             />
           </div>
         </div>
