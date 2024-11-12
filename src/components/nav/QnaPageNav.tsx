@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-function QnaPageNav() {
+function QnAPageNav() {
   const router = useRouter();
   return (
     <nav className="mb-4 flex h-[90px] items-end justify-between px-5">
@@ -21,4 +21,4 @@ function QnaPageNav() {
   );
 }
 
-export default QnaPageNav;
+export default QnAPageNav;

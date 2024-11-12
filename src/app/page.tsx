@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Nav from "@/components/common/Nav";
+import Nav from "@/components/nav/LandingPageNav";
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
 import FabButton from "@/components/common/FAB";
@@ -233,7 +233,7 @@ function Page() {
               type="text"
               id="search"
               placeholder="과목명이나 키워드를 입력하세요"
-              className="text-[16px]] h-[40px] w-full rounded-md bg-gray-50 pl-8 font-pretendard font-medium text-[#aaaaaa]"
+              className="text-[16px]] h-[40px] w-full rounded-md bg-gray-50 pl-8 font-pretendard font-medium text-[#F46B01]"
             />
           </div>
         </div>
