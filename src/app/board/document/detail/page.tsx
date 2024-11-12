@@ -5,7 +5,7 @@ import DocDetail from "@/components/board/document/DocDetail";
 
 export default function Page() {
   return (
-    <div className="w-full max-w-[640px] mx-auto">
+    <div className="mx-auto w-full max-w-[640px]">
       <DetailPageNav />
       <DocDetail />
     </div>
