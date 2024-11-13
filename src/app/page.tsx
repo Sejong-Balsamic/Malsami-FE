@@ -1,107 +1,261 @@
-import React from 'react';
+"use client";
 
-export default function Home() {
+import React, { useEffect, useState } from "react";
+import Nav from "@/components/nav/LandingPageNav";
+import HotDocument from "@/components/landing/HotDocument";
+import HotQuestion from "@/components/landing/HotQuestion";
+import FabButton from "@/components/common/FAB";
+import { Input } from "@/components/ui/input";
+import Image from "next/image";
+import AllDocument from "@/components/landing/AllDocument";
+import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
+
+function Page() {
+  const [scrollY, setScrollY] = useState(0);
+  const [searchVisible, setSearchVisible] = useState(true);
+
+  // 스크롤 이벤트
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      setScrollY(currentScrollY);
+      setSearchVisible(currentScrollY < 1800);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div>
-      <div className="font-pretendard-bold">안녕하십니까 hi</div>
-      <div className="font-pretendard font-bold">안녕하십니까 hi</div>
+    <div className="flex justify-center bg-gray-100">
+      <ScrollToTopOnLoad />
+      <div className="relative mx-auto h-[3000px] w-full max-w-[640px] bg-white">
+        {/* Nav */}
+        <div className="flex justify-center">
+          <Nav />
+        </div>
+        <div className="h-[2400px] w-full min-w-[386px] max-w-[640px]">
+          <Image
+            src="/landing/LandingBackgroundImage.png"
+            alt="배경"
+            width={640}
+            height={2310}
+            className="h-auto w-full max-w-[640px]"
+            priority
+          />
+        </div>
+        {/* 플라잉 북 */}
+        <div className="absolute top-[68px] z-30 h-[905.33px] w-full">
+          <Image
+            src="/landing/book/BookB1.png"
+            alt="book"
+            width={270}
+            height={210.12}
+            className="absolute h-auto w-[270px]"
+            style={{ top: `${12 + scrollY * 0.6}px` }}
+          />
+          <Image
+            src="/landing/book/BookB2.png"
+            alt="book"
+            width={258}
+            height={215.94}
+            className="absolute h-auto w-[258px]"
+            style={{ top: `${110 + scrollY * 0.6}px`, right: "5px" }}
+          />
+          <Image
+            src="/landing/book/BookB3.png"
+            alt="book"
+            width={286}
+            height={183.34}
+            className="absolute h-auto w-[262px]"
+            style={{ top: `${400 + scrollY * 0.4}px`, left: "20px" }}
+          />
+          <Image
+            src="/landing/book/BookB4.png"
+            alt="book"
+            width={365}
+            height={277.62}
+            className="absolute h-auto w-[365px]"
+            style={{ top: `${480 + scrollY * 0.5}px`, right: "5px" }}
+          />
+        </div>
+        <div className="absolute top-[68px] z-20 h-[905.33px] w-full">
+          <Image
+            src="/landing/book/BookB5.png"
+            alt="book"
+            width={365}
+            height={432}
+            className="absolute h-auto w-[232px]"
+            style={{ top: `${900 + scrollY * 0.2}px`, right: "28px" }}
+          />
+          <Image
+            src="/landing/book/BookB6.png"
+            alt="book"
+            width={230}
+            height={432}
+            className="absolute h-auto w-[230px]"
+            style={{ top: `${1200 + scrollY * 0.2}px`, right: "20px" }}
+          />
+          <Image
+            src="/landing/book/BookB7.png"
+            alt="book"
+            width={230}
+            height={432}
+            className="absolute h-auto w-[320px]"
+            style={{ top: `${1380 + scrollY * 0.2}px`, left: "0px" }}
+          />
+          <Image
+            src="/landing/book/BookB8.png"
+            alt="book"
+            width={236}
+            height={432}
+            className="absolute h-auto w-[236px]"
+            style={{ top: `${1580 + scrollY * 1}px`, right: "32px" }}
+          />
+        </div>
+        <div className="absolute top-[68px] z-10 h-[905.33px] w-full">
+          <Image
+            src="/landing/book/BookS1.png"
+            alt="book"
+            width={69}
+            height={210.12}
+            className="absolute h-auto w-[114px]"
+            style={{ top: `${14 + scrollY * 0.5}px`, right: "24px" }}
+          />
+          <Image
+            src="/landing/book/BookS2.png"
+            alt="book"
+            width={132}
+            height={215.94}
+            className="absolute h-auto w-[114px]"
+            style={{ top: `${376 + scrollY * 0.4}px`, left: "16px" }}
+          />
+          <Image
+            src="/landing/book/BookS3.png"
+            alt="book"
+            width={102}
+            height={183.34}
+            className="absolute h-auto w-[114px]"
+            style={{ top: `${415 + scrollY * 0.4}px`, right: "4px" }}
+          />
+          <Image
+            src="/landing/book/BookS4.png"
+            alt="book"
+            width={102}
+            height={183.34}
+            className="absolute h-auto w-[112px]"
+            style={{ top: `${510 + scrollY * 0.3}px`, right: "36px" }}
+          />
+          <Image
+            src="/landing/book/BookS5.png"
+            alt="book"
+            width={102}
+            height={183.34}
+            className="absolute h-auto w-[114px]"
+            style={{ top: `${696 + scrollY * 0.3}px`, left: "28px" }}
+          />
+          <Image
+            src="/landing/book/BookS6.png"
+            alt="book"
+            width={102}
+            height={183.34}
+            className="absolute h-auto w-[114px]"
+            style={{ top: `${840 + scrollY * 0.2}px`, left: "2px" }}
+          />
+          <Image
+            src="/landing/book/BookS7.png"
+            alt="book"
+            width={102}
+            height={183.34}
+            className="absolute h-auto w-[110px]"
+            style={{ top: `${1110 + scrollY * 0.2}px`, left: "36px" }}
+          />
+          <Image
+            src="/landing/book/BookS8.png"
+            alt="book"
+            width={102}
+            height={183.34}
+            className="absolute h-auto w-[110px]"
+            style={{ top: `${1410 + scrollY * 1}px`, right: "50px" }}
+          />
+          <Image
+            src="/landing/book/BookS9.png"
+            alt="book"
+            width={102}
+            height={183.34}
+            className="absolute h-auto w-[94px]"
+            style={{ top: `${1746 + scrollY * 1.2}px`, left: "36px" }}
+          />
+          <Image
+            src="/landing/book/BookS10.png"
+            alt="book"
+            width={102}
+            height={183.34}
+            className="absolute h-auto w-[108px]"
+            style={{ top: `${1780 + scrollY * 1.5}px`, right: "36px" }}
+          />
+          <Image
+            src="/landing/book/BookS11.png"
+            alt="book"
+            width={102}
+            height={183.34}
+            className="absolute h-auto w-[66px]"
+            style={{ top: `${1944 + scrollY * 1.5}px`, left: "110px" }}
+          />
+        </div>
+        {/* 검색 */}
+        <div
+          className={`duration-2000 fixed left-1/2 top-[318px] z-30 w-full max-w-[340px] -translate-x-1/2 transform transition-opacity ${
+            searchVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+          }`}
+        >
+          <span className="font-pretendard-bold text-xl leading-[11px] text-black">종이</span>
+          <span className="font-pretendard-bold text-xl leading-[11px] text-black">
+            님, 환영해요!
+            <br />
+            학습 자료를 찾고, 업로드 해보세요!
+          </span>
+        </div>
+        <div
+          className={`duration-2000 fixed left-1/2 top-[383px] z-30 w-full max-w-[340px] -translate-x-1/2 transform transition-opacity ${
+            searchVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+          }`}
+        >
+          <div className="relative w-full">
+            <Image
+              src="/icons/Search.svg"
+              alt="Search"
+              width={20}
+              height={20}
+              className="absolute left-2 top-1/2 -translate-y-1/2 transform p-[2px]"
+            />
+            <Input
+              type="text"
+              id="search"
+              placeholder="과목명이나 키워드를 입력하세요"
+              className="text-[16px]] h-[40px] w-full rounded-md bg-gray-50 pl-8 font-pretendard font-medium text-[#F46B01]"
+            />
+          </div>
+        </div>
+        {/* 인기자료 */}
+        <div className="flex justify-center">
+          <HotDocument />
+        </div>
+        {/* 전체자료 */}
+        <div>
+          <AllDocument />
+        </div>
+        {/* 인기질문 */}
+        <div className="flex justify-center">
+          <HotQuestion />
+        </div>
+        {/* FAB */}
+        <div className="fixed bottom-5 right-5 z-50">
+          <FabButton />
+        </div>
+      </div>
     </div>
-    // <main className="flex min-h-screen flex-col items-center justify-between p-24">
-    //   <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-    //     <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-    //       Get started by editing&nbsp;
-    //       <code className="font-mono font-bold">src/app/page.tsx</code>
-    //     </p>
-    //     <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:size-auto lg:bg-none">
-    //       <a
-    //         className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-    //         href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-    //         target="_blank"
-    //         rel="noopener noreferrer"
-    //       >
-    //         By <Image src="/vercel.svg" alt="Vercel Logo" className="dark:invert" width={100} height={24} priority />
-    //       </a>
-    //     </div>
-    //   </div>
-
-    //   <div className="relative z-[-1] flex place-items-center before:absolute before:h-[300px] before:w-full before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
-    //     <Image
-    //       className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-    //       src="/next.svg"
-    //       alt="Next.js Logo"
-    //       width={180}
-    //       height={37}
-    //       priority
-    //     />
-    //   </div>
-
-    //   <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-    //     <a
-    //       href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-    //       className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       <h2 className="mb-3 text-2xl font-semibold">
-    //         Docs{' '}
-    //         <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-    //           -&gt;
-    //         </span>
-    //       </h2>
-    //       <p className="m-0 max-w-[30ch] text-sm opacity-50">
-    //         Find in-depth information about Next.js features and API.
-    //       </p>
-    //     </a>
-
-    //     <a
-    //       href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-    //       className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       <h2 className="mb-3 text-2xl font-semibold">
-    //         Learn{' '}
-    //         <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-    //           -&gt;
-    //         </span>
-    //       </h2>
-    //       <p className="m-0 max-w-[30ch] text-sm opacity-50">
-    //         Learn about Next.js in an interactive course with&nbsp;quizzes!
-    //       </p>
-    //     </a>
-
-    //     <a
-    //       href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-    //       className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       <h2 className="mb-3 text-2xl font-semibold">
-    //         Templates{' '}
-    //         <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-    //           -&gt;
-    //         </span>
-    //       </h2>
-    //       <p className="m-0 max-w-[30ch] text-sm opacity-50">Explore starter templates for Next.js.</p>
-    //     </a>
-
-    //     <a
-    //       href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-    //       className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-    //       target="_blank"
-    //       rel="noopener noreferrer"
-    //     >
-    //       <h2 className="mb-3 text-2xl font-semibold">
-    //         Deploy{' '}
-    //         <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-    //           -&gt;
-    //         </span>
-    //       </h2>
-    //       <p className="m-0 max-w-[30ch] text-balance text-sm opacity-50">
-    //         Instantly deploy your Next.js site to a shareable URL with Vercel.
-    //       </p>
-    //     </a>
-    //   </div>
-    // </main>
   );
 }
+
+export default Page;
