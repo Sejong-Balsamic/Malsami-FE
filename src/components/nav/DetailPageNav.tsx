@@ -10,7 +10,7 @@ function DetailPageNav() {
   const router = useRouter();
 
   return (
-    <nav className="flex h-[112px] items-end justify-between px-5 border-b-2 border-[#eaeaea]">
+    <nav className="flex h-[112px] items-end justify-between border-b-2 border-[#eaeaea] px-5">
       {/* 뒤로 가기 아이콘 */}
       <button type="button" className="flex" onClick={() => router.back()}>
         <Image src="/icons/BackIcon.svg" alt="back" width={10} height={20} className="mb-[34px]" />
@@ -23,7 +23,7 @@ function DetailPageNav() {
             <div className="font-pretendard-medium mb-[10px] mt-1 text-xs text-[#f46b01]">양반</div>
           </>
         ) : (
-          <h1 className="font-pretendard-bold text-xl mb-[30px]">질문게시판</h1>
+          <h1 className="font-pretendard-bold mb-[30px] text-xl">질문게시판</h1>
         )}
       </div>
       {/* 옵션 아이콘 */}
@@ -39,15 +39,15 @@ function DetailPageNav() {
             <DrawerDescription>차피 안 보이는 부분</DrawerDescription>
           </VisuallyHidden>
           <div className="flex flex-col pb-[30px]">
-            <Button variant="ghost" className="text-[#f46b02] text-[16px] font-pretendard-semibold gap-[10px]">
+            <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
               <Image src="/icons/Share.svg" alt="option" width={12} height={15} />
               공유하기
             </Button>
-            <Button variant="ghost" className="text-[#f46b02] text-[16px] font-pretendard-semibold gap-[10px]">
+            <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
               <Image src="/icons/Block.svg" alt="option" width={12} height={12} />
               차단하기
             </Button>
-            <Button variant="ghost" className="text-[#f46b02] text-[16px] font-pretendard-semibold gap-[10px]">
+            <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
               <Image src="/icons/Report.svg" alt="option" width={12} height={12} />
               신고하기
             </Button>
