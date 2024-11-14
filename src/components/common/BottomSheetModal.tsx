@@ -51,7 +51,7 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
 
           {/* 모달 컨텐츠 */}
           <div
-            className="relative mx-auto w-full transform rounded-t-[20px] bg-white px-[18px] pb-4 pt-8 shadow-lg transition-transform duration-300"
+            className="relative mx-auto w-full transform rounded-t-[20px] bg-white p-[30px] pb-4 shadow-lg transition-transform duration-300"
             style={{
               maxHeight: modalHeight,
               transform: isVisible ? "translateY(0)" : "translateY(100%)",
@@ -59,8 +59,14 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
             }}
             onClick={e => e.stopPropagation()}
           >
+            {/* 스크롤바 없애기 */}
+            <style jsx>{`
+              div::-webkit-scrollbar {
+                display: none;
+              }
+            `}</style>
             {/* 닫기 버튼 */}
-            <button onClick={onClose} className="absolute right-[30px] top-[38px]">
+            <button onClick={onClose} className="absolute right-[32px] top-[32px]">
               <Image src="/icons/CloseIcon.svg" alt="Close" width={20} height={20} />
             </button>
 

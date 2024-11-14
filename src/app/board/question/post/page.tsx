@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import QnaPostNav from "@/components/nav/QnaPostNav";
 
@@ -63,7 +63,7 @@ export default function QnaPostPage() {
 
         <div className="rounded-lg">
           <form>
-            <label className="mb-4 block">
+            <label htmlFor="title" className="mb-4 block">
               제목 (필수)
               <input
                 type="text"
@@ -76,7 +76,7 @@ export default function QnaPostPage() {
               />
             </label>
 
-            <label className="mb-4 block">
+            <label htmlFor="content" className="mb-4 block">
               질문 (필수)
               <textarea
                 name="content"
@@ -88,7 +88,7 @@ export default function QnaPostPage() {
               />
             </label>
 
-            <label className="mb-4 block">
+            <label htmlFor="subject" className="mb-4 block">
               교과목명 검색 (필수)
               <input
                 type="text"
@@ -101,7 +101,7 @@ export default function QnaPostPage() {
               />
             </label>
 
-            <label className="mb-4 block">
+            <label htmlFor="questionPresetTags" className="mb-4 block">
               정적 태그 {">"}
               <input
                 type="text"
@@ -113,7 +113,7 @@ export default function QnaPostPage() {
               />
             </label>
 
-            <label className="mb-4 block">
+            <label htmlFor="reward" className="mb-4 block">
               엽전 현상금 {">"}
               <input
                 type="number"
@@ -125,7 +125,7 @@ export default function QnaPostPage() {
               />
             </label>
 
-            <label className="mb-4 block">
+            <label htmlFor="customTags" className="mb-4 block">
               커스텀 태그
               <input
                 type="text"
@@ -137,7 +137,7 @@ export default function QnaPostPage() {
               />
             </label>
 
-            <label className="mb-4 block items-center">
+            <label htmlFor="isPrivate" className="mb-4 block items-center">
               <input
                 type="checkbox"
                 name="isPrivate"
@@ -162,3 +162,18 @@ export default function QnaPostPage() {
     </>
   );
 }
+
+/* <div className="mb-6 flex items-center">
+                  <input
+                    type="range"
+                    min="0"
+                    max={maxRewardYeopjeon}
+                    value={isChaeTaek}
+                    onChange={e => setRewardYeopjeon(Number(e.target.value))}
+                    className="custom-slider mr-4 w-full"
+                    style={{
+                      background: `linear-gradient(to right, #03B89E ${(isChaeTaek / maxRewardYeopjeon) * 100}%, #D9D9D9 ${(isChaeTaek / maxRewardYeopjeon) * 100}%)`,
+                    }}
+                  />
+                  <span className="font-semibold text-black">{isChaeTaek}</span>
+                </div> */

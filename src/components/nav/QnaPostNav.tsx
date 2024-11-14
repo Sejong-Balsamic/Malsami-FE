@@ -17,7 +17,7 @@ function QnaPostNav() {
         {/* 임시저장 */}
         <span className="font-pretendard-medium text-[15px] text-[#9B9B9B]">임시저장</span>
       </div>
-      <div className="w- h-0.5 bg-[#EAEAEA]"></div>
+      <div className="w- h-0.5 bg-[#EAEAEA]" />
     </>
   );
 }
