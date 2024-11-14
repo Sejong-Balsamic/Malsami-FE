@@ -69,7 +69,7 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
               className="overflow-y-auto"
               style={{
                 height: `calc(${modalHeight} - 72px)`, // 72px 하단영역을 제외한 높이 설정
-                paddingBottom: "30px",
+                paddingBottom: "60px",
               }}
               onScroll={handleScroll}
               ref={contentRef}

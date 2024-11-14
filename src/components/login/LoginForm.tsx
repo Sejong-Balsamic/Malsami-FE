@@ -52,7 +52,7 @@ export default function LoginForm() {
               value={id}
               onChange={e => setId(e.target.value)}
               required
-              className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-orange-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-orange-400 invalid:ring-gray-300 focus:ring-custom-orange-100"
+              className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-200"
               placeholder="학번을 입력해주세요"
             />
           </label>
@@ -67,7 +67,7 @@ export default function LoginForm() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
-              className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-orange-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-orange-400 invalid:ring-gray-300 focus:ring-custom-orange-100"
+              className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-300"
               placeholder="비밀번호를 입력해주세요"
             />
           </label>
@@ -79,7 +79,7 @@ export default function LoginForm() {
         {/* 로그인 제출 버튼 */}
         <button
           type="submit"
-          className="mt-10 w-full rounded-lg bg-custom-orange-100 px-4 py-2 text-white hover:bg-custom-orange-400 focus:outline-none focus:ring-2 focus:ring-custom-orange-400"
+          className="mt-10 w-full rounded-lg bg-custom-blue-300 px-4 py-2 text-white hover:bg-custom-blue-400 focus:outline-none focus:ring-2 focus:ring-custom-blue-400"
           disabled={isLoading}
         >
           {isLoading ? "로그인 중..." : "로그인"}
