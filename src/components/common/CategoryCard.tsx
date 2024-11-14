@@ -29,6 +29,16 @@ interface CategoryCardProps {
   commentCount: number;
 }
 
+const tagTranslations: { [key: string]: string } = {
+  EXAM_PREPARATION: "시험 대비",
+  OUT_OF_CLASS: "수업 외 내용",
+  UNKNOWN_CONCEPT: "개념 모름",
+  BETTER_SOLUTION: "더 나은 풀이",
+  DOCUMENT_REQUEST: "자료 요청",
+  STUDY_TIPS: "공부 팁",
+  ADVICE_REQUEST: "조언 구함",
+};
+
 function CategoryCard({
   title,
   color,
@@ -53,7 +63,7 @@ function CategoryCard({
             <div className="font-pretendard-bold line-clamp-2 pr-2 text-sm leading-[20px]">{title}</div>
             <div className="mt-2 flex flex-wrap gap-2">
               {JiJeongTags.map(tag => (
-                <JiJeongTag key={tag} title={tag} color={color} />
+                <JiJeongTag key={tag} title={tagTranslations[tag] ?? tag} color={color} />
               ))}
             </div>
           </div>
