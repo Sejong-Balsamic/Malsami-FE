@@ -6,6 +6,7 @@ import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import jijeongTags from "@/lib/jijeongTags";
 import sortingOptions from "@/lib/sortingOptions";
+import chaetaekOptions from "@/lib/chaeTakOptions";
 
 interface QnaFilterOptionsModalProps {
   isVisible: boolean; // 모달 표시 여부
@@ -25,13 +26,12 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
   const [modalHeight, setModalHeight] = useState("50vh"); // 초기 modalHeight 50%로 설정
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const [rewardYeopjeon, setRewardYeopjeon] = useState(initialFilterOptions.rewardYeopjeon);
+  const [isChaeTaek, setIsChaeTaek] = useState(initialFilterOptions.isChaeTaek);
   const [tags, setTags] = useState(initialFilterOptions.tags);
   const [sortOption, setSortOption] = useState(initialFilterOptions.sortOption);
-  let maxRewardYeopjeon = 100; // 사용자가 설정할 수 있는 최대 엽전 현상금 값
 
   const handleApply = () => {
-    onApplyFilter({ rewardYeopjeon, tags, sortOption });
+    onApplyFilter({ isChaeTaek, tags, sortOption });
   };
 
   if (!isVisible) return null;
@@ -72,6 +72,12 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
           <div className="absolute inset-0 bg-black opacity-50" onClick={onClose} />
 
           {/* 모달 컨텐츠 */}
+          {/* 스크롤바 없애기 */}
+          <style jsx>{`
+            div::-webkit-scrollbar {
+              display: none;
+            }
+          `}</style>
           <div
             className="relative mx-auto w-full transform rounded-t-[20px] bg-white px-[18px] pb-4 pt-8 shadow-lg transition-transform duration-300"
             style={{
@@ -97,29 +103,58 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
               ref={contentRef}
             >
               <>
-                <h1 className="font-pretendard-bold mb-6 text-xl">정렬</h1>
-                <div className="mb-[40px] flex flex-wrap">
-                  <div className="flex flex-wrap">
-                    {sortingOptions.map(option => (
-                      <label key={option} className="mr-4 flex items-center">
-                        <input
-                          type="radio"
-                          name="filterOption"
-                          value={option}
-                          checked={sortOption === option}
-                          onChange={() => setSortOption(option)}
-                          className="mr-2"
-                        />
-                        {option}
-                      </label>
-                    ))}
-                  </div>
+                <h1 className="font-pretendard-bold mb-[20px] text-xl">정렬</h1>
+                <div className="mb-[30px] flex flex-col">
+                  {sortingOptions.map(option => (
+                    <li key={option} className="flex rounded-xl py-[10px]">
+                      <div
+                        className="flex w-full cursor-pointer flex-row justify-between"
+                        onClick={() => setSortOption(option)}
+                        onKeyDown={e => e.key === "Enter" && setSortOption(option)}
+                      >
+                        {sortOption === option ? (
+                          <span className="font-pretendard-bold text-base text-custom-blue-500">{option}</span>
+                        ) : (
+                          <span className="font-pretendard-medium text-base">{option}</span>
+                        )}
+                        {sortOption === option ? (
+                          <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
+                        ) : (
+                          <Image src="/icons/UnCheckedIcon.svg" alt="UnCheckedIcon" width={14} height={14} />
+                        )}
+                      </div>
+                    </li>
+                  ))}
                 </div>
 
-                <h1 className="font-pretendard-bold mb-6 text-xl">
+                <h1 className="font-pretendard-bold mb-[20px] text-xl">채택 여부</h1>
+                <div className="mb-[30px] flex flex-col">
+                  {chaetaekOptions.map(option => (
+                    <li key={option} className="flex rounded-xl py-[10px]">
+                      <div
+                        className="flex w-full cursor-pointer flex-row justify-between"
+                        onClick={() => setIsChaeTaek(option)}
+                        onKeyDown={e => e.key === "Enter" && setIsChaeTaek(option)}
+                      >
+                        {isChaeTaek === option ? (
+                          <span className="font-pretendard-bold text-base text-custom-blue-500">{option}</span>
+                        ) : (
+                          <span className="font-pretendard-medium text-base">{option}</span>
+                        )}
+                        {isChaeTaek === option ? (
+                          <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
+                        ) : (
+                          <Image src="/icons/UnCheckedIcon.svg" alt="UnCheckedIcon" width={14} height={14} />
+                        )}
+                      </div>
+                    </li>
+                  ))}
+                </div>
+
+                <h1 className="font-pretendard-bold mb-[20px] text-xl">
                   태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-[#A4A4A4]">최대 2개</span>
                 </h1>
-                <div className="mb-[40px] flex flex-wrap gap-x-1.5 gap-y-3">
+                <div className="mb-[40px] flex flex-wrap justify-center gap-x-[7px] gap-y-[20px]">
                   {jijeongTags.map(tag => (
                     <button
                       key={tag}
@@ -129,29 +164,13 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
                             prevTags.includes(tag) ? prevTags.filter(t => t !== tag) : [...prevTags, tag].slice(0, 2), // 태그 선택 2개만 가능하게
                         )
                       }
-                      className={`font-pretendard-medium rounded-[40px] border border-custom-blue-500 px-1.5 py-1 text-base ${
+                      className={`font-pretendard-bold rounded-[40px] border-2 border-custom-blue-500 px-3 py-1 text-xs ${
                         tags.includes(tag) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
                       }`}
                     >
                       {tag}
                     </button>
                   ))}
-                </div>
-
-                <h1 className="font-pretendard-bold mb-6 text-xl">엽전 현상금</h1>
-                <div className="mb-6 flex items-center">
-                  <input
-                    type="range"
-                    min="0"
-                    max={maxRewardYeopjeon}
-                    value={rewardYeopjeon}
-                    onChange={e => setRewardYeopjeon(Number(e.target.value))}
-                    className="custom-slider mr-4 w-full"
-                    style={{
-                      background: `linear-gradient(to right, #03B89E ${(rewardYeopjeon / maxRewardYeopjeon) * 100}%, #D9D9D9 ${(rewardYeopjeon / maxRewardYeopjeon) * 100}%)`,
-                    }}
-                  />
-                  <span className="font-semibold text-black">{rewardYeopjeon}</span>
                 </div>
               </>
             </div>

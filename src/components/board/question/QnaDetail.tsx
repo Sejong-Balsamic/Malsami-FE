@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -11,13 +13,10 @@ function QnaDetail() {
     <div className="flex flex-col justify-center px-[20px]">
       {/* 교과목명 현상금  */}
       <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
-        <div className="flex h-full w-full items-center">
-          <Button
-            variant="ghost"
-            className="font-pretendard-medium mr-[6px] h-[26px] rounded-[13px] bg-[#03b89e] px-[15px] py-[6px] text-[12px] text-[#ffffff]"
-          >
+        <div className="flex items-center gap-[6px]">
+          <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
             우리차문화의이해
-          </Button>
+          </div>
           <YeopjeonTag point={50} />
         </div>
       </div>
@@ -25,9 +24,8 @@ function QnaDetail() {
       <div className="flex h-auto min-w-[336px] max-w-[640px] flex-col">
         <div className="mt-[20px]">
           <span className="font-pretendard-bold text-[18px]">우리차문화의이해 수업 2주차에서요</span>
-          <div className="font-pretendard-medium mt-[10px] min-h-[100px] text-[14px] leading-normal text-[#727272]">
-            글을 작성해주세요. 글을 작성해주세요. 글을 작성해주세요. 글을 작성해주세요. 글을 작성해주세요. 글을
-            작성해주세요.
+          <div className="font-pretendard-medium mt-[10px] text-[14px] leading-normal text-[#727272]">
+            글을 작성해주세요. 
           </div>
         </div>
         {/* 커스텀태그 */}
@@ -42,19 +40,13 @@ function QnaDetail() {
         </div>
         {/* 지정태그 */}
         <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
-          <div className="flex h-full w-full items-center">
-            <Button
-              variant="ghost"
-              className="font-pretendard-medium mr-[6px] h-[26px] rounded-[13px] border border-[#e7e7e7] bg-transparent px-[15px] py-[6px] text-[12px] text-[#aaaaaa]"
-            >
-              개념 모름
-            </Button>
-            <Button
-              variant="ghost"
-              className="font-pretendard-medium mr-[6px] h-[26px] rounded-[13px] border border-[#e7e7e7] bg-transparent px-[15px] py-[6px] text-[12px] text-[#aaaaaa]"
-            >
-              개념 모름
-            </Button>
+          <div className="flex items-center gap-[10px]">
+            <div className="flex h-[25px] w-auto items-center justify-center rounded-[28px] border border-[#e7e7e7] px-[10px]">
+              <span className="font-pretendard-medium text-[14px] text-[#aaaaaa]">개념 모름</span>
+            </div>
+            <div className="flex h-[25px] w-auto items-center justify-center rounded-[28px] border border-[#e7e7e7] px-[10px]">
+              <span className="font-pretendard-medium text-[14px] text-[#aaaaaa]">개념 모름</span>
+            </div>
           </div>
         </div>
         {/* 작성자 정보 */}

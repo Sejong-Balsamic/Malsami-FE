@@ -4,9 +4,9 @@ import Image from "next/image";
 function QnAPageNav() {
   const router = useRouter();
   return (
-    <nav className="mb-4 flex h-[90px] items-end justify-between px-5">
+    <nav className="mb-4 flex justify-between px-5 pt-[50px]">
       {/* 뒤로 가기 아이콘 */}
-      <button type="button">
+      <button type="button" onClick={() => router.back()}>
         <Image src="/icons/BackIcon.svg" alt="썸네일" width={10} height={20} />
       </button>
 
