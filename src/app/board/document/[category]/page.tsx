@@ -1,33 +1,36 @@
-// app/board/document/[category].tsx
+"use client";
 
-import { useRouter } from "next/router";
 import { useEffect } from "react";
-
-// 각 게시판 컴포넌트를 동적으로 import
 import CheonminBoard from "@/components/board/document/categories/CheonminBoard";
 import JunginBoard from "@/components/board/document/categories/JunginBoard";
 import YangbanBoard from "@/components/board/document/categories/YangbanBoard";
 import KingBoard from "@/components/board/document/categories/KingBoard";
+import { notFound } from "next/navigation";
 
-// 권한을 체크하는 함수 (예시)
+const allowedCategories = ["cheonmin", "jungin", "yangban", "king"];
+
+// 접근 권한 확인하는 함수. url로 접근 시
 const checkAccessPermission = (category: string) => {
-  // 여기에 실제 접근 권한 체크 로직을 작성
-  // 예를 들어, 권한이 없을 때는 false를 반환
-  return true; // 예시로 항상 true 반환
+  return allowedCategories.includes(category); // 고쳐야 함.
 };
 
-const BoardPage = () => {
-  const router = useRouter();
-  const { category } = router.query; // URL에서 category 파라미터를 가져옴
+// 동적라우팅
+function BoardPage({ params }: { params: { category: string } }) {
+  const { category } = params;
 
+  // 허용된 카테고리가 아니면 notFound 페이지로 리다이렉트
+  if (!allowedCategories.includes(category)) {
+    notFound();
+  }
+
+  // 사용자가 권한이 없으면 자료 페이지로 리다이렉트
   useEffect(() => {
-    // 페이지 로드 시 접근 권한을 체크
-    if (category && !checkAccessPermission(category as string)) {
-      router.push("/access-denied"); // 권한이 없을 때 접근 금지 페이지로 리다이렉트
+    if (!checkAccessPermission(category)) {
+      alert("접근 권한이 없습니다");
+      window.location.href = "/board/document";
     }
-  }, [category, router]);
+  }, []);
 
-  // category에 따라 렌더링할 컴포넌트 결정
   const renderBoard = () => {
     switch (category) {
       case "cheonmin":
@@ -39,16 +42,16 @@ const BoardPage = () => {
       case "king":
         return <KingBoard />;
       default:
-        return <p>해당 게시판을 찾을 수 없습니다.</p>;
+        return <p>해당 게시판을 찾을 수 없습니다.</p>; // 기본 반환 값 추가
     }
   };
 
   return (
     <div className="container mx-auto p-4">
       <h1 className="mb-4 text-2xl font-bold">자료 게시판</h1>
-      {renderBoard()}
+      {category ? renderBoard() : <p>로딩 중...</p>}
     </div>
   );
-};
+}
 
 export default BoardPage;
