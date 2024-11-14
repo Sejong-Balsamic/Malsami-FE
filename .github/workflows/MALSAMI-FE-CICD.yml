@@ -82,7 +82,7 @@ jobs:
             BRANCH=${{ github.ref_name }}
             PORT=3000
             CONTAINER_NAME="sejong-malsami-front"
-            
+
             if [ "$BRANCH" == "main" ]; then
               PORT=3004
               echo "메인 브랜치로 배포합니다. 포트는 $PORT입니다."
@@ -91,19 +91,18 @@ jobs:
               PORT=3003
               echo "테스트 브랜치로 배포합니다. 컨테이너 이름은 $CONTAINER_NAME, 포트는 $PORT입니다."
             fi
-            
+
             echo "도커 이미지를 풀링 중입니다: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}"
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-            
+
             echo "기존 컨테이너를 중지합니다: $CONTAINER_NAME"
             echo $PW | sudo -S docker stop $CONTAINER_NAME || true
-            
+
             echo "기존 컨테이너를 제거합니다: $CONTAINER_NAME"
             echo $PW | sudo -S docker rm $CONTAINER_NAME || true
-            
+
             echo "새로운 컨테이너를 실행합니다: $CONTAINER_NAME on port $PORT"
             echo $PW | sudo -S docker run -d -p ${PORT}:3000 --name $CONTAINER_NAME \
               ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-            
+
             echo "배포가 완료되었습니다."
-            
