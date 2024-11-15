@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -8,8 +8,11 @@ import Image from "next/image";
 import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import YeopjeonTag from "../tags/YeopjeonTag";
+import YeopjeonTag from "../../tags/YeopjeonTag";
 import likePost from "@/apis/question/likePost";
+import CommentList from "./CommentList";
+import CommentInput from "./CommentInput";
+import getComments from "@/apis/question/getComment";
 
 interface QnaDetailProps {
   postId: string;
@@ -25,6 +28,7 @@ interface QnaDetailProps {
   commentCount: number;
   answerCount: number;
 }
+
 
 function QnaDetail({
   postId,
@@ -42,6 +46,9 @@ function QnaDetail({
 }: QnaDetailProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
+  const [currentCommentCount, setCurrentCommentCount] = useState(commentCount);
+  const [questionComments, setQuestionComments] = useState([]);
+  const [answerComments, setAnswerComments] = useState([]);
 
   // 좋아요 클릭 핸들러
   const handleLikeClick = async () => {
@@ -59,6 +66,34 @@ function QnaDetail({
       console.error("좋아요 처리 중 오류:", error);
     }
   };
+
+  const fetchQuestionComments = async () => {
+    try {
+      const response = await getComments({ postId, contentType: "QUESTION" });
+      if (response?.commentsPage?.content) {
+        setQuestionComments(response.commentsPage.content);
+        setCurrentCommentCount(response.commentsPage.totalElements);
+      }
+    } catch (error) {
+      console.error("Failed to fetch question comments:", error);
+    }
+  };
+
+  const fetchAnswerComments = async () => {
+    try {
+      const response = await getComments({ postId, contentType: "ANSWER" });
+      if (response?.commentsPage?.content) {
+        setAnswerComments(response.commentsPage.content);
+      }
+    } catch (error) {
+      console.error("Failed to fetch answer comments:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchQuestionComments();
+    fetchAnswerComments();
+  }, [postId]);
 
   return (
     <div className="flex flex-col justify-center px-[20px]">
@@ -111,7 +146,7 @@ function QnaDetail({
             </div>
           </div>
         </div>
-        {/* 반응 */}
+        {/* 좋아요 */}
         <div className="mx-[5px] mt-4 flex justify-start">
           <div className="flex items-center gap-[10px]">
           <div
@@ -134,6 +169,7 @@ function QnaDetail({
         {currentLikeCount}
       </span>
     </div>
+    {/* 질문 댓글 */}
             <Drawer>
               <DrawerTrigger asChild>
                 <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
@@ -144,31 +180,13 @@ function QnaDetail({
               <DrawerContent className="px-[20px] pb-[20px]">
                 <DrawerHeader className="px-0">
                   <DrawerTitle className="font-pretendard-bold flex text-[14px] text-[#3c3c3c]">
-                    댓글 {commentCount}
+                    댓글 {currentCommentCount}
                   </DrawerTitle>
                 </DrawerHeader>
-                <div className="mb-[20px] min-h-[70px] min-w-[310px] rounded-lg border border-[#d9d9d9] p-[14px]">
-                  <div className="mb-[10px] flex items-center">
-                    <Input
-                      type="text"
-                      placeholder="댓글을 입력해주세요."
-                      className="font-pretendard-medium h-[32px] flex-1 border-none text-[12px] text-[#000000] placeholder-[#bcbcbc] focus:ring-0"
-                    />
-                  </div>
-                  <div className="m-auto flex items-center justify-between">
-                    <div className="flex items-center gap-[4px]">
-                      <Checkbox id="Anonymous" />
-                      <p className="font-pretendard-medium text-[12px] text-[#727272]">익명</p>
-                    </div>
-                    <Image src="/icons/Save.svg" alt="Save" width={24} height={24} />
-                  </div>
-                </div>
+                <div className="max-h-[400px] overflow-y-auto">
+                <CommentInput postId={postId} contentType="QUESTION" refreshComments={fetchQuestionComments}/>
                 {/* 댓글 정보 */}
-                <div className="min-h-[88px] min-w-[310px] rounded-lg bg-[#f7f8fb] p-[14px]">
-                  <span className="font-pretendard-bold mb-[4px] text-[14px]">@280fee</span>
-                  <span className="font-pretendard-medium mb-[4px] text-[12px] text-[#737373]"> • 비공개</span>
-                  <p className="font-pretendard-medium min-h-[20px] w-full text-[14px] text-[#7b7b7c]">와 굿굿</p>
-                  <div className="font-pretendard-medium mb-[10px] text-[12px] text-[#bcbcbc]">1일전</div>
+                <CommentList comments={questionComments}/>
                 </div>
               </DrawerContent>
             </Drawer>
@@ -207,30 +225,10 @@ function QnaDetail({
                 </AccordionTrigger>
               </div>
               <AccordionContent>
-                {/* 댓글 작성 */}
-                <div className="mb-[20px] min-h-[70px] min-w-[310px] rounded-lg bg-[#ffffff] p-[14px]">
-                  <div className="mb-[10px] flex items-center">
-                    <Input
-                      type="text"
-                      placeholder="댓글을 입력해주세요."
-                      className="font-pretendard-medium h-[32px] flex-1 border-none text-[12px] text-[#000000] placeholder-[#bcbcbc] focus:ring-0"
-                    />
-                  </div>
-                  <div className="m-auto flex items-center justify-between">
-                    <div className="flex items-center gap-[4px]">
-                      <Checkbox id="Anonymous" />
-                      <p className="font-pretendard-medium text-[12px] text-[#727272]">익명</p>
-                    </div>
-                    <Image src="/icons/Save.svg" alt="Comment_Unclicked" width={24} height={24} />
-                  </div>
-                </div>
-                {/* 댓글 정보 */}
-                <div className="min-h-[88px] min-w-[310px] rounded-lg bg-[#ffffff] p-[14px]">
-                  <span className="font-pretendard-bold mb-[4px] text-[14px]">@280fee</span>
-                  <span className="font-pretendard-medium mb-[4px] text-[12px] text-[#737373]"> • 비공개</span>
-                  <p className="font-pretendard-medium min-h-[20px] w-full text-[14px] text-[#7b7b7c]">와 굿굿</p>
-                  <div className="font-pretendard-medium mb-[10px] text-[12px] text-[#bcbcbc]">1일전</div>
-                </div>
+                {/* 답변 댓글 작성 */}
+                <CommentInput postId={postId} contentType="ANSWER" refreshComments={fetchAnswerComments} />
+                {/* 답변 댓글 정보 */}
+                <CommentList comments={answerComments} />
               </AccordionContent>
             </AccordionItem>
           </Accordion>

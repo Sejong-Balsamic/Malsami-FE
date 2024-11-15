@@ -1,7 +1,7 @@
 "use client";
 
 import DetailPageNav from "@/components/nav/DetailPageNav";
-import QnaDetail from "@/components/board/question/QnaDetail";
+import QnaDetail from "@/components/board/question/detail/QnaDetail";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
