@@ -9,7 +9,9 @@ import subjects from "@/lib/subjects";
 import SubjectSearchInput from "@/components/board/question/SubjectSearchInput";
 import QnaPostRewardModal from "@/components/board/question/post/QnaPostRewardModal";
 import QnaPostJiJeongTagModal from "@/components/board/question/post/QnaPostJiJeongTagModal";
+import QnaPostFileUpload from "@/components/board/question/post/QnaPostFileUpload";
 import YeopjeonTag from "@/components/board/tags/YeopjeonTag";
+import { postNewQna } from "@/apis/question/postNewQna";
 
 interface QnaPostFormData {
   title: string;
@@ -19,6 +21,7 @@ interface QnaPostFormData {
   questionPresetTags: string[];
   reward: number;
   isPrivate: boolean;
+  mediaFiles: File[]; // File 배열로 정의
 }
 
 export default function QnaPostPage() {
@@ -30,12 +33,14 @@ export default function QnaPostPage() {
     questionPresetTags: [],
     reward: 0,
     isPrivate: false,
+    mediaFiles: [],
   });
 
   const [tagInput, setTagInput] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
   const [isJiJeongTagModalOpen, setIsJiJeongTagModalOpen] = useState(false);
+  const mediaAllowedTypes = ["image/jpeg", "image/png"];
 
   // 커스텀 태그 추가 함수
   const handleTagInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -119,20 +124,55 @@ export default function QnaPostPage() {
     }));
   };
 
+  // 파일 업데이트 함수
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const filesArray = Array.from(e.target.files);
+
+      const filteredFiles = filesArray.filter(file => mediaAllowedTypes.includes(file.type));
+
+      if (filteredFiles.length !== filesArray.length) {
+        alert("JPEG 또는 PNG 형식의 파일만 업로드할 수 있습니다.");
+        e.target.value = ""; // 선택한 파일 무효화(올바르지 않은 파일 형식일 경우)
+      } else {
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          mediaFiles: [
+            ...prevFormData.mediaFiles,
+            ...filteredFiles.filter(file => !prevFormData.mediaFiles.some(f => f.name === file.name)), // 기존 파일 중복 방지
+          ],
+        }));
+      }
+    }
+  };
+  // 파일 삭제하는 함수
+  const handleFileDelete = (fileName: string) => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      mediaFiles: prevFormData.mediaFiles.filter(file => file.name !== fileName),
+    }));
+  };
+
   // 폼 제출 핸들러
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!subjects.includes(formData.subject)) {
       alert("정확한 교과목명을 입력하세요.");
       return;
     }
 
     if (isFormValid) {
-      // API 통신 로직을 추가
-      console.log("폼 제출:", formData);
+      try {
+        await postNewQna(formData); // API 호출
+        alert("Q&A 게시글이 성공적으로 등록되었습니다.");
+        window.location.href = "/board/question"; // 작성 완료 후 이동할 페이지로 변경
+      } catch (error) {
+        alert("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+      }
     } else {
       alert("모든 필수 항목을 채워주세요.");
     }
   };
+
   return (
     <>
       <QnaPostNav />
@@ -141,7 +181,7 @@ export default function QnaPostPage() {
         <div className="rounded-lg">
           <form>
             <label htmlFor="title" className="mb-[26px] block">
-              <span className="font-pretendard-semibold mr-1 text-lg">제목</span>
+              <span className="font-pretendard-semibold mr-1.5 text-lg">제목</span>
               <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
               <input
                 type="text"
@@ -157,7 +197,7 @@ export default function QnaPostPage() {
 
             {/* 질문 */}
             <label htmlFor="content" className="mb-[26px] block">
-              <span className="font-pretendard-semibold mr-1 text-lg">질문</span>
+              <span className="font-pretendard-semibold mr-1.5 text-lg">질문</span>
               <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
               <textarea
                 name="content"
@@ -170,10 +210,20 @@ export default function QnaPostPage() {
               />
             </label>
 
+            {/* 파일 업로드 */}
+            <div className="mb-[26px] block">
+              <span className="font-pretendard-semibold mr-1.5 text-lg">파일</span>
+              <QnaPostFileUpload
+                mediaFiles={formData.mediaFiles}
+                onFileChange={handleFileChange}
+                onFileDelete={handleFileDelete}
+              />
+            </div>
+
             {/* 교과목명 검색 */}
             <div className="mb-[26px] block">
               <div className="mb-3">
-                <span className="font-pretendard-semibold mr-1 text-lg">교과목명 검색</span>
+                <span className="font-pretendard-semibold mr-1.5 text-lg">교과목명 검색</span>
                 <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
               </div>
               <SubjectSearchInput value={formData.subject} onChange={handleSubjectChange} />
@@ -183,12 +233,12 @@ export default function QnaPostPage() {
             <div
               role="button"
               tabIndex={0} // Focus 가능하도록 설정. 에러 수정
-              className="mb-[26px] block cursor-pointer"
+              className="mb-[26px] flex cursor-pointer items-center"
               onClick={toggleJiJeongTagModal}
               onKeyDown={e => e.key === "Enter" && toggleJiJeongTagModal()}
             >
-              <span className="font-pretendard-semibold mr-2 text-lg"> 정적 태그 {">"}</span>
-              <div className="mt-2 flex flex-wrap gap-1">
+              <span className="font-pretendard-semibold mr-[14px] text-lg"> 정적 태그 {">"}</span>
+              <div className="flex flex-wrap gap-1.5">
                 {formData.questionPresetTags.map(tag => (
                   <span
                     key={tag}
@@ -201,38 +251,49 @@ export default function QnaPostPage() {
             </div>
 
             {/* 엽전 현상금 */}
-            <button type="button" className="mb-[26px] flex cursor-pointer flex-col" onClick={toggleRewardModal}>
-              <div className="font-pretendard-semibold mr-2 text-lg"> 엽전 현상금 {">"}</div>
+            <button type="button" className="mb-[26px] flex cursor-pointer items-center" onClick={toggleRewardModal}>
+              <div className="font-pretendard-semibold mr-[14px] text-lg"> 엽전 현상금 {">"}</div>
               <YeopjeonTag point={formData.reward} />
             </button>
 
             {/* 커스텀 태그 */}
             <label htmlFor="customTags" className="mb-[26px] block">
-              <span className="font-pretendard-semibold mr-1 text-lg"> 커스텀 태그</span>
+              <span className="font-pretendard-semibold mr-1.5 text-lg"> 커스텀 태그</span>
               <span className="font-pretendard-medium text-base text-[#F46B01]"> 10자 이하, 4개 이하</span>
               {/* 태그 리스트 */}
-              <div className="mb-4 mt-1 flex flex-wrap gap-1">
+              <div className="mb-4 mt-1 flex flex-wrap gap-1.5">
                 {formData.customTags.map(tag => (
                   <span
                     key={tag}
-                    className="font-pretendard-bold flex items-center rounded-full bg-[#F46B01] px-3 py-1 text-xs text-white"
+                    className="font-pretendard-bold flex items-center rounded-full bg-[#5ED513] px-3 text-xs text-white"
                   >
                     {tag}
-                    <button type="button" onClick={() => removeTag(tag)} className="ml-1 font-semibold text-white">
+                    <button
+                      type="button"
+                      onClick={() => removeTag(tag)}
+                      className="ml-2 text-base font-bold text-white"
+                    >
                       &times;
                     </button>
                   </span>
                 ))}
               </div>
-              <input
-                type="text"
-                name="customTags"
-                placeholder="Tab,Enter로 구분해 태그를 입력해주세요."
-                value={tagInput}
-                onChange={handleTagInputChange} // 값을 변경할 때 호출
-                onKeyDown={handleTagInputKeyDown} // 수정한 함수 적용
-                className="w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base"
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  name="customTags"
+                  placeholder="Tab,Enter로 구분해 태그를 입력해주세요."
+                  value={tagInput}
+                  onChange={handleTagInputChange}
+                  onKeyDown={handleTagInputKeyDown}
+                  maxLength={10} // 최대 10자 제한
+                  className="w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base placeholder:text-sm"
+                />
+                {/* 글자 수 표시 */}
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 transform text-sm text-gray-500">
+                  {tagInput.length} / 10자
+                </span>
+              </div>
             </label>
 
             {/* 추가 설정 */}
