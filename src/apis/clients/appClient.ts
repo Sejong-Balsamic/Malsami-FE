@@ -36,7 +36,7 @@ apiClient.interceptors.response.use(
     const originalRequest = error.config as AxiosRequestConfig;
 
     // 400,403 오류 발생 시 로그인 페이지로 리다이렉션
-    if ((error.response?.status === 400 || error.response?.status === 403) && !isRedirecting) {
+    if (error.response?.status === 403 && !isRedirecting) {
       isRedirecting = true; // 리다이렉트를 설정했음을 표시
       alert("로그아웃 되었습니다. 다시 로그인해주세요");
       window.location.href = "/login"; // 전체 페이지를 새로고침하면서 이동하기 때문에, 상태나 데이터가 모두 초기화
@@ -62,6 +62,18 @@ apiClient.interceptors.response.use(
         console.error("refreshToken 요청 실패:", refreshError);
         return Promise.reject(refreshError); // 오류를 상위로 전달
       }
+    }
+
+    // 500 오류 처리
+    else {
+      const errorData = error.response?.data;
+      const errorMessage =
+        errorData && typeof errorData === "object" && "errorMessage" in errorData
+          ? (errorData as { errorMessage: string }).errorMessage
+          : "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.";
+
+      console.error("서버 오류:", errorMessage);
+      alert(errorMessage);
     }
 
     return Promise.reject(error); // 다른 에러는 그대로 전달

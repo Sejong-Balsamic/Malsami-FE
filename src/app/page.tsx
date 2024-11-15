@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Nav from "@/components/common/Nav";
-import HotDocument from "@/components/landing/HotDocument";
+import Nav from "@/components/nav/LandingPageNav";
+// import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
 import FabButton from "@/components/common/FAB";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import AllDocument from "@/components/landing/AllDocument";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 
 function Page() {
@@ -233,18 +232,12 @@ function Page() {
               type="text"
               id="search"
               placeholder="과목명이나 키워드를 입력하세요"
-              className="text-[16px]] h-[40px] w-full rounded-md bg-gray-50 pl-8 font-pretendard font-medium text-[#aaaaaa]"
+              className="text-[16px]] h-[40px] w-full rounded-md bg-gray-50 pl-8 font-pretendard font-medium text-[#F46B01]"
             />
           </div>
         </div>
         {/* 인기자료 */}
-        <div className="flex justify-center">
-          <HotDocument />
-        </div>
-        {/* 전체자료 */}
-        <div>
-          <AllDocument />
-        </div>
+        <div className="flex justify-center">{/* <HotDocument /> */}</div>
         {/* 인기질문 */}
         <div className="flex justify-center">
           <HotQuestion />

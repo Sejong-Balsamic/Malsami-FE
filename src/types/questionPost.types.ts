@@ -1,9 +1,9 @@
 export interface QuestionPost {
-  questionPostId: string;
+  postId: string;
   title: string;
   subject: string;
-  JiJeongTags: string[];
-  rewardYeopjeon?: number;
   likeCount: number;
   commentCount: number;
+  JiJeongTags: string[];
+  rewardYeopjeon?: number;
 }

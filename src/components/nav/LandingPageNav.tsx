@@ -12,7 +12,16 @@ function Nav() {
   };
 
   const handleMyPageClick = () => {
-    router.push("/mypage");
+    // accessToken 확인
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if (accessToken) {
+      // accessToken이 존재하는 경우 마이페이지로 이동
+      router.push("/mypage");
+    } else {
+      // accessToken이 존재하지 않는 경우 로그인 페이지로 이동
+      router.push("/login");
+    }
   };
 
   return (
@@ -27,7 +36,7 @@ function Nav() {
         tabIndex={0} // Tab 키로 접근
         aria-label="랜딩페이지"
       >
-        <div className="h-[30px] w-[30px] bg-[#d9d9d9]" />
+        <div className="h-[30px] w-[30px] border bg-[#ffffff]" />
       </div>
 
       <div
