@@ -17,7 +17,7 @@ function FabButton() {
   };
 
   const handleQuestionClick = () => {
-    router.push("/questions/post"); // QuestionIcon 클릭 시 이동할 경로 (확정 아님)
+    router.push("/board/question/post"); // QuestionIcon 클릭 시 이동할 경로 (확정 아님)
   };
 
   return (

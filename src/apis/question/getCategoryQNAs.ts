@@ -6,7 +6,7 @@ interface GetCategoryQnasProps {
   maxYeopjeon?: number; // 엽전 현상금 최대 개수
   questionPresetTags?: string[]; // 정적 태그 필터링
   faculty?: string; // 단과대별 필터링
-  isChaetaek?: boolean; // 아직 채택되지 않은 글 필터링 (기본값 false)
+  isChaetaek?: string; // 채택여부 필터링
   sortOption?: string; // 정렬 조건
   pageNumber?: number; // 조회하고 싶은 페이지 번호 (기본값 0)
   pageSize?: number; // 한 페이지에 조회하고 싶은 글 개수 (기본값 30)
@@ -50,7 +50,7 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
     });
   } else formData.append("questionPresetTags", "");
   if (params.faculty) formData.append("faculty", params.faculty === "전체" ? "" : params.faculty); // faculty값 추가
-  formData.append("viewNotChaetaek", (params.isChaetaek ?? false).toString()); // ??연산자-> 값이 null이나 undefined이면 false로
+  if (params.isChaetaek) formData.append("viewNotChaetaek", params.isChaetaek);
   if (params.sortOption) {
     const englishSortOption = getEnglishSortOption(params.sortOption);
     if (englishSortOption) formData.append("sortType", englishSortOption);

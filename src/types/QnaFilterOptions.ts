@@ -1,5 +1,5 @@
 export interface QnaFilterOptions {
-  rewardYeopjeon: number;
+  isChaeTaek: string;
   tags: string[];
   sortOption: string;
 }

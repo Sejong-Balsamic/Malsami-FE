@@ -14,28 +14,23 @@ import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
 export default function QuestionBoardPage() {
   const [faculty, setFaculty] = useState("전체");
   const [filterOptions, setFilterOptions] = useState<QnaFilterOptions>({
-    rewardYeopjeon: 0,
+    isChaeTaek: "",
     tags: [],
     sortOption: "",
   });
-  const [isChaeTak, setIsChaeTak] = useState(false); // 채택됨 여부
   const [unansweredQNAs, setUnansweredQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
   const [cateogryQNAs, setCategoryQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
 
   const handleFilterChange = (newFilterOptions: QnaFilterOptions) => {
     setFilterOptions(newFilterOptions);
   };
-  const handleChaeTakChange = (newIsChaeTak: boolean) => {
-    setIsChaeTak(newIsChaeTak);
-  };
 
   // 선택한 학과가 변경되면, api호출해 새로운 QNAs 세팅하는 함수
   const fetchSelectFaculty = async () => {
     const params = {
-      maxYeopjeon: filterOptions.rewardYeopjeon,
       questionPresetTags: filterOptions.tags,
       faculty,
-      isChaetaek: isChaeTak,
+      isChaetaek: filterOptions.isChaeTaek,
       sortOption: filterOptions.sortOption,
     };
 
@@ -51,12 +46,12 @@ export default function QuestionBoardPage() {
   // 선택한 필터가 변경되면, api호출해 새로운 QNAs 세팅하는 함수
   const fetchSelectFiltering = async () => {
     const params = {
-      maxYeopjeon: filterOptions.rewardYeopjeon,
       questionPresetTags: filterOptions.tags,
       faculty,
-      isChaetaek: isChaeTak,
+      isChaetaek: filterOptions.isChaeTaek,
       sortOption: filterOptions.sortOption,
     };
+    console.log("필터옵션: ", filterOptions);
 
     try {
       const datas = await getCategoryQNAs(params);
@@ -72,26 +67,23 @@ export default function QuestionBoardPage() {
 
   useEffect(() => {
     fetchSelectFiltering();
-  }, [isChaeTak, filterOptions]); // 채택, 필터링옵션 변경될 대만 실행
+  }, [filterOptions]); // 채택, 필터링옵션 변경될 대만 실행
 
   return (
-    <div className="bg-gray-white">
+    <div className="flex justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <QnaPageNav />
-      <QnaFilterFacultyCategory onSelect={setFaculty} />
-      <div className="font-pretendard-semibold px-5 pb-3 pt-4 text-lg text-custom-blue-500">아직 답변 안 했어요!</div>
-      <div className="bg-[#EEEEEE]">
-        <QnaMovingCard unansweredQNAs={unansweredQNAs} />
-      </div>
-      <FilterControlBar
-        filterOptions={filterOptions}
-        isChaeTak={isChaeTak}
-        onFilterChange={handleFilterChange}
-        onChaeTakChange={handleChaeTakChange}
-      />
-      <div className="h-0.5 bg-[#EEEEEE]" />
-      <div className="px-5 py-4">
-        <QuestionCardList categoryQNAs={cateogryQNAs} />
+      <div className="relative mx-auto h-[3000px] w-full min-w-[386px] max-w-[640px] bg-white">
+        <QnaPageNav />
+        <QnaFilterFacultyCategory onSelect={setFaculty} />
+        <div className="font-pretendard-semibold px-5 pb-3 pt-4 text-lg text-custom-blue-500">아직 답변 안 했어요!</div>
+        <div className="bg-[#EEEEEE]">
+          <QnaMovingCard unansweredQNAs={unansweredQNAs} />
+        </div>
+        <FilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
+        <div className="h-0.5 bg-[#EEEEEE]" />
+        <div className="px-5 py-4">
+          <QuestionCardList categoryQNAs={cateogryQNAs} />
+        </div>
       </div>
     </div>
   );
