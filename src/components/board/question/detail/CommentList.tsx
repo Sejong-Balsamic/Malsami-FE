@@ -1,11 +1,14 @@
 import React from "react";
 
 interface CommentProps {
-  postId: string;
-  uuidNickname: string;
-  isPrivate: boolean;
-  content: string;
+  commentId: string;
   createdDate: string;
+  member: {
+    uuidNickname: string;
+    major: string;
+  };
+  content: string;
+  isPrivate: boolean;
 }
 
 interface CommentListProps {
@@ -19,9 +22,9 @@ function CommentList({ comments }: CommentListProps) {
         <p className="font-pretendard-medium text-[14px] text-[#7b7b7c]">댓글이 없습니다.</p>
       ) : (
         comments.map(comment => (
-          <div key={comment.postId} className="min-h-[88px] min-w-[310px] rounded-lg bg-[#ffffff] p-[14px]">
+          <div key={comment.commentId} className="min-h-[88px] min-w-[310px] rounded-lg bg-[#ffffff] p-[14px]">
             {!comment.isPrivate ? (
-              <span className="font-pretendard-bold mb-[4px] text-[14px]">@{comment.uuidNickname}</span>
+              <span className="font-pretendard-bold mb-[4px] text-[14px]">@{comment.member.uuidNickname}</span>
             ) : (
               <span className="font-pretendard-medium mb-[4px] text-[12px] text-[#737373]">비공개</span>
             )}
