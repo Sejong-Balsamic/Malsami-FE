@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
@@ -8,8 +9,10 @@ import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import YeopjeonTag from "../tags/YeopjeonTag";
+import likePost from "@/apis/question/likePost";
 
 interface QnaDetailProps {
+  postId: string;
   subject: string;
   rewardYeopjeon: number;
   title: string;
@@ -24,6 +27,7 @@ interface QnaDetailProps {
 }
 
 function QnaDetail({
+  postId,
   subject,
   rewardYeopjeon,
   title,
@@ -36,6 +40,26 @@ function QnaDetail({
   commentCount,
   answerCount,
 }: QnaDetailProps) {
+  const [isLiked, setIsLiked] = useState(false);
+  const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
+
+  // 좋아요 클릭 핸들러
+  const handleLikeClick = async () => {
+    try {
+      if (!isLiked) {
+        // 좋아요 API 호출
+        const response = await likePost(postId, "QUESTION");
+        if (response) {
+          // 좋아요 성공 시 상태 업데이트
+          setIsLiked(true);
+          setCurrentLikeCount(currentLikeCount + 1);
+        }
+      }
+    } catch (error) {
+      console.error("좋아요 처리 중 오류:", error);
+    }
+  };
+
   return (
     <div className="flex flex-col justify-center px-[20px]">
       {/* 교과목명 현상금  */}
@@ -79,7 +103,7 @@ function QnaDetail({
         <div className="flex h-[72px] min-w-[336px] max-w-[640px] flex-col">
           <div className="mt-[20px] text-right">
             <div>
-              <span className="font-pretendard-medium mb-[4px] text-[12px]">{uuidNickname}</span>
+              <span className="font-pretendard-medium mb-[4px] text-[12px]">@{uuidNickname}</span>
             </div>
             <div>
               <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">{createdDate}</span>
@@ -90,10 +114,26 @@ function QnaDetail({
         {/* 반응 */}
         <div className="mx-[5px] mt-4 flex justify-start">
           <div className="flex items-center gap-[10px]">
-            <div className="flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
-              <Image src="/icons/Like_Unclicked.svg" alt="Like_Unclicked" width={16} height={16} />
-              <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">{likeCount}</span>
-            </div>
+          <div
+      onClick={handleLikeClick}
+      className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${
+        isLiked ? "border-[#03b89e]" : "border-[#e7e7e7]"
+      } cursor-pointer`}
+    >
+      <Image
+        src={isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_Unclicked.svg"}
+        alt={isLiked ? "Like_Clicked" : "Like_Unclicked"}
+        width={16}
+        height={16}
+      />
+      <span
+        className={`font-pretendard-semibold text-[12px] ${
+          isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"
+        }`}
+      >
+        {currentLikeCount}
+      </span>
+    </div>
             <Drawer>
               <DrawerTrigger asChild>
                 <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">

@@ -15,7 +15,7 @@ export default function Page() {
 
   // 기본 postId 설정
   if (!postId) {
-    postId = "82902322-8e0b-4eef-a7f6-2e468c86c3e0";
+    postId = "49a3d54f-1f5b-42fd-9337-456c7bb8f199"; // 테스트용
   }
 
   // 상태 관리
@@ -54,6 +54,7 @@ export default function Page() {
       <DetailPageNav />
       {questionDetails && (
         <QnaDetail
+          postId={questionDetails.questionPost.questionPostId}
           subject={questionDetails.questionPost.subject}
           rewardYeopjeon={questionDetails.questionPost.rewardYeopjeon}
           title={questionDetails.questionPost.title}
