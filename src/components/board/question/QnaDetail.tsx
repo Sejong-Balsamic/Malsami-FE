@@ -122,7 +122,7 @@ function QnaDetail({
     >
       <Image
         src={isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_UnClicked.svg"}
-        alt={isLiked ? "Like_Clicked" : "Like_Unclicked"}
+        alt={isLiked ? "Like_Clicked" : "Like_UnClicked"}
         width={16}
         height={16}
       />
@@ -201,7 +201,7 @@ function QnaDetail({
                 <p className="font-pretendard-medium text-[12px] text-[#bcbcbc]">3시간 전</p>
                 <AccordionTrigger>
                   <div className="flex cursor-pointer items-center gap-1">
-                    <Image src="/icons/Comment_Unclicked.svg" alt="Comment_Unclicked" width={16} height={16} />
+                    <Image src="/icons/Comment_UnClicked.svg" alt="Comment_Unclicked" width={16} height={16} />
                     <p className="font-pretendard-medium text-[14px] text-[#bcbcbc]">3</p>
                   </div>
                 </AccordionTrigger>
