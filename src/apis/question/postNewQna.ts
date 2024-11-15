@@ -5,11 +5,11 @@ interface QnaPostFormData {
   title: string;
   content: string;
   subject: string;
-  customTags: string[];
-  questionPresetTags: string[];
+  customTags?: string[];
+  questionPresetTags?: string[];
   reward?: number;
   isPrivate?: boolean;
-  mediaFiles: File[];
+  mediaFiles?: File[];
 }
 
 export default async function postNewQna(data: QnaPostFormData) {
@@ -56,12 +56,12 @@ export default async function postNewQna(data: QnaPostFormData) {
   // 첨부 파일
   if (data.mediaFiles && data.mediaFiles.length > 0) {
     data.mediaFiles.forEach(file => {
-      formData.append("customTags", file);
+      formData.append("mediaFiles", file);
     });
   }
 
   try {
-    const response = await apiClient.post("/api/question/get/filtered-posts", formData, {
+    const response = await apiClient.post("/api/question/post", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
@@ -69,6 +69,6 @@ export default async function postNewQna(data: QnaPostFormData) {
     return response.data;
   } catch (error) {
     console.log("Q&A 게시글 등록 중 오류 발생:", error);
-    throw error; // 오류 발생 시 오류를 그대로 throw
+    throw error;
   }
 }
