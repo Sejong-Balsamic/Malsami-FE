@@ -36,7 +36,7 @@ function Nav() {
         tabIndex={0} // Tab 키로 접근
         aria-label="랜딩페이지"
       >
-        <div className="h-[30px] w-[30px] bg-[#d9d9d9]" />
+        <div className="h-[30px] w-[30px] border bg-[#ffffff]" />
       </div>
 
       <div

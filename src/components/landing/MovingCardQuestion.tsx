@@ -10,7 +10,6 @@ interface MovingCardQuestionProps {
 }
 
 function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
-  // Default to empty array
   const colors = ["#03B89E", "#F46B02", "#5ED513"];
 
   const slidesPerView = (data?.length || 0) > 1 ? 2 : 1; // 혹시나 데이터가 10보다 작을 때 ...
