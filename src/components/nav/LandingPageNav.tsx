@@ -12,7 +12,16 @@ function Nav() {
   };
 
   const handleMyPageClick = () => {
-    router.push("/mypage");
+    // accessToken 확인
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if (accessToken) {
+      // accessToken이 존재하는 경우 마이페이지로 이동
+      router.push("/mypage");
+    } else {
+      // accessToken이 존재하지 않는 경우 로그인 페이지로 이동
+      router.push("/login");
+    }
   };
 
   return (
