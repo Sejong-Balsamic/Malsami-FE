@@ -13,6 +13,9 @@ import likePost from "@/apis/question/likePost";
 import CommentList from "./CommentList";
 import CommentInput from "./CommentInput";
 import getComments from "@/apis/question/getComment";
+import getQuestionDetails from "@/apis/question/getQuestionDetails";
+import AnswerSection from "./AnswerSection";
+import { Answer } from "@/types/answer";
 
 interface QnaDetailProps {
   postId: string;
@@ -28,7 +31,6 @@ interface QnaDetailProps {
   commentCount: number;
   answerCount: number;
 }
-
 
 function QnaDetail({
   postId,
@@ -47,52 +49,73 @@ function QnaDetail({
   const [isLiked, setIsLiked] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
   const [currentCommentCount, setCurrentCommentCount] = useState(commentCount);
-  const [questionComments, setQuestionComments] = useState([]);
-  const [answerComments, setAnswerComments] = useState([]);
+  const [questionComments, setQuestionComments] = useState<any[]>([]);
+  const [answerComments, setAnswerComments] = useState<any[]>([]);
+  const [answers, setAnswers] = useState<Answer[]>([]); 
 
-  // 좋아요 클릭 핸들러
+  useEffect(() => {
+    const fetchQuestionDetails = async () => {
+      try {
+        const response = await getQuestionDetails(postId);
+        if (response.answerPosts) {
+          const mappedAnswers = response.answerPosts.map((answer: any) => ({
+            answerPostId: answer.answerPostId,
+            member: {
+              uuidNickname: answer.member.uuidNickname,
+              major: answer.member.major,
+            },
+            content: answer.content,
+            createdDate: answer.createdDate,
+            commentCount: answer.commentCount || 0,
+          }));
+          setAnswers(mappedAnswers);
+        }
+      } catch (error) {
+        console.error("Failed to fetch question details:", error);
+      }
+    };
+
+    fetchQuestionDetails();
+  }, [postId]);
+
   const handleLikeClick = async () => {
     try {
       if (!isLiked) {
-        // 좋아요 API 호출
         const response = await likePost(postId, "QUESTION");
         if (response) {
-          // 좋아요 성공 시 상태 업데이트
           setIsLiked(true);
           setCurrentLikeCount(currentLikeCount + 1);
         }
       }
     } catch (error) {
-      console.error("좋아요 처리 중 오류:", error);
+      console.error("Failed to handle like click:", error);
     }
   };
 
-  const fetchQuestionComments = async () => {
+  const fetchComments = async (contentType: string, setComments: React.Dispatch<React.SetStateAction<any[]>>, setCount?: (count: number) => void) => {
     try {
-      const response = await getComments({ postId, contentType: "QUESTION" });
+      const response = await getComments({ postId, contentType });
       if (response?.commentsPage?.content) {
-        setQuestionComments(response.commentsPage.content);
-        setCurrentCommentCount(response.commentsPage.totalElements);
+        setComments(response.commentsPage.content);
+        if (setCount) {
+          setCount(response.commentsPage.totalElements);
+        }
       }
     } catch (error) {
-      console.error("Failed to fetch question comments:", error);
+      console.error(`Failed to fetch ${contentType.toLowerCase()} comments:`, error);
     }
   };
 
-  const fetchAnswerComments = async () => {
-    try {
-      const response = await getComments({ postId, contentType: "ANSWER" });
-      if (response?.commentsPage?.content) {
-        setAnswerComments(response.commentsPage.content);
-      }
-    } catch (error) {
-      console.error("Failed to fetch answer comments:", error);
-    }
+  const refreshComments = (contentType: string) => {
+    fetchComments(contentType, 
+      contentType === "QUESTION" ? setQuestionComments : setAnswerComments, 
+      contentType === "QUESTION" ? setCurrentCommentCount : undefined
+    );
   };
 
   useEffect(() => {
-    fetchQuestionComments();
-    fetchAnswerComments();
+    fetchComments("QUESTION", setQuestionComments, setCurrentCommentCount);
+    fetchComments("ANSWER", setAnswerComments);
   }, [postId]);
 
   return (
@@ -184,7 +207,7 @@ function QnaDetail({
                   </DrawerTitle>
                 </DrawerHeader>
                 <div className="max-h-[400px] overflow-y-auto">
-                <CommentInput postId={postId} contentType="QUESTION" refreshComments={fetchQuestionComments}/>
+                <CommentInput postId={postId} contentType="QUESTION" refreshComments={() => refreshComments("QUESTION")}/>
                 {/* 댓글 정보 */}
                 <CommentList comments={questionComments}/>
                 </div>
@@ -194,46 +217,12 @@ function QnaDetail({
         </div>
       </div>
       {/* 답변 */}
-      <div className="my-[40px] flex h-auto min-w-[336px] max-w-[640px] flex-col">
-        <span className="font-pretendard-bold mb-[10px] text-[14px] text-[#3D3D3D]">답변 {answerCount}</span>
-        {/* 답변 정보 */}
-        <div className="my-[30px] flex flex-col gap-[12px] rounded-lg bg-[#f7f8fb] p-[12px]">
-          <div>
-            <Button
-              variant="ghost"
-              className="font-pretendard-medium mr-[6px] h-[26px] rounded-[13px] bg-[#0062D2] px-[15px] py-[6px] text-[12px] text-[#ffffff]"
-            >
-              채택됨
-            </Button>
-            <span className="font-pretendard-bold mb-[4px] text-[14px]">@280fee</span>
-            <span className="font-pretendard-medium mb-[4px] text-[12px] text-[#737373]"> • 경영학과</span>
-          </div>
-          <div className="font-pretendard-medium m-auto text-[14px] leading-relaxed text-[#444444]">
-            우리차문화 정리본 여기있습니다...우리차문화 정리본 여기있습니다...우리차문화 정리본
-            여기있습니다...우리차문화 정리본 여기있습니다...
-          </div>
-          {/* 답변 댓글 */}
-          <Accordion type="single" collapsible>
-            <AccordionItem value="item-1">
-              <div className="flex w-full justify-between pb-[36px]">
-                <p className="font-pretendard-medium text-[12px] text-[#bcbcbc]">3시간 전</p>
-                <AccordionTrigger>
-                  <div className="flex cursor-pointer items-center gap-1">
-                    <Image src="/icons/Comment_UnClicked.svg" alt="Comment_Unclicked" width={16} height={16} />
-                    <p className="font-pretendard-medium text-[14px] text-[#bcbcbc]">3</p>
-                  </div>
-                </AccordionTrigger>
-              </div>
-              <AccordionContent>
-                {/* 답변 댓글 작성 */}
-                <CommentInput postId={postId} contentType="ANSWER" refreshComments={fetchAnswerComments} />
-                {/* 답변 댓글 정보 */}
-                <CommentList comments={answerComments} />
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-      </div>
+      <AnswerSection
+        postId={postId}
+        answers={answers}
+        answerComments={answerComments}
+        fetchAnswerComments={() => fetchComments("ANSWER", setAnswerComments)}
+      />
     </div>
   );
 }

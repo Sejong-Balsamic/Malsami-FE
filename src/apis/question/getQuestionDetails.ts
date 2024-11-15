@@ -18,6 +18,13 @@ interface QuestionDtoResponse {
     rewardYeopjeon: number;
     isPrivate: boolean;
   };
+  answerPosts: {
+    member: {
+      uuidNickname: string;
+      major: string;
+    };
+    content: string;
+  }[];
 }
 
 // 특정 질문 글을 조회하는 함수
