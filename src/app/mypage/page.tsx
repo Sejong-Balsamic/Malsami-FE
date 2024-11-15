@@ -21,7 +21,11 @@ export default function MyPage() {
     <div className="bg-gray-white">
       <ScrollToTopOnLoad />
       <div className="flex min-h-screen flex-col items-center justify-center">
-        <button onClick={handleLogout} className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700">
+        <button
+          type="button"
+          onClick={handleLogout}
+          className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
+        >
           Log Out
         </button>
       </div>
