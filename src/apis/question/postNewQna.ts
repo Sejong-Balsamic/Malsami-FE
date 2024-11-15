@@ -12,7 +12,7 @@ interface QnaPostFormData {
   mediaFiles: File[];
 }
 
-export async function postNewQna(data: QnaPostFormData) {
+export default async function postNewQna(data: QnaPostFormData) {
   const formData = new FormData();
 
   const tagMapping: { [key: string]: string } = {
