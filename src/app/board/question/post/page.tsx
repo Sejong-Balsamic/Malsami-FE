@@ -11,7 +11,7 @@ import QnaPostRewardModal from "@/components/board/question/post/QnaPostRewardMo
 import QnaPostJiJeongTagModal from "@/components/board/question/post/QnaPostJiJeongTagModal";
 import QnaPostFileUpload from "@/components/board/question/post/QnaPostFileUpload";
 import YeopjeonTag from "@/components/board/tags/YeopjeonTag";
-import { postNewQna } from "@/apis/question/postNewQna";
+import postNewQna from "@/apis/question/postNewQna";
 
 interface QnaPostFormData {
   title: string;
