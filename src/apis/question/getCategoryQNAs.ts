@@ -29,6 +29,11 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
     "공부 팁": "STUDY_TIPS",
     "조언 구함": "ADVICE_REQUEST",
   };
+  const chaetaekMapping: { [key: string]: string } = {
+    전체: "ALL",
+    채택: "CHAETAEK",
+    미채택: "NO_CHAETAEK",
+  };
 
   const formData = new FormData();
 
@@ -41,8 +46,6 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
   formData.append("pageNumber", (params.pageNumber ?? 0).toString());
   formData.append("pageSize", (params.pageSize ?? 30).toString());
   // 선택적 파라미터 추가
-  // if (params.maxYeopjeon !== undefined) formData.append("maxYeopjeon", params.maxYeopjeon.toString());
-  if (params.maxYeopjeon) formData.append("maxYeopjeon", params.maxYeopjeon.toString());
   if (params.questionPresetTags && params.questionPresetTags.length > 0) {
     params.questionPresetTags.forEach(tag => {
       const englishTag = tagMapping[tag]; // 한국어 태그를 영어로 변환
@@ -50,7 +53,7 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
     });
   } else formData.append("questionPresetTags", "");
   if (params.faculty) formData.append("faculty", params.faculty === "전체" ? "" : params.faculty); // faculty값 추가
-  if (params.isChaetaek) formData.append("viewNotChaetaek", params.isChaetaek);
+  if (params.isChaetaek) formData.append("chaetaekStatus", chaetaekMapping[params.isChaetaek]);
   if (params.sortOption) {
     const englishSortOption = getEnglishSortOption(params.sortOption);
     if (englishSortOption) formData.append("sortType", englishSortOption);
