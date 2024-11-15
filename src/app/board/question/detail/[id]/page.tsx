@@ -12,6 +12,7 @@ export default function Page() {
   // useParams를 사용해 URL의 동적 파라미터를 가져옴
   const params = useParams();
   let postId = Array.isArray(params.id) ? params.id[0] : params.id;
+  console.log("Retrieved postId:", postId); // Log it here
 
   // 기본 postId 설정
   if (!postId) {
@@ -30,7 +31,7 @@ export default function Page() {
         try {
           setLoading(true); // 로딩 상태 활성화
           const data = await getQuestionDetails(postId); // postId를 이용해 API 호출
-          setQuestionDetails(data); // 데이터 설정
+          setQuestionDetails({ ...data, questionPost: { ...data.questionPost, questionPostId: postId } }); // postId 설정
         } catch (innerError) {
           console.error("질문 상세 정보 가져오기 실패:", error);
           setError(error); // 오류 설정
