@@ -23,8 +23,16 @@ interface QuestionDtoResponse {
 // 특정 질문 글을 조회하는 함수
 export default async function getQuestionDetails(postId: string): Promise<QuestionDtoResponse> {
   try {
-    // 특정 질문 글을 조회하기 위한 POST 요청을 보냄
-    const response = await apiClient.post<QuestionDtoResponse>("/api/question/get", { postId });
+    // `FormData` 객체를 생성해 `postId` 추가
+    const formData = new FormData();
+    formData.append("postId", postId);
+
+    // 특정 질문 글을 조회하기 위한 POST 요청을 보냄 (multipart/form-data 사용)
+    const response = await apiClient.post<QuestionDtoResponse>("/api/question/get", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
 
     // 응답 데이터를 반환
     return response.data;
