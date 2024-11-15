@@ -1,9 +1,30 @@
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import MovingCard from "./MovingCardQuestion";
+import { fetchWeeklyHotDocuments, fetchDailyHotDocuments } from "@/apis/landing/fetchHot";
+import { DocumentPost } from "@/types/documentPost.types";
+import MovingCardDocument from "./MovingCardDocument";
 
 function HotDocument() {
+  const [weekData, setWeekData] = useState<DocumentPost[]>([]);
+  const [dayData, setDayData] = useState<DocumentPost[]>([]);
+
+  useEffect(() => {
+    const getWeeklyData = async () => {
+      const data = await fetchWeeklyHotDocuments();
+      setWeekData(data);
+    };
+
+    const getDailyData = async () => {
+      const data = await fetchDailyHotDocuments();
+      setDayData(data);
+    };
+
+    getWeeklyData();
+    getDailyData();
+  }, []);
+
   return (
     <Tabs defaultValue="weekend" className="h-[400px] w-[400px]">
       <div className="flex justify-center">
@@ -26,7 +47,9 @@ function HotDocument() {
               세종말싸미에서 이번 주의 인기자료를 만나보세요.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex justify-center space-y-2">{/* <MovingCard /> */}</CardContent>
+          <CardContent className="flex justify-center space-y-2">
+            <MovingCardDocument data={weekData} />
+          </CardContent>
           <CardFooter>
             <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
               더보기
@@ -44,7 +67,9 @@ function HotDocument() {
               세종말싸미에서 오늘의 인기자료를 만나보세요.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">{/* <MovingCard /> */} </CardContent>
+          <CardContent className="space-y-2">
+            <MovingCardDocument data={dayData} />
+          </CardContent>
           <CardFooter>
             <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
               더보기

@@ -2,12 +2,11 @@
 
 import React, { useEffect, useState } from "react";
 import Nav from "@/components/nav/LandingPageNav";
-import HotDocument from "@/components/landing/HotDocument";
+// import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
 import FabButton from "@/components/common/FAB";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
-import AllDocument from "@/components/landing/AllDocument";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 
 function Page() {
@@ -238,13 +237,7 @@ function Page() {
           </div>
         </div>
         {/* 인기자료 */}
-        <div className="flex justify-center">
-          <HotDocument />
-        </div>
-        {/* 전체자료 */}
-        <div>
-          <AllDocument />
-        </div>
+        <div className="flex justify-center">{/* <HotDocument /> */}</div>
         {/* 인기질문 */}
         <div className="flex justify-center">
           <HotQuestion />
