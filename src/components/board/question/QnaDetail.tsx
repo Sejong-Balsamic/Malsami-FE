@@ -5,6 +5,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import JiJeongTag from "@/components/common/tags/JiJeongTag";
+import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import YeopjeonTag from "../tags/YeopjeonTag";
 
@@ -68,10 +69,44 @@ function QnaDetail() {
               <Image src="/icons/Like_Unclicked.svg" alt="Like_Unclicked" width={16} height={16} />
               <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">13</span>
             </div>
-            <div className="flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
-              <Image src="/icons/Comment_Unclicked.svg" alt="Comment_Unclicked" width={16} height={16} />
-              <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">13</span>
-            </div>
+            <Drawer>
+              <DrawerTrigger asChild>
+                <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
+                  <Image src="/icons/Comment_Unclicked.svg" alt="Comment_Unclicked" width={16} height={16} />
+                  <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">13</span>
+                </div>
+              </DrawerTrigger>
+              <DrawerContent className="px-[20px] pb-[20px]">
+                <DrawerHeader className="px-0">
+                  <DrawerTitle className="font-pretendard-bold flex text-[14px] text-[#3c3c3c]">
+                    댓글 3
+                  </DrawerTitle>
+                </DrawerHeader>
+                <div className="mb-[20px] min-h-[70px] min-w-[310px] rounded-lg border border-[#d9d9d9] p-[14px]">
+                  <div className="mb-[10px] flex items-center">
+                    <Input
+                      type="text"
+                      placeholder="댓글을 입력해주세요."
+                      className="font-pretendard-medium h-[32px] flex-1 border-none text-[12px] text-[#000000] placeholder-[#bcbcbc] focus:ring-0"
+                    />
+                  </div>
+                  <div className="m-auto flex items-center justify-between">
+                    <div className="flex items-center gap-[4px]">
+                      <Checkbox id="Anonymous" />
+                      <p className="font-pretendard-medium text-[12px] text-[#727272]">익명</p>
+                    </div>
+                    <Image src="/icons/Save.svg" alt="Comment_Unclicked" width={24} height={24} />
+                  </div>
+                </div>
+                {/* 댓글 정보 */}
+                <div className="min-h-[88px] min-w-[310px] rounded-lg bg-[#f7f8fb] p-[14px]">
+                  <span className="font-pretendard-bold mb-[4px] text-[14px]">@280fee</span>
+                  <span className="font-pretendard-medium mb-[4px] text-[12px] text-[#737373]"> • 비공개</span>
+                  <p className="font-pretendard-medium min-h-[20px] w-full text-[14px] text-[#7b7b7c]">와 굿굿</p>
+                  <div className="font-pretendard-medium mb-[10px] text-[12px] text-[#bcbcbc]">1일전</div>
+                </div>
+              </DrawerContent>
+            </Drawer>
           </div>
         </div>
       </div>
