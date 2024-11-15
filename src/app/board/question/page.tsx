@@ -19,7 +19,7 @@ export default function QuestionBoardPage() {
     sortOption: "",
   });
   const [unansweredQNAs, setUnansweredQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
-  const [cateogryQNAs, setCategoryQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
+  const [categoryQNAs, setCategoryQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
 
   const handleFilterChange = (newFilterOptions: QnaFilterOptions) => {
     setFilterOptions(newFilterOptions);
@@ -82,7 +82,7 @@ export default function QuestionBoardPage() {
         <FilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
         <div className="h-0.5 bg-[#EEEEEE]" />
         <div className="px-5 py-4">
-          <QuestionCardList categoryQNAs={cateogryQNAs} />
+          <QuestionCardList categoryQNAs={categoryQNAs} />
         </div>
       </div>
     </div>

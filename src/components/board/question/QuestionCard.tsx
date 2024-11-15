@@ -16,6 +16,7 @@ interface QuestionCardProps {
   likeCount: number;
   commentCount: number;
   rewardYeopjeon: number;
+  isChaetaek: boolean;
 }
 
 const tagTranslations: { [key: string]: string } = {
@@ -38,6 +39,7 @@ function QuestionCard({
   likeCount,
   commentCount,
   rewardYeopjeon = 0,
+  isChaetaek,
 }: QuestionCardProps) {
   const displayThumbnail = thumbnail || "/image/PartyPopper.jpg";
 
@@ -45,7 +47,7 @@ function QuestionCard({
     <div className="... mb-3 flex flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]">
       <div className="mb-2">
         {rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
-        <ChaeTakTag />
+        {isChaetaek && <ChaeTakTag />}
         {JiJeongTags.map(tag => (
           <JiJeongTag key={tag} label={tagTranslations[tag] ?? tag} />
         ))}
