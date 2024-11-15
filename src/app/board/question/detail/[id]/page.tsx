@@ -12,7 +12,6 @@ export default function Page() {
   // useParams를 사용해 URL의 동적 파라미터를 가져옴
   const params = useParams();
   let postId = Array.isArray(params.id) ? params.id[0] : params.id;
-  console.log("Retrieved postId:", postId); // Log it here
 
   // 기본 postId 설정
   if (!postId) {
