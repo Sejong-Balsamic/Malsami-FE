@@ -11,14 +11,14 @@ interface QnaBottomSheetModalProps {
 
 function QnaPostRewardModal({ reward, isVisible, onClose, onSelectReward }: QnaBottomSheetModalProps) {
   const [newReward, setNewReward] = useState(reward);
-  const maxReward = 100; // 최대 엽전 값
+  const maxReward = 300; // 최대 엽전 값
 
   const decreaseReward = () => {
-    if (newReward > 0) setNewReward(newReward - 1);
+    if (newReward > 10) setNewReward(newReward - 10);
   };
 
   const increaseReward = () => {
-    if (newReward < maxReward) setNewReward(newReward + 1);
+    if (newReward < maxReward - 10) setNewReward(newReward + 10);
   };
 
   const handleRewardChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,19 +52,19 @@ function QnaPostRewardModal({ reward, isVisible, onClose, onSelectReward }: QnaB
       <button
         type="button"
         onClick={decreaseReward}
-        className="mr-4 w-10 rounded-2xl bg-gray-200 px-3 py-1 text-lg font-semibold"
+        className="w-15 mr-4 rounded-2xl bg-gray-200 px-3 py-1 text-lg font-semibold"
         disabled={newReward <= 0}
       >
-        -
+        -10
       </button>
       {/* + 버튼 */}
       <button
         type="button"
         onClick={increaseReward}
-        className="w-10 rounded-2xl bg-gray-200 px-3 py-1 text-lg font-semibold"
+        className="w-15 rounded-2xl bg-gray-200 px-3 py-1 text-lg font-semibold"
         disabled={newReward >= maxReward}
       >
-        +
+        +10
       </button>
       {/* 고정된 SubmitFormBtn */}
       <div className="absolute bottom-0 left-0 w-full bg-white px-[30px] py-4">
