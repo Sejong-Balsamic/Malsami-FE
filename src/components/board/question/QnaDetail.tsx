@@ -121,7 +121,7 @@ function QnaDetail({
       } cursor-pointer`}
     >
       <Image
-        src={isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_Unclicked.svg"}
+        src={isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_UnClicked.svg"}
         alt={isLiked ? "Like_Clicked" : "Like_Unclicked"}
         width={16}
         height={16}
@@ -137,7 +137,7 @@ function QnaDetail({
             <Drawer>
               <DrawerTrigger asChild>
                 <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
-                  <Image src="/icons/Comment_Unclicked.svg" alt="Comment_Unclicked" width={16} height={16} />
+                  <Image src="/icons/Comment_UnClicked.svg" alt="Comment_UnClicked" width={16} height={16} />
                   <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">{commentCount}</span>
                 </div>
               </DrawerTrigger>
@@ -160,7 +160,7 @@ function QnaDetail({
                       <Checkbox id="Anonymous" />
                       <p className="font-pretendard-medium text-[12px] text-[#727272]">익명</p>
                     </div>
-                    <Image src="/icons/Save.svg" alt="Comment_Unclicked" width={24} height={24} />
+                    <Image src="/icons/Save.svg" alt="Save" width={24} height={24} />
                   </div>
                 </div>
                 {/* 댓글 정보 */}
