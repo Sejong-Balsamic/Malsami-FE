@@ -10,6 +10,7 @@ import QnaPageNav from "@/components/nav/QnaPageNav";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import getUnansweredQNAs from "@/apis/question/getUnansweredQNAs";
 import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
+import FabButton from "@/components/common/FAB";
 
 export default function QuestionBoardPage() {
   const [faculty, setFaculty] = useState("전체");
@@ -85,6 +86,7 @@ export default function QuestionBoardPage() {
           <QuestionCardList categoryQNAs={categoryQNAs} />
         </div>
       </div>
+      <FabButton />
     </div>
   );
 }
