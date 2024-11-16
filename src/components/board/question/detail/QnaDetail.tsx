@@ -16,6 +16,8 @@ import getComments from "@/apis/question/getComment";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import AnswerSection from "./AnswerSection";
 import { Answer } from "@/types/answer";
+import getDateDiff from "@/utils/getDateDiff";
+
 
 interface QnaDetailProps {
   postId: string;
@@ -164,7 +166,7 @@ function QnaDetail({
               <span className="font-pretendard-medium mb-[4px] text-[12px]">@{uuidNickname}</span>
             </div>
             <div>
-              <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">{createdDate}</span>
+              <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">{getDateDiff(createdDate)}</span>
               <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]"> • 조회수 {viewCount}</span>
             </div>
           </div>
