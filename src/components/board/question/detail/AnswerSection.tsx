@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import Image from "next/image";
 import { Answer } from "@/types/answer";
+import getDateDiff from "@/utils/getDateDiff";
 import CommentList from "./CommentList";
 import CommentInput from "./CommentInput";
 
@@ -41,7 +42,10 @@ function AnswerSection({ postId, answers, answerComments, fetchAnswerComments }:
           <Accordion type="single" collapsible>
             <AccordionItem value={`item-${index}`}>
               <div className="flex w-full justify-between pb-[36px]">
-                <p className="font-pretendard-medium text-[12px] text-[#bcbcbc]">{answer.createdDate}</p>
+                <p className="font-pretendard-medium text-[12px] text-[#bcbcbc]">
+                  {" "}
+                  <p className="font-pretendard-medium text-[12px] text-[#bcbcbc]">{getDateDiff(answer.createdDate)}</p>
+                </p>
                 <AccordionTrigger>
                   <div className="flex cursor-pointer items-center gap-1">
                     <Image src="/icons/Comment_UnClicked.svg" alt="Comment_Unclicked" width={16} height={16} />
