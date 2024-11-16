@@ -19,7 +19,6 @@ import { Answer } from "@/types/answer";
 import getDateDiff from "@/utils/getDateDiff";
 import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
 
-
 interface QnaDetailProps {
   postId: string;
   subject: string;
@@ -33,23 +32,24 @@ interface QnaDetailProps {
   likeCount: number;
   commentCount: number;
   answerCount: number;
+  customTags: string[];
 }
 
-  // 한국어 태그 매핑 (직접 사용)
-  const tagMapping: { [key: string]: string } = {
-    "OUT_OF_CLASS": "수업 외 내용",
-    "UNKNOWN_CONCEPT": "개념 모름",
-    "BETTER_SOLUTION": "더 나은 풀이",
-    "EXAM_PREPARATION": "시험 대비",
-    "DOCUMENT_REQUEST": "자료 요청",
-    "STUDY_TIPS": "공부 팁",
-    "ADVICE_REQUEST": "조언 구함",
-  };
+// 한국어 태그 매핑 (직접 사용)
+const tagMapping: { [key: string]: string } = {
+  OUT_OF_CLASS: "수업 외 내용",
+  UNKNOWN_CONCEPT: "개념 모름",
+  BETTER_SOLUTION: "더 나은 풀이",
+  EXAM_PREPARATION: "시험 대비",
+  DOCUMENT_REQUEST: "자료 요청",
+  STUDY_TIPS: "공부 팁",
+  ADVICE_REQUEST: "조언 구함",
+};
 
-  // 영어 태그를 한국어로 변환하는 함수
-  const getKoreanTag = (englishTag: string): string => {
-    return tagMapping[englishTag] || englishTag; // 매핑되지 않은 경우 원래의 태그 반환
-  };
+// 영어 태그를 한국어로 변환하는 함수
+const getKoreanTag = (englishTag: string): string => {
+  return tagMapping[englishTag] || englishTag; // 매핑되지 않은 경우 원래의 태그 반환
+};
 
 function QnaDetail({
   postId,
@@ -64,13 +64,14 @@ function QnaDetail({
   likeCount,
   commentCount,
   answerCount,
+  customTags,
 }: QnaDetailProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
   const [currentCommentCount, setCurrentCommentCount] = useState(commentCount);
   const [questionComments, setQuestionComments] = useState<any[]>([]);
   const [answerComments, setAnswerComments] = useState<any[]>([]);
-  const [answers, setAnswers] = useState<Answer[]>([]); 
+  const [answers, setAnswers] = useState<Answer[]>([]);
 
   useEffect(() => {
     const fetchQuestionDetails = async () => {
@@ -111,7 +112,11 @@ function QnaDetail({
     }
   };
 
-  const fetchComments = async (contentType: string, setComments: React.Dispatch<React.SetStateAction<any[]>>, setCount?: (count: number) => void) => {
+  const fetchComments = async (
+    contentType: string,
+    setComments: React.Dispatch<React.SetStateAction<any[]>>,
+    setCount?: (count: number) => void,
+  ) => {
     try {
       const response = await getComments({ postId, contentType });
       if (response?.commentsPage?.content) {
@@ -126,9 +131,10 @@ function QnaDetail({
   };
 
   const refreshComments = (contentType: string) => {
-    fetchComments(contentType, 
-      contentType === "QUESTION" ? setQuestionComments : setAnswerComments, 
-      contentType === "QUESTION" ? setCurrentCommentCount : undefined
+    fetchComments(
+      contentType,
+      contentType === "QUESTION" ? setQuestionComments : setAnswerComments,
+      contentType === "QUESTION" ? setCurrentCommentCount : undefined,
     );
   };
 
@@ -136,6 +142,8 @@ function QnaDetail({
     fetchComments("QUESTION", setQuestionComments, setCurrentCommentCount);
     fetchComments("ANSWER", setAnswerComments);
   }, [postId]);
+
+  console.log("customTags:", customTags);
 
   return (
     <div className="flex flex-col justify-center px-[20px]">
@@ -155,13 +163,21 @@ function QnaDetail({
           <div className="font-pretendard-medium mt-[10px] text-[14px] leading-normal text-[#727272]">{content}</div>
         </div>
         {/* 커스텀태그 */}
-        <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
-          <div className="flex h-full w-full items-center gap-[4px]">
-            <JiJeongTag title="차" color="#aaaaaa" />
-            <JiJeongTag title="문화" color="#aaaaaa" />
-            <JiJeongTag title="수업정리본" color="#aaaaaa" />
+        {customTags && customTags.length > 0 && (
+          <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
+            <div className="flex h-full w-full items-center gap-[4px]">
+              {customTags.map((tag, index) => (
+                <JiJeongTag
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={index}
+                  title={tag}
+                  color="#aaaaaa"
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        )}
+
         {/* 지정태그 */}
         <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
           <div className="flex items-center gap-[10px]">
@@ -183,7 +199,9 @@ function QnaDetail({
               <span className="font-pretendard-medium mb-[4px] text-[12px]">@{uuidNickname}</span>
             </div>
             <div>
-              <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">{getDateDiff(createdDate)}</span>
+              <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">
+                {getDateDiff(createdDate)}
+              </span>
               <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]"> • 조회수 {viewCount}</span>
             </div>
           </div>
@@ -191,27 +209,23 @@ function QnaDetail({
         {/* 좋아요 */}
         <div className="mx-[5px] mt-4 flex justify-start">
           <div className="flex items-center gap-[10px]">
-          <div
-      onClick={handleLikeClick}
-      className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${
-        isLiked ? "border-[#03b89e]" : "border-[#e7e7e7]"
-      } cursor-pointer`}
-    >
-      <Image
-        src={isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_UnClicked.svg"}
-        alt={isLiked ? "Like_Clicked" : "Like_UnClicked"}
-        width={16}
-        height={16}
-      />
-      <span
-        className={`font-pretendard-semibold text-[12px] ${
-          isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"
-        }`}
-      >
-        {currentLikeCount}
-      </span>
-    </div>
-    {/* 질문 댓글 */}
+            <div
+              onClick={handleLikeClick}
+              className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${
+                isLiked ? "border-[#03b89e]" : "border-[#e7e7e7]"
+              } cursor-pointer`}
+            >
+              <Image
+                src={isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_UnClicked.svg"}
+                alt={isLiked ? "Like_Clicked" : "Like_UnClicked"}
+                width={16}
+                height={16}
+              />
+              <span className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}>
+                {currentLikeCount}
+              </span>
+            </div>
+            {/* 질문 댓글 */}
             <Drawer>
               <DrawerTrigger asChild>
                 <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
@@ -226,9 +240,13 @@ function QnaDetail({
                   </DrawerTitle>
                 </DrawerHeader>
                 <div className="max-h-[400px] overflow-y-auto">
-                <CommentInput postId={postId} contentType="QUESTION" refreshComments={() => refreshComments("QUESTION")}/>
-                {/* 댓글 정보 */}
-                <CommentList comments={questionComments}/>
+                  <CommentInput
+                    postId={postId}
+                    contentType="QUESTION"
+                    refreshComments={() => refreshComments("QUESTION")}
+                  />
+                  {/* 댓글 정보 */}
+                  <CommentList comments={questionComments} />
                 </div>
               </DrawerContent>
             </Drawer>

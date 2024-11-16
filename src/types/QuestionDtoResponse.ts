@@ -1,5 +1,6 @@
 export interface QuestionDtoResponse {
   questionPost: {
+    [x: string]: any;
     createdDate: string;
     questionPostId: string;
     member: {
@@ -16,4 +17,5 @@ export interface QuestionDtoResponse {
     rewardYeopjeon: number;
     isPrivate: boolean;
   };
+  customTags: string[];
 }
