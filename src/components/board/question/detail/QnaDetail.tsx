@@ -17,6 +17,7 @@ import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import AnswerSection from "./AnswerSection";
 import { Answer } from "@/types/answer";
 import getDateDiff from "@/utils/getDateDiff";
+import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
 
 
 interface QnaDetailProps {
@@ -33,6 +34,22 @@ interface QnaDetailProps {
   commentCount: number;
   answerCount: number;
 }
+
+  // 한국어 태그 매핑 (직접 사용)
+  const tagMapping: { [key: string]: string } = {
+    "OUT_OF_CLASS": "수업 외 내용",
+    "UNKNOWN_CONCEPT": "개념 모름",
+    "BETTER_SOLUTION": "더 나은 풀이",
+    "EXAM_PREPARATION": "시험 대비",
+    "DOCUMENT_REQUEST": "자료 요청",
+    "STUDY_TIPS": "공부 팁",
+    "ADVICE_REQUEST": "조언 구함",
+  };
+
+  // 영어 태그를 한국어로 변환하는 함수
+  const getKoreanTag = (englishTag: string): string => {
+    return tagMapping[englishTag] || englishTag; // 매핑되지 않은 경우 원래의 태그 반환
+  };
 
 function QnaDetail({
   postId,
@@ -154,7 +171,7 @@ function QnaDetail({
                 key={index}
                 className="flex h-[25px] w-auto items-center justify-center rounded-[28px] border border-[#e7e7e7] px-[10px]"
               >
-                <span className="font-pretendard-medium text-[14px] text-[#aaaaaa]">{tag}</span>
+                <span className="font-pretendard-medium text-[14px] text-[#aaaaaa]">{getKoreanTag(tag)}</span>
               </div>
             ))}
           </div>
