@@ -7,6 +7,7 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import { QuestionDtoResponse } from "@/types/QuestionDtoResponse";
+import AnswerFAB from "@/components/board/question/detail/AnswerFAB";
 
 export default function Page() {
   // useParams를 사용해 URL의 동적 파라미터를 가져옴
@@ -29,8 +30,15 @@ export default function Page() {
       const fetchData = async () => {
         try {
           setLoading(true); // 로딩 상태 활성화
-          const data = await getQuestionDetails(postId); // postId를 이용해 API 호출
-          setQuestionDetails({ ...data, questionPost: { ...data.questionPost, questionPostId: postId } }); // postId 설정
+          const data = await getQuestionDetails(postId);
+          setQuestionDetails({
+            ...data,
+            questionPost: {
+              ...data.questionPost,
+              questionPostId: postId,
+            },
+            customTags: data.customTags || [],
+          }); // postId 설정
         } catch (innerError) {
           console.error("질문 상세 정보 가져오기 실패:", error);
           setError(error); // 오류 설정
@@ -53,20 +61,24 @@ export default function Page() {
       <ScrollToTopOnLoad />
       <DetailPageNav />
       {questionDetails && (
-        <QnaDetail
-          postId={questionDetails.questionPost.questionPostId}
-          subject={questionDetails.questionPost.subject}
-          rewardYeopjeon={questionDetails.questionPost.rewardYeopjeon}
-          title={questionDetails.questionPost.title}
-          content={questionDetails.questionPost.content}
-          createdDate={questionDetails.questionPost.createdDate}
-          uuidNickname={questionDetails.questionPost.member.uuidNickname}
-          likeCount={questionDetails.questionPost.likeCount}
-          commentCount={questionDetails.questionPost.commentCount}
-          questionPresetTags={questionDetails.questionPost.questionPresetTags}
-          viewCount={questionDetails.questionPost.viewCount}
-          answerCount={questionDetails.questionPost.answerCount}
-        />
+        <>
+          <QnaDetail
+            postId={questionDetails.questionPost.questionPostId}
+            subject={questionDetails.questionPost.subject}
+            rewardYeopjeon={questionDetails.questionPost.rewardYeopjeon}
+            title={questionDetails.questionPost.title}
+            content={questionDetails.questionPost.content}
+            createdDate={questionDetails.questionPost.createdDate}
+            uuidNickname={questionDetails.questionPost.member.uuidNickname}
+            likeCount={questionDetails.questionPost.likeCount}
+            commentCount={questionDetails.questionPost.commentCount}
+            questionPresetTags={questionDetails.questionPost.questionPresetTags}
+            viewCount={questionDetails.questionPost.viewCount}
+            answerCount={questionDetails.questionPost.answerCount}
+            customTags={questionDetails.customTags}
+          />
+          <AnswerFAB postId={questionDetails.questionPost.questionPostId} />
+        </>
       )}
     </div>
   );
