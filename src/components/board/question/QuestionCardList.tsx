@@ -7,14 +7,14 @@ interface QnaCardListProps {
     title: string;
     subject: string;
     content: string;
-    thumbnail: string;
+    thumbnailUrl: string;
     questionPresetTags: string[];
     rewardYeopjeon: number;
     createdDate: string;
     likeCount: number;
     commentCount: number;
     viewCount: number;
-    isChaetaek: boolean;
+    chaetaekStatus: boolean;
   }[];
 }
 
@@ -40,13 +40,13 @@ export default function QuestionCardList({ categoryQNAs }: QnaCardListProps) {
             JiJeongTags={question.questionPresetTags}
             title={question.title}
             content={question.content}
-            thumbnail={question.thumbnail}
+            thumbnail={question.thumbnailUrl}
             createdDate={question.createdDate}
             viewCount={question.viewCount}
             likeCount={question.likeCount}
             commentCount={question.commentCount}
             rewardYeopjeon={question.rewardYeopjeon}
-            isChaetaek={question.isChaetaek}
+            chaetaekStatus={question.chaetaekStatus}
           />
         </div>
       ))}
