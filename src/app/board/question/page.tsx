@@ -10,6 +10,7 @@ import QnaPageNav from "@/components/nav/QnaPageNav";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import getUnansweredQNAs from "@/apis/question/getUnansweredQNAs";
 import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
+import FabButton from "@/components/common/FAB";
 
 export default function QuestionBoardPage() {
   const [faculty, setFaculty] = useState("전체");
@@ -56,6 +57,7 @@ export default function QuestionBoardPage() {
     try {
       const datas = await getCategoryQNAs(params);
       setCategoryQNAs(datas);
+      console.log("result: ", categoryQNAs);
     } catch (error) {
       console.error("데이터 가져오기 실패:", error);
     }
@@ -84,6 +86,9 @@ export default function QuestionBoardPage() {
         <div className="px-5 py-4">
           <QuestionCardList categoryQNAs={categoryQNAs} />
         </div>
+      </div>
+      <div className="fixed bottom-5 right-5 z-50">
+        <FabButton />
       </div>
     </div>
   );

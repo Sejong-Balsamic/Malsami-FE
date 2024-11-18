@@ -18,6 +18,14 @@ interface QuestionDtoResponse {
     rewardYeopjeon: number;
     isPrivate: boolean;
   };
+  answerPosts: {
+    member: {
+      uuidNickname: string;
+      major: string;
+    };
+    content: string;
+  }[];
+  customTags: string[];
 }
 
 // 특정 질문 글을 조회하는 함수
@@ -34,6 +42,7 @@ export default async function getQuestionDetails(postId: string): Promise<Questi
       },
     });
 
+    console.log("Response Data:", response); // Add this line to inspect the API response
     // 응답 데이터를 반환
     return response.data;
   } catch (error) {
