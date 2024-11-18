@@ -57,6 +57,7 @@ export default function QuestionBoardPage() {
     try {
       const datas = await getCategoryQNAs(params);
       setCategoryQNAs(datas);
+      console.log("result: ", categoryQNAs);
     } catch (error) {
       console.error("데이터 가져오기 실패:", error);
     }
