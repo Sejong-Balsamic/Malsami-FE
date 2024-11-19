@@ -69,6 +69,7 @@ export default function QuestionBoardPage() {
       setIsLoading(false);
     }
   };
+
   // 선택한 필터가 변경되면, api호출해 새로운 QNAs 세팅하는 함수
   const fetchSelectFiltering = async () => {
     const params = {
@@ -76,7 +77,7 @@ export default function QuestionBoardPage() {
       faculty,
       isChaetaek: filterOptions.isChaeTaek,
       sortOption: filterOptions.sortOption,
-      pageNumber,
+      pageNumber: pageNumber - 1,
       pageSize,
     };
     console.log("필터옵션: ", filterOptions);
@@ -91,12 +92,16 @@ export default function QuestionBoardPage() {
   };
 
   useEffect(() => {
+    setPageNumber(1); // 페이지 번호 초기화
     fetchSelectFaculty(); // faculty 상태가 변경될 때마다 handleSelect 호출
   }, [faculty]); // faculty가 변경될 때만 실행
-
   useEffect(() => {
     fetchSelectFiltering();
-  }, [filterOptions, pageNumber]); // 페이지, 필터링옵션 변경될 때만 실행
+  }, [pageNumber]); // 페이지 변경될 때만 실행
+  useEffect(() => {
+    setPageNumber(1); // 페이지 번호 초기화
+    fetchSelectFiltering();
+  }, [filterOptions]); // 필터 옵션이 변경될 때만 실행
 
   return (
     <div className="flex justify-center bg-gray-100">
