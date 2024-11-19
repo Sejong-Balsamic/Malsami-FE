@@ -11,6 +11,7 @@ import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import getUnansweredQNAs from "@/apis/question/getUnansweredQNAs";
 import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
 import FabButton from "@/components/common/FAB";
+import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function QuestionBoardPage() {
@@ -23,15 +24,26 @@ export default function QuestionBoardPage() {
   const [unansweredQNAs, setUnansweredQNAs] = useState<null | any[]>(null); // 초기값을 null로 설정. 학과선택 별 질문들 저장하는 변수
   const [categoryQNAs, setCategoryQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
+  const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호
+  const [pageSize] = useState(4); // 페이지 크기 (한 페이지에 표시할 항목 수)
+  const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
 
-  const renderLoadingMessage = () => {
-    if (unansweredQNAs === null) return "로딩 중..."; // unansweredQNAs가 null일 때 로딩 중 상태 표시. 새로고침 시 표시
-    if (unansweredQNAs.length === 0) return "전부 답변했어요!"; //
-    return "아직 답변 안 했어요!"; // 디폴트 값
+  // 로딩 상태에 따른 메시지
+  const renderLoadingMessage = (): string => {
+    if (isLoading || unansweredQNAs === null) return "로딩 중...";
+    if (unansweredQNAs.length === 0) return "전부 답변했어요!";
+    return "아직 답변 안 했어요!";
   };
 
   const handleFilterChange = (newFilterOptions: QnaFilterOptions) => {
     setFilterOptions(newFilterOptions);
+  };
+
+  // page 변화 감지하는 함수
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPageNumber(newPage); // 페이지 번호 업데이트
+    }
   };
 
   // 선택한 학과가 변경되면, api호출해 새로운 QNAs 세팅하는 함수
@@ -41,6 +53,8 @@ export default function QuestionBoardPage() {
       faculty,
       isChaetaek: filterOptions.isChaeTaek,
       sortOption: filterOptions.sortOption,
+      pageNumber: pageNumber - 1,
+      pageSize,
     };
 
     setIsLoading(true);
@@ -48,7 +62,7 @@ export default function QuestionBoardPage() {
       const datas = await getUnansweredQNAs({ faculty });
       const datas2 = await getCategoryQNAs(params);
       setUnansweredQNAs(datas);
-      setCategoryQNAs(datas2);
+      setCategoryQNAs(datas2.content);
     } catch (error) {
       console.error("데이터 가져오기 실패:", error);
     } finally {
@@ -62,13 +76,15 @@ export default function QuestionBoardPage() {
       faculty,
       isChaetaek: filterOptions.isChaeTaek,
       sortOption: filterOptions.sortOption,
+      pageNumber,
+      pageSize,
     };
     console.log("필터옵션: ", filterOptions);
 
     try {
       const datas = await getCategoryQNAs(params);
-      setCategoryQNAs(datas);
-      console.log("result: ", categoryQNAs);
+      setCategoryQNAs(datas.content); // 필터링 질문 업데이트
+      setTotalPages(datas.totalPages); // 총 페이지 수 업데이트
     } catch (error) {
       console.error("데이터 가져오기 실패:", error);
     }
@@ -80,7 +96,7 @@ export default function QuestionBoardPage() {
 
   useEffect(() => {
     fetchSelectFiltering();
-  }, [filterOptions]); // 채택, 필터링옵션 변경될 대만 실행
+  }, [filterOptions, pageNumber]); // 페이지, 필터링옵션 변경될 때만 실행
 
   return (
     <div className="flex justify-center bg-gray-100">
@@ -98,11 +114,14 @@ export default function QuestionBoardPage() {
             <QnaMovingCard unansweredQNAs={unansweredQNAs} />
           )}
         </div>
+        <div className="h-[2px] w-full bg-[#EEEEEE]" />
         <FilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
         <div className="h-0.5 bg-[#EEEEEE]" />
         <div className="px-5 py-4">
-          {isLoading ? <LoadingSpinner /> : <QuestionCardList categoryQNAs={categoryQNAs} />}{" "}
+          <QuestionCardList categoryQNAs={categoryQNAs} />
         </div>
+        {/* 페이지네이션 컴포넌트 */}
+        <Pagination pageNumber={pageNumber} totalPages={totalPages - 1} onPageChange={handlePageChange} />
       </div>
       <div className="fixed bottom-5 right-5 z-50">
         <FabButton />
