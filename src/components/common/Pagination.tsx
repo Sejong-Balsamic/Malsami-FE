@@ -18,7 +18,7 @@ export default function Pagination({ pageNumber, totalPages, onPageChange }: Pag
   const pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, idx) => startPage + idx);
 
   return (
-    <div className="mt-4 flex items-center justify-between px-[20px]">
+    <div className="mb-8 mt-4 flex items-center justify-between px-[20px]">
       {/* 이전 버튼 */}
       <button
         type="button"

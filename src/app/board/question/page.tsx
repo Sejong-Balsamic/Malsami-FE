@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import QnaFilterFacultyCategory from "@/components/board/question/QnaFilterFacultyCategory";
 import QuestionCardList from "@/components/board/question/QuestionCardList";
-import QnaMovingCard from "@/components/board/question/QnaMovingCard";
+import MovingCardQuestion from "@/components/landing/MovingCardQuestion";
 import FilterControlBar from "@/components/board/question/FilterControlBar";
 import QnaPageNav from "@/components/nav/QnaPageNav";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
@@ -97,6 +97,7 @@ export default function QuestionBoardPage() {
   }, [faculty]); // faculty가 변경될 때만 실행
   useEffect(() => {
     fetchSelectFiltering();
+    window.scrollTo(0, 0);
   }, [pageNumber]); // 페이지 변경될 때만 실행
   useEffect(() => {
     setPageNumber(1); // 페이지 번호 초기화
@@ -106,17 +107,19 @@ export default function QuestionBoardPage() {
   return (
     <div className="flex justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <div className="relative mx-auto h-[3000px] w-full min-w-[386px] max-w-[640px] bg-white">
+      <div className="relative mx-auto w-full min-w-[386px] max-w-[640px] bg-white">
         <QnaPageNav />
         <QnaFilterFacultyCategory onSelect={setFaculty} />
         <div className="font-pretendard-semibold px-5 pb-3 pt-4 text-lg text-custom-blue-500">
           {renderLoadingMessage()}
         </div>
-        <div className="bg-[#EEEEEE]">
+        <div className="flex items-center justify-center bg-[#EEEEEE]">
           {isLoading || unansweredQNAs === null ? (
             <LoadingSpinner />
           ) : (
-            <QnaMovingCard unansweredQNAs={unansweredQNAs} />
+            <div className="flex w-[370px] transition-all duration-300 ease-in-out sm:w-[450px]">
+              <MovingCardQuestion data={unansweredQNAs} />
+            </div>
           )}
         </div>
         <div className="h-[2px] w-full bg-[#EEEEEE]" />
