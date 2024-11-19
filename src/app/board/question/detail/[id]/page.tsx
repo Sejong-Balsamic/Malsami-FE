@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import { QuestionDtoResponse } from "@/types/QuestionDtoResponse";
 import AnswerFAB from "@/components/board/question/detail/AnswerFAB";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function Page() {
   // useParams를 사용해 URL의 동적 파라미터를 가져옴
@@ -21,7 +22,7 @@ export default function Page() {
 
   // 상태 관리
   const [questionDetails, setQuestionDetails] = useState<QuestionDtoResponse | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [isloading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   // API 호출 (postId 변경 시마다)
@@ -29,7 +30,7 @@ export default function Page() {
     if (postId) {
       const fetchData = async () => {
         try {
-          setLoading(true); // 로딩 상태 활성화
+          setIsLoading(true); // 로딩 상태 활성화
           const data = await getQuestionDetails(postId);
           setQuestionDetails({
             ...data,
@@ -43,7 +44,7 @@ export default function Page() {
           console.error("질문 상세 정보 가져오기 실패:", error);
           setError(error); // 오류 설정
         } finally {
-          setLoading(false); // 로딩 상태 비활성화
+          setIsLoading(false); // 로딩 상태 비활성화
         }
       };
 
@@ -52,7 +53,7 @@ export default function Page() {
   }, [error, postId]);
 
   // 로딩 상태 처리
-  if (loading) return <p>로딩 중</p>;
+  if (isloading) return <LoadingSpinner />;
   // 오류 상태 처리
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
