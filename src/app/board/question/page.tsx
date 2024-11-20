@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import QnaFilterFacultyCategory from "@/components/board/question/QnaFilterFacultyCategory";
 import QuestionCardList from "@/components/board/question/QuestionCardList";
-import QnaMovingCard from "@/components/board/question/QnaMovingCard";
+import MovingCardQuestion from "@/components/landing/MovingCardQuestion";
 import FilterControlBar from "@/components/board/question/FilterControlBar";
 import QnaPageNav from "@/components/nav/QnaPageNav";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
@@ -13,6 +13,7 @@ import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
 import FabButton from "@/components/common/FAB";
 import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { QnaCard } from "@/types/QnaCard";
 
 export default function QuestionBoardPage() {
   const [faculty, setFaculty] = useState("전체");
@@ -22,7 +23,7 @@ export default function QuestionBoardPage() {
     sortOption: "",
   });
   const [unansweredQNAs, setUnansweredQNAs] = useState<null | any[]>(null); // 초기값을 null로 설정. 학과선택 별 질문들 저장하는 변수
-  const [categoryQNAs, setCategoryQNAs] = useState([]); // 학과선택 별 질문들 저장하는 변수
+  const [categoryQNAs, setCategoryQNAs] = useState<QnaCard[]>([]); // 학과선택 별 질문들 저장하는 변수
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호
   const [pageSize] = useState(4); // 페이지 크기 (한 페이지에 표시할 항목 수)
@@ -97,6 +98,7 @@ export default function QuestionBoardPage() {
   }, [faculty]); // faculty가 변경될 때만 실행
   useEffect(() => {
     fetchSelectFiltering();
+    window.scrollTo(0, 0);
   }, [pageNumber]); // 페이지 변경될 때만 실행
   useEffect(() => {
     setPageNumber(1); // 페이지 번호 초기화
@@ -106,17 +108,19 @@ export default function QuestionBoardPage() {
   return (
     <div className="flex justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <div className="relative mx-auto h-[3000px] w-full min-w-[386px] max-w-[640px] bg-white">
+      <div className="relative mx-auto w-full min-w-[386px] max-w-[640px] bg-white">
         <QnaPageNav />
         <QnaFilterFacultyCategory onSelect={setFaculty} />
         <div className="font-pretendard-semibold px-5 pb-3 pt-4 text-lg text-custom-blue-500">
           {renderLoadingMessage()}
         </div>
-        <div className="bg-[#EEEEEE]">
+        <div className="flex items-center justify-center bg-[#EEEEEE]">
           {isLoading || unansweredQNAs === null ? (
             <LoadingSpinner />
           ) : (
-            <QnaMovingCard unansweredQNAs={unansweredQNAs} />
+            <div className="flex w-[370px] transition-all duration-300 ease-in-out sm:w-[450px]">
+              <MovingCardQuestion data={unansweredQNAs} />
+            </div>
           )}
         </div>
         <div className="h-[2px] w-full bg-[#EEEEEE]" />
@@ -128,7 +132,7 @@ export default function QuestionBoardPage() {
         {/* 페이지네이션 컴포넌트 */}
         <Pagination pageNumber={pageNumber} totalPages={totalPages - 1} onPageChange={handlePageChange} />
       </div>
-      <div className="fixed bottom-5 right-5 z-50">
+      <div className="fixed bottom-5 right-5 z-10">
         <FabButton />
       </div>
     </div>

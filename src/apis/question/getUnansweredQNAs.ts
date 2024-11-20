@@ -16,7 +16,16 @@ export default async function getUnansweredQNAs({ faculty }: GetUnansweredQNAsPr
         "Content-Type": "multipart/form-data",
       },
     });
-    return response.data.questionPostsPage.content; // API 호출 결과만 반환
+    // return response.data.questionPostsPage.content; // API 호출 결과만 반환
+    return response.data.questionPostsPage.content.map((post: any, index: number) => ({
+      postId: post.questionPostId || index.toString(),
+      title: post.title,
+      subject: post.subject,
+      JiJeongTags: post.questionPresetTags || [],
+      rewardYeopjeon: post.rewardYeopjeon || 0,
+      likeCount: post.likeCount,
+      commentCount: post.commentCount,
+    }));
   } catch (error) {
     console.error("질문 목록을 가져오는 중 오류 발생:", error);
     throw error; // 오류 발생 시 오류를 그대로 throw
