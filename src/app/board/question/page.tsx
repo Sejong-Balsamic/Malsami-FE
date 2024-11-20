@@ -26,7 +26,7 @@ export default function QuestionBoardPage() {
   const [categoryQNAs, setCategoryQNAs] = useState<QnaCard[]>([]); // 학과선택 별 질문들 저장하는 변수
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호
-  const [pageSize] = useState(4); // 페이지 크기 (한 페이지에 표시할 항목 수)
+  const [pageSize] = useState(16); // 페이지 크기 (한 페이지에 표시할 항목 수)
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
 
   // 로딩 상태에 따른 메시지
@@ -64,6 +64,7 @@ export default function QuestionBoardPage() {
       const datas2 = await getCategoryQNAs(params);
       setUnansweredQNAs(datas);
       setCategoryQNAs(datas2.content);
+      setTotalPages(datas2.totalPages); // 총 페이지 수 업데이트
     } catch (error) {
       console.error("데이터 가져오기 실패:", error);
     } finally {
@@ -106,9 +107,9 @@ export default function QuestionBoardPage() {
   }, [filterOptions]); // 필터 옵션이 변경될 때만 실행
 
   return (
-    <div className="flex justify-center bg-gray-100">
+    <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <div className="relative mx-auto w-full min-w-[386px] max-w-[640px] bg-white">
+      <div className="relative mx-auto min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
         <QnaPageNav />
         <QnaFilterFacultyCategory onSelect={setFaculty} />
         <div className="font-pretendard-semibold px-5 pb-3 pt-4 text-lg text-custom-blue-500">

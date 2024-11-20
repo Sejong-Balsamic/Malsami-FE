@@ -1,7 +1,11 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
-function QnaPostNav() {
+interface QnaPostNavProps {
+  onSave: () => void; // 임시저장 함수
+}
+
+function QnaPostNav({ onSave }: QnaPostNavProps) {
   const router = useRouter();
   return (
     <div className="w-full min-w-[386px] max-w-[640px] bg-white">
@@ -15,7 +19,13 @@ function QnaPostNav() {
         <h1 className="font-pretendard-bold absolute left-1/2 -translate-x-1/2 transform text-xl">질문 게시판</h1>
 
         {/* 임시저장 */}
-        <span className="font-pretendard-medium text-[15px] text-[#9B9B9B]">임시저장</span>
+        <button
+          type="button"
+          onClick={onSave} // 부모에서 전달된 저장 함수 호출
+          className="font-pretendard-medium text-[15px] text-[#9B9B9B]"
+        >
+          임시저장
+        </button>
       </div>
       <div className="w- h-0.5 bg-[#EAEAEA]" />
     </div>

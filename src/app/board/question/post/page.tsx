@@ -42,6 +42,23 @@ export default function QnaPostPage() {
   const [isJiJeongTagModalOpen, setIsJiJeongTagModalOpen] = useState(false);
   const mediaAllowedTypes = ["image/jpeg", "image/png"];
 
+  // 로컬 스토리지에 저장하는 함수
+  const saveToLocalStorage = () => {
+    localStorage.setItem("qnaPostFormData", JSON.stringify(formData));
+    alert("임시저장 되었습니다!");
+  };
+  // 로컬 스토리지에서 데이터를 불러오는 함수
+  const loadFromLocalStorage = () => {
+    const savedData = localStorage.getItem("qnaPostFormData");
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
+  };
+  // 컴포넌트가 로드될 때 로컬 스토리지 데이터를 불러오기
+  useEffect(() => {
+    loadFromLocalStorage();
+  }, []);
+
   // 커스텀 태그 추가 함수
   const handleTagInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
     if ((e.key === "Enter" || e.key === "Tab") && tagInput.trim()) {
@@ -173,6 +190,7 @@ export default function QnaPostPage() {
       try {
         await postNewQna(formData); // API 호출
         alert("Q&A 게시글이 성공적으로 등록되었습니다.");
+        localStorage.removeItem("qnaPostFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
         window.location.href = "/board/question"; // 작성 완료 후 이동할 페이지로 변경
       } catch (error) {
         console.log("error", error);
@@ -184,10 +202,10 @@ export default function QnaPostPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-gray-100">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <QnaPostNav />
-      <div className="w-full min-w-[386px] max-w-[640px] bg-white p-5">
+      <QnaPostNav onSave={saveToLocalStorage} />
+      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white p-5">
         <div className="rounded-lg">
           <form>
             {/* 제목 */}
