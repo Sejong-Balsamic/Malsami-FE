@@ -35,14 +35,14 @@ apiClient.interceptors.response.use(
     // originalRequest 저장
     const originalRequest = error.config as AxiosRequestConfig;
 
-    // 400,403 오류 발생 시 로그인 페이지로 리다이렉션
+    // 400,403 오류 발생 시 로그인 페이지로 리다이렉션. 리프레시토큰 없으면 403.
     if (error.response?.status === 403 && !isRedirecting) {
       isRedirecting = true; // 리다이렉트를 설정했음을 표시
       alert("로그아웃 되었습니다. 다시 로그인해주세요");
       window.location.href = "/login"; // 전체 페이지를 새로고침하면서 이동하기 때문에, 상태나 데이터가 모두 초기화
     }
 
-    // 401 오류가 발생 시 refreshAccessToken 후 재시도
+    // 401 오류가 발생 시 refreshAccessToken 후 재시도. 엑세스 토큰 만료 시 401 에러
     else if (error.response?.status === 401) {
       try {
         // refreshToken 사용해 새로운 accessToken 요청
@@ -60,6 +60,12 @@ apiClient.interceptors.response.use(
         return apiClient(originalRequest); // 원래 요청 재전송
       } catch (refreshError) {
         console.error("refreshToken 요청 실패:", refreshError);
+        // refreshAccessToken 실패 시 403으로 처리
+        if (!isRedirecting) {
+          isRedirecting = true;
+          alert("로그아웃 되었습니다. 다시 로그인해주세요.");
+          window.location.href = "/login";
+        }
         return Promise.reject(refreshError); // 오류를 상위로 전달
       }
     }

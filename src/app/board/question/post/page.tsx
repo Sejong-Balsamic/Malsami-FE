@@ -155,6 +155,15 @@ export default function QnaPostPage() {
 
   // 폼 제출 핸들러
   const handleSubmit = async () => {
+    // 제목에 공백만 입력된 경우 확인
+    if (!formData.title.trim()) {
+      alert("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
+      return;
+    }
+    if (!formData.content.trim()) {
+      alert("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
+      return;
+    }
     if (!subjects.includes(formData.subject)) {
       alert("정확한 교과목명을 입력하세요.");
       return;
@@ -175,31 +184,42 @@ export default function QnaPostPage() {
   };
 
   return (
-    <>
-      <QnaPostNav />
+    <div className="flex flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <div className="bg-gray-white p-5">
+      <QnaPostNav />
+      <div className="w-full min-w-[386px] max-w-[640px] bg-white p-5">
         <div className="rounded-lg">
           <form>
+            {/* 제목 */}
             <label htmlFor="title" className="mb-[26px] block">
-              <span className="font-pretendard-semibold mr-1.5 text-lg">제목</span>
-              <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
-              <input
-                type="text"
-                name="title"
-                placeholder="제목(20자 이하)"
-                value={formData.title}
-                onChange={handleChange}
-                maxLength={20} // 최대 글자수 제한 설정
-                required
-                className="font-pretendard-medium mt-3 w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base"
-              />
+              <div className="relative">
+                <span className="font-pretendard-semibold mr-1.5 text-lg">제목</span>
+                <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
+                <input
+                  type="text"
+                  name="title"
+                  placeholder="제목(20자 이하)"
+                  value={formData.title}
+                  onChange={handleChange}
+                  maxLength={20} // 최대 글자수 제한 설정
+                  required
+                  className="font-pretendard-medium mt-3 w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base"
+                />
+                <span className="absolute right-2 mt-8 -translate-y-1/2 transform text-xs text-gray-500">
+                  {formData.title.length} /20자
+                </span>
+              </div>
             </label>
 
             {/* 질문 */}
             <label htmlFor="content" className="mb-[26px] block">
-              <span className="font-pretendard-semibold mr-1.5 text-lg">질문</span>
-              <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
+              <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                  <span className="font-pretendard-semibold mr-1.5 text-lg">질문</span>
+                  <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
+                </div>
+                <span className="text-sm text-gray-500">{formData.content.length} / 2000자</span>
+              </div>
               <textarea
                 name="content"
                 placeholder="질문을 작성해주세요.(2000자 이하)"
@@ -291,8 +311,8 @@ export default function QnaPostPage() {
                   className="w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base placeholder:text-sm"
                 />
                 {/* 글자 수 표시 */}
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 transform text-sm text-gray-500">
-                  {tagInput.length} / 10자
+                <span className="absolute right-2 top-1/2 -translate-y-1/2 transform text-sm text-gray-500">
+                  {tagInput.length} /10자
                 </span>
               </div>
             </label>
@@ -354,6 +374,6 @@ export default function QnaPostPage() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
