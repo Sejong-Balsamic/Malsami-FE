@@ -1,21 +1,9 @@
 import { useRouter } from "next/navigation";
+import { QnaCard } from "@/types/QnaCard";
 import QuestionCard from "./QuestionCard";
 
 interface QnaCardListProps {
-  categoryQNAs: {
-    questionPostId: string;
-    title: string;
-    subject: string;
-    content: string;
-    thumbnailUrl: string;
-    questionPresetTags: string[];
-    rewardYeopjeon: number;
-    createdDate: string;
-    likeCount: number;
-    commentCount: number;
-    viewCount: number;
-    chaetaekStatus: boolean;
-  }[];
+  categoryQNAs: QnaCard[];
 }
 
 export default function QuestionCardList({ categoryQNAs }: QnaCardListProps) {
@@ -44,7 +32,7 @@ export default function QuestionCardList({ categoryQNAs }: QnaCardListProps) {
             createdDate={question.createdDate}
             viewCount={question.viewCount}
             likeCount={question.likeCount}
-            commentCount={question.commentCount}
+            answerCount={question.answerCount}
             rewardYeopjeon={question.rewardYeopjeon}
             chaetaekStatus={question.chaetaekStatus}
           />

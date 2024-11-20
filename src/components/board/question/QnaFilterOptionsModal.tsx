@@ -64,7 +64,7 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
     <>
       {showModal && (
         <div
-          className={`fixed inset-0 z-50 flex items-end justify-center transition-opacity duration-300 ${
+          className={`fixed inset-0 z-30 flex items-end justify-center transition-opacity duration-300 ${
             isVisible ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -79,7 +79,7 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
             }
           `}</style>
           <div
-            className="relative mx-auto w-full transform rounded-t-[20px] bg-white px-[18px] pb-4 pt-8 shadow-lg transition-transform duration-300"
+            className="relative mx-auto min-w-[386px] max-w-[640px] transform rounded-t-[20px] bg-white px-[18px] pb-4 pt-8 shadow-lg transition-transform duration-300"
             style={{
               maxHeight: modalHeight,
               transform: isVisible ? "translateY(0)" : "translateY(100%)",
