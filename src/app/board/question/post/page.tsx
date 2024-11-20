@@ -175,10 +175,10 @@ export default function QnaPostPage() {
   };
 
   return (
-    <>
-      <QnaPostNav />
+    <div className="flex flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <div className="bg-gray-white p-5">
+      <QnaPostNav />
+      <div className="w-full min-w-[386px] max-w-[640px] bg-white p-5">
         <div className="rounded-lg">
           <form>
             <label htmlFor="title" className="mb-[26px] block">
@@ -354,6 +354,6 @@ export default function QnaPostPage() {
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }
