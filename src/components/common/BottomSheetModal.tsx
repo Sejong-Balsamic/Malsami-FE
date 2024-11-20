@@ -51,7 +51,7 @@ const BottomSheetModal: React.FC<BottomSheetModalProps> = ({ isVisible, children
 
           {/* 모달 컨텐츠 */}
           <div
-            className="relative mx-auto w-full transform rounded-t-[20px] bg-white p-[30px] pb-4 shadow-lg transition-transform duration-300"
+            className="relative mx-auto w-full min-w-[386px] max-w-[640px] transform rounded-t-[20px] bg-white p-[30px] pb-4 shadow-lg transition-transform duration-300"
             style={{
               maxHeight: modalHeight,
               transform: isVisible ? "translateY(0)" : "translateY(100%)",
