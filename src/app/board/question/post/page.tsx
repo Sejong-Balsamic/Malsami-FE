@@ -6,11 +6,16 @@ import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import QnaPostNav from "@/components/nav/QnaPostNav";
 import subjects from "@/lib/subjects";
-import SubjectSearchInput from "@/components/board/question/SubjectSearchInput";
+import TitleInput from "@/components/board/question/post/formInput/TitleInput";
+import ContentInput from "@/components/board/question/post/formInput/ContentInput";
+import FileUploadInput from "@/components/board/question/post/formInput/FileUploadInput";
+import SubjectSearchInputComponent from "@/components/board/question/post/formInput/SubjectSearchInputComponent";
+import YeopjeonRewardInput from "@/components/board/question/post/formInput/YeopjeonRewardInput";
+import CustomTagsInput from "@/components/board/question/post/formInput/CustomTagsInput";
+import JiJeongTagInput from "@/components/board/question/post/formInput/JijeongTagInput";
+import PrivateSettingInput from "@/components/board/question/post/formInput/PrivateSettingInput";
 import QnaPostRewardModal from "@/components/board/question/post/QnaPostRewardModal";
 import QnaPostJiJeongTagModal from "@/components/board/question/post/QnaPostJiJeongTagModal";
-import QnaPostFileUpload from "@/components/board/question/post/QnaPostFileUpload";
-import YeopjeonTag from "@/components/board/tags/YeopjeonTag";
 import postNewQna from "@/apis/question/postNewQna";
 
 interface QnaPostFormData {
@@ -41,6 +46,23 @@ export default function QnaPostPage() {
   const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
   const [isJiJeongTagModalOpen, setIsJiJeongTagModalOpen] = useState(false);
   const mediaAllowedTypes = ["image/jpeg", "image/png"];
+
+  // 로컬 스토리지에 저장하는 함수
+  const saveToLocalStorage = () => {
+    localStorage.setItem("qnaPostFormData", JSON.stringify(formData));
+    alert("임시저장 되었습니다!");
+  };
+  // 로컬 스토리지에서 데이터를 불러오는 함수
+  const loadFromLocalStorage = () => {
+    const savedData = localStorage.getItem("qnaPostFormData");
+    if (savedData) {
+      setFormData(JSON.parse(savedData));
+    }
+  };
+  // 컴포넌트가 로드될 때 로컬 스토리지 데이터를 불러오기
+  useEffect(() => {
+    loadFromLocalStorage();
+  }, []);
 
   // 커스텀 태그 추가 함수
   const handleTagInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
@@ -173,6 +195,7 @@ export default function QnaPostPage() {
       try {
         await postNewQna(formData); // API 호출
         alert("Q&A 게시글이 성공적으로 등록되었습니다.");
+        localStorage.removeItem("qnaPostFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
         window.location.href = "/board/question"; // 작성 완료 후 이동할 페이지로 변경
       } catch (error) {
         console.log("error", error);
@@ -184,166 +207,38 @@ export default function QnaPostPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center bg-gray-100">
+    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <QnaPostNav />
-      <div className="w-full min-w-[386px] max-w-[640px] bg-white p-5">
+      <QnaPostNav onSave={saveToLocalStorage} />
+      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white p-5">
         <div className="rounded-lg">
           <form>
             {/* 제목 */}
-            <label htmlFor="title" className="mb-[26px] block">
-              <div className="relative">
-                <span className="font-pretendard-semibold mr-1.5 text-lg">제목</span>
-                <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
-                <input
-                  type="text"
-                  name="title"
-                  placeholder="제목(20자 이하)"
-                  value={formData.title}
-                  onChange={handleChange}
-                  maxLength={20} // 최대 글자수 제한 설정
-                  required
-                  className="font-pretendard-medium mt-3 w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base"
-                />
-                <span className="absolute right-2 mt-8 -translate-y-1/2 transform text-xs text-gray-500">
-                  {formData.title.length} /20자
-                </span>
-              </div>
-            </label>
-
+            <TitleInput value={formData.title} onChange={handleChange} />
             {/* 질문 */}
-            <label htmlFor="content" className="mb-[26px] block">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <span className="font-pretendard-semibold mr-1.5 text-lg">질문</span>
-                  <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
-                </div>
-                <span className="text-sm text-gray-500">{formData.content.length} / 2000자</span>
-              </div>
-              <textarea
-                name="content"
-                placeholder="질문을 작성해주세요.(2000자 이하)"
-                value={formData.content}
-                onChange={handleChange}
-                maxLength={2000} // 최대 글자수 제한 설정
-                required
-                className="font-pretendard-medium mt-3 h-40 w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base"
-              />
-            </label>
-
+            <ContentInput value={formData.content} onChange={handleChange} />
             {/* 파일 업로드 */}
-            <div className="mb-[26px] block">
-              <span className="font-pretendard-semibold mr-1.5 text-lg">파일</span>
-              <QnaPostFileUpload
-                mediaFiles={formData.mediaFiles}
-                onFileChange={handleFileChange}
-                onFileDelete={handleFileDelete}
-              />
-            </div>
-
+            <FileUploadInput
+              mediaFiles={formData.mediaFiles}
+              onFileChange={handleFileChange}
+              onFileDelete={handleFileDelete}
+            />
             {/* 교과목명 검색 */}
-            <div className="mb-[26px] block">
-              <div className="mb-3">
-                <span className="font-pretendard-semibold mr-1.5 text-lg">교과목명 검색</span>
-                <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
-              </div>
-              <SubjectSearchInput value={formData.subject} onChange={handleSubjectChange} />
-            </div>
-
+            <SubjectSearchInputComponent value={formData.subject} onChange={handleSubjectChange} />
             {/* 정적 태그 */}
-            <div
-              role="button"
-              tabIndex={0} // Focus 가능하도록 설정. 에러 수정
-              className="mb-[26px] flex cursor-pointer items-center"
-              onClick={toggleJiJeongTagModal}
-              onKeyDown={e => e.key === "Enter" && toggleJiJeongTagModal()}
-            >
-              <span className="font-pretendard-semibold mr-[14px] text-lg"> 정적 태그 {">"}</span>
-              <div className="flex flex-wrap gap-1.5">
-                {formData.questionPresetTags.map(tag => (
-                  <span
-                    key={tag}
-                    className="font-pretendard-bold rounded-full bg-custom-blue-500 px-3 py-1 text-xs text-white"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-
+            <JiJeongTagInput tags={formData.questionPresetTags} onOpenModal={toggleJiJeongTagModal} />
             {/* 엽전 현상금 */}
-            <button type="button" className="mb-[26px] flex cursor-pointer items-center" onClick={toggleRewardModal}>
-              <div className="font-pretendard-semibold mr-[14px] text-lg"> 엽전 현상금 {">"}</div>
-              <YeopjeonTag point={formData.reward} />
-            </button>
-
+            <YeopjeonRewardInput reward={formData.reward} onClick={toggleRewardModal} />
             {/* 커스텀 태그 */}
-            <label htmlFor="customTags" className="mb-[26px] block">
-              <span className="font-pretendard-semibold mr-1.5 text-lg"> 커스텀 태그</span>
-              <span className="font-pretendard-medium text-base text-[#F46B01]"> 10자 이하, 4개 이하</span>
-              {/* 태그 리스트 */}
-              <div className="mb-4 mt-1 flex flex-wrap gap-1.5">
-                {formData.customTags.map(tag => (
-                  <span
-                    key={tag}
-                    className="font-pretendard-bold flex items-center rounded-full bg-[#5ED513] px-3 text-xs text-white"
-                  >
-                    {tag}
-                    <button
-                      type="button"
-                      onClick={() => removeTag(tag)}
-                      className="ml-2 text-base font-bold text-white"
-                    >
-                      &times;
-                    </button>
-                  </span>
-                ))}
-              </div>
-              <div className="relative">
-                <input
-                  type="text"
-                  name="customTags"
-                  placeholder="Tab,Enter로 구분해 태그를 입력해주세요."
-                  value={tagInput}
-                  onChange={handleTagInputChange}
-                  onKeyDown={handleTagInputKeyDown}
-                  maxLength={10} // 최대 10자 제한
-                  className="w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base placeholder:text-sm"
-                />
-                {/* 글자 수 표시 */}
-                <span className="absolute right-2 top-1/2 -translate-y-1/2 transform text-sm text-gray-500">
-                  {tagInput.length} /10자
-                </span>
-              </div>
-            </label>
-
+            <CustomTagsInput
+              tags={formData.customTags}
+              tagInput={tagInput}
+              onTagChange={handleTagInputChange}
+              onTagKeyDown={handleTagInputKeyDown}
+              onRemoveTag={removeTag}
+            />
             {/* 추가 설정 */}
-            <label htmlFor="isPrivate" className="mb-[26px] block">
-              <div className="font-pretendard-semibold mb-2 text-lg"> 추가 설정</div>
-              <div className="flex items-center">
-                <button
-                  type="button"
-                  onClick={handleIsPrivate}
-                  className={`mr-2 flex h-6 w-6 items-center justify-center rounded-full ${
-                    formData.isPrivate ? "bg-custom-blue-500" : "bg-gray-300"
-                  }`}
-                  aria-pressed={formData.isPrivate}
-                >
-                  {formData.isPrivate && (
-                    <svg
-                      className="h-4 w-4 text-white"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path strokeLinecap="round" strokeWidth="3" d="M5 13l4 4L19 7" />
-                    </svg>
-                  )}
-                </button>
-                <span className="font-pretendard-medium text-base text-[#9B9B9B]">내 정보 비공개</span>
-              </div>
-            </label>
+            <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={handleIsPrivate} />
 
             <button
               type="button"
