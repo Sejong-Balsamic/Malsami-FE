@@ -10,10 +10,11 @@ interface AnswerSectionProps {
   postId: string;
   answers: Answer[];
   answerComments: any[];
+  isChaetaek: boolean;
   fetchAnswerComments: () => void;
 }
 
-function AnswerSection({ postId, answers, answerComments, fetchAnswerComments }: AnswerSectionProps) {
+function AnswerSection({ postId, answers, answerComments, isChaetaek, fetchAnswerComments }: AnswerSectionProps) {
   // 답변 댓글을 새로 고침하는 함수
   const refreshComments = (contentType: string) => {
     if (contentType === "ANSWER") {
@@ -27,12 +28,14 @@ function AnswerSection({ postId, answers, answerComments, fetchAnswerComments }:
       {answers.map((answer, index) => (
         <div key={answer.answerPostId} className="my-[30px] flex flex-col gap-[12px] rounded-lg bg-[#f7f8fb] p-[12px]">
           <div>
-            <Button
-              variant="ghost"
-              className="font-pretendard-medium mr-[6px] h-[26px] rounded-[13px] bg-[#0062D2] px-[15px] py-[6px] text-[12px] text-[#ffffff]"
-            >
-              채택됨
-            </Button>
+            {isChaetaek && (
+              <Button
+                variant="ghost"
+                className="font-pretendard-medium mr-[6px] h-[26px] rounded-[13px] bg-[#0062D2] px-[15px] py-[6px] text-[12px] text-[#ffffff]"
+              >
+                채택됨
+              </Button>
+            )}
             <span className="font-pretendard-bold mb-[4px] text-[14px]">@{answer.member.uuidNickname}</span>
             <span className="font-pretendard-medium mb-[4px] text-[12px] text-[#737373]"> • {answer.member.major}</span>
           </div>
