@@ -6,18 +6,19 @@ import { Input } from "@/components/ui/input";
 
 interface SearchBarProps {
   searchVisible: boolean;
+  userName: string;
 }
 
-function SearchBar({ searchVisible }: SearchBarProps) {
+function SearchBar({ searchVisible, userName }: SearchBarProps) {
   return (
     <>
       {/* 검색 메인 텍스트 */}
       <div
-        className={`duration-2000 fixed left-1/2 top-[318px] z-50 w-full max-w-[340px] -translate-x-1/2 transform transition-opacity ${
+        className={`duration-2700 fixed left-1/2 top-[318px] z-50 w-full max-w-[340px] -translate-x-1/2 transform transition-opacity ${
           searchVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
         }`}
       >
-        <span className="font-pretendard-bold text-xl leading-[11px] text-black">종이</span>
+        <span className="font-pretendard-bold text-xl leading-[11px] text-[#03B8A3]">{userName}</span>
         <span className="font-pretendard-bold text-xl leading-[11px] text-black">
           님, 환영해요!
           <br />

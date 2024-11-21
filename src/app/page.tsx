@@ -13,6 +13,7 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 function Page() {
   const [scrollY, setScrollY] = useState(0);
   const [searchVisible, setSearchVisible] = useState(true);
+  const [userName, setUserName] = useState<string>("");
 
   // 스크롤 이벤트
   useEffect(() => {
@@ -21,6 +22,9 @@ function Page() {
       setScrollY(Math.min(currentScrollY, 3000));
       setSearchVisible(currentScrollY < 1800);
     };
+
+    const storedUserName = sessionStorage.getItem("userName");
+    setUserName(storedUserName || "종이");
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
@@ -63,7 +67,7 @@ function Page() {
         </div>
 
         {/* 검색 */}
-        <SearchBar searchVisible={searchVisible} />
+        <SearchBar searchVisible={searchVisible} userName={userName} />
 
         {/* FAB */}
         <div className="fixed bottom-5 right-5 z-50">
