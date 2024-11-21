@@ -30,13 +30,12 @@ interface QnaDetailProps {
   createdDate: string;
   viewCount: number;
   likeCount: number;
-  isLiked: boolean;
   commentCount: number;
   answerCount: number;
   customTags: string[];
 }
 
-// 한국어 태그 매핑
+// 한국어 태그 매핑 (직접 사용)
 const tagMapping: { [key: string]: string } = {
   OUT_OF_CLASS: "수업 외 내용",
   UNKNOWN_CONCEPT: "개념 모름",
@@ -63,12 +62,11 @@ function QnaDetail({
   createdDate,
   viewCount,
   likeCount,
-  isLiked: initialIsLiked,
   commentCount,
   answerCount,
   customTags,
 }: QnaDetailProps) {
-  const [isLiked, setIsLiked] = useState(initialIsLiked);
+  const [isLiked, setIsLiked] = useState(false);
   const [currentLikeCount, setCurrentLikeCount] = useState(likeCount);
   const [currentCommentCount, setCurrentCommentCount] = useState(commentCount);
   const [questionComments, setQuestionComments] = useState<any[]>([]);
@@ -101,8 +99,6 @@ function QnaDetail({
   }, [postId]);
 
   const handleLikeClick = async () => {
-    if (isLiked) return;
-
     try {
       if (!isLiked) {
         const response = await likePost(postId, "QUESTION");
@@ -214,7 +210,7 @@ function QnaDetail({
         <div className="mx-[5px] mt-4 flex justify-start">
           <div className="flex items-center gap-[10px]">
             <div
-              onClick={!isLiked ? handleLikeClick : undefined}
+              onClick={handleLikeClick}
               className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${
                 isLiked ? "border-[#03b89e]" : "border-[#e7e7e7]"
               } cursor-pointer`}

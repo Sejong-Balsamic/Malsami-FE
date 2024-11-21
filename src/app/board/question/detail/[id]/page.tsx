@@ -11,7 +11,7 @@ import AnswerFAB from "@/components/board/question/detail/AnswerFAB";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function Page() {
-  // URL 파라미터 가져옴
+  // useParams를 사용해 URL의 동적 파라미터를 가져옴
   const params = useParams();
   let postId = Array.isArray(params.id) ? params.id[0] : params.id;
 
