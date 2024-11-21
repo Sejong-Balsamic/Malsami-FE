@@ -65,7 +65,7 @@ function QuestionCard({
               <ImageWrapper src="/icons/CommentIcon.svg" />
               <span className="ml-1 text-xs">{answerCount}</span>
             </span>
-            · <span className="ml-[6px] mr-[6px] text-[11px]"> 조회 {viewCount} </span> ·{" "}
+            · <span className="ml-[6px] mr-[6px] text-[11px]"> 조회수 {viewCount} </span> ·{" "}
             <span className="ml-[6px] text-[11px]">{getDateDiff(createdDate)}</span>
           </div>
         </div>
