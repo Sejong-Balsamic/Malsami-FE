@@ -147,8 +147,6 @@ function QnaDetail({
     fetchComments("ANSWER", setAnswerComments);
   }, [postId]);
 
-  console.log("customTags:", customTags);
-
   return (
     <div className="flex flex-col justify-center px-[20px]">
       {/* 교과목명 현상금  */}
