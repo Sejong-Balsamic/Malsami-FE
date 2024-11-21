@@ -1,13 +1,9 @@
 /* eslint-disable */
 
 import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import YeopjeonTag from "../../tags/YeopjeonTag";
 import likePost from "@/apis/question/likePost";
 import CommentList from "./CommentList";
@@ -17,7 +13,6 @@ import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import AnswerSection from "./AnswerSection";
 import { Answer } from "@/types/answer";
 import getDateDiff from "@/utils/getDateDiff";
-import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
 
 interface QnaDetailProps {
   postId: string;
@@ -65,7 +60,6 @@ function QnaDetail({
   likeCount,
   isLiked: initialIsLiked,
   commentCount,
-  answerCount,
   customTags,
 }: QnaDetailProps) {
   const [isLiked, setIsLiked] = useState(initialIsLiked);
@@ -74,6 +68,7 @@ function QnaDetail({
   const [questionComments, setQuestionComments] = useState<any[]>([]);
   const [answerComments, setAnswerComments] = useState<any[]>([]);
   const [answers, setAnswers] = useState<Answer[]>([]);
+  const isChaetaek = false;
 
   useEffect(() => {
     const fetchQuestionDetails = async () => {
@@ -146,8 +141,6 @@ function QnaDetail({
     fetchComments("QUESTION", setQuestionComments, setCurrentCommentCount);
     fetchComments("ANSWER", setAnswerComments);
   }, [postId]);
-
-  console.log("customTags:", customTags);
 
   return (
     <div className="flex flex-col justify-center px-[20px]">
@@ -262,6 +255,7 @@ function QnaDetail({
         postId={postId}
         answers={answers}
         answerComments={answerComments}
+        isChaetaek={isChaetaek}
         fetchAnswerComments={() => fetchComments("ANSWER", setAnswerComments)}
       />
     </div>

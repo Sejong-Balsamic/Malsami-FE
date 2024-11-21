@@ -6,7 +6,7 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
-import { QuestionDtoResponse } from "@/types/QuestionDtoResponse";
+import { QuestionData } from "@/types/QuestionData";
 import AnswerFAB from "@/components/board/question/detail/AnswerFAB";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
@@ -21,7 +21,7 @@ export default function Page() {
   }
 
   // 상태 관리
-  const [questionDetails, setQuestionDetails] = useState<QuestionDtoResponse | null>(null);
+  const [questionDetails, setQuestionDetails] = useState<QuestionData | null>(null);
   const [isloading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -72,6 +72,7 @@ export default function Page() {
             createdDate={questionDetails.questionPost.createdDate}
             uuidNickname={questionDetails.questionPost.member.uuidNickname}
             likeCount={questionDetails.questionPost.likeCount}
+            isLiked={questionDetails.isLiked}
             commentCount={questionDetails.questionPost.commentCount}
             questionPresetTags={questionDetails.questionPost.questionPresetTags}
             viewCount={questionDetails.questionPost.viewCount}

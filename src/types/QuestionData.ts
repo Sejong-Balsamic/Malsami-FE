@@ -1,6 +1,5 @@
-export interface QuestionDtoResponse {
+export interface QuestionData {
   questionPost: {
-    [x: string]: any;
     createdDate: string;
     questionPostId: string;
     member: {
@@ -15,7 +14,20 @@ export interface QuestionDtoResponse {
     answerCount: number;
     commentCount: number;
     rewardYeopjeon: number;
+    chaetaekStatus: boolean;
     isPrivate: boolean;
   };
+  answerPosts: {
+    member: {
+      uuidNickname: string;
+      major: string;
+    };
+    content: string;
+    likeCount: number;
+    commentCount: number;
+    isChaetaek: boolean;
+    isPrivate: boolean;
+  }[];
+  isLiked: boolean;
   customTags: string[];
 }
