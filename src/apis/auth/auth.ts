@@ -18,6 +18,7 @@ export const login = async (id: string, password: string) => {
 
     // 성공 처리
     sessionStorage.setItem("accessToken", response.data.accessToken);
+    sessionStorage.setItem("userName", response.data.member.studentName);
     return response.data;
   } catch (error) {
     // 오류 처리
