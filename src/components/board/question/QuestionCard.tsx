@@ -14,8 +14,9 @@ interface QuestionCardProps {
   createdDate: string;
   viewCount: number;
   likeCount: number;
-  commentCount: number;
+  answerCount: number;
   rewardYeopjeon: number;
+  chaetaekStatus: boolean;
 }
 
 const tagTranslations: { [key: string]: string } = {
@@ -36,16 +37,17 @@ function QuestionCard({
   createdDate,
   viewCount,
   likeCount,
-  commentCount,
+  answerCount,
   rewardYeopjeon = 0,
+  chaetaekStatus,
 }: QuestionCardProps) {
   const displayThumbnail = thumbnail || "/image/PartyPopper.jpg";
 
   return (
     <div className="... mb-3 flex flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]">
       <div className="mb-2">
-        {rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
-        <ChaeTakTag />
+        {!chaetaekStatus && rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
+        {chaetaekStatus && <ChaeTakTag />}
         {JiJeongTags.map(tag => (
           <JiJeongTag key={tag} label={tagTranslations[tag] ?? tag} />
         ))}
@@ -61,9 +63,9 @@ function QuestionCard({
             </span>
             <span className="mr-[6px]">
               <ImageWrapper src="/icons/CommentIcon.svg" />
-              <span className="ml-1 text-xs">{commentCount}</span>
+              <span className="ml-1 text-xs">{answerCount}</span>
             </span>
-            · <span className="ml-[6px] mr-[6px] text-[11px]"> 조회 {viewCount} </span> ·{" "}
+            · <span className="ml-[6px] mr-[6px] text-[11px]"> 조회수 {viewCount} </span> ·{" "}
             <span className="ml-[6px] text-[11px]">{getDateDiff(createdDate)}</span>
           </div>
         </div>
