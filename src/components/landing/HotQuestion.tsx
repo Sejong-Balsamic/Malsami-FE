@@ -27,7 +27,7 @@ function HotQuestion() {
   }, []);
 
   return (
-    <Tabs defaultValue="weekend" className="h-[400px] w-[400px]">
+    <Tabs defaultValue="weekend" className="z-40 h-[400px] w-[400px]">
       <div className="flex justify-center">
         <TabsList className="grid w-[96px] grid-cols-2">
           <TabsTrigger value="weekend" className="font-pretendard-semibold text-[14px] text-[#aaaaaa]">
