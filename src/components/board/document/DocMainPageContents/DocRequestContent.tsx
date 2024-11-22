@@ -1,11 +1,11 @@
-import DocMovingCard from "../../DocMovingCard";
+import DocMovingCard from "../DocMovingCard";
 
-export default function HotDownloadContent() {
+export default function DocRequestContent() {
   return (
-    <div className="mb-10">
+    <div>
       {/* 콘텐츠 제목 */}
       <div className="mb-3.5 flex justify-between">
-        <span className="font-pretendard-semibold text-lg text-custom-blue-500">HOT 다운로드</span>
+        <span className="font-pretendard-semibold text-lg text-custom-blue-500">자료 요청</span>
         <span className="font-pretendard-medium text-sm text-custom-blue-500">더 보기 {">"}</span>
       </div>
       {/* 콘텐츠 내용 */}

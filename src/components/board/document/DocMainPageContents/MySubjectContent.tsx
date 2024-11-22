@@ -1,4 +1,4 @@
-import DocMovingCard from "../../DocMovingCard";
+import DocMovingCard from "../DocMovingCard";
 
 export default function MySubjectContent({ subject }: { subject: string }) {
   return (
