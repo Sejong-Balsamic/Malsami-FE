@@ -5,25 +5,32 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import Image from "next/image";
 import postComment from "@/apis/question/postComment";
+import refreshComments from "@/apis/question/refreshComments";
+import { Comment } from "@/types/comment";
 
 interface CommentInputProps {
   postId: string;
   contentType: "QUESTION" | "ANSWER" | "DOCUMENT" | "DOCUMENT_REQUEST";
-  refreshComments: () => void; // New prop to refresh comments
+  setComments: React.Dispatch<React.SetStateAction<Comment[]>>; // 댓글 목록 상태
+  // eslint-disable-next-line react/require-default-props
+  setTotalComments?: React.Dispatch<React.SetStateAction<number>>; // 총 댓글 개수 상태 (선택)
 }
 
-function CommentInput({ postId, contentType, refreshComments }: CommentInputProps) {
-  const [content, setContent] = useState("");
-  const [isPrivate, setIsPrivate] = useState(false);
+function CommentInput({ postId, contentType, setComments, setTotalComments }: CommentInputProps) {
+  const [content, setContent] = useState(""); // 입력한 댓글 내용
+  const [isPrivate, setIsPrivate] = useState(false); // 익명 여부
 
+  // 댓글 입력값 변경 핸들러
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContent(e.target.value);
   };
 
+  // 익명 여부 체크박스 변경 핸들러
   const handleCheckboxChange = (checked: boolean | "indeterminate") => {
     setIsPrivate(checked === true);
   };
 
+  // 댓글 저장 및 새로고침 핸들러
   const handleSaveClick = async () => {
     if (!content.trim()) {
       alert("댓글 내용을 입력해주세요.");
@@ -31,15 +38,25 @@ function CommentInput({ postId, contentType, refreshComments }: CommentInputProp
     }
 
     try {
+      // 댓글 등록 API 호출
       await postComment({
         content,
         postId,
         contentType,
         isPrivate,
       });
-      console.log("Comment posted successfully");
+      console.log("댓글 등록 성공");
+
+      // 댓글 입력란 초기화
       setContent("");
-      refreshComments();
+
+      // 댓글 새로고침
+      await refreshComments({
+        postId,
+        contentType,
+        setComments,
+        setTotalComments,
+      });
     } catch (error) {
       console.error("Error posting comment:", error);
     }
