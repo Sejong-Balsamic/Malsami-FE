@@ -14,7 +14,7 @@ export default function QuestionCardList({ categoryQNAs }: QnaCardListProps) {
       {categoryQNAs.map(question => (
         <div
           key={question.questionPostId}
-          role="button" // 접근성을 위해 role="button" 추가
+          role="button"
           tabIndex={0} // 키보드 탐색이 가능하도록 tabindex 추가
           onClick={() => router.push(`/board/question/detail/${question.questionPostId}`)}
           onKeyDown={e => {

@@ -1,3 +1,5 @@
+/* eslint-disable */
+
 import { useState, useEffect } from "react";
 
 interface PopularItem {
@@ -12,7 +14,7 @@ interface DocPopularContainerProps {
 
 export default function DocPopularContainer({ allPopularItems }: DocPopularContainerProps) {
   const [visibleItems, setVisibleItems] = useState<PopularItem[]>([]); // 현재 보이는 5개
-  const [currentIndex, setCurrentIndex] = useState(0); // 현재 시작 인덱스
+  // const [currentIndex, setCurrentIndex] = useState(0); // 현재 시작 인덱스
   const [isTransitioning, setIsTransitioning] = useState(false); // 애니메이션 제어
 
   useEffect(() => {
@@ -26,15 +28,19 @@ export default function DocPopularContainer({ allPopularItems }: DocPopularConta
       const interval = setInterval(() => {
         setIsTransitioning(true); // 애니메이션 시작
         setTimeout(() => {
-          setCurrentIndex(prev => {
-            const nextIndex = (prev + 5) % allPopularItems.length; // 다음 인덱스 계산
-            setVisibleItems(allPopularItems.slice(nextIndex, nextIndex + 5)); // 다음 5개 설정
-            return nextIndex;
+          // setCurrentIndex(prev => {
+          //   const nextIndex = (prev + 5) % allPopularItems.length; // 다음 인덱스 계산
+          //   setVisibleItems(allPopularItems.slice(nextIndex, nextIndex + 5)); // 다음 5개 설정
+          //   return nextIndex;
+          // });
+          setVisibleItems(prev => {
+            const nextIndex = (prev[0]?.rank || 0) + 4;
+            console.log(prev[0].rank, nextIndex);
+            return allPopularItems.slice(nextIndex % allPopularItems.length, (nextIndex % allPopularItems.length) + 5);
           });
           setIsTransitioning(false); // 애니메이션 종료
         }, 400);
       }, 7000);
-
       return () => clearInterval(interval); // 컴포넌트 언마운트 시 cleanup
     }
   }, [allPopularItems]);
