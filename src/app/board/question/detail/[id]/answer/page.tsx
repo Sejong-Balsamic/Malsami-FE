@@ -1,12 +1,14 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import AnswerPageNav from "@/components/nav/AnswerPageNav";
 import ContentInput from "@/components/board/question/post/formInput/ContentInput";
 import FileUploadInput from "@/components/board/question/post/formInput/FileUploadInput";
 import PrivateSettingInput from "@/components/board/question/post/formInput/PrivateSettingInput";
 import postAnswer from "@/apis/question/postAnswer";
+import OriginalQuestion from "@/components/board/question/answer/OriginalQuestion";
 
 interface AnswerPostFormData {
   content: string;
@@ -14,7 +16,10 @@ interface AnswerPostFormData {
   mediaFiles: File[];
 }
 
-export default function AnswerPostPage({ postId }: { postId: string }) {
+export default function AnswerPostPage() {
+  const params = useParams(); // URL에서 파라미터 추출
+  const questionPostId = Array.isArray(params.id) ? params.id[0] : params.id; // id를 추출
+
   const [formData, setFormData] = useState<AnswerPostFormData>({
     content: "",
     isPrivate: false,
@@ -85,13 +90,13 @@ export default function AnswerPostPage({ postId }: { postId: string }) {
       try {
         await postAnswer({
           content: formData.content,
-          questionPostId: postId, // postId를 questionPostId로 변경
+          questionPostId,
           isPrivate: formData.isPrivate,
           mediaFiles: formData.mediaFiles,
         }); // API 호출
         alert("답변이 성공적으로 등록되었습니다.");
         localStorage.removeItem("answerFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
-        window.location.href = `/board/question/${postId}`; // 작성 완료 후 해당 질문 상세 페이지로 이동
+        window.location.href = `/board/question/detail/${questionPostId}`; // 작성 완료 후 해당 질문 상세 페이지로 이동
       } catch (error) {
         console.log("error", error);
         alert("답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
@@ -106,7 +111,11 @@ export default function AnswerPostPage({ postId }: { postId: string }) {
       <ScrollToTopOnLoad />
       <AnswerPageNav />
       <div className="w-full min-w-[386px] max-w-[640px] bg-white p-5">
-        <div className="rounded-lg">
+        <div>
+          <div>
+            {/* 원문 */}
+            <OriginalQuestion />
+          </div>
           <form>
             {/* 질문 */}
             <ContentInput value={formData.content} onChange={handleChange} />
