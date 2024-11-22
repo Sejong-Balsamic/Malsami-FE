@@ -1,5 +1,5 @@
 import useUserPermissions from "@/utils/useUserPermissions";
-import DocBoardCard from "../DocBoardContent/DocBoardCard";
+import DocBoardCard from "./DocBoardCard";
 
 export default function DocBoardContent() {
   const { canAccessCheonmin, canAccessJungin, canAccessYangban, canAccessKing } = useUserPermissions();
