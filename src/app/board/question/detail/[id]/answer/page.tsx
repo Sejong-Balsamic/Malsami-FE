@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import AnswerPageNav from "@/components/nav/AnswerPageNav";
-import ContentInput from "@/components/board/question/post/formInput/ContentInput";
+import AnswerInput from "@/components/board/question/answer/AnswerInput";
 import FileUploadInput from "@/components/board/question/post/formInput/FileUploadInput";
 import PrivateSettingInput from "@/components/board/question/post/formInput/PrivateSettingInput";
 import postAnswer from "@/apis/question/postAnswer";
@@ -114,11 +114,11 @@ export default function AnswerPostPage() {
         <div>
           <div>
             {/* 원문 */}
-            <OriginalQuestion />
+            <OriginalQuestion questionPostId={questionPostId} />
           </div>
           <form>
-            {/* 질문 */}
-            <ContentInput value={formData.content} onChange={handleChange} />
+            {/* 답변 */}
+            <AnswerInput value={formData.content} onChange={handleChange} />
             {/* 파일 업로드 */}
             <FileUploadInput
               mediaFiles={formData.mediaFiles}

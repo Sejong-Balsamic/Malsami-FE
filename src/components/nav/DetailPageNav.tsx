@@ -10,7 +10,7 @@ function DetailPageNav() {
   const router = useRouter();
 
   return (
-    <nav className="flex h-[112px] items-end justify-between border-b-2 border-[#eaeaea] px-5">
+    <nav className="flex h-[80px] items-end justify-between border-b-2 border-[#eaeaea] px-5">
       {/* 뒤로 가기 아이콘 */}
       <button type="button" className="flex" onClick={() => router.back()}>
         <Image src="/icons/BackIcon.svg" alt="back" width={10} height={20} className="mb-[34px]" />
