@@ -28,18 +28,27 @@ const getKoreanTag = (englishTag: string): string => {
 };
 
 function QnaDetail({ questionData }: { questionData: QuestionData }) {
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(questionData.questionPost.isLiked); // API 응답 값으로 초기화
   const [currentLikeCount, setCurrentLikeCount] = useState(questionData.questionPost.likeCount);
 
   const handleLikeClick = async () => {
-    setCurrentLikeCount(currentLikeCount + 1); // 즉시 반영
+    if (isLiked) return; // 이미 좋아요를 누른 상태라면 실행하지 않음
+
     try {
+      setIsLiked(true); // 즉시 반영: 버튼 비활성화 및 색상 변경
+      setCurrentLikeCount(currentLikeCount + 1); // 즉시 반영: 좋아요 숫자 증가
+
       await likePost(questionData.questionPost.questionPostId, "QUESTION");
     } catch (error) {
       console.error("좋아요 업데이트 실패");
-      setCurrentLikeCount(currentLikeCount - 1); // 실패 시 롤백
+      setIsLiked(false); // 실패 시 롤백
+      setCurrentLikeCount(currentLikeCount - 1); // 숫자도 원래대로 롤백
     }
   };
+
+  const buttonClass = isLiked
+    ? "border-[#03b89e] text-[#03b89e] cursor-default" // 눌린 상태
+    : "border-[#e7e7e7] text-[#aaaaaa] cursor-pointer"; // 기본 상태
 
   return (
     <div className="flex flex-col justify-center px-[20px]">
@@ -112,18 +121,16 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
         <div className="mx-[5px] mt-4 flex justify-start">
           <div className="flex items-center gap-[10px]">
             <div
-              onClick={!questionData.questionPost.isLiked ? handleLikeClick : undefined}
-              className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${
-                questionData.questionPost.isLiked ? "border-[#03b89e]" : "border-[#e7e7e7]"
-              } cursor-pointer`}
+              onClick={!isLiked ? handleLikeClick : undefined} // 이미 눌렀다면 클릭 비활성화
+              className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass}`}
             >
               <Image
-                src={questionData.questionPost.isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_UnClicked.svg"}
-                alt={questionData.questionPost.isLiked ? "Like_Clicked" : "Like_UnClicked"}
+                src={isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_UnClicked.svg"}
+                alt={isLiked ? "Like_Clicked" : "Like_UnClicked"}
                 width={16}
                 height={16}
               />
-              <span className={`font-pretendard-semibold text-[12px] ${questionData.questionPost.isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}>
+              <span className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}>
                 {currentLikeCount}
               </span>
             </div>
