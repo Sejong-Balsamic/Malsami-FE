@@ -63,22 +63,7 @@ export default function Page() {
       <DetailPageNav />
       {questionDetails && (
         <>
-          <QnaDetail
-            postId={questionDetails.questionPost.questionPostId}
-            subject={questionDetails.questionPost.subject}
-            rewardYeopjeon={questionDetails.questionPost.rewardYeopjeon}
-            title={questionDetails.questionPost.title}
-            content={questionDetails.questionPost.content}
-            createdDate={questionDetails.questionPost.createdDate}
-            uuidNickname={questionDetails.questionPost.member.uuidNickname}
-            likeCount={questionDetails.questionPost.likeCount}
-            isLiked={questionDetails.isLiked}
-            commentCount={questionDetails.questionPost.commentCount}
-            questionPresetTags={questionDetails.questionPost.questionPresetTags}
-            viewCount={questionDetails.questionPost.viewCount}
-            answerCount={questionDetails.questionPost.answerCount}
-            customTags={questionDetails.customTags}
-          />
+          <QnaDetail questionData={questionDetails} />
           <AnswerFAB postId={questionDetails.questionPost.questionPostId} />
         </>
       )}
