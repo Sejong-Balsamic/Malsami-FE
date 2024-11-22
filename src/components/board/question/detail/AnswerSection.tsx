@@ -45,7 +45,7 @@ function AnswerSection({ postId }: AnswerSectionProps) {
     <div className="my-[40px] flex h-auto min-w-[336px] max-w-[640px] flex-col">
       <span className="font-pretendard-bold mb-[10px] text-[14px] text-[#3D3D3D]">답변 {answers.length}</span>
       {answers.map((answer, index) => (
-        <div key={answer.answerPostId} className="my-[30px] flex flex-col gap-[12px] rounded-lg bg-[#f7f8fb] p-[12px]">
+        <div key={answer.answerPostId} className="my-[10px] flex flex-col gap-[12px] rounded-lg bg-[#f7f8fb] p-[12px]">
           <div>
             {answer.isChaetaek && (
               <Button
