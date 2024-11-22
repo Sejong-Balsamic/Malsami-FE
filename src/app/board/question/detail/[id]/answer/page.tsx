@@ -5,8 +5,8 @@ import { useParams } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import AnswerPageNav from "@/components/nav/AnswerPageNav";
 import AnswerInput from "@/components/board/question/answer/AnswerInput";
-import FileUploadInput from "@/components/board/question/post/formInput/FileUploadInput";
-import PrivateSettingInput from "@/components/board/question/post/formInput/PrivateSettingInput";
+import FileUploadInput from "@/components/board/question/post/formInputs/FileUploadInput";
+import PrivateSettingInput from "@/components/board/question/post/formInputs/PrivateSettingInput";
 import postAnswer from "@/apis/question/postAnswer";
 import OriginalQuestion from "@/components/board/question/answer/OriginalQuestion";
 
