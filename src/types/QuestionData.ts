@@ -1,6 +1,7 @@
 export interface QuestionData {
   questionPost: {
     createdDate: string;
+    isLiked: boolean;
     questionPostId: string;
     member: {
       uuidNickname: string;
@@ -17,17 +18,5 @@ export interface QuestionData {
     chaetaekStatus: boolean;
     isPrivate: boolean;
   };
-  answerPosts: {
-    member: {
-      uuidNickname: string;
-      major: string;
-    };
-    content: string;
-    likeCount: number;
-    commentCount: number;
-    isChaetaek: boolean;
-    isPrivate: boolean;
-  }[];
-  isLiked: boolean;
   customTags: string[];
 }
