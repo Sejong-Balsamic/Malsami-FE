@@ -2,7 +2,6 @@ import { apiClient } from "../clients/appClient";
 
 interface LikeResponse {
   questionPost: {
-    questionPostId: string;
     likeCount: number;
   };
 }

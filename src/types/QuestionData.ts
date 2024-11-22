@@ -1,7 +1,7 @@
-export interface QuestionDtoResponse {
+export interface QuestionData {
   questionPost: {
-    [x: string]: any;
     createdDate: string;
+    isLiked: boolean;
     questionPostId: string;
     member: {
       uuidNickname: string;
@@ -15,6 +15,7 @@ export interface QuestionDtoResponse {
     answerCount: number;
     commentCount: number;
     rewardYeopjeon: number;
+    chaetaekStatus: boolean;
     isPrivate: boolean;
   };
   customTags: string[];

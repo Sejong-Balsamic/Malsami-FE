@@ -2,7 +2,7 @@ import { apiClient } from "../clients/appClient";
 
 interface GetCommentsParams {
   postId: string;
-  contentType: string;
+  contentType: "QUESTION" | "ANSWER" | "DOCUMENT" | "DOCUMENT_REQUEST";
   pageNumber?: number;
   pageSize?: number;
 }
@@ -23,8 +23,8 @@ const getComments = async ({ postId, contentType, pageNumber = 0, pageSize = 30 
 
     return response.data;
   } catch (error) {
-    console.error("Failed to fetch comments:", error);
-    throw error;
+    console.error("댓글 조회 실패:", error);
+    throw new Error("댓글 조회 중 오류가 발생했습니다.");
   }
 };
 
