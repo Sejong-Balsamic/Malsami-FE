@@ -45,7 +45,7 @@ export default function QnaPostPage() {
   const [isFormValid, setIsFormValid] = useState(false);
   const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
   const [isJiJeongTagModalOpen, setIsJiJeongTagModalOpen] = useState(false);
-  const mediaAllowedTypes = ["image/jpeg", "image/png"];
+  const mediaAllowedTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
 
   // 로컬 스토리지에 저장하는 함수
   const saveToLocalStorage = () => {

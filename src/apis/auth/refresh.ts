@@ -13,6 +13,7 @@ export const refreshAccessToken = async (): Promise<string> => {
 
     const newAccessToken = response.data.accessToken;
     sessionStorage.setItem("accessToken", newAccessToken); // 새로운 accessToken 저장
+    sessionStorage.setItem("userName", response.data.member.studentName);
     return newAccessToken;
   } catch (error) {
     const axiosError = error as AxiosError;

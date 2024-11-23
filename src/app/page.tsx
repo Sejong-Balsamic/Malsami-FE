@@ -9,6 +9,7 @@ import FabButton from "@/components/common/FAB";
 import SearchBar from "@/components/landing/SearchBar";
 import Image from "next/image";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
+import refreshAccessToken from "@/apis/auth/refresh";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);
@@ -23,10 +24,22 @@ function Page() {
       setSearchVisible(currentScrollY < 1800);
     };
 
-    const storedUserName = sessionStorage.getItem("userName");
-    setUserName(storedUserName || "종이");
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // refreshToken 호출
+  useEffect(() => {
+    const fetchAccessToken = async () => {
+      try {
+        await refreshAccessToken(); // accessToken 갱신
+        const storedUserName = sessionStorage.getItem("userName"); // userName 갱신
+        setUserName(storedUserName || "종이");
+      } catch (error) {
+        console.error("Access token refresh failed:", error);
+      }
+    };
+    fetchAccessToken();
   }, []);
 
   return (
