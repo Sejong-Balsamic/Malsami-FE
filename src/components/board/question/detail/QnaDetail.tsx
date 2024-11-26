@@ -53,6 +53,11 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
     ? "border-[#03b89e] text-[#03b89e] cursor-default" // 눌린 상태
     : "border-[#e7e7e7] text-[#aaaaaa] cursor-pointer"; // 기본 상태
 
+  const [commentCount, setCommentCount] = useState(questionData.questionPost.commentCount);
+  const incrementCommentCount = () => {
+    setCommentCount(prevCount => prevCount + 1);
+  };
+
   return (
     <div className="flex flex-col justify-center px-[20px]">
       {/* 교과목명 현상금  */}
@@ -159,18 +164,18 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
                 <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
                   <Image src="/icons/Comment_UnClicked.svg" alt="Comment_UnClicked" width={16} height={16} />
                   <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">
-                    {questionData.questionPost.commentCount}
+                    {commentCount}
                   </span>
                 </div>
               </DrawerTrigger>
               <DrawerContent className="px-[20px] pb-[20px]">
                 <DrawerHeader className="px-0">
                   <DrawerTitle className="font-pretendard-bold flex text-[14px] text-[#3c3c3c]">
-                    댓글 {questionData.questionPost.commentCount}
+                    댓글 {commentCount}
                   </DrawerTitle>
                 </DrawerHeader>
                 <div className="max-h-[400px] overflow-y-auto">
-                  <CommentSection postId={questionData.questionPost.questionPostId} contentType="QUESTION" />
+                  <CommentSection postId={questionData.questionPost.questionPostId} contentType="QUESTION" onCommentAdded={incrementCommentCount}/>
                 </div>
               </DrawerContent>
             </Drawer>

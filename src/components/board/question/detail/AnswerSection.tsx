@@ -30,6 +30,16 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
     setCurrentAnswerId(null);
   };
 
+  const incrementCommentCount = (answerId: string) => {
+    setAnswers(prevAnswers =>
+      prevAnswers.map(answer =>
+        answer.answerPostId === answerId
+          ? { ...answer, commentCount: answer.commentCount + 1 }
+          : answer
+      )
+    );
+  };
+
   useEffect(() => {
     const fetchAnswers = async () => {
       try {
@@ -100,7 +110,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                 </AccordionTrigger>
               </div>
               <AccordionContent>
-                <CommentSection postId={answer.answerPostId} contentType="ANSWER" />
+                <CommentSection postId={answer.answerPostId} contentType="ANSWER" onCommentAdded={() => incrementCommentCount(answer.answerPostId)}/>
               </AccordionContent>
             </AccordionItem>
           </Accordion>

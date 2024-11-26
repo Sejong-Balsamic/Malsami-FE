@@ -12,9 +12,10 @@ import sameMember from "@/utils/sameMember";
 interface CommentSectionProps {
   postId: string;
   contentType: "QUESTION" | "ANSWER" | "DOCUMENT" | "DOCUMENT_REQUEST";
+  onCommentAdded: () => void;
 }
 
-function CommentSection({ postId, contentType }: CommentSectionProps) {
+function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionProps) {
   const [content, setContent] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
@@ -62,6 +63,8 @@ function CommentSection({ postId, contentType }: CommentSectionProps) {
         setComments,
         setTotalComments,
       });
+      onCommentAdded();
+
     } catch (error) {
       console.error("댓글 등록 실패:", error);
     }
