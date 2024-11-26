@@ -22,6 +22,7 @@ export interface Comment {
   updatedDate: string;
   isEdited: boolean;
   isDeleted: boolean;
+  isLiked: boolean;
   commentId: string;
   member: Member;
   postId: string;

@@ -130,7 +130,6 @@ export default function AnswerPostPage() {
               isPrivate={formData.isPrivate}
               onToggle={() => setFormData(prev => ({ ...prev, isPrivate: !prev.isPrivate }))}
             />
-
             <button
               type="button"
               onClick={handleSubmit}
