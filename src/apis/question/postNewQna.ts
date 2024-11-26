@@ -56,7 +56,7 @@ export default async function postNewQna(data: QnaPostFormData) {
   // 첨부 파일
   if (data.mediaFiles && data.mediaFiles.length > 0) {
     data.mediaFiles.forEach(file => {
-      formData.append("mediaFiles", file);
+      formData.append("attachmentFiles", file);
     });
   }
 

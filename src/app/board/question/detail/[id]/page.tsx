@@ -6,12 +6,12 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
-import { QuestionDtoResponse } from "@/types/QuestionDtoResponse";
+import { QuestionData } from "@/types/QuestionData";
 import AnswerFAB from "@/components/board/question/detail/AnswerFAB";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function Page() {
-  // useParams를 사용해 URL의 동적 파라미터를 가져옴
+  // URL 파라미터 가져옴
   const params = useParams();
   let postId = Array.isArray(params.id) ? params.id[0] : params.id;
 
@@ -21,7 +21,7 @@ export default function Page() {
   }
 
   // 상태 관리
-  const [questionDetails, setQuestionDetails] = useState<QuestionDtoResponse | null>(null);
+  const [questionDetails, setQuestionDetails] = useState<QuestionData | null>(null);
   const [isloading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -63,21 +63,7 @@ export default function Page() {
       <DetailPageNav />
       {questionDetails && (
         <>
-          <QnaDetail
-            postId={questionDetails.questionPost.questionPostId}
-            subject={questionDetails.questionPost.subject}
-            rewardYeopjeon={questionDetails.questionPost.rewardYeopjeon}
-            title={questionDetails.questionPost.title}
-            content={questionDetails.questionPost.content}
-            createdDate={questionDetails.questionPost.createdDate}
-            uuidNickname={questionDetails.questionPost.member.uuidNickname}
-            likeCount={questionDetails.questionPost.likeCount}
-            commentCount={questionDetails.questionPost.commentCount}
-            questionPresetTags={questionDetails.questionPost.questionPresetTags}
-            viewCount={questionDetails.questionPost.viewCount}
-            answerCount={questionDetails.questionPost.answerCount}
-            customTags={questionDetails.customTags}
-          />
+          <QnaDetail questionData={questionDetails} />
           <AnswerFAB postId={questionDetails.questionPost.questionPostId} />
         </>
       )}

@@ -1,5 +1,4 @@
 name: MALSAMI-FE-INTEGRATION-CICD
-
 on:
   push:
     branches:
@@ -18,15 +17,37 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "18"
+          cache: "npm"
 
-      - name: Log - Installing dependencies
-        run: echo "의존성을 설치 중입니다..."
+      - name: Cache npm dependencies
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+
+      - name: Cache node_modules
+        id: node-modules-cache
+        uses: actions/cache@v3
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
 
       - name: Install dependencies
-        run: npm install
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --prefer-offline --no-audit
 
-      - name: Log - Building project
-        run: echo "프로젝트를 빌드 중입니다..."
+      - name: Cache Next.js build
+        uses: actions/cache@v3
+        with:
+          path: |
+            .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
 
       - name: Build with npm
         run: npm run build
@@ -40,19 +61,13 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Log - Setting up Docker cache
-        run: echo "Docker 레이어 캐시를 설정 중입니다..."
-
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-
-      - name: Log - Building and pushing Docker image
-        run: echo "Docker 이미지를 빌드하고 푸시 중입니다..."
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
@@ -62,7 +77,14 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${{ github.ref_name }}
           cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache,mode=max
+          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
+          build-args: |
+            NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
+
+      - name: Move cache
+        run: |
+          rm -rf /tmp/.buildx-cache
+          mv /tmp/.buildx-cache-new /tmp/.buildx-cache
 
   deploy:
     needs: build
@@ -76,7 +98,6 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 2022
           script: |
-            echo "배포를 시작합니다..."
             export PATH=$PATH:/usr/local/bin
             export PW=${{ secrets.SERVER_PASSWORD }}
             BRANCH=${{ github.ref_name }}
@@ -85,24 +106,17 @@ jobs:
 
             if [ "$BRANCH" == "main" ]; then
               PORT=3004
-              echo "메인 브랜치로 배포합니다. 포트는 $PORT입니다."
             elif [ "$BRANCH" == "test" ]; then
               CONTAINER_NAME="sejong-malsami-front-test"
               PORT=3003
-              echo "테스트 브랜치로 배포합니다. 컨테이너 이름은 $CONTAINER_NAME, 포트는 $PORT입니다."
             fi
 
-            echo "도커 이미지를 풀링 중입니다: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}"
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-
-            echo "기존 컨테이너를 중지합니다: $CONTAINER_NAME"
             echo $PW | sudo -S docker stop $CONTAINER_NAME || true
-
-            echo "기존 컨테이너를 제거합니다: $CONTAINER_NAME"
             echo $PW | sudo -S docker rm $CONTAINER_NAME || true
 
-            echo "새로운 컨테이너를 실행합니다: $CONTAINER_NAME on port $PORT"
-            echo $PW | sudo -S docker run -d -p ${PORT}:3000 --name $CONTAINER_NAME \
+            echo $PW | sudo -S docker run -d \
+              -p ${PORT}:3000 \
+              --name $CONTAINER_NAME \
+              -e NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
               ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-
-            echo "배포가 완료되었습니다."
