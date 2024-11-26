@@ -15,9 +15,9 @@ export default function Page() {
   const params = useParams();
   let postId = Array.isArray(params.id) ? params.id[0] : params.id;
 
-  // 기본 postId 설정
+  // 테스트 postId 설정
   if (!postId) {
-    postId = "49a3d54f-1f5b-42fd-9337-456c7bb8f199"; // 테스트용
+    postId = "49a3d54f-1f5b-42fd-9337-456c7bb8f199";
   }
 
   // 상태 관리

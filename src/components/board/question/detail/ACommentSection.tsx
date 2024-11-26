@@ -5,6 +5,7 @@ import Image from "next/image";
 import postComment from "@/apis/question/postComment";
 import refreshComments from "@/apis/question/refreshComments";
 import { Comment } from "@/types/comment";
+import getDateDiff from "@/utils/getDateDiff";
 
 interface CommentSectionProps {
   postId: string;
@@ -74,7 +75,7 @@ function CommentSection({ postId, contentType }: CommentSectionProps) {
             value={content}
             onChange={handleInputChange}
             placeholder="댓글을 입력해주세요."
-            className="font-pretendard-medium h-[32px] flex-1 border-none text-[12px] text-[#000000] placeholder-[#bcbcbc] focus:ring-0"
+            className="font-pretendard-medium h-[32px] flex-1 border-none text-[12px] text-[#000000] placeholder-[#bcbcbc] caret-[#03B89E] focus:outline-none"
           />
         </div>
         <div className="m-auto flex items-center justify-between">
@@ -93,7 +94,7 @@ function CommentSection({ postId, contentType }: CommentSectionProps) {
             tabIndex={0}
             role="button"
           >
-            <Image src="/icons/Save.svg" alt="Save" width={24} height={24} />
+            <Image src={content.trim() ? "/icons/Save.svg" : "/icons/Save_Un.svg"} alt="Save" width={24} height={24} />
           </div>
         </div>
       </div>
@@ -104,15 +105,20 @@ function CommentSection({ postId, contentType }: CommentSectionProps) {
           <p className="font-pretendard-medium text-[14px] text-[#7b7b7c]">댓글이 없습니다.</p>
         ) : (
           comments.map(comment => (
-            <div key={comment.commentId} className="min-h-[88px] min-w-[310px] rounded-lg bg-[#ffffff] p-[14px]">
+            <div
+              key={comment.commentId}
+              className="mb-[10px] min-h-[88px] min-w-[310px] rounded-lg bg-[#ffffff] p-[14px]"
+            >
               {!comment.isPrivate ? (
-                <span className="font-pretendard-bold mb-[4px] text-[14px]">@{comment.member.uuidNickname}</span>
+                <span className="font-pretendard-bold text-[14px]">@{comment.member.uuidNickname}</span>
               ) : (
-                <span className="font-pretendard-medium mb-[4px] text-[12px] text-[#737373]">비공개</span>
+                <span className="font-pretendard-medium text-[12px] text-[#737373]">비공개</span>
               )}
-              <p className="font-pretendard-medium min-h-[20px] w-full text-[14px] text-[#7b7b7c]">{comment.content}</p>
+              <p className="font-pretendard-medium mb-[18px] mt-[10px] min-h-[20px] w-full text-[14px] text-[#7b7b7c]">
+                {comment.content}
+              </p>
               <div className="font-pretendard-medium mb-[10px] text-[12px] text-[#bcbcbc]">
-                {new Date(comment.createdDate).toLocaleDateString()}
+                {getDateDiff(comment.createdDate)}
               </div>
             </div>
           ))

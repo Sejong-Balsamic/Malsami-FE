@@ -5,13 +5,14 @@ import Image from "next/image";
 import { Answer } from "@/types/answer";
 import getDateDiff from "@/utils/getDateDiff";
 import getAnswer from "@/apis/question/getAnswer";
-import CommentSection from "./CommentSection";
+import CommentSection from "./ACommentSection";
 
 interface AnswerSectionProps {
   postId: string;
+  isAuthor: boolean;
 }
 
-function AnswerSection({ postId }: AnswerSectionProps) {
+function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -46,29 +47,41 @@ function AnswerSection({ postId }: AnswerSectionProps) {
       <span className="font-pretendard-bold mb-[10px] text-[14px] text-[#3D3D3D]">답변 {answers.length}</span>
       {answers.map((answer, index) => (
         <div key={answer.answerPostId} className="my-[10px] flex flex-col gap-[12px] rounded-lg bg-[#f7f8fb] p-[12px]">
-          <div>
-            {answer.isChaetaek && (
+          <div className="mb-[4px] flex items-center justify-between">
+            <div>
+              {answer.isChaetaek && (
+                <Button
+                  variant="ghost"
+                  className="font-pretendard-medium mr-[6px] h-[26px] rounded-[13px] bg-[#0062D2] px-[15px] py-[6px] text-[12px] text-[#ffffff]"
+                >
+                  채택됨
+                </Button>
+              )}
+              <span className="font-pretendard-bold mb-[4px] text-[14px]">@{answer.member.uuidNickname}</span>
+              <span className="font-pretendard-medium mb-[4px] text-[12px] text-[#737373]">
+                • {answer.member.major}
+              </span>
+            </div>
+            {isAuthor && !answer.isChaetaek && (
               <Button
                 variant="ghost"
-                className="font-pretendard-medium mr-[6px] h-[26px] rounded-[13px] bg-[#0062D2] px-[15px] py-[6px] text-[12px] text-[#ffffff]"
+                className="font-pretendard-medium ml-[6px] h-[26px] rounded-[13px] border border-[#0062D2] px-[15px] py-[6px] text-[12px] text-[#0062D2]"
               >
-                채택됨
+                채택하기
               </Button>
             )}
-            <span className="font-pretendard-bold mb-[4px] text-[14px]">@{answer.member.uuidNickname}</span>
-            <span className="font-pretendard-medium mb-[4px] text-[12px] text-[#737373]"> • {answer.member.major}</span>
           </div>
           <div className="font-pretendard-medium text-[14px] leading-relaxed text-[#444444]">{answer.content}</div>
           <Accordion type="single" collapsible>
             <AccordionItem value={`item-${index}`}>
-              <div className="flex w-full justify-between">
+              <div className="flex h-[24px] w-full justify-between">
                 <p className="font-pretendard-medium text-[12px] text-[#bcbcbc]">
                   <p className="font-pretendard-medium text-[12px] text-[#bcbcbc]">{getDateDiff(answer.createdDate)}</p>
                 </p>
                 <AccordionTrigger>
-                  <div className="flex cursor-pointer items-center gap-1">
-                    <Image src="/icons/Comment_UnClicked.svg" alt="Comment_Unclicked" width={16} height={16} />
-                    <p className="font-pretendard-medium text-[14px] text-[#bcbcbc]">{answer.commentCount}</p>
+                  <div className="mb-4 flex cursor-pointer items-center gap-1">
+                    <Image src="/icons/Comment_Empty_UnClicked.svg" alt="Comment_Unclicked" width={16} height={16} />
+                    <p className="font-pretendard-medium text-[14px] text-[#000000]">{answer.commentCount}</p>
                   </div>
                 </AccordionTrigger>
               </div>

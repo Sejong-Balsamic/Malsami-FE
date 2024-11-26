@@ -1,15 +1,15 @@
 /* eslint-disable */
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import YeopjeonTag from "../../tags/YeopjeonTag";
 import likePost from "@/apis/question/likePost";
 import AnswerSection from "./AnswerSection";
 import getDateDiff from "@/utils/getDateDiff";
 import { QuestionData } from "@/types/QuestionData";
-import CommentSection from "./CommentSection";
+import CommentSection from "./QCommentSection";
+import sameMember from "@/utils/sameMember";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -30,6 +30,8 @@ const getKoreanTag = (englishTag: string): string => {
 function QnaDetail({ questionData }: { questionData: QuestionData }) {
   const [isLiked, setIsLiked] = useState(questionData.questionPost.isLiked); // API 응답 값으로 초기화
   const [currentLikeCount, setCurrentLikeCount] = useState(questionData.questionPost.likeCount);
+
+  const isAuthor: boolean = sameMember(questionData.questionPost.member.memberId); // 작성자 여부 확인
 
   const handleLikeClick = async () => {
     if (isLiked) return; // 이미 좋아요를 누른 상태라면 실행하지 않음
@@ -58,7 +60,10 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
           <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
             {questionData.questionPost.subject}
           </div>
-          <YeopjeonTag point={questionData.questionPost.rewardYeopjeon} />
+          <span className="font-pretendard-semibold mr-1 inline-flex h-[26px] items-center rounded-[33px] bg-custom-orange-500 px-2 py-[3px] text-xs text-white">
+            <img src="/icons/Yeopjeon.svg" alt="Yeopjeon" className="inline-block h-[14px] w-[14px]" />
+            <span className="ml-1">{questionData.questionPost.rewardYeopjeon}</span>
+          </span>
         </div>
       </div>
       {/* 글 정보 */}
@@ -159,7 +164,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
         </div>
       </div>
       {/* 답변 */}
-      <AnswerSection postId={questionData.questionPost.questionPostId} />
+      <AnswerSection postId={questionData.questionPost.questionPostId} isAuthor={isAuthor} />
     </div>
   );
 }
