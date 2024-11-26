@@ -7,7 +7,7 @@ interface LikeResponse {
 }
 
 // 특정 질문 글 또는 답변에 좋아요를 누르는 함수
-export default async function likePost(postId: string, contentType: string): Promise<LikeResponse> {
+export default async function postLikeQuestion(postId: string, contentType: string): Promise<LikeResponse> {
   try {
     // FormData 객체 생성 및 데이터 추가
     const formData = new FormData();

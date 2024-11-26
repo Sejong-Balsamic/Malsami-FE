@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import likePost from "@/apis/question/postLike";
+import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import AnswerSection from "./AnswerSection";
 import getDateDiff from "@/utils/getDateDiff";
 import { QuestionData } from "@/types/QuestionData";
@@ -41,7 +41,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
       setIsLiked(true); // 즉시 반영: 버튼 비활성화 및 색상 변경
       setCurrentLikeCount(currentLikeCount + 1); // 즉시 반영: 좋아요 숫자 증가
 
-      await likePost(questionData.questionPost.questionPostId, "QUESTION");
+      await postLikeQuestion(questionData.questionPost.questionPostId, "QUESTION");
     } catch (error) {
       console.error("좋아요 업데이트 실패");
       setIsLiked(false); // 실패 시 롤백

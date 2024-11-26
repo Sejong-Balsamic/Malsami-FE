@@ -6,6 +6,8 @@ import postComment from "@/apis/question/postComment";
 import refreshComments from "@/apis/question/refreshComments";
 import { Comment } from "@/types/comment";
 import getDateDiff from "@/utils/getDateDiff";
+import postLikeComment from "@/apis/question/postLikeComment";
+import sameMember from "@/utils/sameMember";
 
 interface CommentSectionProps {
   postId: string;
@@ -65,6 +67,29 @@ function CommentSection({ postId, contentType }: CommentSectionProps) {
     }
   };
 
+  const handleLikeClick = async (commentId: string) => {
+    const updatedComments = [...comments];
+    const commentIndex = updatedComments.findIndex(c => c.commentId === commentId);
+    if (commentIndex === -1) return;
+
+    const comment = updatedComments[commentIndex];
+    if (comment.isLiked) return; // 이미 좋아요를 눌렀다면 실행하지 않음
+    if (sameMember(comment.member.memberId)) return; // 작성자가 좋아요를 누르지 못하도록 차단
+
+    try {
+      updatedComments[commentIndex].isLiked = true; // 즉시 반영: 버튼 비활성화 및 색상 변경
+      updatedComments[commentIndex].likeCount += 1; // 즉시 반영: 좋아요 숫자 증가
+      setComments(updatedComments);
+
+      await postLikeComment(commentId); // API 호출
+    } catch (error) {
+      console.error("댓글 좋아요 실패:", error);
+      updatedComments[commentIndex].isLiked = false; // 실패 시 롤백
+      updatedComments[commentIndex].likeCount -= 1; // 숫자도 원래대로 롤백
+      setComments(updatedComments);
+    }
+  };
+
   return (
     <div className="flex flex-col gap-[20px]">
       {/* 댓글 입력 */}
@@ -109,16 +134,42 @@ function CommentSection({ postId, contentType }: CommentSectionProps) {
               key={comment.commentId}
               className="mb-[14px] min-h-[88px] min-w-[310px] rounded-lg bg-[#f7f8fb] p-[14px]"
             >
-              {!comment.isPrivate ? (
-                <span className="font-pretendard-bold text-[14px] text-[#09bba2]">@{comment.member.uuidNickname}</span>
-              ) : (
-                <span className="font-pretendard-medium text-[12px] text-[#737373]">비공개</span>
-              )}
-              <p className="font-pretendard-medium mb-[14px] mt-[10px] min-h-[20px] w-full text-[14px] text-[#7b7b7c]">
+              <div className="flex items-center gap-[8px]">
+                {!comment.isPrivate ? (
+                  <span className="font-pretendard-bold text-[14px] text-[#09bba2]">
+                    @{comment.member.uuidNickname}
+                  </span>
+                ) : (
+                  <span className="font-pretendard-bold text-[14px]">익명</span>
+                )}
+                <div className="font-pretendard-medium text-[12px] text-[#bcbcbc]">
+                  {getDateDiff(comment.createdDate)}
+                </div>
+              </div>
+              <p className="font-pretendard-medium my-[10px] min-h-[20px] w-full text-[14px] text-[#7b7b7c]">
                 {comment.content}
               </p>
-              <div className="font-pretendard-medium mb-[10px] text-[12px] text-[#bcbcbc]">
-                {getDateDiff(comment.createdDate)}
+              <div className="flex justify-end">
+              <div
+                  onClick={() => handleLikeClick(comment.commentId)} // 좋아요 클릭 핸들러
+                  className={`flex h-[30px] items-center justify-center gap-[5px] ${
+                    comment.isLiked
+                      ? "cursor-default text-[#03b89e]"
+                      : "cursor-pointer text-[#aaaaaa]"
+                  }`}
+                >
+                  <Image
+                    src={comment.isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_Empty_UnClicked.svg"}
+                    alt={comment.isLiked ? "Like_Clicked" : "Like_UnClicked"}
+                    width={16}
+                    height={16}
+                  />
+                  <span
+                    className={`font-pretendard-medium text-[14px] ${comment.isLiked ? "text-[#03b89e]" : "text-[#737373]"}`}
+                  >
+                    {comment.likeCount}
+                  </span>
+                </div>
               </div>
             </div>
           ))
