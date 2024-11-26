@@ -80,7 +80,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
               )}
               <span className="font-pretendard-bold mb-[4px] text-[14px]">@{answer.member.uuidNickname}</span>
               <span className="font-pretendard-medium mb-[4px] text-[12px] text-[#737373]">
-                • {answer.member.major}
+                • {answer.isPrivate ? "비공개" : answer.member.major}
               </span>
             </div>
             {isAuthor && !answer.isChaetaek && (
