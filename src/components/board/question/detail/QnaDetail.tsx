@@ -128,7 +128,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
           <div className="mt-[20px] text-right">
             <div>
               <span className="font-pretendard-medium mb-[4px] text-[12px]">
-                @{questionData.questionPost.member.uuidNickname}
+                {questionData.questionPost.isPrivate ? "익명" : `@${questionData.questionPost.member.uuidNickname}`}
               </span>
             </div>
             <div>
