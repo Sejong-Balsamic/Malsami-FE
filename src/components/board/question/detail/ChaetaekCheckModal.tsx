@@ -66,11 +66,7 @@ function ChaetaekCheckModal({ isOpen, onClose, answerPostId, author }: ModalProp
         </div>
       </div>
       {isSuccessModalOpen && (
-        <ChaetaekSuccessModal
-          isOpen={isSuccessModalOpen}
-          onClose={handleSuccessModalClose}
-          author={author}
-        />
+        <ChaetaekSuccessModal isOpen={isSuccessModalOpen} onClose={handleSuccessModalClose} author={author} />
       )}
     </div>
   );

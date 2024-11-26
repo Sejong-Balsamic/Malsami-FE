@@ -152,12 +152,12 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
                 {comment.content}
               </p>
               <div className="flex justify-end">
-              <div
+                <button
+                  type="button" // 명시적으로 type을 설정
                   onClick={() => handleLikeClick(comment.commentId)} // 좋아요 클릭 핸들러
-                  className={`flex h-[30px] items-center justify-center gap-[5px] ${
-                    comment.isLiked
-                      ? "cursor-default text-[#03b89e]"
-                      : "cursor-pointer text-[#aaaaaa]"
+                  disabled={comment.isLiked} // 좋아요가 눌린 상태라면 버튼 비활성화
+                  className={`flex h-[30px] items-center justify-center gap-[5px] border-none bg-transparent ${
+                    comment.isLiked ? "cursor-default text-[#03b89e]" : "cursor-pointer text-[#aaaaaa]"
                   }`}
                 >
                   <Image
@@ -171,7 +171,7 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
                   >
                     {comment.likeCount}
                   </span>
-                </div>
+                </button>
               </div>
             </div>
           ))

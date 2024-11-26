@@ -19,12 +19,12 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
   const [error, setError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentAnswerId, setCurrentAnswerId] = useState<string | null>(null);
-  
+
   const openModalForAnswer = (answerId: string) => {
     setCurrentAnswerId(answerId);
     setIsModalOpen(true);
   };
-  
+
   const closeModal = () => {
     setIsModalOpen(false);
     setCurrentAnswerId(null);
@@ -33,10 +33,8 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
   const incrementCommentCount = (answerId: string) => {
     setAnswers(prevAnswers =>
       prevAnswers.map(answer =>
-        answer.answerPostId === answerId
-          ? { ...answer, commentCount: answer.commentCount + 1 }
-          : answer
-      )
+        answer.answerPostId === answerId ? { ...answer, commentCount: answer.commentCount + 1 } : answer,
+      ),
     );
   };
 
@@ -110,11 +108,20 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                 </AccordionTrigger>
               </div>
               <AccordionContent>
-                <CommentSection postId={answer.answerPostId} contentType="ANSWER" onCommentAdded={() => incrementCommentCount(answer.answerPostId)}/>
+                <CommentSection
+                  postId={answer.answerPostId}
+                  contentType="ANSWER"
+                  onCommentAdded={() => incrementCommentCount(answer.answerPostId)}
+                />
               </AccordionContent>
             </AccordionItem>
           </Accordion>
-          <ChaetaekCheckModal isOpen={isModalOpen && currentAnswerId === answer.answerPostId} author={answer.member.uuidNickname} onClose={closeModal} answerPostId={answer.answerPostId} />
+          <ChaetaekCheckModal
+            isOpen={isModalOpen && currentAnswerId === answer.answerPostId}
+            author={answer.member.uuidNickname}
+            onClose={closeModal}
+            answerPostId={answer.answerPostId}
+          />
         </div>
       ))}
     </div>

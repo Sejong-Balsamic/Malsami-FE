@@ -1,5 +1,5 @@
-import { apiClient } from "../clients/appClient";
 import { Comment } from "@/types/comment";
+import { apiClient } from "../clients/appClient";
 
 interface CommentLikeResponse {
   commentDto: Comment;

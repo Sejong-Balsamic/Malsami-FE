@@ -163,9 +163,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
               <DrawerTrigger asChild>
                 <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
                   <Image src="/icons/Comment_UnClicked.svg" alt="Comment_UnClicked" width={16} height={16} />
-                  <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">
-                    {commentCount}
-                  </span>
+                  <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">{commentCount}</span>
                 </div>
               </DrawerTrigger>
               <DrawerContent className="px-[20px] pb-[20px]">
@@ -175,7 +173,11 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
                   </DrawerTitle>
                 </DrawerHeader>
                 <div className="max-h-[400px] overflow-y-auto">
-                  <CommentSection postId={questionData.questionPost.questionPostId} contentType="QUESTION" onCommentAdded={incrementCommentCount}/>
+                  <CommentSection
+                    postId={questionData.questionPost.questionPostId}
+                    contentType="QUESTION"
+                    onCommentAdded={incrementCommentCount}
+                  />
                 </div>
               </DrawerContent>
             </Drawer>
