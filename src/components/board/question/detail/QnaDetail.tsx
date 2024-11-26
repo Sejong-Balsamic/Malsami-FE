@@ -35,6 +35,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
 
   const handleLikeClick = async () => {
     if (isLiked) return; // 이미 좋아요를 누른 상태라면 실행하지 않음
+    if (sameMember(questionData.questionPost.member.memberId)) return; // 작성자가 좋아요를 누르지 못하도록 차단
 
     try {
       setIsLiked(true); // 즉시 반영: 버튼 비활성화 및 색상 변경
@@ -57,13 +58,26 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
       {/* 교과목명 현상금  */}
       <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
         <div className="flex items-center gap-[6px]">
-          <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
-            {questionData.questionPost.subject}
-          </div>
-          <span className="font-pretendard-semibold mr-1 inline-flex h-[26px] items-center rounded-[33px] bg-custom-orange-500 px-2 py-[3px] text-xs text-white">
-            <img src="/icons/Yeopjeon.svg" alt="Yeopjeon" className="inline-block h-[14px] w-[14px]" />
-            <span className="ml-1">{questionData.questionPost.rewardYeopjeon}</span>
-          </span>
+          {questionData.questionPost.chaetaekStatus ? (
+            <>
+              <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#0062D2] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
+                채택됨
+              </div>
+              <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
+                {questionData.questionPost.subject}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
+                {questionData.questionPost.subject}
+              </div>
+              <span className="font-pretendard-semibold mr-1 inline-flex h-[26px] items-center rounded-[33px] bg-custom-orange-500 px-2 py-[3px] text-xs text-white">
+                <img src="/icons/Yeopjeon.svg" alt="Yeopjeon" className="inline-block h-[14px] w-[14px]" />
+                <span className="ml-1">{questionData.questionPost.rewardYeopjeon}</span>
+              </span>
+            </>
+          )}
         </div>
       </div>
       {/* 글 정보 */}
