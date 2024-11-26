@@ -4,6 +4,13 @@ interface ContentTextareaProps {
 }
 
 function ContentInput({ value, onChange }: ContentTextareaProps) {
+  const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value.length > 2000) {
+      // 글자 수 제한: 2000자
+      e.target.value = e.target.value.slice(0, 2000);
+    }
+    onChange(e);
+  };
   return (
     <label htmlFor="content" className="mb-[26px] block">
       <div className="flex items-center justify-between">
@@ -17,7 +24,7 @@ function ContentInput({ value, onChange }: ContentTextareaProps) {
         name="content"
         placeholder="질문을 작성해주세요.(2000자 이하)"
         value={value}
-        onChange={onChange}
+        onChange={handleChange}
         maxLength={2000}
         required
         className="font-pretendard-medium mt-3 h-40 w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base"

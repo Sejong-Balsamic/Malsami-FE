@@ -37,8 +37,8 @@ function QnaPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploa
             <span className="text-3xl text-[#939393]">+&nbsp;</span>
             파일 불러오기
           </div>
-          <div className="mt-2 text-sm text-gray-500">JPEG, PNG 이미지 파일만 업로드할 수 있습니다.</div>
-          <div className="text-sm text-gray-500">최대 3개의 파일까지 업로드 가능합니다.</div>
+          <div className="mt-2 text-sm text-gray-500">JPEG, JPG, PNG, WEBP 이미지 파일만 업로드할 수 있습니다.</div>
+          <div className="text-sm text-gray-500">최대 10개의 파일까지 업로드 가능합니다.</div>
         </div>
       </button>
 
