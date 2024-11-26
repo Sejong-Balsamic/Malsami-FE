@@ -9,6 +9,7 @@ import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import { QuestionData } from "@/types/QuestionData";
 import AnswerFAB from "@/components/board/question/detail/AnswerFAB";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import sameMember from "@/utils/sameMember";
 
 export default function Page() {
   // URL 파라미터 가져옴
@@ -57,6 +58,8 @@ export default function Page() {
   // 오류 상태 처리
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
+  const isAuthor = questionDetails && sameMember(questionDetails.questionPost.member.memberId);
+
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
       <ScrollToTopOnLoad />
@@ -64,7 +67,7 @@ export default function Page() {
       {questionDetails && (
         <>
           <QnaDetail questionData={questionDetails} />
-          <AnswerFAB postId={questionDetails.questionPost.questionPostId} />
+          {!isAuthor && <AnswerFAB postId={questionDetails.questionPost.questionPostId} />}
         </>
       )}
     </div>
