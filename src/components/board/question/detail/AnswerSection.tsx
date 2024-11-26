@@ -6,6 +6,7 @@ import { Answer } from "@/types/answer";
 import getDateDiff from "@/utils/getDateDiff";
 import getAnswer from "@/apis/question/getAnswer";
 import CommentSection from "./ACommentSection";
+import ChaetaekCheckModal from "./ChaetaekCheckModal";
 
 interface AnswerSectionProps {
   postId: string;
@@ -16,6 +17,18 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
   const [answers, setAnswers] = useState<Answer[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentAnswerId, setCurrentAnswerId] = useState<string | null>(null);
+  
+  const openModalForAnswer = (answerId: string) => {
+    setCurrentAnswerId(answerId);
+    setIsModalOpen(true);
+  };
+  
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setCurrentAnswerId(null);
+  };
 
   useEffect(() => {
     const fetchAnswers = async () => {
@@ -65,6 +78,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
             {isAuthor && !answer.isChaetaek && (
               <Button
                 variant="ghost"
+                onClick={() => openModalForAnswer(answer.answerPostId)}
                 className="font-pretendard-medium ml-[6px] h-[26px] rounded-[13px] border border-[#0062D2] px-[15px] py-[6px] text-[12px] text-[#0062D2]"
               >
                 채택하기
@@ -90,6 +104,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
               </AccordionContent>
             </AccordionItem>
           </Accordion>
+          <ChaetaekCheckModal isOpen={isModalOpen && currentAnswerId === answer.answerPostId} author={answer.member.uuidNickname} onClose={closeModal} answerPostId={answer.answerPostId} />
         </div>
       ))}
     </div>

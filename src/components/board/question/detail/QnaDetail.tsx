@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import likePost from "@/apis/question/likePost";
+import likePost from "@/apis/question/postLike";
 import AnswerSection from "./AnswerSection";
 import getDateDiff from "@/utils/getDateDiff";
 import { QuestionData } from "@/types/QuestionData";
