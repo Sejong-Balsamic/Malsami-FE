@@ -168,7 +168,7 @@ import QnaPageNav from "@/components/nav/QnaPageNav";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import getUnansweredQNAs from "@/apis/question/getUnansweredQNAs";
 import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
-import FabButton from "@/components/common/UploadFAB";
+import UploadQFAB from "@/components/common/UploadQFAB";
 import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { QnaCard } from "@/types/QnaCard";
@@ -313,7 +313,7 @@ export default function QuestionBoardPage() {
         <Pagination pageNumber={pageNumber} totalPages={totalPages - 1} onPageChange={handlePageChange} />
       </div>
       <div className="fixed bottom-5 right-5 z-10">
-        <FabButton />
+        <UploadQFAB />
       </div>
     </div>
   );
