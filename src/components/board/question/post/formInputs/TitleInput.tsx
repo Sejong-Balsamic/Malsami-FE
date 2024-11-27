@@ -4,6 +4,13 @@ interface TitleInputProps {
 }
 
 export default function TitleInput({ value, onChange }: TitleInputProps) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.value.length > 20) {
+      // 글자 수 제한: 20자
+      e.target.value = e.target.value.slice(0, 20);
+    }
+    onChange(e);
+  };
   return (
     <label htmlFor="title" className="mb-[26px] block">
       <div className="relative">
@@ -14,7 +21,7 @@ export default function TitleInput({ value, onChange }: TitleInputProps) {
           name="title"
           placeholder="제목(20자 이하)"
           value={value}
-          onChange={onChange}
+          onChange={handleChange}
           maxLength={20}
           required
           className="font-pretendard-medium mt-3 w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base"

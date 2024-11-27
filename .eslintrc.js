@@ -17,6 +17,7 @@ module.exports = {
         endOfLine: "auto",
       },
     ],
+    "import/no-named-as-default": "off", // 이 규칙 비활성화
   },
   ignorePatterns: [".eslintrc.js"],
 };

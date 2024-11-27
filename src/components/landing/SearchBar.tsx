@@ -8,7 +8,6 @@ interface SearchBarProps {
   searchVisible: boolean;
   userName: string;
 }
-
 function SearchBar({ searchVisible, userName }: SearchBarProps) {
   return (
     <>
@@ -25,7 +24,6 @@ function SearchBar({ searchVisible, userName }: SearchBarProps) {
           학습 자료를 찾고, 업로드 해보세요!
         </span>
       </div>
-
       {/* 검색 입력창 */}
       <div
         className={`duration-2000 fixed left-1/2 top-[383px] z-50 w-full max-w-[340px] -translate-x-1/2 transform transition-opacity ${
@@ -51,5 +49,4 @@ function SearchBar({ searchVisible, userName }: SearchBarProps) {
     </>
   );
 }
-
 export default SearchBar;

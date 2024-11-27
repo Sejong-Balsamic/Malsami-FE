@@ -4,7 +4,6 @@ import Image from "next/image";
 interface FlyingBooksProps {
   scrollY: number;
 }
-
 function FlyingBooks({ scrollY }: FlyingBooksProps) {
   return (
     <>
@@ -43,7 +42,6 @@ function FlyingBooks({ scrollY }: FlyingBooksProps) {
           style={{ top: `${Math.min(480 + scrollY * 0.5)}px`, right: "5px" }}
         />
       </div>
-
       {/* 두 번째 레이어 */}
       <div className="absolute top-[68px] z-10 h-[905.33px] w-full">
         <Image
@@ -79,7 +77,6 @@ function FlyingBooks({ scrollY }: FlyingBooksProps) {
           style={{ top: `${Math.min(1580 + scrollY * 0.2)}px`, right: "32px" }}
         />
       </div>
-
       {/* 세 번째 레이어 */}
       <div className="absolute top-[68px] z-0 h-[905.33px] w-full">
         <Image
@@ -174,5 +171,4 @@ function FlyingBooks({ scrollY }: FlyingBooksProps) {
     </>
   );
 }
-
 export default FlyingBooks;

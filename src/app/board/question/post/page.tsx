@@ -45,7 +45,7 @@ export default function QnaPostPage() {
   const [isFormValid, setIsFormValid] = useState(false);
   const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
   const [isJiJeongTagModalOpen, setIsJiJeongTagModalOpen] = useState(false);
-  const mediaAllowedTypes = ["image/jpeg", "image/png"];
+  const mediaAllowedTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
 
   // 로컬 스토리지에 저장하는 함수
   const saveToLocalStorage = () => {
@@ -84,6 +84,9 @@ export default function QnaPostPage() {
   };
   // 태그 입력 값 변경 함수
   const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    if (e.target.value.length > 10) {
+      e.target.value = e.target.value.slice(0, 10);
+    }
     setTagInput(e.target.value.trim());
   };
   // 태그 삭제 함수
@@ -154,8 +157,12 @@ export default function QnaPostPage() {
       const filteredFiles = filesArray.filter(file => mediaAllowedTypes.includes(file.type));
 
       if (filteredFiles.length !== filesArray.length) {
-        alert("JPEG 또는 PNG 형식의 파일만 업로드할 수 있습니다.");
+        alert("JPEG,JPG,PNG,WEBP 형식의 파일만 업로드할 수 있습니다.");
         e.target.value = ""; // 선택한 파일 무효화(올바르지 않은 파일 형식일 경우)
+      } else if (formData.mediaFiles.length + filteredFiles.length > 10) {
+        // 최대 10개 파일 업로드 가능
+        alert("최대 10개의 파일만 업로드할 수 있습니다.");
+        e.target.value = ""; // 선택한 파일 무효화
       } else {
         setFormData(prevFormData => ({
           ...prevFormData,
