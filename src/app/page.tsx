@@ -38,6 +38,7 @@ function Page() {
         const storedUserName = sessionStorage.getItem("userName"); // userName 갱신
         setUserName(storedUserName || "종이");
       } catch (error) {
+        setUserName("종이");
         console.error("Access token refresh failed:", error);
       }
     };
