@@ -7,6 +7,8 @@ import getDateDiff from "@/utils/getDateDiff";
 import getAnswer from "@/apis/question/getAnswer";
 import CommentSection from "./ACommentSection";
 import ChaetaekCheckModal from "./ChaetaekCheckModal";
+import postLikeQuestion from "@/apis/question/postLikeQuestion";
+import sameMember from "@/utils/sameMember";
 
 interface AnswerSectionProps {
   postId: string;
@@ -36,6 +38,31 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
         answer.answerPostId === answerId ? { ...answer, commentCount: answer.commentCount + 1 } : answer,
       ),
     );
+  };
+
+  const handleLikeClick = async (answerId: string) => {
+    const answer = answers.find(a => a.answerPostId === answerId);
+    if (!answer || answer.isLiked) return; // 이미 좋아요를 눌렀다면 실행하지 않음
+    if (sameMember(answer.member.memberId)) return; // 작성자가 자신에게 좋아요를 누르지 못하도록 차단
+
+    try {
+      setAnswers(prevAnswers =>
+        prevAnswers.map(answer =>
+          answer.answerPostId === answerId ? { ...answer, isLiked: true, likeCount: answer.likeCount + 1 } : answer,
+        ),
+      );
+
+      await postLikeQuestion(answerId, "ANSWER");
+    } catch (error) {
+      console.error("좋아요 업데이트 실패:", error);
+
+      // 실패 시 상태 롤백
+      setAnswers(prevAnswers =>
+        prevAnswers.map(answer =>
+          answer.answerPostId === answerId ? { ...answer, isLiked: false, likeCount: answer.likeCount - 1 } : answer,
+        ),
+      );
+    }
   };
 
   useEffect(() => {
@@ -100,12 +127,26 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                 <p className="font-pretendard-medium text-[12px] text-[#bcbcbc]">
                   <p className="font-pretendard-medium text-[12px] text-[#bcbcbc]">{getDateDiff(answer.createdDate)}</p>
                 </p>
-                <AccordionTrigger>
-                  <div className="mb-4 flex cursor-pointer items-center gap-1">
-                    <Image src="/icons/Comment_Empty_UnClicked.svg" alt="Comment_Unclicked" width={16} height={16} />
-                    <p className="font-pretendard-medium text-[14px] text-[#000000]">{answer.commentCount}</p>
+                <div className="flex gap-4">
+                  <div
+                    className="mb-2 flex cursor-pointer items-center gap-1"
+                    onClick={() => handleLikeClick(answer.answerPostId)}
+                  >
+                    <Image
+                      src={answer.isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_Empty_UnClicked.svg"}
+                      alt={answer.isLiked ? "Like_Clicked" : "Like_Unclicked"}
+                      width={16}
+                      height={16}
+                    />
+                    <p className="font-pretendard-medium text-[14px] text-[#000000]">{answer.likeCount}</p>
                   </div>
-                </AccordionTrigger>
+                  <AccordionTrigger>
+                    <div className="mb-4 flex cursor-pointer items-center gap-1">
+                      <Image src="/icons/Comment_Empty_UnClicked.svg" alt="Comment_Unclicked" width={16} height={16} />
+                      <p className="font-pretendard-medium text-[14px] text-[#000000]">{answer.commentCount}</p>
+                    </div>
+                  </AccordionTrigger>
+                </div>
               </div>
               <AccordionContent>
                 <CommentSection
