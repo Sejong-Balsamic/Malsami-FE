@@ -24,7 +24,7 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
         spaceBetween={0}
         loop={loopEnabled}
         autoplay={{
-          delay: 2000,
+          delay: 3000,
           disableOnInteraction: false,
         }}
       >

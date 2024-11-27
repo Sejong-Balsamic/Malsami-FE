@@ -5,6 +5,7 @@ export interface Answer {
   member: {
     uuidNickname: string;
     major: string;
+    memberId: string;
   };
   content: string;
   likeCount: number;
