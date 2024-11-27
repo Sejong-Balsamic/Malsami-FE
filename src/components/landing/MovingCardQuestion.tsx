@@ -35,7 +35,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
         spaceBetween={0}
         loop={loopEnabled}
         autoplay={{
-          delay: 5000,
+          delay: 3000,
           disableOnInteraction: false,
         }}
       >
