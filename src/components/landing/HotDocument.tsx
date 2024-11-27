@@ -29,10 +29,10 @@ function HotDocument() {
     <Tabs defaultValue="weekend" className="z-40 h-[400px] w-[400px]">
       <div className="flex justify-center">
         <TabsList className="grid w-[96px] grid-cols-2">
-          <TabsTrigger value="weekend" className="font-pretendard-semibold text-[14px] text-[#aaaaaa]">
+          <TabsTrigger value="weekend" className="font-pretendard-medium text-[14px] text-[#aaaaaa]">
             주간
           </TabsTrigger>
-          <TabsTrigger value="today" className="font-pretendard-semibold text-[14px] text-[#aaaaaa]">
+          <TabsTrigger value="today" className="font-pretendard-medium text-[14px] text-[#aaaaaa]">
             일간
           </TabsTrigger>
         </TabsList>
