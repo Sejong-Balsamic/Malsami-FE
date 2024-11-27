@@ -13,7 +13,7 @@ function FabButton() {
   const toggleExpand = () => setIsExpanded(!isExpanded);
 
   const handleDocumentClick = () => {
-    router.push("/document/post"); // DocumentIcon 클릭 시 이동할 경로 (확정 아님)
+    router.push("document/post"); // DocumentIcon 클릭 시 이동할 경로 (확정 아님)
   };
 
   const handleQuestionClick = () => {
