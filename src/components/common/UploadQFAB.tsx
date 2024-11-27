@@ -13,7 +13,11 @@ function UploadQFAB() {
 
   return (
     <div className="z-0">
-      <button className="relative z-50 h-[50px] w-[50px] rounded-full bg-[#03b89e]" onClick={handleQuestionClick}>
+      <button
+        type="button"
+        className="relative z-50 h-[50px] w-[50px] rounded-full bg-[#03b89e]"
+        onClick={handleQuestionClick}
+      >
         <Upload />
       </button>
     </div>
