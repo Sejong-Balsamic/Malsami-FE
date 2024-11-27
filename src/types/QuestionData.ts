@@ -5,6 +5,7 @@ export interface QuestionData {
     questionPostId: string;
     member: {
       uuidNickname: string;
+      memberId: string;
     };
     title: string;
     content: string;

@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Nav from "@/components/nav/LandingPageNav";
+import React, { useEffect, useState, useRef } from "react";
+import Nav from "@/components/nav/LandingNav";
 import FlyingBooks from "@/components/landing/FlyingBooks";
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
-import FabButton from "@/components/common/FAB";
+import UploadFAB from "@/components/common/UploadFAB";
+import ScrollFAB from "@/components/common/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
 import Image from "next/image";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
@@ -15,6 +16,7 @@ function Page() {
   const [scrollY, setScrollY] = useState(0);
   const [searchVisible, setSearchVisible] = useState(true);
   const [userName, setUserName] = useState<string>("");
+  const hotDocumentRef = useRef<HTMLDivElement>(null); // HotDocument 참조
 
   // 스크롤 이벤트
   useEffect(() => {
@@ -36,6 +38,7 @@ function Page() {
         const storedUserName = sessionStorage.getItem("userName"); // userName 갱신
         setUserName(storedUserName || "종이");
       } catch (error) {
+        setUserName("종이");
         console.error("Access token refresh failed:", error);
       }
     };
@@ -66,7 +69,7 @@ function Page() {
           <FlyingBooks scrollY={scrollY} />
         </div>
         {/* 인기자료 */}
-        <div className="z-40 flex justify-center">
+        <div ref={hotDocumentRef} className="z-40 flex justify-center">
           <HotDocument />
         </div>
         {/* 인기질문 */}
@@ -76,8 +79,11 @@ function Page() {
         {/* 검색 */}
         <SearchBar searchVisible={searchVisible} userName={userName} />
         {/* FAB */}
-        <div className="fixed bottom-5 right-5 z-50">
-          <FabButton />
+        <div className="fixed bottom-[30px] right-[20px] z-50">
+          <div className="flex flex-col items-center space-y-4">
+            <UploadFAB />
+            <ScrollFAB targetRef={hotDocumentRef} />
+          </div>
         </div>
       </div>
     </div>

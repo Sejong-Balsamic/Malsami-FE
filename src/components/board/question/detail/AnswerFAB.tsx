@@ -1,5 +1,4 @@
 import { useRouter } from "next/navigation";
-import Image from "next/image";
 
 interface AnswerFABProps {
   postId: string;
@@ -15,10 +14,11 @@ function AnswerFAB({ postId }: AnswerFABProps) {
   return (
     <button
       onClick={handleClick}
-      className="fixed bottom-5 right-5 flex h-[60px] w-[60px] items-center justify-center rounded-full bg-[#03B89E] shadow-lg"
+      aria-label="답변 작성"
+      className="font-pretendard-semibold fixed bottom-5 left-1/2 h-10 w-[336px] -translate-x-1/2 transform rounded-[10px] bg-[#03b89e] text-[16px] text-white"
       type="button"
     >
-      <Image src="/icons/Yeopjeon.svg" alt="답변 작성" width={30} height={30} />
+      답변하기
     </button>
   );
 }
