@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import Hamburger from "../../../public/icons/Hamburger.svg";
+import { MemberDto } from "@/types/member";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import getMyInfo from "@/apis/member/getMyInfo";
-import { MemberDto } from "@/types/member";
+import Hamburger from "../../../public/icons/Hamburger.svg";
 
 function Nav() {
   const router = useRouter();
@@ -26,75 +26,48 @@ function Nav() {
     }
   }, []);
 
-  const handleLandingPageClick = () => {
-    router.push("/");
-  };
-
-  const handleLoginPageClick = () => {
-    router.push("/login");
-  };
-
-  const handleMyPageClick = () => {
-    router.push("/mypage");
-  };
-
-  const handleQnaPageClick = () => {
-    router.push("/board/question");
-  };
-
-  const handleDocPageClick = () => {
-    router.push("/board/document");
-  };
-
-  const handleRulePageClick = () => {
-    router.push("/rule");
-  };
-
-  const handleNoticePageClick = () => {
-    router.push("/notice");
+  const handleNavigation = (path: string) => {
+    router.push(path);
   };
 
   return (
     <div className="fixed top-0 z-50 h-[64px] w-full max-w-[640px]">
       <div className="absolute left-0 top-0 h-full w-full border-b bg-white" />
 
-      <div
-        className="absolute bottom-[12px] left-[18px] cursor-pointer"
-        onClick={handleLandingPageClick}
-        onKeyDown={e => e.key === "Enter" && handleLandingPageClick()}
-        role="button"
-        tabIndex={0}
+      <button
+        type="button"
+        className="absolute bottom-[12px] left-[18px] h-[30px] w-[30px] border bg-[#ffffff]"
+        onClick={() => handleNavigation("/")}
         aria-label="랜딩페이지"
-      >
-        <div className="h-[30px] w-[30px] border bg-[#ffffff]" />
-      </div>
+      />
 
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
-          <div
+          <button
+            type="button"
             className="absolute bottom-[24px] right-[20px] h-[20px] w-[24px] cursor-pointer"
-            role="button"
-            tabIndex={0}
             aria-label="Hamburger Menu"
           >
             <Hamburger />
-          </div>
+          </button>
         </SheetTrigger>
         <SheetContent side="right" className="w-[300px] p-0">
           <div>
             <ul className="mt-0 space-y-2">
               {!accessToken ? (
-                <li
-                  className="font-pretendard-bold flex h-[92px] cursor-pointer items-center gap-4 bg-[#03b89e] py-[32px] pl-[30px] text-[20px] text-white"
-                  onClick={handleLoginPageClick}
+                <button
+                  type="button"
+                  className="font-pretendard-bold flex h-[92px] w-full cursor-pointer items-center gap-4 bg-[#03b89e] py-[32px] pl-[30px] text-[20px] text-white"
+                  onClick={() => handleNavigation("/login")}
                 >
                   <Image src="/icons/My.svg" alt="Search" width={40} height={40} />
                   로그인 후 이용해주세요.
-                </li>
+                </button>
               ) : (
-                <li
-                  className="flex h-[92px] cursor-pointer items-center gap-4 bg-[#03b89e] py-[32px] pl-[30px] text-white"
-                  onClick={handleMyPageClick}
+                <button
+                  type="button"
+                  className="flex h-[92px] w-full cursor-pointer items-center gap-4 bg-[#03b89e] py-[32px] pl-[30px] text-white"
+                  onClick={() => handleNavigation("/mypage")}
                 >
                   <div className="flex flex-col">
                     <div className="flex items-center gap-[6px]">
@@ -111,36 +84,40 @@ function Nav() {
                       </span>
                     </div>
                   </div>
-                </li>
+                </button>
               )}
-              <li
-                className="font-pretendard-bold flex h-[70px] cursor-pointer items-center gap-2 border-b-2 pl-[30px] text-[20px]"
-                onClick={handleQnaPageClick}
+              <button
+                type="button"
+                className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 border-b-2 pl-[30px] text-[20px]"
+                onClick={() => handleNavigation("/board/question")}
               >
                 <Image src="/icons/Question_Colored.svg" alt="Search" width={30} height={30} />
                 질문 게시판
-              </li>
-              <li
-                className="font-pretendard-bold flex h-[70px] cursor-pointer items-center gap-2 border-b-2 pl-[30px] text-[20px]"
-                onClick={handleDocPageClick}
+              </button>
+              <button
+                type="button"
+                className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 border-b-2 pl-[30px] text-[20px]"
+                onClick={() => handleNavigation("/board/document")}
               >
                 <Image src="/icons/Document_Colored.svg" alt="Search" width={30} height={30} />
                 자료 게시판
-              </li>
-              <li
-                className="font-pretendard-bold flex h-[70px] cursor-pointer items-center gap-2 border-b-2 pl-[30px] text-[20px]"
-                onClick={handleRulePageClick}
+              </button>
+              <button
+                type="button"
+                className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 border-b-2 pl-[30px] text-[20px]"
+                onClick={() => handleNavigation("/rule")}
               >
                 <Image src="/icons/Rule_Colored.svg" alt="Search" width={30} height={30} />
                 이용규칙
-              </li>
-              <li
-                className="font-pretendard-bold flex h-[70px] cursor-pointer items-center gap-2 pl-[30px] text-[20px]"
-                onClick={handleNoticePageClick}
+              </button>
+              <button
+                type="button"
+                className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[20px]"
+                onClick={() => handleNavigation("/notice")}
               >
                 <Image src="/icons/Notice_Colored.svg" alt="Search" width={30} height={30} />
                 공지사항
-              </li>
+              </button>
             </ul>
           </div>
         </SheetContent>
