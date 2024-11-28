@@ -119,7 +119,6 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
           </div>
         )}
 
-
         {/* 지정태그 */}
         <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
           <div className="flex items-center gap-[10px]">

@@ -20,7 +20,7 @@ interface LikeResponse {
 export default async function postLikeDocument(
   documentPostId: string,
   contentType: "DOCUMENT" | "DOCUMENT_REQUEST",
-  reactionType: "LIKE" | "DISLIKE"
+  reactionType: "LIKE" | "DISLIKE",
 ): Promise<LikeResponse> {
   try {
     // FormData 객체 생성 및 데이터 추가

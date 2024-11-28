@@ -31,8 +31,6 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
   const [currentDislikeCount, setCurrentDislikeCount] = useState(documentData.documentPost.dislikeCount);
   const [isDisliked, setIsDisliked] = useState(false);
 
-  const isAuthor: boolean = sameMember(documentData.documentPost.member.memberId);
-
   const handleLikeClick = async () => {
     if (isLiked || isDisliked) return; // 이미 좋아요 또는 싫어요를 누른 경우
     if (sameMember(documentData.documentPost.member.memberId)) return; // 작성자가 좋아요를 누르지 못하도록 차단
@@ -127,7 +125,7 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
         </div>
 
         {/* 좋아요/싫어요 */}
-        <div className="mx-[5px] mt-4 py-4 flex justify-start border-b-2">
+        <div className="mx-[5px] mt-4 flex justify-start border-b-2 py-4">
           <div className="flex items-center gap-[10px]">
             {/* 좋아요 버튼 */}
             <div

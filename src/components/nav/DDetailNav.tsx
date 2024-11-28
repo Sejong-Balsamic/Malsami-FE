@@ -1,4 +1,4 @@
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerTitle, DrawerDescription, DrawerTrigger } from "@/components/ui/drawer";
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -6,7 +6,6 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Button } from "../ui/button";
 
 function DetailPageNav() {
-  const pathname = usePathname();
   const router = useRouter();
 
   return (
