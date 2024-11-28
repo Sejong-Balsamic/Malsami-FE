@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -51,9 +52,11 @@ function HotDocument() {
             <MovingCardDocument data={weekData} />
           </CardContent>
           <CardFooter>
-            <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
-              더보기
-            </Button>
+            <Link href="/board/document" passHref>
+              <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
+                더보기
+              </Button>
+            </Link>
           </CardFooter>
         </Card>
       </TabsContent>
@@ -71,9 +74,11 @@ function HotDocument() {
             <MovingCardDocument data={dayData} />
           </CardContent>
           <CardFooter>
-            <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
-              더보기
-            </Button>
+            <Link href="/board/document" passHref>
+              <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
+                더보기
+              </Button>
+            </Link>
           </CardFooter>
         </Card>
       </TabsContent>
