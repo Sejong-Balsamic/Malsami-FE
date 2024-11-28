@@ -2,7 +2,7 @@ export default function SubmitFormBtn({ onClick }: { onClick: () => void }) {
   return (
     <button
       type="button"
-      className="w-full h-10 py-[10px] bg-custom-blue-400 hover:bg-custom-blue-500 text-white text-base font-pretendard-semibold rounded-[10px]"
+      className="font-pretendard-semibold h-10 w-full rounded-[10px] bg-custom-blue-400 py-[10px] text-base text-white hover:bg-custom-blue-500"
       onClick={onClick}
     >
       적용하기

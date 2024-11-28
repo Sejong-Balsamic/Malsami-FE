@@ -1,17 +1,38 @@
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-// import MovingCard from "./MovingCardQuestion";
+import { fetchWeeklyHotDocuments, fetchDailyHotDocuments } from "@/apis/landing/fetchHot";
+import { DocumentPost } from "@/types/documentPost.types";
+import MovingCardDocument from "./MovingCardDocument";
 
 function HotDocument() {
+  const [weekData, setWeekData] = useState<DocumentPost[]>([]);
+  const [dayData, setDayData] = useState<DocumentPost[]>([]);
+
+  useEffect(() => {
+    const getWeeklyData = async () => {
+      const data = await fetchWeeklyHotDocuments();
+      setWeekData(data);
+    };
+
+    const getDailyData = async () => {
+      const data = await fetchDailyHotDocuments();
+      setDayData(data);
+    };
+
+    getWeeklyData();
+    getDailyData();
+  }, []);
+
   return (
-    <Tabs defaultValue="weekend" className="w-[400px] h-[400px]">
+    <Tabs defaultValue="weekend" className="z-40 h-[400px] w-[400px]">
       <div className="flex justify-center">
-        <TabsList className="w-[96px] grid grid-cols-2">
-          <TabsTrigger value="weekend" className="text-[#aaaaaa] text-[14px] font-pretendard-semibold">
+        <TabsList className="grid w-[96px] grid-cols-2">
+          <TabsTrigger value="weekend" className="font-pretendard-medium text-[14px] text-[#aaaaaa]">
             주간
           </TabsTrigger>
-          <TabsTrigger value="today" className="text-[#aaaaaa] text-[14px] font-pretendard-semibold">
+          <TabsTrigger value="today" className="font-pretendard-medium text-[14px] text-[#aaaaaa]">
             일간
           </TabsTrigger>
         </TabsList>
@@ -19,16 +40,18 @@ function HotDocument() {
       <TabsContent value="weekend">
         <Card>
           <CardHeader>
-            <CardTitle className="flex justify-center text-black text-[18px] font-pretendard-bold">
+            <CardTitle className="font-pretendard-bold flex justify-center text-[18px] text-black">
               🔥HOT 인기자료🔥
             </CardTitle>
-            <CardDescription className="flex justify-center text-black text-[16px] font-pretendard-medium">
+            <CardDescription className="font-pretendard-medium flex justify-center text-[16px] text-black">
               세종말싸미에서 이번 주의 인기자료를 만나보세요.
             </CardDescription>
           </CardHeader>
-          <CardContent className="flex justify-center space-y-2">{/* <MovingCard /> */}</CardContent>
+          <CardContent className="flex justify-center space-y-2">
+            <MovingCardDocument data={weekData} />
+          </CardContent>
           <CardFooter>
-            <Button className="w-[340px] max-w-[376px] h-[30px] bg-[#03b8a3] rounded-[10px] text-white text-[12px] font-pretendard-semibold">
+            <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
               더보기
             </Button>
           </CardFooter>
@@ -37,16 +60,18 @@ function HotDocument() {
       <TabsContent value="today">
         <Card>
           <CardHeader>
-            <CardTitle className="flex justify-center text-black text-[18px] font-pretendard-bold">
+            <CardTitle className="font-pretendard-bold flex justify-center text-[18px] text-black">
               🔥HOT 인기자료🔥
             </CardTitle>
-            <CardDescription className="flex justify-center text-black text-[16px] font-pretendard-medium">
+            <CardDescription className="font-pretendard-medium flex justify-center text-[16px] text-black">
               세종말싸미에서 오늘의 인기자료를 만나보세요.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">{/* <MovingCard /> */} </CardContent>
+          <CardContent className="space-y-2">
+            <MovingCardDocument data={dayData} />
+          </CardContent>
           <CardFooter>
-            <Button className="w-[340px] max-w-[376px] h-[30px] bg-[#03b8a3] rounded-[10px] text-white text-[12px] font-pretendard-semibold">
+            <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
               더보기
             </Button>
           </CardFooter>

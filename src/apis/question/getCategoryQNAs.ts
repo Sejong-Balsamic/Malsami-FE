@@ -1,109 +1,73 @@
 import { apiClient } from "../clients/appClient";
 
-export default async function getCategoryQNAs() {
+interface GetCategoryQnasProps {
+  subject?: string; // 교과목명 필터링
+  minYeopjeon?: number; // 엽전 현상금 최소 개수
+  maxYeopjeon?: number; // 엽전 현상금 최대 개수
+  questionPresetTags?: string[]; // 정적 태그 필터링
+  faculty?: string; // 단과대별 필터링
+  isChaetaek?: string; // 채택여부 필터링
+  sortOption?: string; // 정렬 조건
+  pageNumber?: number; // 조회하고 싶은 페이지 번호 (기본값 0)
+  pageSize?: number; // 한 페이지에 조회하고 싶은 글 개수 (기본값 30)
+}
+
+export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
+  // 한국어 -> 영어 매핑 객체
+  const sortOptionMapping: { [key: string]: string } = {
+    최신순: "LATEST",
+    좋아요: "MOST_LIKED",
+    "엽전 현상금 순": "YEOPJEON_REWARD",
+    조회수: "VIEW_COUNT",
+  };
+  const tagMapping: { [key: string]: string } = {
+    "수업 외 내용": "OUT_OF_CLASS",
+    "개념 모름": "UNKNOWN_CONCEPT",
+    "더 나은 풀이": "BETTER_SOLUTION",
+    "시험 대비": "EXAM_PREPARATION",
+    "자료 요청": "DOCUMENT_REQUEST",
+    "공부 팁": "STUDY_TIPS",
+    "조언 구함": "ADVICE_REQUEST",
+  };
+  const chaetaekMapping: { [key: string]: string } = {
+    전체: "ALL",
+    채택: "CHAETAEK",
+    미채택: "NO_CHAETAEK",
+  };
+
   const formData = new FormData();
-  formData.append("pageNumber", "0"); // 기본값 0
-  formData.append("pageSize", "30"); // 기본값 30
+
+  // 영어 변환 함수
+  const getEnglishSortOption = (koreanSortOption: string): string | undefined => {
+    return sortOptionMapping[koreanSortOption];
+  };
+
+  formData.append("subject", "");
+  formData.append("pageNumber", (params.pageNumber ?? 0).toString());
+  formData.append("pageSize", (params.pageSize ?? 30).toString());
+  // 선택적 파라미터 추가
+  if (params.questionPresetTags && params.questionPresetTags.length > 0) {
+    params.questionPresetTags.forEach(tag => {
+      const englishTag = tagMapping[tag]; // 한국어 태그를 영어로 변환
+      if (englishTag) formData.append("questionPresetTags", englishTag);
+    });
+  } else formData.append("questionPresetTags", "");
+  if (params.faculty) formData.append("faculty", params.faculty === "전체" ? "" : params.faculty); // faculty값 추가
+  if (params.isChaetaek) formData.append("chaetaekStatus", chaetaekMapping[params.isChaetaek]);
+  if (params.sortOption) {
+    const englishSortOption = getEnglishSortOption(params.sortOption);
+    if (englishSortOption) formData.append("sortType", englishSortOption);
+  }
 
   try {
-    const response = await apiClient.post("/api/questions/get/all", formData, {
+    const response = await apiClient.post("/api/question/filter", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    return response.data.questionPosts.content; // API 호출 결과만 반환
+    return response.data.questionPostsPage; // API 호출 결과만 반환
   } catch (error) {
     console.error("질문 목록을 가져오는 중 오류 발생:", error);
     throw error; // 오류 발생 시 오류를 그대로 throw
   }
 }
-
-// // 목 데이터 생성
-// const CategoryQNAs = [
-//   {
-//     questionPostId: 1,
-//     assignedTags: ["지정태그", "지정태그12"],
-//     title: "React에서 상태 관리하는 법",
-//     content: "React에서 상태 관리는 어떻게 하나요?",
-//     thumbnail: "/image/PartyPopper.jpg",
-//     createdDate: "2024-10-25T02:53:43.934Z",
-//     viewCount: 100,
-//     likeCount: 20,
-//     commentCount: 5,
-//     rewardYeopjeon: 150,
-//   },
-//   {
-//     questionPostId: 10,
-//     assignedTags: ["지정태그", "지정태그12"],
-//     title: "React에서 상태 관리하는 법",
-//     content: "React에서 상태 관리는 어떻게 하나요?",
-//     thumbnail: "/image/PartyPopper.jpg",
-//     createdDate: "2024-10-25T02:53:43.934Z",
-//     viewCount: 100,
-//     likeCount: 20,
-//     commentCount: 5,
-//     rewardYeopjeon: 0,
-//   },
-//   {
-//     questionPostId: 2,
-//     assignedTags: ["지정태그2", "지정태그"],
-//     title: "Next.js로 SEO 최적화하기",
-//     content: "Next.js를 이용한 SEO 최적화 방법에 대해 알고 싶습니다.",
-//     thumbnail: "/image/PartyPopper.jpg",
-//     createdDate: "2024-10-24T10:30:00.000Z",
-//     viewCount: 200,
-//     likeCount: 50,
-//     commentCount: 10,
-//     rewardYeopjeon: 150,
-//   },
-//   {
-//     questionPostId: 3,
-//     assignedTags: ["지정태그", "지정태그12"],
-//     title: "React에서 상태 관리하는 법",
-//     content: "React에서 상태 관리는 어떻게 하나요?",
-//     thumbnail: "/image/PartyPopper.jpg",
-//     createdDate: "2024-10-25T02:53:43.934Z",
-//     viewCount: 100,
-//     likeCount: 20,
-//     commentCount: 5,
-//     rewardYeopjeon: 1000,
-//   },
-//   {
-//     questionPostId: 4,
-//     assignedTags: ["지정태그2", "지정태그"],
-//     title: "Next.js로 SEO 최적화하기",
-//     content: "Next.js를 이용한 SEO 최적화 방법에 대해 알고 싶습니다.",
-//     thumbnail: "/image/PartyPopper.jpg",
-//     createdDate: "2024-10-24T10:30:00.000Z",
-//     viewCount: 200,
-//     likeCount: 50,
-//     commentCount: 10,
-//     rewardYeopjeon: 150,
-//   },
-//   {
-//     questionPostId: 5,
-//     assignedTags: ["지정태그", "지정태그12"],
-//     title: "React에서 상태 관리하는 법",
-//     content: "React에서 상태 관리는 어떻게 하나요?",
-//     thumbnail: "/image/PartyPopper.jpg",
-//     createdDate: "2024-10-25T02:53:43.934Z",
-//     viewCount: 100,
-//     likeCount: 20,
-//     commentCount: 5,
-//     rewardYeopjeon: 150,
-//   },
-//   {
-//     questionPostId: 6,
-//     assignedTags: ["지정태그2", "지정태그"],
-//     title: "Next.js로 SEO 최적화하기",
-//     content: "Next.js를 이용한 SEO 최적화 방법에 대해 알고 싶습니다.",
-//     thumbnail: "/image/PartyPopper.jpg",
-//     createdDate: "2024-10-24T10:30:00.000Z",
-//     viewCount: 200,
-//     likeCount: 50,
-//     commentCount: 10,
-//     rewardYeopjeon: 150,
-//   },
-// ];
-
-// export default CategoryQNAs;

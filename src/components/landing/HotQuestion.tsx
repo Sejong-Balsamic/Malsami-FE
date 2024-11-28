@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -26,13 +27,13 @@ function HotQuestion() {
   }, []);
 
   return (
-    <Tabs defaultValue="weekend" className="w-[400px] h-[400px]">
+    <Tabs defaultValue="weekend" className="z-40 h-[400px] w-[400px]">
       <div className="flex justify-center">
-        <TabsList className="w-[96px] grid grid-cols-2">
-          <TabsTrigger value="weekend" className="text-[#aaaaaa] text-[14px] font-pretendard-semibold">
+        <TabsList className="grid w-[96px] grid-cols-2">
+          <TabsTrigger value="weekend" className="font-pretendard-medium text-[14px] text-[#aaaaaa]">
             주간
           </TabsTrigger>
-          <TabsTrigger value="today" className="text-[#aaaaaa] text-[14px] font-pretendard-semibold">
+          <TabsTrigger value="today" className="font-pretendard-medium text-[14px] text-[#aaaaaa]">
             일간
           </TabsTrigger>
         </TabsList>
@@ -40,10 +41,10 @@ function HotQuestion() {
       <TabsContent value="weekend">
         <Card>
           <CardHeader>
-            <CardTitle className="flex justify-center text-black text-[18px] font-pretendard-bold">
+            <CardTitle className="font-pretendard-bold flex justify-center text-[18px] text-black">
               🔥HOT 인기질문🔥
             </CardTitle>
-            <CardDescription className="flex justify-center text-black text-[16px] font-pretendard-medium">
+            <CardDescription className="font-pretendard-medium flex justify-center text-[16px] text-black">
               세종말싸미에서 이번 주의 인기질문을 만나보세요.
             </CardDescription>
           </CardHeader>
@@ -51,19 +52,21 @@ function HotQuestion() {
             <MovingCardQuestion data={weekData} />
           </CardContent>
           <CardFooter>
-            <Button className="w-[340px] max-w-[376px] h-[30px] bg-[#03b8a3] rounded-[10px] text-white text-[12px] font-pretendard-semibold">
-              더보기
-            </Button>
+            <Link href="/board/question" passHref>
+              <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
+                더보기
+              </Button>
+            </Link>
           </CardFooter>
         </Card>
       </TabsContent>
       <TabsContent value="today">
         <Card>
           <CardHeader>
-            <CardTitle className="flex justify-center text-black text-[18px] font-pretendard-bold">
+            <CardTitle className="font-pretendard-bold flex justify-center text-[18px] text-black">
               🔥HOT 인기질문🔥
             </CardTitle>
-            <CardDescription className="flex justify-center text-black text-[16px] font-pretendard-medium">
+            <CardDescription className="font-pretendard-medium flex justify-center text-[16px] text-black">
               세종말싸미에서 오늘의 인기질문을 만나보세요.
             </CardDescription>
           </CardHeader>
@@ -71,9 +74,11 @@ function HotQuestion() {
             <MovingCardQuestion data={dayData} />
           </CardContent>
           <CardFooter>
-            <Button className="w-[340px] max-w-[376px] h-[30px] bg-[#03b8a3] rounded-[10px] text-white text-[12px] font-pretendard-semibold">
-              더보기
-            </Button>
+            <Link href="/board/question" passHref>
+              <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
+                더보기
+              </Button>
+            </Link>
           </CardFooter>
         </Card>
       </TabsContent>

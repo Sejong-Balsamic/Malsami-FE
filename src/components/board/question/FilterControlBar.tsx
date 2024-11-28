@@ -1,28 +1,46 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
-import ToggleSwitch from "./ToggleSwitch";
+import { QnaFilterOptions } from "@/types/QnaFilterOptions";
+import QnaFilterOptionsModal from "./QnaFilterOptionsModal";
+import JiJeongTag from "../tags/JiJeongTag";
 
-// api 연동해 isChaeTak 변경되면 api 호출하는 코드 짜야 함
-function FilterControlBar() {
-  const [isChaeTak, setIsChaeTak] = useState<boolean>(false);
+interface FilterControlBarProps {
+  filterOptions: QnaFilterOptions; // 초기 필터 옵션
+  onFilterChange: (newFilterOptions: QnaFilterOptions) => void; // 필터 변경 시 호출되는 함수
+}
 
-  const toggleSwitch = () => setIsChaeTak(!isChaeTak);
+function FilterControlBar({ filterOptions, onFilterChange }: FilterControlBarProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // isChaeTak의 값이 변경될 때마다 콘솔에 출력
-  useEffect(() => {
-    console.log("isChaeTak:", isChaeTak);
-  }, [isChaeTak]);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   return (
-    <div className="px-5 py-4 flex justify-end">
-      <ToggleSwitch isChaeTak={isChaeTak} toggleSwitch={toggleSwitch} />
-      <span className="mr-2.5 text-xs font-pretendard-semibold text-[#737373]">채택됨</span>
-      <Image
-        src="/icons/FilterIcon.svg" // 이미지 경로
-        alt="filter"
-        width={16}
-        height={16}
-      />
+    <div className="flex justify-between px-5 py-3">
+      <div className="flex">
+        {filterOptions.tags.length > 0 && filterOptions.tags.map(tag => <JiJeongTag key={tag} label={tag} />)}{" "}
+      </div>
+      <div className="flex items-center">
+        <Image
+          src="/icons/FilterIcon.svg"
+          alt="filter"
+          width={16}
+          height={16}
+          onClick={openModal}
+          style={{ cursor: "pointer" }}
+        />
+      </div>
+      {isModalOpen && (
+        <QnaFilterOptionsModal
+          isVisible={isModalOpen}
+          onClose={closeModal}
+          initialFilterOptions={filterOptions}
+          onApplyFilter={newFilterOptions => {
+            onFilterChange(newFilterOptions);
+            closeModal();
+          }}
+        />
+      )}
     </div>
   );
 }
