@@ -10,7 +10,7 @@ import getDateDiff from "@/utils/getDateDiff";
 import { QuestionData } from "@/types/QuestionData";
 import CommentSection from "./QCommentSection";
 import sameMember from "@/utils/sameMember";
-import AttachedFiles from "./AttachedFiles";
+import AttachedFiles from "../../../common/AttachedFiles";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {

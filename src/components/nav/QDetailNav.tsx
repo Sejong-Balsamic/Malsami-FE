@@ -17,14 +17,7 @@ function DetailPageNav() {
       </button>
       {/* 제목과 양반등급 표시 */}
       <div className="flex flex-col items-center">
-        {pathname === "/board/document/detail" ? (
-          <>
-            <h1 className="font-pretendard-bold text-[20px]">자료게시판</h1>
-            <div className="font-pretendard-medium mb-[10px] mt-1 text-xs text-[#f46b01]">양반</div>
-          </>
-        ) : (
-          <h1 className="font-pretendard-bold mb-[16px] text-[20px]">질문게시판</h1>
-        )}
+        <h1 className="font-pretendard-bold mb-[16px] text-[20px]">질문게시판</h1>
       </div>
       {/* 옵션 아이콘 */}
       <Drawer>
