@@ -1,38 +1,21 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { DocCardProps } from "@/types/docCard.type";
-import { DocFilterOptions } from "@/types/DocFilterOptions";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
-import getFilteringDocs from "@/apis/document/getFilteringDocs";
-import DocFilterControlBar from "../DocFilterControlBar";
-import DocCard from "../DocCard";
+import { DocCardProps } from "@/types/docCard.type";
+import DocCard from "@/components/board/document/DocCard";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
+import getDocWeeklyPopulars from "@/apis/document/docMainPage/getDocWeeklyPopulars";
 
-export default function CheonminBoard() {
+export default function PopularWeekly() {
   const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
-  const [filterOptions, setFilterOptions] = useState<DocFilterOptions>({
-    tags: [],
-    sortOption: "",
-  });
-
-  const handleFilterChange = (newFilterOptions: DocFilterOptions) => {
-    setFilterOptions(newFilterOptions);
-    sessionStorage.setItem("DocfilterOptions", JSON.stringify(newFilterOptions)); // 스토리지에 저장
-  };
 
   const fetchDocs = async () => {
-    const params = {
-      documentTypes: filterOptions.tags,
-      sortType: filterOptions.sortOption,
-      postTier: "천민", // 게시판 티어 설정
-      pageNumber: 0, // 기본 페이지 번호
-      pageSize: 12, // 페이지 크기
-    };
-
     setIsLoading(true);
     try {
-      const response = await getFilteringDocs(params);
+      const response = await getDocWeeklyPopulars();
       console.log(response);
       setDocCards(response);
     } catch (error) {
@@ -44,14 +27,13 @@ export default function CheonminBoard() {
 
   useEffect(() => {
     fetchDocs();
-  }, [filterOptions]);
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <DocTierPageNav subTitle="천민 게시판" />
+      <DocTierPageNav subTitle="주간 인기글" />
       <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
-        <DocFilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
         <div className="h-0.5 bg-[#EEEEEE]" />
         <div className="p-5">
           {isLoading ? (

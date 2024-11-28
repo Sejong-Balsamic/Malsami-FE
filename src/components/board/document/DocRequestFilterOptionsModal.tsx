@@ -3,20 +3,20 @@
 import React, { ReactNode, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
-import { QnaFilterOptions } from "@/types/QnaFilterOptions";
-import qnaJijeongTags from "@/lib/qnaJijeongTags";
-import qnaSortingOptions from "@/lib/qnaSortingOptions";
-import chaetaekOptions from "@/lib/chaeTakOptions";
+import docJijeongTags from "@/lib/docJijeongTags";
+import docSortingOptions from "@/lib/docSortingOptions";
+import facultys from "@/lib/facultys";
+import { DocFilterOptions } from "@/types/DocFilterOptions";
 
-interface QnaFilterOptionsModalProps {
+interface DocRequestFilterOptionsModalProps {
   isVisible: boolean; // 모달 표시 여부
   onClose: () => void; // 모달을 닫는 함수
-  initialFilterOptions: QnaFilterOptions; // 필터 옵션의 초기값
-  onApplyFilter: (filters: QnaFilterOptions) => void; // 필터 적용 함수
+  initialFilterOptions: DocFilterOptions; // 필터 옵션의 초기값
+  onApplyFilter: (filters: DocFilterOptions) => void; // 필터 적용 함수
   children?: ReactNode; // 모달 내용으로 표시할 컴포넌트나 요소들
 }
 
-const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
+const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> = ({
   isVisible,
   onClose,
   initialFilterOptions,
@@ -26,19 +26,19 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
   const [modalHeight, setModalHeight] = useState("50vh"); // 초기 modalHeight 50%로 설정
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const [isChaeTaek, setIsChaeTaek] = useState(initialFilterOptions.isChaeTaek);
   const [tags, setTags] = useState(initialFilterOptions.tags);
   const [sortOption, setSortOption] = useState(initialFilterOptions.sortOption);
+  const [faculty, setFaculty] = useState(initialFilterOptions.faculty);
 
   const handleApply = () => {
-    onApplyFilter({ isChaeTaek, tags, sortOption });
+    onApplyFilter({ tags, sortOption, faculty });
   };
 
   // 필터 초기화 함수
   const resetFilters = () => {
-    setIsChaeTaek("");
     setTags([]);
     setSortOption("");
+    setFaculty("");
   };
 
   if (!isVisible) return null;
@@ -112,7 +112,7 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
               <>
                 <h1 className="font-pretendard-bold mb-[20px] text-xl">정렬</h1>
                 <div className="mb-[30px] flex flex-col">
-                  {qnaSortingOptions.map(option => (
+                  {docSortingOptions.map(option => (
                     <li key={option} className="flex rounded-xl py-[10px]">
                       <div
                         className="flex w-full cursor-pointer flex-row justify-between"
@@ -134,35 +134,11 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
                   ))}
                 </div>
 
-                <h1 className="font-pretendard-bold mb-[20px] text-xl">채택 여부</h1>
-                <div className="mb-[30px] flex flex-col">
-                  {chaetaekOptions.map(option => (
-                    <li key={option} className="flex rounded-xl py-[10px]">
-                      <div
-                        className="flex w-full cursor-pointer flex-row justify-between"
-                        onClick={() => setIsChaeTaek(option)}
-                        onKeyDown={e => e.key === "Enter" && setIsChaeTaek(option)}
-                      >
-                        {isChaeTaek === option ? (
-                          <span className="font-pretendard-bold text-base text-custom-blue-500">{option}</span>
-                        ) : (
-                          <span className="font-pretendard-medium text-base">{option}</span>
-                        )}
-                        {isChaeTaek === option ? (
-                          <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
-                        ) : (
-                          <Image src="/icons/UnCheckedIcon.svg" alt="UnCheckedIcon" width={14} height={14} />
-                        )}
-                      </div>
-                    </li>
-                  ))}
-                </div>
-
                 <h1 className="font-pretendard-bold mb-[20px] text-xl">
                   태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-[#A4A4A4]">최대 2개</span>
                 </h1>
-                <div className="mb-[40px] flex flex-wrap justify-center gap-x-[7px] gap-y-[20px]">
-                  {qnaJijeongTags.map(tag => (
+                <div className="mb-[40px] flex flex-wrap justify-between gap-x-[7px] gap-y-[20px]">
+                  {docJijeongTags.map(tag => (
                     <button
                       key={tag}
                       onClick={() =>
@@ -177,6 +153,30 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
                     >
                       {tag}
                     </button>
+                  ))}
+                </div>
+
+                <h1 className="font-pretendard-bold mb-[20px] text-xl">단과대 선택</h1>
+                <div className="mb-[30px] flex flex-col">
+                  {facultys.map(option => (
+                    <li key={option} className="flex rounded-xl py-[10px]">
+                      <div
+                        className="flex w-full cursor-pointer flex-row justify-between"
+                        onClick={() => setFaculty(option)}
+                        onKeyDown={e => e.key === "Enter" && setFaculty(option)}
+                      >
+                        {faculty === option ? (
+                          <span className="font-pretendard-bold text-base text-custom-blue-500">{option}</span>
+                        ) : (
+                          <span className="font-pretendard-medium text-base">{option}</span>
+                        )}
+                        {faculty === option ? (
+                          <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
+                        ) : (
+                          <Image src="/icons/UnCheckedIcon.svg" alt="UnCheckedIcon" width={14} height={14} />
+                        )}
+                      </div>
+                    </li>
                   ))}
                 </div>
                 <button
@@ -202,4 +202,4 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
   );
 };
 
-export default QnaFilterOptionsModal;
+export default DocRequestFilterOptionsModal;

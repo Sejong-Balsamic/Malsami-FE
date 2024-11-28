@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BottomSheetModal from "@/components/common/BottomSheetModal";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
-import jijeongTags from "@/lib/jijeongTags";
+import qnaJijeongTags from "@/lib/qnaJijeongTags";
 
 interface QnaPostJiJeongTagModalProps {
   isVisible: boolean;
@@ -30,7 +30,7 @@ function QnaPostJiJeongTagModal({ isVisible, onClose, selectedTags, onSubmitTags
         태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-[#A4A4A4]">최대 2개</span>
       </h1>
       <div className="mb-[40px] flex flex-wrap justify-center gap-x-2 gap-y-5">
-        {jijeongTags.map(tag => (
+        {qnaJijeongTags.map(tag => (
           <button
             type="button"
             key={tag}

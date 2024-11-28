@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { CardProps } from "@/types/DocCardProps.type";
 import getDocHotDownload from "@/apis/document/docMainPage/getDocHotDownload";
+import { useRouter } from "next/navigation";
 import MovingCardDocument from "../MovingCardDocument";
 
 export default function HotDownloadContent() {
+  const router = useRouter();
   const [hotDownloadItems, setHotDownloadItems] = useState<CardProps[]>([]); // 핫 다운로드
 
   // api호출로 내전공관련자료 세팅
@@ -30,7 +32,13 @@ export default function HotDownloadContent() {
       {/* 콘텐츠 제목 */}
       <div className="mb-3.5 flex justify-between">
         <span className="font-pretendard-semibold text-lg text-custom-blue-500">HOT 다운로드</span>
-        <span className="font-pretendard-medium text-sm text-custom-blue-500">더 보기 {">"}</span>
+        <button
+          type="button"
+          className="font-pretendard-medium cursor-pointer text-sm text-custom-blue-500"
+          onClick={() => router.push("/board/document/sub/hot-download")}
+        >
+          더 보기 {">"}
+        </button>
       </div>
       {/* 콘텐츠 내용 */}
       <div className="flex items-center justify-center">
