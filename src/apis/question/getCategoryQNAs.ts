@@ -15,10 +15,10 @@ interface GetCategoryQnasProps {
 export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
   // 한국어 -> 영어 매핑 객체
   const sortOptionMapping: { [key: string]: string } = {
-    최신순: "LATEST",
-    좋아요: "MOST_LIKED",
-    "엽전 현상금 순": "YEOPJEON_REWARD",
-    조회수: "VIEW_COUNT",
+    최근순: "LATEST",
+    "좋아요 많은 순": "MOST_LIKED",
+    "엽전현상금 많은 순": "REWARD_YEOPJEON",
+    "조회수 많은 순": "VIEW_COUNT",
   };
   const tagMapping: { [key: string]: string } = {
     "수업 외 내용": "OUT_OF_CLASS",

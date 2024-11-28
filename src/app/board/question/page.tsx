@@ -163,7 +163,7 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import QnaFilterFacultyCategory from "@/components/board/question/QnaFilterFacultyCategory";
 import QuestionCardList from "@/components/board/question/QuestionCardList";
 import MovingCardQuestion from "@/components/landing/MovingCardQuestion";
-import FilterControlBar from "@/components/board/question/FilterControlBar";
+import QnaFilterControlBar from "@/components/board/question/QnaFilterControlBar";
 import QnaPageNav from "@/components/nav/QnaPageNav";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import getUnansweredQNAs from "@/apis/question/getUnansweredQNAs";
@@ -304,7 +304,7 @@ export default function QuestionBoardPage() {
           )}
         </div>
         <div className="h-[2px] w-full bg-[#EEEEEE]" />
-        <FilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
+        <QnaFilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
         <div className="h-0.5 bg-[#EEEEEE]" />
         <div className="px-5 py-4">
           <QuestionCardList categoryQNAs={categoryQNAs} />
