@@ -19,7 +19,7 @@ export default async function postAnswer(data: PostAnswerFormData) {
     formData.append("isPrivate", data.isPrivate.toString());
   }
 
-  // 첨부 파일 
+  // 첨부 파일
   if (data.mediaFiles && data.mediaFiles.length > 0) {
     data.mediaFiles.forEach(file => {
       formData.append("attachmentFiles", file);
