@@ -113,9 +113,12 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
           </div>
         )}
         {/* 첨부파일 */}
-        <div className="justfy-center my-4 flex">
-          <AttachedFiles files={files} />
-        </div>
+        {files.length > 0 && ( // 파일이 있을 때만 렌더링
+          <div className="justfy-center my-4 flex">
+            <AttachedFiles files={files} />
+          </div>
+        )}
+
 
         {/* 지정태그 */}
         <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
