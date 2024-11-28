@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
+import Image from "next/image";
 import "swiper/css";
 import "swiper/css/pagination";
 
@@ -10,7 +11,7 @@ interface AttachedFilesProps {
   files: string[]; // 이미지 경로 배열
 }
 
-const AttachedFiles: React.FC<AttachedFilesProps> = ({ files }) => {
+export default function AttachedFiles({ files }: AttachedFilesProps) {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   const handleImageClick = (file: string) => {
@@ -31,33 +32,53 @@ const AttachedFiles: React.FC<AttachedFilesProps> = ({ files }) => {
         slidesPerView={1}
         className="mySwiper h-full"
       >
-        {files.map((file, index) => (
-          <SwiperSlide key={index} className="flex h-full items-center justify-center rounded-lg bg-gray-100">
-            <div className="flex h-full w-full items-center justify-center">
-              <img
+        {files.map(file => (
+          <SwiperSlide key={file} className="flex h-full items-center justify-center rounded-lg bg-gray-100">
+            <button
+              type="button"
+              className="flex h-full w-full items-center justify-center focus:outline-none"
+              onClick={() => handleImageClick(file)}
+            >
+              <Image
                 src={file}
-                alt={`Slide ${index + 1}`}
-                className="h-full w-full cursor-pointer rounded-lg object-cover"
-                onClick={() => handleImageClick(file)} // 이미지 클릭 핸들러
+                alt="Slide image"
+                className="cursor-pointer rounded-lg object-cover"
+                layout="fill"
+                objectFit="contain"
+                priority
               />
-            </div>
+            </button>
           </SwiperSlide>
         ))}
       </Swiper>
       {/* 페이지네이션 */}
-      <div className="swiper-pagination font-bold text-black"></div>
+      <div className="swiper-pagination font-bold text-black" />
 
       {/* 모달 */}
       {selectedImage && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={closeModal}>
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
+          role="button"
+          aria-modal="true"
+          tabIndex={0} // 키보드 포커스를 허용
+          onClick={closeModal} // 클릭 이벤트
+          onKeyDown={e => {
+            if (e.key === "Escape") closeModal(); // ESC 키로 모달 닫기
+          }}
+        >
           <div className="relative">
-            {/* 모달 내부 이미지 */}
-            <img src={selectedImage} alt="Selected" className="max-h-[90vh] max-w-[90vw] rounded-lg" />
+            <Image
+              src={selectedImage}
+              alt="Selected"
+              className="rounded-lg"
+              width={900}
+              height={900}
+              objectFit="contain"
+              priority
+            />
           </div>
         </div>
       )}
     </div>
   );
-};
-
-export default AttachedFiles;
+}
