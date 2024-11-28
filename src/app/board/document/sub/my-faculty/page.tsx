@@ -1,14 +1,16 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { DocCardProps } from "@/types/docCard.type";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
+import DocFilterControlBar from "@/components/board/document/DocFilterControlBar";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
-import DocFilterControlBar from "../DocFilterControlBar";
-import DocCard from "../DocCard";
+import { DocCardProps } from "@/types/docCard.type";
+import DocCard from "@/components/board/document/DocCard";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
-export default function CheonminBoard() {
+export default function DocMyFacultyPage() {
   const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const [filterOptions, setFilterOptions] = useState<DocFilterOptions>({
@@ -25,7 +27,7 @@ export default function CheonminBoard() {
     const params = {
       documentTypes: filterOptions.tags,
       sortType: filterOptions.sortOption,
-      postTier: "천민", // 게시판 티어 설정
+      faculty: "소프트웨어융합대학",
       pageNumber: 0, // 기본 페이지 번호
       pageSize: 12, // 페이지 크기
     };
@@ -49,7 +51,7 @@ export default function CheonminBoard() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <DocTierPageNav subTitle="천민 게시판" />
+      <DocTierPageNav subTitle="소프트웨어융합대학" />
       <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
         <DocFilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
         <div className="h-0.5 bg-[#EEEEEE]" />

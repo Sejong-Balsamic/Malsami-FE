@@ -8,7 +8,7 @@ function DocMainPageNav() {
   return (
     <nav className="mb-4 flex items-end justify-between px-5 pt-[20px]">
       {/* 뒤로 가기 아이콘 */}
-      <button type="button">
+      <button type="button" onClick={() => router.push("/")}>
         <Image src="/icons/BackIcon.svg" alt="썸네일" width={10} height={20} />
       </button>
 

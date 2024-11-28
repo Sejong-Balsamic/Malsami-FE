@@ -9,7 +9,7 @@ interface FilterControlBarProps {
   onFilterChange: (newFilterOptions: QnaFilterOptions) => void; // 필터 변경 시 호출되는 함수
 }
 
-function FilterControlBar({ filterOptions, onFilterChange }: FilterControlBarProps) {
+function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBarProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
@@ -45,4 +45,4 @@ function FilterControlBar({ filterOptions, onFilterChange }: FilterControlBarPro
   );
 }
 
-export default FilterControlBar;
+export default QnaFilterControlBar;

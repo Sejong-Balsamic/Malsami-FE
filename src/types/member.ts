@@ -9,6 +9,7 @@ export interface Member {
   studentName: string;
   uuidNickname: string;
   major: string;
+  faculty: string;
   academicYear: string;
   enrollmentStatus: string;
   profileUrl: string | null;
