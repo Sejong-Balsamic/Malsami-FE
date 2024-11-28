@@ -10,6 +10,7 @@ import getDateDiff from "@/utils/getDateDiff";
 import { QuestionData } from "@/types/QuestionData";
 import CommentSection from "./QCommentSection";
 import sameMember from "@/utils/sameMember";
+import AttachedFiles from "./AttachedFiles";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -58,6 +59,8 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
     setCommentCount(prevCount => prevCount + 1);
   };
 
+  const files = questionData.mediaFiles.map(file => file.uploadedImageUrl);
+
   return (
     <div className="flex flex-col justify-center px-[20px]">
       {/* 교과목명 현상금  */}
@@ -93,6 +96,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
             {questionData.questionPost.content}
           </div>
         </div>
+
         {/* 커스텀태그 */}
         {questionData.customTags && questionData.customTags.length > 0 && (
           <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
@@ -108,6 +112,13 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
             </div>
           </div>
         )}
+        {/* 첨부파일 */}
+        {files.length > 0 && ( // 파일이 있을 때만 렌더링
+          <div className="justfy-center my-4 flex">
+            <AttachedFiles files={files} />
+          </div>
+        )}
+
 
         {/* 지정태그 */}
         <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">

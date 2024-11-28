@@ -9,6 +9,7 @@ import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import sameMember from "@/utils/sameMember";
 import CommentSection from "./ACommentSection";
 import ChaetaekCheckModal from "./ChaetaekCheckModal";
+import AttachedFiles from "./AttachedFiles";
 
 interface AnswerSectionProps {
   postId: string;
@@ -118,6 +119,12 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
             )}
           </div>
           <div className="font-pretendard-medium text-[14px] leading-relaxed text-[#444444]">{ans.content}</div>
+          {/* 첨부파일 */}
+          {ans.mediaFiles && ans.mediaFiles.length > 0 && (
+            <div className="mt-4">
+              <AttachedFiles files={ans.mediaFiles.map(file => file.uploadedImageUrl)} />
+            </div>
+          )}
           <Accordion type="single" collapsible>
             <AccordionItem value={`item-${index}`}>
               <div className="flex h-[24px] w-full justify-between">
