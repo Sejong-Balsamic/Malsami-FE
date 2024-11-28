@@ -1,4 +1,4 @@
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerTitle, DrawerDescription, DrawerTrigger } from "@/components/ui/drawer";
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -6,25 +6,17 @@ import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { Button } from "../ui/button";
 
 function DetailPageNav() {
-  const pathname = usePathname();
   const router = useRouter();
 
   return (
     <nav className="flex h-[64px] items-end justify-between border-b-2 border-[#eaeaea] px-5">
       {/* 뒤로 가기 아이콘 */}
-      <button type="button" className="flex" onClick={() => router.push("/board/question")}>
+      <button type="button" className="flex" onClick={() => router.push("/board/document")}>
         <Image src="/icons/BackIcon.svg" alt="back" width={10} height={20} className="mb-[20px]" />
       </button>
       {/* 제목과 양반등급 표시 */}
       <div className="flex flex-col items-center">
-        {pathname === "/board/document/detail" ? (
-          <>
-            <h1 className="font-pretendard-bold text-[20px]">자료게시판</h1>
-            <div className="font-pretendard-medium mb-[10px] mt-1 text-xs text-[#f46b01]">양반</div>
-          </>
-        ) : (
-          <h1 className="font-pretendard-bold mb-[16px] text-[20px]">질문게시판</h1>
-        )}
+        <h1 className="font-pretendard-bold mb-[16px] text-[20px]">자료게시판</h1>
       </div>
       {/* 옵션 아이콘 */}
       <Drawer>
