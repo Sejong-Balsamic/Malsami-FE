@@ -17,7 +17,12 @@ const nextConfig = {
       {
         protocol: "http",
         hostname: "221.149.185.157",
-        pathname: "/sejong-malsami/question/**", // 추가된 경로
+        pathname: "/sejong-malsami/question/**",
+      },
+      {
+        protocol: "http",
+        hostname: "221.149.185.157",
+        pathname: "/sejong-malsami/answer/**",
       },
     ],
   },
