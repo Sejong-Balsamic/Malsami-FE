@@ -70,11 +70,12 @@ function QuestionCard({
           </div>
         </div>
         <Image
-          src={displayThumbnail} // 이미지 썸네일 경로로 나중에 바꿔야 함
+          src={displayThumbnail}
           alt="썸네일"
           width={74}
           height={74}
           className="ml-4 rounded-sm border"
+          style={{ maxWidth: "74px", maxHeight: "74px", width: "auto", height: "auto" }}
         />
       </div>
     </div>
