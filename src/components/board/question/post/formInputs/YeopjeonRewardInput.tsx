@@ -7,9 +7,9 @@ interface YeopjeonRewardProps {
 
 export default function YeopjeonRewardInput({ reward, onClick }: YeopjeonRewardProps) {
   return (
-    <button type="button" className="mb-[26px] flex cursor-pointer items-center" onClick={onClick}>
-      <div className="font-pretendard-semibold mr-[14px] text-lg"> 엽전 현상금 {">"}</div>
-      <YeopjeonTag point={reward} />
+    <button type="button" className="mb-[26px] cursor-pointer" onClick={onClick}>
+      <div className="font-pretendard-semibold mb-2.5 text-lg"> 엽전 현상금 {">"}</div>
+      <div className="flex items-start">{reward !== 0 && <YeopjeonTag point={reward} />}</div>
     </button>
   );
 }

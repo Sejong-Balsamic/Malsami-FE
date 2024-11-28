@@ -32,7 +32,7 @@ export default async function postNewQna(data: QnaPostFormData) {
 
   // 선택 항목 추가
   if (data.reward !== undefined) {
-    formData.append("reward", data.reward.toString());
+    formData.append("rewardYeopjeon", data.reward.toString());
   }
   if (data.isPrivate !== undefined) {
     formData.append("isPrivate", data.isPrivate.toString());
