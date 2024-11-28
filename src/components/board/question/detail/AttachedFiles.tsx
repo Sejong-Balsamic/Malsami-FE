@@ -22,7 +22,7 @@ const AttachedFiles: React.FC<AttachedFilesProps> = ({ files }) => {
   };
 
   return (
-    <div className="w-full max-w-[430px] h-[300px] mx-auto relative">
+    <div className="relative mx-auto h-[300px] w-full max-w-[600px]">
       {/* 슬라이더 */}
       <Swiper
         modules={[Pagination]}
@@ -32,15 +32,12 @@ const AttachedFiles: React.FC<AttachedFilesProps> = ({ files }) => {
         className="mySwiper h-full"
       >
         {files.map((file, index) => (
-          <SwiperSlide
-            key={index}
-            className="flex items-center justify-center bg-gray-100 rounded-lg h-full"
-          >
-            <div className="flex items-center justify-center w-full h-full">
+          <SwiperSlide key={index} className="flex h-full items-center justify-center rounded-lg bg-gray-100">
+            <div className="flex h-full w-full items-center justify-center">
               <img
                 src={file}
                 alt={`Slide ${index + 1}`}
-                className="w-full h-full object-cover rounded-lg cursor-pointer"
+                className="h-full w-full cursor-pointer rounded-lg object-cover"
                 onClick={() => handleImageClick(file)} // 이미지 클릭 핸들러
               />
             </div>
@@ -48,25 +45,14 @@ const AttachedFiles: React.FC<AttachedFilesProps> = ({ files }) => {
         ))}
       </Swiper>
       {/* 페이지네이션 */}
-      <div className="swiper-pagination text-black font-bold"></div>
+      <div className="swiper-pagination font-bold text-black"></div>
 
       {/* 모달 */}
       {selectedImage && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={closeModal}>
           <div className="relative">
             {/* 모달 내부 이미지 */}
-            <img
-              src={selectedImage}
-              alt="Selected"
-              className="max-w-[90vw] max-h-[90vh] rounded-lg"
-            />
-            {/* 닫기 버튼 */}
-            <button
-              onClick={closeModal}
-              className="absolute top-4 right-4 text-white text-[24px] font-bold"
-            >
-              ×
-            </button>
+            <img src={selectedImage} alt="Selected" className="max-h-[90vh] max-w-[90vw] rounded-lg" />
           </div>
         </div>
       )}

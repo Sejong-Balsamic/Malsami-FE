@@ -59,12 +59,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
     setCommentCount(prevCount => prevCount + 1);
   };
 
-  const files = [
-    "/image/image2.png",
-    "/image/image3.png",
-    "/image/image4.png",
-    "/image/image5.png"
-  ];
+  const files = questionData.mediaFiles.map(file => file.uploadedImageUrl);
 
   return (
     <div className="flex flex-col justify-center px-[20px]">
@@ -117,8 +112,8 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
             </div>
           </div>
         )}
-
-        <div className="flex justfy-center p-4">
+        {/* 첨부파일 */}
+        <div className="justfy-center my-4 flex">
           <AttachedFiles files={files} />
         </div>
 
