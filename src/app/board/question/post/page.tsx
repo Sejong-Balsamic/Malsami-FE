@@ -1,7 +1,5 @@
 "use client";
 
-// 컴포넌트 나누어야 함. 나중에 수정
-
 import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import QnaPostNav from "@/components/nav/QnaPostNav";
@@ -16,7 +14,9 @@ import JiJeongTagInput from "@/components/board/question/post/formInputs/Jijeong
 import PrivateSettingInput from "@/components/board/question/post/formInputs/PrivateSettingInput";
 import QnaPostRewardModal from "@/components/board/question/post/QnaPostRewardModal";
 import QnaPostJiJeongTagModal from "@/components/board/question/post/QnaPostJiJeongTagModal";
+import QnaPostSubjectModal from "@/components/board/question/post/QnaPostSubjectModal";
 import postNewQna from "@/apis/question/postNewQna";
+import QnaPostCustomTagsModal from "@/components/board/question/post/QnaPostCustomTagsModal";
 
 interface QnaPostFormData {
   title: string;
@@ -41,10 +41,11 @@ export default function QnaPostPage() {
     mediaFiles: [],
   });
 
-  const [tagInput, setTagInput] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
   const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
+  const [isSubjectModalOpen, setIsSubjectModalOpen] = useState(false);
   const [isJiJeongTagModalOpen, setIsJiJeongTagModalOpen] = useState(false);
+  const [isCustomTagsModalOpen, setIsCustomTagsModalOpen] = useState(false);
   const mediaAllowedTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
 
   // 로컬 스토리지에 저장하는 함수
@@ -64,31 +65,6 @@ export default function QnaPostPage() {
     loadFromLocalStorage();
   }, []);
 
-  // 커스텀 태그 추가 함수
-  const handleTagInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if ((e.key === "Enter" || e.key === "Tab") && tagInput.trim()) {
-      e.preventDefault(); // 기본 동작 막기
-      const newTag = tagInput.trim();
-
-      // 유효한 태그 조건 확인
-      if (newTag.length <= 10 && formData.customTags.length < 4 && !formData.customTags.includes(newTag)) {
-        setFormData(prev => ({
-          ...prev,
-          customTags: [...prev.customTags, newTag],
-        }));
-      }
-
-      // tagInput을 비동기적으로 초기화해, 키 입력 처리와 상태 초기화 사이의 타이밍 문제 해결.
-      setTimeout(() => setTagInput(""), 0);
-    }
-  };
-  // 태그 입력 값 변경 함수
-  const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    if (e.target.value.length > 10) {
-      e.target.value = e.target.value.slice(0, 10);
-    }
-    setTagInput(e.target.value.trim());
-  };
   // 태그 삭제 함수
   const removeTag = (tag: string): void => {
     setFormData(prev => ({
@@ -97,12 +73,11 @@ export default function QnaPostPage() {
     }));
   };
 
-  const toggleRewardModal = () => {
-    setIsRewardModalOpen(!isRewardModalOpen);
-  };
-
-  const toggleJiJeongTagModal = () => {
-    setIsJiJeongTagModalOpen(!isJiJeongTagModalOpen);
+  const toggleRewardModal = () => setIsRewardModalOpen(!isRewardModalOpen);
+  const toggleJiJeongTagModal = () => setIsJiJeongTagModalOpen(!isJiJeongTagModalOpen);
+  const toggleSubjectModal = () => setIsSubjectModalOpen(!isSubjectModalOpen);
+  const toggleCustomTagsModal = () => {
+    setIsCustomTagsModalOpen(!isCustomTagsModalOpen);
   };
 
   // 모든 필수 입력 필드가 채워져 있는지 확인
@@ -146,6 +121,14 @@ export default function QnaPostPage() {
     setFormData(prev => ({
       ...prev,
       questionPresetTags: selectedTags,
+    }));
+  };
+
+  // 커스텀 태그 업데이트 함수
+  const handleCustomTagsSubmit = (tags: string[]) => {
+    setFormData(prev => ({
+      ...prev,
+      customTags: tags,
     }));
   };
 
@@ -231,19 +214,13 @@ export default function QnaPostPage() {
               onFileDelete={handleFileDelete}
             />
             {/* 교과목명 검색 */}
-            <SubjectSearchInputComponent value={formData.subject} onChange={handleSubjectChange} />
+            <SubjectSearchInputComponent value={formData.subject} onClick={toggleSubjectModal} />
             {/* 정적 태그 */}
             <JiJeongTagInput tags={formData.questionPresetTags} onOpenModal={toggleJiJeongTagModal} />
             {/* 엽전 현상금 */}
             <YeopjeonRewardInput reward={formData.reward} onClick={toggleRewardModal} />
             {/* 커스텀 태그 */}
-            <CustomTagsInput
-              tags={formData.customTags}
-              tagInput={tagInput}
-              onTagChange={handleTagInputChange}
-              onTagKeyDown={handleTagInputKeyDown}
-              onRemoveTag={removeTag}
-            />
+            <CustomTagsInput tags={formData.customTags} onClick={toggleCustomTagsModal} onRemoveTag={removeTag} />
             {/* 추가 설정 */}
             <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={handleIsPrivate} />
 
@@ -258,6 +235,14 @@ export default function QnaPostPage() {
           </form>
 
           {/* 모달들 */}
+          {isSubjectModalOpen && (
+            <QnaPostSubjectModal
+              isVisible={isSubjectModalOpen}
+              subject={formData.subject}
+              onClose={toggleSubjectModal}
+              onSelectSubject={handleSubjectChange} // subject을 변경할 함수 전달
+            />
+          )}
           {isRewardModalOpen && (
             <QnaPostRewardModal
               isVisible={isRewardModalOpen}
@@ -272,6 +257,14 @@ export default function QnaPostPage() {
               onClose={toggleJiJeongTagModal}
               selectedTags={formData.questionPresetTags}
               onSubmitTags={handleJiJeongTagSelect}
+            />
+          )}
+          {isCustomTagsModalOpen && (
+            <QnaPostCustomTagsModal
+              isVisible={isCustomTagsModalOpen}
+              onClose={toggleCustomTagsModal}
+              initialTags={formData.customTags}
+              onTagsSubmit={handleCustomTagsSubmit}
             />
           )}
         </div>

@@ -42,16 +42,11 @@ function BoardPage({ params }: { params: { category: string } }) {
       case "king":
         return <KingBoard />;
       default:
-        return <p>해당 게시판을 찾을 수 없습니다.</p>; // 기본 반환 값 추가
+        return <p>해당 게시판을 찾을 수 없습니다.</p>;
     }
   };
 
-  return (
-    <div className="container mx-auto p-4">
-      <h1 className="mb-4 text-2xl font-bold">자료 게시판</h1>
-      {category ? renderBoard() : <p>로딩 중...</p>}
-    </div>
-  );
+  return <div>{category ? renderBoard() : <p>로딩 중...</p>}</div>;
 }
 
 export default BoardPage;

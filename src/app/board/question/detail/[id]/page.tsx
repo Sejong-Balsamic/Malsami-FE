@@ -1,6 +1,6 @@
 "use client";
 
-import DetailPageNav from "@/components/nav/DetailPageNav";
+import DetailPageNav from "@/components/nav/QDetailNav";
 import QnaDetail from "@/components/board/question/detail/QnaDetail";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useParams } from "next/navigation";

@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import DocMainPageNav from "@/components/nav/DocMainPageNav";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import WeeklyPopularContent from "@/components/board/document/DocMainPageContents/WeeklyPopularContent";
@@ -8,8 +9,24 @@ import DocBoardContent from "@/components/board/document/DocMainPageContents/Doc
 import HotDownloadContent from "@/components/board/document/DocMainPageContents/HotDownloadContent";
 import MyFacultyContent from "@/components/board/document/DocMainPageContents/MyFacultyContent";
 import DocRequestContent from "@/components/board/document/DocMainPageContents/DocRequestContent";
+import UploadDocFAB from "@/components/common/UploadDocFAB";
+import getMyInfo from "@/apis/member/getMyInfo";
 
 export default function DocumentBoardPage() {
+  const [faculty, setFaculty] = useState("");
+  useEffect(() => {
+    const fetchMyInfo = async () => {
+      try {
+        const response = await getMyInfo();
+        setFaculty(response.member.faculty);
+        console.log("faculty:", faculty);
+      } catch (error) {
+        console.error("내 정보 데이터를 불러오는 중 오류 발생:", error);
+      }
+    };
+    fetchMyInfo();
+  }, []);
+
   return (
     <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
@@ -20,11 +37,15 @@ export default function DocumentBoardPage() {
         <div className="h-[2px] w-full bg-[#EEEEEE]" />
         <div className="p-5">
           <HotDownloadContent />
-          <MyFacultyContent faculty="소프트웨어융합대학" />
+          <MyFacultyContent faculty={faculty} />
           <WeeklyPopularContent />
           <DailyPopularContent />
           <DocRequestContent />
         </div>
+      </div>
+
+      <div className="fixed bottom-5 right-5 z-10">
+        <UploadDocFAB />
       </div>
     </div>
   );

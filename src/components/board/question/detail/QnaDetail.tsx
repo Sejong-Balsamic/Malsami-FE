@@ -10,7 +10,7 @@ import getDateDiff from "@/utils/getDateDiff";
 import { QuestionData } from "@/types/QuestionData";
 import CommentSection from "./QCommentSection";
 import sameMember from "@/utils/sameMember";
-import AttachedFiles from "./AttachedFiles";
+import AttachedFiles from "../../../common/AttachedFiles";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -118,7 +118,6 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
             <AttachedFiles files={files} />
           </div>
         )}
-
 
         {/* 지정태그 */}
         <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
