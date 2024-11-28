@@ -11,13 +11,9 @@ import sameMember from "@/utils/sameMember";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
-  OUT_OF_CLASS: "수업 외 내용",
-  UNKNOWN_CONCEPT: "개념 모름",
-  BETTER_SOLUTION: "더 나은 풀이",
-  EXAM_PREPARATION: "시험 대비",
-  DOCUMENT_REQUEST: "자료 요청",
-  STUDY_TIPS: "공부 팁",
-  ADVICE_REQUEST: "조언 구함",
+  DOCUMENT: "자료",
+  SOLUTION: "솔루션",
+  PAST_EXAM: "기출 문제",
 };
 
 // 영어 태그를 한국어로 변환하는 함수
