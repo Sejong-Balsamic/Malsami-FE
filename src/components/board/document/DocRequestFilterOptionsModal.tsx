@@ -3,7 +3,7 @@
 import React, { ReactNode, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
-import docJijeongTags from "@/lib/docJijeongTags";
+import docJijeongTag from "@/lib/docJijeongTag";
 import docSortingOptions from "@/lib/docSortingOptions";
 import facultys from "@/lib/facultys";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
@@ -138,7 +138,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                   태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-[#A4A4A4]">최대 2개</span>
                 </h1>
                 <div className="mb-[40px] flex flex-wrap justify-between gap-x-[7px] gap-y-[20px]">
-                  {docJijeongTags.map(tag => (
+                  {docJijeongTag.map(tag => (
                     <button
                       key={tag}
                       onClick={() =>

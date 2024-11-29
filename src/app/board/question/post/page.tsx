@@ -76,9 +76,7 @@ export default function QnaPostPage() {
   const toggleRewardModal = () => setIsRewardModalOpen(!isRewardModalOpen);
   const toggleJiJeongTagModal = () => setIsJiJeongTagModalOpen(!isJiJeongTagModalOpen);
   const toggleSubjectModal = () => setIsSubjectModalOpen(!isSubjectModalOpen);
-  const toggleCustomTagsModal = () => {
-    setIsCustomTagsModalOpen(!isCustomTagsModalOpen);
-  };
+  const toggleCustomTagsModal = () => setIsCustomTagsModalOpen(!isCustomTagsModalOpen);
 
   // 모든 필수 입력 필드가 채워져 있는지 확인
   const checkFormValidity = () => {
@@ -228,7 +226,7 @@ export default function QnaPostPage() {
               type="button"
               onClick={handleSubmit}
               disabled={!isFormValid}
-              className={`w-full rounded-md p-2 text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
+              className={`w-full rounded-[10px] p-2 text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
             >
               작성완료
             </button>
