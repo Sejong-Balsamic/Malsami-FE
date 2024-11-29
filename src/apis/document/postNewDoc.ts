@@ -28,7 +28,7 @@ export default async function postNewDoc(data: DocPostFormData) {
 
   // 선택 항목 추가
   if (data.studyYear) {
-    formData.append("studyYear", data.studyYear.toString());
+    formData.append("attendedYear", data.studyYear.toString());
   }
   if (data.isPrivate !== undefined) {
     formData.append("isDepartmentPrivate", data.isPrivate.toString());

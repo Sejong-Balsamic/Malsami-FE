@@ -14,7 +14,7 @@ function QnaPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploa
         <ul className="mt-2 text-sm text-gray-500">
           {mediaFiles.map(file => (
             <li key={file.name} className="mb-2 flex justify-between">
-              {file.name}
+              <span className="flex-1 truncate">{file.name}</span> {/* 파일 이름이 길면 말줄임 처리 */}
               <button
                 type="button"
                 onClick={() => onFileDelete(file.name)}

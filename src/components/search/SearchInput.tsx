@@ -39,10 +39,10 @@ function SearchInput() {
   };
 
   return (
-    <div className="flex w-full flex-col items-center bg-slate-400 px-4 py-2">
+    <div className="flex w-full flex-col items-center bg-white px-4 py-2">
       {/* 검색 입력 필드 */}
-      <div className="flex w-full items-center rounded-lg bg-gray-100 p-2">
-        <Image src="/icons/Search.svg" alt="Search" width={16} height={16} />
+      <div className="flex w-full items-center rounded-lg bg-[#EEEEEE] p-2">
+        <Image src="/icons/SearchIcon.svg" alt="Search" width={20} height={20} />
         <input
           type="text"
           placeholder="검색어를 입력해 주세요."
