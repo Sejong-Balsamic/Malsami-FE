@@ -32,13 +32,16 @@ function BasicInfo({ memberInfo }: BasicInfoProps) {
           </div>
         </div>
         <div className="flex justify-end">
-          <div className="flex h-[29px] w-[87px] items-center justify-between gap-[8px] rounded-[28px] border-2 border-[#74d7cb] bg-white px-[12px]">
+          <button
+            type="button"
+            className="flex h-[29px] w-[87px] items-center justify-between gap-[8px] rounded-[28px] border-2 border-[#74d7cb] bg-white px-[12px]"
+          >
             <Image src="/icons/Yeopjeon.svg" alt="Yeopjeon" width={16} height={16} className="h-[16px] w-[16px]" />
             <span className="font-pretendard-semibold text-[14px] text-[#03b89e]">
               {memberInfo?.yeopjeon.yeopjeon || "0"}
             </span>
             <Image src="/icons/Move.svg" alt="Move" width={6} height={12} className="h-[12px] w-[6px]" />
-          </div>
+          </button>
         </div>
       </div>
     </div>

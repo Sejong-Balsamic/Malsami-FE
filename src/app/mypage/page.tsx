@@ -9,12 +9,13 @@ import BasicInfo from "@/components/mypage/BasicInfo";
 import InfoCard from "@/components/mypage/InfoCard";
 import InfoList from "@/components/mypage/InfoList";
 import Facility from "@/components/mypage/Facility";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 function Page() {
   const [memberInfo, setMemberInfo] = useState<MemberDto | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  
+
   useEffect(() => {
     const fetchMemberInfo = async () => {
       const token = sessionStorage.getItem("accessToken");
@@ -37,13 +38,7 @@ function Page() {
     fetchMemberInfo();
   }, []);
 
-  if (isLoading) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="text-gray-600">회원 정보를 불러오는 중입니다...</p>
-      </div>
-    );
-  }
+  if (isLoading) return <LoadingSpinner />;
 
   if (error) {
     return (
@@ -56,20 +51,20 @@ function Page() {
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
       <div>
-        <MyPageNav />
+        <MyPageNav title="마이페이지" />
       </div>
       <div className="p-[20px]">
         <div className="flex justify-end">
           <BasicInfo memberInfo={memberInfo} />
         </div>
-        <div className="flex">
+        <div className="relative flex">
           {/* 티어에 따라 이미지 변동 필요 */}
           <Image
             src="/image/tier/Yangban.svg"
-            alt="Yeopjeon"
+            alt="Yangban"
             width={132}
             height={125}
-            className="absolute left-[10px] top-[95px] z-0 h-[125px] w-[132px]"
+            className="absolute bottom-[180px] z-0 h-[125px] w-[132px]"
           />
           <div className="z-10 w-full">
             <InfoCard memberInfo={memberInfo} />
