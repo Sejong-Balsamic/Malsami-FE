@@ -1,4 +1,4 @@
-import MyPageNav from "@/components/nav/MyPageNav";
+import MyPageNav from "@/components/nav/MyPageDetailNav";
 import Image from "next/image";
 
 function Page() {
