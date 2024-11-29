@@ -2,7 +2,7 @@ import Image from "next/image";
 
 function DownloadFile() {
   return (
-    <div className="my-[30px] p-[14px] flex h-[58px] w-[270px] items-center justify-between rounded-[10px] bg-[#f7f8fb]">
+    <div className="my-[30px] flex h-[58px] w-[270px] items-center justify-between rounded-[10px] bg-[#f7f8fb] p-[14px]">
       <div className="flex flex-col">
         <div className="font-pretendard-medium text-[12px]">첨부파일 이름.pdf</div>
         <div className="font-pretendard-medium text-[12px] text-[#737373]">3.3MB</div>
