@@ -29,7 +29,7 @@ function InfoCard({ memberInfo }: InfoProps) {
         modules={[EffectFlip]} // EffectFlip 모듈 등록
         className="h-full w-full"
       >
-        {/* 슬라이드 뒷면*/}
+        {/* 슬라이드 뒷면 */}
         <SwiperSlide>
           <div className="flex w-full flex-col gap-7 rounded-[15px] bg-[#95e4da] px-[20px] py-[30px]">
             <div>
