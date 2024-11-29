@@ -1,28 +1,24 @@
 // src/apis/questionBoard/postNewQna.ts
 import { apiClient } from "../clients/appClient";
 
-interface QnaPostFormData {
-  title: string;
-  content: string;
-  subject: string;
-  customTags?: string[];
-  questionPresetTags?: string[];
-  reward?: number;
-  isPrivate?: boolean;
-  mediaFiles?: File[];
+interface DocPostFormData {
+  title: string; // 필수
+  content: string; // 필수
+  subject: string; // 필수
+  categoryTags: string[]; // 필수
+  customTags: string[];
+  studyYear: number;
+  isPrivate: boolean;
+  mediaFiles: File[]; // File 배열로 정의
 }
 
-export default async function postNewQna(data: QnaPostFormData) {
+export default async function postNewDoc(data: DocPostFormData) {
   const formData = new FormData();
 
   const tagMapping: { [key: string]: string } = {
-    "수업 외 내용": "OUT_OF_CLASS",
-    "개념 모름": "UNKNOWN_CONCEPT",
-    "더 나은 풀이": "BETTER_SOLUTION",
-    "시험 대비": "EXAM_PREPARATION",
-    "자료 요청": "DOCUMENT_REQUEST",
-    "공부 팁": "STUDY_TIPS",
-    "조언 구함": "ADVICE_REQUEST",
+    강의자료: "DOCUMENT",
+    "과제 기출": "PAST_EXAM",
+    해설: "SOLUTION",
   };
 
   // 필수 항목 추가
@@ -31,18 +27,18 @@ export default async function postNewQna(data: QnaPostFormData) {
   formData.append("subject", data.subject);
 
   // 선택 항목 추가
-  if (data.reward !== undefined) {
-    formData.append("rewardYeopjeon", data.reward.toString());
+  if (data.studyYear) {
+    formData.append("studyYear", data.studyYear.toString());
   }
   if (data.isPrivate !== undefined) {
-    formData.append("isPrivate", data.isPrivate.toString());
+    formData.append("isDepartmentPrivate", data.isPrivate.toString());
   }
 
-  // 정적 태그
-  if (data.questionPresetTags && data.questionPresetTags.length > 0) {
-    data.questionPresetTags.forEach(tag => {
+  // 카테고리
+  if (data.categoryTags && data.categoryTags.length > 0) {
+    data.categoryTags.forEach(tag => {
       const englishTag = tagMapping[tag]; // 한국어 태그를 영어로 변환
-      if (englishTag) formData.append("questionPresetTags", englishTag);
+      if (englishTag) formData.append("documentTypeSet", englishTag);
     });
   }
 
@@ -61,7 +57,7 @@ export default async function postNewQna(data: QnaPostFormData) {
   }
 
   try {
-    const response = await apiClient.post("/api/question/post", formData, {
+    const response = await apiClient.post("/api/document/post", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

@@ -5,8 +5,8 @@ interface PrivateSettingProps {
 
 function PrivateSettingInput({ isPrivate, onToggle }: PrivateSettingProps) {
   return (
-    <label htmlFor="isPrivate" className="mb-[26px] block">
-      <div className="font-pretendard-semibold mb-2 text-lg">추가 설정</div>
+    <div className="mb-[26px] block">
+      {/* <div className="font-pretendard-semibold mb-2 text-lg">추가 설정</div> */}
       <div className="flex items-center">
         <button
           type="button"
@@ -30,7 +30,7 @@ function PrivateSettingInput({ isPrivate, onToggle }: PrivateSettingProps) {
         </button>
         <span className="font-pretendard-medium text-base text-[#9B9B9B]">내 정보 비공개</span>
       </div>
-    </label>
+    </div>
   );
 }
 
