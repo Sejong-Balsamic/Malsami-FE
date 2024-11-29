@@ -1,34 +1,89 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import logOut from "@/apis/auth/logOut";
+import { useEffect, useState } from "react";
+import Image from "next/image";
+import { MemberDto } from "@/types/member";
+import getMyInfo from "@/apis/member/getMyInfo";
+import MyPageNav from "@/components/nav/MyPageNav";
+import BasicInfo from "@/components/mypage/BasicInfo";
+import InfoCard from "@/components/mypage/InfoCard";
+import InfoList from "@/components/mypage/InfoList";
+import Facility from "@/components/mypage/Facility";
 
-export default function MyPage() {
-  const router = useRouter();
+function Page() {
+  const [memberInfo, setMemberInfo] = useState<MemberDto | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  
+  useEffect(() => {
+    const fetchMemberInfo = async () => {
+      const token = sessionStorage.getItem("accessToken");
+      if (token) {
+        try {
+          setIsLoading(true);
+          const data = await getMyInfo();
+          setMemberInfo(data);
+        } catch (fetchError) {
+          console.error("회원 정보 가져오기 실패:", fetchError);
+          setError("회원 정보를 불러오는 중 오류가 발생했습니다.");
+        } finally {
+          setIsLoading(false);
+        }
+      } else {
+        setError("로그인이 필요합니다.");
+      }
+    };
 
-  const handleLogout = async () => {
-    try {
-      await logOut(); // 로그아웃 API 호출
-      alert("로그아웃에 성공하였습니다.");
-      router.push("/"); // 성공적으로 로그아웃 시 랜딩페이지 이동
-    } catch {
-      alert("로그아웃에 실패했습니다. 다시 시도해주세요.");
-    }
-  };
+    fetchMemberInfo();
+  }, []);
+
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="text-gray-600">회원 정보를 불러오는 중입니다...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="text-red-600">{error}</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-gray-white">
-      <ScrollToTopOnLoad />
-      <div className="flex min-h-screen flex-col items-center justify-center">
-        <button
-          type="button"
-          onClick={handleLogout}
-          className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
-        >
-          Log Out
-        </button>
+    <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
+      <div>
+        <MyPageNav />
+      </div>
+      <div className="p-[20px]">
+        <div className="flex justify-end">
+          <BasicInfo memberInfo={memberInfo} />
+        </div>
+        <div className="flex">
+          {/* 티어에 따라 이미지 변동 필요 */}
+          <Image
+            src="/image/tier/Yangban.svg"
+            alt="Yeopjeon"
+            width={132}
+            height={125}
+            className="absolute left-[10px] top-[95px] z-0 h-[125px] w-[132px]"
+          />
+          <div className="z-10 w-full">
+            <InfoCard memberInfo={memberInfo} />
+          </div>
+        </div>
+        <div>
+          <InfoList memberInfo={memberInfo} />
+        </div>
+        <div>
+          <Facility />
+        </div>
       </div>
     </div>
   );
 }
+
+export default Page;
