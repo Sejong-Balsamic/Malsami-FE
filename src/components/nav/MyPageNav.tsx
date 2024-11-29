@@ -12,7 +12,7 @@ function MyPageNav({ title }: MyPageNavProps) {
   return (
     <nav className="flex h-[64px] items-end justify-between border-b-2 border-[#eaeaea] px-5">
       {/* 뒤로 가기 아이콘 */}
-      <button type="button" className="flex" onClick={() => router.push("/mypage")}>
+      <button type="button" className="flex" onClick={() => router.push("/")}>
         <Image src="/icons/BackIcon.svg" alt="back" width={10} height={20} className="mb-[20px]" />
       </button>
       {/* 제목 */}
