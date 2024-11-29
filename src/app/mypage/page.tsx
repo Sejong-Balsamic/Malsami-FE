@@ -14,7 +14,7 @@ function Page() {
   const [memberInfo, setMemberInfo] = useState<MemberDto | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-
+  
   useEffect(() => {
     const fetchMemberInfo = async () => {
       const token = sessionStorage.getItem("accessToken");
@@ -79,7 +79,7 @@ function Page() {
           <InfoList memberInfo={memberInfo} />
         </div>
         <div>
-            <Facility />
+          <Facility />
         </div>
       </div>
     </div>

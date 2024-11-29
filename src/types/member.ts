@@ -57,5 +57,5 @@ export interface MemberDto {
   answerPostCount: number;
   documentPostCount: number;
   documentRequestPostCount: number;
-  expPercentile: number,
+  expPercentile: number;
 }

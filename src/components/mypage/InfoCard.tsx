@@ -12,7 +12,7 @@ interface InfoProps {
     };
     totalExp: number;
     totalLikeCount: number;
-    expPercentile: number,
+    expPercentile: number;
   } | null;
 }
 

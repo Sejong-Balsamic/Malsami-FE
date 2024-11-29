@@ -17,7 +17,7 @@ interface BasicInfoProps {
 function BasicInfo({ memberInfo }: BasicInfoProps) {
   return (
     <div className="flex">
-      <div className="pb-[10px] pt-[30px] float-right">
+      <div className="float-right pb-[10px] pt-[30px]">
         <div className="flex w-full pb-[10px]">
           <div className="flex flex-col items-end">
             <div className="flex items-end gap-[6px]">

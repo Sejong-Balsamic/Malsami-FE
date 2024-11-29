@@ -15,7 +15,7 @@ function ExpBar({ value }: ExpBarProps) {
     return () => clearTimeout(timer);
   }, [value]);
 
-  return <Progress value={progress} className="w-full bg-transparent border-2 border-[#016D5D]" />;
+  return <Progress value={progress} className="w-full border-2 border-[#016D5D] bg-transparent" />;
 }
 
 export default ExpBar;
