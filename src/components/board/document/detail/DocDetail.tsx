@@ -8,6 +8,7 @@ import getDateDiff from "@/utils/getDateDiff";
 import { DocumentData } from "@/types/DocumentData";
 import CommentSection from "../../document/detail/DCommentSection";
 import sameMember from "@/utils/sameMember";
+import DownloadFile from "./DownloadFile";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -86,7 +87,7 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
             {documentData.documentPost.content}
           </div>
         </div>
-
+        <DownloadFile />
         {/* 카테고리 */}
         <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
           <div className="flex items-center gap-[10px]">
@@ -120,46 +121,49 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
           </div>
         </div>
 
-        {/* 좋아요/싫어요 */}
-        <div className="mx-[5px] mt-4 flex justify-start border-b-2 py-4">
-          <div className="flex items-center gap-[10px]">
-            {/* 좋아요 버튼 */}
-            <div
-              onClick={!isLiked ? handleLikeClick : undefined}
-              className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
-                isLiked,
-              )}`}
-            >
-              <Image
-                src={isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_UnClicked.svg"}
-                alt={isLiked ? "Like_Clicked" : "Like_UnClicked"}
-                width={16}
-                height={16}
-              />
-              <span className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}>
-                {currentLikeCount}
-              </span>
-            </div>
-            {/* 싫어요 버튼 */}
-            <div
-              onClick={!isDisliked ? handleDisLikeClick : undefined}
-              className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
-                isDisliked,
-              )}`}
-            >
-              <Image
-                src={isDisliked ? "/icons/Dislike_Clicked.svg" : "/icons/Dislike_UnClicked.svg"}
-                alt={isDisliked ? "Dislike_Clicked" : "Dislike_UnClicked"}
-                width={16}
-                height={16}
-              />
-              <span
-                className={`font-pretendard-semibold text-[12px] ${isDisliked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}
+        <div className="flex justify-start border-b-2 py-[30px]">
+          <div className="flex w-full items-center justify-between">
+            <div className="flex items-center gap-[10px]">
+              {/* 좋아요 */}
+              <div
+                onClick={!isLiked ? handleLikeClick : undefined}
+                className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
+                  isLiked,
+                )}`}
               >
-                {currentDislikeCount}
-              </span>
+                <Image
+                  src={isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_UnClicked.svg"}
+                  alt={isLiked ? "Like_Clicked" : "Like_UnClicked"}
+                  width={16}
+                  height={16}
+                />
+                <span
+                  className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}
+                >
+                  {currentLikeCount}
+                </span>
+              </div>
+              {/* 싫어요 */}
+              <div
+                onClick={!isDisliked ? handleDisLikeClick : undefined}
+                className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
+                  isDisliked,
+                )}`}
+              >
+                <Image
+                  src={isDisliked ? "/icons/Dislike_Clicked.svg" : "/icons/Dislike_UnClicked.svg"}
+                  alt={isDisliked ? "Dislike_Clicked" : "Dislike_UnClicked"}
+                  width={16}
+                  height={16}
+                />
+                <span
+                  className={`font-pretendard-semibold text-[12px] ${isDisliked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}
+                >
+                  {currentDislikeCount}
+                </span>
+              </div>
             </div>
-            {/* 문서 댓글 */}
+            {/* 댓글 */}
             <Drawer>
               <DrawerTrigger asChild>
                 <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
