@@ -12,9 +12,9 @@ import DownloadFile from "./DownloadFile";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
-  DOCUMENT: "자료",
-  SOLUTION: "솔루션",
-  PAST_EXAM: "기출 문제",
+  DOCUMENT: "강의자료",
+  SOLUTION: "해설",
+  PAST_EXAM: "과제 기출",
 };
 
 // 영어 태그를 한국어로 변환하는 함수
