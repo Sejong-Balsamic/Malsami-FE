@@ -8,6 +8,7 @@ import MyPageNav from "@/components/nav/MyPageNav";
 import BasicInfo from "@/components/mypage/BasicInfo";
 import InfoCard from "@/components/mypage/InfoCard";
 import InfoList from "@/components/mypage/InfoList";
+import Facility from "@/components/mypage/Facility";
 
 function Page() {
   const [memberInfo, setMemberInfo] = useState<MemberDto | null>(null);
@@ -57,7 +58,7 @@ function Page() {
       <div>
         <MyPageNav />
       </div>
-      <div className="px-[20px]">
+      <div className="p-[20px]">
         <div className="flex justify-end">
           <BasicInfo memberInfo={memberInfo} />
         </div>
@@ -77,7 +78,9 @@ function Page() {
         <div>
           <InfoList memberInfo={memberInfo} />
         </div>
-        <div>부가기능</div>
+        <div>
+            <Facility />
+        </div>
       </div>
     </div>
   );
