@@ -75,7 +75,7 @@ function Page() {
           </div>
         </div>
         <div>
-          <InfoList />
+          <InfoList memberInfo={memberInfo} />
         </div>
         <div>부가기능</div>
       </div>
