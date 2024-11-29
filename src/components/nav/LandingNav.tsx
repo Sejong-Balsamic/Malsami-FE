@@ -118,6 +118,13 @@ function Nav() {
                 <Image src="/icons/Notice_Colored.svg" alt="Search" width={30} height={30} />
                 공지사항
               </button>
+              <button
+                type="button"
+                className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[20px]"
+                onClick={() => handleNavigation("/logout")}
+              >
+                로그아웃
+              </button>
             </ul>
           </div>
         </SheetContent>
