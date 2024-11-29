@@ -53,7 +53,7 @@ export default function Page() {
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
       <ScrollToTopOnLoad />
-      <DetailPageNav />
+      <DetailPageNav documentData={documentDetails} />
       {documentDetails && <DocDetail documentData={documentDetails} />}
     </div>
   );
