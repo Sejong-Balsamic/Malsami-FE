@@ -1,13 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import { MemberDto } from "@/types/member";
 import getMyInfo from "@/apis/member/getMyInfo";
 import MyPageNav from "@/components/nav/MyPageNav";
 import BasicInfo from "@/components/mypage/BasicInfo";
+import InfoCard from "@/components/mypage/InfoCard";
+import InfoList from "@/components/mypage/InfoList";
 
 function Page() {
-  const [accessToken, setAccessToken] = useState<string | null>(null);
   const [memberInfo, setMemberInfo] = useState<MemberDto | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +18,6 @@ function Page() {
     const fetchMemberInfo = async () => {
       const token = sessionStorage.getItem("accessToken");
       if (token) {
-        setAccessToken(token);
         try {
           setIsLoading(true);
           const data = await getMyInfo();
@@ -37,7 +38,7 @@ function Page() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex h-screen items-center justify-center">
         <p className="text-gray-600">회원 정보를 불러오는 중입니다...</p>
       </div>
     );
@@ -45,7 +46,7 @@ function Page() {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center h-screen">
+      <div className="flex h-screen items-center justify-center">
         <p className="text-red-600">{error}</p>
       </div>
     );
@@ -57,11 +58,25 @@ function Page() {
         <MyPageNav />
       </div>
       <div className="px-[20px]">
-        <div>
+        <div className="flex justify-end">
           <BasicInfo memberInfo={memberInfo} />
         </div>
-        <div>카드</div>
-        <div>정보섹션</div>
+        <div className="flex">
+          {/* 티어에 따라 이미지 변동 필요 */}
+          <Image
+            src="/image/tier/Yangban.svg"
+            alt="Yeopjeon"
+            width={132}
+            height={125}
+            className="absolute left-[10px] top-[95px] z-0 h-[125px] w-[132px]"
+          />
+          <div className="z-10 w-full">
+            <InfoCard memberInfo={memberInfo} />
+          </div>
+        </div>
+        <div>
+          <InfoList />
+        </div>
         <div>부가기능</div>
       </div>
     </div>

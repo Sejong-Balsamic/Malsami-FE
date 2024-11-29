@@ -44,4 +44,7 @@ export interface MemberDto {
   exp: Exp;
   isFirstLogin: boolean;
   isAdmin: boolean;
+  totalExp: number;
+  totalLikeCount: number;
+  expPercentile: number,
 }
