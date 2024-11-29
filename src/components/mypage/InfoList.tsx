@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface InfoProps {
   memberInfo: {
@@ -9,6 +10,8 @@ interface InfoProps {
 }
 
 function InfoList({ memberInfo }: InfoProps) {
+  const router = useRouter();
+
   return (
     <div className="mt-[20px] flex flex-col gap-[20px]">
       <div className="relative grid w-full grid-cols-3 grid-rows-1 rounded-[10px] border-2 border-[#95e4da] py-[24px]">
@@ -37,14 +40,22 @@ function InfoList({ memberInfo }: InfoProps) {
         </button>
       </div>
       <div className="relative grid w-full grid-cols-1 grid-rows-2 gap-[20px] rounded-[10px] border-2 border-[#95e4da] p-[20px]">
-        <button type="button" className="flex items-center justify-between">
+        <button
+          onClick={() => router.push("/mypage/mycomment")}
+          type="button"
+          className="flex items-center justify-between"
+        >
           <div className="flex items-center gap-[10px]">
             <Image src="/icons/mypage/Post.svg" alt="Post" width={18} height={18} className="h-[18px] w-[18px]" />
             <span className="font-pretendard-medium text-[16px]">내가 작성한 글</span>
           </div>
           <Image src="/icons/mypage/Move_gray.svg" alt="Move" width={7} height={14} className="h-[14px] w-[7px]" />
         </button>
-        <button type="button" className="flex items-center justify-between">
+        <button
+          onClick={() => router.push("/mypage/mypost")}
+          type="button"
+          className="flex items-center justify-between"
+        >
           <div className="flex items-center gap-[10px]">
             <Image src="/icons/mypage/Folder.svg" alt="Folder" width={18} height={18} className="h-[18px] w-[18px]" />
             <span className="font-pretendard-medium text-[16px]">내가 올린 자료글</span>
@@ -53,7 +64,11 @@ function InfoList({ memberInfo }: InfoProps) {
         </button>
       </div>
       <div className="relative grid w-full grid-cols-1 grid-rows-2 gap-[20px] rounded-[10px] border-2 border-[#95e4da] p-[20px]">
-        <button type="button" className="flex items-center justify-between">
+        <button
+          onClick={() => router.push("/mypage/mypurchase")}
+          type="button"
+          className="flex items-center justify-between"
+        >
           <div className="flex items-center gap-[10px]">
             <Image
               src="/icons/mypage/YeopJeon.svg"
@@ -66,7 +81,11 @@ function InfoList({ memberInfo }: InfoProps) {
           </div>
           <Image src="/icons/mypage/Move_gray.svg" alt="Move" width={7} height={14} className="h-[14px] w-[7px]" />
         </button>
-        <button type="button" className="flex items-center justify-between">
+        <button
+          onClick={() => router.push("/mypage/myrecommend")}
+          type="button"
+          className="flex items-center justify-between"
+        >
           <div className="flex items-center gap-[10px]">
             <Image src="/icons/mypage/Like.svg" alt="Like" width={18} height={18} className="h-[18px] w-[18px]" />
             <span className="font-pretendard-medium text-[16px]">내가 추천한 자료</span>
