@@ -1,51 +1,42 @@
-import { useState, useEffect } from "react";
-import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
+import { useRouter } from "next/navigation";
+import { QnaCard } from "@/types/QnaCard";
 import QuestionCard from "./QuestionCard";
 
-interface Question {
-  questionPostId: string;
-  questionPresetTagSet: string[];
-  title: string;
-  content: string;
-  thumbnail: string;
-  createdDate: string;
-  viewCount: number;
-  likeCount: number;
-  commentCount: number;
-  rewardYeopjeon: number;
+interface QnaCardListProps {
+  categoryQNAs: QnaCard[];
 }
 
-export default function QuestionCardList() {
-  const [questions, setQuestions] = useState<Question[]>([]);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getCategoryQNAs();
-        setQuestions(data);
-      } catch (error) {
-        console.error("질문 목록을 가져오는 중 오류 발생:", error);
-      }
-    };
-
-    fetchData();
-  }, []); // 빈 의존성 배열로 초기 렌더링 시 한 번만 실행
+export default function QuestionCardList({ categoryQNAs }: QnaCardListProps) {
+  const router = useRouter();
 
   return (
     <div>
-      {questions.map(question => (
-        <QuestionCard
-          key={question.questionPostId} // 질문 ID를 키로 사용
-          JiJeongTags={question.questionPresetTagSet}
-          title={question.title}
-          content={question.content}
-          thumbnail={question.thumbnail}
-          createdDate={question.createdDate}
-          viewCount={question.viewCount}
-          likeCount={question.likeCount}
-          commentCount={question.commentCount}
-          rewardYeopjeon={question.rewardYeopjeon}
-        />
+      {categoryQNAs.map(question => (
+        <div
+          key={question.questionPostId}
+          role="button"
+          tabIndex={0} // 키보드 탐색이 가능하도록 tabindex 추가
+          onClick={() => router.push(`/board/question/detail/${question.questionPostId}`)}
+          onKeyDown={e => {
+            if (e.key === "Enter" || e.key === " ") {
+              router.push(`/board/question/detail/${question.questionPostId}`);
+            }
+          }} // 키보드 이벤트 추가
+          className="cursor-pointer"
+        >
+          <QuestionCard
+            JiJeongTags={question.questionPresetTags}
+            title={question.title}
+            content={question.content}
+            thumbnail={question.thumbnailUrl}
+            createdDate={question.createdDate}
+            viewCount={question.viewCount}
+            likeCount={question.likeCount}
+            answerCount={question.answerCount}
+            rewardYeopjeon={question.rewardYeopjeon}
+            chaetaekStatus={question.chaetaekStatus}
+          />
+        </div>
       ))}
     </div>
   );

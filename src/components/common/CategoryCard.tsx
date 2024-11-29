@@ -29,6 +29,16 @@ interface CategoryCardProps {
   commentCount: number;
 }
 
+const tagTranslations: { [key: string]: string } = {
+  EXAM_PREPARATION: "시험 대비",
+  OUT_OF_CLASS: "수업 외 내용",
+  UNKNOWN_CONCEPT: "개념 모름",
+  BETTER_SOLUTION: "더 나은 풀이",
+  DOCUMENT_REQUEST: "자료 요청",
+  STUDY_TIPS: "공부 팁",
+  ADVICE_REQUEST: "조언 구함",
+};
+
 function CategoryCard({
   title,
   color,
@@ -40,35 +50,35 @@ function CategoryCard({
 }: CategoryCardProps) {
   return (
     <div>
-      <div className="w-[166px] h-[166px] flex flex-col m-3">
+      <div className="m-3 flex h-[166px] w-[166px] flex-col">
         {/* 상단 학과 제목 영역 */}
-        <div className="h-[52px] rounded-t-[20px] flex items-end px-3.5 pb-2 pt-2" style={{ backgroundColor: color }}>
-          <span className="text-white text-sm font-pretendard-semibold leading-tight line-clamp-2">{subject}</span>
+        <div className="flex h-[52px] items-end rounded-t-[20px] px-3.5 pb-2 pt-2" style={{ backgroundColor: color }}>
+          <span className="font-pretendard-semibold line-clamp-2 text-sm leading-tight text-white">{subject}</span>
         </div>
 
         {/* 본문 영역 */}
-        <div className="px-3.5 pt-2 pb-4 rounded-b-[20px] flex flex-col justify-between bg-white shadow-md shadow-gray h-[114px]">
+        <div className="shadow-gray flex h-[114px] flex-col justify-between rounded-b-[20px] bg-white px-3.5 pb-4 pt-2 shadow-md">
           {/* 질문 부분, 태그들 부분 */}
-          <div className="min-h-[64px] flex flex-col justify-between">
-            <div className="text-sm font-pretendard-bold leading-[20px] line-clamp-2 pr-2">{title}</div>
-            <div className="flex gap-2 flex-wrap mt-2">
+          <div className="flex min-h-[64px] flex-col justify-between">
+            <div className="font-pretendard-bold line-clamp-2 pr-2 text-sm leading-[20px]">{title}</div>
+            <div className="mt-2 flex flex-wrap gap-2">
               {JiJeongTags.map(tag => (
-                <JiJeongTag key={tag} title={tag} color={color} />
+                <JiJeongTag key={tag} title={tagTranslations[tag] ?? tag} color={color} />
               ))}
             </div>
           </div>
 
           {/* 엽전, 좋아요, 댓글 부분 */}
-          <div className="flex flex-row justify-between text-[#D0D0D0] text-xs font-pretendard-semibold">
+          <div className="font-pretendard-semibold flex flex-row justify-between text-xs text-[#D0D0D0]">
             <YeopjeonTag point={rewardYeopjeon} />
             <div>
               <span className="mr-1.5">
                 <ImageWrapper src="/icons/LikeIcon.svg" />
-                <span className="ml-1 text-xs font-pretendard-medium">{likeCount}</span>
+                <span className="font-pretendard-medium ml-1 text-xs">{likeCount}</span>
               </span>
               <span>
                 <ImageWrapper src="/icons/CommentIcon.svg" />
-                <span className=" ml-1 text-xs font-pretendard-medium">{commentCount}</span>
+                <span className="font-pretendard-medium ml-1 text-xs">{commentCount}</span>
               </span>
             </div>
           </div>

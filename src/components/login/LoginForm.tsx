@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, FormEvent } from "react";
+import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "@/apis/auth/auth";
 import LoginSuccessModal from "./LoginSuccessModal";
@@ -13,8 +13,13 @@ export default function LoginForm() {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isFirstLogin, setIsFirstLogin] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>(""); // 사용자 이름 상태 추가
+  const [isFormValid, setIsFormValid] = useState<boolean>(false); // 폼 유효성 상태 추가
 
   const router = useRouter(); // useRouter 사용
+
+  useEffect(() => {
+    setIsFormValid(!!id.trim() && !!password.trim()); // 학번,비밀번호가 비어있는지 확인
+  }, [id, password]);
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
@@ -40,7 +45,7 @@ export default function LoginForm() {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <form onSubmit={handleLogin} className="space-y-6">
         {/* 아이디 입력 */}
         <div>
@@ -52,8 +57,7 @@ export default function LoginForm() {
               value={id}
               onChange={e => setId(e.target.value)}
               required
-              className="mt-1 block w-full px-3 py-2 ring-2 ring-gray-300 rounded-lg shadow-sm focus:ring-custom-orange-100
-            outline-none caret-custom-orange-400 invalid:ring-gray-300 valid:ring-custom-orange-400"
+              className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-200"
               placeholder="학번을 입력해주세요"
             />
           </label>
@@ -68,25 +72,31 @@ export default function LoginForm() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
-              className="mt-1 block w-full px-3 py-2 ring-2 ring-gray-300 rounded-lg shadow-sm focus:ring-custom-orange-100
-            outline-none caret-custom-orange-400 invalid:ring-gray-300 valid:ring-custom-orange-400"
+              className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-300"
               placeholder="비밀번호를 입력해주세요"
             />
           </label>
         </div>
 
         {/* 에러 메시지 */}
-        {errorMessage && <p className="text-red-500 text-center text-sm mb-4">{errorMessage}</p>}
+        {errorMessage && <p className="mb-4 text-center text-sm text-red-500">{errorMessage}</p>}
 
         {/* 로그인 제출 버튼 */}
         <button
           type="submit"
-          className="w-full mt-10 bg-custom-orange-100 text-white py-2 px-4 rounded-lg hover:bg-custom-orange-400 focus:outline-none focus:ring-2 focus:ring-custom-orange-400"
-          disabled={isLoading}
+          className={`mt-10 w-full rounded-lg px-4 py-2 text-white ${
+            isFormValid ? "bg-custom-blue-300 hover:bg-custom-blue-500 focus:ring-custom-blue-400" : "bg-[#D9D9D9]"
+          }`}
+          disabled={!isFormValid || isLoading}
         >
           {isLoading ? "로그인 중..." : "로그인"}
         </button>
       </form>
+
+      {/* 안내 메시지 */}
+      <div className="mt-4 text-center text-xs text-gray-500">
+        입력하신 비밀번호는 서버에 저장되지 않으며, <br /> 암호화된 상태로 처리됩니다.
+      </div>
 
       {/* 로그인 성공 모달 */}
       {isModalOpen && <LoginSuccessModal onClose={handleModalClose} userName={userName} />}

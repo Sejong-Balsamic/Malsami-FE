@@ -7,6 +7,25 @@ const nextConfig = {
     });
     return config;
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "http",
+        hostname: "221.149.185.157",
+        pathname: "/sejong-malsami/thumbnail/**",
+      },
+      {
+        protocol: "http",
+        hostname: "221.149.185.157",
+        pathname: "/sejong-malsami/question/**",
+      },
+      {
+        protocol: "http",
+        hostname: "221.149.185.157",
+        pathname: "/sejong-malsami/answer/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;
