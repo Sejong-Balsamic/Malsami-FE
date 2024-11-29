@@ -44,4 +44,18 @@ export interface MemberDto {
   exp: Exp;
   isFirstLogin: boolean;
   isAdmin: boolean;
+  yeopjeonRank: number;
+  totalYeopjeon: number;
+  yeopjeonPercentile: number;
+  expRank: number;
+  totalExp: number;
+  totalLikeCount: number;
+  totalPopularPostCount: number;
+  totalCommentCount: number;
+  totalPostCount: number;
+  questionPostCount: number;
+  answerPostCount: number;
+  documentPostCount: number;
+  documentRequestPostCount: number;
+  expPercentile: number;
 }
