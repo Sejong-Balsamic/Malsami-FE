@@ -49,33 +49,27 @@ export default function LoginForm() {
       <form onSubmit={handleLogin} className="space-y-6">
         {/* 아이디 입력 */}
         <div>
-          <label htmlFor="id" className="block text-sm font-medium text-black">
-            학번
-            <input
-              type="text"
-              id="id"
-              value={id}
-              onChange={e => setId(e.target.value)}
-              required
-              className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-200"
-              placeholder="학번을 입력해주세요"
-            />
-          </label>
+          <input
+            type="text"
+            id="id"
+            value={id}
+            onChange={e => setId(e.target.value)}
+            required
+            className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-200"
+            placeholder="학번을 입력해주세요"
+          />
         </div>
         {/* 비밀번호 입력 */}
         <div>
-          <label htmlFor="password" className="block text-sm font-medium text-black">
-            비밀번호
-            <input
-              type="password"
-              id="password"
-              value={password}
-              onChange={e => setPassword(e.target.value)}
-              required
-              className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-300"
-              placeholder="비밀번호를 입력해주세요"
-            />
-          </label>
+          <input
+            type="password"
+            id="password"
+            value={password}
+            onChange={e => setPassword(e.target.value)}
+            required
+            className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-300"
+            placeholder="비밀번호를 입력해주세요"
+          />
         </div>
 
         {/* 에러 메시지 */}
