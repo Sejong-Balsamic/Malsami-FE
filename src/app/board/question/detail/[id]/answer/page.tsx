@@ -19,6 +19,7 @@ interface AnswerPostFormData {
 export default function AnswerPostPage() {
   const params = useParams(); // URL에서 파라미터 추출
   const questionPostId = Array.isArray(params.id) ? params.id[0] : params.id; // id를 추출
+  const [isSubmitting, setisSubmitting] = useState(false);
 
   const [formData, setFormData] = useState<AnswerPostFormData>({
     content: "",
@@ -81,10 +82,13 @@ export default function AnswerPostPage() {
 
   // 제출 핸들러
   const handleSubmit = async () => {
+    if (isSubmitting) return;
+
     if (!formData.content.trim()) {
       alert("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
+    setisSubmitting(true);
 
     if (isFormValid) {
       try {
@@ -100,6 +104,8 @@ export default function AnswerPostPage() {
       } catch (error) {
         console.log("error", error);
         alert("답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+      } finally {
+        setisSubmitting(false);
       }
     } else {
       alert("모든 필수 항목을 채워주세요.");
