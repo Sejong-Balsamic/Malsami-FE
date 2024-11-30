@@ -29,7 +29,7 @@ function DetailPageNav({ documentData }: { documentData: DocumentData }) {
       </button>
       {/* 제목과 양반등급 표시 */}
       <div className="my-auto flex flex-col items-center">
-        <h1 className="font-pretendard-bold text-[20px]">자료게시판</h1>
+        <h1 className="font-pretendard-bold text-[20px]">자료 게시판</h1>
         <span className="font-pretendard-medium text-[12px] text-[#09bba2]">
           {getKoreanTier(documentData.documentPost.postTier)}등급
         </span>
