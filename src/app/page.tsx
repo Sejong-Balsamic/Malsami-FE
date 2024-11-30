@@ -25,15 +25,20 @@ function Page() {
   const [documents, setDocuments] = useState<{ subject: string; content: string }[]>([]);
   const [questions, setQuestions] = useState<{ subject: string; content: string }[]>([]);
 
-
   // 스크롤 이벤트
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      const isSmallScreen = window.innerWidth <= 375;
+      let threshold = 1800;
+
+      if (window.innerWidth >= 640) {
+        threshold = 3000;
+      } else if (window.innerWidth <= 375) {
+        threshold = 1400;
+      }
 
       setScrollY(Math.min(currentScrollY, 3000));
-      setSearchVisible(currentScrollY < (isSmallScreen ? 1400 : 1800));
+      setSearchVisible(currentScrollY < threshold);
     };
 
     window.addEventListener("scroll", handleScroll);
