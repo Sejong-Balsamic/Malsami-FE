@@ -27,7 +27,15 @@ function UploadFAB() {
       {isDivVisible && (
         <div
           className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
-          onClick={() => setIsDivVisible(false)} // 배경 클릭 시 닫히도록 설정
+          role="button"
+          tabIndex={0}
+          onClick={() => setIsDivVisible(false)}
+          onKeyDown={e => {
+            if (e.key === "Enter" || e.key === " ") {
+              setIsDivVisible(false);
+            }
+          }}
+          aria-label="Close Overlay"
         />
       )}
       <button
@@ -38,38 +46,36 @@ function UploadFAB() {
         <Upload />
       </button>
       {isDivVisible && (
-        <>
-          <div className="absolute bottom-[138px] right-0 z-40 flex flex-col items-center space-y-[10px]">
-            <div className="flex items-center gap-[10px]">
-              <span className="font-pretendard-medium w-[50px] text-right text-[14px] text-white">
-                질문
-                <br />
-                올리기
-              </span>
-              <button
-                type="button"
-                className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
-                onClick={handleQuestionClick}
-              >
-                <QuestionIcon className="h-[50px] w-[50px] text-[#03b89e]" />
-              </button>
-            </div>
-            <div className="flex items-center gap-[10px]">
-              <span className="font-pretendard-medium w-[50px] text-right text-[14px] text-white">
-                자료
-                <br />
-                올리기
-              </span>
-              <button
-                type="button"
-                className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
-                onClick={handleDocumentClick}
-              >
-                <DocumentIcon className="h-[50px] w-[50px] text-[#03b89e]" />
-              </button>
-            </div>
+        <div className="absolute bottom-[138px] right-0 z-40 flex flex-col items-center space-y-[10px]">
+          <div className="flex items-center gap-[10px]">
+            <span className="font-pretendard-medium w-[50px] text-right text-[14px] text-white">
+              질문
+              <br />
+              올리기
+            </span>
+            <button
+              type="button"
+              className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
+              onClick={handleQuestionClick}
+            >
+              <QuestionIcon className="h-[50px] w-[50px] text-[#03b89e]" />
+            </button>
           </div>
-        </>
+          <div className="flex items-center gap-[10px]">
+            <span className="font-pretendard-medium w-[50px] text-right text-[14px] text-white">
+              자료
+              <br />
+              올리기
+            </span>
+            <button
+              type="button"
+              className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
+              onClick={handleDocumentClick}
+            >
+              <DocumentIcon className="h-[50px] w-[50px] text-[#03b89e]" />
+            </button>
+          </div>
+        </div>
       )}
     </div>
   );

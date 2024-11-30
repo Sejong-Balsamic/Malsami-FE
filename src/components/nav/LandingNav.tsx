@@ -120,7 +120,7 @@ function Nav() {
               </button>
               <button
                 type="button"
-                className="absolute bottom-0 font-pretendard-medium flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[16px]"
+                className="font-pretendard-medium absolute bottom-0 flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[16px]"
                 onClick={() => handleNavigation("/logout")}
               >
                 로그아웃
