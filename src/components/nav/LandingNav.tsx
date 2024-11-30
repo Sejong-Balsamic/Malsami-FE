@@ -66,22 +66,27 @@ function Nav() {
               ) : (
                 <button
                   type="button"
-                  className="flex h-[92px] w-full cursor-pointer items-center gap-4 bg-[#03b89e] py-[32px] pl-[30px] text-white"
+                  className="py-auto flex h-[92px] w-full cursor-pointer items-center gap-4 bg-[#03b89e] px-[30px] text-white"
                   onClick={() => handleNavigation("/mypage")}
                 >
-                  <div className="flex flex-col">
-                    <div className="flex items-center gap-[6px]">
-                      <span className="font-pretendard-bold text-[18px]">
-                        {memberInfo?.member.studentName || "사용자"}
-                      </span>
-                      <span className="font-pretendard-semibold text-[14px]">
-                        @{memberInfo?.member.uuidNickname || "아이디"}
-                      </span>
+                  <div className="flex w-full items-center justify-between">
+                    <div className="flex flex-col">
+                      <div className="flex items-center gap-[6px]">
+                        <span className="font-pretendard-bold text-[18px]">
+                          {memberInfo?.member.studentName || "사용자"}
+                        </span>
+                        <span className="font-pretendard-semibold text-[14px]">
+                          @{memberInfo?.member.uuidNickname || "아이디"}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="font-pretendard-medium text-[14px]">
+                          {memberInfo?.member.studentId} | {memberInfo?.member.major}
+                        </span>
+                      </div>
                     </div>
-                    <div>
-                      <span className="font-pretendard-medium text-[14px]">
-                        {memberInfo?.member.studentId} | {memberInfo?.member.major}
-                      </span>
+                    <div className="flex">
+                      <Image src="/icons/Move.svg" alt="Mypage" width={10} height={10} />
                     </div>
                   </div>
                 </button>
@@ -91,7 +96,7 @@ function Nav() {
                 className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 border-b-2 pl-[30px] text-[20px]"
                 onClick={() => handleNavigation("/board/question")}
               >
-                <Image src="/icons/Question_Colored.svg" alt="Search" width={30} height={30} />
+                <Image src="/icons/Question_Colored.svg" alt="Question" width={30} height={30} />
                 질문 게시판
               </button>
               <button
@@ -105,10 +110,10 @@ function Nav() {
               <button
                 type="button"
                 className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 border-b-2 pl-[30px] text-[20px]"
-                onClick={() => handleNavigation("/mypage/rule")}
+                onClick={() => handleNavigation("/mypage/help")}
               >
                 <Image src="/icons/Rule_Colored.svg" alt="Search" width={30} height={30} />
-                이용규칙
+                이용도우미
               </button>
               <button
                 type="button"
