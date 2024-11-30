@@ -1,4 +1,4 @@
-import { DocumentData } from "@/types/DocumentData";
+import { DocumentData } from "@/types/DocumentDetailData";
 import { apiClient } from "../clients/appClient";
 
 // 특정 문서 글을 조회하는 함수

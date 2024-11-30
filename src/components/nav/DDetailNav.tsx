@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Drawer, DrawerContent, DrawerTitle, DrawerDescription, DrawerTrigger } from "@/components/ui/drawer";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { DocumentData } from "@/types/DocumentData";
+import { DocumentData } from "@/types/DocumentDetailData";
 import { Button } from "../ui/button";
 
 const tierMapping: { [key: string]: string } = {

@@ -105,7 +105,7 @@ function Nav() {
               <button
                 type="button"
                 className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 border-b-2 pl-[30px] text-[20px]"
-                onClick={() => handleNavigation("/rule")}
+                onClick={() => handleNavigation("/mypage/rule")}
               >
                 <Image src="/icons/Rule_Colored.svg" alt="Search" width={30} height={30} />
                 이용규칙
@@ -113,14 +113,14 @@ function Nav() {
               <button
                 type="button"
                 className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[20px]"
-                onClick={() => handleNavigation("/notice")}
+                onClick={() => handleNavigation("/mypage/notice")}
               >
                 <Image src="/icons/Notice_Colored.svg" alt="Search" width={30} height={30} />
                 공지사항
               </button>
               <button
                 type="button"
-                className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[20px]"
+                className="absolute bottom-0 font-pretendard-medium flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[16px]"
                 onClick={() => handleNavigation("/logout")}
               >
                 로그아웃
