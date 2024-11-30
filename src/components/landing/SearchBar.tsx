@@ -9,7 +9,7 @@ interface SearchBarProps {
   userName: string;
 }
 
-function SearchBar({ searchVisible, userName }: SearchBarProps) {
+function SearchBar({ userName }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const router = useRouter();
 
