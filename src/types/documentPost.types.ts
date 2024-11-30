@@ -1,5 +1,5 @@
 export interface DocumentPost {
-  documentPostId: string;
+  postId: string;
   title: string;
   subject: string;
   likeCount: number;

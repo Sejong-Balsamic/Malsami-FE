@@ -69,7 +69,7 @@ function Nav() {
                   className="py-auto flex h-[92px] w-full cursor-pointer items-center gap-4 bg-[#03b89e] px-[30px] text-white"
                   onClick={() => handleNavigation("/mypage")}
                 >
-                  <div className="justify-between items-center flex w-full">
+                  <div className="flex w-full items-center justify-between">
                     <div className="flex flex-col">
                       <div className="flex items-center gap-[6px]">
                         <span className="font-pretendard-bold text-[18px]">

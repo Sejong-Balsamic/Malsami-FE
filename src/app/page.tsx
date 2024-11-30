@@ -51,6 +51,7 @@ function Page() {
     fetchAccessToken();
   }, []);
 
+  // 자료 출력
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
@@ -69,6 +70,7 @@ function Page() {
     fetchDocuments();
   }, []);
 
+  // 질문 출력
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -90,9 +92,7 @@ function Page() {
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
       <ScrollToTopOnLoad />
-      <div>
-        <Nav />
-      </div>
+      <Nav />
       <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
         {/* 배경 이미지 */}
         <div className="relative z-0 w-full">
@@ -109,22 +109,15 @@ function Page() {
         <div className="z-10">
           <FlyingBooks scrollY={scrollY} />
         </div>
-        {/* 인기자료 */}
-        <div ref={hotDocumentRef} className="z-40 flex justify-center">
-          <HotDocument />
-        </div>
-        <div className="z-40 flex items-center px-[20px]">
+        <div className="relative z-40 flex flex-col items-center justify-center px-[20px]">
+          <div ref={hotDocumentRef} className="w-full">
+            <HotDocument />
+          </div>
           <AllDocument documents={documents} />
-        </div>
-        {/* 인기질문 */}
-        <div className="z-40 flex justify-center">
           <HotQuestion />
-        </div>
-        <div className="z-40 flex items-center px-[20px]">
           <AllQuestion questions={questions} />
+          {searchVisible && <SearchBar userName={userName} />}
         </div>
-        {/* 검색 */}
-        <SearchBar searchVisible={searchVisible} userName={userName} />
         {/* FAB */}
         <div className="fixed bottom-[30px] right-[20px] z-50">
           <div className="flex flex-col items-center space-y-4">

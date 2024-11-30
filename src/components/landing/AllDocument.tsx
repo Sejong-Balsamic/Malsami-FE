@@ -25,12 +25,10 @@ function AllDocument({ documents }: AllDocumentProps) {
       </div>
       <div className="font-pretendard-medium w-full rounded-[20px] border border-gray-100 bg-white px-[14px] py-[22px] text-[14px] shadow-lg shadow-gray-200">
         <div className="relative grid w-full grid-cols-[1fr_2fr] grid-rows-5 gap-[15px]">
-          {documents.map((doc, index) => (
-            <React.Fragment key={index}>
-              <div className="flex items-center overflow-hidden text-ellipsis whitespace-nowrap">
-                {doc.subject}
-              </div>
-              <div className="flex items-center text-[#727272] overflow-hidden text-ellipsis whitespace-nowrap">
+          {documents.map(doc => (
+            <React.Fragment key={`${doc.subject}-${doc.content.slice(0, 5)}`}>
+              <div className="flex items-center overflow-hidden text-ellipsis whitespace-nowrap">{doc.subject}</div>
+              <div className="flex items-center overflow-hidden text-ellipsis whitespace-nowrap text-[#727272]">
                 {doc.content}
               </div>
             </React.Fragment>
