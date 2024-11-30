@@ -5,6 +5,8 @@ import Nav from "@/components/nav/LandingNav";
 import FlyingBooks from "@/components/landing/FlyingBooks";
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
+import AllDocument from "@/components/landing/AllDocument";
+import getAllDocuments from "@/apis/landing/getAllDocument";
 import UploadFAB from "@/components/common/UploadFAB";
 import ScrollFAB from "@/components/common/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
@@ -16,7 +18,8 @@ function Page() {
   const [scrollY, setScrollY] = useState(0);
   const [searchVisible, setSearchVisible] = useState(true);
   const [userName, setUserName] = useState<string>("");
-  const hotDocumentRef = useRef<HTMLDivElement>(null); // HotDocument 참조
+  const hotDocumentRef = useRef<HTMLDivElement>(null);
+  const [documents, setDocuments] = useState<{ subject: string; content: string }[]>([]);
 
   // 스크롤 이벤트
   useEffect(() => {
@@ -45,6 +48,24 @@ function Page() {
     fetchAccessToken();
   }, []);
 
+  useEffect(() => {
+    const fetchDocuments = async () => {
+      try {
+        const data = await getAllDocuments();
+        const latestDocuments = data.documentPostsPage?.content.slice(0, 5) || []; // 최신 5개 추출
+        const transformedDocuments = latestDocuments.map(doc => ({
+          subject: doc.subject,
+          content: doc.content,
+        }));
+        setDocuments(transformedDocuments);
+      } catch (error) {
+        console.error("자료 가져오기 실패:", error);
+      }
+    };
+
+    fetchDocuments();
+  }, []);
+
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
       <ScrollToTopOnLoad />
@@ -70,6 +91,9 @@ function Page() {
         {/* 인기자료 */}
         <div ref={hotDocumentRef} className="z-40 flex justify-center">
           <HotDocument />
+        </div>
+        <div className="z-40 flex items-center px-[20px]">
+          <AllDocument documents={documents} />
         </div>
         {/* 인기질문 */}
         <div className="z-40 flex justify-center">
