@@ -52,7 +52,7 @@ function Nav() {
           </button>
         </SheetTrigger>
         <SheetContent side="right" className="w-[300px] p-0">
-          <div>
+          <div className="w-full">
             <ul className="mt-0 space-y-2">
               {!accessToken ? (
                 <button

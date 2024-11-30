@@ -15,7 +15,6 @@ interface InfoProps {
       exp: number;
       expId: string;
     };
-    totalExp: number;
     totalLikeCount: number;
     expPercentile: number;
   } | null;
@@ -34,12 +33,12 @@ function InfoCard({ memberInfo }: InfoProps) {
           <div className="flex w-full flex-col gap-7 rounded-[15px] bg-[#95e4da] px-[20px] py-[30px]">
             <div>
               <div className="mb-2">
-                <ExpBar value={memberInfo?.totalExp || 0} />
+                <ExpBar value={memberInfo?.exp.exp || 0} />
               </div>
               <div className="flex justify-between">
-                <div className="font-pretendard-medium text-[14px]">경험치</div>
+                <div className="font-pretendard-medium text-[14px]">종3품</div>
                 <div className="font-pretendard-medium flex items-center gap-[6px] text-[14px]">
-                  {memberInfo?.totalExp || "0"}
+                  {memberInfo?.exp.exp || "0"}
                   <Image src="/icons/Move.svg" alt="Move" width={6} height={12} className="h-[12px] w-[6px]" />
                 </div>
               </div>

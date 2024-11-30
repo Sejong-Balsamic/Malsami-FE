@@ -46,13 +46,12 @@ function Page() {
   }, []);
 
   return (
-    <div className="flex justify-center bg-gray-100">
+    <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
       <ScrollToTopOnLoad />
+      <div>
+        <Nav />
+      </div>
       <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
-        {/* Nav */}
-        <div className="flex justify-center">
-          <Nav />
-        </div>
         {/* 배경 이미지 */}
         <div className="relative z-0 w-full">
           <Image
