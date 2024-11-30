@@ -13,7 +13,6 @@ function SubjectSearchInput({ value, onChange }: SubjectSearchInputProps) {
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1); // 선택된 제안 인덱스
 
   // searchValue 변경 시 호출
-  // searchValue 변경 시 호출
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     onChange(newValue); // 부모 컴포넌트에 값 전달

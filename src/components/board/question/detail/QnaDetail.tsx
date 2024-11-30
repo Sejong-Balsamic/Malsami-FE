@@ -1,15 +1,16 @@
 /* eslint-disable */
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
-import YeopjeonTag from "../../tags/YeopjeonTag";
-import likePost from "@/apis/question/likePost";
+import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import AnswerSection from "./AnswerSection";
 import getDateDiff from "@/utils/getDateDiff";
 import { QuestionData } from "@/types/QuestionData";
-import CommentSection from "./CommentSection";
+import CommentSection from "./QCommentSection";
+import sameMember from "@/utils/sameMember";
+import AttachedFiles from "../../../common/AttachedFiles";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -31,14 +32,17 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
   const [isLiked, setIsLiked] = useState(questionData.questionPost.isLiked); // API 응답 값으로 초기화
   const [currentLikeCount, setCurrentLikeCount] = useState(questionData.questionPost.likeCount);
 
+  const isAuthor: boolean = sameMember(questionData.questionPost.member.memberId); // 작성자 여부 확인
+
   const handleLikeClick = async () => {
     if (isLiked) return; // 이미 좋아요를 누른 상태라면 실행하지 않음
+    if (sameMember(questionData.questionPost.member.memberId)) return; // 작성자가 좋아요를 누르지 못하도록 차단
 
     try {
       setIsLiked(true); // 즉시 반영: 버튼 비활성화 및 색상 변경
       setCurrentLikeCount(currentLikeCount + 1); // 즉시 반영: 좋아요 숫자 증가
 
-      await likePost(questionData.questionPost.questionPostId, "QUESTION");
+      await postLikeQuestion(questionData.questionPost.questionPostId, "QUESTION");
     } catch (error) {
       console.error("좋아요 업데이트 실패");
       setIsLiked(false); // 실패 시 롤백
@@ -50,15 +54,38 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
     ? "border-[#03b89e] text-[#03b89e] cursor-default" // 눌린 상태
     : "border-[#e7e7e7] text-[#aaaaaa] cursor-pointer"; // 기본 상태
 
+  const [commentCount, setCommentCount] = useState(questionData.questionPost.commentCount);
+  const incrementCommentCount = () => {
+    setCommentCount(prevCount => prevCount + 1);
+  };
+
+  const files = questionData.mediaFiles.map(file => file.uploadedImageUrl);
+
   return (
     <div className="flex flex-col justify-center px-[20px]">
       {/* 교과목명 현상금  */}
       <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
         <div className="flex items-center gap-[6px]">
-          <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
-            {questionData.questionPost.subject}
-          </div>
-          <YeopjeonTag point={questionData.questionPost.rewardYeopjeon} />
+          {questionData.questionPost.chaetaekStatus ? (
+            <>
+              <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#0062D2] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
+                채택됨
+              </div>
+              <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
+                {questionData.questionPost.subject}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
+                {questionData.questionPost.subject}
+              </div>
+              <span className="font-pretendard-semibold mr-1 inline-flex h-[26px] items-center rounded-[33px] bg-custom-orange-500 px-2 py-[3px] text-xs text-white">
+                <img src="/icons/Yeopjeon.svg" alt="Yeopjeon" className="inline-block h-[14px] w-[14px]" />
+                <span className="ml-1">{questionData.questionPost.rewardYeopjeon}</span>
+              </span>
+            </>
+          )}
         </div>
       </div>
       {/* 글 정보 */}
@@ -69,6 +96,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
             {questionData.questionPost.content}
           </div>
         </div>
+
         {/* 커스텀태그 */}
         {questionData.customTags && questionData.customTags.length > 0 && (
           <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
@@ -82,6 +110,12 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
                 />
               ))}
             </div>
+          </div>
+        )}
+        {/* 첨부파일 */}
+        {files.length > 0 && ( // 파일이 있을 때만 렌더링
+          <div className="justfy-center my-4 flex">
+            <AttachedFiles files={files} />
           </div>
         )}
 
@@ -104,7 +138,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
           <div className="mt-[20px] text-right">
             <div>
               <span className="font-pretendard-medium mb-[4px] text-[12px]">
-                @{questionData.questionPost.member.uuidNickname}
+                {questionData.questionPost.isPrivate ? "익명" : `@${questionData.questionPost.member.uuidNickname}`}
               </span>
             </div>
             <div>
@@ -139,19 +173,21 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
               <DrawerTrigger asChild>
                 <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
                   <Image src="/icons/Comment_UnClicked.svg" alt="Comment_UnClicked" width={16} height={16} />
-                  <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">
-                    {questionData.questionPost.commentCount}
-                  </span>
+                  <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">{commentCount}</span>
                 </div>
               </DrawerTrigger>
               <DrawerContent className="px-[20px] pb-[20px]">
                 <DrawerHeader className="px-0">
                   <DrawerTitle className="font-pretendard-bold flex text-[14px] text-[#3c3c3c]">
-                    댓글 {questionData.questionPost.commentCount}
+                    댓글 {commentCount}
                   </DrawerTitle>
                 </DrawerHeader>
                 <div className="max-h-[400px] overflow-y-auto">
-                  <CommentSection postId={questionData.questionPost.questionPostId} contentType="QUESTION" />
+                  <CommentSection
+                    postId={questionData.questionPost.questionPostId}
+                    contentType="QUESTION"
+                    onCommentAdded={incrementCommentCount}
+                  />
                 </div>
               </DrawerContent>
             </Drawer>
@@ -159,7 +195,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
         </div>
       </div>
       {/* 답변 */}
-      <AnswerSection postId={questionData.questionPost.questionPostId} />
+      <AnswerSection postId={questionData.questionPost.questionPostId} isAuthor={isAuthor} />
     </div>
   );
 }

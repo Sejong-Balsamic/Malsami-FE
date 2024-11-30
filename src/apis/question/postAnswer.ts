@@ -19,13 +19,10 @@ export default async function postAnswer(data: PostAnswerFormData) {
     formData.append("isPrivate", data.isPrivate.toString());
   }
 
-  // 첨부 파일 추가 (최대 3개 제한)
+  // 첨부 파일
   if (data.mediaFiles && data.mediaFiles.length > 0) {
-    if (data.mediaFiles.length > 3) {
-      throw new Error("최대 3개의 파일만 업로드할 수 있습니다.");
-    }
     data.mediaFiles.forEach(file => {
-      formData.append("mediaFiles", file);
+      formData.append("attachmentFiles", file);
     });
   }
 

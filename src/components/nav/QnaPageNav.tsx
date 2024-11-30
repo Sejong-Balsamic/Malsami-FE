@@ -6,7 +6,7 @@ function QnAPageNav() {
   return (
     <nav className="mb-4 flex justify-between px-5 pt-[20px]">
       {/* 뒤로 가기 아이콘 */}
-      <button type="button" onClick={() => router.back()}>
+      <button type="button" className="flex" onClick={() => router.push("/")}>
         <Image src="/icons/BackIcon.svg" alt="썸네일" width={10} height={20} />
       </button>
 
@@ -15,7 +15,7 @@ function QnAPageNav() {
 
       {/* 검색 아이콘 */}
       <button type="button" onClick={() => router.push("/search")}>
-        <Image src="/icons/Search.svg" alt="Search" width={20} height={20} />
+        <Image src="/icons/SearchIcon.svg" alt="Search" width={20} height={20} />
       </button>
     </nav>
   );

@@ -1,14 +1,40 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
+import { useRouter } from "next/navigation";
 
 interface SearchBarProps {
   searchVisible: boolean;
   userName: string;
 }
+
 function SearchBar({ searchVisible, userName }: SearchBarProps) {
+  const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
+  const router = useRouter();
+
+  // 검색 실행 함수
+  const routeSearchValue = (term: string) => {
+    if (term.trim()) {
+      router.push(`/search/result?query=${encodeURIComponent(term)}`); // 검색어를 URL에 추가
+    }
+  };
+  // 검색어 변경 상태 업데이트
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+  // Enter 키 입력 시
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      routeSearchValue(searchTerm);
+    }
+  };
+  // SearchIcon 클릭 처리
+  const handleSearchClick = () => {
+    routeSearchValue(searchTerm);
+  };
+
   return (
     <>
       {/* 검색 메인 텍스트 */}
@@ -32,16 +58,20 @@ function SearchBar({ searchVisible, userName }: SearchBarProps) {
       >
         <div className="relative w-full">
           <Image
-            src="/icons/Search.svg"
+            src="/icons/SearchIcon.svg"
             alt="Search"
             width={20}
             height={20}
-            className="absolute left-2 top-1/2 -translate-y-1/2 transform p-[2px]"
+            onClick={handleSearchClick}
+            className="absolute left-2 top-1/2 -translate-y-1/2 transform cursor-pointer p-[2px]"
           />
           <Input
             type="text"
             id="search"
             placeholder="과목명이나 키워드를 입력하세요"
+            value={searchTerm}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
             className="h-[40px] w-full rounded-md bg-gray-50 pl-8 font-pretendard text-[16px] font-medium text-[#F46B01]"
           />
         </div>
@@ -49,4 +79,5 @@ function SearchBar({ searchVisible, userName }: SearchBarProps) {
     </>
   );
 }
+
 export default SearchBar;

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -29,10 +30,10 @@ function HotDocument() {
     <Tabs defaultValue="weekend" className="z-40 h-[400px] w-[400px]">
       <div className="flex justify-center">
         <TabsList className="grid w-[96px] grid-cols-2">
-          <TabsTrigger value="weekend" className="font-pretendard-semibold text-[14px] text-[#aaaaaa]">
+          <TabsTrigger value="weekend" className="font-pretendard-medium text-[14px] text-[#aaaaaa]">
             주간
           </TabsTrigger>
-          <TabsTrigger value="today" className="font-pretendard-semibold text-[14px] text-[#aaaaaa]">
+          <TabsTrigger value="today" className="font-pretendard-medium text-[14px] text-[#aaaaaa]">
             일간
           </TabsTrigger>
         </TabsList>
@@ -51,9 +52,11 @@ function HotDocument() {
             <MovingCardDocument data={weekData} />
           </CardContent>
           <CardFooter>
-            <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
-              더보기
-            </Button>
+            <Link href="/board/document" passHref>
+              <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
+                더보기
+              </Button>
+            </Link>
           </CardFooter>
         </Card>
       </TabsContent>
@@ -71,9 +74,11 @@ function HotDocument() {
             <MovingCardDocument data={dayData} />
           </CardContent>
           <CardFooter>
-            <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
-              더보기
-            </Button>
+            <Link href="/board/document" passHref>
+              <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
+                더보기
+              </Button>
+            </Link>
           </CardFooter>
         </Card>
       </TabsContent>

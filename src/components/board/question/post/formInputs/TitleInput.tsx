@@ -12,7 +12,7 @@ export default function TitleInput({ value, onChange }: TitleInputProps) {
     onChange(e);
   };
   return (
-    <label htmlFor="title" className="mb-[26px] block">
+    <div className="mb-[26px] block">
       <div className="relative">
         <span className="font-pretendard-semibold mr-1.5 text-lg">제목</span>
         <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
@@ -30,6 +30,6 @@ export default function TitleInput({ value, onChange }: TitleInputProps) {
           {value.length} /20자
         </span>
       </div>
-    </label>
+    </div>
   );
 }

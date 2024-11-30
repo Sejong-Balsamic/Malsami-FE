@@ -22,7 +22,6 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
       console.error("Invalid postId:", postId);
       return;
     }
-    console.log("Clicked card postId:", postId);
     router.push(`/board/question/detail/${postId}`);
   };
 
@@ -35,12 +34,11 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
         spaceBetween={0}
         loop={loopEnabled}
         autoplay={{
-          delay: 5000,
+          delay: 3000,
           disableOnInteraction: false,
         }}
       >
         {data.map((document, index) => {
-          console.log("Document:", document); // Logging each document to inspect its contents
           return (
             <SwiperSlide key={document.postId || index}>
               <div

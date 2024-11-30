@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
 import { CardProps } from "@/types/DocCardProps.type";
 import getDocRequest from "@/apis/document/docMainPage/getDocRequest";
+import { useRouter } from "next/navigation";
 import MovingCardDocument from "../MovingCardDocument";
 
 export default function DocRequestContent() {
+  const router = useRouter();
   const [docRequestItems, setDocRequestItems] = useState<CardProps[]>([]); // 자료요청 카드들
 
   // api호출로 자료요청 카드 세팅
@@ -31,7 +33,13 @@ export default function DocRequestContent() {
       {/* 콘텐츠 제목 */}
       <div className="mb-3.5 flex justify-between">
         <span className="font-pretendard-semibold text-lg text-custom-blue-500">자료 요청</span>
-        <span className="font-pretendard-medium text-sm text-custom-blue-500">더 보기 {">"}</span>
+        <button
+          type="button"
+          className="font-pretendard-medium cursor-pointer text-sm text-custom-blue-500"
+          onClick={() => router.push("/board/document/sub/request")}
+        >
+          더 보기 {">"}
+        </button>
       </div>
       {/* 콘텐츠 내용 */}
       <div className="flex items-center justify-center">
