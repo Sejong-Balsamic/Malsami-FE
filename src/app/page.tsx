@@ -6,7 +6,9 @@ import FlyingBooks from "@/components/landing/FlyingBooks";
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
 import AllDocument from "@/components/landing/AllDocument";
+import AllQuestion from "@/components/landing/AllQuestion";
 import getAllDocuments from "@/apis/landing/getAllDocument";
+import getAllQuestions from "@/apis/landing/getAllQuestion";
 import UploadFAB from "@/components/common/UploadFAB";
 import ScrollFAB from "@/components/common/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
@@ -20,6 +22,7 @@ function Page() {
   const [userName, setUserName] = useState<string>("");
   const hotDocumentRef = useRef<HTMLDivElement>(null);
   const [documents, setDocuments] = useState<{ subject: string; content: string }[]>([]);
+  const [questions, setQuestions] = useState<{ subject: string; content: string }[]>([]);
 
   // 스크롤 이벤트
   useEffect(() => {
@@ -66,6 +69,24 @@ function Page() {
     fetchDocuments();
   }, []);
 
+  useEffect(() => {
+    const fetchQuestions = async () => {
+      try {
+        const data = await getAllQuestions();
+        const latestQuestions = data.questionPostsPage?.content.slice(0, 5) || []; // 최신 5개 추출
+        const transformedQuestions = latestQuestions.map(qna => ({
+          subject: qna.subject,
+          content: qna.content,
+        }));
+        setQuestions(transformedQuestions);
+      } catch (error) {
+        console.error("질문 가져오기 실패:", error);
+      }
+    };
+
+    fetchQuestions();
+  }, []);
+
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
       <ScrollToTopOnLoad />
@@ -98,6 +119,9 @@ function Page() {
         {/* 인기질문 */}
         <div className="z-40 flex justify-center">
           <HotQuestion />
+        </div>
+        <div className="z-40 flex items-center px-[20px]">
+          <AllQuestion questions={questions} />
         </div>
         {/* 검색 */}
         <SearchBar searchVisible={searchVisible} userName={userName} />
