@@ -20,6 +20,7 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
   const [isPrivate, setIsPrivate] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [totalComments, setTotalComments] = useState(0);
+  const [isSubmitting, setisSubmitting] = useState(false);
 
   useEffect(() => {
     const loadComments = async () => {
@@ -42,12 +43,16 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
   };
 
   const handleSaveClick = async () => {
+    if (isSubmitting) return;
+
     if (!content.trim()) {
       alert("댓글 내용을 입력해주세요.");
       return;
     }
+    setisSubmitting(true);
 
     try {
+      // 댓글 등록
       await postComment({
         content,
         postId,
@@ -57,7 +62,7 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
       setContent(""); // 입력 필드 초기화
 
       // 댓글 새로고침
-      refreshComments({
+      await refreshComments({
         postId,
         contentType,
         setComments,
@@ -66,6 +71,8 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
       onCommentAdded();
     } catch (error) {
       console.error("댓글 등록 실패:", error);
+    } finally {
+      setisSubmitting(false);
     }
   };
 

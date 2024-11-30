@@ -15,8 +15,9 @@ import refreshAccessToken from "@/apis/auth/refresh";
 function Page() {
   const [scrollY, setScrollY] = useState(0);
   const [searchVisible, setSearchVisible] = useState(true);
+  const [showScrollFAB, setShowScrollFAB] = useState(true);
   const [userName, setUserName] = useState<string>("");
-  const hotDocumentRef = useRef<HTMLDivElement>(null); // HotDocument 참조
+  const hotDocumentRef = useRef<HTMLDivElement>(null);
 
   // 스크롤 이벤트
   useEffect(() => {
@@ -28,6 +29,20 @@ function Page() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleScrollForFAB = () => {
+      const currentScrollY = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+
+      // 맨 아래에서 100px 여유를 둔 위치까지 스크롤하면 ScrollFAB 숨김
+      setShowScrollFAB(currentScrollY + windowHeight < documentHeight - 100);
+    };
+
+    window.addEventListener("scroll", handleScrollForFAB);
+    return () => window.removeEventListener("scroll", handleScrollForFAB);
   }, []);
 
   // refreshToken 호출
@@ -81,7 +96,7 @@ function Page() {
         <div className="fixed bottom-[30px] right-[20px] z-50">
           <div className="flex flex-col items-center space-y-4">
             <UploadFAB />
-            <ScrollFAB targetRef={hotDocumentRef} />
+            {showScrollFAB && <ScrollFAB targetRef={hotDocumentRef} />}
           </div>
         </div>
       </div>

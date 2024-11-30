@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/ui/drawer";
 import postLikeDocument from "@/apis/document/postLikeDocument";
 import getDateDiff from "@/utils/getDateDiff";
-import { DocumentData } from "@/types/DocumentData";
+import { DocumentData } from "@/types/DocumentDetailData";
 import CommentSection from "../../document/detail/DCommentSection";
 import sameMember from "@/utils/sameMember";
 import DownloadFile from "./DownloadFile";

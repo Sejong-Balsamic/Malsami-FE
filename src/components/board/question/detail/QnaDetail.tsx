@@ -7,7 +7,7 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from 
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import AnswerSection from "./AnswerSection";
 import getDateDiff from "@/utils/getDateDiff";
-import { QuestionData } from "@/types/QuestionData";
+import { QuestionData } from "@/types/QuestionDetailData";
 import CommentSection from "./QCommentSection";
 import sameMember from "@/utils/sameMember";
 import AttachedFiles from "../../../common/AttachedFiles";
