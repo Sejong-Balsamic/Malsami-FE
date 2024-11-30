@@ -16,7 +16,7 @@ function DetailPageNav() {
       </button>
       {/* 제목과 양반등급 표시 */}
       <div className="flex flex-col items-center">
-        <h1 className="font-pretendard-bold mb-[16px] text-[20px]">질문게시판</h1>
+        <h1 className="font-pretendard-bold mb-[16px] text-[20px]">질문 게시판</h1>
       </div>
       {/* 옵션 아이콘 */}
       <Drawer>
