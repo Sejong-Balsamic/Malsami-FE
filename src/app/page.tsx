@@ -28,8 +28,10 @@ function Page() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
+      const isSmallScreen = window.innerWidth <= 375;
+
       setScrollY(Math.min(currentScrollY, 3000));
-      setSearchVisible(currentScrollY < 1800);
+      setSearchVisible(currentScrollY < (isSmallScreen ? 1400 : 1800));
     };
 
     window.addEventListener("scroll", handleScroll);

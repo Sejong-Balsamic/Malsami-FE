@@ -10,7 +10,7 @@ interface SearchBarProps {
 
 function SearchBar({ userName }: SearchBarProps) {
   return (
-    <div className="fixed top-[318px] px-[20px] flex w-full flex-col items-center gap-7">
+    <div className="fixed top-[318px] flex w-full max-w-[600px] flex-col items-center gap-7 px-[20px]">
       {/* 검색 메인 텍스트 */}
       <div className="duration-2700 z-50 w-full transform leading-8 opacity-100 transition-opacity">
         <span className="font-pretendard-bold text-xl text-[#03B8A3]">{userName}</span>
