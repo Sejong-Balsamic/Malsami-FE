@@ -1,22 +1,22 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
+// import { useState, useEffect } from "react";
 import Image from "next/image";
 import SearchPageInput from "./SearchPageInput";
 
 export default function SearchComponent() {
   const router = useRouter();
-  const [searchTerm, setSearchTerm] = useState("");
-  const [recentSearches, setRecentSearches] = useState(["검색기록", "검색기록1", "검색기록2"]);
+  // const [searchTerm, setSearchTerm] = useState("");
+  // const [recentSearches, setRecentSearches] = useState(["검색기록", "검색기록1", "검색기록2"]);
 
-  useEffect(() => {
-    setRecentSearches(prev => [...prev]); // 상태를 복사하여 업데이트
-  }, []);
+  // useEffect(() => {
+  //   setRecentSearches(prev => [...prev]); // 상태를 복사하여 업데이트
+  // }, []);
 
-  const handleSearch = (term: string) => {
-    setSearchTerm(term);
-  };
+  // const handleSearch = (term: string) => {
+  //   setSearchTerm(term);
+  // };
 
   return (
     <div className="h-screen bg-[#EEEEEE]">
@@ -32,7 +32,7 @@ export default function SearchComponent() {
       <SearchPageInput />
 
       {/* 최근 검색어 */}
-      {!searchTerm && (
+      {/* {!searchTerm && (
         <div className="px-4 py-4">
           <h2 className="mb-2 text-base font-semibold">최근 검색어</h2>
           <div className="flex flex-wrap gap-2">
@@ -50,7 +50,7 @@ export default function SearchComponent() {
             ))}
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 }
