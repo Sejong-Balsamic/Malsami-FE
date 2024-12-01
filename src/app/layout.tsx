@@ -7,8 +7,8 @@ export const metadata: Metadata = {
   title: "세종말싸미",
   description: "세종대학생을 위한 세종말싸미입니다.",
   icons: {
-    icon: "https://i.ibb.co/WGgfyXH/logo.png", // 일반 아이콘
-    apple: "https://i.ibb.co/WGgfyXH/logo.png", // 애플 터치 아이콘 (iOS)
+    icon: "https://i.ibb.co/JQRFwTD/logoicon.png", // 일반 아이콘
+    apple: "https://i.ibb.co/JQRFwTD/logoicon.png", // 애플 터치 아이콘 (iOS)
   },
   openGraph: {
     title: "세종말싸미",
@@ -16,9 +16,9 @@ export const metadata: Metadata = {
     url: "https://test.sejong-malsami.co.kr/",
     images: [
       {
-        url: "https://i.ibb.co/WGgfyXH/logo.png",
+        url: "https://i.ibb.co/JQRFwTD/logoicon.png",
         width: 1200,
-        height: 630,
+        height: 1200,
         alt: "세종말싸미 로고",
       },
     ],
@@ -36,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Open Graph 메타 태그 */}
         <meta property="og:title" content="세종말싸미" />
         <meta property="og:description" content="세종대학생을 위한 세종말싸미입니다." />
-        <meta property="og:image" content="https://i.ibb.co/WGgfyXH/logo.png" />
+        <meta property="og:image" content="https://i.ibb.co/JQRFwTD/logoicon.png" />
         <meta property="og:url" content="https://test.sejong-malsami.co.kr/" />
         <meta property="og:type" content="website" />
       </head>

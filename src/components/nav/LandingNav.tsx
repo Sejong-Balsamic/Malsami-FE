@@ -38,7 +38,7 @@ function Nav() {
 
       <button
         type="button"
-        className="z-10 flex h-auto w-auto items-end gap-2 bg-[#ffffff]"
+        className="z-10 flex h-auto w-auto items-center gap-2 bg-[#ffffff]"
         onClick={() => handleNavigation("/")}
         aria-label="랜딩페이지"
       >
