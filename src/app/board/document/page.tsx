@@ -10,16 +10,15 @@ import HotDownloadContent from "@/components/board/document/DocMainPageContents/
 import MyFacultyContent from "@/components/board/document/DocMainPageContents/MyFacultyContent";
 import DocRequestContent from "@/components/board/document/DocMainPageContents/DocRequestContent";
 import UploadDocFAB from "@/components/common/UploadDocFAB";
-import getMyInfo from "@/apis/member/getMyInfo";
+import getMyShortInfo from "@/apis/document/getMyShortInfo";
 
 export default function DocumentBoardPage() {
   const [faculty, setFaculty] = useState("");
   useEffect(() => {
     const fetchMyInfo = async () => {
       try {
-        const response = await getMyInfo();
+        const response = await getMyShortInfo();
         setFaculty(response.member.faculty);
-        console.log("faculty:", faculty);
       } catch (error) {
         console.error("내 정보 데이터를 불러오는 중 오류 발생:", error);
       }
