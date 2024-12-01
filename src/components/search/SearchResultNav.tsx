@@ -11,7 +11,7 @@ interface SearchHeaderProps {
 
 function SearchResultNav({ searchValue, onSearchChange, onBack, onClear, onSearch }: SearchHeaderProps) {
   return (
-    <div className="flex items-center justify-between border-b-[2px] bg-white px-5 py-3">
+    <div className="flex items-center justify-between border-b-[2px] border-b-[#EAEAEA] bg-white px-5 py-3">
       {/* 뒤로가기 버튼 */}
       <button type="button" onClick={onBack}>
         <Image src="/icons/BackIcon.svg" alt="뒤로가기" width={10} height={20} />

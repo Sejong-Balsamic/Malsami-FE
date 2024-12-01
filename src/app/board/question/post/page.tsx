@@ -250,7 +250,7 @@ export default function QnaPostPage() {
               type="button"
               onClick={handleSubmit}
               disabled={!isFormValid}
-              className={`w-full rounded-[10px] p-2 text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
+              className={`font-pretendard-semibold w-full rounded-[10px] p-2 text-base text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
             >
               작성완료
             </button>
