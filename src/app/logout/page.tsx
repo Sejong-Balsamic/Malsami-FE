@@ -3,37 +3,41 @@
 import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import logOut from "@/apis/auth/logOut";
-import { useToast } from "@/hooks/use-toast";
-import { ToastAction, ToastIcon } from "@/components/ui/toast";
+import { useDispatch } from "react-redux";
+import { addToast } from "@/store/toastSlice";
+import { store } from "@/store";
+import { ToastIcon, ToastAction } from "@/components/ui/toast";
 
 export default function MyPage() {
   const router = useRouter();
-  const { toast } = useToast();
+  const dispatch = useDispatch();
 
   const handleLogout = async () => {
     try {
       await logOut(); // 로그아웃 API 호출
-      toast({
-        icon: <ToastIcon color="orange" />,
-        title: "로그아웃 되었습니다.",
-        action: (
-          <ToastAction color="orange" altText="확인">
-            확인
-          </ToastAction>
-        ),
-      });
+      dispatch(
+        addToast({
+          id: Date.now().toString(),
+          icon:  <ToastIcon color="orange" />,
+          title: "로그아웃 되었습니다.",
+          action: <ToastAction color="orange" altText="확인">확인</ToastAction>, // 액션 전달
+          color: "orange",
+        })
+      );
       router.push("/"); // 성공적으로 로그아웃 시 랜딩페이지 이동
     } catch {
-      toast({
-        icon: <ToastIcon color="orange" />,
-        title: "로그아웃을 실패했습니다. 다시 시도해주세요.",
-        action: (
-          <ToastAction color="orange" altText="확인">
-            확인
-          </ToastAction>
-        ),
-      });    }
+      dispatch(
+        addToast({
+          id: Date.now().toString(),
+          icon: "orange",
+          title: "로그아웃 실패",
+          color: "orange",
+        })
+      );
+    }
   };
+
+  console.log(store.getState().toast);
 
   return (
     <div className="bg-gray-white">

@@ -17,6 +17,8 @@ import QnaPostJiJeongTagModal from "@/components/board/question/post/QnaPostJiJe
 import QnaPostSubjectModal from "@/components/board/question/post/QnaPostSubjectModal";
 import postNewQna from "@/apis/question/postNewQna";
 import QnaPostCustomTagsModal from "@/components/board/question/post/QnaPostCustomTagsModal";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction, ToastIcon } from "@/components/ui/toast";
 
 interface QnaPostFormData {
   title: string;
@@ -47,6 +49,7 @@ export default function QnaPostPage() {
   const [isJiJeongTagModalOpen, setIsJiJeongTagModalOpen] = useState(false);
   const [isCustomTagsModalOpen, setIsCustomTagsModalOpen] = useState(false);
   const mediaAllowedTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
+  const { toast } = useToast();
 
   // 로컬 스토리지에 저장하는 함수
   const saveToLocalStorage = () => {
@@ -165,34 +168,43 @@ export default function QnaPostPage() {
 
   // 폼 제출 핸들러
   const handleSubmit = async () => {
+    const showToast = (message: string) => {
+      toast({
+        title: message,
+        color: "blue",
+        action: <ToastAction color="blue" altText="확인">확인</ToastAction>,
+      });
+    };
+  
     // 제목에 공백만 입력된 경우 확인
     if (!formData.title.trim()) {
-      alert("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showToast("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     if (!formData.content.trim()) {
-      alert("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showToast("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     if (!subjects.includes(formData.subject)) {
-      alert("정확한 교과목명을 입력하세요.");
+      showToast("정확한 교과목명을 입력하세요.");
       return;
     }
-
+  
     if (isFormValid) {
       try {
         await postNewQna(formData); // API 호출
-        alert("Q&A 게시글이 성공적으로 등록되었습니다.");
         localStorage.removeItem("qnaPostFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
+        showToast("Q&A 게시글이 성공적으로 등록되었습니다.");
         window.location.href = "/board/question"; // 작성 완료 후 이동할 페이지로 변경
       } catch (error) {
         console.log("error", error);
-        alert("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+        showToast("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
       }
     } else {
-      alert("모든 필수 항목을 채워주세요.");
+      showToast("모든 필수 항목을 채워주세요.");
     }
   };
+  
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
