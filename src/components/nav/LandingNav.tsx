@@ -43,7 +43,7 @@ function Nav() {
         aria-label="랜딩페이지"
       >
         <Image src="/image/logo.png" alt="logo" width={40} height={20} />
-        <span className="font-pretendard-semibold text-md">세종말싸미</span>
+        <span className="font-pretendard-semibold text-xl">세종말싸미</span>
       </button>
 
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
@@ -65,8 +65,10 @@ function Nav() {
                   className="font-pretendard-bold flex h-[92px] w-full cursor-pointer items-center gap-4 bg-[#03b89e] py-[32px] pl-[30px] text-[20px] text-white"
                   onClick={() => handleNavigation("/login")}
                 >
-                  <Image src="/icons/My.svg" alt="Search" width={40} height={40} />
-                  로그인 후 이용해주세요.
+                  <span>로그인 후 이용해주세요</span>
+                  <div className="flex">
+                    <Image src="/icons/Move.svg" alt="Mypage" width={10} height={10} />
+                  </div>
                 </button>
               ) : (
                 <button
