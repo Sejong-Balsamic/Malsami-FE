@@ -33,15 +33,18 @@ function Nav() {
   };
 
   return (
-    <div className="fixed top-0 z-50 h-[64px] w-full max-w-[640px]">
+    <div className="fixed top-0 z-50 flex h-[64px] w-full max-w-[640px] items-center justify-start pl-4">
       <div className="absolute left-0 top-0 h-full w-full border-b bg-white" />
 
       <button
         type="button"
-        className="absolute bottom-[12px] left-[18px] h-[30px] w-[30px] border bg-[#ffffff]"
+        className="z-10 flex h-auto w-auto items-end gap-2 bg-[#ffffff]"
         onClick={() => handleNavigation("/")}
         aria-label="랜딩페이지"
-      />
+      >
+        <Image src="/image/logo.png" alt="logo" width={40} height={20} />
+        <span className="font-pretendard-semibold text-md">세종말싸미</span>
+      </button>
 
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
