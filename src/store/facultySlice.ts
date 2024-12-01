@@ -7,7 +7,7 @@ interface FacultyState {
 }
 
 const initialState: FacultyState = {
-  faculty: "대양휴머니티칼리지",
+  faculty: "전체",
 };
 
 const facultySlice = createSlice({

@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import getMyInfo from "@/apis/member/getMyInfo";
 import getAccessInfo from "@/apis/member/getAccessInfo";
 
 interface UserPermissions {
