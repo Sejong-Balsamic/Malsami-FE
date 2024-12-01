@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Toaster } from "@/components/ui/toaster";
 import Providers from "./providers"; // Redux Provider 컴포넌트
 import "./globals.css";
 
@@ -16,7 +17,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
       </head>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children} <Toaster />
+        </Providers>
       </body>
     </html>
   );

@@ -14,7 +14,7 @@ export default function LoginPage() {
         </h1>
 
         <div className="font-pretendard-medium mb-[50px] text-left text-sm text-[#737373]">
-          *세종대학교 포털의 학번과 비밀번호로 로그인해주세요.{" "}
+          *세종대학교 포털의 학번과 비밀번호로 로그인해주세요.
         </div>
         <LoginForm />
       </div>
