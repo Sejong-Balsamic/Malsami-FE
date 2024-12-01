@@ -3,18 +3,36 @@
 import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import logOut from "@/apis/auth/logOut";
+import { useToast } from "@/hooks/use-toast";
+import { ToastAction, ToastIcon } from "@/components/ui/toast";
 
 export default function MyPage() {
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleLogout = async () => {
     try {
       await logOut(); // 로그아웃 API 호출
-      alert("로그아웃에 성공하였습니다.");
+      toast({
+        icon: <ToastIcon color="orange" />,
+        title: "로그아웃 되었습니다.",
+        action: (
+          <ToastAction color="orange" altText="확인">
+            확인
+          </ToastAction>
+        ),
+      });
       router.push("/"); // 성공적으로 로그아웃 시 랜딩페이지 이동
     } catch {
-      alert("로그아웃에 실패했습니다. 다시 시도해주세요.");
-    }
+      toast({
+        icon: <ToastIcon color="orange" />,
+        title: "로그아웃을 실패했습니다. 다시 시도해주세요.",
+        action: (
+          <ToastAction color="orange" altText="확인">
+            확인
+          </ToastAction>
+        ),
+      });    }
   };
 
   return (
