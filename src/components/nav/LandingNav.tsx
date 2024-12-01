@@ -6,6 +6,7 @@ import Image from "next/image";
 import { MemberDto } from "@/types/member";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import getMyInfo from "@/apis/member/getMyInfo";
+import useLogout from "@/hooks/useLogout";
 import Hamburger from "../../../public/icons/Hamburger.svg";
 
 function Nav() {
@@ -13,6 +14,7 @@ function Nav() {
   const [isSheetOpen, setIsSheetOpen] = useState(false); // Sheet 열림 상태 관리
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [memberInfo, setMemberInfo] = useState<MemberDto | null>(null);
+  const handleLogout = useLogout();
 
   // accessToken 확인 및 사용자 정보 가져오기
   useEffect(() => {
@@ -126,7 +128,7 @@ function Nav() {
               <button
                 type="button"
                 className="font-pretendard-medium absolute bottom-0 flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[16px]"
-                onClick={() => handleNavigation("/logout")}
+                onClick={handleLogout}
               >
                 로그아웃
               </button>
