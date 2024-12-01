@@ -10,14 +10,47 @@ export const metadata: Metadata = {
     icon: "/images/logo.png", // 일반 아이콘
     apple: "/images/logo.png", // 애플 터치 아이콘 (iOS)
   },
+  openGraph: {
+    title: "세종말싸미",
+    description: "세종대학생을 위한 세종말싸미입니다.",
+    url: "https://test.sejong-malsami.co.kr/",
+    images: [
+      {
+        url: "/images/logo.png",
+        width: 1200,
+        height: 630,
+        alt: "세종말싸미 로고",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "세종말싸미",
+    description: "세종대학생을 위한 세종말싸미입니다.",
+    images: ["/images/logo.png"],
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
       <head>
-        {/* Meta 태그 추가 */}
+        {/* 기본 Meta 태그 */}
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+
+        {/* Open Graph 메타 태그 */}
+        <meta property="og:title" content="세종말싸미" />
+        <meta property="og:description" content="세종대학생을 위한 세종말싸미입니다." />
+        <meta property="og:image" content="/images/logo.png" />
+        <meta property="og:url" content="https://test.sejong-malsami.co.kr/" />
+        <meta property="og:type" content="website" />
+
+        {/* Twitter Card 메타 태그 */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="세종말싸미" />
+        <meta name="twitter:description" content="세종대학생을 위한 세종말싸미입니다." />
+        <meta name="twitter:image" content="/images/logo.png" />
       </head>
       <body>
         <Providers>
