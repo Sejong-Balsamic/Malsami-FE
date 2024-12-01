@@ -38,7 +38,7 @@ export default async function postNewDoc(data: DocPostFormData) {
   if (data.categoryTags && data.categoryTags.length > 0) {
     data.categoryTags.forEach(tag => {
       const englishTag = tagMapping[tag]; // 한국어 태그를 영어로 변환
-      if (englishTag) formData.append("documentTypeSet", englishTag);
+      if (englishTag) formData.append("documentTypes", englishTag);
     });
   }
 

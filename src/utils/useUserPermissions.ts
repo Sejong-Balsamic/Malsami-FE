@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import getMyInfo from "@/apis/member/getMyInfo";
+import getAccessInfo from "@/apis/member/getAccessInfo";
 
 interface UserPermissions {
   canAccessCheonmin: boolean;
@@ -23,34 +23,19 @@ export default function useUserPermissions() {
     const fetchPermissions = async () => {
       try {
         // API 호출
-        const userInfo = await getMyInfo();
-        const userYeopjeon = userInfo.yeopjeon.yeopjeon;
-        // yeopjeon 수에 따라 등급 설정
-        let userTier: string;
-
-        if (userYeopjeon <= 1000) {
-          userTier = "cheonmin";
-        } else if (userYeopjeon <= 10000) {
-          userTier = "jungin";
-        } else if (userYeopjeon <= 50000) {
-          userTier = "yangban";
-        } else {
-          userTier = "king";
-        }
+        const userInfo = await getAccessInfo();
 
         // 권한을 계급별로 설정
         const updatedPermissions: UserPermissions = {
-          canAccessCheonmin: true,
-          canAccessJungin: userTier === "jungin" || userTier === "yangban" || userTier === "king",
-          canAccessYangban: userTier === "yangban" || userTier === "king",
-          canAccessKing: userTier === "king",
+          canAccessCheonmin: userInfo.canAccessCheonmin,
+          canAccessJungin: userInfo.canAccessJungin,
+          canAccessYangban: userInfo.canAccessYangban,
+          canAccessKing: userInfo.canAccessKing,
         };
 
         setPermissions(updatedPermissions);
-        console.log("permission: ", permissions);
       } catch (error) {
         console.error("Failed to fetch user permissions:", error);
-        // 기본값 유지 또는 에러 처리
       }
     };
 

@@ -12,6 +12,9 @@ const config: Config = {
       fontFamily: {
         pretendard: ["Pretendard"],
       },
+      fontSynthesis: {
+        none: "none",
+      },
       colors: {
         "custom-blue": {
           "100": "#95E4DA",

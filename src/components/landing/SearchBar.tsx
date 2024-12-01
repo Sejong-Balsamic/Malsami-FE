@@ -6,11 +6,10 @@ import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 
 interface SearchBarProps {
-  searchVisible: boolean;
   userName: string;
 }
 
-function SearchBar({ searchVisible, userName }: SearchBarProps) {
+function SearchBar({ userName }: SearchBarProps) {
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const router = useRouter();
 
@@ -36,26 +35,18 @@ function SearchBar({ searchVisible, userName }: SearchBarProps) {
   };
 
   return (
-    <>
+    <div className="fixed top-[318px] flex w-full max-w-[600px] flex-col items-center gap-7 px-[20px]">
       {/* 검색 메인 텍스트 */}
-      <div
-        className={`duration-2700 fixed left-1/2 top-[318px] z-50 w-full max-w-[340px] -translate-x-1/2 transform transition-opacity ${
-          searchVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-        }`}
-      >
-        <span className="font-pretendard-bold text-xl leading-[11px] text-[#03B8A3]">{userName}</span>
-        <span className="font-pretendard-bold text-xl leading-[11px] text-black">
+      <div className="duration-2700 z-50 w-full transform leading-8 opacity-100 transition-opacity">
+        <span className="font-pretendard-bold text-xl text-[#03B8A3]">{userName}</span>
+        <span className="font-pretendard-bold text-xl">
           님, 환영해요!
           <br />
           학습 자료를 찾고, 업로드 해보세요!
         </span>
       </div>
       {/* 검색 입력창 */}
-      <div
-        className={`duration-2000 fixed left-1/2 top-[383px] z-50 w-full max-w-[340px] -translate-x-1/2 transform transition-opacity ${
-          searchVisible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
-        }`}
-      >
+      <div className="duration-2000 z-50 w-full transform opacity-100 transition-opacity">
         <div className="relative w-full">
           <Image
             src="/icons/SearchIcon.svg"
@@ -76,7 +67,7 @@ function SearchBar({ searchVisible, userName }: SearchBarProps) {
           />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 

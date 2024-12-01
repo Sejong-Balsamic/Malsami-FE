@@ -18,6 +18,24 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
   return (
     <div className="flex justify-between px-5 py-3">
       <div className="flex">
+        {filterOptions.sortOption && (
+          <JiJeongTag
+            key={filterOptions.sortOption}
+            label={filterOptions.sortOption}
+            style={{
+              backgroundColor: "#74D7CB",
+            }}
+          />
+        )}
+        {filterOptions.isChaeTaek && (
+          <JiJeongTag
+            key={filterOptions.isChaeTaek}
+            label={filterOptions.isChaeTaek}
+            style={{
+              backgroundColor: "#0062D2",
+            }}
+          />
+        )}
         {filterOptions.tags.length > 0 && filterOptions.tags.map(tag => <JiJeongTag key={tag} label={tag} />)}{" "}
       </div>
       <div className="flex items-center">

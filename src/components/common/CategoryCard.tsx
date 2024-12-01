@@ -49,8 +49,8 @@ function CategoryCard({
   commentCount,
 }: CategoryCardProps) {
   return (
-    <div>
-      <div className="m-3 flex h-[166px] w-[166px] flex-col">
+    <div className="flex items-center justify-center">
+      <div className="m-3 flex h-[166px] w-full flex-col">
         {/* 상단 학과 제목 영역 */}
         <div className="flex h-[52px] items-end rounded-t-[20px] px-3.5 pb-2 pt-2" style={{ backgroundColor: color }}>
           <span className="font-pretendard-semibold line-clamp-2 text-sm leading-tight text-white">{subject}</span>
