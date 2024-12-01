@@ -23,7 +23,7 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
             key={filterOptions.sortOption}
             label={filterOptions.sortOption}
             style={{
-              backgroundColor: "#AAE483",
+              backgroundColor: "#74D7CB",
             }}
           />
         )}
