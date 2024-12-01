@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        pretendard: ["Pretendard"],
+        pretendard: ["Pretendard", "Apple SD Gothic Neo", "Roboto", "Arial", "sans-serif"], // 대체 폰트 포함
       },
       fontSynthesis: {
         none: "none",
