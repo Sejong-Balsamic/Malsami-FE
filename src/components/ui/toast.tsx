@@ -72,29 +72,27 @@ const ToastAction = React.forwardRef<
 });
 ToastAction.displayName = ToastPrimitives.Action.displayName;
 
-const ToastIcon = React.forwardRef<
-  HTMLDivElement,
-  { color?: "orange" | "blue" | "green"; className?: string }
->(({ color = "blue", className }, ref) => {
-  // 아이콘 경로 매핑
-  const iconMapping = {
-    orange: "/icons/book/Book_Orange.svg",
-    blue: "/icons/book/Book_Blue.svg",
-    green: "/icons/book/Book_Green.svg",
-  };
+const ToastIcon = React.forwardRef<HTMLDivElement, { color?: "orange" | "blue" | "green"; className?: string }>(
+  ({ color = "blue", className }, ref) => {
+    // 아이콘 경로 매핑
+    const iconMapping = {
+      orange: "/icons/book/Book_Orange.svg",
+      blue: "/icons/book/Book_Blue.svg",
+      green: "/icons/book/Book_Green.svg",
+    };
 
-  return (
-    <div ref={ref} className={cn("flex items-center justify-center", className)}>
-      <img
-        src={iconMapping[color]} // color에 따라 동적으로 선택
-        alt={`${color} book icon`}
-        className="h-[27px] w-[22px]"
-      />
-    </div>
-  );
-});
+    return (
+      <div ref={ref} className={cn("flex items-center justify-center", className)}>
+        <img
+          src={iconMapping[color]} // color에 따라 동적으로 선택
+          alt={`${color} book icon`}
+          className="h-[27px] w-[22px]"
+        />
+      </div>
+    );
+  },
+);
 ToastIcon.displayName = "ToastIcon";
-
 
 const ToastClose = React.forwardRef<
   React.ElementRef<typeof ToastPrimitives.Close>,

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
+import { Toaster } from "@/components/ui/toaster";
 import Providers from "./providers"; // Redux Provider 컴포넌트
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {
   title: "세종말싸미",

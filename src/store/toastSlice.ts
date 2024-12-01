@@ -2,13 +2,13 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Toast 타입 정의
 interface Toast {
-    id: string;
-    title: string;
-    description?: string;
-    icon?: React.ReactNode;
-    action?: React.ReactNode;
-    color?: "blue" | "green" | "orange";
-  }
+  id: string;
+  title: string;
+  description?: string;
+  icon?: React.ReactNode;
+  action?: React.ReactNode;
+  color?: "blue" | "green" | "orange";
+}
 
 // Slice 상태 타입 정의
 interface ToastState {
@@ -29,6 +29,7 @@ const toastSlice = createSlice({
       state.toasts.push(action.payload);
     },
     removeToast: (state, action: PayloadAction<string>) => {
+      /* eslint-disable no-param-reassign */
       state.toasts = state.toasts.filter(toast => toast.id !== action.payload);
     },
   },
