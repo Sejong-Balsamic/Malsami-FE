@@ -15,6 +15,7 @@ export default function SearchDocContainer({ docResults }: SearchDocContainerPro
       {docResults.length > 0 ? (
         docResults.map((card: DocCardProps) => (
           <div
+            key={card.documentPostId}
             onClick={() => router.push(`/board/document/detail/${card.documentPostId}`)}
             onKeyDown={e => {
               if (e.key === "Enter" || e.key === " ") {
