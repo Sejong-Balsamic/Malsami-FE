@@ -6,6 +6,7 @@ import Image from "next/image";
 import { MemberDto } from "@/types/member";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import getMyInfo from "@/apis/member/getMyInfo";
+import useLogout from "@/hooks/useLogout";
 import Hamburger from "../../../public/icons/Hamburger.svg";
 
 function Nav() {
@@ -13,6 +14,7 @@ function Nav() {
   const [isSheetOpen, setIsSheetOpen] = useState(false); // Sheet 열림 상태 관리
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [memberInfo, setMemberInfo] = useState<MemberDto | null>(null);
+  const handleLogout = useLogout();
 
   // accessToken 확인 및 사용자 정보 가져오기
   useEffect(() => {
@@ -31,15 +33,18 @@ function Nav() {
   };
 
   return (
-    <div className="fixed top-0 z-50 h-[64px] w-full max-w-[640px]">
+    <div className="fixed top-0 z-50 flex h-[64px] w-full max-w-[640px] items-center justify-start pl-4">
       <div className="absolute left-0 top-0 h-full w-full border-b bg-white" />
 
       <button
         type="button"
-        className="absolute bottom-[12px] left-[18px] h-[30px] w-[30px] border bg-[#ffffff]"
+        className="z-10 flex h-auto w-auto items-center gap-2 bg-[#ffffff]"
         onClick={() => handleNavigation("/")}
         aria-label="랜딩페이지"
-      />
+      >
+        <Image src="/image/logo.png" alt="logo" width={40} height={20} />
+        <span className="font-pretendard-semibold text-xl">세종말싸미</span>
+      </button>
 
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
         <SheetTrigger asChild>
@@ -60,8 +65,10 @@ function Nav() {
                   className="font-pretendard-bold flex h-[92px] w-full cursor-pointer items-center gap-4 bg-[#03b89e] py-[32px] pl-[30px] text-[20px] text-white"
                   onClick={() => handleNavigation("/login")}
                 >
-                  <Image src="/icons/My.svg" alt="Search" width={40} height={40} />
-                  로그인 후 이용해주세요.
+                  <span>로그인 후 이용해주세요</span>
+                  <div className="flex">
+                    <Image src="/icons/Move.svg" alt="Mypage" width={10} height={10} />
+                  </div>
                 </button>
               ) : (
                 <button
@@ -126,7 +133,7 @@ function Nav() {
               <button
                 type="button"
                 className="font-pretendard-medium absolute bottom-0 flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[16px]"
-                onClick={() => handleNavigation("/logout")}
+                onClick={handleLogout}
               >
                 로그아웃
               </button>

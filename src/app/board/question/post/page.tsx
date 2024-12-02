@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import QnaPostNav from "@/components/nav/QnaPostNav";
 import subjects from "@/lib/subjects";
@@ -17,6 +18,9 @@ import QnaPostJiJeongTagModal from "@/components/board/question/post/QnaPostJiJe
 import QnaPostSubjectModal from "@/components/board/question/post/QnaPostSubjectModal";
 import postNewQna from "@/apis/question/postNewQna";
 import QnaPostCustomTagsModal from "@/components/board/question/post/QnaPostCustomTagsModal";
+import { useDispatch } from "react-redux";
+import { addToast } from "@/store/toastSlice"; // Toast 액션 가져오기
+import { ToastIcon, ToastAction } from "@/components/ui/toast";
 
 interface QnaPostFormData {
   title: string;
@@ -30,6 +34,8 @@ interface QnaPostFormData {
 }
 
 export default function QnaPostPage() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState<QnaPostFormData>({
     title: "",
     content: "",
@@ -47,17 +53,35 @@ export default function QnaPostPage() {
   const [isJiJeongTagModalOpen, setIsJiJeongTagModalOpen] = useState(false);
   const [isCustomTagsModalOpen, setIsCustomTagsModalOpen] = useState(false);
   const mediaAllowedTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
+  const dispatch = useDispatch();
+
+  const showToast = (message: string) => {
+    dispatch(
+      addToast({
+        id: Date.now().toString(),
+        icon: <ToastIcon color="blue" />,
+        title: message,
+        color: "blue",
+        action: (
+          <ToastAction color="blue" altText="확인">
+            확인
+          </ToastAction>
+        ),
+      }),
+    );
+  };
 
   // 로컬 스토리지에 저장하는 함수
   const saveToLocalStorage = () => {
     localStorage.setItem("qnaPostFormData", JSON.stringify(formData));
-    alert("임시저장 되었습니다!");
+    showToast("임시저장 되었습니다!");
   };
   // 로컬 스토리지에서 데이터를 불러오는 함수
   const loadFromLocalStorage = () => {
     const savedData = localStorage.getItem("qnaPostFormData");
     if (savedData) {
       setFormData(JSON.parse(savedData));
+      showToast("임시저장 데이터를 불러왔습니다.");
     }
   };
   // 컴포넌트가 로드될 때 로컬 스토리지 데이터를 불러오기
@@ -138,11 +162,11 @@ export default function QnaPostPage() {
       const filteredFiles = filesArray.filter(file => mediaAllowedTypes.includes(file.type));
 
       if (filteredFiles.length !== filesArray.length) {
-        alert("JPEG,JPG,PNG,WEBP 형식의 파일만 업로드할 수 있습니다.");
+        showToast("JPEG,JPG,PNG,WEBP 형식의 파일만 업로드할 수 있습니다.");
         e.target.value = ""; // 선택한 파일 무효화(올바르지 않은 파일 형식일 경우)
       } else if (formData.mediaFiles.length + filteredFiles.length > 10) {
         // 최대 10개 파일 업로드 가능
-        alert("최대 10개의 파일만 업로드할 수 있습니다.");
+        showToast("최대 10개의 파일만 업로드할 수 있습니다.");
         e.target.value = ""; // 선택한 파일 무효화
       } else {
         setFormData(prevFormData => ({
@@ -167,30 +191,30 @@ export default function QnaPostPage() {
   const handleSubmit = async () => {
     // 제목에 공백만 입력된 경우 확인
     if (!formData.title.trim()) {
-      alert("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showToast("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     if (!formData.content.trim()) {
-      alert("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showToast("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     if (!subjects.includes(formData.subject)) {
-      alert("정확한 교과목명을 입력하세요.");
+      showToast("정확한 교과목명을 입력하세요.");
       return;
     }
 
     if (isFormValid) {
       try {
         await postNewQna(formData); // API 호출
-        alert("Q&A 게시글이 성공적으로 등록되었습니다.");
         localStorage.removeItem("qnaPostFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
-        window.location.href = "/board/question"; // 작성 완료 후 이동할 페이지로 변경
+        showToast("Q&A 게시글이 성공적으로 등록되었습니다.");
+        router.push("/board/question");
       } catch (error) {
         console.log("error", error);
-        alert("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+        showToast("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
       }
     } else {
-      alert("모든 필수 항목을 채워주세요.");
+      showToast("모든 필수 항목을 채워주세요.");
     }
   };
 

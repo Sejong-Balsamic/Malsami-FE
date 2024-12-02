@@ -10,7 +10,7 @@ const config: Config = {
   theme: {
     extend: {
       fontFamily: {
-        pretendard: ["Pretendard"],
+        pretendard: ["Pretendard", "Apple SD Gothic Neo", "Roboto", "Arial", "sans-serif"], // 대체 폰트 포함
       },
       fontSynthesis: {
         none: "none",
@@ -112,6 +112,9 @@ const config: Config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+      },
+      backgroundImage: {
+        "toast-bg": "url('/image/ToastBG.png')",
       },
     },
   },
