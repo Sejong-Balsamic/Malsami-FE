@@ -6,9 +6,10 @@ import { useRouter } from "next/navigation";
 
 interface SearchDocContainerProps {
   docResults: DocCardProps[];
+  searchValue: string;
 }
 
-export default function SearchDocContainer({ docResults }: SearchDocContainerProps) {
+export default function SearchDocContainer({ docResults, searchValue }: SearchDocContainerProps) {
   const router = useRouter();
   return (
     <div className="p-5">
@@ -41,7 +42,9 @@ export default function SearchDocContainer({ docResults }: SearchDocContainerPro
           </div>
         ))
       ) : (
-        <p className="text-center text-gray-500">결과가 없습니다.</p>
+        <p className="font-pretendard-medium text-center text-gray-500">
+          <span className="font-pretendard-bold">{searchValue}</span> 에 대한 결과가 없습니다.
+        </p>
       )}
     </div>
   );
