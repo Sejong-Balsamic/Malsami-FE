@@ -87,13 +87,9 @@ export default function SearchResultPage() {
         />
         {/* 검색 결과 컴포넌트 렌더링 */}
         <div className="p-4">
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : activeTab === "자료게시판" ? (
-            <SearchDocContainer docResults={docResults} />
-          ) : (
-            <SearchQnaContainer qnaResults={qnaResults} />
-          )}
+          {isLoading && <LoadingSpinner />}
+          {!isLoading && activeTab === "자료게시판" && <SearchDocContainer docResults={docResults} />}
+          {!isLoading && activeTab === "질문게시판" && <SearchQnaContainer qnaResults={qnaResults} />}
         </div>
       </div>
     </div>

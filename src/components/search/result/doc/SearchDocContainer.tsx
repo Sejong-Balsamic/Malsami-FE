@@ -15,6 +15,8 @@ export default function SearchDocContainer({ docResults }: SearchDocContainerPro
       {docResults.length > 0 ? (
         docResults.map((card: DocCardProps) => (
           <div
+            role="button"
+            tabIndex={0} // 키보드 포커스 가능하도록 추가
             key={card.documentPostId}
             onClick={() => router.push(`/board/document/detail/${card.documentPostId}`)}
             onKeyDown={e => {

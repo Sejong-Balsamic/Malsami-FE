@@ -34,12 +34,13 @@ export default function DocCard({
   };
   return (
     <div
+      tabIndex={0}
+      role="button"
       className="mb-3 flex cursor-pointer flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]"
-      onClick={() => {
-        if (documentPostId) {
-          handleCardClick(documentPostId);
-        } else {
-          console.error("Invalid or undefined postId:", document);
+      onClick={() => handleCardClick(documentPostId || "")}
+      onKeyDown={e => {
+        if (e.key === "Enter" || e.key === " ") {
+          handleCardClick(documentPostId || "");
         }
       }}
     >
