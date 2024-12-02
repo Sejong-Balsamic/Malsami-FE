@@ -13,9 +13,8 @@ export default function DocRequestContent() {
     const fetchDocRequestItems = async () => {
       try {
         const response = await getDocRequest(); // API 호출
-        console.log("asdf: ", response);
         const data = response.map((item: any) => ({
-          postId: item.documentPostId,
+          postId: item.documentRequestPostId,
           subject: item.subject || "과목명",
           title: item.title || "타이틀",
         }));

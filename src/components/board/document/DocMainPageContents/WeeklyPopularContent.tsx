@@ -15,6 +15,7 @@ export default function WeeklyPopularContent() {
         const data = response
           .slice(0, 5) // 첫 5개 데이터만 선택
           .map((item: any, index: number) => ({
+            postId: item.documentPostId,
             rank: index + 1,
             subject: item.subject || "과목명",
             title: item.title || "타이틀",

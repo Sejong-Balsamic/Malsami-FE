@@ -19,7 +19,7 @@ function SearchBoardTab({
           }`}
           onClick={() => onTabChange("자료게시판")}
         >
-          자료게시판
+          자료 게시판
         </button>
         {/* 질문게시판 탭 */}
         <button
@@ -31,7 +31,7 @@ function SearchBoardTab({
           }`}
           onClick={() => onTabChange("질문게시판")}
         >
-          질문게시판
+          질문 게시판
         </button>
       </div>
     </div>

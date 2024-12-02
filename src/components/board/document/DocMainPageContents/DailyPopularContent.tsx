@@ -13,6 +13,7 @@ export default function DailyPopularContent() {
       try {
         const response = await getDocDailyPopulars(); // API 호출
         const data = response.slice(0, 5).map((item: any, index: number) => ({
+          postId: item.documentPostId,
           rank: index + 1,
           subject: item.subject || "과목명",
           title: item.title || "타이틀",
