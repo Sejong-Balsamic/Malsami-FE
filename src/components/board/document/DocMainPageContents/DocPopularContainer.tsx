@@ -66,21 +66,37 @@
 
 /* eslint-disable */
 
-interface PopularItem {
-  rank: number;
-  subject: string;
-  title: string;
-}
+import { PopularItem } from "@/types/DocPopularItem.type";
+import { useRouter } from "next/navigation";
 
 interface DocPopularContainerProps {
   allPopularItems: PopularItem[];
 }
 
 export default function DocPopularContainer({ allPopularItems }: DocPopularContainerProps) {
+  const router = useRouter();
+  const handleCardClick = (postId: string) => {
+    if (!postId) {
+      console.error("Invalid postId:", postId);
+      return;
+    }
+    console.log("Clicked card postId:", postId);
+    router.push(`/board/document/detail/${postId}`);
+  };
   return (
     <div className="w-full overflow-hidden rounded-[14px] px-4 pb-1 pt-5 shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]">
       {allPopularItems.map(item => (
-        <div key={item.rank} className="mb-4 flex items-center text-sm">
+        <div
+          key={item.rank}
+          className="mb-4 flex cursor-pointer items-center text-sm"
+          onClick={() => {
+            if (item.postId) {
+              handleCardClick(item.postId);
+            } else {
+              console.error("Invalid or undefined postId:", item.postId);
+            }
+          }}
+        >
           {/* 순위 */}
           <span className="font-pretendard-bold mr-2 flex items-center text-custom-blue-500">
             <span className="block w-2">{item.rank}</span>

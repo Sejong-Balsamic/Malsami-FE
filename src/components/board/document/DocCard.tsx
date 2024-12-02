@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import getDateDiff from "@/utils/getDateDiff";
 import { DocCardProps } from "@/types/docCard.type";
 import ImageWrapper from "../tags/ImageWrapper";
@@ -13,6 +14,7 @@ const tagTranslations: { [key: string]: string } = {
 
 export default function DocCard({
   subject,
+  documentPostId,
   title,
   content,
   documentTypes,
@@ -21,8 +23,26 @@ export default function DocCard({
   viewCount,
   likeCount,
 }: DocCardProps) {
+  const router = useRouter();
+  const handleCardClick = (postId: string) => {
+    if (!postId) {
+      console.error("Invalid postId:", postId);
+      return;
+    }
+    console.log("Clicked card postId:", postId);
+    router.push(`/board/document/detail/${postId}`);
+  };
   return (
-    <div className="mb-3 flex flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]">
+    <div
+      className="mb-3 flex cursor-pointer flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]"
+      onClick={() => {
+        if (documentPostId) {
+          handleCardClick(documentPostId);
+        } else {
+          console.error("Invalid or undefined postId:", document);
+        }
+      }}
+    >
       <SubjectTag subject={subject} />
       <div className="flex flex-row items-center justify-between">
         {/* 왼쪽 텍스트 콘텐츠 */}
