@@ -13,7 +13,7 @@ export default async function getSearchResult({ params }: { params: string }) {
       },
     });
 
-    return response;
+    return response.data;
   } catch (error) {
     console.error("회원 정보 가져오기 실패:", error);
     throw error;
