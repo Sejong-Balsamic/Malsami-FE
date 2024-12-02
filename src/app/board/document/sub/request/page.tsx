@@ -6,12 +6,12 @@ import { DocFilterOptions } from "@/types/DocFilterOptions";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import DocRequestFilterControlBar from "@/components/board/document/DocRequestFilterControlBar";
 import getRequestDocs from "@/apis/document/getRequestDocs";
-import { DocCardProps } from "@/types/docCard.type";
+import { DocRequestCardProps } from "@/types/DocRequestCardProps";
 import DocCard from "@/components/board/document/DocCard";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function DocRequestPage() {
-  const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장
+  const [docCards, setDocCards] = useState<DocRequestCardProps[]>([]); // API 결과값 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const [filterOptions, setFilterOptions] = useState<DocFilterOptions>({
     tags: [],
@@ -60,10 +60,10 @@ export default function DocRequestPage() {
           {isLoading ? (
             <LoadingSpinner />
           ) : (
-            docCards.map((card: DocCardProps) => (
+            docCards.map((card: DocRequestCardProps) => (
               <DocCard
-                key={card.documentPostId}
-                documentPostId={card.documentPostId}
+                key={card.documentRequestPostId}
+                documentPostId={card.documentRequestPostId}
                 subject={card.subject || "과목명"}
                 title={card.title || "타이틀"}
                 content={card.content || "내용이 없습니다."}

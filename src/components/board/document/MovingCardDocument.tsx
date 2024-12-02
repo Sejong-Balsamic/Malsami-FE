@@ -66,7 +66,6 @@ function MovingCardDocument({ data = [] }: MovingCardQuestionProps) {
               <div
                 onClick={() => {
                   if (document.postId) {
-                    console.log("Valid postId:", document.postId);
                     handleCardClick(document.postId);
                   } else {
                     console.error("Invalid or undefined postId:", document);

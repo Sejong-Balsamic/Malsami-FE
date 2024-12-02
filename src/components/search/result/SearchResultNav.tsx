@@ -13,7 +13,7 @@ function SearchResultNav({ searchValue, onSearchChange, onBack, onClear, onSearc
   return (
     <div className="flex items-center justify-between border-b-[2px] border-b-[#EAEAEA] bg-white px-5 py-3">
       {/* 뒤로가기 버튼 */}
-      <button type="button" onClick={onBack}>
+      <button type="button" onClick={onBack} className="cursor-pointer">
         <Image src="/icons/BackIcon.svg" alt="뒤로가기" width={10} height={20} />
       </button>
 
@@ -25,6 +25,7 @@ function SearchResultNav({ searchValue, onSearchChange, onBack, onClear, onSearc
           width={20}
           height={20}
           onClick={onSearch} // 돋보기 버튼 클릭 시 API 호출
+          className="cursor-pointer"
         />
         <input
           type="text"
