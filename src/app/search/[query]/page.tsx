@@ -23,6 +23,7 @@ export default function SearchResultPage() {
   const activeTab = useSelector((state: RootState) => state.activeTab.activeTab); // Get activeTab from Redux
   const [searchValue, setSearchValue] = useState(initialQuery || ""); // 현재 검색어 상태
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
+  const [executedSearchValue, setExecutedSearchValue] = useState(initialQuery || ""); // 실행된 검색어
   const [docResults, setDocResults] = useState<DocCardProps[]>([]); // 자료 결과 저장
   const [qnaResults, setQnaResults] = useState<QnaCard[]>([]); // 질문 결과 저장
 
@@ -46,6 +47,7 @@ export default function SearchResultPage() {
   const handleSearch = () => {
     if (!searchValue.trim()) return;
 
+    setExecutedSearchValue(searchValue); // 실행된 검색어 업데이트
     const updatedQuery = `?query=${encodeURIComponent(searchValue.trim())}`;
     router.push(`/search/result${updatedQuery}`); // URL 업데이트
     fetchSearchResults(searchValue); // API 호출
@@ -65,6 +67,7 @@ export default function SearchResultPage() {
   useEffect(() => {
     const query = searchParams.get("query") || "";
     setSearchValue(query); // 검색어 상태 업데이트
+    setExecutedSearchValue(query); // 실행된 검색어도 업데이트
     fetchSearchResults(query); // API 호출
   }, [searchParams]); // searchParams가 변경될 때마다 실행
 
@@ -88,8 +91,12 @@ export default function SearchResultPage() {
         {/* 검색 결과 컴포넌트 렌더링 */}
         <div className="p-4">
           {isLoading && <LoadingSpinner />}
-          {!isLoading && activeTab === "자료게시판" && <SearchDocContainer docResults={docResults} />}
-          {!isLoading && activeTab === "질문게시판" && <SearchQnaContainer qnaResults={qnaResults} />}
+          {!isLoading && activeTab === "자료게시판" && (
+            <SearchDocContainer docResults={docResults} searchValue={executedSearchValue} />
+          )}
+          {!isLoading && activeTab === "질문게시판" && (
+            <SearchQnaContainer qnaResults={qnaResults} searchValue={executedSearchValue} />
+          )}
         </div>
       </div>
     </div>
