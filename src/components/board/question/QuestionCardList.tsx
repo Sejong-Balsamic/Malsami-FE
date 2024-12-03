@@ -32,9 +32,9 @@ export default function QuestionCardList({ categoryQNAs }: QnaCardListProps) {
             createdDate={question.createdDate}
             viewCount={question.viewCount}
             likeCount={question.likeCount}
-            answerCount={question.answerCount}
             rewardYeopjeon={question.rewardYeopjeon}
             chaetaekStatus={question.chaetaekStatus}
+            subject={question.subject}
           />
         </div>
       ))}
