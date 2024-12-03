@@ -27,7 +27,7 @@ function HotQuestion() {
   }, []);
 
   return (
-    <Tabs defaultValue="weekend" className="z-40 h-[400px] w-[400px]">
+    <Tabs defaultValue="weekend" className="z-40 h-auto w-full">
       <div className="flex justify-center">
         <TabsList className="grid w-[96px] grid-cols-2">
           <TabsTrigger value="weekend" className="font-pretendard-medium text-[14px] text-[#aaaaaa]">
@@ -52,8 +52,8 @@ function HotQuestion() {
             <MovingCardQuestion data={weekData} />
           </CardContent>
           <CardFooter>
-            <Link href="/board/question" passHref>
-              <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
+            <Link href="/board/question" passHref className="mx-3 w-full">
+              <Button className="font-pretendard-semibold h-[30px] w-full rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
                 더보기
               </Button>
             </Link>
@@ -70,12 +70,12 @@ function HotQuestion() {
               세종말싸미에서 오늘의 인기질문을 만나보세요.
             </CardDescription>
           </CardHeader>
-          <CardContent className="space-y-2">
+          <CardContent className="flex justify-center space-y-2">
             <MovingCardQuestion data={dayData} />
           </CardContent>
           <CardFooter>
-            <Link href="/board/question" passHref>
-              <Button className="font-pretendard-semibold h-[30px] w-[340px] max-w-[376px] rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
+            <Link href="/board/question" passHref className="mx-3 w-full">
+              <Button className="font-pretendard-semibold h-[30px] w-full rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
                 더보기
               </Button>
             </Link>

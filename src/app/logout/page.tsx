@@ -3,17 +3,37 @@
 import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import logOut from "@/apis/auth/logOut";
+import { useDispatch } from "react-redux";
+import { addToast } from "@/store/toastSlice";
+import { ToastIcon, ToastAction } from "@/components/ui/toast";
 
 export default function MyPage() {
   const router = useRouter();
+  const dispatch = useDispatch();
+
+  const showToast = (message: string) => {
+    dispatch(
+      addToast({
+        id: Date.now().toString(),
+        icon: <ToastIcon color="orange" />,
+        title: message,
+        color: "orange",
+        action: (
+          <ToastAction color="orange" altText="확인">
+            확인
+          </ToastAction>
+        ),
+      }),
+    );
+  };
 
   const handleLogout = async () => {
     try {
       await logOut(); // 로그아웃 API 호출
-      alert("로그아웃에 성공하였습니다.");
+      showToast("로그아웃 되었습니다.");
       router.push("/"); // 성공적으로 로그아웃 시 랜딩페이지 이동
     } catch {
-      alert("로그아웃에 실패했습니다. 다시 시도해주세요.");
+      showToast("로그아웃을 실패했습니다. 다시 시도해주세요.");
     }
   };
 

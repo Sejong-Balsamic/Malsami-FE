@@ -27,7 +27,7 @@ interface JiJeongTagProps {
 function JiJeongTag({ label, style }: JiJeongTagProps) {
   return (
     <span
-      className="font-pretendard-medium mr-1 inline-block rounded-[33px] bg-custom-blue-500 px-2 py-[3px] text-xs text-white"
+      className="font-pretendard-medium mr-1 inline-block rounded-[33px] bg-custom-blue-500 px-3 py-1 text-xs text-white"
       style={style} // 전달받은 style 적용
     >
       {label}
