@@ -60,24 +60,27 @@ export default function DocCard({
             <div className="flex flex-wrap items-center">
               <span className="flex items-center">
                 <ImageWrapper src="/icons/LikeIcon.svg" />
-                <span className="ml-1 text-xs">{likeCount}</span>
+                <span className="ml-1 text-xs">{likeCount > 999 ? "999+" : likeCount}</span>
               </span>
               <span className="mx-1.5">·</span>
-              <span>조회수 {viewCount > 999 ? "999+" : viewCount}</span>
+              <ImageWrapper src="/icons/ViewCountIcon.svg" />
+              <span className="ml-1">{viewCount > 999 ? "999+" : viewCount}</span>
               <span className="mx-1.5">·</span>
               <span>{getDateDiff(createdDate)}</span>
             </div>
           </div>
         </div>
         {/* 썸네일 */}
-        <Image
-          src={thumbnailUrl || "/image/PartyPopper.jpg"} // 이미지 썸네일 경로로 나중에 바꿔야 함
-          alt="썸네일"
-          width={74}
-          height={74}
-          className="ml-4 rounded-sm border"
-          style={{ maxWidth: "74px", maxHeight: "74px", width: "auto", height: "auto" }}
-        />
+        {thumbnailUrl && (
+          <Image
+            src={thumbnailUrl}
+            alt="썸네일"
+            width={74}
+            height={74}
+            className="ml-3 rounded-sm border"
+            style={{ maxWidth: "74px", maxHeight: "74px", width: "auto", height: "auto" }}
+          />
+        )}
       </div>
     </div>
   );
