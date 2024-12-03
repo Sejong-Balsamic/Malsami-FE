@@ -1,8 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import SearchDocCard from "./SearchDocCard";
 import { DocCardProps } from "@/types/docCard.type";
+import SearchDocCard from "./SearchDocCard";
 
 interface SearchDocContainerProps {
   docResults: DocCardProps[];
