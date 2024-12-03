@@ -1,8 +1,8 @@
 "use client";
 
-import DocCard from "@/components/board/document/DocCard";
-import { DocCardProps } from "@/types/docCard.type";
 import { useRouter } from "next/navigation";
+import SearchDocCard from "./SearchDocCard";
+import { DocCardProps } from "@/types/docCard.type";
 
 interface SearchDocContainerProps {
   docResults: DocCardProps[];
@@ -27,7 +27,7 @@ export default function SearchDocContainer({ docResults, searchValue }: SearchDo
             }} // 키보드 이벤트 추가
             className="cursor-pointer"
           >
-            <DocCard
+            <SearchDocCard
               key={card.documentPostId}
               documentPostId={card.documentPostId}
               subject={card.subject || "과목명"}
@@ -38,6 +38,7 @@ export default function SearchDocContainer({ docResults, searchValue }: SearchDo
               thumbnailUrl={card.thumbnailUrl || ""}
               viewCount={card.viewCount || 0}
               likeCount={card.likeCount || 0}
+              postTier={card.postTier}
             />
           </div>
         ))

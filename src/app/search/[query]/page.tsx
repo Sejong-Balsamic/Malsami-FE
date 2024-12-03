@@ -89,15 +89,13 @@ export default function SearchResultPage() {
           onTabChange={(tab: "자료게시판" | "질문게시판") => dispatch(setActiveTab(tab))}
         />
         {/* 검색 결과 컴포넌트 렌더링 */}
-        <div className="p-4">
-          {isLoading && <LoadingSpinner />}
-          {!isLoading && activeTab === "자료게시판" && (
-            <SearchDocContainer docResults={docResults} searchValue={executedSearchValue} />
-          )}
-          {!isLoading && activeTab === "질문게시판" && (
-            <SearchQnaContainer qnaResults={qnaResults} searchValue={executedSearchValue} />
-          )}
-        </div>
+        {isLoading && <LoadingSpinner />}
+        {!isLoading && activeTab === "자료게시판" && (
+          <SearchDocContainer docResults={docResults} searchValue={executedSearchValue} />
+        )}
+        {!isLoading && activeTab === "질문게시판" && (
+          <SearchQnaContainer qnaResults={qnaResults} searchValue={executedSearchValue} />
+        )}
       </div>
     </div>
   );
