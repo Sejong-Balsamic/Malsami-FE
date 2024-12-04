@@ -15,19 +15,42 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  // 태그 삭제 핸들러
+  const handleRemoveTag = (tagToRemove: string) => {
+    const updatedTags = filterOptions.tags.filter(tag => tag !== tagToRemove);
+    onFilterChange({ ...filterOptions, tags: updatedTags });
+  };
+
+  const handleRemoveSortOption = () => {
+    onFilterChange({ ...filterOptions, sortOption: "" });
+  };
+
   return (
     <div className="flex justify-between px-5 py-3">
-      <div className="flex">
+      <div className="flex overflow-x-auto scrollbar-hide">
         {filterOptions.sortOption && (
           <JiJeongTag
             key={filterOptions.sortOption}
-            label={filterOptions.sortOption}
+            label={`${filterOptions.sortOption} ×`}
+            onClick={handleRemoveSortOption}
             style={{
               backgroundColor: "#74D7CB",
+              cursor: "pointer",
             }}
           />
         )}
-        {filterOptions.tags.length > 0 && filterOptions.tags.map(tag => <JiJeongTag key={tag} label={tag} />)}{" "}
+        {filterOptions.tags.length > 0 &&
+          filterOptions.tags.map(tag => (
+            <JiJeongTag
+              key={tag}
+              label={`${tag} ×`}
+              onClick={() => handleRemoveTag(tag)}
+              style={{
+                backgroundColor: "#0062D2",
+                cursor: "pointer",
+              }}
+            />
+          ))}
       </div>
       <div className="flex items-center">
         <Image

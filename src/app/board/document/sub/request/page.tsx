@@ -21,7 +21,6 @@ export default function DocRequestPage() {
 
   const handleFilterChange = (newFilterOptions: DocFilterOptions) => {
     setFilterOptions(newFilterOptions);
-    sessionStorage.setItem("DocfilterOptions", JSON.stringify(newFilterOptions)); // 스토리지에 저장
   };
 
   const fetchDocs = async () => {

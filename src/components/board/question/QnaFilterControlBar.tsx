@@ -17,7 +17,8 @@
 
 //   return (
 //     <div className="flex justify-between px-5 py-3">
-//       <div className="flex">
+//       {/* <div className="flex flex-wrap justify-start"> */}
+//       <div className="scrollbar-hide flex overflow-x-auto whitespace-nowrap">
 //         {filterOptions.sortOption && (
 //           <JiJeongTag
 //             key={filterOptions.sortOption}
@@ -38,6 +39,8 @@
 //         )}
 //         {filterOptions.tags.length > 0 && filterOptions.tags.map(tag => <JiJeongTag key={tag} label={tag} />)}{" "}
 //       </div>
+//       {/* </div> */}
+
 //       <div className="flex items-center">
 //         <Image
 //           src="/icons/FilterIcon.svg"
@@ -45,7 +48,7 @@
 //           width={16}
 //           height={16}
 //           onClick={openModal}
-//           style={{ cursor: "pointer" }}
+//           className="ml-1.5 cursor-pointer"
 //         />
 //       </div>
 //       {isModalOpen && (
@@ -81,31 +84,59 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  // 태그 삭제 처리
+  const handleRemoveTag = (tag: string) => {
+    const newTags = filterOptions.tags.filter(item => item !== tag); // 해당 태그를 제거한 새 배열 생성
+    onFilterChange({ ...filterOptions, tags: newTags }); // 부모 컴포넌트에 반영
+  };
+
+  // 정렬 옵션 삭제 처리
+  const handleRemoveSortOption = () => {
+    onFilterChange({ ...filterOptions, sortOption: "" });
+  };
+
+  // 채택 상태 삭제 처리
+  const handleRemoveChaeTaek = () => {
+    onFilterChange({ ...filterOptions, isChaeTaek: "" });
+  };
+
   return (
     <div className="flex justify-between px-5 py-3">
-      {/* <div className="flex flex-wrap justify-start"> */}
-      <div className="scrollbar-hide flex overflow-x-auto whitespace-nowrap">
+      <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
         {filterOptions.sortOption && (
           <JiJeongTag
             key={filterOptions.sortOption}
-            label={filterOptions.sortOption}
+            label={`${filterOptions.sortOption} ×`}
+            onClick={handleRemoveSortOption} // 정렬 옵션 삭제
             style={{
               backgroundColor: "#74D7CB",
+              cursor: "pointer",
             }}
           />
         )}
         {filterOptions.isChaeTaek && (
           <JiJeongTag
-            key={filterOptions.isChaeTaek}
-            label={filterOptions.isChaeTaek}
+            key="isChaeTaek"
+            label="채택됨 ×"
+            onClick={handleRemoveChaeTaek} // 채택 상태 삭제
             style={{
               backgroundColor: "#0062D2",
+              cursor: "pointer",
             }}
           />
         )}
-        {filterOptions.tags.length > 0 && filterOptions.tags.map(tag => <JiJeongTag key={tag} label={tag} />)}{" "}
+        {filterOptions.tags.map(tag => (
+          <JiJeongTag
+            key={tag}
+            label={`${tag} ×`}
+            onClick={() => handleRemoveTag(tag)} // 태그 삭제
+            style={{
+              backgroundColor: "#58C4AE",
+              cursor: "pointer",
+            }}
+          />
+        ))}
       </div>
-      {/* </div> */}
 
       <div className="flex items-center">
         <Image
