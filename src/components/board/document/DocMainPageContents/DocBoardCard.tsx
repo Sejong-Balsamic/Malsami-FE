@@ -82,8 +82,7 @@ export default function DocBoardCard({ title, link, accessible }: DocCategoryCar
               <Image src={imageSrc} alt={title} width={170} height={170} className="mb-4 rounded-full" />
               <h1 className="font-pretendard-bold text-lg">게시판 입장 제한</h1>
               <p className="mt-2 text-sm text-gray-600">
-                해당 게시판은 게시판 등급이 <span className="font-bold">{title} 이상</span>일 경우에만 <br />
-                입장이 가능합니다
+                해당 게시판은 게시판 등급이 <span className="font-bold">{title} 이상</span>일 경우에만 입장이 가능합니다
               </p>
               <button
                 type="button"

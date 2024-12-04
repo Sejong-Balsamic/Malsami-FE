@@ -3,9 +3,11 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 
 export default function SearchPage() {
   return (
-    <div>
+    <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <SearchComponent />
+      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
+        <SearchComponent />
+      </div>
     </div>
   );
 }

@@ -28,7 +28,7 @@ export default async function postNewDoc(data: DocPostFormData) {
 
   // 선택 항목 추가
   if (data.studyYear) {
-    formData.append("studyYear", data.studyYear.toString());
+    formData.append("attendedYear", data.studyYear.toString());
   }
   if (data.isPrivate !== undefined) {
     formData.append("isDepartmentPrivate", data.isPrivate.toString());
@@ -38,7 +38,7 @@ export default async function postNewDoc(data: DocPostFormData) {
   if (data.categoryTags && data.categoryTags.length > 0) {
     data.categoryTags.forEach(tag => {
       const englishTag = tagMapping[tag]; // 한국어 태그를 영어로 변환
-      if (englishTag) formData.append("documentTypeSet", englishTag);
+      if (englishTag) formData.append("documentTypes", englishTag);
     });
   }
 

@@ -6,7 +6,7 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import getDocumentDetails from "@/apis/document/getDocumentDetails";
-import { DocumentData } from "@/types/DocumentData";
+import { DocumentData } from "@/types/DocumentDetailData";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function Page() {

@@ -11,7 +11,7 @@ function QnaPostNav({ onSave }: QnaPostNavProps) {
     <div className="w-full min-w-[386px] max-w-[640px] bg-white">
       <div className="relative flex items-center justify-between p-5">
         {/* 뒤로 가기 아이콘 */}
-        <button type="button" onClick={() => router.back()}>
+        <button type="button" onClick={() => router.push("/board/question")}>
           <Image src="/icons/BackIcon.svg" alt="썸네일" width={10} height={20} />
         </button>
 

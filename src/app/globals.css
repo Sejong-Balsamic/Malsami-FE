@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -84,6 +85,16 @@
     --chart-3: 30 80% 55%;
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
+  }
+  html {
+    @apply bg-background text-foreground;
+  }
+
+  body {
+    font-synthesis: none; /* 폰트 합성 제거 */
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Roboto", "Arial", sans-serif;
+    -webkit-font-smoothing: antialiased; /* iOS 텍스트 렌더링 개선 */
+    -moz-osx-font-smoothing: grayscale; /* macOS 텍스트 렌더링 개선 */
   }
 }
 

@@ -19,7 +19,7 @@ function DocTierPageNav({ subTitle }: { subTitle: string }) {
 
         {/* 검색 아이콘 */}
         <button type="button" onClick={() => router.push("/search")}>
-          <Image src="/icons/Search.svg" alt="Search" width={20} height={20} />
+          <Image src="/icons/SearchIcon.svg" alt="Search" width={20} height={20} />
         </button>
       </div>
       <div className="w- h-0.5 bg-[#EAEAEA]" />

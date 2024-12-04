@@ -14,7 +14,6 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
   const colors = ["#03B89E", "#F46B02", "#5ED513"];
   const router = useRouter();
 
-  const slidesPerView = (data?.length || 0) > 1 ? 2 : 1; // 데이터가 10보다 작을 때
   const loopEnabled = (data?.length || 0) > 1;
 
   const handleCardClick = (postId: string) => {
@@ -22,7 +21,6 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
       console.error("Invalid postId:", postId);
       return;
     }
-    console.log("Clicked card postId:", postId);
     router.push(`/board/question/detail/${postId}`);
   };
 
@@ -31,22 +29,32 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
       <Swiper
         key={`swiper-container-${data.length}`}
         modules={[Autoplay]}
-        slidesPerView={slidesPerView}
+        slidesPerView={2} // 기본값
         spaceBetween={0}
         loop={loopEnabled}
         autoplay={{
-          delay: 3000,
+          delay: 2500,
           disableOnInteraction: false,
         }}
+        breakpoints={{
+          0: {
+            slidesPerView: 1, // 화면 가로 사이즈가 375px 미만일 경우
+          },
+          375: {
+            slidesPerView: 2, // 기본값
+          },
+          600: {
+            slidesPerView: 3, // 화면 가로 사이즈가 475px 이상일 경우
+          },
+        }}
+        className="w-full"
       >
         {data.map((document, index) => {
-          console.log("Document:", document); // Logging each document to inspect its contents
           return (
-            <SwiperSlide key={document.postId || index}>
+            <SwiperSlide key={document.postId || index} className="flex items-center justify-center">
               <div
                 onClick={() => {
                   if (document.postId) {
-                    console.log("Valid postId:", document.postId);
                     handleCardClick(document.postId);
                   } else {
                     console.error("Invalid or undefined postId:", document);

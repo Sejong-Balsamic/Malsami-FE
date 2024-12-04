@@ -11,17 +11,17 @@ function DetailPageNav() {
   return (
     <nav className="flex h-[64px] items-end justify-between border-b-2 border-[#eaeaea] px-5">
       {/* 뒤로 가기 아이콘 */}
-      <button type="button" className="flex" onClick={() => router.push("/board/question")}>
+      <button type="button" className="flex w-[20px]" onClick={() => router.back()}>
         <Image src="/icons/BackIcon.svg" alt="back" width={10} height={20} className="mb-[20px]" />
       </button>
       {/* 제목과 양반등급 표시 */}
       <div className="flex flex-col items-center">
-        <h1 className="font-pretendard-bold mb-[16px] text-[20px]">질문게시판</h1>
+        <h1 className="font-pretendard-bold mb-[16px] text-[20px]">질문 게시판</h1>
       </div>
       {/* 옵션 아이콘 */}
       <Drawer>
         <DrawerTrigger asChild>
-          <button type="button" className="flex">
+          <button type="button" className="flex w-[20px]">
             <Image src="/icons/Option.svg" alt="option" width={4} height={20} className="mb-[20px]" />
           </button>
         </DrawerTrigger>
