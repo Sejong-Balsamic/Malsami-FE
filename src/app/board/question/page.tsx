@@ -110,7 +110,10 @@ export default function QuestionBoardPage() {
         <div className="h-[2px] w-full bg-[#EEEEEE]" />
         <QnaFilterControlBar
           filterOptions={filterOptions}
-          onFilterChange={newFilterOptions => dispatch(setFilterOptions(newFilterOptions))}
+          onFilterChange={newFilterOptions => {
+            dispatch(setFilterOptions(newFilterOptions)); // Redux 상태 업데이트
+          }}
+          // onFilterChange={newFilterOptions => dispatch(setFilterOptions(newFilterOptions))}
         />
         <div className="h-0.5 bg-[#EEEEEE]" />
         <div className="px-5 py-4">

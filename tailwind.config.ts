@@ -119,6 +119,6 @@ const config: Config = {
     },
   },
   // eslint-disable-next-line global-require
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar-hide")],
 };
 export default config;
