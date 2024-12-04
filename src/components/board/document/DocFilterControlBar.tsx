@@ -18,6 +18,15 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
   return (
     <div className="flex justify-between px-5 py-3">
       <div className="flex">
+        {filterOptions.sortOption && (
+          <JiJeongTag
+            key={filterOptions.sortOption}
+            label={filterOptions.sortOption}
+            style={{
+              backgroundColor: "#74D7CB",
+            }}
+          />
+        )}
         {filterOptions.tags.length > 0 && filterOptions.tags.map(tag => <JiJeongTag key={tag} label={tag} />)}{" "}
       </div>
       <div className="flex items-center">

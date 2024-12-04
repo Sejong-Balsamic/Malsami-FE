@@ -51,7 +51,7 @@ export default function DocMyFacultyPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <DocTierPageNav subTitle="소프트웨어융합대학" />
+      <DocTierPageNav subTitle="내 전공 관련 자료" />
       <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
         <DocFilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
         <div className="h-0.5 bg-[#EEEEEE]" />
