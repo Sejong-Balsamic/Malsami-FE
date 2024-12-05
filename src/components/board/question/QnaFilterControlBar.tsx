@@ -114,13 +114,24 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
             }}
           />
         )}
-        {filterOptions.isChaeTaek && (
+        {filterOptions.isChaeTaek === "채택됨" && (
           <JiJeongTag
             key="isChaeTaek"
-            label="채택됨 ×"
+            label={`${filterOptions.isChaeTaek} ×`} // 값에 따라 "채택 ×" 표시
             onClick={handleRemoveChaeTaek} // 채택 상태 삭제
             style={{
               backgroundColor: "#0062D2",
+              cursor: "pointer",
+            }}
+          />
+        )}
+        {filterOptions.isChaeTaek === "미채택" && (
+          <JiJeongTag
+            key="isChaeTaek"
+            label={`${filterOptions.isChaeTaek} ×`} // 값에 따라 "미채택 ×" 표시
+            onClick={handleRemoveChaeTaek} // 채택 상태 삭제
+            style={{
+              backgroundColor: "#F46B02",
               cursor: "pointer",
             }}
           />
