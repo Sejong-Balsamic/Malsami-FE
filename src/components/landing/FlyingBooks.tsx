@@ -189,15 +189,15 @@ function FlyingBooks({ scrollY }: FlyingBooksProps) {
   };
 
   useEffect(() => {
-    if (clickCount === 10) {
+    if (clickCount === 5) {
       // 10번 클릭 시 이스터 에그 활성화
       setIsEasterEggActive(true);
       setClickCount(0); // 클릭 횟수 초기화
     }
 
     const resetTimer = setTimeout(() => {
-      setClickCount(0); // 3초 안에 10번 클릭하지 않으면 초기화
-    }, 3000);
+      setClickCount(0); // 2초 안에 5번 클릭하지 않으면 초기화
+    }, 2000);
 
     return () => clearTimeout(resetTimer);
   }, [clickCount]);
