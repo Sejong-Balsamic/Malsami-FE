@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { CardProps } from "@/types/DocCardProps.type";
 import { useRouter } from "next/navigation";
-import MovingCardDocument from "../MovingCardDocument";
 import getHotDownloadDocs from "@/apis/document/getHotDownloadDocs";
+import MovingCardDocument from "../MovingCardDocument";
 
 export default function HotDownloadContent() {
   const router = useRouter();

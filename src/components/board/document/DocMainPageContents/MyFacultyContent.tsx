@@ -4,7 +4,7 @@ import getDocMyFaculty from "@/apis/document/docMainPage/getDocMyFaculty";
 import { useRouter } from "next/navigation";
 import MovingCardDocument from "../MovingCardDocument";
 
-export default function MyFacultyContent({ faculty }: { faculty: string }) {
+export default function MyFacultyContent({ facultys }: { facultys: string[] }) {
   const router = useRouter();
   const [myFacultyItems, setMyFacultyItems] = useState<CardProps[]>([]); // 내 전공관련 자료
 
@@ -12,7 +12,7 @@ export default function MyFacultyContent({ faculty }: { faculty: string }) {
   useEffect(() => {
     const fetchMyFacultyItems = async () => {
       try {
-        const response = await getDocMyFaculty({ faculty }); // API 호출
+        const response = await getDocMyFaculty({ facultys }); // API 호출
         const data = response.map((item: any) => ({
           postId: item.documentPostId,
           subject: item.subject || "과목명",
@@ -24,7 +24,7 @@ export default function MyFacultyContent({ faculty }: { faculty: string }) {
       }
     };
 
-    if (faculty) fetchMyFacultyItems(); // faculty 값이 있을 경우 API 호출
+    if (facultys) fetchMyFacultyItems(); // faculty 값이 있을 경우 API 호출
   }, []);
 
   return (
@@ -33,7 +33,6 @@ export default function MyFacultyContent({ faculty }: { faculty: string }) {
       <div className="mb-3.5 flex items-center justify-between">
         <div>
           <p className="font-pretendard-semibold text-lg text-custom-blue-500">내 전공 관련 자료</p>
-          <p className="font-pretendard-semibold text-xs text-[#737373]">{faculty}</p>
         </div>
         <button
           type="button"
