@@ -218,7 +218,7 @@ function FlyingBooks({ scrollY }: FlyingBooksProps) {
           alt="book"
           width={258}
           height={215.94}
-          className="absolute h-auto w-[258px] cursor-pointer"
+          className="absolute h-auto w-[258px]"
           style={{ top: `${Math.min(110 + scrollY * 0.6)}px`, right: "5px" }}
           onClick={handleBookClick}
         />
