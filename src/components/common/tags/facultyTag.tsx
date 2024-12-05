@@ -14,7 +14,7 @@ function FacultyTag({ title, onClick }: FacultyTagProps) {
       }}
       tabIndex={0} // 키보드 포커스를 가능하게 만듦
       role="button" // 접근성을 위해 버튼 역할 추가
-      className="font-pretendard-medium mr-1 inline-block cursor-pointer rounded-[33px] bg-custom-green-500 px-2 py-[3px] text-xs text-white"
+      className="font-pretendard-medium mr-1 inline-block cursor-pointer rounded-[33px] bg-custom-green-500 px-3 py-1 text-xs text-white"
     >
       {title}
     </span>

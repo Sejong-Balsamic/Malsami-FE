@@ -7,6 +7,7 @@ import { RootState } from "@/store";
 import { setDocMyFacultyFilterOptions } from "@/store/docFilterOptions/docMyFacultyFilterOptionsSlice";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
+import getMyShortInfo from "@/apis/document/getMyShortInfo";
 import DocFilterControlBar from "@/components/board/document/DocFilterControlBar";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
 import { DocCardProps } from "@/types/docCard.type";
@@ -14,6 +15,7 @@ import DocCard from "@/components/board/document/DocCard";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function DocMyFacultyPage() {
+  const [facultys, setFacultys] = useState<string[]>([]);
   const dispatch = useDispatch();
   const docMyFacultyFilterOptions = useSelector(
     (state: RootState) => state.docMyFacultyFilterOptions.docMyFacultyFilterOptions,
@@ -29,7 +31,7 @@ export default function DocMyFacultyPage() {
     const params = {
       documentTypes: docMyFacultyFilterOptions.tags,
       sortType: docMyFacultyFilterOptions.sortOption,
-      faculty: "소프트웨어융합대학",
+      facultys,
       pageNumber: 0, // 기본 페이지 번호
       pageSize: 12, // 페이지 크기
     };
@@ -49,6 +51,18 @@ export default function DocMyFacultyPage() {
   useEffect(() => {
     fetchDocs();
   }, [docMyFacultyFilterOptions]);
+
+  useEffect(() => {
+    const fetchMyInfo = async () => {
+      try {
+        const response = await getMyShortInfo();
+        setFacultys(response.member.faculties);
+      } catch (error) {
+        console.error("내 정보 데이터를 불러오는 중 오류 발생:", error);
+      }
+    };
+    fetchMyInfo();
+  }, []);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">

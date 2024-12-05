@@ -8,7 +8,7 @@ import { setDocHotDownFilterOptions } from "@/store/docFilterOptions/docHotDownF
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import DocFilterControlBar from "@/components/board/document/DocFilterControlBar";
-import getFilteringDocs from "@/apis/document/getFilteringDocs";
+import getHotDownloadDocs from "@/apis/document/getHotDownloadDocs";
 import { DocCardProps } from "@/types/docCard.type";
 import DocCard from "@/components/board/document/DocCard";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
@@ -27,15 +27,13 @@ export default function DocHotdownloadPage() {
 
   const fetchDocs = async () => {
     const params = {
-      documentTypes: docHotDownFilterOptions.tags,
-      sortType: docHotDownFilterOptions.sortOption,
       pageNumber: 0, // 기본 페이지 번호
       pageSize: 12, // 페이지 크기
     };
 
     setIsLoading(true);
     try {
-      const response = await getFilteringDocs(params);
+      const response = await getHotDownloadDocs(params);
       console.log(response);
       setDocCards(response);
     } catch (error) {
