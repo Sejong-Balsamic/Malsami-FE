@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { CardProps } from "@/types/DocCardProps.type";
-import getDocHotDownload from "@/apis/document/docMainPage/getDocHotDownload";
 import { useRouter } from "next/navigation";
 import MovingCardDocument from "../MovingCardDocument";
+import getHotDownloadDocs from "@/apis/document/getHotDownloadDocs";
 
 export default function HotDownloadContent() {
   const router = useRouter();
@@ -11,8 +11,12 @@ export default function HotDownloadContent() {
   // api호출로 내전공관련자료 세팅
   useEffect(() => {
     const fetchHotDownloadItems = async () => {
+      const params = {
+        pageNumber: 0, // 기본 페이지 번호
+        pageSize: 30, // 페이지 크기
+      };
       try {
-        const response = await getDocHotDownload(); // API 호출
+        const response = await getHotDownloadDocs(params); // API 호출
         const data = response.map((item: any) => ({
           postId: item.documentPostId,
           subject: item.subject || "과목명",
