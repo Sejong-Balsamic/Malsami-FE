@@ -87,7 +87,7 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
             {documentData.documentPost.content}
           </div>
         </div>
-        <DownloadFile />
+        <DownloadFile documentFiles={documentData.documentFiles} />
         {/* 카테고리 */}
         <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
           <div className="flex items-center gap-[10px]">
