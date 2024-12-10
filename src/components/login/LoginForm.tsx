@@ -46,7 +46,7 @@ export default function LoginForm() {
 
   return (
     <div className="w-full">
-      <form onSubmit={handleLogin} className="space-y-6">
+      <form onSubmit={handleLogin} className="space-y-2">
         {/* 아이디 입력 */}
         <div>
           <input
@@ -55,7 +55,7 @@ export default function LoginForm() {
             value={id}
             onChange={e => setId(e.target.value)}
             required
-            className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-200"
+            className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-1 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-200"
             placeholder="학번을 입력해주세요"
           />
         </div>
@@ -67,7 +67,7 @@ export default function LoginForm() {
             value={password}
             onChange={e => setPassword(e.target.value)}
             required
-            className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-2 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-300"
+            className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-1 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-300"
             placeholder="비밀번호를 입력해주세요"
           />
         </div>
