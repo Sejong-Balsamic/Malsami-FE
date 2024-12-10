@@ -35,7 +35,6 @@ export default function SearchResultPage() {
       const response = await getSearchResult({ params: value.trim() });
       setDocResults(response.documentPostsPage.content);
       setQnaResults(response.questionPostsPage.content);
-      7;
     } catch (error) {
       console.error("API 호출 에러:", error);
       alert("검색 결과를 가져오는 데 문제가 발생했습니다.");
