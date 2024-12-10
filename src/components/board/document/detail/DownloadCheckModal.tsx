@@ -6,18 +6,18 @@ interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   documentFileId: string;
+  originalFileName: string;
 }
 
-function DownloadCheckModal({ isOpen, onClose, documentFileId }: ModalProps) {
+function DownloadCheckModal({ isOpen, onClose, documentFileId, originalFileName }: ModalProps) {
   const [isSuccessModalOpen, setIsSuccessModalOpen] = useState(false);
 
   const handleConfirm = async () => {
     try {
-      await fileDownload(documentFileId);
-      console.log("다운로드 성공");
+      await fileDownload(documentFileId); // 다운로드 API 호출
       setIsSuccessModalOpen(true);
     } catch (error) {
-      console.error("다운로드 요청 실패:", error);
+      console.error("파일 다운로드 실패:", error);
     }
   };
 
@@ -42,9 +42,9 @@ function DownloadCheckModal({ isOpen, onClose, documentFileId }: ModalProps) {
         <div className="flex h-48 w-[336px] flex-col items-center justify-center rounded-2xl bg-white/50 p-[20px]">
           <h1 className="font-pretendard-bold pb-[10px] text-[18px]">파일 다운로드</h1>
           <div className="font-pretendard-medium w-full border-t-2 border-[#EEEEEE] pb-[20px] pt-[10px] text-center text-[16px]">
-            다운로드하시겠습니까?
+            {`${originalFileName}을(를) 다운로드 하시겠습니까?`}
             <br />
-            다운로드는 취소가 불가능합니다.
+            다운로드 시 엽전 현상금이 소모됩니다.
           </div>
           <div className="flex h-[30px] w-full justify-between">
             <button

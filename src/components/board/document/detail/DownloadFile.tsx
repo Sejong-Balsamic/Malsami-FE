@@ -12,8 +12,20 @@ interface DownloadFileProps {
 }
 
 function formatFileSize(fileSize: number): string {
-  // 파일 크기를 MB로 변환
-  return (fileSize / (1024 * 1024)).toFixed(1); // MB 단위, 소수점 1자리 표시
+  if (fileSize < 1024) {
+    // B 단위
+    return `${fileSize} B`;
+    // eslint-disable-next-line no-else-return
+  } else if (fileSize < 1024 * 1024) {
+    // KB 단위
+    return `${(fileSize / 1024).toFixed(1)} KB`;
+  } else if (fileSize < 1024 * 1024 * 1024) {
+    // MB 단위
+    return `${(fileSize / (1024 * 1024)).toFixed(1)} MB`;
+  } else {
+    // GB 단위
+    return `${(fileSize / (1024 * 1024 * 1024)).toFixed(1)} GB`;
+  }
 }
 
 function DownloadFile({ documentFiles }: DownloadFileProps) {
@@ -22,11 +34,11 @@ function DownloadFile({ documentFiles }: DownloadFileProps) {
       {documentFiles.map(file => (
         <div
           key={file.documentFileId} // documentFileId를 key로 사용
-          className="flex h-[58px] w-[270px] items-center justify-between rounded-[10px] bg-[#f7f8fb] p-[14px]"
+          className="flex h-auto w-auto items-center justify-between rounded-[10px] bg-[#f7f8fb] p-[14px]"
         >
           <div className="flex flex-col">
             <div className="font-pretendard-medium text-[12px]">{file.filePath}</div>
-            <div className="font-pretendard-medium text-[12px] text-[#737373]">{formatFileSize(file.fileSize)}MB</div>
+            <div className="font-pretendard-medium text-[12px] text-[#737373]">{formatFileSize(file.fileSize)}</div>
           </div>
           <div className="flex flex-col items-center justify-center gap-1">
             <Image src="/icons/Download.svg" alt="Download" width={12} height={15} />
