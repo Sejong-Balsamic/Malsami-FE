@@ -14,7 +14,7 @@ function DownloadCheckModal({ isOpen, onClose, documentFileId, originalFileName 
 
   const handleConfirm = async () => {
     try {
-      await fileDownload(documentFileId); // 다운로드 API 호출
+      await fileDownload(documentFileId, originalFileName); // 다운로드 API 호출
       setIsSuccessModalOpen(true);
     } catch (error) {
       console.error("파일 다운로드 실패:", error);
@@ -42,7 +42,7 @@ function DownloadCheckModal({ isOpen, onClose, documentFileId, originalFileName 
         <div className="flex h-48 w-[336px] flex-col items-center justify-center rounded-2xl bg-white/50 p-[20px]">
           <h1 className="font-pretendard-bold pb-[10px] text-[18px]">파일 다운로드</h1>
           <div className="font-pretendard-medium w-full border-t-2 border-[#EEEEEE] pb-[20px] pt-[10px] text-center text-[16px]">
-            {`${originalFileName}을(를) 다운로드 하시겠습니까?`}
+            ${originalFileName}을(를) 다운로드 하시겠습니까?
             <br />
             다운로드 시 엽전 현상금이 소모됩니다.
           </div>

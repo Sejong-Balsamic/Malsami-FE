@@ -1,8 +1,10 @@
+import { useState } from "react";
 import Image from "next/image";
+import DownloadCheckModal from "./DownloadCheckModal";
 
 interface DocumentFile {
   documentFileId: string;
-  filePath: string;
+  originalFileName: string;
   fileSize: number;
   downloadCount: number;
 }
@@ -29,15 +31,36 @@ function formatFileSize(fileSize: number): string {
 }
 
 function DownloadFile({ documentFiles }: DownloadFileProps) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedFile, setSelectedFile] = useState<{
+    documentFileId: string;
+    originalFileName: string;
+  } | null>(null);
+
+  const handleDownloadClick = (file: DocumentFile) => {
+    setSelectedFile({
+      documentFileId: file.documentFileId,
+      originalFileName: file.originalFileName,
+    });
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedFile(null);
+  };
+
   return (
     <div className="my-[30px] flex flex-col gap-4">
       {documentFiles.map(file => (
+        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
           key={file.documentFileId} // documentFileId를 key로 사용
           className="flex h-auto w-auto items-center justify-between rounded-[10px] bg-[#f7f8fb] p-[14px]"
+          onClick={() => handleDownloadClick(file)} // 버튼 클릭 시 모달 열기
         >
           <div className="flex flex-col">
-            <div className="font-pretendard-medium text-[12px]">{file.filePath}</div>
+            <div className="font-pretendard-medium text-[12px]">{file.originalFileName}</div>
             <div className="font-pretendard-medium text-[12px] text-[#737373]">{formatFileSize(file.fileSize)}</div>
           </div>
           <div className="flex flex-col items-center justify-center gap-1">
@@ -46,6 +69,16 @@ function DownloadFile({ documentFiles }: DownloadFileProps) {
           </div>
         </div>
       ))}
+
+      {/* DownloadCheckModal 모달 */}
+      {isModalOpen && selectedFile && (
+        <DownloadCheckModal
+          isOpen={isModalOpen}
+          onClose={closeModal}
+          documentFileId={selectedFile.documentFileId}
+          originalFileName={selectedFile.originalFileName}
+        />
+      )}
     </div>
   );
 }
