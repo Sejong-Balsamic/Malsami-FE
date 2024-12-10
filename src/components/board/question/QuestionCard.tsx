@@ -1,10 +1,10 @@
-import React from "react";
 import Image from "next/image";
 import getDateDiff from "@/utils/getDateDiff";
 import ImageWrapper from "../tags/ImageWrapper";
 import ChaeTakTag from "../tags/ChaeTakTag";
-import JiJeongTag from "../tags/JiJeongTag";
+import DocJiJeongTag from "../document/tags/DocJiJeongTag";
 import YeopjeonTag from "../tags/YeopjeonTag";
+import SubjectTag from "../tags/SubjectTag";
 
 interface QuestionCardProps {
   JiJeongTags: string[];
@@ -14,9 +14,9 @@ interface QuestionCardProps {
   createdDate: string;
   viewCount: number;
   likeCount: number;
-  answerCount: number;
   rewardYeopjeon: number;
   chaetaekStatus: boolean;
+  subject: string;
 }
 
 const tagTranslations: { [key: string]: string } = {
@@ -37,46 +37,53 @@ function QuestionCard({
   createdDate,
   viewCount,
   likeCount,
-  answerCount,
+  subject,
   rewardYeopjeon = 0,
   chaetaekStatus,
 }: QuestionCardProps) {
-  const displayThumbnail = thumbnail || "/image/PartyPopper.jpg";
-
   return (
     <div className="... mb-3 flex flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]">
-      <div className="mb-2">
+      <div className="mb-2.5 flex">
         {!chaetaekStatus && rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
         {chaetaekStatus && <ChaeTakTag />}
-        {JiJeongTags.map(tag => (
-          <JiJeongTag key={tag} label={tagTranslations[tag] ?? tag} />
-        ))}
+        <SubjectTag subject={subject} />
       </div>
       <div className="flex flex-row justify-between">
-        <div>
-          <h2 className="font-pretendard-bold mb-1 line-clamp-1 text-sm">{title}</h2>
-          <p className="font-pretendard-medium mb-4 line-clamp-1 text-sm text-[#737373]">{content}</p>
-          <div className="font-pretendard-medium flex items-center text-xs text-[#BCBCBC]">
-            <span className="mr-[3px]">
-              <ImageWrapper src="/icons/LikeIcon.svg" />
-              <span className="ml-1 text-xs">{likeCount}</span>
-            </span>
-            <span className="mr-[6px]">
-              <ImageWrapper src="/icons/CommentIcon.svg" />
-              <span className="ml-1 text-xs">{answerCount}</span>
-            </span>
-            · <span className="ml-[6px] mr-[6px] text-[11px]"> 조회수 {viewCount} </span> ·{" "}
-            <span className="ml-[6px] text-[11px]">{getDateDiff(createdDate)}</span>
+        {/* 왼쪽 텍스트 콘텐츠 */}
+        <div className="flex flex-col">
+          {/* 제목 */}
+          <p className="font-pretendard-bold mb-1 line-clamp-1 text-sm text-black">{title}</p>
+          {/* 내용 */}
+          <p className="font-pretendard-medium mb-2 line-clamp-1 text-xs text-[#737373]">{content}</p>
+          {/* 태그 및 기타 정보 */}
+          <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
+            <div className="flex flex-wrap items-center">
+              {JiJeongTags?.[0] && <DocJiJeongTag tag={tagTranslations[JiJeongTags[0]] || "알 수 없는 태그"} />}
+            </div>
+            <div className="flex flex-wrap items-center">
+              <span className="flex items-center">
+                <ImageWrapper src="/icons/LikeIcon.svg" />
+                <span className="ml-1 text-xs">{likeCount > 999 ? "999+" : likeCount}</span>
+              </span>
+              <span className="mx-1.5">·</span>
+              <ImageWrapper src="/icons/ViewCountIcon.svg" />
+              <span className="ml-1">{viewCount > 999 ? "999+" : viewCount}</span>
+              <span className="mx-1.5">·</span>
+              <span>{getDateDiff(createdDate)}</span>
+            </div>
           </div>
         </div>
-        <Image
-          src={displayThumbnail}
-          alt="썸네일"
-          width={74}
-          height={74}
-          className="ml-4 rounded-sm border"
-          style={{ maxWidth: "74px", maxHeight: "74px", width: "auto", height: "auto" }}
-        />
+
+        {thumbnail && (
+          <Image
+            src={thumbnail}
+            alt="썸네일"
+            width={74}
+            height={74}
+            className="ml-4 rounded-sm border"
+            style={{ maxWidth: "74px", maxHeight: "74px", width: "auto", height: "auto" }}
+          />
+        )}
       </div>
     </div>
   );

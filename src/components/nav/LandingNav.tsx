@@ -14,7 +14,20 @@ function Nav() {
   const [isSheetOpen, setIsSheetOpen] = useState(false); // Sheet 열림 상태 관리
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const [memberInfo, setMemberInfo] = useState<MemberDto | null>(null);
+  const [clickCount, setClickCount] = useState(0); // 클릭 횟수
+  const [isEasterEggActive, setIsEasterEggActive] = useState(false); // 이스터 에그 활성화 상태
   const handleLogout = useLogout();
+
+  const handleLogoClick = () => setClickCount(prev => prev + 1);
+
+  // 클릭 횟수 5회 이상 시 이스터 에그 활성화
+  useEffect(() => {
+    if (clickCount >= 5) {
+      setIsEasterEggActive(true);
+      setClickCount(0); // 초기화
+      setTimeout(() => setIsEasterEggActive(false), 5000); // 5초 후 자동 숨김
+    }
+  }, [clickCount]);
 
   // accessToken 확인 및 사용자 정보 가져오기
   useEffect(() => {
@@ -39,11 +52,28 @@ function Nav() {
       <button
         type="button"
         className="z-10 flex h-auto w-auto items-center gap-2 bg-[#ffffff]"
-        onClick={() => handleNavigation("/")}
+        onClick={() => {
+          handleNavigation("/"); // 첫 번째 함수 실행
+          handleLogoClick(); // 두 번째 함수 실행
+        }}
         aria-label="랜딩페이지"
       >
         <Image src="/image/logo.png" alt="logo" width={40} height={20} />
         <span className="font-pretendard-semibold text-xl">세종말싸미</span>
+        {/* 이스터 에그 */}
+        {isEasterEggActive && (
+          <div className="pointer-events-none absolute inset-0 z-50">
+            <div
+              className="absolute left-[60px] top-[15px] animate-moveToHamburger"
+              style={{
+                width: "40px",
+                height: "40px",
+              }}
+            >
+              <Image src="/image/cockroach.svg" alt="cockroach" width={60} height={50} />
+            </div>
+          </div>
+        )}
       </button>
 
       <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>

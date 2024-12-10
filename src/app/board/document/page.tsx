@@ -13,12 +13,13 @@ import UploadDocFAB from "@/components/common/UploadDocFAB";
 import getMyShortInfo from "@/apis/document/getMyShortInfo";
 
 export default function DocumentBoardPage() {
-  const [faculty, setFaculty] = useState("");
+  const [facultys, setFacultys] = useState<string[]>([]);
   useEffect(() => {
     const fetchMyInfo = async () => {
       try {
         const response = await getMyShortInfo();
-        setFaculty(response.member.faculty);
+        setFacultys(response.member.faculties);
+        console.log(facultys);
       } catch (error) {
         console.error("내 정보 데이터를 불러오는 중 오류 발생:", error);
       }
@@ -36,7 +37,7 @@ export default function DocumentBoardPage() {
         <div className="h-[2px] w-full bg-[#EEEEEE]" />
         <div className="p-5">
           <HotDownloadContent />
-          <MyFacultyContent faculty={faculty} />
+          <MyFacultyContent facultys={facultys} />
           <WeeklyPopularContent />
           <DailyPopularContent />
           <DocRequestContent />

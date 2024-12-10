@@ -31,7 +31,7 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
   };
   const chaetaekMapping: { [key: string]: string } = {
     전체: "ALL",
-    채택: "CHAETAEK",
+    채택됨: "CHAETAEK",
     미채택: "NO_CHAETAEK",
   };
 

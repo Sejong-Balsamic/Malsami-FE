@@ -2,26 +2,26 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import getDateDiff from "@/utils/getDateDiff";
 import { DocCardProps } from "@/types/docCard.type";
-import ImageWrapper from "../tags/ImageWrapper";
-import SubjectTag from "./tags/SubjectTag";
-import DocJiJeongTag from "./tags/DocJiJeongTag";
+import ImageWrapper from "@/components/board/tags/ImageWrapper";
+import SubjectTag from "@/components/board/document/tags/SubjectTag";
 
 const tagTranslations: { [key: string]: string } = {
-  DOCUMENT: "강의 자료",
-  PAST_EXAM: "과제 기출",
-  SOLUTION: "해설",
+  CHEONMIN: "천민 게시판",
+  JUNGIN: "중인 게시판",
+  YANGBAN: "양반 게시판",
+  KING: "왕 게시판",
 };
 
-export default function DocCard({
+export default function SearchDocCard({
   subject,
   documentPostId,
   title,
   content,
-  documentTypes,
   createdDate,
   thumbnailUrl,
   viewCount,
   likeCount,
+  postTier,
 }: DocCardProps) {
   const router = useRouter();
   const handleCardClick = (postId: string) => {
@@ -51,11 +51,13 @@ export default function DocCard({
           {/* 제목 */}
           <p className="font-pretendard-bold mb-1 line-clamp-1 text-sm text-black">{title}</p>
           {/* 내용 */}
-          <p className="font-pretendard-medium mb-2 line-clamp-1 text-xs text-[#737373]">{content}</p>
+          <p className="font-pretendard-medium mb-2 line-clamp-1 text-sm text-[#737373]">{content}</p>
           {/* 태그 및 기타 정보 */}
           <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
             <div className="flex flex-wrap items-center">
-              {documentTypes?.[0] && <DocJiJeongTag tag={tagTranslations[documentTypes[0]] || "알 수 없는 태그"} />}
+              <span className="font-pretendard-medium mr-3.5 text-xs text-custom-blue-500">
+                {tagTranslations[postTier as string] || "알 수 없는 게시판"}
+              </span>
             </div>
             <div className="flex flex-wrap items-center">
               <span className="flex items-center">
