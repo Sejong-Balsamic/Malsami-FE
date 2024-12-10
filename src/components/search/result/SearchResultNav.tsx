@@ -1,4 +1,66 @@
-import React from "react";
+// import { useState, useEffect } from "react";
+// import Image from "next/image";
+
+// interface SearchHeaderProps {
+//   searchValue: string;
+//   onSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+//   onBack: () => void;
+//   onClear: () => void;
+//   onSearch: () => void; // API 호출 함수
+// }
+
+// function SearchResultNav({ searchValue, onSearchChange, onBack, onClear, onSearch }: SearchHeaderProps) {
+//   const [placeholderIndex, setPlaceholderIndex] = useState(0);
+//   const placeholders = ["@과목으로 시작하여 검색하기", "@공간과인간 기말과제"];
+
+//   useEffect(() => {
+//     const interval = setInterval(() => {
+//       setPlaceholderIndex(prevIndex => (prevIndex + 1) % placeholders.length); // 순환
+//     }, 3000); // 3초마다 변경
+
+//     return () => clearInterval(interval); // 컴포넌트 언마운트 시 정리
+//   }, []);
+
+//   return (
+//     <div className="flex items-center justify-between border-b-[2px] border-b-[#EAEAEA] bg-white px-5 py-3">
+//       {/* 뒤로가기 버튼 */}
+//       <button type="button" onClick={onBack} className="cursor-pointer">
+//         <Image src="/icons/BackIcon.svg" alt="뒤로가기" width={10} height={20} />
+//       </button>
+
+//       {/* 검색 입력 필드 */}
+//       <div className="font-pretendard-medium mx-[10px] flex flex-1 flex-row rounded-[8px] bg-[#EEEEEE] p-2.5 text-base">
+//         <Image
+//           src="/icons/SearchIcon.svg"
+//           alt="검색"
+//           width={20}
+//           height={20}
+//           onClick={onSearch} // 돋보기 버튼 클릭 시 API 호출
+//           className="cursor-pointer"
+//         />
+//         <input
+//           type="text"
+//           placeholder={placeholders[placeholderIndex]} // 동적으로 변경된 placeholder
+//           value={searchValue}
+//           onChange={onSearchChange}
+//           className="font-pretendard-medium ml-3 w-full bg-transparent text-sm text-black placeholder-gray-400 outline-none"
+//           onKeyDown={e => e.key === "Enter" && onSearch()} // 엔터키 입력 시 API 호출
+//         />
+//       </div>
+
+//       {/* 검색어 초기화 버튼 */}
+//       {searchValue && (
+//         <button type="button" onClick={onClear}>
+//           <Image src="/icons/CloseIcon.svg" alt="검색어 삭제" width={18} height={18} />
+//         </button>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default SearchResultNav;
+
+import { useState, useEffect } from "react";
 import Image from "next/image";
 
 interface SearchHeaderProps {
@@ -10,6 +72,17 @@ interface SearchHeaderProps {
 }
 
 function SearchResultNav({ searchValue, onSearchChange, onBack, onClear, onSearch }: SearchHeaderProps) {
+  const placeholders = ["@과목으로 시작하여 검색하기", "@공간과인간 기말과제"];
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex(prevIndex => (prevIndex + 1) % placeholders.length); // 다음 placeholder
+    }, 3000); // 3초마다 전환
+
+    return () => clearInterval(interval); // 컴포넌트 언마운트 시 정리
+  }, []);
+
   return (
     <div className="flex items-center justify-between border-b-[2px] border-b-[#EAEAEA] bg-white px-5 py-3">
       {/* 뒤로가기 버튼 */}
@@ -25,15 +98,15 @@ function SearchResultNav({ searchValue, onSearchChange, onBack, onClear, onSearc
           width={20}
           height={20}
           onClick={onSearch} // 돋보기 버튼 클릭 시 API 호출
-          className="cursor-pointer"
+          className="mr-[10px] cursor-pointer"
         />
         <input
           type="text"
-          placeholder="검색어를 입력해 주세요."
           value={searchValue}
           onChange={onSearchChange}
-          className="font-pretendard-medium ml-3 w-full bg-transparent text-sm text-black placeholder-gray-400 outline-none"
-          onKeyDown={e => e.key === "Enter" && onSearch()} // 엔터키 입력 시 API 호출
+          placeholder={placeholders[placeholderIndex]} // placeholder를 직접 애니메이션 처리
+          className="font-pretendard-medium w-full bg-transparent text-sm text-black placeholder-gray-400 outline-none transition-all duration-500"
+          onKeyDown={e => e.key === "Enter" && onSearch()} // Enter로 API 호출
         />
       </div>
 
