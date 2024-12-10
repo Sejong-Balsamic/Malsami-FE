@@ -14,7 +14,7 @@ function DownloadCheckModal({ isOpen, onClose, documentFileId, originalFileName 
 
   const handleConfirm = async () => {
     try {
-      await fileDownload(documentFileId, originalFileName); // 다운로드 API 호출
+      await fileDownload(documentFileId); // 다운로드 API 호출
       setIsSuccessModalOpen(true);
     } catch (error) {
       console.error("파일 다운로드 실패:", error);
