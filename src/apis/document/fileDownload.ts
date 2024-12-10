@@ -1,30 +1,40 @@
 import { apiClient } from "../clients/appClient";
 
 // 자료 파일 다운로드 함수
-export default async function fileDownload(documentFileId: string, fileName: string): Promise<void> {
+export default async function fileDownload(documentFileId: string): Promise<void> {
   try {
-    // `FormData` 객체 생성 및 `documentFileId` 추가
+    // FormData 생성
     const formData = new FormData();
     formData.append("documentFileId", documentFileId);
 
-    // 자료 파일 다운로드를 위한 POST 요청
-    const response = await apiClient.post<string>("/api/document/file/download", formData, {
+    // POST 요청으로 파일 다운로드
+    const response = await apiClient.post("/api/document/file/download", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
+      responseType: "arraybuffer", // 파일 데이터는 바이너리로 수신
     });
 
-    console.log("File Download Response (Blob URL):", response.data); // 서버에서 반환된 Blob URL 확인
+    // 응답에서 파일 이름 추출 (Content-Disposition 헤더 파싱)
+    const contentDisposition = response.headers["content-disposition"];
+    const fileNameMatch = contentDisposition?.match(/filename\*=UTF-8''(.+)/);
+    const fileName = fileNameMatch ? decodeURIComponent(fileNameMatch[1]) : "downloaded_file";
 
-    // 다운로드를 위한 동적 `<a>` 태그 생성
+    // Blob 데이터 생성
+    const blob = new Blob([response.data], { type: response.headers["content-type"] });
+
+    // Blob URL 생성 및 다운로드 트리거
+    const blobURL = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = response.data; // 서버에서 반환된 Blob URL을 href로 설정
-    a.download = fileName; // 파일 이름 설정
-    document.body.appendChild(a); // `<a>` 태그를 DOM에 추가
-    a.click(); // 클릭 이벤트로 다운로드 트리거
-    document.body.removeChild(a); // `<a>` 태그 제거
+    a.href = blobURL;
+    a.download = fileName;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+
+    // Blob URL 해제
+    window.URL.revokeObjectURL(blobURL);
   } catch (error) {
-    // 오류 발생 시 에러 출력
     console.error("파일 다운로드 중 오류 발생:", error);
     throw error;
   }

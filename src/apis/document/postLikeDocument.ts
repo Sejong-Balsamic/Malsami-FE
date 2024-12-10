@@ -20,14 +20,14 @@ interface LikeResponse {
 export default async function postLikeDocument(
   documentPostId: string,
   contentType: "DOCUMENT" | "DOCUMENT_REQUEST",
-  reactionType: "LIKE" | "DISLIKE",
+  likeType: "LIKE" | "DISLIKE",
 ): Promise<LikeResponse> {
   try {
     // FormData 객체 생성 및 데이터 추가
     const formData = new FormData();
     formData.append("documentPostId", documentPostId);
     formData.append("contentType", contentType);
-    formData.append("reactionType", reactionType);
+    formData.append("likeType", likeType);
 
     // 좋아요/싫어요를 위한 POST 요청
     const response = await apiClient.post<LikeResponse>("/api/likes/document/board", formData, {
