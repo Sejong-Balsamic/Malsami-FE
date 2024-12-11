@@ -64,7 +64,7 @@ function Nav() {
         {isEasterEggActive && (
           <div className="pointer-events-none absolute inset-0 z-50">
             <div
-              className="animate-moveToHamburger absolute left-[60px] top-[15px]"
+              className="absolute left-[60px] top-[15px] animate-moveToHamburger"
               style={{
                 width: "40px",
                 height: "40px",
