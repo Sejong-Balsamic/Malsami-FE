@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, ReactNode } from "react";
+import { useEffect, useState, ReactNode } from "react";
+import LandingDirectModal from "@/components/common/LandingDirectModal";
 
 interface AuthCheckerProps {
   children: ReactNode;
@@ -9,6 +10,7 @@ interface AuthCheckerProps {
 
 export default function AuthChecker({ children }: AuthCheckerProps) {
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     const publicPaths = ["/", "/notice", "/help"];
@@ -16,11 +18,19 @@ export default function AuthChecker({ children }: AuthCheckerProps) {
     const accessToken = sessionStorage.getItem("accessToken");
 
     if (!publicPaths.includes(currentPath) && !accessToken) {
-      alert("로그인이 필요합니다.");
-      router.replace("/"); // 랜딩 페이지로 리디렉트
+      setIsModalOpen(true); // 모달 열기
     }
   }, [router]);
 
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <>{children}</>; // 자식 요소를 JSX로 반환
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    router.replace("/"); // 랜딩 페이지로 리디렉트
+  };
+
+  return (
+    <>
+      <LandingDirectModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      {children}
+    </>
+  );
 }
