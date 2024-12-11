@@ -9,7 +9,7 @@ export interface Member {
   studentName: string;
   uuidNickname: string;
   major: string;
-  faculty: string;
+  faculties: string[]; // 여러 학부를 지원
   academicYear: string;
   enrollmentStatus: string;
   profileUrl: string | null;
@@ -28,7 +28,40 @@ export interface Yeopjeon {
 export interface Exp {
   member: Member;
   exp: number;
+  expTier: string;
+  tierStartExp: number;
+  tierEndExp: number;
+  progressPercent: number;
   expId: string;
+}
+
+export interface MembersPage {
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  content: Member[];
+  number: number;
+  sort: {
+    empty: boolean;
+    sorted: boolean;
+    unsorted: boolean;
+  };
+  pageable: {
+    offset: number;
+    sort: {
+      empty: boolean;
+      sorted: boolean;
+      unsorted: boolean;
+    };
+    paged: boolean;
+    pageNumber: number;
+    pageSize: number;
+    unpaged: boolean;
+  };
+  numberOfElements: number;
+  first: boolean;
+  last: boolean;
+  empty: boolean;
 }
 
 export interface MemberDto {
@@ -45,10 +78,11 @@ export interface MemberDto {
   isFirstLogin: boolean;
   isAdmin: boolean;
   yeopjeonRank: number;
-  totalYeopjeon: number;
+  totalYeopjeonMembers: number; // 총 (엽전을 가진) 사람 수 (전체 회원수)
   yeopjeonPercentile: number;
   expRank: number;
-  totalExp: number;
+  totalExpMembers: number; // 총 (경험치를 가진) 사람 수 (전체 회원수)
+  expPercentile: number;
   totalLikeCount: number;
   totalPopularPostCount: number;
   totalCommentCount: number;
@@ -57,5 +91,5 @@ export interface MemberDto {
   answerPostCount: number;
   documentPostCount: number;
   documentRequestPostCount: number;
-  expPercentile: number;
+  membersPage: MembersPage; // 멤버 페이지 정보
 }
