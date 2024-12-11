@@ -1,7 +1,7 @@
 import { apiClient } from "../clients/appClient";
 
 // 자료 파일 다운로드 함수
-export default async function fileDownload(documentFileId: string): Promise<void> {
+export default async function fileDownload(documentFileId: string, originalFileName: string): Promise<void> {
   try {
     // FormData 생성
     const formData = new FormData();
@@ -15,11 +15,6 @@ export default async function fileDownload(documentFileId: string): Promise<void
       responseType: "arraybuffer", // 파일 데이터는 바이너리로 수신
     });
 
-    // 응답에서 파일 이름 추출 (Content-Disposition 헤더 파싱)
-    const contentDisposition = response.headers["content-disposition"];
-    const fileNameMatch = contentDisposition?.match(/filename\*=UTF-8''(.+)/);
-    const fileName = fileNameMatch ? decodeURIComponent(fileNameMatch[1]) : "downloaded_file";
-
     // Blob 데이터 생성
     const blob = new Blob([response.data], { type: response.headers["content-type"] });
 
@@ -27,7 +22,7 @@ export default async function fileDownload(documentFileId: string): Promise<void
     const blobURL = window.URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = blobURL;
-    a.download = fileName;
+    a.download = originalFileName;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
