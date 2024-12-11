@@ -9,6 +9,8 @@ import AllDocument from "@/components/landing/AllDocument";
 import AllQuestion from "@/components/landing/AllQuestion";
 import getAllDocuments from "@/apis/landing/getAllDocument";
 import getAllQuestions from "@/apis/landing/getAllQuestion";
+import { QuestionPost } from "@/types/question";
+import { DocumentPost } from "@/types/document";
 import getMyInfo from "@/apis/member/getMyInfo";
 import UploadFAB from "@/components/common/UploadFAB";
 import ScrollFAB from "@/components/common/ScrollFAB";
@@ -22,8 +24,8 @@ function Page() {
   const [showScrollFAB, setShowScrollFAB] = useState(true);
   const [userName, setUserName] = useState<string>("");
   const hotDocumentRef = useRef<HTMLDivElement>(null);
-  const [documents, setDocuments] = useState<{ subject: string; content: string }[]>([]);
-  const [questions, setQuestions] = useState<{ subject: string; content: string }[]>([]);
+  const [documents, setDocuments] = useState<DocumentPost[]>([]);
+  const [questions, setQuestions] = useState<QuestionPost[]>([]);
 
   // 스크롤 이벤트
   useEffect(() => {
@@ -97,13 +99,9 @@ function Page() {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const data = await getAllDocuments();
-        const latestDocuments = data.documentPostsPage?.content.slice(0, 5) || []; // 최신 5개 추출
-        const transformedDocuments = latestDocuments.map(doc => ({
-          subject: doc.subject,
-          content: doc.content,
-        }));
-        setDocuments(transformedDocuments);
+        const data = await getAllDocuments(); // API 호출
+        const allDocuments = data.documentPostsPage?.content || []; // 전체 질문 리스트 추출
+        setDocuments(allDocuments); // 상태에 저장
       } catch (error) {
         console.error("자료 가져오기 실패:", error);
       }
@@ -116,13 +114,9 @@ function Page() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const data = await getAllQuestions();
-        const latestQuestions = data.questionPostsPage?.content.slice(0, 5) || []; // 최신 5개 추출
-        const transformedQuestions = latestQuestions.map(qna => ({
-          subject: qna.subject,
-          content: qna.content,
-        }));
-        setQuestions(transformedQuestions);
+        const data = await getAllQuestions(); // API 호출
+        const allQuestions = data.questionPostsPage?.content || []; // 전체 질문 리스트 추출
+        setQuestions(allQuestions); // 상태에 저장
       } catch (error) {
         console.error("질문 가져오기 실패:", error);
       }
