@@ -10,7 +10,6 @@ function DownloadSuccessModal({ isOpen, onClose }: ModalProps) {
 
   const handleConfirm = () => {
     onClose();
-    window.location.reload();
   };
 
   return (
