@@ -4,6 +4,7 @@ import { EffectFlip } from "swiper/modules"; // EffectFlip을 modules에서 가�
 import "swiper/css";
 import "swiper/css/effect-flip";
 import Image from "next/image";
+import AnimatedNumber from "@/utils/AnimatedNumber";
 import ExpBar from "./ExpBar";
 
 interface InfoProps {
@@ -28,7 +29,7 @@ function InfoCard({ memberInfo }: InfoProps) {
         modules={[EffectFlip]} // EffectFlip 모듈 등록
         className="h-full w-full"
       >
-        {/* 슬라이드 뒷면 */}
+        {/* 슬라이드 앞면 */}
         <SwiperSlide>
           <div className="flex w-full flex-col gap-7 rounded-[15px] bg-[#95e4da] px-[20px] py-[30px]">
             <div>
@@ -48,7 +49,9 @@ function InfoCard({ memberInfo }: InfoProps) {
                 <div className="font-pretendard-medium text-[16px]">상위</div>
                 <div className="flex items-center gap-2">
                   <Image src="/icons/mypage/Like.svg" alt="Like" width={18} height={18} className="h-[18px] w-[18px]" />
-                  <span className="font-pretendard-semibold text-[20px]">{memberInfo?.expPercentile || 0}%</span>
+                  <span className="font-pretendard-semibold text-[20px]">
+                    {memberInfo ? <AnimatedNumber target={memberInfo.expPercentile || 0} /> : "0%"}
+                  </span>
                 </div>
               </div>
               <div className="absolute bottom-0 left-1/2 top-0 w-[2px] bg-[#03B89E]" />
@@ -56,7 +59,9 @@ function InfoCard({ memberInfo }: InfoProps) {
                 <div className="font-pretendard-medium text-[16px]">받은 좋아요</div>
                 <div className="flex items-center gap-2">
                   <Image src="/icons/mypage/Like.svg" alt="Like" width={18} height={18} className="h-[18px] w-[18px]" />
-                  <span className="font-pretendard-semibold text-[20px]">{memberInfo?.totalLikeCount || 0}</span>
+                  <span className="font-pretendard-semibold text-[20px]">
+                    {memberInfo ? <AnimatedNumber target={memberInfo.totalLikeCount || 0} /> : "0%"}
+                  </span>
                 </div>
               </div>
             </div>
