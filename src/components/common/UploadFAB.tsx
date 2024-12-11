@@ -14,12 +14,21 @@ function UploadFAB() {
     setIsDivVisible(prev => !prev);
   };
 
+  const checkAccessTokenAndNavigate = (path: string) => {
+    const accessToken = sessionStorage.getItem("accessToken");
+    if (!accessToken) {
+      router.push("/login");
+    } else {
+      router.push(path);
+    }
+  };
+
   const handleDocumentClick = () => {
-    router.push("board/document/post");
+    checkAccessTokenAndNavigate("board/document/post");
   };
 
   const handleQuestionClick = () => {
-    router.push("/board/question/post");
+    checkAccessTokenAndNavigate("/board/question/post");
   };
 
   return (
