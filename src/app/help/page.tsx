@@ -1,10 +1,10 @@
-import MyPageNav from "@/components/nav/MyPageDetailNav";
+import Nav from "@/components/nav/NoticeHelpNav";
 import Image from "next/image";
 
 function Page() {
   return (
     <div className="relative mx-auto w-full max-w-[640px]">
-      <MyPageNav title="세종말싸미 이용도우미" />
+      <Nav title="세종말싸미 이용도우미" />
       <Image
         src="/image/PaperBG.png"
         alt="BG"
