@@ -25,7 +25,6 @@ function Page() {
           const data = await getMyInfo();
           setMemberInfo(data);
         } catch (fetchError) {
-          console.error("회원 정보 가져오기 실패:", fetchError);
           setError("회원 정보를 불러오는 중 오류가 발생했습니다.");
         } finally {
           setIsLoading(false);
