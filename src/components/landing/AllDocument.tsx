@@ -1,14 +1,10 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-
-interface Document {
-  subject: string;
-  content: string;
-}
+import { DocumentPost } from "@/types/document";
 
 interface AllDocumentProps {
-  documents: Document[];
+  documents: DocumentPost[];
 }
 
 function AllDocument({ documents }: AllDocumentProps) {
@@ -39,9 +35,31 @@ function AllDocument({ documents }: AllDocumentProps) {
       <div className="font-pretendard-medium w-full rounded-[20px] border border-gray-100 bg-white px-[14px] py-[22px] text-[14px] shadow-lg shadow-gray-200">
         <div className="relative grid w-full grid-cols-[1fr_2fr] grid-rows-5 gap-[15px]">
           {documents.map(doc => (
-            <React.Fragment key={`${doc.subject}-${doc.content.slice(0, 5)}`}>
-              <div className="flex items-center overflow-hidden text-ellipsis whitespace-nowrap">{doc.subject}</div>
-              <div className="flex items-center overflow-hidden text-ellipsis whitespace-nowrap text-[#727272]">
+            <React.Fragment key={doc.documentPostId}>
+              <div
+                className="flex cursor-pointer items-center overflow-hidden text-ellipsis whitespace-nowrap"
+                onClick={() => checkAccessTokenAndNavigate(`/board/document/detail/${doc.documentPostId}`)}
+                onKeyDown={e => {
+                  if (e.key === "Enter") {
+                    checkAccessTokenAndNavigate(`/board/document/detail/${doc.documentPostId}`);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                {doc.subject}
+              </div>
+              <div
+                className="flex cursor-pointer items-center overflow-hidden text-ellipsis whitespace-nowrap text-[#727272]"
+                onClick={() => checkAccessTokenAndNavigate(`/board/document/detail/${doc.documentPostId}`)}
+                onKeyDown={e => {
+                  if (e.key === "Enter") {
+                    checkAccessTokenAndNavigate(`/board/document/detail/${doc.documentPostId}`);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
                 {doc.content}
               </div>
             </React.Fragment>
