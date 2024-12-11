@@ -9,12 +9,12 @@ import AllDocument from "@/components/landing/AllDocument";
 import AllQuestion from "@/components/landing/AllQuestion";
 import getAllDocuments from "@/apis/landing/getAllDocument";
 import getAllQuestions from "@/apis/landing/getAllQuestion";
+import getMyInfo from "@/apis/member/getMyInfo";
 import UploadFAB from "@/components/common/UploadFAB";
 import ScrollFAB from "@/components/common/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
 import Image from "next/image";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import refreshAccessToken from "@/apis/auth/refresh";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);
@@ -59,19 +59,38 @@ function Page() {
     return () => window.removeEventListener("scroll", handleScrollForFAB);
   }, []);
 
-  // refreshToken 호출
+  // userName 갱신
+  const storeUserName = async (): Promise<void> => {
+    try {
+      // getMyInfo API 호출
+      const memberInfo = await getMyInfo();
+      const studentName = memberInfo?.member?.studentName || "종이";
+
+      // 상태에 userName 저장
+      setUserName(studentName);
+    } catch (error) {
+      console.error("사용자 정보 불러오기 실패:", error);
+
+      // 기본값 설정
+      setUserName("종이");
+    }
+  };
+
   useEffect(() => {
-    const fetchAccessToken = async () => {
-      try {
-        await refreshAccessToken(); // accessToken 갱신
-        const storedUserName = sessionStorage.getItem("userName"); // userName 갱신
-        setUserName(storedUserName || "종이");
-      } catch (error) {
-        setUserName("종이");
-        console.error("Access token refresh failed:", error);
+    const initializeUserName = async () => {
+      const accessToken = sessionStorage.getItem("accessToken");
+
+      if (accessToken) {
+        // accessToken이 있는 경우 userName 갱신
+        await storeUserName();
+      } else {
+        // accessToken이 없는 경우 기본값 설정
+        const defaultName = "종이";
+        setUserName(defaultName);
       }
     };
-    fetchAccessToken();
+
+    initializeUserName();
   }, []);
 
   // 자료 출력
