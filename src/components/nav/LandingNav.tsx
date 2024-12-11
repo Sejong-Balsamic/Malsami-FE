@@ -147,7 +147,7 @@ function Nav() {
               <button
                 type="button"
                 className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 border-b-2 pl-[30px] text-[20px]"
-                onClick={() => handleNavigation("/mypage/help")}
+                onClick={() => handleNavigation("/help")}
               >
                 <Image src="/icons/Rule_Colored.svg" alt="Search" width={30} height={30} />
                 이용도우미
@@ -155,7 +155,7 @@ function Nav() {
               <button
                 type="button"
                 className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[20px]"
-                onClick={() => handleNavigation("/mypage/notice")}
+                onClick={() => handleNavigation("/notice")}
               >
                 <Image src="/icons/Notice_Colored.svg" alt="Search" width={30} height={30} />
                 공지사항
