@@ -44,9 +44,9 @@ function QuestionCard({
   return (
     <div className="... mb-3 flex flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]">
       <div className="mb-2.5 flex">
+        <SubjectTag subject={subject} />
         {!chaetaekStatus && rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
         {chaetaekStatus && <ChaeTakTag />}
-        <SubjectTag subject={subject} />
       </div>
       <div className="flex flex-row justify-between">
         {/* 왼쪽 텍스트 콘텐츠 */}
@@ -57,9 +57,9 @@ function QuestionCard({
           <p className="font-pretendard-medium mb-2 line-clamp-1 text-xs text-[#737373]">{content}</p>
           {/* 태그 및 기타 정보 */}
           <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
-            <div className="flex flex-wrap items-center">
+            {/* <div className="flex flex-wrap items-center">
               {JiJeongTags?.[0] && <DocJiJeongTag tag={tagTranslations[JiJeongTags[0]] || "알 수 없는 태그"} />}
-            </div>
+            </div> */}
             <div className="flex flex-wrap items-center">
               <span className="flex items-center">
                 <ImageWrapper src="/icons/LikeIcon.svg" />
