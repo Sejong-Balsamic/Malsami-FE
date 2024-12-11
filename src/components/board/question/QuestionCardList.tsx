@@ -25,7 +25,6 @@ export default function QuestionCardList({ categoryQNAs }: QnaCardListProps) {
           className="cursor-pointer"
         >
           <QuestionCard
-            JiJeongTags={question.questionPresetTags}
             title={question.title}
             content={question.content}
             thumbnail={question.thumbnailUrl}

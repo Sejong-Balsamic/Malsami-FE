@@ -2,12 +2,10 @@ import Image from "next/image";
 import getDateDiff from "@/utils/getDateDiff";
 import ImageWrapper from "../tags/ImageWrapper";
 import ChaeTakTag from "../tags/ChaeTakTag";
-import DocJiJeongTag from "../document/tags/DocJiJeongTag";
 import YeopjeonTag from "../tags/YeopjeonTag";
 import SubjectTag from "../tags/SubjectTag";
 
 interface QuestionCardProps {
-  JiJeongTags: string[];
   title: string;
   content: string;
   thumbnail: string;
@@ -19,18 +17,7 @@ interface QuestionCardProps {
   subject: string;
 }
 
-const tagTranslations: { [key: string]: string } = {
-  EXAM_PREPARATION: "시험 대비",
-  OUT_OF_CLASS: "수업 외 내용",
-  UNKNOWN_CONCEPT: "개념 모름",
-  BETTER_SOLUTION: "더 나은 풀이",
-  DOCUMENT_REQUEST: "자료 요청",
-  STUDY_TIPS: "공부 팁",
-  ADVICE_REQUEST: "조언 구함",
-};
-
 function QuestionCard({
-  JiJeongTags,
   title,
   content,
   thumbnail,
@@ -57,9 +44,6 @@ function QuestionCard({
           <p className="font-pretendard-medium mb-2 line-clamp-1 text-xs text-[#737373]">{content}</p>
           {/* 태그 및 기타 정보 */}
           <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
-            {/* <div className="flex flex-wrap items-center">
-              {JiJeongTags?.[0] && <DocJiJeongTag tag={tagTranslations[JiJeongTags[0]] || "알 수 없는 태그"} />}
-            </div> */}
             <div className="flex flex-wrap items-center">
               <span className="flex items-center">
                 <ImageWrapper src="/icons/LikeIcon.svg" />
