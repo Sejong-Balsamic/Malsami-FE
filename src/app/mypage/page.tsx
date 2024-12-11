@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { MemberDto } from "@/types/member";
-import getMyInfo from "@/apis/member/getMyInfo";
+import getMyInfo from "@/apis/member/getMyPage";
 import MyPageNav from "@/components/nav/MyPageNav";
 import BasicInfo from "@/components/mypage/BasicInfo";
 import InfoCard from "@/components/mypage/InfoCard";
