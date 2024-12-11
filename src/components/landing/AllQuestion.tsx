@@ -14,11 +14,24 @@ interface AllQuestionProps {
 function AllQuestion({ questions }: AllQuestionProps) {
   const router = useRouter();
 
+  const checkAccessTokenAndNavigate = (path: string) => {
+    const accessToken = sessionStorage.getItem("accessToken");
+    if (!accessToken) {
+      router.push("/login");
+    } else {
+      router.push(path);
+    }
+  };
+
   return (
     <div className="z-0 w-full pb-[176px] pt-[100px]">
       <div className="mb-[14px] flex w-full items-center justify-between">
         <span className="font-pretendard-semibold text-[18px]">전체 질문 게시판</span>
-        <button type="button" className="flex items-center gap-1" onClick={() => router.push("/board/question")}>
+        <button
+          type="button"
+          className="flex items-center gap-1"
+          onClick={() => checkAccessTokenAndNavigate("/board/document")}
+        >
           <span className="font-pretendard-medium text-[14px] text-[#03B8A3]">더보기 </span>
           <Image src="/icons/Move.svg" alt="Mypage" width={7} height={14} />
         </button>
