@@ -1,14 +1,10 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-
-interface Question {
-  subject: string;
-  content: string;
-}
+import { QuestionPost } from "@/types/question";
 
 interface AllQuestionProps {
-  questions: Question[];
+  questions: QuestionPost[];
 }
 
 function AllQuestion({ questions }: AllQuestionProps) {
@@ -30,7 +26,7 @@ function AllQuestion({ questions }: AllQuestionProps) {
         <button
           type="button"
           className="flex items-center gap-1"
-          onClick={() => checkAccessTokenAndNavigate("/board/document")}
+          onClick={() => checkAccessTokenAndNavigate("/board/question")}
         >
           <span className="font-pretendard-medium text-[14px] text-[#03B8A3]">더보기 </span>
           <Image src="/icons/Move.svg" alt="Mypage" width={7} height={14} />
@@ -39,9 +35,31 @@ function AllQuestion({ questions }: AllQuestionProps) {
       <div className="font-pretendard-medium w-full rounded-[20px] border border-gray-100 bg-white px-[14px] py-[22px] text-[14px] shadow-lg shadow-gray-200">
         <div className="relative grid w-full grid-cols-2 grid-cols-[1fr_2fr] grid-rows-5 gap-[15px]">
           {questions.map(qna => (
-            <React.Fragment key={`${qna.subject}-${qna.content.slice(0, 5)}`}>
-              <div className="flex items-center overflow-hidden text-ellipsis whitespace-nowrap">{qna.subject}</div>
-              <div className="flex items-center overflow-hidden text-ellipsis whitespace-nowrap text-[#727272]">
+            <React.Fragment key={qna.questionPostId}>
+              <div
+                className="flex cursor-pointer items-center overflow-hidden text-ellipsis whitespace-nowrap"
+                onClick={() => checkAccessTokenAndNavigate(`/board/question/detail/${qna.questionPostId}`)}
+                onKeyDown={e => {
+                  if (e.key === "Enter") {
+                    checkAccessTokenAndNavigate(`/board/question/detail/${qna.questionPostId}`);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
+                {qna.subject}
+              </div>
+              <div
+                className="flex cursor-pointer items-center overflow-hidden text-ellipsis whitespace-nowrap text-[#727272]"
+                onClick={() => checkAccessTokenAndNavigate(`/board/question/detail/${qna.questionPostId}`)}
+                onKeyDown={e => {
+                  if (e.key === "Enter") {
+                    checkAccessTokenAndNavigate(`/board/question/detail/${qna.questionPostId}`);
+                  }
+                }}
+                role="button"
+                tabIndex={0}
+              >
                 {qna.content}
               </div>
             </React.Fragment>
