@@ -58,11 +58,7 @@ function UploadFAB() {
         {isDivVisible && (
           <div className="absolute bottom-[70px] right-0 z-40 flex flex-col items-center space-y-[10px]">
             <div className="flex items-center gap-[10px]">
-              <span className="font-pretendard-medium w-[50px] text-right text-[14px] text-white">
-                질문
-                <br />
-                올리기
-              </span>
+              <span className="font-pretendard-medium w-[70px] text-right text-[14px] text-white">질문 올리기</span>
               <button
                 type="button"
                 className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
@@ -72,11 +68,7 @@ function UploadFAB() {
               </button>
             </div>
             <div className="flex items-center gap-[10px]">
-              <span className="font-pretendard-medium w-[50px] text-right text-[14px] text-white">
-                자료
-                <br />
-                올리기
-              </span>
+              <span className="font-pretendard-medium w-[70px] text-right text-[14px] text-white">자료 올리기</span>
               <button
                 type="button"
                 className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
