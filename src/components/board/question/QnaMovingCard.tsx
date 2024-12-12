@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
-import CategoryCard from "@/components/common/CategoryCard";
+import CategoryCard from "@/components/common/QuestionCard";
 
 interface QnaMovingCardProps {
   unansweredQNAs: {
