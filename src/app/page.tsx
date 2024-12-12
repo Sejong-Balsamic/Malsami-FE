@@ -12,7 +12,7 @@ import getAllQuestions from "@/apis/landing/getAllQuestion";
 import { QuestionPost } from "@/types/question";
 import { DocumentPost } from "@/types/document";
 import getMyInfo from "@/apis/member/getMyInfo";
-import UploadFAB from "@/components/common/UploadFAB";
+import UploadFAB from "@/components/common/UploadLandingFAB";
 import ScrollFAB from "@/components/common/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
 import Image from "next/image";
