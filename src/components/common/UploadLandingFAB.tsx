@@ -1,18 +1,21 @@
 "use client";
 
-import React, { useState } from "react";
+import * as React from "react";
 import { useRouter } from "next/navigation";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import Upload from "@/../public/icons/Upload.svg";
+import Close from "@/../public/icons/Close.svg";
 import DocumentIcon from "@/../public/icons/Document.svg";
 import QuestionIcon from "@/../public/icons/Question.svg";
 
 function UploadFAB() {
-  const [isDivVisible, setIsDivVisible] = useState(false);
   const router = useRouter();
-
-  const toggleDivVisibility = () => {
-    setIsDivVisible(prev => !prev);
-  };
+  const [isOpen, setIsOpen] = React.useState(false); // Dropdown 상태 관리
 
   const checkAccessTokenAndNavigate = (path: string) => {
     const accessToken = sessionStorage.getItem("accessToken");
@@ -32,32 +35,17 @@ function UploadFAB() {
   };
 
   return (
-    <div className="relative z-0">
-      {isDivVisible && (
-        <div
-          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
-          role="button"
-          tabIndex={0}
-          onClick={() => setIsDivVisible(false)}
-          onKeyDown={e => {
-            if (e.key === "Enter" || e.key === " ") {
-              setIsDivVisible(false);
-            }
-          }}
-          aria-label="Close Overlay"
-        />
-      )}
-      <div className="relative">
-        <button
-          type="button"
-          className="relative z-50 h-[50px] w-[50px] rounded-full bg-[#03b89e] shadow-lg"
-          onClick={toggleDivVisibility}
-        >
-          <Upload />
-        </button>
-        {isDivVisible && (
-          <div className="absolute bottom-[70px] right-0 z-40 flex flex-col items-center space-y-[10px]">
-            <div className="flex items-center gap-[10px]">
+    <>
+      {isOpen && <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm" />}
+      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
+        <DropdownMenuTrigger asChild>
+          <button type="button" className="relative z-50 h-[50px] w-[50px] rounded-full bg-[#03b89e] shadow-lg">
+            {isOpen ? <Close /> : <Upload />}
+          </button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <div className="relative mb-[5px] flex w-auto flex-col items-center gap-[10px]">
+            <DropdownMenuItem className="flex items-center gap-[10px]">
               <span className="font-pretendard-medium w-[70px] text-right text-[14px] text-white">질문 올리기</span>
               <button
                 type="button"
@@ -66,8 +54,8 @@ function UploadFAB() {
               >
                 <QuestionIcon className="h-[50px] w-[50px] text-[#03b89e]" />
               </button>
-            </div>
-            <div className="flex items-center gap-[10px]">
+            </DropdownMenuItem>
+            <DropdownMenuItem className="flex items-center gap-[10px]">
               <span className="font-pretendard-medium w-[70px] text-right text-[14px] text-white">자료 올리기</span>
               <button
                 type="button"
@@ -76,11 +64,11 @@ function UploadFAB() {
               >
                 <DocumentIcon className="h-[50px] w-[50px] text-[#03b89e]" />
               </button>
-            </div>
+            </DropdownMenuItem>
           </div>
-        )}
-      </div>
-    </div>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    </>
   );
 }
 
