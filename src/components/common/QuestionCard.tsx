@@ -50,18 +50,18 @@ function CategoryCard({
 }: CategoryCardProps) {
   return (
     <div className="flex items-center justify-center">
-      <div className="m-3 flex h-[166px] w-full flex-col">
+      <div className="m-3 flex min-h-[166px] w-full flex-col">
         {/* 상단 학과 제목 영역 */}
         <div className="flex h-[52px] items-end rounded-t-[20px] px-3.5 pb-2 pt-2" style={{ backgroundColor: color }}>
           <span className="font-pretendard-semibold line-clamp-2 text-sm leading-tight text-white">{subject}</span>
         </div>
 
         {/* 본문 영역 */}
-        <div className="shadow-gray flex h-[114px] flex-col justify-between rounded-b-[20px] bg-white px-3.5 pb-4 pt-2 shadow-md">
+        <div className="shadow-gray flex min-h-[114px] flex-col justify-between rounded-b-[20px] bg-white px-2 pb-4 pt-2 shadow-md">
           {/* 질문 부분, 태그들 부분 */}
-          <div className="flex min-h-[64px] flex-col justify-between">
+          <div className="flex flex-col justify-between">
             <div className="font-pretendard-bold line-clamp-2 pr-2 text-sm leading-[20px]">{title}</div>
-            <div className="mt-2 flex flex-wrap gap-2">
+            <div className="my-2 flex flex-wrap gap-1">
               {JiJeongTags.map(tag => (
                 <JiJeongTag key={tag} title={tagTranslations[tag] ?? tag} color={color} />
               ))}
