@@ -2,7 +2,7 @@ import React from "react";
 import Image from "next/image";
 
 interface ScrollFABProps {
-  targetRef: React.RefObject<HTMLDivElement>; // 부모에서 전달받는 Ref
+  targetRef: React.RefObject<HTMLDivElement>;
 }
 
 function ScrollFAB({ targetRef }: ScrollFABProps) {
@@ -16,8 +16,8 @@ function ScrollFAB({ targetRef }: ScrollFABProps) {
     <div className="z-0">
       <button
         type="button"
-        className="relative flex h-[50px] w-[50px] items-center justify-center rounded-full bg-gray-300 shadow-lg"
-        onClick={handleScroll} // 스크롤 이벤트 핸들러 추가
+        className="relative flex h-[50px] w-[50px] items-center justify-center rounded-full border border-[#E1E1E1] bg-white shadow-lg"
+        onClick={handleScroll}
       >
         <Image src="/icons/Scroll.svg" alt="Scroll Down" width={22} height={11} />
       </button>
