@@ -7,6 +7,8 @@ import { MemberDto } from "@/types/member";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import getMyInfo from "@/apis/member/getMyInfo";
 import useLogout from "@/hooks/useLogout";
+import { useDispatch } from "react-redux";
+import { showToast } from "@/utils/toastUtils";
 import Hamburger from "../../../public/icons/Hamburger.svg";
 
 function Nav() {
@@ -17,6 +19,7 @@ function Nav() {
   const [clickCount, setClickCount] = useState(0); // 클릭 횟수
   const [isEasterEggActive, setIsEasterEggActive] = useState(false); // 이스터 에그 활성화 상태
   const handleLogout = useLogout();
+  const dispatch = useDispatch();
 
   const handleLogoClick = () => setClickCount(prev => prev + 1);
 
@@ -37,9 +40,12 @@ function Nav() {
     if (token) {
       getMyInfo()
         .then(data => setMemberInfo(data))
-        .catch(error => console.error("Failed to fetch member info:", error));
+        .catch(error => {
+          const message = error.response?.data?.message || "사용자 정보를 가져오지 못했습니다.";
+          showToast(dispatch, message, "orange");
+        });
     }
-  }, []);
+  }, [dispatch]);
 
   const handleNavigation = (path: string) => {
     router.push(path);
