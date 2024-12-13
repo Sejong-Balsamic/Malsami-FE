@@ -17,3 +17,8 @@ export default function SubmitFormBtn({ onClick, disabled = false }: SubmitFormB
     </button>
   );
 }
+
+// defaultProps 선언. 없으면 eslint 오류
+SubmitFormBtn.defaultProps = {
+  disabled: false,
+};

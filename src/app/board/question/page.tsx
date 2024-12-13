@@ -26,8 +26,10 @@ export default function QuestionBoardPage() {
   const [categoryQNAs, setCategoryQNAs] = useState<QnaCard[]>([]); // 학과 선택 별 질문들 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const [isUnansweredLoading, setIsUnansweredLoading] = useState(false); // 로딩 상태 관리
+
+  // 페이지네이션 관리
   const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호
-  const [pageSize] = useState(16); // 페이지 크기 (한 페이지에 표시할 항목 수)
+  const [pageSize] = useState(15); // 페이지 크기 (한 페이지에 표시할 항목 수)
   const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
 
   // 로딩 상태에 따른 메시지
@@ -84,7 +86,6 @@ export default function QuestionBoardPage() {
     setPageNumber(1); // 페이지 번호 초기화
     getUnansweredDatas();
     getCategoryDatas();
-    console.log("faculty 상태 변경됨:", faculty);
   }, [faculty]); // faculty가 변경될 때 실행
 
   // 페이지 번호 변경 시 데이터 로드
@@ -97,7 +98,6 @@ export default function QuestionBoardPage() {
   useEffect(() => {
     setPageNumber(1); // 페이지 번호 초기화
     getCategoryDatas();
-    console.log("filterOptions 상태 변경됨:", filterOptions);
   }, [filterOptions]); // filterOptions가 변경될 때 실행
 
   return (
@@ -110,7 +110,7 @@ export default function QuestionBoardPage() {
           {renderLoadingMessage()}
         </div>
         <div className="flex items-center justify-center bg-[#EEEEEE]">
-          {isLoading || unansweredQNAs === null ? (
+          {isUnansweredLoading || unansweredQNAs === null ? (
             <LoadingSpinner />
           ) : (
             <div className="flex w-full min-w-[370px] transition-all duration-300 ease-in-out sm:px-10">
@@ -124,14 +124,14 @@ export default function QuestionBoardPage() {
           onFilterChange={newFilterOptions => {
             dispatch(setFilterOptions(newFilterOptions)); // Redux 상태 업데이트
           }}
-          // onFilterChange={newFilterOptions => dispatch(setFilterOptions(newFilterOptions))}
         />
         <div className="h-0.5 bg-[#EEEEEE]" />
         <div className="px-5 py-4">
-          <QuestionCardList categoryQNAs={categoryQNAs} />
+          {isLoading || categoryQNAs === null ? <LoadingSpinner /> : <QuestionCardList categoryQNAs={categoryQNAs} />}
+          {/* <QuestionCardList categoryQNAs={categoryQNAs} /> */}
         </div>
         {/* 페이지네이션 컴포넌트 */}
-        <Pagination pageNumber={pageNumber} totalPages={totalPages - 1} onPageChange={handlePageChange} />
+        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
       <div className="fixed bottom-5 right-5 z-10">
         <UploadQFAB />
