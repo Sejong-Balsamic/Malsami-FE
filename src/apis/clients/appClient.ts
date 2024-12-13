@@ -76,9 +76,9 @@ apiClient.interceptors.response.use(
       const errorMessage =
         errorData && typeof errorData === "object" && "errorMessage" in errorData
           ? (errorData as { errorMessage: string }).errorMessage
-          : "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.";
+          : "잠시 후 다시 시도해주세요.";
 
-      console.error("서버 오류:", errorMessage);
+      console.error("apiclient 오류:", errorMessage);
       alert(errorMessage);
     }
 
