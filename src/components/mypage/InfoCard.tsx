@@ -18,10 +18,39 @@ interface InfoProps {
     };
     totalLikeCount: number;
     expPercentile: number;
+    expRank: number;
   } | null;
 }
 
+const getRankName = (rank: number): string => {
+  const ranks = [
+    "정1품",
+    "종1품",
+    "정2품",
+    "종2품",
+    "정3품",
+    "종3품",
+    "정4품",
+    "종4품",
+    "정5품",
+    "종5품",
+    "정6품",
+    "종6품",
+    "정7품",
+    "종7품",
+    "정8품",
+    "종8품",
+    "정9품",
+    "종9품",
+  ];
+  return ranks[rank - 1] || "랭킹 없음"; // 기본값 처리
+};
+
 function InfoCard({ memberInfo }: InfoProps) {
+  const expRank = memberInfo?.expRank || 18; // 기본값: 종9품
+  const currentRank = getRankName(expRank); // 현재 품계
+  const nextRank = getRankName(expRank - 1); // 다음 품계
+
   return (
     <div className="relative w-full">
       <Swiper
@@ -33,14 +62,21 @@ function InfoCard({ memberInfo }: InfoProps) {
         <SwiperSlide>
           <div className="flex w-full flex-col gap-7 rounded-[15px] bg-[#95e4da] px-[20px] py-[30px]">
             <div>
-              <div className="mb-2">
+              <div className="flex items-center justify-between">
+                <div className="font-pretendard-medium text-[14px]">경험치</div>
+                <div className="flex items-center gap-1">
+                  <span className="font-pretendard-semibold text-[20px]"> {memberInfo?.exp.exp || "0"}</span>
+                  <span className="font-pretendard-medium text-[14px]">EXP</span>
+                  <Image src="/icons/Move.svg" alt="Move" width={6} height={12} className="h-[12px] w-[6px]" />
+                </div>
+              </div>
+              <div className="py-2">
                 <ExpBar value={memberInfo?.exp.exp || 0} />
               </div>
-              <div className="flex justify-between">
-                <div className="font-pretendard-medium text-[14px]">종3품</div>
-                <div className="font-pretendard-medium flex items-center gap-[6px] text-[14px]">
-                  {memberInfo?.exp.exp || "0"}
-                  <Image src="/icons/Move.svg" alt="Move" width={6} height={12} className="h-[12px] w-[6px]" />
+              <div className="flex items-center justify-between">
+                <div className="font-pretendard-medium text-[14px]">{currentRank}</div>
+                <div className="flex items-center gap-1">
+                  <span className="font-pretendard-medium text-[14px] text-[#016C5D]">{nextRank}</span>
                 </div>
               </div>
             </div>
@@ -50,7 +86,13 @@ function InfoCard({ memberInfo }: InfoProps) {
                 <div className="flex items-center gap-2">
                   <Image src="/icons/mypage/Like.svg" alt="Like" width={18} height={18} className="h-[18px] w-[18px]" />
                   <span className="font-pretendard-semibold text-[20px]">
-                    {memberInfo ? <AnimatedNumber target={memberInfo.expPercentile || 0} /> : "0%"}
+                    {memberInfo ? (
+                      <>
+                        <AnimatedNumber target={memberInfo.expPercentile || 0} />%
+                      </>
+                    ) : (
+                      "0%"
+                    )}
                   </span>
                 </div>
               </div>
@@ -60,7 +102,7 @@ function InfoCard({ memberInfo }: InfoProps) {
                 <div className="flex items-center gap-2">
                   <Image src="/icons/mypage/Like.svg" alt="Like" width={18} height={18} className="h-[18px] w-[18px]" />
                   <span className="font-pretendard-semibold text-[20px]">
-                    {memberInfo ? <AnimatedNumber target={memberInfo.totalLikeCount || 0} /> : "0%"}
+                    {memberInfo ? <AnimatedNumber target={memberInfo.totalLikeCount || 0} /> : "0"}
                   </span>
                 </div>
               </div>
