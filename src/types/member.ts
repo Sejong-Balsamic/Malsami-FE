@@ -80,6 +80,10 @@ export interface MemberDto {
   yeopjeonRank: number;
   totalYeopjeonMembers: number; // 총 (엽전을 가진) 사람 수 (전체 회원수)
   yeopjeonPercentile: number;
+  canAccessCheonmin: boolean;
+  canAccessJungin: boolean;
+  canAccessYangban: boolean;
+  canAccessKing: boolean;
   expRank: number;
   totalExpMembers: number; // 총 (경험치를 가진) 사람 수 (전체 회원수)
   expPercentile: number;
