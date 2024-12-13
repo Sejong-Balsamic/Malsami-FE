@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
 import { setDocMyFacultyFilterOptions } from "@/store/docFilterOptions/docMyFacultyFilterOptionsSlice";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
+import Pagination from "@/components/common/Pagination";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import getMyShortInfo from "@/apis/document/getMyShortInfo";
 import DocFilterControlBar from "@/components/board/document/DocFilterControlBar";
@@ -23,6 +24,18 @@ export default function DocMyFacultyPage() {
   const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
 
+  // 페이지네이션 관리
+  const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호
+  const [pageSize] = useState(15); // 페이지 크기 (한 페이지에 표시할 항목 수)
+  const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
+
+  // 페이지 변경
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPageNumber(newPage);
+    }
+  };
+
   const handleFilterChange = (newFilterOptions: DocFilterOptions) => {
     dispatch(setDocMyFacultyFilterOptions(newFilterOptions)); // Redux에 업데이트
   };
@@ -32,15 +45,16 @@ export default function DocMyFacultyPage() {
       documentTypes: docMyFacultyFilterOptions.tags,
       sortType: docMyFacultyFilterOptions.sortOption,
       facultys,
-      pageNumber: 0, // 기본 페이지 번호
-      pageSize: 12, // 페이지 크기
+      pageNumber: pageNumber - 1,
+      pageSize,
     };
 
     setIsLoading(true);
     try {
       const response = await getFilteringDocs(params);
       console.log(response);
-      setDocCards(response);
+      setDocCards(response.content);
+      setTotalPages(response.totalPages); // 총 페이지 수 업데이트
     } catch (error) {
       console.error("문서 필터링 목록을 가져오는 중 오류 발생:", error);
     } finally {
@@ -49,8 +63,14 @@ export default function DocMyFacultyPage() {
   };
 
   useEffect(() => {
+    setPageNumber(1); // 페이지 번호 초기화
     fetchDocs();
   }, [docMyFacultyFilterOptions]);
+
+  useEffect(() => {
+    fetchDocs();
+    window.scrollTo(0, 0);
+  }, [pageNumber]);
 
   useEffect(() => {
     const fetchMyInfo = async () => {
@@ -91,6 +111,8 @@ export default function DocMyFacultyPage() {
             ))
           )}
         </div>
+        {/* 페이지네이션 컴포넌트 */}
+        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
   );

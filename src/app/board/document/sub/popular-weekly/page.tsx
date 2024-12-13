@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import { DocCardProps } from "@/types/docCard.type";
+import Pagination from "@/components/common/Pagination";
 import DocCard from "@/components/board/document/DocCard";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import getDocWeeklyPopulars from "@/apis/document/docMainPage/getDocWeeklyPopulars";
@@ -12,12 +13,28 @@ export default function PopularWeekly() {
   const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
 
+  // 페이지네이션 관리
+  const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호
+  const [pageSize] = useState(15); // 페이지 크기 (한 페이지에 표시할 항목 수)
+  const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
+
+  // 페이지 변경
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPageNumber(newPage);
+    }
+  };
+
   const fetchDocs = async () => {
+    const params = {
+      pageNumber: pageNumber - 1,
+      pageSize,
+    };
     setIsLoading(true);
     try {
-      const response = await getDocWeeklyPopulars();
-      console.log(response);
-      setDocCards(response);
+      const response = await getDocWeeklyPopulars(params);
+      setDocCards(response.content);
+      setTotalPages(response.totalPages); // 총 페이지 수 업데이트
     } catch (error) {
       console.error("문서 필터링 목록을 가져오는 중 오류 발생:", error);
     } finally {
@@ -27,7 +44,8 @@ export default function PopularWeekly() {
 
   useEffect(() => {
     fetchDocs();
-  }, []);
+    window.scrollTo(0, 0);
+  }, [pageNumber]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
@@ -55,6 +73,8 @@ export default function PopularWeekly() {
             ))
           )}
         </div>
+        {/* 페이지네이션 컴포넌트 */}
+        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
   );

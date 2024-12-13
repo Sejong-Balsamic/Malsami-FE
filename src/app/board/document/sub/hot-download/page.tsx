@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
+import Pagination from "@/components/common/Pagination";
 import { setDocHotDownFilterOptions } from "@/store/docFilterOptions/docHotDownFilterOptionsSlice";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
@@ -21,21 +22,33 @@ export default function DocHotdownloadPage() {
   const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
 
+  // 페이지네이션 관리
+  const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호
+  const [pageSize] = useState(15); // 페이지 크기 (한 페이지에 표시할 항목 수)
+  const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
+
+  // 페이지 변경
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPageNumber(newPage);
+    }
+  };
+
   const handleFilterChange = (newFilterOptions: DocFilterOptions) => {
     dispatch(setDocHotDownFilterOptions(newFilterOptions)); // Redux에 업데이트
   };
 
   const fetchDocs = async () => {
     const params = {
-      pageNumber: 0, // 기본 페이지 번호
-      pageSize: 12, // 페이지 크기
+      pageNumber: pageNumber - 1,
+      pageSize,
     };
 
     setIsLoading(true);
     try {
       const response = await getHotDownloadDocs(params);
-      console.log(response);
-      setDocCards(response);
+      setDocCards(response.content);
+      setTotalPages(response.totalPages); // 총 페이지 수 업데이트
     } catch (error) {
       console.error("문서 필터링 목록을 가져오는 중 오류 발생:", error);
     } finally {
@@ -44,8 +57,14 @@ export default function DocHotdownloadPage() {
   };
 
   useEffect(() => {
+    setPageNumber(1); // 페이지 번호 초기화
     fetchDocs();
   }, [docHotDownFilterOptions]);
+
+  useEffect(() => {
+    fetchDocs();
+    window.scrollTo(0, 0);
+  }, [pageNumber]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
@@ -74,6 +93,8 @@ export default function DocHotdownloadPage() {
             ))
           )}
         </div>
+        {/* 페이지네이션 컴포넌트 */}
+        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
   );
