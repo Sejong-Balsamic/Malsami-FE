@@ -49,8 +49,15 @@ function TierImage({ memberInfo }: InfoProps) {
   return (
     <div>
       {tierImage && (
-        <Image src={tierImage} alt={altText} width={150} height={150} className="absolute bottom-[210px] z-0" />
+        <Image
+          src={tierImage}
+          alt={altText}
+          width={150}
+          height={150}
+          className="absolute bottom-[210px] left-[20px] z-0"
+        />
       )}
+      <div className="absolute h-full w-full flex-col gap-7 rounded-[15px] border-2 border-[#95e4da] bg-white px-[20px] py-[30px]" />
     </div>
   );
 }

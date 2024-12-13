@@ -1,11 +1,12 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectFlip } from "swiper/modules"; // EffectFlip을 modules에서 가져오기
+import { EffectFlip } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-flip";
 import Image from "next/image";
 import AnimatedNumber from "@/utils/AnimatedNumber";
 import ExpBar from "./ExpBar";
+import { ScrollArea } from "../ui/scroll-area";
 
 interface InfoProps {
   memberInfo: {
@@ -112,12 +113,53 @@ function InfoCard({ memberInfo }: InfoProps) {
 
         {/* 슬라이드 뒷면 */}
         <SwiperSlide>
-          <div className="flex w-full flex-col gap-7 rounded-[15px] border-2 border-[#95e4da] bg-white px-[20px] py-[30px]">
+          <div className="flex h-full w-full flex-col gap-3 rounded-[15px] border-2 border-[#95e4da] bg-white p-5">
             <span className="font-pretendard-medium">
-              세종말싸미에는 레베루가 존재합니다.. 바로바로 품계명인데요 종9품 정9품 종8품 정8품 종7품 정7품 종6품 정6품
-              종5품 정5품 종4품 정4품 종3품 정3품 종2품 정2품 종1품 정1품 <br />
-              열심히 해서 품계를 올려봅시다 !!
+              <span className="font-pretendard-semibold">세종말싸미</span>에는
+              <span className="font-pretendard-semibold text-[#03B89E]"> 경험치</span>를 기준으로 품계가 존재합니다.
+              <br />
+              종9품 ~ 정1품까지 총 18개로 이루어져 있으며
+              <br />각 품계의 경험치 기준은 아래 표를 참고해주세요.
             </span>
+            <ScrollArea className="relative h-[100px] w-full rounded-[15px] bg-[#95e4da] p-2">
+              <div className="grid h-auto w-full grid-cols-3 gap-2 p-2">
+                {Array.from({ length: 18 }).map((_, index) => (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <React.Fragment key={index}>
+                    <div className="font-pretendard-semibold flex items-center justify-start text-[18px]">
+                      #{index + 1}
+                    </div>
+                    <div className="font-pretendard-medium flex items-center justify-start text-[14px]">
+                      {
+                        [
+                          "정1품",
+                          "종1품",
+                          "정2품",
+                          "종2품",
+                          "정3품",
+                          "종3품",
+                          "정4품",
+                          "종4품",
+                          "정5품",
+                          "종5품",
+                          "정6품",
+                          "종6품",
+                          "정7품",
+                          "종7품",
+                          "정8품",
+                          "종8품",
+                          "정9품",
+                          "종9품",
+                        ][17 - index]
+                      }
+                    </div>
+                    <div className="font-pretendard-medium flex items-center justify-end text-[14px]">
+                      {index * 500} EXP 이상
+                    </div>
+                  </React.Fragment>
+                ))}
+              </div>
+            </ScrollArea>
           </div>
         </SwiperSlide>
       </Swiper>
