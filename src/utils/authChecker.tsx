@@ -13,7 +13,7 @@ export default function AuthChecker({ children }: AuthCheckerProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const publicPaths = ["/", "/notice", "/help"];
+    const publicPaths = ["/", "/notice", "/login", "/help"];
     const currentPath = window.location.pathname; // 현재 경로 가져오기
     const accessToken = sessionStorage.getItem("accessToken");
 
