@@ -60,8 +60,8 @@ function InfoCard({ memberInfo }: InfoProps) {
         className="h-full w-full"
       >
         {/* 슬라이드 앞면 */}
-        <SwiperSlide>
-          <div className="flex w-full flex-col gap-7 rounded-[15px] bg-[#95e4da] px-[20px] py-[30px]">
+        <SwiperSlide className="flex rounded-[15px] bg-[#95e4da]">
+          <div className="flex h-full w-full flex-col gap-7 px-[20px] py-5">
             <div>
               <div className="flex items-center justify-between">
                 <div className="font-pretendard-medium text-[14px]">경험치</div>
@@ -112,17 +112,16 @@ function InfoCard({ memberInfo }: InfoProps) {
         </SwiperSlide>
 
         {/* 슬라이드 뒷면 */}
-        <SwiperSlide>
-          <div className="flex h-full w-full flex-col gap-3 rounded-[15px] border-2 border-[#95e4da] bg-white p-5">
-            <span className="font-pretendard-medium">
+        <SwiperSlide className="flex items-stretch rounded-[15px] border-2 border-[#95e4da] bg-white">
+          <div className="flex h-full w-full flex-col gap-3 p-5">
+            <span className="font-pretendard-medium text-[14px]">
               <span className="font-pretendard-semibold">세종말싸미</span>에는
               <span className="font-pretendard-semibold text-[#03B89E]"> 경험치</span>를 기준으로 품계가 존재합니다.
               <br />
-              종9품 ~ 정1품까지 총 18개로 이루어져 있으며
-              <br />각 품계의 경험치 기준은 아래 표를 참고해주세요.
+              종9품 ~ 정1품까지 총 18개로 이루어져 있으며 각 품계의 경험치 기준은 아래 표를 참고해주세요.
             </span>
-            <ScrollArea className="relative h-[100px] w-full rounded-[15px] bg-[#95e4da] p-2">
-              <div className="grid h-auto w-full grid-cols-3 gap-2 p-2">
+            <ScrollArea className="relative h-[98px] w-full rounded-[15px] bg-[#95e4da] p-2">
+              <div className="grid h-auto w-full grid-cols-3 gap-2 p-1">
                 {Array.from({ length: 18 }).map((_, index) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <React.Fragment key={index}>
