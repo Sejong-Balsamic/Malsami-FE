@@ -84,7 +84,7 @@ function InfoCard({ memberInfo }: InfoProps) {
               <div className="flex flex-col items-center justify-center">
                 <div className="font-pretendard-medium text-[16px]">상위</div>
                 <div className="flex items-center gap-2">
-                  <Image src="/icons/mypage/Like.svg" alt="Like" width={18} height={18} className="h-[18px] w-[18px]" />
+                  <Image src="/icons/mypage/Rank.svg" alt="Rank" width={18} height={18} className="h-[18px] w-[18px]" />
                   <span className="font-pretendard-semibold text-[20px]">
                     {memberInfo ? (
                       <>
