@@ -49,7 +49,18 @@ function QnaFilterFacultyCategory() {
             }`}
           >
             {faculty === "전체" ? lastSelected : faculty} {/* faculty가 "전체"인 경우 lastSelected를 표시 */}
-            <span onClick={openModal}>
+            <span
+              onClick={openModal}
+              role="button"
+              tabIndex={0}
+              onKeyDown={e => {
+                if (e.key === "Enter") {
+                  openModal();
+                }
+              }}
+              className="cursor-pointer"
+            >
+              {" "}
               <ImageWrapper src="/icons/ToggleIcon.svg" />
             </span>
           </button>

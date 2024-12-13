@@ -3,12 +3,11 @@
 import DetailPageNav from "@/components/nav/DDetailNav";
 import DocDetail from "@/components/board/document/detail/DocDetail";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import getDocumentDetails from "@/apis/document/getDocumentDetails";
 import { DocumentData } from "@/types/DocumentDetailData";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { useRouter } from "next/navigation";
 
 export default function Page() {
   const router = useRouter();
