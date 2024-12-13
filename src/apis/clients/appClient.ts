@@ -63,7 +63,6 @@ apiClient.interceptors.response.use(
         // refreshAccessToken 실패 시 403으로 처리
         if (!isRedirecting) {
           isRedirecting = true;
-          window.location.href = "/login";
         }
         return Promise.reject(refreshError); // 오류를 상위로 전달
       }
