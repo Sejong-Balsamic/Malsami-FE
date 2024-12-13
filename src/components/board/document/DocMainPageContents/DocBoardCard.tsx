@@ -26,7 +26,22 @@ export default function DocBoardCard({ title, link, accessible }: DocCategoryCar
         return "/icons/CheonminIcon.svg"; // 기본값을 설정하여 undefined 방지
     }
   };
+  const getImageNoDurumariSrc = () => {
+    switch (title) {
+      case "천민":
+        return "/icons/tier/CheonminNoDurumari.svg";
+      case "중인":
+        return "/icons/tier/JunginNoDurumari.svg";
+      case "양반":
+        return "/icons/tier/YangbanNoDurumari.svg";
+      case "왕":
+        return "/icons/tier/KingNoDurumari.svg";
+      default:
+        return "/icons/tier/CheonminNoDurumari.svg"; // 기본값을 설정하여 undefined 방지
+    }
+  };
   const imageSrc = getImageSrc();
+  const imageNoDurumariSrc = getImageNoDurumariSrc();
 
   const handleCardClick = (e: React.MouseEvent) => {
     if (!accessible) {
@@ -56,7 +71,7 @@ export default function DocBoardCard({ title, link, accessible }: DocCategoryCar
           onClick={handleCardClick}
           className="rounded-full transition-transform hover:scale-105"
         >
-          <Image src={imageSrc} alt={title} width={66} height={66} className="rounded-full" />
+          <Image src={imageNoDurumariSrc} alt={title} width={66} height={66} className="rounded-full" />
         </Link>
         {/* 게시판 카테고리 제목 */}
         <span className={`font-pretendard-medium text-xs ${accessible ? "text-black" : "text-gray-400"}`}>
