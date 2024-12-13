@@ -47,10 +47,11 @@ function QnaFilterFacultyCategory() {
                 ? "font-pretendard-medium border-b-2 border-[#EEEEEE] text-[#ABABAB]"
                 : "font-pretendard-semibold border-b-2 border-custom-blue-500 text-black"
             }`}
-            onClick={openModal}
           >
             {faculty === "전체" ? lastSelected : faculty} {/* faculty가 "전체"인 경우 lastSelected를 표시 */}
-            <ImageWrapper src="/icons/ToggleIcon.svg" />
+            <span onClick={openModal}>
+              <ImageWrapper src="/icons/ToggleIcon.svg" />
+            </span>
           </button>
           <QnaSelectFacultyModal isVisible={isModalOpen} onClose={closeModal} onSelect={handleSelect} />
         </div>
