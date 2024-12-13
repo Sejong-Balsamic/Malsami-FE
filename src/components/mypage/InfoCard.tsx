@@ -166,7 +166,7 @@ function InfoCard({ memberInfo }: InfoProps) {
               종9품 ~ 정1품까지 총 18개로 이루어져 있으며 각 품계의 경험치 기준은 아래 표를 참고해주세요.
             </span>
             <ScrollArea className="relative h-[98px] w-full rounded-[15px] bg-[#95e4da] p-2">
-              <div className="grid h-auto w-full grid-cols-3 gap-2 p-1">
+              <div className="grid h-auto w-full grid-cols-3 gap-2 p-1" style={{ gridTemplateColumns: "1fr 1fr 2fr" }}>
                 {Array.from({ length: 18 }).map((_, index) => (
                   // eslint-disable-next-line react/no-array-index-key
                   <React.Fragment key={index}>
