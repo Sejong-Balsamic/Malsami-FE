@@ -44,7 +44,7 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
 
   formData.append("subject", "");
   formData.append("pageNumber", (params.pageNumber ?? 0).toString());
-  formData.append("pageSize", (params.pageSize ?? 30).toString());
+  formData.append("pageSize", (params.pageSize ?? 15).toString());
   // 선택적 파라미터 추가
   if (params.questionPresetTags && params.questionPresetTags.length > 0) {
     params.questionPresetTags.forEach(tag => {

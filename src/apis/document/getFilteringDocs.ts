@@ -46,15 +46,15 @@ export default async function getFilteringDocs(params: FilteringDocListParams) {
     if (params.postTier) formData.append("postTier", tierMapping[params.postTier]); // 자료 등급별
     if (params.sortType) formData.append("sortType", sortOptionMapping[params.sortType]); // 정렬 기준
 
-    formData.append("pageNumber", params.pageNumber?.toString() || "0"); // 페이지 번호
-    formData.append("pageSize", params.pageSize?.toString() || "12"); // 페이지 크기
+    formData.append("pageNumber", (params.pageNumber ?? 0).toString()); // 페이지 번호
+    formData.append("pageSize", (params.pageSize ?? 15).toString()); // 페이지 크기
 
     const response = await apiClient.post("/api/document/filter", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
     });
-    return response.data.documentPostsPage.content; // API 호출 결과만 반환
+    return response.data.documentPostsPage; // API 호출 결과만 반환
   } catch (error) {
     console.error("내 전공 관련 자료 목록을 가져오는 중 오류 발생:", error);
     throw error; // 오류 발생 시 오류를 그대로 throw

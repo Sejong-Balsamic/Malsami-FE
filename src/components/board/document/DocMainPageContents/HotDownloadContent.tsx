@@ -17,7 +17,7 @@ export default function HotDownloadContent() {
       };
       try {
         const response = await getHotDownloadDocs(params); // API 호출
-        const data = response.map((item: any) => ({
+        const data = response.content.map((item: any) => ({
           postId: item.documentPostId,
           subject: item.subject || "과목명",
           title: item.title || "타이틀",

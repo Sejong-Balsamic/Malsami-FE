@@ -10,16 +10,18 @@ export default function WeeklyPopularContent() {
 
   useEffect(() => {
     const fetchPopularItems = async () => {
+      const params = {
+        pageNumber: 0,
+        pageSize: 5,
+      };
       try {
-        const response = await getDocWeeklyPopulars();
-        const data = response
-          .slice(0, 5) // 첫 5개 데이터만 선택
-          .map((item: any, index: number) => ({
-            postId: item.documentPostId,
-            rank: index + 1,
-            subject: item.subject || "과목명",
-            title: item.title || "타이틀",
-          }));
+        const response = await getDocWeeklyPopulars(params);
+        const data = response.content.slice(0, 5).map((item: any, index: number) => ({
+          postId: item.documentPostId,
+          rank: index + 1,
+          subject: item.subject || "과목명",
+          title: item.title || "타이틀",
+        }));
         setPopularItems(data);
       } catch (error) {
         console.error("주간 인기글 데이터를 불러오는 중 오류 발생:", error);
