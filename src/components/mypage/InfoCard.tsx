@@ -16,42 +16,87 @@ interface InfoProps {
     exp: {
       exp: number;
       expId: string;
+      expTier: string;
     };
     totalLikeCount: number;
     expPercentile: number;
-    expRank: number;
   } | null;
 }
 
-const getRankName = (rank: number): string => {
-  const ranks = [
-    "정1품",
-    "종1품",
-    "정2품",
-    "종2품",
-    "정3품",
-    "종3품",
-    "정4품",
-    "종4품",
-    "정5품",
-    "종5품",
-    "정6품",
-    "종6품",
-    "정7품",
-    "종7품",
-    "정8품",
-    "종8품",
-    "정9품",
-    "종9품",
-  ];
-  return ranks[rank - 1] || "랭킹 없음"; // 기본값 처리
+const getRankName = (
+  tier: "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H" | "I" | "J" | "K" | "L" | "M" | "N" | "O" | "P" | "Q" | "R",
+): string => {
+  const ranks = {
+    A: "정1품",
+    B: "종1품",
+    C: "정2품",
+    D: "종2품",
+    E: "정3품",
+    F: "종3품",
+    G: "정4품",
+    H: "종4품",
+    I: "정5품",
+    J: "종5품",
+    K: "정6품",
+    L: "종6품",
+    M: "정7품",
+    N: "종7품",
+    O: "정8품",
+    P: "종8품",
+    Q: "정9품",
+    R: "종9품",
+  };
+  return ranks[tier] || "랭킹 없음"; // 기본값 처리
 };
 
 function InfoCard({ memberInfo }: InfoProps) {
-  const expRank = memberInfo?.expRank || 18; // 기본값: 종9품
-  const currentRank = getRankName(expRank); // 현재 품계
-  const nextRank = getRankName(expRank - 1); // 다음 품계
+  const expTier = memberInfo?.exp.expTier || "R"; // 기본값: 종9품
+  const currentRank = getRankName(
+    expTier as
+      | "A"
+      | "B"
+      | "C"
+      | "D"
+      | "E"
+      | "F"
+      | "G"
+      | "H"
+      | "I"
+      | "J"
+      | "K"
+      | "L"
+      | "M"
+      | "N"
+      | "O"
+      | "P"
+      | "Q"
+      | "R",
+  ); // 현재 품계
 
+  const nextRank =
+    expTier > "A"
+      ? getRankName(
+          String.fromCharCode(expTier.charCodeAt(0) - 1) as
+            | "A"
+            | "B"
+            | "C"
+            | "D"
+            | "E"
+            | "F"
+            | "G"
+            | "H"
+            | "I"
+            | "J"
+            | "K"
+            | "L"
+            | "M"
+            | "N"
+            | "O"
+            | "P"
+            | "Q"
+            | "R",
+        )
+      : "랭킹 없음"; // 다음 품계
   return (
     <div className="relative w-full">
       <Swiper
