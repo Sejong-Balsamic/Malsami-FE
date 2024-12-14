@@ -17,15 +17,11 @@ function Page() {
 
   useEffect(() => {
     const fetchMemberInfo = async () => {
-      try {
-        setIsLoading(true);
-        const data = await getMyInfo();
-        setMemberInfo(data);
-      } finally {
-        setIsLoading(false);
-      }
+      setIsLoading(true);
+      const data = await getMyInfo();
+      setMemberInfo(data || {});
+      setIsLoading(false);
     };
-
     fetchMemberInfo();
   }, []);
 
