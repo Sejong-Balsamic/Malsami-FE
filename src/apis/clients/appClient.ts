@@ -63,8 +63,9 @@ apiClient.interceptors.response.use(
         // refreshAccessToken 실패 시 403으로 처리
         if (!isRedirecting) {
           isRedirecting = true;
-          alert("해당 페이지는 로그인을 해야 열람할 수 있습니다.");
           window.location.href = "/login";
+
+          alert("해당 페이지는 로그인을 해야 열람할 수 있습니다.");
         }
         return Promise.reject(refreshError); // 오류를 상위로 전달
       }

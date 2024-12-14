@@ -24,7 +24,7 @@ export default function AuthChecker({ children }: AuthCheckerProps) {
 
   const handleCloseModal = () => {
     setIsModalOpen(false);
-    router.replace("/"); // 랜딩 페이지로 리디렉트
+    router.replace("/login"); // 랜딩 페이지로 리다이렉트
   };
 
   return (
