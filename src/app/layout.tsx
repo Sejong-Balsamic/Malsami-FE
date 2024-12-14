@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
-import AuthChecker from "@/utils/authChecker";
 import Providers from "./providers"; // Redux Provider 컴포넌트
 import "./globals.css";
 
