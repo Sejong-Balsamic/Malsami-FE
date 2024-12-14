@@ -10,24 +10,15 @@ interface AllDocumentProps {
 function AllDocument({ documents }: AllDocumentProps) {
   const router = useRouter();
 
-  const checkAccessTokenAndNavigate = (path: string) => {
-    const accessToken = sessionStorage.getItem("accessToken");
-    if (!accessToken) {
-      router.push("/login");
-    } else {
-      router.push(path);
-    }
+  const handleNavigation = (path: string) => {
+    router.push(path);
   };
 
   return (
     <div className="z-0 w-full pb-[176px] pt-[100px]">
       <div className="mb-[14px] flex w-full items-center justify-between">
         <span className="font-pretendard-semibold text-[18px]">전체 자료 게시판</span>
-        <button
-          type="button"
-          className="flex items-center gap-1"
-          onClick={() => checkAccessTokenAndNavigate("/board/document")}
-        >
+        <button type="button" className="flex items-center gap-1" onClick={() => handleNavigation("/board/document")}>
           <span className="font-pretendard-medium text-[14px] text-[#03B8A3]">더보기 </span>
           <Image src="/icons/Move.svg" alt="Mypage" width={7} height={14} />
         </button>
@@ -38,10 +29,10 @@ function AllDocument({ documents }: AllDocumentProps) {
             <React.Fragment key={doc.documentPostId}>
               <div
                 className="flex cursor-pointer items-center overflow-hidden text-ellipsis whitespace-nowrap"
-                onClick={() => checkAccessTokenAndNavigate(`/board/document/detail/${doc.documentPostId}`)}
+                onClick={() => handleNavigation(`/board/document/detail/${doc.documentPostId}`)}
                 onKeyDown={e => {
                   if (e.key === "Enter") {
-                    checkAccessTokenAndNavigate(`/board/document/detail/${doc.documentPostId}`);
+                    handleNavigation(`/board/document/detail/${doc.documentPostId}`);
                   }
                 }}
                 role="button"
@@ -51,10 +42,10 @@ function AllDocument({ documents }: AllDocumentProps) {
               </div>
               <div
                 className="flex cursor-pointer items-center overflow-hidden text-ellipsis whitespace-nowrap text-[#727272]"
-                onClick={() => checkAccessTokenAndNavigate(`/board/document/detail/${doc.documentPostId}`)}
+                onClick={() => handleNavigation(`/board/document/detail/${doc.documentPostId}`)}
                 onKeyDown={e => {
                   if (e.key === "Enter") {
-                    checkAccessTokenAndNavigate(`/board/document/detail/${doc.documentPostId}`);
+                    handleNavigation(`/board/document/detail/${doc.documentPostId}`);
                   }
                 }}
                 role="button"

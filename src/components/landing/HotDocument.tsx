@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,6 +8,7 @@ import { DocumentPost } from "@/types/documentPost.types";
 import MovingCardDocument from "./MovingCardDocument";
 
 function HotDocument() {
+  const router = useRouter();
   const [weekData, setWeekData] = useState<DocumentPost[]>([]);
   const [dayData, setDayData] = useState<DocumentPost[]>([]);
 
@@ -25,13 +27,8 @@ function HotDocument() {
     getDailyData();
   }, []);
 
-  const checkAccessTokenAndNavigate = (path: string) => {
-    const accessToken = sessionStorage.getItem("accessToken");
-    if (!accessToken) {
-      window.location.href = "/login";
-    } else {
-      window.location.href = path;
-    }
+  const handleNavigation = (path: string) => {
+    router.push(path);
   };
 
   return (
@@ -61,7 +58,7 @@ function HotDocument() {
           </CardContent>
           <CardFooter>
             <Button
-              onClick={() => checkAccessTokenAndNavigate("/board/document/sub/popular-weekly")}
+              onClick={() => handleNavigation("/board/document/sub/popular-weekly")}
               className="font-pretendard-semibold h-[30px] w-full rounded-[10px] bg-[#03b8a3] text-[12px] text-white"
             >
               더보기
@@ -84,7 +81,7 @@ function HotDocument() {
           </CardContent>
           <CardFooter>
             <Button
-              onClick={() => checkAccessTokenAndNavigate("/board/document/sub/popular-daily")}
+              onClick={() => handleNavigation("/board/document/sub/popular-daily")}
               className="font-pretendard-semibold h-[30px] w-full rounded-[10px] bg-[#03b8a3] text-[12px] text-white"
             >
               더보기
