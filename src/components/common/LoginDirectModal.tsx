@@ -5,12 +5,12 @@ interface ModalProps {
   onClose: () => void;
 }
 
-function LandingDirectModal({ isOpen, onClose }: ModalProps) {
+function LoginDirectModal({ isOpen, onClose }: ModalProps) {
   if (!isOpen) return null;
 
   const handleConfirm = () => {
     onClose();
-    window.location.href = "/"; // 랜딩 페이지로 이동
+    window.location.href = "/login"; // 로그인 페이지로 이동
   };
 
   return (
@@ -35,7 +35,7 @@ function LandingDirectModal({ isOpen, onClose }: ModalProps) {
               onClick={handleConfirm}
               className="font-pretendard-semibold h-[30px] w-full rounded-lg bg-[#0062d2] text-[14px] text-white"
             >
-              랜딩페이지로 가기
+              로그인페이지로 가기
             </button>
           </div>
         </div>
@@ -44,4 +44,4 @@ function LandingDirectModal({ isOpen, onClose }: ModalProps) {
   );
 }
 
-export default LandingDirectModal;
+export default LoginDirectModal;

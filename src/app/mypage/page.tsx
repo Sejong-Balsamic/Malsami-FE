@@ -14,23 +14,15 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 function Page() {
   const [memberInfo, setMemberInfo] = useState<MemberDto | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchMemberInfo = async () => {
-      const token = sessionStorage.getItem("accessToken");
-      if (token) {
-        try {
-          setIsLoading(true);
-          const data = await getMyInfo();
-          setMemberInfo(data);
-        } catch (fetchError) {
-          setError("회원 정보를 불러오는 중 오류가 발생했습니다.");
-        } finally {
-          setIsLoading(false);
-        }
-      } else {
-        setError("로그인이 필요합니다.");
+      try {
+        setIsLoading(true);
+        const data = await getMyInfo();
+        setMemberInfo(data);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -38,14 +30,6 @@ function Page() {
   }, []);
 
   if (isLoading) return <LoadingSpinner />;
-
-  if (error) {
-    return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="text-red-600">{error}</p>
-      </div>
-    );
-  }
 
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
