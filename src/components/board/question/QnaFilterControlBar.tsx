@@ -101,8 +101,8 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
   };
 
   return (
-    <div className="flex justify-between px-5 py-3">
-      <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
+    <div className="flex h-12 justify-between px-5 py-3">
+      <div className="scrollbar-hide flex overflow-x-auto whitespace-nowrap">
         {filterOptions.sortOption && (
           <JiJeongTag
             key={filterOptions.sortOption}
@@ -153,8 +153,8 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
         <Image
           src="/icons/FilterIcon.svg"
           alt="filter"
-          width={16}
-          height={16}
+          width={18}
+          height={18}
           onClick={openModal}
           className="ml-1.5 cursor-pointer"
         />
