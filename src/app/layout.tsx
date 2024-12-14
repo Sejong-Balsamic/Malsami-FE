@@ -43,7 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Providers>
-          <AuthChecker>{children}</AuthChecker> {/* AuthChecker로 인증 확인 */}
+          {children}
           <Toaster />
         </Providers>
       </body>
