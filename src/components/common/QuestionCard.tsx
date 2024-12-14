@@ -30,16 +30,16 @@ interface CategoryCardProps {
 }
 
 const tagTranslations: { [key: string]: string } = {
-  EXAM_PREPARATION: "시험 대비",
-  OUT_OF_CLASS: "수업 외 내용",
-  UNKNOWN_CONCEPT: "개념 모름",
-  BETTER_SOLUTION: "더 나은 풀이",
-  DOCUMENT_REQUEST: "자료 요청",
-  STUDY_TIPS: "공부 팁",
-  ADVICE_REQUEST: "조언 구함",
+  EXAM_PREPARATION: "시험_대비",
+  OUT_OF_CLASS: "수업_외_내용",
+  UNKNOWN_CONCEPT: "개념_모름",
+  BETTER_SOLUTION: "더_나은_풀이",
+  DOCUMENT_REQUEST: "자료_요청",
+  STUDY_TIPS: "공부_팁",
+  ADVICE_REQUEST: "조언_구함",
 };
 
-function CategoryCard({
+function QuestionCard({
   title,
   color,
   subject,
@@ -50,16 +50,16 @@ function CategoryCard({
 }: CategoryCardProps) {
   return (
     <div className="flex items-center justify-center">
-      <div className="m-3 flex min-h-[166px] w-full flex-col">
+      <div className="m-3 flex min-h-[166px] w-[163px] flex-col">
         {/* 상단 학과 제목 영역 */}
-        <div className="flex h-[52px] items-end rounded-t-[20px] px-3.5 pb-2 pt-2" style={{ backgroundColor: color }}>
+        <div className="flex h-[52px] items-end rounded-t-[20px] px-2 pb-2 pt-2" style={{ backgroundColor: color }}>
           <span className="font-pretendard-semibold line-clamp-2 text-sm leading-tight text-white">{subject}</span>
         </div>
 
         {/* 본문 영역 */}
         <div className="shadow-gray flex min-h-[114px] flex-col justify-between rounded-b-[20px] bg-white px-2 pb-4 pt-2 shadow-md">
           {/* 질문 부분, 태그들 부분 */}
-          <div className="flex flex-col justify-between">
+          <div className="flex flex-1 flex-col justify-between">
             <div className="font-pretendard-bold line-clamp-2 pr-2 text-sm leading-[20px]">{title}</div>
             <div className="my-2 flex flex-wrap gap-1">
               {JiJeongTags.map(tag => (
@@ -88,4 +88,4 @@ function CategoryCard({
   );
 }
 
-export default CategoryCard;
+export default QuestionCard;

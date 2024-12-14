@@ -3,7 +3,7 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
-import CategoryCard from "@/components/common/QuestionCard";
+import QuestionCard from "@/components/common/QuestionCard";
 
 interface QnaMovingCardProps {
   unansweredQNAs: {
@@ -62,7 +62,7 @@ function QnaMovingCard({ unansweredQNAs }: QnaMovingCardProps) {
               role="button"
               tabIndex={0}
             >
-              <CategoryCard
+              <QuestionCard
                 title={category.title}
                 color={color}
                 subject={category.subject}
