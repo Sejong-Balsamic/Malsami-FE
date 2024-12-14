@@ -9,7 +9,7 @@ export default async function getMyShortInfo() {
     const response = await apiClient.post("/api/member/my-info", formData, {
       headers: {
         "Content-Type": "multipart/form-data", // Content-Type 설정
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`, // JWT 토큰 설정
+        // Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`, // JWT 토큰 설정
       },
     });
 

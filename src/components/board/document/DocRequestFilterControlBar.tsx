@@ -16,13 +16,52 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  // 태그 삭제 핸들러
+  const handleRemoveTag = (tagToRemove: string) => {
+    const updatedTags = filterOptions.tags.filter(tag => tag !== tagToRemove);
+    onFilterChange({ ...filterOptions, tags: updatedTags });
+  };
+
+  const handleRemoveSortOption = () => {
+    onFilterChange({ ...filterOptions, sortOption: "" });
+  };
+
+  const handleRemoveFaculty = () => {
+    onFilterChange({ ...filterOptions, faculty: "" });
+  };
+
   return (
     <div className="flex justify-between px-5 py-3">
-      <div className="flex">
-        {filterOptions.faculty && <FacultyTag title={filterOptions.faculty} />}
-        {filterOptions.tags.length > 0 && filterOptions.tags.map(tag => <JiJeongTag key={tag} label={tag} />)}{" "}
+      <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
+        {/* 정렬 옵션 */}
+        {filterOptions.sortOption && (
+          <JiJeongTag
+            key={filterOptions.sortOption}
+            label={`${filterOptions.sortOption} ×`}
+            onClick={handleRemoveSortOption}
+            style={{
+              backgroundColor: "#74D7CB",
+              cursor: "pointer",
+            }}
+          />
+        )}
+        {/* 학과 옵션 */}
+        {filterOptions.faculty && <FacultyTag title={`${filterOptions.faculty} ×`} onClick={handleRemoveFaculty} />}
+        {/* 태그 목록 */}
+        {filterOptions.tags.length > 0 &&
+          filterOptions.tags.map(tag => (
+            <JiJeongTag
+              key={tag}
+              label={`${tag} ×`}
+              onClick={() => handleRemoveTag(tag)}
+              style={{
+                backgroundColor: "#0062D2",
+                cursor: "pointer",
+              }}
+            />
+          ))}
       </div>
-      <div className="flex items-center">
+      <div className="ml-1.5 flex items-center">
         <Image
           src="/icons/FilterIcon.svg"
           alt="filter"

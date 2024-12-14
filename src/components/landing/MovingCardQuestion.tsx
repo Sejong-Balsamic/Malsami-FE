@@ -4,7 +4,7 @@ import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import { QuestionPost } from "@/types/questionPost.types";
-import CategoryCard from "../common/CategoryCard";
+import QuestionCard from "../common/QuestionCard";
 
 interface MovingCardQuestionProps {
   data: QuestionPost[];
@@ -14,6 +14,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
   const colors = ["#03B89E", "#F46B02", "#5ED513"];
   const router = useRouter();
 
+  const slidesPerView = (data?.length || 0) > 1 ? 2 : 1; // 데이터가 10보다 작을 때
   const loopEnabled = (data?.length || 0) > 1;
 
   const handleCardClick = (postId: string) => {
@@ -29,11 +30,11 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
       <Swiper
         key={`swiper-container-${data.length}`}
         modules={[Autoplay]}
-        slidesPerView={2} // 기본값
+        slidesPerView={slidesPerView}
         spaceBetween={0}
         loop={loopEnabled}
         autoplay={{
-          delay: 2500,
+          delay: 5000,
           disableOnInteraction: false,
         }}
         breakpoints={{
@@ -51,7 +52,15 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
       >
         {data.map((document, index) => {
           return (
-            <SwiperSlide key={document.postId || index} className="flex items-center justify-center">
+            <SwiperSlide
+              key={document.postId || document.title || index}
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                height: "auto", // 슬라이드 높이 자동
+              }}
+            >
               <div
                 onClick={() => {
                   if (document.postId) {
@@ -65,7 +74,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
                 role="button"
                 tabIndex={0}
               >
-                <CategoryCard
+                <QuestionCard
                   title={document.title}
                   color={colors[index % colors.length]}
                   subject={document.subject}

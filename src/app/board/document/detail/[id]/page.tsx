@@ -3,13 +3,15 @@
 import DetailPageNav from "@/components/nav/DDetailNav";
 import DocDetail from "@/components/board/document/detail/DocDetail";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import getDocumentDetails from "@/apis/document/getDocumentDetails";
 import { DocumentData } from "@/types/DocumentDetailData";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function Page() {
+  const router = useRouter();
+
   // URL 파라미터 가져옴
   const params = useParams();
   const postId = Array.isArray(params.id) ? params.id[0] : params.id;
@@ -21,29 +23,43 @@ export default function Page() {
 
   // API 호출 (postId 변경 시마다)
   useEffect(() => {
+    let isMounted = true;
+
     if (postId) {
       const fetchData = async () => {
         try {
           setIsLoading(true); // 로딩 상태 활성화
           const data = await getDocumentDetails(postId);
-          setDocumentDetails({
-            ...data,
-            documentPost: {
-              ...data.documentPost,
-              documentPostId: postId,
-            },
-          }); // postId 설정
+
+          if (isMounted) {
+            // postId 설정
+            setDocumentDetails({
+              ...data,
+              documentPost: {
+                ...data.documentPost,
+                documentPostId: postId,
+              },
+            });
+          }
         } catch (innerError) {
-          console.error("문서 상세 정보 가져오기 실패:", error);
-          setError(error); // 오류 설정
+          console.error("문서 상세 정보 가져오기 실패:", innerError);
+          if (isMounted && !error) {
+            // 에러가 이미 설정되지 않은 경우만 처리
+            setError(error); // 오류 설정
+          }
         } finally {
-          setIsLoading(false); // 로딩 상태 비활성화
+          if (isMounted) {
+            setIsLoading(false); // 로딩 상태 비활성화
+          }
         }
       };
 
       fetchData();
     }
-  }, [error, postId]);
+    return () => {
+      isMounted = false;
+    };
+  }, [postId, error, router]);
 
   // 로딩 상태 처리
   if (isloading) return <LoadingSpinner />;

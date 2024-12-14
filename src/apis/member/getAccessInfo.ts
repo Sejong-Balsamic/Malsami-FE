@@ -5,7 +5,7 @@ export default async function getAccessInfo() {
     // FormData 객체 생성
     const formData = new FormData();
 
-    const response = await apiClient.post("/api/member/document/access-info", formData, {
+    const response = await apiClient.post("/api/member/yeopjeon-info", formData, {
       headers: {
         "Content-Type": "multipart/form-data", // Content-Type 설정
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`, // JWT 토큰 설정

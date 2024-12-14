@@ -31,7 +31,7 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
   };
   const chaetaekMapping: { [key: string]: string } = {
     전체: "ALL",
-    채택: "CHAETAEK",
+    채택됨: "CHAETAEK",
     미채택: "NO_CHAETAEK",
   };
 
@@ -44,7 +44,7 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
 
   formData.append("subject", "");
   formData.append("pageNumber", (params.pageNumber ?? 0).toString());
-  formData.append("pageSize", (params.pageSize ?? 30).toString());
+  formData.append("pageSize", (params.pageSize ?? 15).toString());
   // 선택적 파라미터 추가
   if (params.questionPresetTags && params.questionPresetTags.length > 0) {
     params.questionPresetTags.forEach(tag => {

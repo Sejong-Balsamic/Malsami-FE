@@ -7,8 +7,8 @@ import SubjectTag from "./tags/SubjectTag";
 import DocJiJeongTag from "./tags/DocJiJeongTag";
 
 const tagTranslations: { [key: string]: string } = {
-  DOCUMENT: "강의 자료",
-  PAST_EXAM: "과제 기출",
+  DOCUMENT: "강의_자료",
+  PAST_EXAM: "과제_기출",
   SOLUTION: "해설",
 };
 

@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
+import Pagination from "@/components/common/Pagination";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import DocRequestFilterControlBar from "@/components/board/document/DocRequestFilterControlBar";
 import getRequestDocs from "@/apis/document/getRequestDocs";
@@ -19,9 +20,20 @@ export default function DocRequestPage() {
     faculty: "",
   });
 
+  // 페이지네이션 관리
+  const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호
+  const [pageSize] = useState(15); // 페이지 크기 (한 페이지에 표시할 항목 수)
+  const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
+
+  // 페이지 변경
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPageNumber(newPage);
+    }
+  };
+
   const handleFilterChange = (newFilterOptions: DocFilterOptions) => {
     setFilterOptions(newFilterOptions);
-    sessionStorage.setItem("DocfilterOptions", JSON.stringify(newFilterOptions)); // 스토리지에 저장
   };
 
   const fetchDocs = async () => {
@@ -29,15 +41,15 @@ export default function DocRequestPage() {
       documentTypes: filterOptions.tags,
       sortType: filterOptions.sortOption,
       faculty: filterOptions.faculty,
-      pageNumber: 0, // 기본 페이지 번호
-      pageSize: 12, // 페이지 크기
+      pageNumber: pageNumber - 1,
+      pageSize,
     };
 
     setIsLoading(true);
     try {
       const response = await getRequestDocs(params);
-      console.log(response);
-      setDocCards(response);
+      setDocCards(response.content);
+      setTotalPages(response.totalPages); // 총 페이지 수 업데이트
     } catch (error) {
       console.error("문서 필터링 목록을 가져오는 중 오류 발생:", error);
     } finally {
@@ -46,8 +58,14 @@ export default function DocRequestPage() {
   };
 
   useEffect(() => {
+    setPageNumber(1); // 페이지 번호 초기화
     fetchDocs();
   }, [filterOptions]);
+
+  useEffect(() => {
+    fetchDocs();
+    window.scrollTo(0, 0);
+  }, [pageNumber]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
@@ -76,6 +94,8 @@ export default function DocRequestPage() {
             ))
           )}
         </div>
+        {/* 페이지네이션 컴포넌트 */}
+        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
   );

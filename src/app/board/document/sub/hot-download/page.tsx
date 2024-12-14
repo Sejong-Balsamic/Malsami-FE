@@ -2,40 +2,53 @@
 
 import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/store";
+import Pagination from "@/components/common/Pagination";
+import { setDocHotDownFilterOptions } from "@/store/docFilterOptions/docHotDownFilterOptionsSlice";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import DocFilterControlBar from "@/components/board/document/DocFilterControlBar";
-import getFilteringDocs from "@/apis/document/getFilteringDocs";
+import getHotDownloadDocs from "@/apis/document/getHotDownloadDocs";
 import { DocCardProps } from "@/types/docCard.type";
 import DocCard from "@/components/board/document/DocCard";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 
 export default function DocHotdownloadPage() {
+  const dispatch = useDispatch();
+  const docHotDownFilterOptions = useSelector(
+    (state: RootState) => state.docHotDownFilterOptions.docHotDownFilterOptions,
+  ); // Redux에서 가져오기
   const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
-  const [filterOptions, setFilterOptions] = useState<DocFilterOptions>({
-    tags: [],
-    sortOption: "",
-  });
+
+  // 페이지네이션 관리
+  const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호
+  const [pageSize] = useState(15); // 페이지 크기 (한 페이지에 표시할 항목 수)
+  const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
+
+  // 페이지 변경
+  const handlePageChange = (newPage: number) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setPageNumber(newPage);
+    }
+  };
 
   const handleFilterChange = (newFilterOptions: DocFilterOptions) => {
-    setFilterOptions(newFilterOptions);
-    sessionStorage.setItem("DocfilterOptions", JSON.stringify(newFilterOptions)); // 스토리지에 저장
+    dispatch(setDocHotDownFilterOptions(newFilterOptions)); // Redux에 업데이트
   };
 
   const fetchDocs = async () => {
     const params = {
-      documentTypes: filterOptions.tags,
-      sortType: filterOptions.sortOption,
-      pageNumber: 0, // 기본 페이지 번호
-      pageSize: 12, // 페이지 크기
+      pageNumber: pageNumber - 1,
+      pageSize,
     };
 
     setIsLoading(true);
     try {
-      const response = await getFilteringDocs(params);
-      console.log(response);
-      setDocCards(response);
+      const response = await getHotDownloadDocs(params);
+      setDocCards(response.content);
+      setTotalPages(response.totalPages); // 총 페이지 수 업데이트
     } catch (error) {
       console.error("문서 필터링 목록을 가져오는 중 오류 발생:", error);
     } finally {
@@ -44,15 +57,21 @@ export default function DocHotdownloadPage() {
   };
 
   useEffect(() => {
+    setPageNumber(1); // 페이지 번호 초기화
     fetchDocs();
-  }, [filterOptions]);
+  }, [docHotDownFilterOptions]);
+
+  useEffect(() => {
+    fetchDocs();
+    window.scrollTo(0, 0);
+  }, [pageNumber]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <DocTierPageNav subTitle="HOT 다운로드" />
       <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
-        <DocFilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
+        <DocFilterControlBar filterOptions={docHotDownFilterOptions} onFilterChange={handleFilterChange} />
         <div className="h-0.5 bg-[#EEEEEE]" />
         <div className="p-5">
           {isLoading ? (
@@ -74,6 +93,8 @@ export default function DocHotdownloadPage() {
             ))
           )}
         </div>
+        {/* 페이지네이션 컴포넌트 */}
+        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
   );

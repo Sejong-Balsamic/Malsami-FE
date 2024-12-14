@@ -1,13 +1,12 @@
 import { apiClient } from "@/apis/clients/appClient";
 
-export default async function getDocMyFaculty({ faculty }: { faculty: string }) {
+export default async function getDocMyFaculty({ facultys }: { facultys: string[] }) {
   try {
     const formData = new FormData();
-    formData.append("faculty", faculty);
-    // formData.append("subject", "");
-    // formData.append("documentTypes", "");
-    // formData.append("postTier", "");
-    // formData.append("sortType", "");
+    // facultys 배열의 각 요소를 FormData에 추가
+    facultys.forEach(faculty => {
+      formData.append("faculty", faculty);
+    });
     // formData.append("pageNumber", "");
     // formData.append("pageSize", "");
 
