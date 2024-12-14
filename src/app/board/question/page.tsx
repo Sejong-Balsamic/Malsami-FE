@@ -26,6 +26,7 @@ export default function QuestionBoardPage() {
   const [categoryQNAs, setCategoryQNAs] = useState<QnaCard[]>([]); // 학과 선택 별 질문들 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const [isUnansweredLoading, setIsUnansweredLoading] = useState(false); // 로딩 상태 관리
+  const [isFABVisible, setIsFABVisible] = useState(true); // FAB 버튼 상태 관리
 
   // 페이지네이션 관리
   const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호
@@ -100,6 +101,20 @@ export default function QuestionBoardPage() {
     getCategoryDatas();
   }, [filterOptions]); // filterOptions가 변경될 때 실행
 
+  // 스크롤 이벤트로 FAB 버튼 관리
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const documentHeight = document.body.offsetHeight;
+
+      // 스크롤이 맨 밑 근처로 가면 FAB 숨김
+      setIsFABVisible(scrollPosition < documentHeight - 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
@@ -128,12 +143,15 @@ export default function QuestionBoardPage() {
         <div className="h-0.5 bg-[#EEEEEE]" />
         <div className="px-5 py-4">
           {isLoading || categoryQNAs === null ? <LoadingSpinner /> : <QuestionCardList categoryQNAs={categoryQNAs} />}
-          {/* <QuestionCardList categoryQNAs={categoryQNAs} /> */}
         </div>
         {/* 페이지네이션 컴포넌트 */}
         <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
-      <div className="fixed bottom-5 right-5 z-10">
+      <div
+        className={`fixed bottom-5 right-5 z-10 transform transition-opacity duration-500 ${
+          isFABVisible ? "scale-100 opacity-100" : "opacity-0"
+        }`}
+      >
         <UploadQFAB />
       </div>
     </div>
