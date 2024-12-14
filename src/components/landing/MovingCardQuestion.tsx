@@ -4,7 +4,7 @@ import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import { QuestionPost } from "@/types/questionPost.types";
-import CategoryCard from "../common/QuestionCard";
+import QuestionCard from "../common/QuestionCard";
 
 interface MovingCardQuestionProps {
   data: QuestionPost[];
@@ -74,7 +74,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
                 role="button"
                 tabIndex={0}
               >
-                <CategoryCard
+                <QuestionCard
                   title={document.title}
                   color={colors[index % colors.length]}
                   subject={document.subject}
