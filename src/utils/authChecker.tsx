@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState, ReactNode } from "react";
-import LandingDirectModal from "@/components/common/LandingDirectModal";
+import LoginDirectModal from "@/components/common/LoginDirectModal";
 
 interface AuthCheckerProps {
   children: ReactNode;
@@ -29,7 +29,7 @@ export default function AuthChecker({ children }: AuthCheckerProps) {
 
   return (
     <>
-      <LandingDirectModal isOpen={isModalOpen} onClose={handleCloseModal} />
+      <LoginDirectModal isOpen={isModalOpen} onClose={handleCloseModal} />
       {children}
     </>
   );
