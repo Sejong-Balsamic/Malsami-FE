@@ -39,7 +39,7 @@ function QnaFilterFacultyCategory() {
           전체
         </button>
 
-        <div className="relative flex-1">
+        <div className="flex-1">
           <button
             type="button"
             className={`w-full p-1 text-lg ${
