@@ -1,5 +1,5 @@
-import { useState } from "react";
-import facultys from "@/lib/facultys";
+import { useState, useEffect } from "react";
+import getFacultys from "@/apis/question/getFacultys";
 import BottomSheetModal from "@/components/common/BottomSheetModal";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import Image from "next/image";
@@ -11,7 +11,27 @@ interface QnaBottomSheetModalProps {
 }
 
 function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetModalProps) {
+  const [facultys, setFacultys] = useState<string[]>([]); // API로부터 받은 학부 데이터 저장
   const [selectedFaculty, setSelectedFaculty] = useState<string | null>(null);
+
+  // API 호출하여 facultys 데이터 가져오기
+  useEffect(() => {
+    const fetchFacultys = async () => {
+      try {
+        const response = await getFacultys(); // API 호출
+        console.log("asdf", response);
+        const facultyNames = response.faculties
+          .filter((faculty: { isActive: boolean }) => faculty.isActive) // isActive가 true인 항목만
+          .map((faculty: { name: string }) => faculty.name); // name만 추출
+        setFacultys(facultyNames);
+      } catch (error) {
+        console.error("단과대 호출 api 도중 문제 발생", error);
+      }
+    };
+    if (isVisible) {
+      fetchFacultys(); // 모달이 열릴 때 데이터를 가져옴
+    }
+  }, [isVisible]);
 
   const handleSelect = (faculty: string) => {
     setSelectedFaculty(faculty);
