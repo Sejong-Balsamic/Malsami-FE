@@ -80,10 +80,12 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
               <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
                 {questionData.questionPost.subject}
               </div>
-              <span className="font-pretendard-semibold mr-1 inline-flex h-[26px] items-center rounded-[33px] bg-custom-orange-500 px-2 py-[3px] text-xs text-white">
-                <img src="/icons/Yeopjeon.svg" alt="Yeopjeon" className="inline-block h-[14px] w-[14px]" />
-                <span className="ml-1">{questionData.questionPost.rewardYeopjeon}</span>
-              </span>
+              {questionData.questionPost.rewardYeopjeon > 0 && (
+                <span className="font-pretendard-semibold mr-1 inline-flex h-[26px] items-center rounded-[33px] bg-custom-orange-500 px-2 py-[3px] text-xs text-white">
+                  <img src="/icons/Yeopjeon.svg" alt="Yeopjeon" className="inline-block h-[14px] w-[14px]" />
+                  <span className="ml-1">{questionData.questionPost.rewardYeopjeon}</span>
+                </span>
+              )}
             </>
           )}
         </div>

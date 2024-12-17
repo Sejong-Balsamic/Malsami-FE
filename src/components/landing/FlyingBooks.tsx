@@ -190,7 +190,7 @@ function FlyingBooks({ scrollY }: FlyingBooksProps) {
 
   useEffect(() => {
     if (clickCount === 5) {
-      // 10번 클릭 시 이스터 에그 활성화
+      // 5번 클릭 시 이스터 에그 활성화
       setIsEasterEggActive(true);
       setClickCount(0); // 클릭 횟수 초기화
     }

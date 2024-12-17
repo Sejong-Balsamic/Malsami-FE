@@ -3,7 +3,7 @@ import subjects from "@/lib/subjects";
 
 interface SubjectSearchInputProps {
   value: string;
-  onChange: (value: string) => void;
+  onChange: (value: string, isValid: boolean) => void;
 }
 
 const savedSearchTerms: string[] = subjects;
@@ -15,8 +15,10 @@ function SubjectSearchInput({ value, onChange }: SubjectSearchInputProps) {
   // searchValue 변경 시 호출
   const handleValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
-    onChange(newValue); // 부모 컴포넌트에 값 전달
-    setFilteredTerms(savedSearchTerms.filter(term => term.toLowerCase().includes(newValue.toLowerCase())));
+    const newFilteredTerms = savedSearchTerms.filter(term => term.toLowerCase().includes(newValue.toLowerCase()));
+
+    onChange(newValue, newFilteredTerms.includes(newValue)); // 유효성 업데이트, 부모 컴포넌트에 전달
+    setFilteredTerms(newFilteredTerms);
     setActiveSuggestionIndex(-1);
   };
 
@@ -28,13 +30,13 @@ function SubjectSearchInput({ value, onChange }: SubjectSearchInputProps) {
       setActiveSuggestionIndex(prevIndex => (prevIndex > 0 ? prevIndex - 1 : prevIndex));
     } else if (e.key === "Enter" && activeSuggestionIndex >= 0) {
       const selectedTerm = filteredTerms[activeSuggestionIndex];
-      onChange(selectedTerm); // 부모 컴포넌트에 선택된 값 전달
+      onChange(selectedTerm, true); // 선택된 값과 유효성을 전달
       setFilteredTerms([]);
     }
   };
 
   const handleSuggestionClick = (term: string) => {
-    onChange(term); // 부모 컴포넌트에 선택된 값 전달
+    onChange(term, true); // 선택된 값과 유효성을 전달
     setFilteredTerms([]); // 선택 후 목록 초기화
   };
 

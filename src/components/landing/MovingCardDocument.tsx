@@ -4,7 +4,7 @@ import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import { DocumentPost } from "@/types/documentPost.types";
-import CategoryCard from "../common/CategoryCard";
+import CategoryCard from "../common/DocumentCard";
 
 interface MovingCardDocumentProps {
   data: DocumentPost[];
@@ -70,8 +70,6 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
                   title={document.title}
                   color={colors[index % colors.length]}
                   subject={document.subject}
-                  JiJeongTags={document.JiJeongTags}
-                  rewardYeopjeon={document.rewardYeopjeon || 0}
                   likeCount={document.likeCount}
                   commentCount={document.commentCount}
                 />
