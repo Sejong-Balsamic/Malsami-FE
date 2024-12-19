@@ -85,11 +85,11 @@ function SearchResultNav({
   };
 
   return (
-    <div className="relative w-full border-b-[2px] border-b-[#EAEAEA] bg-white">
+    <div className="relative h-[64px] w-full border-b-[2px] border-b-[#EAEAEA] bg-white">
       <div className="flex items-center px-5 py-3">
         {/* 뒤로가기 버튼 */}
         <button type="button" onClick={onBack} className="mr-2.5 cursor-pointer">
-          <Image src="/icons/BackIcon.svg" alt="뒤로가기" width={12} height={20} />
+          <Image src="/icons/BackIcon.svg" alt="뒤로가기" width={10} height={20} />
         </button>
 
         {/* 검색 입력 필드 */}
