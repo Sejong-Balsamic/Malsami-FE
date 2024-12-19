@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Nav from "@/components/nav/LandingNav";
 import FlyingBooks from "@/components/landing/FlyingBooks";
 import HotDocument from "@/components/landing/HotDocument";
@@ -9,12 +9,16 @@ import AllDocument from "@/components/landing/AllDocument";
 import AllQuestion from "@/components/landing/AllQuestion";
 import getAllDocuments from "@/apis/landing/getAllDocument";
 import getAllQuestions from "@/apis/landing/getAllQuestion";
-import UploadFAB from "@/components/common/UploadFAB";
+import { QuestionPost } from "@/types/question";
+import { DocumentPost } from "@/types/document";
+import getMyInfo from "@/apis/member/getMyInfo";
+import UploadFAB from "@/components/common/UploadLandingFAB";
 import ScrollFAB from "@/components/common/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
 import Image from "next/image";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import refreshAccessToken from "@/apis/auth/refresh";
+import { useDispatch } from "react-redux";
+import { showToast } from "@/utils/toastUtils";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);
@@ -22,8 +26,9 @@ function Page() {
   const [showScrollFAB, setShowScrollFAB] = useState(true);
   const [userName, setUserName] = useState<string>("");
   const hotDocumentRef = useRef<HTMLDivElement>(null);
-  const [documents, setDocuments] = useState<{ subject: string; content: string }[]>([]);
-  const [questions, setQuestions] = useState<{ subject: string; content: string }[]>([]);
+  const [documents, setDocuments] = useState<DocumentPost[]>([]);
+  const [questions, setQuestions] = useState<QuestionPost[]>([]);
+  const dispatch = useDispatch();
 
   // 스크롤 이벤트
   useEffect(() => {
@@ -59,58 +64,65 @@ function Page() {
     return () => window.removeEventListener("scroll", handleScrollForFAB);
   }, []);
 
-  // refreshToken 호출
+  // storeUserName 래핑
+  const storeUserName = useCallback(async (): Promise<void> => {
+    try {
+      const memberInfo = await getMyInfo();
+      const studentName = memberInfo?.member?.studentName || "종이";
+      setUserName(studentName);
+    } catch (error) {
+      const message = "사용자 정보를 불러오지 못했습니다.";
+      showToast(dispatch, message, "orange");
+      setUserName("종이");
+    }
+  }, [dispatch]);
+
+  // useEffect 의존성 배열 정리
   useEffect(() => {
-    const fetchAccessToken = async () => {
-      try {
-        await refreshAccessToken(); // accessToken 갱신
-        const storedUserName = sessionStorage.getItem("userName"); // userName 갱신
-        setUserName(storedUserName || "종이");
-      } catch (error) {
+    const initializeUserName = async () => {
+      const accessToken = sessionStorage.getItem("accessToken");
+
+      if (accessToken) {
+        await storeUserName();
+      } else {
         setUserName("종이");
-        console.error("Access token refresh failed:", error);
       }
     };
-    fetchAccessToken();
-  }, []);
+
+    initializeUserName();
+  }, [storeUserName]);
 
   // 자료 출력
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const data = await getAllDocuments();
-        const latestDocuments = data.documentPostsPage?.content.slice(0, 5) || []; // 최신 5개 추출
-        const transformedDocuments = latestDocuments.map(doc => ({
-          subject: doc.subject,
-          content: doc.content,
-        }));
-        setDocuments(transformedDocuments);
+        const data = await getAllDocuments(); // API 호출
+        const allDocuments = data.documentPostsPage?.content || []; // 전체 질문 리스트 추출
+        setDocuments(allDocuments); // 상태에 저장
       } catch (error) {
-        console.error("자료 가져오기 실패:", error);
+        const message = "자료를 불러오지 못했습니다.";
+        showToast(dispatch, message, "orange"); // Toast로 에러 메시지 표시
       }
     };
 
     fetchDocuments();
-  }, []);
+  }, [dispatch]);
 
   // 질문 출력
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const data = await getAllQuestions();
-        const latestQuestions = data.questionPostsPage?.content.slice(0, 5) || []; // 최신 5개 추출
-        const transformedQuestions = latestQuestions.map(qna => ({
-          subject: qna.subject,
-          content: qna.content,
-        }));
-        setQuestions(transformedQuestions);
+        const data = await getAllQuestions(); // API 호출
+        const allQuestions = data.questionPostsPage?.content || []; // 전체 질문 리스트 추출
+        setQuestions(allQuestions); // 상태에 저장
       } catch (error) {
-        console.error("질문 가져오기 실패:", error);
+        const message = "질문을 불러오지 못했습니다.";
+        showToast(dispatch, message, "orange"); // Toast로 에러 메시지 표시
       }
     };
 
     fetchQuestions();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>

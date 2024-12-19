@@ -4,7 +4,7 @@ import Image from "next/image";
 function Page() {
   return (
     <div className="relative mx-auto w-full max-w-[640px]">
-      <MyPageNav title="세종말싸미 이용도우미" />
+      <MyPageNav title="내가 올린 질문" />
       <Image
         src="/image/PaperBG.png"
         alt="BG"

@@ -2,6 +2,8 @@
 
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { refreshAccessToken } from "../auth/refresh";
+import { store } from "@/store";
+import { showModal } from "@/store/modalSlice";
 
 // 사용법: axios 대신 apiClient import해서 사용
 export const apiClient = axios.create({
@@ -38,8 +40,10 @@ apiClient.interceptors.response.use(
     // 400,403 오류 발생 시 로그인 페이지로 리다이렉션. 리프레시토큰 없으면 403.
     if (error.response?.status === 403 && !isRedirecting) {
       isRedirecting = true; // 리다이렉트를 설정했음을 표시
-      alert("로그아웃 되었습니다. 다시 로그인해주세요");
-      window.location.href = "/login"; // 전체 페이지를 새로고침하면서 이동하기 때문에, 상태나 데이터가 모두 초기화
+      // alert("해당 페이지는 로그인을 해야 열람할 수 있습니다.");
+      store.dispatch(showModal("해당 페이지는 로그인을 해야 열람할 수 있습니다."));
+      console.log("Redux State After Dispatch:", store.getState().modal);
+      // window.location.href = "/login"; // 전체 페이지를 새로고침하면서 이동하기 때문에, 상태나 데이터가 모두 초기화
     }
 
     // 401 오류가 발생 시 refreshAccessToken 후 재시도. 엑세스 토큰 만료 시 401 에러
@@ -63,8 +67,10 @@ apiClient.interceptors.response.use(
         // refreshAccessToken 실패 시 403으로 처리
         if (!isRedirecting) {
           isRedirecting = true;
-          alert("로그아웃 되었습니다. 다시 로그인해주세요.");
-          window.location.href = "/login";
+          // alert("해당 페이지는 로그인을 해야 열람할 수 있습니다.");
+          store.dispatch(showModal("해당 페이지는 로그인을 해야 열람할 수 있습니다."));
+          console.log("Redux State After Dispatch:", store.getState().modal);
+          // window.location.href = "/login";
         }
         return Promise.reject(refreshError); // 오류를 상위로 전달
       }
@@ -76,9 +82,9 @@ apiClient.interceptors.response.use(
       const errorMessage =
         errorData && typeof errorData === "object" && "errorMessage" in errorData
           ? (errorData as { errorMessage: string }).errorMessage
-          : "잠시 후 다시 시도해주세요.";
+          : "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.";
 
-      console.error("apiclient 오류:", errorMessage);
+      console.error("서버 오류:", errorMessage);
       alert(errorMessage);
     }
 

@@ -13,13 +13,11 @@ export const login = async (id: string, password: string) => {
 
   try {
     const response = await axios.post("https://api.sejong-malsami.co.kr/api/member/signin", formData, {
-      withCredentials: true, // http-only로 Cookie에 refeshToken 저장하기 위해
+      withCredentials: true, // http-only로 Cookie에 refreshToken 저장하기 위해
     });
 
     // 성공 처리
     sessionStorage.setItem("accessToken", response.data.accessToken);
-    sessionStorage.setItem("userName", response.data.member.studentName);
-    sessionStorage.setItem("memberId", response.data.member.memberId);
     return response.data;
   } catch (error) {
     // 오류 처리

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -8,6 +8,7 @@ import { DocumentPost } from "@/types/documentPost.types";
 import MovingCardDocument from "./MovingCardDocument";
 
 function HotDocument() {
+  const router = useRouter();
   const [weekData, setWeekData] = useState<DocumentPost[]>([]);
   const [dayData, setDayData] = useState<DocumentPost[]>([]);
 
@@ -25,6 +26,10 @@ function HotDocument() {
     getWeeklyData();
     getDailyData();
   }, []);
+
+  const handleNavigation = (path: string) => {
+    router.push(path);
+  };
 
   return (
     <Tabs defaultValue="weekend" className="z-40 h-auto w-full">
@@ -52,11 +57,12 @@ function HotDocument() {
             <MovingCardDocument data={weekData} />
           </CardContent>
           <CardFooter>
-            <Link href="/board/document" passHref className="mx-3 w-full">
-              <Button className="font-pretendard-semibold h-[30px] w-full rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
-                더보기
-              </Button>
-            </Link>
+            <Button
+              onClick={() => handleNavigation("/board/document/sub/popular-weekly")}
+              className="font-pretendard-semibold h-[30px] w-full rounded-[10px] bg-[#03b8a3] text-[12px] text-white"
+            >
+              더보기
+            </Button>
           </CardFooter>
         </Card>
       </TabsContent>
@@ -74,11 +80,12 @@ function HotDocument() {
             <MovingCardDocument data={dayData} />
           </CardContent>
           <CardFooter>
-            <Link href="/board/document" passHref className="mx-3 w-full">
-              <Button className="font-pretendard-semibold h-[30px] w-full rounded-[10px] bg-[#03b8a3] text-[12px] text-white">
-                더보기
-              </Button>
-            </Link>
+            <Button
+              onClick={() => handleNavigation("/board/document/sub/popular-daily")}
+              className="font-pretendard-semibold h-[30px] w-full rounded-[10px] bg-[#03b8a3] text-[12px] text-white"
+            >
+              더보기
+            </Button>
           </CardFooter>
         </Card>
       </TabsContent>

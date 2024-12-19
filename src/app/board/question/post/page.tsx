@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import QnaPostNav from "@/components/nav/QnaPostNav";
 import subjects from "@/lib/subjects";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import TitleInput from "@/components/board/question/post/formInputs/TitleInput";
 import ContentInput from "@/components/board/question/post/formInputs/ContentInput";
 import FileUploadInput from "@/components/board/question/post/formInputs/FileUploadInput";
@@ -53,6 +54,7 @@ export default function QnaPostPage() {
   const [isJiJeongTagModalOpen, setIsJiJeongTagModalOpen] = useState(false);
   const [isCustomTagsModalOpen, setIsCustomTagsModalOpen] = useState(false);
   const mediaAllowedTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
+  const [isUploading, setIsUploading] = useState(false); // 업로드 상태
   const dispatch = useDispatch();
 
   const showToast = (message: string) => {
@@ -204,6 +206,7 @@ export default function QnaPostPage() {
     }
 
     if (isFormValid) {
+      setIsUploading(true); // 업로딩 시작
       try {
         await postNewQna(formData); // API 호출
         localStorage.removeItem("qnaPostFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
@@ -212,6 +215,8 @@ export default function QnaPostPage() {
       } catch (error) {
         console.log("error", error);
         showToast("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+      } finally {
+        setIsUploading(false); // 업로딩 종료
       }
     } else {
       showToast("모든 필수 항목을 채워주세요.");
@@ -224,37 +229,45 @@ export default function QnaPostPage() {
       <QnaPostNav onSave={saveToLocalStorage} />
       <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white p-5">
         <div className="rounded-lg">
-          <form>
-            {/* 제목 */}
-            <TitleInput value={formData.title} onChange={handleChange} />
-            {/* 질문 */}
-            <ContentInput value={formData.content} onChange={handleChange} />
-            {/* 파일 업로드 */}
-            <FileUploadInput
-              mediaFiles={formData.mediaFiles}
-              onFileChange={handleFileChange}
-              onFileDelete={handleFileDelete}
-            />
-            {/* 교과목명 검색 */}
-            <SubjectSearchInputComponent value={formData.subject} onClick={toggleSubjectModal} />
-            {/* 정적 태그 */}
-            <JiJeongTagInput tags={formData.questionPresetTags} onOpenModal={toggleJiJeongTagModal} />
-            {/* 엽전 현상금 */}
-            <YeopjeonRewardInput reward={formData.reward} onClick={toggleRewardModal} />
-            {/* 커스텀 태그 */}
-            <CustomTagsInput tags={formData.customTags} onClick={toggleCustomTagsModal} onRemoveTag={removeTag} />
-            {/* 추가 설정 */}
-            <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={handleIsPrivate} />
+          {/* 로딩 중일 때 */}
+          {isUploading ? (
+            <div className="flex h-[500px] items-center justify-center">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            //  업로딩 중이 아닐 때 폼 내용 표시
+            <form>
+              {/* 제목 */}
+              <TitleInput value={formData.title} onChange={handleChange} />
+              {/* 질문 */}
+              <ContentInput value={formData.content} onChange={handleChange} />
+              {/* 파일 업로드 */}
+              <FileUploadInput
+                mediaFiles={formData.mediaFiles}
+                onFileChange={handleFileChange}
+                onFileDelete={handleFileDelete}
+              />
+              {/* 교과목명 검색 */}
+              <SubjectSearchInputComponent value={formData.subject} onClick={toggleSubjectModal} />
+              {/* 정적 태그 */}
+              <JiJeongTagInput tags={formData.questionPresetTags} onOpenModal={toggleJiJeongTagModal} />
+              {/* 엽전 현상금 */}
+              <YeopjeonRewardInput reward={formData.reward} onClick={toggleRewardModal} />
+              {/* 커스텀 태그 */}
+              <CustomTagsInput tags={formData.customTags} onClick={toggleCustomTagsModal} onRemoveTag={removeTag} />
+              {/* 추가 설정 */}
+              <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={handleIsPrivate} />
 
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={!isFormValid}
-              className={`font-pretendard-semibold w-full rounded-[10px] p-2 text-base text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
-            >
-              작성완료
-            </button>
-          </form>
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={!isFormValid}
+                className={`font-pretendard-semibold w-full rounded-[10px] p-2 text-base text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
+              >
+                작성완료
+              </button>
+            </form>
+          )}
 
           {/* 모달들 */}
           {isSubjectModalOpen && (

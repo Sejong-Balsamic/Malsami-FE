@@ -94,17 +94,14 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
       {answers.map((ans, index) => (
         <div key={ans.answerPostId} className="my-[10px] flex flex-col gap-[12px] rounded-lg bg-[#f7f8fb] p-[12px]">
           <div className="mb-[4px] flex items-center justify-between">
-            <div>
+            <div className="flex items-center justify-between gap-[6px]">
               {ans.isChaetaek && (
-                <Button
-                  variant="ghost"
-                  className="font-pretendard-medium mr-[6px] h-[26px] rounded-[13px] bg-[#0062D2] px-[15px] py-[6px] text-[12px] text-[#ffffff]"
-                >
+                <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#0062D2] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
                   채택됨
-                </Button>
+                </div>
               )}
-              <span className="font-pretendard-bold mb-[4px] text-[14px]">@{ans.member.uuidNickname}</span>
-              <span className="font-pretendard-medium mb-[4px] text-[12px] text-[#737373]">
+              <span className="font-pretendard-bold text-[14px]">@{ans.member.uuidNickname}</span>
+              <span className="font-pretendard-medium text-[12px] text-[#737373]">
                 • {ans.isPrivate ? "비공개" : ans.member.major}
               </span>
             </div>

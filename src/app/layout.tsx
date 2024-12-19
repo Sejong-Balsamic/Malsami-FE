@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
+import LoginDirectModal from "@/components/common/LoginDirectModal";
 import Providers from "./providers"; // Redux Provider 컴포넌트
 import "./globals.css";
 
@@ -42,7 +43,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Providers>
-          {children} <Toaster />
+          {children}
+          <Toaster />
+          <LoginDirectModal />
         </Providers>
       </body>
     </html>

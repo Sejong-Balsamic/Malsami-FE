@@ -3,7 +3,7 @@
 import DetailPageNav from "@/components/nav/QDetailNav";
 import QnaDetail from "@/components/board/question/detail/QnaDetail";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import { QuestionData } from "@/types/QuestionDetailData";
@@ -12,14 +12,11 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 import sameMember from "@/utils/sameMember";
 
 export default function Page() {
+  const router = useRouter();
+
   // URL 파라미터 가져옴
   const params = useParams();
-  let postId = Array.isArray(params.id) ? params.id[0] : params.id;
-
-  // 테스트 postId 설정
-  if (!postId) {
-    postId = "49a3d54f-1f5b-42fd-9337-456c7bb8f199";
-  }
+  const postId = Array.isArray(params.id) ? params.id[0] : params.id;
 
   // 상태 관리
   const [questionDetails, setQuestionDetails] = useState<QuestionData | null>(null);
@@ -28,30 +25,43 @@ export default function Page() {
 
   // API 호출 (postId 변경 시마다)
   useEffect(() => {
+    let isMounted = true;
+
     if (postId) {
       const fetchData = async () => {
         try {
           setIsLoading(true); // 로딩 상태 활성화
           const data = await getQuestionDetails(postId);
-          setQuestionDetails({
-            ...data,
-            questionPost: {
-              ...data.questionPost,
-              questionPostId: postId,
-            },
-            customTags: data.customTags || [],
-          }); // postId 설정
+
+          if (isMounted) {
+            // postId 설정
+            setQuestionDetails({
+              ...data,
+              questionPost: {
+                ...data.questionPost,
+                questionPostId: postId,
+              },
+            });
+          }
         } catch (innerError) {
-          console.error("질문 상세 정보 가져오기 실패:", error);
-          setError(error); // 오류 설정
+          console.error("문서 상세 정보 가져오기 실패:", innerError);
+          if (isMounted && !error) {
+            // 에러가 이미 설정되지 않은 경우만 처리
+            setError(error); // 오류 설정
+          }
         } finally {
-          setIsLoading(false); // 로딩 상태 비활성화
+          if (isMounted) {
+            setIsLoading(false); // 로딩 상태 비활성화
+          }
         }
       };
 
       fetchData();
     }
-  }, [error, postId]);
+    return () => {
+      isMounted = false;
+    };
+  }, [postId, error, router]);
 
   // 로딩 상태 처리
   if (isloading) return <LoadingSpinner />;

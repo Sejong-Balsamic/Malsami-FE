@@ -6,6 +6,7 @@ import filterOptionsReducer from "./filterOptionsSlice";
 import facultyReducer from "./facultySlice";
 import activeTabReducer from "./activeTabSlice";
 import toastReducer from "./toastSlice";
+import modalReducer from "./modalSlice";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ export const store = configureStore({
     filterOptions: filterOptionsReducer,
     activeTab: activeTabReducer,
     toast: toastReducer,
+    modal: modalReducer,
     docHotDownFilterOptions: docHotDownFilterOptionsReducer,
     docMyFacultyFilterOptions: docMyFacultyFilterOptionsReducer,
     docRequestFilterOptions: docRequestFilterOptionsReducer,
