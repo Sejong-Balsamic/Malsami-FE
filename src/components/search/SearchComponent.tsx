@@ -21,7 +21,7 @@ export default function SearchComponent() {
   return (
     <div className="h-screen bg-[#EEEEEE]">
       {/* 헤더 */}
-      <div className="flex items-center border-b-[2px] bg-white px-5 py-5">
+      <div className="flex h-[64px] items-center border-b-[2px] bg-white p-5">
         <button type="button" onClick={() => router.back()} className="ml-0">
           <Image src="/icons/BackIcon.svg" alt="Back" width={10} height={20} />
         </button>
