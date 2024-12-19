@@ -1,4 +1,4 @@
-import CategoryCard from "./CategoryCard";
+import QuestionCard from "./QuestionCard";
 
 type CategoryCardListProps = {
   categoryCardDatas: {
@@ -23,7 +23,7 @@ export default function CategoryCardList({ categoryCardDatas }: CategoryCardList
         else color = "#5ED513";
 
         return (
-          <CategoryCard
+          <QuestionCard
             key={category.postId}
             title={category.title}
             color={color} // 계산된 색상 전달

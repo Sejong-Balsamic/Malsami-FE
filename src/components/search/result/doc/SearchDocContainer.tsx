@@ -7,9 +7,10 @@ import SearchDocCard from "./SearchDocCard";
 interface SearchDocContainerProps {
   docResults: DocCardProps[];
   searchValue: string;
+  subject: string;
 }
 
-export default function SearchDocContainer({ docResults, searchValue }: SearchDocContainerProps) {
+export default function SearchDocContainer({ docResults, searchValue, subject }: SearchDocContainerProps) {
   const router = useRouter();
   return (
     <div className="p-5">
@@ -44,6 +45,7 @@ export default function SearchDocContainer({ docResults, searchValue }: SearchDo
         ))
       ) : (
         <p className="font-pretendard-medium text-center text-gray-500">
+          <span className="font-pretendard-bold">{subject} </span>
           <span className="font-pretendard-bold">{searchValue}</span> 에 대한 결과가 없습니다.
         </p>
       )}

@@ -7,7 +7,7 @@ export default async function getMyInfo(): Promise<MemberDto> {
     const formData = new FormData();
 
     // POST 요청으로 회원 정보 조회
-    const response = await apiClient.post<MemberDto>("/api/member/my-page", formData, {
+    const response = await apiClient.post<MemberDto>("/api/member/my-info", formData, {
       headers: {
         "Content-Type": "multipart/form-data", // Content-Type 설정
         Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`, // JWT 토큰 설정

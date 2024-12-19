@@ -15,39 +15,17 @@
 // return(<CategoryCardList categoryCardDatas={categoryCardDatass} />)
 
 import React from "react";
-import JiJeongTag from "./tags/JiJeongTag";
-import YeopjeonTag from "./tags/YeopjeonTag";
 import ImageWrapper from "../board/tags/ImageWrapper";
 
 interface CategoryCardProps {
   title: string;
   color: string;
   subject: string;
-  JiJeongTags: string[];
-  rewardYeopjeon: number;
   likeCount: number;
   commentCount: number;
 }
 
-const tagTranslations: { [key: string]: string } = {
-  EXAM_PREPARATION: "시험 대비",
-  OUT_OF_CLASS: "수업외내용",
-  UNKNOWN_CONCEPT: "개념 모름",
-  BETTER_SOLUTION: "더나은풀이",
-  DOCUMENT_REQUEST: "자료 요청",
-  STUDY_TIPS: "공부 팁",
-  ADVICE_REQUEST: "조언 구함",
-};
-
-function CategoryCard({
-  title,
-  color,
-  subject,
-  JiJeongTags,
-  rewardYeopjeon,
-  likeCount,
-  commentCount,
-}: CategoryCardProps) {
+function CategoryCard({ title, color, subject, likeCount, commentCount }: CategoryCardProps) {
   return (
     <div className="flex items-center justify-center">
       <div className="m-3 flex h-[166px] w-[163px] flex-col">
@@ -60,17 +38,11 @@ function CategoryCard({
         <div className="shadow-gray flex h-[114px] flex-col justify-between rounded-b-[20px] bg-white px-3.5 pb-4 pt-2 shadow-md">
           {/* 질문 부분, 태그들 부분 */}
           <div className="flex min-h-[64px] flex-col justify-between">
-            <div className="font-pretendard-bold line-clamp-2 pr-2 text-sm leading-[20px]">{title}</div>
-            <div className="mt-2 flex flex-wrap gap-2">
-              {JiJeongTags.map(tag => (
-                <JiJeongTag key={tag} title={tagTranslations[tag] ?? tag} color={color} />
-              ))}
-            </div>
+            <div className="font-pretendard-bold line-clamp-3 pr-2 text-sm leading-[20px]">{title}</div>
           </div>
 
-          {/* 엽전, 좋아요, 댓글 부분 */}
-          <div className="font-pretendard-semibold flex flex-row justify-between text-xs text-[#D0D0D0]">
-            <YeopjeonTag point={rewardYeopjeon} />
+          {/* 좋아요, 댓글 부분 */}
+          <div className="font-pretendard-semibold flex flex-row justify-end text-xs text-[#D0D0D0]">
             <div>
               <span className="mr-1.5">
                 <ImageWrapper src="/icons/LikeIcon.svg" />

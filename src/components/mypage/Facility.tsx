@@ -25,11 +25,7 @@ function Facility() {
         </button>
       </div>
       <div className="relative grid w-full grid-cols-1 grid-rows-2 gap-[22px] border-b-2 border-[#EEEEEE] p-[24px]">
-        <button
-          onClick={() => router.push("/mypage/help")}
-          type="button"
-          className="flex w-full items-center justify-between"
-        >
+        <button onClick={() => router.push("/help")} type="button" className="flex w-full items-center justify-between">
           <span className="font-pretendard-semibold text-[18px]">세종말싸미 이용도우미</span>
           <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} className="h-[14px] w-[7px]" />
         </button>
@@ -44,7 +40,7 @@ function Facility() {
       </div>
       <div className="relative grid w-full grid-cols-1 grid-rows-1 border-b-2 border-[#EEEEEE] p-[24px]">
         <button
-          onClick={() => router.push("/mypage/notice")}
+          onClick={() => router.push("/notice")}
           type="button"
           className="flex w-full items-center justify-between"
         >

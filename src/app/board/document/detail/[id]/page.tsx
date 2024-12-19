@@ -46,7 +46,6 @@ export default function Page() {
           if (isMounted && !error) {
             // 에러가 이미 설정되지 않은 경우만 처리
             setError(error); // 오류 설정
-            router.back();
           }
         } finally {
           if (isMounted) {

@@ -232,28 +232,7 @@ export interface DocumentData {
       isEdited: boolean;
       isDeleted: boolean;
       isLiked: boolean;
-      dailyScore: number;
-      weeklyScore: number;
       documentPostId: string;
-      member: {
-        createdDate: string;
-        updatedDate: string;
-        isEdited: boolean;
-        isDeleted: boolean;
-        isLiked: boolean;
-        memberId: string;
-        studentId: number;
-        studentName: string;
-        uuidNickname: string;
-        major: string;
-        academicYear: string;
-        enrollmentStatus: string;
-        profileUrl: string;
-        isNotificationEnabled: boolean;
-        roles: string[];
-        accountStatus: string;
-        lastLoginTime: string;
-      };
       title: string;
       subject: string;
       faculties: string[];
@@ -293,7 +272,7 @@ export interface DocumentData {
     uploadedFileName: string;
     fileSize: number;
     mimeType: string;
-    downloadCount: number;
+    totalDownloadCount: number;
     password: string;
     isInitialPasswordSet: boolean;
   }[];

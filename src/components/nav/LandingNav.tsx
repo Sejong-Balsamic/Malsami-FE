@@ -7,6 +7,8 @@ import { MemberDto } from "@/types/member";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import getMyInfo from "@/apis/member/getMyInfo";
 import useLogout from "@/hooks/useLogout";
+import { useDispatch } from "react-redux";
+import { showToast } from "@/utils/toastUtils";
 import Hamburger from "../../../public/icons/Hamburger.svg";
 
 function Nav() {
@@ -17,6 +19,7 @@ function Nav() {
   const [clickCount, setClickCount] = useState(0); // 클릭 횟수
   const [isEasterEggActive, setIsEasterEggActive] = useState(false); // 이스터 에그 활성화 상태
   const handleLogout = useLogout();
+  const dispatch = useDispatch();
 
   const handleLogoClick = () => setClickCount(prev => prev + 1);
 
@@ -37,9 +40,12 @@ function Nav() {
     if (token) {
       getMyInfo()
         .then(data => setMemberInfo(data))
-        .catch(error => console.error("Failed to fetch member info:", error));
+        .catch(error => {
+          const message = error.response?.data?.message || "사용자 정보를 가져오지 못했습니다.";
+          showToast(dispatch, message, "orange");
+        });
     }
-  }, []);
+  }, [dispatch]);
 
   const handleNavigation = (path: string) => {
     router.push(path);
@@ -147,7 +153,7 @@ function Nav() {
               <button
                 type="button"
                 className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 border-b-2 pl-[30px] text-[20px]"
-                onClick={() => handleNavigation("/mypage/help")}
+                onClick={() => handleNavigation("/help")}
               >
                 <Image src="/icons/Rule_Colored.svg" alt="Search" width={30} height={30} />
                 이용도우미
@@ -155,18 +161,20 @@ function Nav() {
               <button
                 type="button"
                 className="font-pretendard-bold flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[20px]"
-                onClick={() => handleNavigation("/mypage/notice")}
+                onClick={() => handleNavigation("/notice")}
               >
                 <Image src="/icons/Notice_Colored.svg" alt="Search" width={30} height={30} />
                 공지사항
               </button>
-              <button
-                type="button"
-                className="font-pretendard-medium absolute bottom-0 flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[16px]"
-                onClick={handleLogout}
-              >
-                로그아웃
-              </button>
+              {accessToken && (
+                <button
+                  type="button"
+                  className="font-pretendard-medium absolute bottom-0 flex h-[70px] w-full cursor-pointer items-center gap-2 pl-[30px] text-[16px]"
+                  onClick={handleLogout}
+                >
+                  로그아웃
+                </button>
+              )}
             </ul>
           </div>
         </SheetContent>
