@@ -1,10 +1,11 @@
 import { apiClient } from "@/apis/clients/appClient";
 
-export default async function getSearchResult({ params }: { params: string }) {
+export default async function getSearchResult({ params }: { params: { query: string; subject: string } }) {
   try {
     // FormData 객체 생성
     const formData = new FormData();
-    formData.append("query", params);
+    formData.append("query", params.query);
+    formData.append("subject", params.subject);
 
     // POST 요청으로 회원 정보 조회
     const response = await apiClient.post("/api/query", formData, {
