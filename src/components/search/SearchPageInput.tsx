@@ -116,7 +116,7 @@
 
 // export default SearchPageInput;
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import subjects from "@/lib/subjects";
@@ -127,7 +127,17 @@ function SearchPageInput() {
   const [searchValue, setSearchValue] = useState(""); // 검색창 전체 입력값
   const [filteredTerms, setFilteredTerms] = useState<string[]>([]); // 추천 목록
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1); // 활성화된 추천 항목
+  const placeholders = ["@과목으로 시작하여 검색하기", "@공간과인간 기말과제"];
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const router = useRouter();
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setPlaceholderIndex(prevIndex => (prevIndex + 1) % placeholders.length); // 다음 placeholder
+    }, 3000); // 3초마다 전환
+
+    return () => clearInterval(interval); // 컴포넌트 언마운트 시 정리
+  }, []);
 
   // @로 시작하는 교과목명과 일반 검색어를 분리
   const parseSearchValue = (value: string) => {
@@ -201,6 +211,7 @@ function SearchPageInput() {
       {/* 검색 입력 필드 */}
       <div className="px-4">
         <div className="flex w-full items-center justify-between rounded-lg bg-[#EEEEEE] p-2">
+          {/* 검색 아이콘 */}
           <div className="flex items-center">
             <Image
               src="/icons/SearchIcon.svg"
@@ -208,28 +219,33 @@ function SearchPageInput() {
               width={20}
               height={20}
               onClick={routeSearchValue}
-              className="mr-[10px] cursor-pointer"
+              className="mr-[10px] flex-shrink-0 cursor-pointer" // 크기 고정
             />
-            <div className="flex items-center">
-              {faculty && <span className="mr-2 rounded bg-blue-100 px-2 py-1 text-sm text-blue-500">{faculty}</span>}
-              <input
-                type="text"
-                placeholder="검색어를 입력해 주세요."
-                value={searchValue}
-                onChange={handleValueChange}
-                onKeyDown={handleKeyDown}
-                className="font-pretendard-medium bg-transparent text-sm text-black placeholder-gray-400 outline-none"
-              />
-            </div>
           </div>
+
+          {/* 입력 필드 */}
+          <div className="flex flex-1 items-center">
+            {faculty && (
+              <span className="mr-2 flex-shrink-0 rounded bg-blue-100 px-2 py-1 text-sm text-blue-500">{faculty}</span>
+            )}
+            <input
+              type="text"
+              placeholder={placeholders[placeholderIndex]} // placeholder를 직접 애니메이션 처리
+              value={searchValue}
+              onChange={handleValueChange}
+              onKeyDown={handleKeyDown}
+              className="font-pretendard-medium flex-grow bg-transparent text-sm text-black placeholder-gray-400 outline-none"
+            />
+          </div>
+
+          {/* 삭제 버튼 */}
           {searchValue && (
-            <button type="button" onClick={handleClearSearch} className="ml-1">
+            <button type="button" onClick={handleClearSearch} className="ml-[10px] flex-shrink-0">
               <Image src="/icons/CloseIcon.svg" alt="삭제" width={18} height={18} />
             </button>
           )}
         </div>
       </div>
-
       {/* 자동 완성 제안 목록 */}
       {faculty && filteredTerms.length > 0 && (
         <div className="absolute top-full z-10 mt-0.5 w-full rounded-b-[20px] bg-white px-1 pb-3 pt-3">
