@@ -53,7 +53,7 @@ function InfoList({ memberInfo }: InfoProps) {
       </div>
       <div className="relative grid w-full grid-cols-1 grid-rows-2 gap-[20px] rounded-[10px] border-2 border-[#95e4da] p-[20px]">
         <button
-          onClick={() => router.push("/mypage/mypost/qna/answer")}
+          onClick={() => router.push("/mypage/mypost/qna")}
           type="button"
           className="flex items-center justify-between"
         >
