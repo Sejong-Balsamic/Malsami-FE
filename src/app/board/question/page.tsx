@@ -147,13 +147,8 @@ export default function QuestionBoardPage() {
         {/* 페이지네이션 컴포넌트 */}
         <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
-      <div
-        className={`fixed bottom-5 right-5 z-10 transform transition-opacity duration-500 ${
-          isFABVisible ? "scale-100 opacity-100" : "opacity-0"
-        }`}
-      >
-        <UploadQFAB />
-      </div>
+
+      <UploadQFAB isFABVisible={isFABVisible} />
     </div>
   );
 }
