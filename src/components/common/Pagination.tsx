@@ -20,7 +20,7 @@ export default function Pagination({ pageNumber, totalPages, onPageChange }: Pag
   const pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, idx) => startPage + idx);
 
   return (
-    <div className="font-pretendard-semibold flex items-center justify-center gap-2.5 py-4 text-[13px] text-gray-500">
+    <div className="font-pretendard-semibold mb-7 flex items-center justify-center gap-2.5 text-[13px] text-gray-500">
       {/* 이전 페이지 버튼 */}
       <button type="button" onClick={() => onPageChange(pageNumber - 1)} disabled={pageNumber === 1} className="mr-1">
         <Image
