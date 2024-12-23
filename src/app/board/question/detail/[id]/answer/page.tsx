@@ -36,6 +36,23 @@ export default function AnswerPostPage() {
 
   const [isFormValid, setIsFormValid] = useState(false);
   const mediaAllowedTypes = ["image/jpeg", "image/png"];
+  const dispatch = useDispatch();
+
+  const showToast = (message: string) => {
+    dispatch(
+      addToast({
+        id: Date.now().toString(),
+        icon: <ToastIcon color="blue" />,
+        title: message,
+        color: "blue",
+        action: (
+          <ToastAction color="blue" altText="확인">
+            확인
+          </ToastAction>
+        ),
+      }),
+    );
+  };
 
   const showToast = (message: string) => {
     dispatch(

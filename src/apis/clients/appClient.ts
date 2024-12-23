@@ -67,7 +67,6 @@ apiClient.interceptors.response.use(
         // refreshAccessToken 실패 시 403으로 처리
         if (!isRedirecting) {
           isRedirecting = true;
-          // alert("해당 페이지는 로그인을 해야 열람할 수 있습니다.");
           store.dispatch(showModal("해당 페이지는 로그인을 해야 열람할 수 있습니다."));
           console.log("Redux State After Dispatch:", store.getState().modal);
           // window.location.href = "/login";
@@ -83,9 +82,7 @@ apiClient.interceptors.response.use(
         errorData && typeof errorData === "object" && "errorMessage" in errorData
           ? (errorData as { errorMessage: string }).errorMessage
           : "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.";
-
-      console.error("서버 오류:", errorMessage);
-      alert(errorMessage);
+      console.error("apiClient 오류:", errorMessage);
     }
 
     return Promise.reject(error); // 다른 에러는 그대로 전달
