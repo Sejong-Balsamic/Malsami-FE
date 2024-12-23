@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { MemberDto } from "@/types/member";
 import getMyInfo from "@/apis/member/getMyPage";
 import MyPageNav from "@/components/nav/MyPageNav";
+import TierImage from "@/components/mypage/TierImage";
 import BasicInfo from "@/components/mypage/BasicInfo";
 import InfoCard from "@/components/mypage/InfoCard";
 import InfoList from "@/components/mypage/InfoList";
@@ -25,7 +25,6 @@ function Page() {
           const data = await getMyInfo();
           setMemberInfo(data);
         } catch (fetchError) {
-          console.error("회원 정보 가져오기 실패:", fetchError);
           setError("회원 정보를 불러오는 중 오류가 발생했습니다.");
         } finally {
           setIsLoading(false);
@@ -58,14 +57,7 @@ function Page() {
           <BasicInfo memberInfo={memberInfo} />
         </div>
         <div className="relative flex">
-          {/* 티어에 따라 이미지 변동 필요 */}
-          <Image
-            src="/image/tier/Yangban.svg"
-            alt="Yangban"
-            width={132}
-            height={125}
-            className="absolute bottom-[180px] z-0 h-[125px] w-[132px]"
-          />
+          <TierImage memberInfo={memberInfo} />
           <div className="z-10 w-full">
             <InfoCard memberInfo={memberInfo} />
           </div>

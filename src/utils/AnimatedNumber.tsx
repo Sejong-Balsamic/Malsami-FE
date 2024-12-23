@@ -23,7 +23,7 @@ function AnimatedNumber({ target }: AnimatedNumberProps) {
     return () => clearInterval(interval); // 컴포넌트 언마운트 시 정리
   }, [target, duration]);
 
-  return <span>{Math.round(current)}%</span>; // 숫자를 반올림하여 표시
+  return <span>{Math.round(current)}</span>; // 숫자를 반올림하여 표시
 }
 
 export default AnimatedNumber;

@@ -3,8 +3,6 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { refreshAccessToken } from "../auth/refresh";
 
-import { ToastIcon, ToastAction } from "@/components/ui/toast";
-
 // 사용법: axios 대신 apiClient import해서 사용
 export const apiClient = axios.create({
   baseURL: "https://api.sejong-malsami.co.kr",

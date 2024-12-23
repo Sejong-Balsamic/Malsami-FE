@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
+import AuthChecker from "@/utils/authChecker";
 import Providers from "./providers"; // Redux Provider 컴포넌트
 import "./globals.css";
 
@@ -42,7 +43,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body>
         <Providers>
-          {children} <Toaster />
+          <AuthChecker>{children}</AuthChecker> {/* AuthChecker로 인증 확인 */}
+          <Toaster />
         </Providers>
       </body>
     </html>

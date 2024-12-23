@@ -10,9 +10,13 @@ export default function DailyPopularContent() {
 
   useEffect(() => {
     const fetchPopularItems = async () => {
+      const params = {
+        pageNumber: 0,
+        pageSize: 5,
+      };
       try {
-        const response = await getDocDailyPopulars(); // API 호출
-        const data = response.slice(0, 5).map((item: any, index: number) => ({
+        const response = await getDocDailyPopulars(params); // API 호출
+        const data = response.content.slice(0, 5).map((item: any, index: number) => ({
           postId: item.documentPostId,
           rank: index + 1,
           subject: item.subject || "과목명",

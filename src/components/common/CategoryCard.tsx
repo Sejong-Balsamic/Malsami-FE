@@ -31,9 +31,9 @@ interface CategoryCardProps {
 
 const tagTranslations: { [key: string]: string } = {
   EXAM_PREPARATION: "시험 대비",
-  OUT_OF_CLASS: "수업 외 내용",
+  OUT_OF_CLASS: "수업외내용",
   UNKNOWN_CONCEPT: "개념 모름",
-  BETTER_SOLUTION: "더 나은 풀이",
+  BETTER_SOLUTION: "더나은풀이",
   DOCUMENT_REQUEST: "자료 요청",
   STUDY_TIPS: "공부 팁",
   ADVICE_REQUEST: "조언 구함",
@@ -50,7 +50,7 @@ function CategoryCard({
 }: CategoryCardProps) {
   return (
     <div className="flex items-center justify-center">
-      <div className="m-3 flex h-[166px] w-full flex-col">
+      <div className="m-3 flex h-[166px] w-[163px] flex-col">
         {/* 상단 학과 제목 영역 */}
         <div className="flex h-[52px] items-end rounded-t-[20px] px-3.5 pb-2 pt-2" style={{ backgroundColor: color }}>
           <span className="font-pretendard-semibold line-clamp-2 text-sm leading-tight text-white">{subject}</span>

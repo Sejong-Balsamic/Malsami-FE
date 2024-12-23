@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import Nav from "@/components/nav/LandingNav";
 import FlyingBooks from "@/components/landing/FlyingBooks";
 import HotDocument from "@/components/landing/HotDocument";
@@ -12,11 +12,13 @@ import getAllQuestions from "@/apis/landing/getAllQuestion";
 import { QuestionPost } from "@/types/question";
 import { DocumentPost } from "@/types/document";
 import getMyInfo from "@/apis/member/getMyInfo";
-import UploadFAB from "@/components/common/UploadFAB";
+import UploadFAB from "@/components/common/UploadLandingFAB";
 import ScrollFAB from "@/components/common/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
 import Image from "next/image";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
+import { useDispatch } from "react-redux";
+import { showToast } from "@/utils/toastUtils";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);
@@ -26,6 +28,7 @@ function Page() {
   const hotDocumentRef = useRef<HTMLDivElement>(null);
   const [documents, setDocuments] = useState<DocumentPost[]>([]);
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
+  const dispatch = useDispatch();
 
   // 스크롤 이벤트
   useEffect(() => {
@@ -61,39 +64,33 @@ function Page() {
     return () => window.removeEventListener("scroll", handleScrollForFAB);
   }, []);
 
-  // userName 갱신
-  const storeUserName = async (): Promise<void> => {
+  // storeUserName 래핑
+  const storeUserName = useCallback(async (): Promise<void> => {
     try {
-      // getMyInfo API 호출
       const memberInfo = await getMyInfo();
       const studentName = memberInfo?.member?.studentName || "종이";
-
-      // 상태에 userName 저장
       setUserName(studentName);
     } catch (error) {
-      console.error("사용자 정보 불러오기 실패:", error);
-
-      // 기본값 설정
+      const message = "사용자 정보를 불러오지 못했습니다.";
+      showToast(dispatch, message, "orange");
       setUserName("종이");
     }
-  };
+  }, [dispatch]);
 
+  // useEffect 의존성 배열 정리
   useEffect(() => {
     const initializeUserName = async () => {
       const accessToken = sessionStorage.getItem("accessToken");
 
       if (accessToken) {
-        // accessToken이 있는 경우 userName 갱신
         await storeUserName();
       } else {
-        // accessToken이 없는 경우 기본값 설정
-        const defaultName = "종이";
-        setUserName(defaultName);
+        setUserName("종이");
       }
     };
 
     initializeUserName();
-  }, []);
+  }, [storeUserName]);
 
   // 자료 출력
   useEffect(() => {
@@ -103,12 +100,13 @@ function Page() {
         const allDocuments = data.documentPostsPage?.content || []; // 전체 질문 리스트 추출
         setDocuments(allDocuments); // 상태에 저장
       } catch (error) {
-        console.error("자료 가져오기 실패:", error);
+        const message = "자료를 불러오지 못했습니다.";
+        showToast(dispatch, message, "orange"); // Toast로 에러 메시지 표시
       }
     };
 
     fetchDocuments();
-  }, []);
+  }, [dispatch]);
 
   // 질문 출력
   useEffect(() => {
@@ -118,12 +116,13 @@ function Page() {
         const allQuestions = data.questionPostsPage?.content || []; // 전체 질문 리스트 추출
         setQuestions(allQuestions); // 상태에 저장
       } catch (error) {
-        console.error("질문 가져오기 실패:", error);
+        const message = "질문을 불러오지 못했습니다.";
+        showToast(dispatch, message, "orange"); // Toast로 에러 메시지 표시
       }
     };
 
     fetchQuestions();
-  }, []);
+  }, [dispatch]);
 
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>

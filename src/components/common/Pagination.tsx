@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface PaginationProps {
   pageNumber: number; // 현재 페이지
   totalPages: number; // 총 페이지 수
@@ -6,7 +8,7 @@ interface PaginationProps {
 
 export default function Pagination({ pageNumber, totalPages, onPageChange }: PaginationProps) {
   // 한 번에 보여줄 페이지 번호 개수
-  const pageSize = 5;
+  const pageSize = 3;
 
   // 시작 페이지 계산
   const startPage = Math.floor((pageNumber - 1) / pageSize) * pageSize + 1;
@@ -18,41 +20,65 @@ export default function Pagination({ pageNumber, totalPages, onPageChange }: Pag
   const pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, idx) => startPage + idx);
 
   return (
-    <div className="mb-8 mt-4 flex items-center justify-between px-[20px]">
-      {/* 이전 버튼 */}
-      <button
-        type="button"
-        onClick={() => onPageChange(pageNumber - 1)} // 사용자 기준 -1
-        disabled={pageNumber === 1}
-        className="mx-1 rounded-s-full bg-gray-500 px-2 py-1 text-white disabled:opacity-50"
-      >
-        이전
+    <div className="font-pretendard-semibold flex items-center justify-center gap-4 py-4 text-[13px] text-gray-500">
+      {/* 이전 페이지 버튼 */}
+      <button type="button" onClick={() => onPageChange(pageNumber - 1)} disabled={pageNumber === 1}>
+        <Image
+          src={pageNumber === 1 ? "/icons/pagination/BackDisable.svg" : "/icons/pagination/BackAble.svg"}
+          alt={pageNumber === 1 ? "이전 비활성화" : "이전"}
+          width={7}
+          height={14}
+        />
       </button>
 
-      <div className="flex gap-x-1">
-        {/* 페이지 번호 */}
-        {pageNumbers.map(page => (
+      {/* 페이지 번호 표시 */}
+      {startPage > 1 && (
+        <>
           <button
             type="button"
-            key={page}
-            onClick={() => onPageChange(page)} // 사용자 기준으로 페이지 번호를 전달
-            className={`mx-1 rounded-full px-3 py-1 ${
-              page === pageNumber ? "bg-custom-blue-500 text-white" : "bg-gray-200 text-black"
-            }`}
+            onClick={() => onPageChange(1)}
+            className="flex h-7 w-7 items-center justify-center rounded-full hover:bg-gray-200"
           >
-            {page}
+            1
           </button>
-        ))}
-      </div>
+          {startPage > 2 && <span className="text-gray-500">...</span>}
+        </>
+      )}
 
-      {/* 다음 버튼 */}
-      <button
-        type="button"
-        onClick={() => onPageChange(pageNumber + 1)} // 사용자 기준 +1
-        disabled={pageNumber === totalPages}
-        className="mx-1 rounded-e-full bg-gray-500 px-2 py-1 text-white disabled:opacity-50"
-      >
-        다음
+      {pageNumbers.map(page => (
+        <button
+          type="button"
+          key={page}
+          onClick={() => onPageChange(page)}
+          className={`flex h-7 w-7 items-center justify-center rounded-full ${
+            page === pageNumber ? "bg-custom-blue-500 text-white" : "hover:bg-gray-200"
+          }`}
+        >
+          {page}
+        </button>
+      ))}
+
+      {endPage < totalPages && (
+        <>
+          {endPage < totalPages - 1 && <span className="text-gray-500">...</span>}
+          <button
+            type="button"
+            onClick={() => onPageChange(totalPages)}
+            className="flex h-7 w-7 items-center justify-center rounded-full hover:bg-gray-200"
+          >
+            {totalPages}
+          </button>
+        </>
+      )}
+
+      {/* 다음 페이지 버튼 */}
+      <button type="button" onClick={() => onPageChange(pageNumber + 1)} disabled={pageNumber === totalPages}>
+        <Image
+          src={pageNumber === totalPages ? "/icons/pagination/NextDisable.svg" : "/icons/pagination/NextAble.svg"}
+          alt={pageNumber === totalPages ? "다음 비활성화" : "다음"}
+          width={7}
+          height={14}
+        />
       </button>
     </div>
   );
