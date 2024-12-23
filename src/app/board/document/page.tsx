@@ -60,13 +60,7 @@ export default function DocumentBoardPage() {
         </div>
       </div>
 
-      <div
-        className={`fixed bottom-5 right-5 z-10 transform transition-opacity duration-500 ${
-          isFABVisible ? "scale-100 opacity-100" : "opacity-0"
-        }`}
-      >
-        <UploadDocFAB />
-      </div>
+      <UploadDocFAB isFABVisible={isFABVisible} />
     </div>
   );
 }
