@@ -272,7 +272,7 @@ export interface DocumentData {
     uploadedFileName: string;
     fileSize: number;
     mimeType: string;
-    downloadCount: number;
+    totalDownloadCount: number;
     password: string;
     isInitialPasswordSet: boolean;
   }[];

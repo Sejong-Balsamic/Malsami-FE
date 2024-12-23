@@ -14,6 +14,8 @@ import getMyShortInfo from "@/apis/document/getMyShortInfo";
 
 export default function DocumentBoardPage() {
   const [facultys, setFacultys] = useState<string[]>([]);
+  const [isFABVisible, setIsFABVisible] = useState(true); // FAB 버튼 상태 관리
+
   useEffect(() => {
     const fetchMyInfo = async () => {
       try {
@@ -25,6 +27,20 @@ export default function DocumentBoardPage() {
       }
     };
     fetchMyInfo();
+  }, []);
+
+  // 스크롤 이벤트로 FAB 버튼 관리
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.innerHeight + window.scrollY;
+      const documentHeight = document.body.offsetHeight;
+
+      // 스크롤이 맨 밑 근처로 가면 FAB 숨김
+      setIsFABVisible(scrollPosition < documentHeight - 100);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return (
@@ -44,9 +60,7 @@ export default function DocumentBoardPage() {
         </div>
       </div>
 
-      <div className="fixed bottom-5 right-5 z-10">
-        <UploadDocFAB />
-      </div>
+      <UploadDocFAB isFABVisible={isFABVisible} />
     </div>
   );
 }

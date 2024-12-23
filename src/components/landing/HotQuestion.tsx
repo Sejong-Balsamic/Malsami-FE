@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -7,6 +8,7 @@ import { QuestionPost } from "@/types/questionPost.types";
 import MovingCardQuestion from "./MovingCardQuestion";
 
 function HotQuestion() {
+  const router = useRouter();
   const [weekData, setWeekData] = useState<QuestionPost[]>([]);
   const [dayData, setDayData] = useState<QuestionPost[]>([]);
 
@@ -25,13 +27,8 @@ function HotQuestion() {
     getDailyData();
   }, []);
 
-  const checkAccessTokenAndNavigate = (path: string) => {
-    const accessToken = sessionStorage.getItem("accessToken");
-    if (!accessToken) {
-      window.location.href = "/login";
-    } else {
-      window.location.href = path;
-    }
+  const handleNavigation = (path: string) => {
+    router.push(path);
   };
 
   return (
@@ -61,7 +58,7 @@ function HotQuestion() {
           </CardContent>
           <CardFooter>
             <Button
-              onClick={() => checkAccessTokenAndNavigate("/board/question")}
+              onClick={() => handleNavigation("/board/question")}
               className="font-pretendard-semibold h-[30px] w-full rounded-[10px] bg-[#03b8a3] text-[12px] text-white"
             >
               더보기
@@ -84,7 +81,7 @@ function HotQuestion() {
           </CardContent>
           <CardFooter>
             <Button
-              onClick={() => checkAccessTokenAndNavigate("/board/question")}
+              onClick={() => handleNavigation("/board/question")}
               className="font-pretendard-semibold h-[30px] w-full rounded-[10px] bg-[#03b8a3] text-[12px] text-white"
             >
               더보기

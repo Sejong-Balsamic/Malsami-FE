@@ -138,7 +138,7 @@ export interface DocumentFile {
   uploadedFileName: string;
   fileSize: number;
   mimeType: string;
-  downloadCount: number;
+  totaldownloadCount: number;
   password: string;
   isInitialPasswordSet: boolean;
 }

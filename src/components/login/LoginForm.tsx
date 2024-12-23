@@ -56,7 +56,7 @@ export default function LoginForm() {
             onChange={e => setId(e.target.value)}
             required
             className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-1 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-200"
-            placeholder="학번을 입력해주세요"
+            placeholder="학번 (테스트학번: 99999999)"
           />
         </div>
         {/* 비밀번호 입력 */}
@@ -68,7 +68,7 @@ export default function LoginForm() {
             onChange={e => setPassword(e.target.value)}
             required
             className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-1 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-300"
-            placeholder="비밀번호를 입력해주세요"
+            placeholder="비밀번호 (테스트비번: 99999999)"
           />
         </div>
 

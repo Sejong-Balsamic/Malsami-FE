@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
-import { setActiveTab } from "@/store/activeTabSlice"; // Redux action
+import { setActiveTab } from "@/store/activeTabSlice";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import getSearchResult from "@/apis/search/getSearchResult";
@@ -18,21 +18,29 @@ import { QnaCard } from "@/types/QnaCard";
 export default function SearchResultPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const initialQuery = searchParams.get("query") || ""; // URL에서 검색어 추출
   const dispatch = useDispatch();
-  const activeTab = useSelector((state: RootState) => state.activeTab.activeTab); // Get activeTab from Redux
-  const [searchValue, setSearchValue] = useState(initialQuery || ""); // 현재 검색어 상태
+  const activeTab = useSelector((state: RootState) => state.activeTab.activeTab);
+
+  const initialQuery = searchParams.get("query") || ""; // URL에서 검색어 추출
+  const initialSubject = searchParams.get("subject") || ""; // URL에서 subject 추출
+  const [searchValue, setSearchValue] = useState(initialQuery); // 검색어 상태
+  const [subject, setSubject] = useState(initialSubject); // subject 상태
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
-  const [executedSearchValue, setExecutedSearchValue] = useState(initialQuery || ""); // 실행된 검색어
+  const [executedSearchValue, setExecutedSearchValue] = useState(initialQuery); // 실행된 검색어
+  const [executedSubject, setExecutedSubject] = useState(initialSubject); // 실행된 subject
   const [docResults, setDocResults] = useState<DocCardProps[]>([]); // 자료 결과 저장
   const [qnaResults, setQnaResults] = useState<QnaCard[]>([]); // 질문 결과 저장
 
   // 검색 API 호출 함수
-  const fetchSearchResults = async (value: string) => {
-    if (!value.trim()) return;
+  const fetchSearchResults = async (query: string, subjectParam: string) => {
+    if (!query.trim() && !subjectParam.trim()) return;
+
     setIsLoading(true);
+    const formattedSubject = subjectParam.startsWith("@") ? subjectParam.slice(1).trim() : subjectParam.trim(); // "@" 제거 처리
     try {
-      const response = await getSearchResult({ params: value.trim() });
+      const response = await getSearchResult({
+        params: { query: query.trim(), subject: formattedSubject },
+      });
       setDocResults(response.documentPostsPage.content);
       setQnaResults(response.questionPostsPage.content);
     } catch (error) {
@@ -45,30 +53,39 @@ export default function SearchResultPage() {
 
   // 검색 실행 함수
   const handleSearch = () => {
-    if (!searchValue.trim()) return;
+    if (!searchValue.trim() && !subject.trim()) return;
 
     setExecutedSearchValue(searchValue); // 실행된 검색어 업데이트
-    const updatedQuery = `?query=${encodeURIComponent(searchValue.trim())}`;
+    setExecutedSubject(subject); // 실행된 subject 업데이트
+
+    const updatedQuery = `?query=${encodeURIComponent(searchValue.trim())}&subject=${encodeURIComponent(
+      subject.trim(),
+    )}`;
     router.push(`/search/result${updatedQuery}`); // URL 업데이트
-    fetchSearchResults(searchValue); // API 호출
+    fetchSearchResults(searchValue, subject); // API 호출
   };
 
   // 검색어 입력 시 호출되는 함수
-  const handleValueChange = ({ target: { value } }: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(value); // 입력값 업데이트
-  };
+  const handleValueChange = (value: string) => setSearchValue(value); // 검색어 상태 업데이트
 
-  // 검색어 초기화 함수
-  const handleClearValue = () => {
-    setSearchValue("");
-  };
+  // subject 입력 시 호출되는 함수
+  const handleSubjectChange = (newSubject: string) => setSubject(newSubject); // subject 상태 업데이트
 
-  // URL에서 검색어 변경을 감지하고 상태를 업데이트 및 API 호출
+  // URL에서 검색어와 subject 변경을 감지하고 상태를 업데이트 및 API 호출
   useEffect(() => {
     const query = searchParams.get("query") || "";
+    const subjectParam = searchParams.get("subject") || "";
+
+    console.log("query: ", query);
+    console.log("subject: ", subjectParam);
+
     setSearchValue(query); // 검색어 상태 업데이트
-    setExecutedSearchValue(query); // 실행된 검색어도 업데이트
-    fetchSearchResults(query); // API 호출
+    setExecutedSearchValue(query); // 실행된 검색어 업데이트
+
+    setSubject(subjectParam); // subject 상태 업데이트
+    setExecutedSubject(subjectParam); // 실행된 subject 업데이트
+
+    fetchSearchResults(query, subjectParam); // API 호출
   }, [searchParams]); // searchParams가 변경될 때마다 실행
 
   return (
@@ -78,9 +95,10 @@ export default function SearchResultPage() {
         {/* 헤더 */}
         <SearchResultNav
           searchValue={searchValue}
+          subject={subject}
           onSearchChange={handleValueChange}
+          onSubjectChange={handleSubjectChange}
           onBack={() => router.back()}
-          onClear={handleClearValue}
           onSearch={handleSearch} // 돋보기 버튼 클릭 시 API 호출
         />
         {/* 탭 컴포넌트 */}
@@ -91,10 +109,10 @@ export default function SearchResultPage() {
         {/* 검색 결과 컴포넌트 렌더링 */}
         {isLoading && <LoadingSpinner />}
         {!isLoading && activeTab === "자료게시판" && (
-          <SearchDocContainer docResults={docResults} searchValue={executedSearchValue} />
+          <SearchDocContainer docResults={docResults} searchValue={executedSearchValue} subject={executedSubject} />
         )}
         {!isLoading && activeTab === "질문게시판" && (
-          <SearchQnaContainer qnaResults={qnaResults} searchValue={executedSearchValue} />
+          <SearchQnaContainer qnaResults={qnaResults} searchValue={executedSearchValue} subject={executedSubject} />
         )}
       </div>
     </div>

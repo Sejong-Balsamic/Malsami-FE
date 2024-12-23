@@ -28,7 +28,7 @@ interface CategoryCardProps {
 function CategoryCard({ title, color, subject, likeCount, commentCount }: CategoryCardProps) {
   return (
     <div className="flex items-center justify-center">
-      <div className="m-3 flex h-[166px] w-full flex-col">
+      <div className="m-3 flex h-[166px] w-[163px] flex-col">
         {/* 상단 학과 제목 영역 */}
         <div className="flex h-[52px] items-end rounded-t-[20px] px-3.5 pb-2 pt-2" style={{ backgroundColor: color }}>
           <span className="font-pretendard-semibold line-clamp-2 text-sm leading-tight text-white">{subject}</span>
@@ -38,7 +38,7 @@ function CategoryCard({ title, color, subject, likeCount, commentCount }: Catego
         <div className="shadow-gray flex h-[114px] flex-col justify-between rounded-b-[20px] bg-white px-3.5 pb-4 pt-2 shadow-md">
           {/* 질문 부분, 태그들 부분 */}
           <div className="flex min-h-[64px] flex-col justify-between">
-            <div className="font-pretendard-bold line-clamp-2 pr-2 text-sm leading-[20px]">{title}</div>
+            <div className="font-pretendard-bold line-clamp-3 pr-2 text-sm leading-[20px]">{title}</div>
           </div>
 
           {/* 좋아요, 댓글 부분 */}

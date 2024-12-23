@@ -21,11 +21,11 @@ export default function SearchComponent() {
   return (
     <div className="h-screen bg-[#EEEEEE]">
       {/* 헤더 */}
-      <div className="flex items-center border-b-[2px] bg-white px-4 py-2">
-        <button type="button" onClick={() => router.back()}>
+      <div className="flex h-[64px] items-center border-b-[2px] bg-white p-5">
+        <button type="button" onClick={() => router.back()} className="ml-0">
           <Image src="/icons/BackIcon.svg" alt="Back" width={10} height={20} />
         </button>
-        <h1 className="flex-grow text-center text-lg font-semibold">검색하기</h1>
+        <h1 className="font-pretendard-bold text absolute left-1/2 -translate-x-1/2 transform text-xl">검색하기</h1>
       </div>
 
       {/* 검색 입력 */}
