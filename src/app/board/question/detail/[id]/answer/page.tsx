@@ -9,6 +9,9 @@ import FileUploadInput from "@/components/board/question/post/formInputs/FileUpl
 import PrivateSettingInput from "@/components/board/question/post/formInputs/PrivateSettingInput";
 import postAnswer from "@/apis/question/postAnswer";
 import OriginalQuestion from "@/components/board/question/answer/OriginalQuestion";
+import { useDispatch } from "react-redux";
+import { addToast } from "@/store/toastSlice"; // Toast 액션 가져오기
+import { ToastIcon, ToastAction } from "@/components/ui/toast";
 
 interface AnswerPostFormData {
   content: string;
@@ -29,6 +32,23 @@ export default function AnswerPostPage() {
 
   const [isFormValid, setIsFormValid] = useState(false);
   const mediaAllowedTypes = ["image/jpeg", "image/png"];
+  const dispatch = useDispatch();
+
+  const showToast = (message: string) => {
+    dispatch(
+      addToast({
+        id: Date.now().toString(),
+        icon: <ToastIcon color="blue" />,
+        title: message,
+        color: "blue",
+        action: (
+          <ToastAction color="blue" altText="확인">
+            확인
+          </ToastAction>
+        ),
+      }),
+    );
+  };
 
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -48,7 +68,7 @@ export default function AnswerPostPage() {
       const filteredFiles = filesArray.filter(file => mediaAllowedTypes.includes(file.type));
 
       if (filteredFiles.length !== filesArray.length) {
-        alert("JPEG 또는 PNG 형식의 파일만 업로드할 수 있습니다.");
+        showToast("JPEG 또는 PNG 형식의 파일만 업로드할 수 있습니다.");
         e.target.value = ""; // 선택한 파일 무효화
       } else {
         setFormData(prevFormData => ({
@@ -85,7 +105,7 @@ export default function AnswerPostPage() {
     if (isSubmitting) return;
 
     if (!formData.content.trim()) {
-      alert("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showToast("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     setisSubmitting(true);
@@ -98,17 +118,17 @@ export default function AnswerPostPage() {
           isPrivate: formData.isPrivate,
           mediaFiles: formData.mediaFiles,
         }); // API 호출
-        alert("답변이 성공적으로 등록되었습니다.");
+        showToast("답변이 성공적으로 등록되었습니다.");
         localStorage.removeItem("answerFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
         window.location.href = `/board/question/detail/${questionPostId}`; // 작성 완료 후 해당 질문 상세 페이지로 이동
       } catch (error) {
         console.log("error", error);
-        alert("답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+        showToast("답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
       } finally {
         setisSubmitting(false);
       }
     } else {
-      alert("모든 필수 항목을 채워주세요.");
+      showToast("모든 필수 항목을 채워주세요.");
     }
   };
 

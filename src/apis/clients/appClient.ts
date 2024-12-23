@@ -63,6 +63,8 @@ apiClient.interceptors.response.use(
         // refreshAccessToken 실패 시 403으로 처리
         if (!isRedirecting) {
           isRedirecting = true;
+          alert("로그아웃 되었습니다. 다시 로그인해주세요.");
+          window.location.href = "/login";
         }
         return Promise.reject(refreshError); // 오류를 상위로 전달
       }
@@ -74,10 +76,9 @@ apiClient.interceptors.response.use(
       const errorMessage =
         errorData && typeof errorData === "object" && "errorMessage" in errorData
           ? (errorData as { errorMessage: string }).errorMessage
-          : "잠시 후 다시 시도해주세요.";
+          : "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.";
 
-      console.error("apiclient 오류:", errorMessage);
-      alert(errorMessage);
+      console.error("apiClient:", errorMessage);
     }
 
     return Promise.reject(error); // 다른 에러는 그대로 전달
