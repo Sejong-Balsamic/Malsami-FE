@@ -3,6 +3,8 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { refreshAccessToken } from "../auth/refresh";
 
+import { ToastIcon, ToastAction } from "@/components/ui/toast";
+
 // 사용법: axios 대신 apiClient import해서 사용
 export const apiClient = axios.create({
   baseURL: "https://api.sejong-malsami.co.kr",
@@ -78,8 +80,7 @@ apiClient.interceptors.response.use(
           ? (errorData as { errorMessage: string }).errorMessage
           : "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.";
 
-      console.error("서버 오류:", errorMessage);
-      alert(errorMessage);
+      console.error("apiClient:", errorMessage);
     }
 
     return Promise.reject(error); // 다른 에러는 그대로 전달
