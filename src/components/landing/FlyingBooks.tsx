@@ -179,13 +179,16 @@ import LandingEasterEgg from "../easterEgg/LandingEasterEgg";
 
 interface FlyingBooksProps {
   scrollY: number;
+  studentName: string;
 }
-function FlyingBooks({ scrollY }: FlyingBooksProps) {
+function FlyingBooks({ scrollY, studentName }: FlyingBooksProps) {
   const [clickCount, setClickCount] = useState(0); // 클릭 횟수
   const [isEasterEggActive, setIsEasterEggActive] = useState(false); // 이스터 에그 활성화 상태
 
   const handleBookClick = () => {
-    setClickCount(prev => prev + 1);
+    if (studentName !== "종이") {
+      setClickCount(prev => prev + 1);
+    }
   };
 
   useEffect(() => {
