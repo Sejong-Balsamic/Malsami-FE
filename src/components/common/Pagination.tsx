@@ -8,7 +8,7 @@ interface PaginationProps {
 
 export default function Pagination({ pageNumber, totalPages, onPageChange }: PaginationProps) {
   // 한 번에 보여줄 페이지 번호 개수
-  const pageSize = 3;
+  const pageSize = 5;
 
   // 시작 페이지 계산
   const startPage = Math.floor((pageNumber - 1) / pageSize) * pageSize + 1;
@@ -20,9 +20,9 @@ export default function Pagination({ pageNumber, totalPages, onPageChange }: Pag
   const pageNumbers = Array.from({ length: endPage - startPage + 1 }, (_, idx) => startPage + idx);
 
   return (
-    <div className="font-pretendard-semibold flex items-center justify-center gap-4 py-4 text-[13px] text-gray-500">
+    <div className="font-pretendard-semibold mb-7 flex items-center justify-center gap-2.5 text-[13px] text-gray-500">
       {/* 이전 페이지 버튼 */}
-      <button type="button" onClick={() => onPageChange(pageNumber - 1)} disabled={pageNumber === 1}>
+      <button type="button" onClick={() => onPageChange(pageNumber - 1)} disabled={pageNumber === 1} className="mr-1">
         <Image
           src={pageNumber === 1 ? "/icons/pagination/BackDisable.svg" : "/icons/pagination/BackAble.svg"}
           alt={pageNumber === 1 ? "이전 비활성화" : "이전"}
@@ -72,7 +72,12 @@ export default function Pagination({ pageNumber, totalPages, onPageChange }: Pag
       )}
 
       {/* 다음 페이지 버튼 */}
-      <button type="button" onClick={() => onPageChange(pageNumber + 1)} disabled={pageNumber === totalPages}>
+      <button
+        type="button"
+        onClick={() => onPageChange(pageNumber + 1)}
+        disabled={pageNumber === totalPages}
+        className="ml-1"
+      >
         <Image
           src={pageNumber === totalPages ? "/icons/pagination/NextDisable.svg" : "/icons/pagination/NextAble.svg"}
           alt={pageNumber === totalPages ? "다음 비활성화" : "다음"}
