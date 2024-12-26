@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
+import axios from "axios";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import AnswerPageNav from "@/components/nav/AnswerPageNav";
@@ -125,8 +126,14 @@ export default function AnswerPostPage() {
         localStorage.removeItem("answerFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
         router.push(`/board/question/detail/${questionPostId}`); // 작성 완료 후 해당 질문 상세 페이지로 이동
       } catch (error) {
-        console.log("error", error);
-        showToast("답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+        // AxiosError 확인
+        if (axios.isAxiosError(error)) {
+          const errorMessage = error.response?.data?.errorMessage || "오류가 발생했습니다.";
+          showToast(errorMessage);
+        } else {
+          // 예상치 못한 오류 처리
+          showToast("답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+        }
       } finally {
         setisSubmitting(false);
       }
