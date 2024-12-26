@@ -1,5 +1,6 @@
 "use client";
 
+import axios from "axios";
 import DetailPageNav from "@/components/nav/DDetailNav";
 import DocDetail from "@/components/board/document/detail/DocDetail";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
@@ -8,9 +9,12 @@ import { useEffect, useState } from "react";
 import getDocumentDetails from "@/apis/document/getDocumentDetails";
 import { DocumentData } from "@/types/DocumentDetailData";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { useDispatch } from "react-redux";
+import { showToast } from "@/utils/toastUtils";
 
 export default function Page() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   // URL 파라미터 가져옴
   const params = useParams();
@@ -44,8 +48,17 @@ export default function Page() {
         } catch (innerError) {
           console.error("문서 상세 정보 가져오기 실패:", innerError);
           if (isMounted && !error) {
-            // 에러가 이미 설정되지 않은 경우만 처리
-            setError(error); // 오류 설정
+            // 에러 객체가 AxiosError인지 확인
+            if (axios.isAxiosError(innerError)) {
+              const message = innerError.response?.data?.errorMessage || "알 수 없는 오류가 발생했습니다.";
+              showToast(dispatch, message, "orange");
+              setError(innerError.response?.data?.errorMessage); // 오류 설정
+              router.back(); // 이전 페이지로 이동
+            } else {
+              // AxiosError가 아닌 경우 처리
+              showToast(dispatch, "예상치 못한 오류가 발생했습니다.", "orange");
+              router.back(); // 이전 페이지로 이동
+            }
           }
         } finally {
           if (isMounted) {
