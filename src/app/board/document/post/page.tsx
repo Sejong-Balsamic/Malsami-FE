@@ -1,10 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import DocPostNav from "@/components/nav/DocPostNav";
 import subjects from "@/lib/subjects";
 import { docMediaAllowedTypes } from "@/lib/docMediaAllowedTypes";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import TitleInput from "@/components/board/question/post/formInputs/TitleInput";
 import CategoryInput from "@/components/board/document/post/formInputs/CategoryInput";
 import ContentInput from "@/components/board/document/post/formInputs/ContentInput";
@@ -18,6 +20,9 @@ import QnaPostSubjectModal from "@/components/board/question/post/QnaPostSubject
 import QnaPostCustomTagsModal from "@/components/board/question/post/QnaPostCustomTagsModal";
 import DocPostStudyYearModal from "@/components/board/document/post/DocPostStudyYearModal";
 import postNewDoc from "@/apis/document/postNewDoc";
+import { useDispatch } from "react-redux";
+import { addToast } from "@/store/toastSlice"; // Toast 액션 가져오기
+import { ToastIcon, ToastAction } from "@/components/ui/toast";
 
 interface DocPostFormData {
   title: string;
@@ -31,6 +36,8 @@ interface DocPostFormData {
 }
 
 export default function QnaPostPage() {
+  const router = useRouter();
+
   const [formData, setFormData] = useState<DocPostFormData>({
     title: "",
     content: "",
@@ -47,11 +54,29 @@ export default function QnaPostPage() {
   const [isSubjectModalOpen, setIsSubjectModalOpen] = useState(false);
   const [isStudyYearModalOpen, setIsStudyYearModalOpen] = useState(false);
   const [isCustomTagsModalOpen, setIsCustomTagsModalOpen] = useState(false);
+  const [isUploading, setIsUploading] = useState(false); // 업로드 상태
+  const dispatch = useDispatch();
+
+  const showToast = (message: string) => {
+    dispatch(
+      addToast({
+        id: Date.now().toString(),
+        icon: <ToastIcon color="blue" />,
+        title: message,
+        color: "blue",
+        action: (
+          <ToastAction color="blue" altText="확인">
+            확인
+          </ToastAction>
+        ),
+      }),
+    );
+  };
 
   // 로컬 스토리지에 저장하는 함수
   const saveToLocalStorage = () => {
     localStorage.setItem("docPostFormData", JSON.stringify(formData));
-    alert("임시저장 되었습니다!");
+    showToast("임시저장 되었습니다!");
   };
   // 로컬 스토리지에서 데이터를 불러오는 함수
   const loadFromLocalStorage = () => {
@@ -154,10 +179,10 @@ export default function QnaPostPage() {
         const isValidType = docMediaAllowedTypes.includes(file.type) || isExtensionAllowed(file.name); // 허용된 형식 또는 확장자
         const isValidSize = isFileSizeValid(file); // 파일 크기 검사
         if (!isValidType) {
-          alert(`"${file.name}"는 지원하지 않는 파일 형식입니다.`);
+          showToast(`"${file.name}"는 지원하지 않는 파일 형식입니다.`);
         } else if (!isValidSize) {
           const maxSize = file.type.startsWith("video/") ? "200MB" : "30MB";
-          alert(`"${file.name}" 파일은 최대 ${maxSize}를 초과할 수 없습니다.`);
+          showToast(`"${file.name}" 파일은 최대 ${maxSize}를 초과할 수 없습니다.`);
         }
         return isValidType && isValidSize;
       });
@@ -171,14 +196,14 @@ export default function QnaPostPage() {
       const existingFilesTotalSize = formData.mediaFiles.reduce((acc, file) => acc + file.size, 0);
       // 전체 파일 크기 제한 검사
       if (existingFilesTotalSize + newFilesTotalSize > 1024 * 1024 * 1000) {
-        alert("전체 파일 크기는 1KB를 초과할 수 없습니다.");
+        showToast("전체 파일 크기는 1KB를 초과할 수 없습니다.");
         e.target.value = ""; // 파일 무효화
         return;
       }
 
       // 총 파일 개수 검사
       if (formData.mediaFiles.length + filteredFiles.length > 10) {
-        alert("최대 10개의 파일만 업로드할 수 있습니다.");
+        showToast("최대 10개의 파일만 업로드할 수 있습니다.");
         e.target.value = ""; // 파일 무효화
         return;
       }
@@ -205,30 +230,33 @@ export default function QnaPostPage() {
   const handleSubmit = async () => {
     // 제목에 공백만 입력된 경우 확인
     if (!formData.title.trim()) {
-      alert("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showToast("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     if (!formData.content.trim()) {
-      alert("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showToast("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     if (!subjects.includes(formData.subject)) {
-      alert("정확한 교과목명을 입력하세요.");
+      showToast("정확한 교과목명을 입력하세요.");
       return;
     }
 
     if (isFormValid) {
+      setIsUploading(true); // 업로딩 시작
       try {
         await postNewDoc(formData); // API 호출
-        alert("자료 게시글이 성공적으로 등록되었습니다.");
         localStorage.removeItem("docPostFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
-        window.location.href = "/board/document"; // 작성 완료 후 이동할 페이지로 변경
+        showToast("자료 게시글이 성공적으로 등록되었습니다.");
+        router.push("/board/document");
       } catch (error) {
         console.log("error", error);
-        alert("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+        showToast("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+      } finally {
+        setIsUploading(false); // 업로딩 종료
       }
     } else {
-      alert("모든 필수 항목을 채워주세요.");
+      showToast("모든 필수 항목을 채워주세요.");
     }
   };
 
@@ -238,38 +266,45 @@ export default function QnaPostPage() {
       <DocPostNav onSave={saveToLocalStorage} />
       <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white p-5">
         <div className="rounded-lg">
-          <form>
-            {/* 제목 */}
-            <TitleInput value={formData.title} onChange={handleChange} />
-            {/* 설명 */}
-            <ContentInput value={formData.content} onChange={handleChange} />
-            {/* 파일 업로드 */}
-            <FileUploadInput
-              mediaFiles={formData.mediaFiles}
-              onFileChange={handleFileChange}
-              onFileDelete={handleFileDelete}
-            />
-            {/* 교과목명 검색 */}
-            <SubjectSearchInputComponent value={formData.subject} onClick={toggleSubjectModal} />
-            {/* 카테고리 선택 */}
-            <CategoryInput tags={formData.categoryTags} onOpenModal={toggleCategoryTagsModal} />
-            {/* 수강년도 선택 */}
-            <StudyYearInput year={formData.studyYear} onOpenModal={toggleStudyYearModal} />
-            {/* 커스텀 태그 */}
-            <CustomTagsInput tags={formData.customTags} onClick={toggleCustomTagsModal} onRemoveTag={removeTag} />
-            {/* 추가 설정 */}
-            <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={handleIsPrivate} />
+          {/* 로딩 중일 때 */}
+          {isUploading ? (
+            <div className="flex h-[500px] items-center justify-center">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            //  업로딩 중이 아닐 때 폼 내용 표시
+            <form>
+              {/* 제목 */}
+              <TitleInput value={formData.title} onChange={handleChange} />
+              {/* 설명 */}
+              <ContentInput value={formData.content} onChange={handleChange} />
+              {/* 파일 업로드 */}
+              <FileUploadInput
+                mediaFiles={formData.mediaFiles}
+                onFileChange={handleFileChange}
+                onFileDelete={handleFileDelete}
+              />
+              {/* 교과목명 검색 */}
+              <SubjectSearchInputComponent value={formData.subject} onClick={toggleSubjectModal} />
+              {/* 카테고리 선택 */}
+              <CategoryInput tags={formData.categoryTags} onOpenModal={toggleCategoryTagsModal} />
+              {/* 수강년도 선택 */}
+              <StudyYearInput year={formData.studyYear} onOpenModal={toggleStudyYearModal} />
+              {/* 커스텀 태그 */}
+              <CustomTagsInput tags={formData.customTags} onClick={toggleCustomTagsModal} onRemoveTag={removeTag} />
+              {/* 추가 설정 */}
+              <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={handleIsPrivate} />
 
-            <button
-              type="button"
-              onClick={handleSubmit}
-              disabled={!isFormValid}
-              className={`w-full rounded-[10px] p-2 text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
-            >
-              작성완료
-            </button>
-          </form>
-
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={!isFormValid}
+                className={`w-full rounded-[10px] p-2 text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
+              >
+                작성완료
+              </button>
+            </form>
+          )}
           {/* 모달들 */}
           {/* 교과목명 검색 모달 */}
           {isSubjectModalOpen && (
