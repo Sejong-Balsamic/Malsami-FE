@@ -142,7 +142,7 @@ function Page() {
         </div>
         {/* 플라잉 북 */}
         <div className="z-10">
-          <FlyingBooks scrollY={scrollY} />
+          <FlyingBooks scrollY={scrollY} studentName={userName} />
         </div>
         <div className="relative z-40 flex flex-col items-center justify-center px-[20px]">
           <div ref={hotDocumentRef} className="w-full">
