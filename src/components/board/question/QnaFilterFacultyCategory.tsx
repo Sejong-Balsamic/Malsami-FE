@@ -9,19 +9,24 @@ import QnaSelectFacultyModal from "./QnaSelectFacultyModal";
 
 function QnaFilterFacultyCategory() {
   const dispatch = useDispatch();
-  const faculty = useSelector((state: RootState) => state.faculty.faculty); // Redux에서 faculty 가져오기
+  const faculty = useSelector((state: RootState) => state.faculty.faculty);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [lastSelected, setLastSelected] = useState("단과대 선택"); // "전체" 선택 시 표시할 최근 선택 학부
+  const [lastSelected, setLastSelected] = useState("단과대 선택");
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   const handleSelect = (selectedFaculty: string) => {
     if (selectedFaculty !== "전체") {
-      setLastSelected(selectedFaculty); // "전체"가 아닌 경우에만 lastSelected 업데이트
+      setLastSelected(selectedFaculty);
     }
-    dispatch(setFaculty(selectedFaculty)); // Redux 상태 업데이트
+    dispatch(setFaculty(selectedFaculty));
     closeModal();
+  };
+
+  // 단과대 직접 선택 (텍스트 클릭 시)
+  const handleDirectSelect = (selectedFaculty: string) => {
+    dispatch(setFaculty(selectedFaculty));
   };
 
   return (
@@ -34,39 +39,47 @@ function QnaFilterFacultyCategory() {
               ? "font-pretendard-semibold border-b-2 border-custom-blue-500 text-black"
               : "font-pretendard-medium border-b-2 border-[#EEEEEE] text-[#ABABAB]"
           }`}
-          onClick={() => handleSelect("전체")}
+          onClick={() => handleDirectSelect("전체")}
         >
           전체
         </button>
 
-        <div className="flex-1">
-          <button
-            type="button"
-            className={`w-full p-1 text-lg ${
-              faculty === "전체"
-                ? "font-pretendard-medium border-b-2 border-[#EEEEEE] text-[#ABABAB]"
-                : "font-pretendard-semibold border-b-2 border-custom-blue-500 text-black"
-            }`}
-          >
-            {faculty === "전체" ? lastSelected : faculty} {/* faculty가 "전체"인 경우 lastSelected를 표시 */}
-            <span
+        <div className="flex flex-1">
+          {lastSelected === "단과대 선택" ? (
+            // 초기 상태: 단과대 선택 버튼
+            <button
+              type="button"
               onClick={openModal}
-              role="button"
-              tabIndex={0}
-              onKeyDown={e => {
-                if (e.key === "Enter") {
-                  openModal();
-                }
-              }}
-              className="cursor-pointer"
+              className="flex-1 p-1 text-lg font-pretendard-medium border-b-2 border-[#EEEEEE] text-[#ABABAB]"
             >
-              {" "}
-              <ImageWrapper src="/icons/ToggleIcon.svg" />
-            </span>
-          </button>
-          <QnaSelectFacultyModal isVisible={isModalOpen} onClose={closeModal} onSelect={handleSelect} />
+              단과대 선택
+            </button>
+          ) : (
+            // 단과대 선택 후 상태
+            <>
+              <button
+                type="button"
+                onClick={() => handleDirectSelect(lastSelected)}
+                className={`flex-1 p-1 text-lg ${
+                  faculty === "전체"
+                    ? "font-pretendard-medium border-b-2 border-[#EEEEEE] text-[#ABABAB]"
+                    : "font-pretendard-semibold border-b-2 border-custom-blue-500 text-black"
+                }`}
+              >
+                {lastSelected}
+              </button>
+              <button
+                type="button"
+                onClick={openModal}
+                className="px-2 border-b-2 border-custom-blue-500"
+              >
+                <ImageWrapper src="/icons/ToggleIcon.svg" />
+              </button>
+            </>
+          )}
         </div>
       </div>
+      <QnaSelectFacultyModal isVisible={isModalOpen} onClose={closeModal} onSelect={handleSelect} />
     </div>
   );
 }
