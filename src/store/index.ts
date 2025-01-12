@@ -1,23 +1,23 @@
 import { configureStore } from "@reduxjs/toolkit";
-import docHotDownFilterOptionsReducer from "@/store/docFilterOptions/docHotDownFilterOptionsSlice";
-import docMyFacultyFilterOptionsReducer from "@/store/docFilterOptions/docMyFacultyFilterOptionsSlice";
-import docRequestFilterOptionsReducer from "./docFilterOptions/docRequestFilterOptionsSlice";
-import filterOptionsReducer from "./filterOptionsSlice";
+import docHotDownFilterOptions from "@/store/docFilterOptions/docHotDownFilterOptionsSlice";
+import docMyFacultyFilterOptions from "@/store/docFilterOptions/docMyFacultyFilterOptionsSlice";
+import docRequestFilterOptions from "./docFilterOptions/docRequestFilterOptionsSlice";
+import filterOptions from "./filterOptionsSlice";
 import facultyState from "./facultySlice";
-import activeTabReducer from "./activeTabSlice";
-import toastReducer from "./toastSlice";
-import modalReducer from "./modalSlice";
+import activeTab from "./activeTabSlice";
+import toast from "./toastSlice";
+import modal from "./modalSlice";
 
 export const store = configureStore({
   reducer: {
     facultyState,
-    filterOptions: filterOptionsReducer,
-    activeTab: activeTabReducer,
-    toast: toastReducer,
-    modal: modalReducer,
-    docHotDownFilterOptions: docHotDownFilterOptionsReducer,
-    docMyFacultyFilterOptions: docMyFacultyFilterOptionsReducer,
-    docRequestFilterOptions: docRequestFilterOptionsReducer,
+    filterOptions,
+    activeTab,
+    toast,
+    modal,
+    docHotDownFilterOptions,
+    docMyFacultyFilterOptions,
+    docRequestFilterOptions,
   },
 });
 
