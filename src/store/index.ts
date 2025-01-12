@@ -3,14 +3,14 @@ import docHotDownFilterOptionsReducer from "@/store/docFilterOptions/docHotDownF
 import docMyFacultyFilterOptionsReducer from "@/store/docFilterOptions/docMyFacultyFilterOptionsSlice";
 import docRequestFilterOptionsReducer from "./docFilterOptions/docRequestFilterOptionsSlice";
 import filterOptionsReducer from "./filterOptionsSlice";
-import facultyReducer from "./facultySlice";
+import facultyState from "./facultySlice";
 import activeTabReducer from "./activeTabSlice";
 import toastReducer from "./toastSlice";
 import modalReducer from "./modalSlice";
 
 export const store = configureStore({
   reducer: {
-    faculty: facultyReducer,
+    facultyState,
     filterOptions: filterOptionsReducer,
     activeTab: activeTabReducer,
     toast: toastReducer,
