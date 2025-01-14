@@ -125,7 +125,6 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                           </span>
                         ) : (
                           <span className="font-pretendard-medium text-base">
-                            {" "}
                             {SortTypes[docSortTypeKey as keyof typeof SortTypes]}
                           </span>
                         )}

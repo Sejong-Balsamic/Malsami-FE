@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
+import DocTypes from "@/lib/constants/docTypes";
+import SortTypes from "@/lib/constants/sortTypes";
 import FacultyTag from "@/components/common/tags/facultyTag";
 import DocRequestFilterOptionsModal from "./DocRequestFilterOptionsModal";
 import JiJeongTag from "../tags/JiJeongTag";
@@ -33,11 +35,11 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
   return (
     <div className="flex justify-between px-5 py-3">
       <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
-        {/* 정렬 옵션 */}
+        {/* 필터링바에 sortType 표시 */}
         {filterOptions.sortType && (
           <JiJeongTag
             key={filterOptions.sortType}
-            label={`${filterOptions.sortType} ×`}
+            label={`${SortTypes[filterOptions.sortType as keyof typeof SortTypes]} ×`}
             onClick={handleRemoveSortOption}
             style={{
               backgroundColor: "#74D7CB",
@@ -47,12 +49,12 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
         )}
         {/* 학과 옵션 */}
         {filterOptions.faculty && <FacultyTag title={`${filterOptions.faculty} ×`} onClick={handleRemoveFaculty} />}
-        {/* 태그 목록 */}
+        {/* 필터링바에 docType 표시 */}
         {filterOptions.docTypes.length > 0 &&
           filterOptions.docTypes.map(tag => (
             <JiJeongTag
               key={tag}
-              label={`${tag} ×`}
+              label={`${DocTypes[tag as keyof typeof DocTypes]} ×`}
               onClick={() => handleRemoveTag(tag)}
               style={{
                 backgroundColor: "#0062D2",

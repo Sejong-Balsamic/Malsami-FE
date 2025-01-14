@@ -42,6 +42,7 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
             }}
           />
         )}
+        {/* 필터링바에 docType 표시 */}
         {filterOptions.docTypes.length > 0 &&
           filterOptions.docTypes.map(tag => (
             <JiJeongTag
