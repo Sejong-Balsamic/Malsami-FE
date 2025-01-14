@@ -9,8 +9,8 @@ interface FilterOptionsState {
 
 const initialState: FilterOptionsState = {
   docMyFacultyFilterOptions: {
-    tags: [],
-    sortOption: "",
+    docTypes: [],
+    sortType: "",
   },
 };
 

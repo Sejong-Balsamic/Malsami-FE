@@ -26,12 +26,12 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
   const [modalHeight, setModalHeight] = useState("50vh"); // 초기 modalHeight 50%로 설정
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const [tags, setTags] = useState(initialFilterOptions.tags);
-  const [sortOption, setSortOption] = useState(initialFilterOptions.sortOption);
+  const [tags, setTags] = useState(initialFilterOptions.docTypes);
+  const [sortOption, setSortOption] = useState(initialFilterOptions.sortType);
   const [faculty, setFaculty] = useState(initialFilterOptions.faculty);
 
   const handleApply = () => {
-    onApplyFilter({ tags, sortOption, faculty });
+    onApplyFilter({ docTypes: tags, sortType: sortOption, faculty });
   };
 
   // 필터 초기화 함수

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
+import DocTypes from "@/lib/constants/docTypes";
+import SortTypes from "@/lib/constants/sortTypes";
 import DocFilterOptionsModal from "./DocFilterOptionsModal";
 import JiJeongTag from "../tags/JiJeongTag";
 
@@ -17,21 +19,22 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
 
   // 태그 삭제 핸들러
   const handleRemoveTag = (tagToRemove: string) => {
-    const updatedTags = filterOptions.tags.filter(tag => tag !== tagToRemove);
-    onFilterChange({ ...filterOptions, tags: updatedTags });
+    const updatedTags = filterOptions.docTypes.filter(tag => tag !== tagToRemove);
+    onFilterChange({ ...filterOptions, docTypes: updatedTags });
   };
 
   const handleRemoveSortOption = () => {
-    onFilterChange({ ...filterOptions, sortOption: "" });
+    onFilterChange({ ...filterOptions, sortType: "" });
   };
 
   return (
     <div className="flex justify-between px-5 py-3">
       <div className="flex overflow-x-auto scrollbar-hide">
-        {filterOptions.sortOption && (
+        {/* 필터링바에 sortType 표시 */}
+        {filterOptions.sortType && (
           <JiJeongTag
-            key={filterOptions.sortOption}
-            label={`${filterOptions.sortOption} ×`}
+            key={filterOptions.sortType}
+            label={`${SortTypes[filterOptions.sortType as keyof typeof SortTypes]} ×`}
             onClick={handleRemoveSortOption}
             style={{
               backgroundColor: "#74D7CB",
@@ -39,11 +42,11 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
             }}
           />
         )}
-        {filterOptions.tags.length > 0 &&
-          filterOptions.tags.map(tag => (
+        {filterOptions.docTypes.length > 0 &&
+          filterOptions.docTypes.map(tag => (
             <JiJeongTag
               key={tag}
-              label={`${tag} ×`}
+              label={`${DocTypes[tag as keyof typeof DocTypes]} ×`}
               onClick={() => handleRemoveTag(tag)}
               style={{
                 backgroundColor: "#0062D2",

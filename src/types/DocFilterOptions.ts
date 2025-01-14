@@ -1,5 +1,5 @@
 export interface DocFilterOptions {
-  tags: string[];
-  sortOption: string;
+  docTypes: string[];
+  sortType: string;
   faculty?: string;
 }

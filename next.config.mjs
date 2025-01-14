@@ -24,6 +24,11 @@ const nextConfig = {
         hostname: "221.149.185.157",
         pathname: "/sejong-malsami/answer/**",
       },
+      {
+        protocol: "http",
+        hostname: "suh-project.synology.me", // 새 호스트 추가
+        pathname: "/sejong-malsami/thumbnail/**", // 이 경로의 이미지만 허용
+      },
     ],
   },
 };

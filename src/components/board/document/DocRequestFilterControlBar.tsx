@@ -18,12 +18,12 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
 
   // 태그 삭제 핸들러
   const handleRemoveTag = (tagToRemove: string) => {
-    const updatedTags = filterOptions.tags.filter(tag => tag !== tagToRemove);
-    onFilterChange({ ...filterOptions, tags: updatedTags });
+    const updatedTags = filterOptions.docTypes.filter(tag => tag !== tagToRemove);
+    onFilterChange({ ...filterOptions, docTypes: updatedTags });
   };
 
   const handleRemoveSortOption = () => {
-    onFilterChange({ ...filterOptions, sortOption: "" });
+    onFilterChange({ ...filterOptions, sortType: "" });
   };
 
   const handleRemoveFaculty = () => {
@@ -34,10 +34,10 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
     <div className="flex justify-between px-5 py-3">
       <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
         {/* 정렬 옵션 */}
-        {filterOptions.sortOption && (
+        {filterOptions.sortType && (
           <JiJeongTag
-            key={filterOptions.sortOption}
-            label={`${filterOptions.sortOption} ×`}
+            key={filterOptions.sortType}
+            label={`${filterOptions.sortType} ×`}
             onClick={handleRemoveSortOption}
             style={{
               backgroundColor: "#74D7CB",
@@ -48,8 +48,8 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
         {/* 학과 옵션 */}
         {filterOptions.faculty && <FacultyTag title={`${filterOptions.faculty} ×`} onClick={handleRemoveFaculty} />}
         {/* 태그 목록 */}
-        {filterOptions.tags.length > 0 &&
-          filterOptions.tags.map(tag => (
+        {filterOptions.docTypes.length > 0 &&
+          filterOptions.docTypes.map(tag => (
             <JiJeongTag
               key={tag}
               label={`${tag} ×`}

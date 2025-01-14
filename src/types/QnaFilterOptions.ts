@@ -1,5 +1,5 @@
 export interface QnaFilterOptions {
-  isChaeTaek: string;
-  tags: string[];
-  sortOption: string;
+  chaetakStatus: string;
+  qnaPresetTags: string[];
+  sortType: string;
 }
