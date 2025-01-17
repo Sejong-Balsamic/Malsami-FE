@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import DocTypes from "@/lib/constants/docTypes";
-import SortTypes from "@/lib/constants/sortTypes";
+import { SortTypes } from "@/lib/constants/sortTypes";
 import DocFilterOptionsModal from "./DocFilterOptionsModal";
 import JiJeongTag from "../tags/JiJeongTag";
 

@@ -65,7 +65,7 @@ export default function QuestionBoardPage() {
     const params = {
       qnaPresetTags: filterOptions.qnaPresetTags,
       faculty,
-      chaetakStatus: filterOptions.chaetakStatus,
+      chaetaekStatus: filterOptions.chaetaekStatus,
       sortType: filterOptions.sortType,
       pageNumber: pageNumber - 1,
       pageSize,

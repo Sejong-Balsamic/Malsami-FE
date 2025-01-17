@@ -2,9 +2,9 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 
 const initialState: QnaFilterOptions = {
-  chaetakStatus: "",
+  chaetaekStatus: undefined,
   qnaPresetTags: [],
-  sortType: "",
+  sortType: undefined,
 };
 
 const filterOptionsSlice = createSlice({

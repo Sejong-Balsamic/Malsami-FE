@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
-import QnaPresetTags from "@/lib/constants/qnaPresetTags";
-import SortTypes from "@/lib/constants/sortTypes";
-import ChaetaekStatus from "@/lib/constants/chaetakStatus";
+import { QnaPresetTags, QnaPresetTagsKey } from "@/lib/constants/qnaPresetTags";
+import { sortTypeLabels } from "@/lib/constants/sortTypes";
+import { ChaetaekStatusKey, ChaetaekStatus } from "@/lib/constants/chaetaekStatus";
 import QnaFilterOptionsModal from "./QnaFilterOptionsModal";
 import JiJeongTag from "../tags/JiJeongTag";
 
@@ -19,29 +19,29 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
   const closeModal = () => setIsModalOpen(false);
 
   // 태그 삭제 처리
-  const handleRemoveTag = (tag: string) => {
+  const handleRemoveTag = (tag: QnaPresetTagsKey) => {
     const newTags = filterOptions.qnaPresetTags.filter(item => item !== tag); // 해당 태그를 제거한 새 배열 생성
     onFilterChange({ ...filterOptions, qnaPresetTags: newTags }); // 부모 컴포넌트에 반영
   };
 
   // 정렬 옵션 삭제 처리
   const handleRemoveSortType = () => {
-    onFilterChange({ ...filterOptions, sortType: "" });
+    onFilterChange({ ...filterOptions, sortType: undefined });
   };
 
   // 채택 상태 삭제 처리
   const handleRemoveChaeTaek = () => {
-    onFilterChange({ ...filterOptions, chaetakStatus: "" });
+    onFilterChange({ ...filterOptions, chaetaekStatus: undefined });
   };
 
   return (
     <div className="flex h-12 justify-between px-5 py-3">
       <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
-        {/* 필터링바에 sortType 표시 */}
+        {/* 필터링바에 sortType 표시. null이 아닐 경우만. null은 sortType 선택안됨을 의미 */}
         {filterOptions.sortType && (
           <JiJeongTag
             key={filterOptions.sortType}
-            label={`${SortTypes[filterOptions.sortType as keyof typeof SortTypes]} ×`}
+            label={`${sortTypeLabels[filterOptions.sortType]} ×`}
             onClick={handleRemoveSortType} // 정렬 옵션 삭제
             style={{
               backgroundColor: "#74D7CB",
@@ -49,18 +49,20 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
             }}
           />
         )}
+
         {/* 필터링바에 채택여부 표시. 채택됨, 미채택만 표시 */}
-        {["CHAETAEK", "NO_CHAETAEK"].includes(filterOptions.chaetakStatus) && (
+        {["CHAETAEK", "NO_CHAETAEK"].includes(filterOptions.chaetaekStatus as ChaetaekStatusKey) && (
           <JiJeongTag
-            key="chaetakStatus"
-            label={`${ChaetaekStatus[filterOptions.chaetakStatus as keyof typeof ChaetaekStatus]} ×`} // 값에 따라 "채택 ×" 또는 "미채택 ×" 표시
+            key="chaetaekStatus"
+            label={`${ChaetaekStatus[filterOptions.chaetaekStatus as ChaetaekStatusKey]} ×`} // 값에 따라 "채택 ×" 또는 "미채택 ×" 표시
             onClick={handleRemoveChaeTaek} // 채택 상태 삭제
             style={{
-              backgroundColor: filterOptions.chaetakStatus === "CHAETAEK" ? "#0062D2" : "#F46B02", // 색상 동적으로 변경
+              backgroundColor: filterOptions.chaetaekStatus === "CHAETAEK" ? "#0062D2" : "#F46B02", // 색상 동적으로 변경
               cursor: "pointer",
             }}
           />
         )}
+
         {/* 필터링바에 질문태그 표시 */}
         {filterOptions.qnaPresetTags.map(tag => (
           <JiJeongTag
