@@ -15,17 +15,11 @@ interface QnaBottomSheetModalProps {
   onSelect: (selection: string) => void;
 }
 
-function QnaSelectFacultyModal({
-                                 isVisible,
-                                 onClose,
-                                 onSelect,
-                               }: QnaBottomSheetModalProps) {
+function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetModalProps) {
   const dispatch = useDispatch();
 
   // Redux에서 단과대 목록, 페치 여부 가져오기
-  const { facultiesList, isFacultiesFetched } = useSelector(
-    (state: RootState) => state.facultyState,
-  );
+  const { facultiesList, isFacultiesFetched } = useSelector((state: RootState) => state.facultyState);
 
   // 현재 모달 안에서 선택된 단과대 (최종 확정 전)
   const [selectedFaculty, setSelectedFaculty] = useState<string | null>(null);
@@ -40,8 +34,8 @@ function QnaSelectFacultyModal({
           // 서버에서 받은 데이터에서 필요한 값만 필터
           // 예: { faculties: [{ name: "...", isActive: true }, ...] }
           const facultyNames = response.faculties
-          .filter((f: { isActive: boolean }) => f.isActive)
-          .map((f: { name: string }) => f.name);
+            .filter((f: { isActive: boolean }) => f.isActive)
+            .map((f: { name: string }) => f.name);
 
           // Redux store에 저장
           dispatch(setFacultiesList(facultyNames));
@@ -79,7 +73,7 @@ function QnaSelectFacultyModal({
         <div>단과대 목록 불러오는 중...</div>
       ) : (
         <ul>
-          {facultiesList.map((faculty) => (
+          {facultiesList.map(faculty => (
             <li key={faculty} className="flex rounded-xl py-[10px]">
               <button
                 type="button"
@@ -87,29 +81,15 @@ function QnaSelectFacultyModal({
                 onClick={() => handleSelect(faculty)}
               >
                 {selectedFaculty === faculty ? (
-                  <span className="font-pretendard-bold text-base text-custom-blue-500">
-                    {faculty}
-                  </span>
+                  <span className="font-pretendard-bold text-base text-custom-blue-500">{faculty}</span>
                 ) : (
-                  <span className="font-pretendard-medium text-base">
-                    {faculty}
-                  </span>
+                  <span className="font-pretendard-medium text-base">{faculty}</span>
                 )}
 
                 {selectedFaculty === faculty ? (
-                  <Image
-                    src="/icons/CheckedIcon.svg"
-                    alt="CheckedIcon"
-                    width={14}
-                    height={14}
-                  />
+                  <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
                 ) : (
-                  <Image
-                    src="/icons/UnCheckedIcon.svg"
-                    alt="UnCheckedIcon"
-                    width={14}
-                    height={14}
-                  />
+                  <Image src="/icons/UnCheckedIcon.svg" alt="UnCheckedIcon" width={14} height={14} />
                 )}
               </button>
             </li>
