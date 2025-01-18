@@ -9,13 +9,9 @@ import QnaSelectFacultyModal from "./QnaSelectFacultyModal";
 
 function QnaFilterFacultyCategory() {
   const dispatch = useDispatch();
-  const faculty = useSelector((state: RootState) => 
-    state.facultyState.selectedFacultyMapByBoard["question"] || "전체"
-  );
+  const faculty = useSelector((state: RootState) => state.facultyState.selectedFacultyMapByBoard.question || "전체");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [lastSelected, setLastSelected] = useState(
-    faculty !== "전체" ? faculty : "단과대 선택"
-  );
+  const [lastSelected, setLastSelected] = useState(faculty !== "전체" ? faculty : "단과대 선택");
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -24,19 +20,23 @@ function QnaFilterFacultyCategory() {
     if (selectedFaculty !== "전체") {
       setLastSelected(selectedFaculty);
     }
-    dispatch(setSelectedFaculty({ 
-      board: "question", 
-      faculty: selectedFaculty 
-    }));
+    dispatch(
+      setSelectedFaculty({
+        board: "question",
+        faculty: selectedFaculty,
+      }),
+    );
     closeModal();
   };
 
   // 단과대 직접 선택 (텍스트 클릭 시)
   const handleDirectSelect = (selectedFaculty: string) => {
-    dispatch(setSelectedFaculty({ 
-      board: "question", 
-      faculty: selectedFaculty 
-    }));
+    dispatch(
+      setSelectedFaculty({
+        board: "question",
+        faculty: selectedFaculty,
+      }),
+    );
   };
 
   // faculty 값이 변경될 때마다 lastSelected 업데이트
@@ -61,13 +61,13 @@ function QnaFilterFacultyCategory() {
           전체
         </button>
 
-        <div className="flex flex-1">
+        <div className={`flex flex-1 border-b-2 ${faculty === "전체" ? "border-[#EEEEEE]" : "border-custom-blue-500"}`}>
           {lastSelected === "단과대 선택" ? (
             // 초기 상태: 단과대 선택 버튼
             <button
               type="button"
               onClick={openModal}
-              className="flex-1 p-1 text-lg font-pretendard-medium border-b-2 border-[#EEEEEE] text-[#ABABAB]"
+              className="font-pretendard-medium flex-1 p-1 text-lg text-[#ABABAB]"
             >
               단과대 선택
             </button>
@@ -78,18 +78,12 @@ function QnaFilterFacultyCategory() {
                 type="button"
                 onClick={() => handleDirectSelect(lastSelected)}
                 className={`flex-1 p-1 text-lg ${
-                  faculty === "전체"
-                    ? "font-pretendard-medium border-b-2 border-[#EEEEEE] text-[#ABABAB]"
-                    : "font-pretendard-semibold border-b-2 border-custom-blue-500 text-black"
+                  faculty === "전체" ? "font-pretendard-medium text-[#ABABAB]" : "font-pretendard-semibold text-black"
                 }`}
               >
                 {lastSelected}
               </button>
-              <button
-                type="button"
-                onClick={openModal}
-                className="px-2 border-b-2 border-custom-blue-500"
-              >
+              <button type="button" onClick={openModal} className="px-2">
                 <ImageWrapper src="/icons/ToggleIcon.svg" />
               </button>
             </>
