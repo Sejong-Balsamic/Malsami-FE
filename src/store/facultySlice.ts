@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // 상태 인터페이스 정의
 interface FacultyState {
-  selectedFaculties: {
+  selectedFacultyMapByBoard: {
     [board: string]: string;    //FIXME: 타입 변환 필요 : board: "question", "document"
   };
   facultiesList: string[];      // 단과대 목록
@@ -13,7 +13,7 @@ interface FacultyState {
 
 // 초기 상태 정의
 const initialState: FacultyState = {
-  selectedFaculties: {},        // 선택된 단과대 없음
+  selectedFacultyMapByBoard: {},        // 선택된 단과대 없음
   facultiesList: [],            // 단과대 목록 비어 있음
   isFacultiesFetched: false    // 단과대 목록 가져오지 않음
 };
@@ -28,7 +28,7 @@ const facultySlice = createSlice({
       action: PayloadAction<{ board: string; faculty: string }>
     ) => {
       const { board, faculty } = action.payload;
-      state.selectedFaculties[board] = faculty;
+      state.selectedFacultyMapByBoard[board] = faculty;
     },
 
     // 단과대 목록 설정

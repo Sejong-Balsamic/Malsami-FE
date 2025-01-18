@@ -19,7 +19,9 @@ import { QnaCard } from "@/types/QnaCard";
 
 export default function QuestionBoardPage() {
   const dispatch = useDispatch();
-  const faculty = useSelector((state: RootState) => state.faculty.faculty);
+  const selectedFaculty = useSelector((state: RootState) => 
+    state.facultyState.selectedFacultyMapByBoard["question"] || "전체"
+  );
   const filterOptions = useSelector((state: RootState) => state.filterOptions);
 
   const [unansweredQNAs, setUnansweredQNAs] = useState<null | any[]>(null); // 초기값을 null로 설정
@@ -51,7 +53,7 @@ export default function QuestionBoardPage() {
   const getUnansweredDatas = async () => {
     setIsUnansweredLoading(true);
     try {
-      const unansweredData = await getUnansweredQNAs({ faculty });
+      const unansweredData = await getUnansweredQNAs({ faculty: selectedFaculty });
       setUnansweredQNAs(unansweredData); // 상태에 반영
     } catch (error) {
       console.error("미답변 QNA 데이터 가져오기 실패:", error);
@@ -64,7 +66,7 @@ export default function QuestionBoardPage() {
   const getCategoryDatas = async () => {
     const params = {
       questionPresetTags: filterOptions.tags,
-      faculty,
+      faculty: selectedFaculty,
       isChaetaek: filterOptions.isChaeTaek,
       sortOption: filterOptions.sortOption,
       pageNumber: pageNumber - 1,
@@ -84,22 +86,22 @@ export default function QuestionBoardPage() {
 
   // 학과 변경 시 데이터 로드
   useEffect(() => {
-    setPageNumber(1); // 페이지 번호 초기화
+    setPageNumber(1);
     getUnansweredDatas();
     getCategoryDatas();
-  }, [faculty]); // faculty가 변경될 때 실행
+  }, [selectedFaculty]);
 
   // 페이지 번호 변경 시 데이터 로드
   useEffect(() => {
     getCategoryDatas();
     window.scrollTo(0, 0);
-  }, [pageNumber]); // 페이지 번호가 변경될 때 실행
+  }, [pageNumber]);
 
   // 필터 변경 시 데이터 로드
   useEffect(() => {
-    setPageNumber(1); // 페이지 번호 초기화
+    setPageNumber(1);
     getCategoryDatas();
-  }, [filterOptions]); // filterOptions가 변경될 때 실행
+  }, [filterOptions]);
 
   // 스크롤 이벤트로 FAB 버튼 관리
   useEffect(() => {
@@ -137,7 +139,7 @@ export default function QuestionBoardPage() {
         <QnaFilterControlBar
           filterOptions={filterOptions}
           onFilterChange={newFilterOptions => {
-            dispatch(setFilterOptions(newFilterOptions)); // Redux 상태 업데이트
+            dispatch(setFilterOptions(newFilterOptions));
           }}
         />
         <div className="h-0.5 bg-[#EEEEEE]" />

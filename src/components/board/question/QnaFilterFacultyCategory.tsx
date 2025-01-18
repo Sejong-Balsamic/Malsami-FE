@@ -1,17 +1,21 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/store";
-import { setFaculty } from "@/store/facultySlice";
+import { setSelectedFaculty } from "@/store/facultySlice";
 import ImageWrapper from "../tags/ImageWrapper";
 import QnaSelectFacultyModal from "./QnaSelectFacultyModal";
 
 function QnaFilterFacultyCategory() {
   const dispatch = useDispatch();
-  const faculty = useSelector((state: RootState) => state.faculty.faculty);
+  const faculty = useSelector((state: RootState) => 
+    state.facultyState.selectedFacultyMapByBoard["question"] || "전체"
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [lastSelected, setLastSelected] = useState("단과대 선택");
+  const [lastSelected, setLastSelected] = useState(
+    faculty !== "전체" ? faculty : "단과대 선택"
+  );
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -20,14 +24,27 @@ function QnaFilterFacultyCategory() {
     if (selectedFaculty !== "전체") {
       setLastSelected(selectedFaculty);
     }
-    dispatch(setFaculty(selectedFaculty));
+    dispatch(setSelectedFaculty({ 
+      board: "question", 
+      faculty: selectedFaculty 
+    }));
     closeModal();
   };
 
   // 단과대 직접 선택 (텍스트 클릭 시)
   const handleDirectSelect = (selectedFaculty: string) => {
-    dispatch(setFaculty(selectedFaculty));
+    dispatch(setSelectedFaculty({ 
+      board: "question", 
+      faculty: selectedFaculty 
+    }));
   };
+
+  // faculty 값이 변경될 때마다 lastSelected 업데이트
+  useEffect(() => {
+    if (faculty !== "전체") {
+      setLastSelected(faculty);
+    }
+  }, [faculty]);
 
   return (
     <div className="flex flex-col bg-white">
