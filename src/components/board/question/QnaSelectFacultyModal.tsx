@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import getFacultys from "@/apis/question/getFacultys";
+import getFaculties from "@/apis/question/getFaculties"; // 실제 API URL에 맞게 조정
 import BottomSheetModal from "@/components/common/BottomSheetModal";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import Image from "next/image";
@@ -11,44 +11,45 @@ interface QnaBottomSheetModalProps {
 }
 
 function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetModalProps) {
-  const [facultys, setFacultys] = useState<string[]>([]); // API로부터 받은 학부 데이터 저장
+  const [faculties, setFaculties] = useState<string[]>([]);
   const [selectedFaculty, setSelectedFaculty] = useState<string | null>(null);
 
-  // API 호출하여 facultys 데이터 가져오기
   useEffect(() => {
     const fetchFacultys = async () => {
       try {
-        const response = await getFacultys(); // API 호출
-        console.log("asdf", response);
+        const response = await getFaculties();
         const facultyNames = response.faculties
-          .filter((faculty: { isActive: boolean }) => faculty.isActive) // isActive가 true인 항목만
-          .map((faculty: { name: string }) => faculty.name); // name만 추출
-        setFacultys(facultyNames);
+          .filter((f: { isActive: boolean }) => f.isActive)
+          .map((f: { name: string }) => f.name);
+
+        setFaculties(facultyNames);
       } catch (error) {
         console.error("단과대 호출 api 도중 문제 발생", error);
       }
     };
     if (isVisible) {
-      fetchFacultys(); // 모달이 열릴 때 데이터를 가져옴
+      fetchFacultys();
     }
   }, [isVisible]);
 
+  // 목록 하나 클릭
   const handleSelect = (faculty: string) => {
     setSelectedFaculty(faculty);
   };
 
+  // "확인" 버튼
   const handleSubmit = () => {
     if (selectedFaculty) {
-      onSelect(selectedFaculty); // 최종 선택된 학부를 부모로 전달
+      onSelect(selectedFaculty);
     }
-    onClose(); // 모달 닫기
+    onClose();
   };
 
   return (
     <BottomSheetModal isVisible={isVisible} onClose={onClose}>
       <div className="font-pretendard-bold mb-[30px] text-xl">단과대 선택</div>
-      <ul className="">
-        {facultys.map(faculty => (
+      <ul>
+        {faculties.map(faculty => (
           <li key={faculty} className="flex rounded-xl py-[10px]">
             <button
               type="button"
@@ -61,6 +62,7 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
               ) : (
                 <span className="font-pretendard-medium text-base">{faculty}</span>
               )}
+
               {selectedFaculty === faculty ? (
                 <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
               ) : (
@@ -70,7 +72,8 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
           </li>
         ))}
       </ul>
-      {/* 고정된 SubmitFormBtn */}
+
+      {/* 고정된 Submit 버튼 */}
       <div className="absolute bottom-0 left-0 w-full bg-white px-[30px] py-4">
         <SubmitFormBtn onClick={handleSubmit} />
       </div>

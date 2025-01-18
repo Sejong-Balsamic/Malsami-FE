@@ -1,15 +1,20 @@
 import { apiClient } from "../clients/appClient";
 
 interface GetUnansweredQNAsProps {
-  faculty: string;
+  faculty?: string;
 }
 
 export default async function getUnansweredQNAs({ faculty }: GetUnansweredQNAsProps) {
   const formData = new FormData();
   formData.append("pageNumber", "0"); // 기본값 0
   formData.append("pageSize", "30"); // 기본값 30
-  formData.append("faculty", faculty === "전체" ? "" : faculty); // faculty값 추가
-
+  if (faculty) {
+    // faculty 가 존재
+    formData.append("faculty", faculty);
+  } else {
+    // faculty 가 없는 경우
+    formData.append("faculty", "");
+  }
   try {
     const response = await apiClient.post("/api/question/unanswered", formData, {
       headers: {

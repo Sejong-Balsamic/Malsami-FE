@@ -1,6 +1,6 @@
 import { apiClient } from "../clients/appClient";
 
-const getFacultys = async () => {
+const getFaculties = async () => {
   try {
     const response = await apiClient.post(
       "/api/sejong/faculty/get-all",
@@ -19,4 +19,4 @@ const getFacultys = async () => {
   }
 };
 
-export default getFacultys;
+export default getFaculties;
