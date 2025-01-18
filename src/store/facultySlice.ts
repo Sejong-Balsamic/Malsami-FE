@@ -5,7 +5,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // 상태 인터페이스 정의
 interface FacultyState {
   selectedFaculties: {
-    [board: string]: string;    // 게시판별 선택 단과대
+    [board: string]: string;    //FIXME: 타입 변환 필요 : board: "question", "document"
   };
   facultiesList: string[];      // 단과대 목록
   isFacultiesFetched: boolean;  // 단과대 목록 가져왔는지 여부
