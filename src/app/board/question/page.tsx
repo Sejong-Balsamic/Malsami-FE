@@ -20,11 +20,11 @@ import { setFilterOptions } from "@/store/filterOptionsSlice";
 export default function QuestionBoardPage() {
   const dispatch = useDispatch();
 
-  // Redux에서 선택된 단과대 및 필터 옵션 가져오기
+  // Redux 상태
   const selectedFaculty = useSelector((state: RootState) => state.facultyState.selectedFacultyMapByBoard.question);
   const filterOptions = useSelector((state: RootState) => state.filterOptions);
 
-  // "전체" 버튼 상태 관리
+  // "전체" 버튼 상태
   const [isAllFacultySelected, setIsAllFacultySelected] = useState(false);
 
   // 데이터 상태
@@ -40,31 +40,28 @@ export default function QuestionBoardPage() {
   const [pageSize] = useState(15);
   const [totalPages, setTotalPages] = useState(1);
 
-  // FAB 버튼 표시/숨김 관리
+  // FAB 버튼 표시/숨김
   const [isFABVisible, setIsFABVisible] = useState(true);
 
-  // ================== 데이터 로드 함수 ==================
-
+  // API 호출 함수
   const loadAllData = async (faculty: string | undefined) => {
     setIsLoading(true);
     setIsUnansweredLoading(true);
-
     try {
-      // 1) 미답변 데이터 가져오기
+      // 미답변 질문
       const unansweredData = await getUnansweredQNAs({ faculty });
       setUnansweredQNAs(unansweredData);
 
-      // 2) 필터 데이터 가져오기
+      // 필터된 질문
       const params = {
         questionPresetTags: filterOptions.tags,
         faculty,
         isChaetaek: filterOptions.isChaeTaek,
         sortOption: filterOptions.sortOption,
-        pageNumber: pageNumber - 1, // 페이지 번호는 0부터 시작
+        pageNumber: pageNumber - 1, // 0-based
         pageSize,
       };
       const categoryData = await getCategoryQNAs(params);
-
       setCategoryQNAs(categoryData.content || []);
       setTotalPages(categoryData.totalPages || 1);
     } catch (error) {
@@ -75,58 +72,61 @@ export default function QuestionBoardPage() {
     }
   };
 
-  // ================== useEffect ==================
-
-  // (A) 단과대 변경 또는 "전체" 선택 시 데이터 로드
+  // 단과대/필터 변경 시 페이지 번호 리셋
   useEffect(() => {
-    const facultyParam = isAllFacultySelected ? undefined : selectedFaculty;
-    loadAllData(facultyParam);
-    setPageNumber(1); // 페이지 번호 초기화
+    // 단과대나 필터가 바뀌면 첫 페이지로
+    setPageNumber(1);
   }, [selectedFaculty, isAllFacultySelected, filterOptions]);
 
-  // (B) 페이지 번호 변경 시 데이터 로드
+  // 단과대/필터/페이지 변경 시 API 호출
   useEffect(() => {
     const facultyParam = isAllFacultySelected ? undefined : selectedFaculty;
     loadAllData(facultyParam);
-    window.scrollTo(0, 0); // 페이지 상단으로 스크롤 이동
+  }, [isAllFacultySelected, selectedFaculty, filterOptions, pageNumber]);
+
+  // 페이지 번호 변경 시 스크롤 최상단
+  useEffect(() => {
+    window.scrollTo(0, 0);
   }, [pageNumber]);
 
-  // (C) 스크롤 시 FAB 버튼 표시/숨김
+  // 스크롤 시 FAB 표시/숨김
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.innerHeight + window.scrollY;
       const documentHeight = document.body.offsetHeight;
       setIsFABVisible(scrollPosition < documentHeight - 100);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ================== UI ==================
   return (
     <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <div className="relative mx-auto min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
-        {/* 상단 네비게이션 */}
         <QnaPageNav />
 
-        {/* === 단과대 필터 + 전체 버튼 === */}
+        {/* 단과대 필터 */}
         <QnaFilterFacultyCategory
           onAllFacultySelect={() => {
+            // 전체 선택
             setIsAllFacultySelected(true);
-            loadAllData(undefined); // 전체 선택
           }}
-          onFacultySelect={(faculty) => {
+          onFacultySelect={faculty => {
+            // 특정 단과대 선택
             setIsAllFacultySelected(false);
-            loadAllData(faculty); // 특정 단과대 선택
           }}
           isAllFacultySelected={isAllFacultySelected}
         />
 
-        {/* === 미답변 질문 목록 === */}
+        {/* 미답변 질문 영역 */}
         <div className="font-pretendard-semibold px-5 pb-3 pt-4 text-lg text-custom-blue-500">
-          {isUnansweredLoading || unansweredQNAs === null ? "로딩 중..." : unansweredQNAs.length === 0 ? "전부 답변했어요!" : "아직 답변 안 했어요!"}
+          {/* eslint-disable-next-line no-nested-ternary */}
+          {isUnansweredLoading || unansweredQNAs === null
+            ? "로딩 중..."
+            : unansweredQNAs.length === 0
+              ? "전부 답변했어요!"
+              : "아직 답변 안 했어요!"}
         </div>
         <div className="flex items-center justify-center bg-[#EEEEEE]">
           {isUnansweredLoading || unansweredQNAs === null ? (
@@ -138,21 +138,21 @@ export default function QuestionBoardPage() {
 
         <div className="h-[2px] w-full bg-[#EEEEEE]" />
 
-        {/* === 상단 필터 바 === */}
+        {/* 상단 필터 바 */}
         <QnaFilterControlBar
           filterOptions={filterOptions}
-          onFilterChange={(newFilterOptions) => dispatch(setFilterOptions(newFilterOptions))}
+          onFilterChange={newFilterOptions => dispatch(setFilterOptions(newFilterOptions))}
         />
 
         <div className="h-0.5 bg-[#EEEEEE]" />
 
-        {/* === 질문 카드 목록 === */}
+        {/* 질문 카드 목록 */}
         <div className="px-5 py-4">
           {isLoading ? <LoadingSpinner /> : <QuestionCardList categoryQNAs={categoryQNAs} />}
         </div>
 
-        {/* === 페이지네이션 === */}
-        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={(newPage) => setPageNumber(newPage)} />
+        {/* 페이지네이션 */}
+        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={newPage => setPageNumber(newPage)} />
       </div>
 
       <UploadQFAB isFABVisible={isFABVisible} />
