@@ -11,6 +11,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         pretendard: ["Pretendard", "Apple SD Gothic Neo", "Roboto", "Arial", "sans-serif"], // 대체 폰트 포함
+        suit: ["SUIT", "sans-serif"], // 추가된 SUIT 폰트
       },
       fontSynthesis: {
         none: "none",
@@ -129,6 +130,13 @@ const config: Config = {
       },
       backgroundImage: {
         "toast-bg": "url('/image/ToastBG.png')",
+      },
+      fontSize: {
+        SUIT_XL: ["20px", { fontWeight: "700" }], // 제목
+        SUIT_L: ["18px", { fontWeight: "600" }], // 소제목목
+        SUIT_M: ["16px", { fontWeight: "500" }], // 본문문
+        SUIT_S: ["14px", { fontWeight: "500" }], // 세부사항
+        SUIT_XS: ["12px", { fontWeight: "500" }], // 태그
       },
     },
   },
