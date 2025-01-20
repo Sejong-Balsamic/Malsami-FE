@@ -66,6 +66,7 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
     formData.append("faculty", "");
   } else {
     // "전체"를 선택하지 않은 경우
+    // eslint-disable-next-line no-lonely-if
     if (params.faculty) {
       // 단과대를 선택한 경우
       formData.append("faculty", params.faculty);
