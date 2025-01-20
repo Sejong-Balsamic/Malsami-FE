@@ -1,11 +1,13 @@
 import { apiClient } from "@/apis/clients/appClient";
+import { SortTypeKey } from "@/lib/constants/sortTypes";
+import { DocTypesKey } from "@/lib/constants/docTypes";
 
 interface FilteringDocListParams {
   subject?: string; // 교과목명 (선택)
-  docTypes?: string[]; // 태그 필터링 (최대 2개, 선택)
+  docTypes?: DocTypesKey[]; // 태그 필터링 (최대 2개, 선택)
   faculty?: string; // 단과대 필터링 (선택)
   postTier?: string; // 자료 등급별 필터링 (선택)
-  sortType?: string; // 정렬 기준 (default = 최신순)
+  sortType?: SortTypeKey; // 정렬 기준 (default = 최신순)
   pageNumber?: number; // 페이지 번호 (default = 0)
   pageSize?: number; // 한 페이지 조회 글 개수 (default = 30)
 }
@@ -26,15 +28,16 @@ export default async function getFilteringDocs(params: FilteringDocListParams) {
   formData.append("pageSize", (params.pageSize ?? 15).toString()); // 페이지 크기
 
   // 선택적 파라미터 설정
-  if (params.subject) formData.append("subject", params.subject); // 교과목명
+  // null과 undefined를 빈 문자열로 처리하는 기본값을 설정하기 위해 삼항 연산자, 널 병합 연산자 사용
+  formData.append("subject", params.subject ?? ""); // 교과목명
   if (params.docTypes?.length) {
     params.docTypes.forEach(docType => {
       formData.append("documentTypes", docType);
     });
   }
-  if (params.faculty) formData.append("faculty", params.faculty); // 단과대
+  formData.append("faculty", params.faculty ?? ""); // 단과대
   if (params.postTier) formData.append("postTier", tierMapping[params.postTier]); // 자료 등급별
-  if (params.sortType) formData.append("sortType", params.sortType); // 정렬 기준
+  formData.append("sortType", params.sortType ?? ""); // 정렬 기준
 
   // API 호출
   try {

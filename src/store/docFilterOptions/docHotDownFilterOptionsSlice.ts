@@ -10,7 +10,7 @@ interface FilterOptionsState {
 const initialState: FilterOptionsState = {
   docHotDownFilterOptions: {
     docTypes: [],
-    sortType: "",
+    sortType: undefined,
   },
 };
 

@@ -1,8 +1,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
-import DocTypes from "@/lib/constants/docTypes";
-import { SortTypes } from "@/lib/constants/sortTypes";
+import { DocTypes, DocTypesKey } from "@/lib/constants/docTypes";
+import { sortTypeLabels } from "@/lib/constants/sortTypes";
 import FacultyTag from "@/components/common/tags/facultyTag";
 import DocRequestFilterOptionsModal from "./DocRequestFilterOptionsModal";
 import JiJeongTag from "../tags/JiJeongTag";
@@ -19,13 +19,13 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
   const closeModal = () => setIsModalOpen(false);
 
   // 태그 삭제 핸들러
-  const handleRemoveTag = (tagToRemove: string) => {
+  const handleRemoveTag = (tagToRemove: DocTypesKey) => {
     const updatedTags = filterOptions.docTypes.filter(tag => tag !== tagToRemove);
     onFilterChange({ ...filterOptions, docTypes: updatedTags });
   };
 
   const handleRemoveSortOption = () => {
-    onFilterChange({ ...filterOptions, sortType: "" });
+    onFilterChange({ ...filterOptions, sortType: undefined });
   };
 
   const handleRemoveFaculty = () => {
@@ -35,11 +35,11 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
   return (
     <div className="flex justify-between px-5 py-3">
       <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
-        {/* 필터링바에 sortType 표시 */}
+        {/* 필터링바에 sortType 표시. null이 아닐 경우만. null은 sortType 선택안됨을 의미 */}
         {filterOptions.sortType && (
           <JiJeongTag
             key={filterOptions.sortType}
-            label={`${SortTypes[filterOptions.sortType as keyof typeof SortTypes]} ×`}
+            label={`${sortTypeLabels[filterOptions.sortType]} ×`}
             onClick={handleRemoveSortOption}
             style={{
               backgroundColor: "#74D7CB",

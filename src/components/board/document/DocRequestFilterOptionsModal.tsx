@@ -3,9 +3,8 @@
 import React, { ReactNode, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
-import DocTypes from "@/lib/constants/docTypes";
-import DocSortTypeKeys from "@/lib/constants/partial/docSortTypeKeys";
-import { SortTypes } from "@/lib/constants/sortTypes";
+import { DocTypesKeys, DocTypes } from "@/lib/constants/docTypes";
+import { DocSortTypeKeys, sortTypeLabels } from "@/lib/constants/sortTypes";
 import facultys from "@/lib/facultys";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 
@@ -38,7 +37,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
   // 필터 초기화 함수
   const resetFilters = () => {
     setDocTypes([]);
-    setSortType("");
+    setSortType(undefined);
     setFaculty("");
   };
 
@@ -113,8 +112,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
               <>
                 <h1 className="font-pretendard-bold mb-[20px] text-xl">정렬</h1>
                 <div className="mb-[30px] flex flex-col">
-                  {/* DocSortTypeKeys가 객체이므로 Object.keys로 key배열 생성 */}
-                  {Object.keys(DocSortTypeKeys).map(docSortTypeKey => (
+                  {DocSortTypeKeys.map(docSortTypeKey => (
                     <li key={docSortTypeKey} className="flex rounded-xl py-[10px]">
                       <div
                         className="flex w-full cursor-pointer flex-row justify-between"
@@ -123,13 +121,11 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                       >
                         {sortType === docSortTypeKey ? (
                           <span className="font-pretendard-bold text-base text-custom-blue-500">
-                            {SortTypes[docSortTypeKey as keyof typeof SortTypes]}
-                            {/*docSortTypeKey가 SortTypes의 유효한 키인지 확인. 컴파일 단계에서 안전성을 확보하고, 런타임 오류를 방지*/}
+                            {/* docSortTypeKey로 라벨링 매핑 */}
+                            {sortTypeLabels[docSortTypeKey]}
                           </span>
                         ) : (
-                          <span className="font-pretendard-medium text-base">
-                            {SortTypes[docSortTypeKey as keyof typeof SortTypes]}
-                          </span>
+                          <span className="font-pretendard-medium text-base">{sortTypeLabels[docSortTypeKey]} </span>
                         )}
                         {sortType === docSortTypeKey ? (
                           <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
@@ -145,8 +141,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                   태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-[#A4A4A4]">최대 2개</span>
                 </h1>
                 <div className="mb-[40px] flex flex-wrap justify-between gap-x-[7px] gap-y-[20px]">
-                  {/* DocTypes 객체에서 key 배열 생성 */}
-                  {Object.keys(DocTypes).map(docTypeKey => (
+                  {DocTypesKeys.map(docTypeKey => (
                     <button
                       key={docTypeKey}
                       onClick={() =>
@@ -161,13 +156,14 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                         docTypes.includes(docTypeKey) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
                       }`}
                     >
-                      {DocTypes[docTypeKey as keyof typeof DocTypes]} {/* 자료태그키 확인 및 한글로 렌더링 */}
+                      {DocTypes[docTypeKey]} {/* 한글 라벨 표시 */}
                     </button>
                   ))}
                 </div>
 
                 <h1 className="font-pretendard-bold mb-[20px] text-xl">단과대 선택</h1>
                 <div className="mb-[30px] flex flex-col">
+                  {/* 새찬님이 올려준 코드 보면서 수정해야함. 전역으로 관리하는 facultys로 수정 필요 */}
                   {facultys.map(option => (
                     <li key={option} className="flex rounded-xl py-[10px]">
                       <div

@@ -14,7 +14,7 @@ export default function YangbanBoard() {
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const [filterOptions, setFilterOptions] = useState<DocFilterOptions>({
     docTypes: [],
-    sortType: "",
+    sortType: undefined,
   });
 
   // 페이지네이션 관리

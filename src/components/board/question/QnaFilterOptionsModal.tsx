@@ -4,7 +4,7 @@ import React, { ReactNode, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
-import { SortTypes, QnaSortTypeKeys, sortTypeLabels } from "@/lib/constants/sortTypes";
+import { QnaSortTypeKeys, sortTypeLabels } from "@/lib/constants/sortTypes";
 import { ChaetaekStatusKeys, ChaetaekStatus } from "@/lib/constants/chaetaekStatus";
 import { QnaPresetTagKeys, QnaPresetTags } from "@/lib/constants/qnaPresetTags";
 
@@ -113,7 +113,6 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
               <>
                 <h1 className="font-pretendard-bold mb-[20px] text-xl">정렬</h1>
                 <div className="mb-[30px] flex flex-col">
-                  {/* QNA_SORT_TYPES 배열을 순회하여 각 정렬 옵션 키(qnaSortTypeKey) 처리*/}
                   {QnaSortTypeKeys.map(qnaSortTypeKey => (
                     <li key={qnaSortTypeKey} className="flex rounded-xl py-[10px]">
                       <div

@@ -10,7 +10,7 @@ interface FilterOptionsState {
 const initialState: FilterOptionsState = {
   docRequestFilterOptions: {
     docTypes: [],
-    sortType: "",
+    sortType: undefined,
     faculty: "",
   },
 };
