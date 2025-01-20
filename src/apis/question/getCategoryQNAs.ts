@@ -60,13 +60,19 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
     formData.append("questionPresetTags", "");
   }
 
-  // 단과대 필터
-  if (!params.isAllFacultySelected && params.faculty) {
-    // isAllFacultySelected = false 이고 Redux 에 question 에 선택한 단과대 존재
-    formData.append("faculty", params.faculty);
-  } else if (params.isAllFacultySelected) {
-    // isAllFacultySelected = true 이면 단과대 "전체" 인경우
+  // 단과대 필터 분기문
+  if (params.isAllFacultySelected) {
+    // "전체"를 선택한 경우
     formData.append("faculty", "");
+  } else {
+    // "전체"를 선택하지 않은 경우
+    if (params.faculty) {
+      // 단과대를 선택한 경우
+      formData.append("faculty", params.faculty);
+    } else {
+      // 단과대를 선택하지 않은 경우 ("전체" 로 판단)
+      formData.append("faculty", "");
+    }
   }
 
   // 채택 여부
