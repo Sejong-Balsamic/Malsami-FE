@@ -118,5 +118,7 @@ jobs:
             echo $PW | sudo -S docker run -d \
               -p ${PORT}:3000 \
               --name $CONTAINER_NAME \
+              --network sejong-malsami-network \
+              -v /var/run/docker.sock:/var/run/docker.sock \
               -e NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
               ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
