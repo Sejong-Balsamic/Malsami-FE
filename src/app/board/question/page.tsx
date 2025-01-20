@@ -112,7 +112,7 @@ export default function QuestionBoardPage() {
             // 전체 선택
             setIsAllFacultySelected(true);
           }}
-          onFacultySelect={faculty => {
+          onFacultySelect={() => {
             // 특정 단과대 선택
             setIsAllFacultySelected(false);
           }}
