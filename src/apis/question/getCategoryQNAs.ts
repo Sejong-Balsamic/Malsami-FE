@@ -5,7 +5,8 @@ interface GetCategoryQnasProps {
   minYeopjeon?: number; // 엽전 현상금 최소 개수
   maxYeopjeon?: number; // 엽전 현상금 최대 개수
   questionPresetTags?: string[]; // 정적 태그 필터링
-  faculty?: string; // 단과대별 필터링
+  faculty?: string; // 단과대 필터링 (REDUX: selectedFacultyMapByBoard["question"]의 value)
+  isAllFacultySelected?: boolean; // 단고대가 "전체"로 선택된 여부
   isChaetaek?: string; // 채택여부 필터링
   sortOption?: string; // 정렬 조건
   pageNumber?: number; // 조회하고 싶은 페이지 번호 (기본값 0)
@@ -37,26 +38,54 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
 
   const formData = new FormData();
 
-  // 영어 변환 함수
+  // 정렬 옵션 영문 변환 함수
   const getEnglishSortOption = (koreanSortOption: string): string | undefined => {
     return sortOptionMapping[koreanSortOption];
   };
 
-  formData.append("subject", "");
+  // 기본 파라미터
+  formData.append("subject", params.subject || "");
   formData.append("pageNumber", (params.pageNumber ?? 0).toString());
   formData.append("pageSize", (params.pageSize ?? 15).toString());
-  // 선택적 파라미터 추가
+
+  // 태그 필터
   if (params.questionPresetTags && params.questionPresetTags.length > 0) {
     params.questionPresetTags.forEach(tag => {
-      const englishTag = tagMapping[tag]; // 한국어 태그를 영어로 변환
-      if (englishTag) formData.append("questionPresetTags", englishTag);
+      const englishTag = tagMapping[tag];
+      if (englishTag) {
+        formData.append("questionPresetTags", englishTag);
+      }
     });
-  } else formData.append("questionPresetTags", "");
-  if (params.faculty) formData.append("faculty", params.faculty === "전체" ? "" : params.faculty); // faculty값 추가
-  if (params.isChaetaek) formData.append("chaetaekStatus", chaetaekMapping[params.isChaetaek]);
+  } else {
+    formData.append("questionPresetTags", "");
+  }
+
+  // 단과대 필터 분기문
+  if (params.isAllFacultySelected) {
+    // "전체"를 선택한 경우
+    formData.append("faculty", "");
+  } else {
+    // "전체"를 선택하지 않은 경우
+    if (params.faculty) {
+      // 단과대를 선택한 경우
+      formData.append("faculty", params.faculty);
+    } else {
+      // 단과대를 선택하지 않은 경우 ("전체" 로 판단)
+      formData.append("faculty", "");
+    }
+  }
+
+  // 채택 여부
+  if (params.isChaetaek && chaetaekMapping[params.isChaetaek]) {
+    formData.append("chaetaekStatus", chaetaekMapping[params.isChaetaek]);
+  }
+
+  // 정렬 옵션
   if (params.sortOption) {
     const englishSortOption = getEnglishSortOption(params.sortOption);
-    if (englishSortOption) formData.append("sortType", englishSortOption);
+    if (englishSortOption) {
+      formData.append("sortType", englishSortOption);
+    }
   }
 
   try {
@@ -68,6 +97,6 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
     return response.data.questionPostsPage; // API 호출 결과만 반환
   } catch (error) {
     console.error("질문 목록을 가져오는 중 오류 발생:", error);
-    throw error; // 오류 발생 시 오류를 그대로 throw
+    throw error;
   }
 }
