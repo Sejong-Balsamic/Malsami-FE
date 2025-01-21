@@ -25,7 +25,7 @@ export default function QuestionBoardPage() {
   const filterOptions = useSelector((state: RootState) => state.filterOptions);
 
   // "전체" 버튼 상태
-  const [isAllFacultySelected, setIsAllFacultySelected] = useState(false);
+  const [isAllFacultySelected, setIsAllFacultySelected] = useState(true);
 
   // 데이터 상태
   const [unansweredQNAs, setUnansweredQNAs] = useState<null | any[]>(null);
