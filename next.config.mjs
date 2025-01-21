@@ -11,17 +11,17 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "http",
-        hostname: "221.149.185.157",
+        hostname: "suh-project.synology.me",
         pathname: "/sejong-malsami/thumbnail/**",
       },
       {
         protocol: "http",
-        hostname: "221.149.185.157",
+        hostname: "suh-project.synology.me",
         pathname: "/sejong-malsami/question/**",
       },
       {
         protocol: "http",
-        hostname: "221.149.185.157",
+        hostname: "suh-project.synology.me",
         pathname: "/sejong-malsami/answer/**",
       },
       {
