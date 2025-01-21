@@ -3,9 +3,9 @@
 import React, { ReactNode, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
-import docJijeongTag from "@/lib/docJijeongTag";
-import docSortingOptions from "@/lib/docSortingOptions";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
+import { DocTypesKeys, DocTypes } from "@/lib/constants/docTypes";
+import { DocSortTypeKeys, sortTypeLabels } from "@/lib/constants/sortTypes";
 
 interface DocFilterOptionsModalProps {
   isVisible: boolean; // 모달 표시 여부
@@ -25,17 +25,17 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
   const [modalHeight, setModalHeight] = useState("50vh"); // 초기 modalHeight 50%로 설정
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const [tags, setTags] = useState(initialFilterOptions.tags);
-  const [sortOption, setSortOption] = useState(initialFilterOptions.sortOption);
+  const [docTypes, setDocTypes] = useState(initialFilterOptions.docTypes);
+  const [sortType, setSortType] = useState(initialFilterOptions.sortType);
 
   const handleApply = () => {
-    onApplyFilter({ tags, sortOption });
+    onApplyFilter({ docTypes, sortType });
   };
 
   // 필터 초기화 함수
   const resetFilters = () => {
-    setTags([]);
-    setSortOption("");
+    setDocTypes([]);
+    setSortType(undefined);
   };
 
   if (!isVisible) return null;
@@ -109,19 +109,22 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
               <>
                 <h1 className="font-pretendard-bold mb-[20px] text-xl">정렬</h1>
                 <div className="mb-[30px] flex flex-col">
-                  {docSortingOptions.map(option => (
-                    <li key={option} className="flex rounded-xl py-[10px]">
+                  {DocSortTypeKeys.map(docSortTypeKey => (
+                    <li key={docSortTypeKey} className="flex rounded-xl py-[10px]">
                       <div
                         className="flex w-full cursor-pointer flex-row justify-between"
-                        onClick={() => setSortOption(option)}
-                        onKeyDown={e => e.key === "Enter" && setSortOption(option)}
+                        onClick={() => setSortType(docSortTypeKey)}
+                        onKeyDown={e => e.key === "Enter" && setSortType(docSortTypeKey)}
                       >
-                        {sortOption === option ? (
-                          <span className="font-pretendard-bold text-base text-custom-blue-500">{option}</span>
+                        {sortType === docSortTypeKey ? (
+                          <span className="font-pretendard-bold text-base text-custom-blue-500">
+                            {/* docSortTypeKey로 라벨링 매핑 */}
+                            {sortTypeLabels[docSortTypeKey]}
+                          </span>
                         ) : (
-                          <span className="font-pretendard-medium text-base">{option}</span>
+                          <span className="font-pretendard-medium text-base">{sortTypeLabels[docSortTypeKey]}</span>
                         )}
-                        {sortOption === option ? (
+                        {sortType === docSortTypeKey ? (
                           <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
                         ) : (
                           <Image src="/icons/UnCheckedIcon.svg" alt="UnCheckedIcon" width={14} height={14} />
@@ -135,20 +138,22 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                   태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-[#A4A4A4]">최대 2개</span>
                 </h1>
                 <div className="mb-[40px] flex flex-wrap justify-between gap-x-[7px] gap-y-[20px]">
-                  {docJijeongTag.map(tag => (
+                  {DocTypesKeys.map(docTypeKey => (
                     <button
-                      key={tag}
+                      key={docTypeKey}
                       onClick={() =>
-                        setTags(
+                        setDocTypes(
                           prevTags =>
-                            prevTags.includes(tag) ? prevTags.filter(t => t !== tag) : [...prevTags, tag].slice(0, 2), // 태그 선택 2개만 가능하게
+                            prevTags.includes(docTypeKey)
+                              ? prevTags.filter(t => t !== docTypeKey)
+                              : [...prevTags, docTypeKey].slice(0, 2), // 태그 선택 2개만 가능하게
                         )
                       }
                       className={`font-pretendard-bold rounded-[40px] border-2 border-custom-blue-500 px-3 py-1 text-xs ${
-                        tags.includes(tag) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
+                        docTypes.includes(docTypeKey) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
                       }`}
                     >
-                      {tag}
+                      {DocTypes[docTypeKey]} {/* 한글 라벨 표시 */}
                     </button>
                   ))}
                 </div>

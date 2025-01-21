@@ -63,10 +63,10 @@ export default function QuestionBoardPage() {
   // 필터 변경 시 데이터 가져오기
   const getCategoryDatas = async () => {
     const params = {
-      questionPresetTags: filterOptions.tags,
+      qnaPresetTags: filterOptions.qnaPresetTags,
       faculty,
-      isChaetaek: filterOptions.isChaeTaek,
-      sortOption: filterOptions.sortOption,
+      chaetaekStatus: filterOptions.chaetaekStatus,
+      sortType: filterOptions.sortType,
       pageNumber: pageNumber - 1,
       pageSize,
     };
@@ -106,7 +106,6 @@ export default function QuestionBoardPage() {
     const handleScroll = () => {
       const scrollPosition = window.innerHeight + window.scrollY;
       const documentHeight = document.body.offsetHeight;
-
       // 스크롤이 맨 밑 근처로 가면 FAB 숨김
       setIsFABVisible(scrollPosition < documentHeight - 100);
     };
