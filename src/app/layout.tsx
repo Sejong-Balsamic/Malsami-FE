@@ -1,7 +1,9 @@
+import { useEffect } from "react";
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
 import LoginDirectModal from "@/components/common/LoginDirectModal";
 import initializeFirebase from "@/utils/firebaseInit";
+import { getFcmToken } from "@/utils/firebaseMessaging";
 import Providers from "./providers"; // Redux Provider 컴포넌트
 import "./globals.css";
 
@@ -32,6 +34,18 @@ export const metadata: Metadata = {
 initializeFirebase();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  // FCM 토큰 로컬 저장
+  useEffect(() => {
+    async function fetchToken() {
+      const token = await getFcmToken();
+      if (token) {
+        localStorage.setItem("fcmToken", token);
+        console.log("FCM 토큰 로컬 스토리지에 저장:", token);
+      }
+    }
+    fetchToken();
+  }, []);
+
   return (
     <html lang="ko">
       <head>
