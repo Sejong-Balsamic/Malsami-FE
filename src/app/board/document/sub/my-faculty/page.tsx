@@ -42,8 +42,8 @@ export default function DocMyFacultyPage() {
 
   const fetchDocs = async () => {
     const params = {
-      documentTypes: docMyFacultyFilterOptions.tags,
-      sortType: docMyFacultyFilterOptions.sortOption,
+      docTypes: docMyFacultyFilterOptions.docTypes,
+      sortType: docMyFacultyFilterOptions.sortType,
       facultys,
       pageNumber: pageNumber - 1,
       pageSize,

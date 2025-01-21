@@ -3,6 +3,7 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { DocCardProps } from "@/types/docCard.type";
+import { PostTiersKeys } from "@/lib/constants/postTiers";
 import Pagination from "@/components/common/Pagination";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
@@ -13,8 +14,8 @@ export default function YangbanBoard() {
   const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const [filterOptions, setFilterOptions] = useState<DocFilterOptions>({
-    tags: [],
-    sortOption: "",
+    docTypes: [],
+    sortType: undefined,
   });
 
   // 페이지네이션 관리
@@ -36,9 +37,9 @@ export default function YangbanBoard() {
 
   const fetchDocs = async () => {
     const params = {
-      documentTypes: filterOptions.tags,
-      sortType: filterOptions.sortOption,
-      postTier: "양반", // 게시판 티어 설정
+      documentTypes: filterOptions.docTypes,
+      sortType: filterOptions.sortType,
+      postTier: PostTiersKeys[2], // 게시판 티어 설정
       pageNumber: pageNumber - 1,
       pageSize,
     };

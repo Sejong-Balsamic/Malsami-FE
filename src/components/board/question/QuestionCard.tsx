@@ -1,7 +1,7 @@
 import Image from "next/image";
 import getDateDiff from "@/utils/getDateDiff";
 import ImageWrapper from "../tags/ImageWrapper";
-import ChaeTakTag from "../tags/ChaeTakTag";
+import ChaeTaekTag from "../tags/ChaeTaekTag";
 import YeopjeonTag from "../tags/YeopjeonTag";
 import SubjectTag from "../tags/SubjectTag";
 
@@ -33,7 +33,7 @@ function QuestionCard({
       <div className="mb-2.5 flex">
         <SubjectTag subject={subject} />
         {!chaetaekStatus && rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
-        {chaetaekStatus && <ChaeTakTag />}
+        {chaetaekStatus && <ChaeTaekTag />}
       </div>
       <div className="flex flex-row justify-between">
         {/* 왼쪽 텍스트 콘텐츠 */}

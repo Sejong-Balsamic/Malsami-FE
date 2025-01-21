@@ -4,19 +4,8 @@ import { Drawer, DrawerContent, DrawerTitle, DrawerDescription, DrawerTrigger } 
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { DocumentData } from "@/types/DocumentDetailData";
+import { PostTiers, PostTiersKey, PostTiersKeys } from "@/lib/constants/postTiers";
 import { Button } from "../ui/button";
-
-const tierMapping: { [key: string]: string } = {
-  CHUNMIN: "천민",
-  JUNGIN: "중인",
-  YANGBAN: "양반",
-  KING: "왕",
-};
-
-// 영어 티어를 한국어로 변환하는 함수
-const getKoreanTier = (englishTier: string): string => {
-  return tierMapping[englishTier] || englishTier; // 매핑되지 않은 경우 원래의 태그 반환
-};
 
 function DetailPageNav({ documentData }: { documentData: DocumentData }) {
   const router = useRouter();
@@ -31,7 +20,12 @@ function DetailPageNav({ documentData }: { documentData: DocumentData }) {
       <div className="my-auto flex flex-col items-center">
         <h1 className="font-pretendard-bold text-[20px]">자료 게시판</h1>
         <span className="font-pretendard-medium text-[12px] text-[#09bba2]">
-          {getKoreanTier(documentData.documentPost.postTier)}등급
+          {/* 허용된 postTiersKey의 형식은 string이 아닌 PostTiersKeys이기에 조건문으로 구분해 알맞은 키타입인지 확인 */}
+          {PostTiersKeys.includes(documentData.documentPost.postTier as PostTiersKey) ? (
+            <p>{PostTiers[documentData.documentPost.postTier as PostTiersKey]} 등급</p>
+          ) : (
+            <p>잘못된 등급 정보</p>
+          )}
         </span>
       </div>
       {/* 옵션 아이콘 */}

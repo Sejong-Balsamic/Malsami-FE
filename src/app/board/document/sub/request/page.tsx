@@ -15,8 +15,8 @@ export default function DocRequestPage() {
   const [docCards, setDocCards] = useState<DocRequestCardProps[]>([]); // API 결과값 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const [filterOptions, setFilterOptions] = useState<DocFilterOptions>({
-    tags: [],
-    sortOption: "",
+    docTypes: [],
+    sortType: undefined,
     faculty: "",
   });
 
@@ -38,8 +38,8 @@ export default function DocRequestPage() {
 
   const fetchDocs = async () => {
     const params = {
-      documentTypes: filterOptions.tags,
-      sortType: filterOptions.sortOption,
+      documentTypes: filterOptions.docTypes,
+      sortType: filterOptions.sortType,
       faculty: filterOptions.faculty,
       pageNumber: pageNumber - 1,
       pageSize,
