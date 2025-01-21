@@ -45,9 +45,9 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
       // 단과대를 선택하지 않은 경우 ("전체" 로 판단)
       formData.append("faculty", "");
     }
-  }  formData.append("chaetaekStatus", params.chaetaekStatus ?? "");
+  }
+  formData.append("chaetaekStatus", params.chaetaekStatus ?? "");
   formData.append("sortType", params.sortType ?? "");
-
 
   // API 호출
   try {
