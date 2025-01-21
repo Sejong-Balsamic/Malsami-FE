@@ -8,9 +8,10 @@ interface GetCategoryQnasProps {
   minYeopjeon?: number; // 엽전 현상금 최소 개수
   maxYeopjeon?: number; // 엽전 현상금 최대 개수
   qnaPresetTags?: QnaPresetTagsKey[]; // 정적 태그 필터링
-  faculty?: string; // 단과대별 필터링
   chaetaekStatus?: ChaetaekStatusKey; // 채택여부 필터링
   sortType?: SortTypeKey; // 정렬 조건
+  faculty?: string; // 단과대 필터링 (REDUX: selectedFacultyMapByBoard["question"]의 value)
+  isAllFacultySelected?: boolean; // 단고대가 "전체"로 선택된 여부
   pageNumber?: number; // 조회하고 싶은 페이지 번호 (기본값 0)
   pageSize?: number; // 한 페이지에 조회하고 싶은 글 개수 (기본값 30)
 }
@@ -30,9 +31,23 @@ export default async function getCategoryQNAs(params: GetCategoryQnasProps) {
       formData.append("questionPresetTags", qnaPresetTag);
     });
   } else formData.append("questionPresetTags", "");
-  formData.append("faculty", params.faculty === "전체" ? "" : (params.faculty ?? ""));
-  formData.append("chaetaekStatus", params.chaetaekStatus ?? "");
+  // 단과대 필터 분기문
+  if (params.isAllFacultySelected) {
+    // "전체"를 선택한 경우
+    formData.append("faculty", "");
+  } else {
+    // "전체"를 선택하지 않은 경우
+    // eslint-disable-next-line no-lonely-if
+    if (params.faculty) {
+      // 단과대를 선택한 경우
+      formData.append("faculty", params.faculty);
+    } else {
+      // 단과대를 선택하지 않은 경우 ("전체" 로 판단)
+      formData.append("faculty", "");
+    }
+  }  formData.append("chaetaekStatus", params.chaetaekStatus ?? "");
   formData.append("sortType", params.sortType ?? "");
+
 
   // API 호출
   try {
