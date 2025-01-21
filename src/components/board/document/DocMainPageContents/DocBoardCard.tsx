@@ -14,13 +14,13 @@ export default function DocBoardCard({ title, link, accessible }: DocCategoryCar
   // 이미지 경로를 title에 따라 동적으로 설정
   const getImageSrc = () => {
     switch (title) {
-      case "천민":
+      case "CHEONMIN":
         return accessible ? "/icons/CheonminIcon.svg" : "/icons/CheonminIcon.svg";
-      case "중인":
+      case "JUNGIN":
         return accessible ? "/icons/JunginIcon.svg" : "/icons/JunginIcon.svg";
-      case "양반":
+      case "YANGBAN":
         return accessible ? "/icons/YangbanIcon.svg" : "/icons/YangbanIcon.svg";
-      case "왕":
+      case "KING":
         return accessible ? "/icons/KingIcon.svg" : "/icons/KingIcon.svg";
       default:
         return "/icons/CheonminIcon.svg"; // 기본값을 설정하여 undefined 방지
@@ -28,13 +28,13 @@ export default function DocBoardCard({ title, link, accessible }: DocCategoryCar
   };
   const getImageNoDurumariSrc = () => {
     switch (title) {
-      case "천민":
+      case "CHEONMIN":
         return "/icons/tier/CheonminNoDurumari.svg";
-      case "중인":
+      case "JUNGIN":
         return "/icons/tier/JunginNoDurumari.svg";
-      case "양반":
+      case "YANGBAN":
         return "/icons/tier/YangbanNoDurumari.svg";
-      case "왕":
+      case "KING":
         return "/icons/tier/KingNoDurumari.svg";
       default:
         return "/icons/tier/CheonminNoDurumari.svg"; // 기본값을 설정하여 undefined 방지

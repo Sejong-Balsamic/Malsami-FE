@@ -54,12 +54,12 @@ export default function QuestionBoardPage() {
 
       // 필터된 질문
       const params = {
-        questionPresetTags: filterOptions.tags,
+      qnaPresetTags: filterOptions.qnaPresetTags,
         faculty,
-        isChaetaek: filterOptions.isChaeTaek,
-        sortOption: filterOptions.sortOption,
-        pageNumber: pageNumber - 1, // 0-based
-        pageSize,
+        chaetaekStatus: filterOptions.chaetaekStatus,
+      sortType: filterOptions.sortType,
+      pageNumber: pageNumber - 1,
+      pageSize,
       };
       const categoryData = await getCategoryQNAs(params);
       setCategoryQNAs(categoryData.content || []);
