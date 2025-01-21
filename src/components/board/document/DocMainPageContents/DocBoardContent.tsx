@@ -7,10 +7,10 @@ export default function DocBoardContent() {
   return (
     <div className="p-5">
       <div className="flex justify-between">
-        <DocBoardCard title="천민" link="/board/document/tier/cheonmin" accessible={canAccessCheonmin} />
-        <DocBoardCard title="중인" link="/board/document/tier/jungin" accessible={canAccessJungin} />
-        <DocBoardCard title="양반" link="/board/document/tier/yangban" accessible={canAccessYangban} />
-        <DocBoardCard title="왕" link="/board/document/tier/king" accessible={canAccessKing} />
+        <DocBoardCard title="CHEONMIN" link="/board/document/tier/cheonmin" accessible={canAccessCheonmin} />
+        <DocBoardCard title="JUNGIN" link="/board/document/tier/jungin" accessible={canAccessJungin} />
+        <DocBoardCard title="YANGBAN" link="/board/document/tier/yangban" accessible={canAccessYangban} />
+        <DocBoardCard title="KING" link="/board/document/tier/king" accessible={canAccessKing} />
       </div>
     </div>
   );

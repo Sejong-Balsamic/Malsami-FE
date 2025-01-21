@@ -4,6 +4,7 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { DocCardProps } from "@/types/docCard.type";
 import Pagination from "@/components/common/Pagination";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
+import { PostTiersKeys } from "@/lib/constants/postTiers";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
 import DocFilterControlBar from "../DocFilterControlBar";
@@ -38,7 +39,7 @@ export default function CheonminBoard() {
     const params = {
       documentTypes: filterOptions.docTypes,
       sortType: filterOptions.sortType,
-      postTier: "천민", // 게시판 티어 설정
+      postTier: PostTiersKeys[0], // 게시판 티어 설정
       pageNumber: pageNumber - 1,
       pageSize,
     };
