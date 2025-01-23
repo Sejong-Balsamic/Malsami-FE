@@ -2,9 +2,12 @@ import { apiClient } from "../clients/appClient";
 
 const logOut = async (): Promise<void> => {
   try {
-    await apiClient.post("/api/auth/logout", null, {
+    const formData = new FormData();
+    formData.append("fcmToken", "//TODO: 추가해야합니다");
+
+    await apiClient.post("/api/auth/logout", formData, {
       withCredentials: true, // 쿠키 포함
-    }); // 성공 처리
+    });
 
     // sessionStorage에서 accessToken 삭제
     sessionStorage.removeItem("accessToken");
