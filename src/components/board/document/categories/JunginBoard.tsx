@@ -4,6 +4,7 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { DocCardProps } from "@/types/docCard.type";
 import Pagination from "@/components/common/Pagination";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
+import { PostTiersKeys } from "@/lib/constants/postTiers";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
 import DocFilterControlBar from "../DocFilterControlBar";
@@ -13,8 +14,8 @@ export default function JunginBoard() {
   const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
   const [filterOptions, setFilterOptions] = useState<DocFilterOptions>({
-    tags: [],
-    sortOption: "",
+    docTypes: [],
+    sortType: undefined,
   });
 
   // 페이지네이션 관리
@@ -36,9 +37,9 @@ export default function JunginBoard() {
 
   const fetchDocs = async () => {
     const params = {
-      documentTypes: filterOptions.tags,
-      sortType: filterOptions.sortOption,
-      postTier: "중인", // 게시판 티어 설정
+      documentTypes: filterOptions.docTypes,
+      sortType: filterOptions.sortType,
+      postTier: PostTiersKeys[1], // 게시판 티어 설정
       pageNumber: pageNumber - 1,
       pageSize,
     };

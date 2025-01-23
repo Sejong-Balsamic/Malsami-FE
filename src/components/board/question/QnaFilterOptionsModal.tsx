@@ -4,9 +4,9 @@ import React, { ReactNode, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
-import qnaJijeongTags from "@/lib/qnaJijeongTags";
-import qnaSortingOptions from "@/lib/qnaSortingOptions";
-import chaetaekOptions from "@/lib/chaeTakOptions";
+import { QnaSortTypeKeys, sortTypeLabels } from "@/lib/constants/sortTypes";
+import { ChaetaekStatusKeys, ChaetaekStatus } from "@/lib/constants/chaetaekStatus";
+import { QnaPresetTagKeys, QnaPresetTags } from "@/lib/constants/qnaPresetTags";
 
 interface QnaFilterOptionsModalProps {
   isVisible: boolean; // 모달 표시 여부
@@ -26,19 +26,20 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
   const [modalHeight, setModalHeight] = useState("50vh"); // 초기 modalHeight 50%로 설정
   const contentRef = useRef<HTMLDivElement>(null);
 
-  const [isChaeTaek, setIsChaeTaek] = useState(initialFilterOptions.isChaeTaek);
-  const [tags, setTags] = useState(initialFilterOptions.tags);
-  const [sortOption, setSortOption] = useState(initialFilterOptions.sortOption);
+  const [chaetaekStatus, setChaetaekStatus] = useState(initialFilterOptions.chaetaekStatus);
+  const [qnaPresetTags, setQnaPresetTags] = useState(initialFilterOptions.qnaPresetTags);
+  const [sortType, setSortType] = useState(initialFilterOptions.sortType);
 
+  // 필터 적용 함수
   const handleApply = () => {
-    onApplyFilter({ isChaeTaek, tags, sortOption });
+    onApplyFilter({ chaetaekStatus: chaetaekStatus, qnaPresetTags, sortType });
   };
 
   // 필터 초기화 함수
   const resetFilters = () => {
-    setIsChaeTaek("");
-    setTags([]);
-    setSortOption("");
+    setChaetaekStatus(undefined);
+    setQnaPresetTags([]);
+    setSortType(undefined);
   };
 
   if (!isVisible) return null;
@@ -112,19 +113,22 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
               <>
                 <h1 className="font-pretendard-bold mb-[20px] text-xl">정렬</h1>
                 <div className="mb-[30px] flex flex-col">
-                  {qnaSortingOptions.map(option => (
-                    <li key={option} className="flex rounded-xl py-[10px]">
+                  {QnaSortTypeKeys.map(qnaSortTypeKey => (
+                    <li key={qnaSortTypeKey} className="flex rounded-xl py-[10px]">
                       <div
                         className="flex w-full cursor-pointer flex-row justify-between"
-                        onClick={() => setSortOption(option)}
-                        onKeyDown={e => e.key === "Enter" && setSortOption(option)}
+                        onClick={() => setSortType(qnaSortTypeKey)}
+                        onKeyDown={e => e.key === "Enter" && setSortType(qnaSortTypeKey)}
                       >
-                        {sortOption === option ? (
-                          <span className="font-pretendard-bold text-base text-custom-blue-500">{option}</span>
+                        {sortType === qnaSortTypeKey ? (
+                          <span className="font-pretendard-bold text-base text-custom-blue-500">
+                            {/* qnaSortTypeKey로 라벨링 매핑 */}
+                            {sortTypeLabels[qnaSortTypeKey]}
+                          </span>
                         ) : (
-                          <span className="font-pretendard-medium text-base">{option}</span>
+                          <span className="font-pretendard-medium text-base">{sortTypeLabels[qnaSortTypeKey]}</span>
                         )}
-                        {sortOption === option ? (
+                        {sortType === qnaSortTypeKey ? (
                           <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
                         ) : (
                           <Image src="/icons/UnCheckedIcon.svg" alt="UnCheckedIcon" width={14} height={14} />
@@ -136,19 +140,24 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
 
                 <h1 className="font-pretendard-bold mb-[20px] text-xl">채택 여부</h1>
                 <div className="mb-[30px] flex flex-col">
-                  {chaetaekOptions.map(option => (
-                    <li key={option} className="flex rounded-xl py-[10px]">
+                  {ChaetaekStatusKeys.map(chaetaekStatusKey => (
+                    <li key={chaetaekStatusKey} className="flex rounded-xl py-[10px]">
                       <div
                         className="flex w-full cursor-pointer flex-row justify-between"
-                        onClick={() => setIsChaeTaek(option)}
-                        onKeyDown={e => e.key === "Enter" && setIsChaeTaek(option)}
+                        onClick={() => setChaetaekStatus(chaetaekStatusKey)}
+                        onKeyDown={e => e.key === "Enter" && setChaetaekStatus(chaetaekStatusKey)}
                       >
-                        {isChaeTaek === option ? (
-                          <span className="font-pretendard-bold text-base text-custom-blue-500">{option}</span>
+                        {chaetaekStatus === chaetaekStatusKey ? (
+                          <span className="font-pretendard-bold text-base text-custom-blue-500">
+                            {ChaetaekStatus[chaetaekStatusKey as keyof typeof ChaetaekStatus]}
+                            {/* chaetaekStatusKey가 ChaetaekStatus의 유효한 키인지 확인, 값 렌더링 */}
+                          </span>
                         ) : (
-                          <span className="font-pretendard-medium text-base">{option}</span>
+                          <span className="font-pretendard-medium text-base">
+                            {ChaetaekStatus[chaetaekStatusKey as keyof typeof ChaetaekStatus]}
+                          </span>
                         )}
-                        {isChaeTaek === option ? (
+                        {chaetaekStatus === chaetaekStatusKey ? (
                           <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
                         ) : (
                           <Image src="/icons/UnCheckedIcon.svg" alt="UnCheckedIcon" width={14} height={14} />
@@ -162,23 +171,28 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
                   태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-[#A4A4A4]">최대 2개</span>
                 </h1>
                 <div className="mb-[40px] flex flex-wrap justify-center gap-x-[7px] gap-y-[20px]">
-                  {qnaJijeongTags.map(tag => (
+                  {QnaPresetTagKeys.map(qnaPresetTagKey => (
                     <button
-                      key={tag}
+                      key={qnaPresetTagKey}
                       onClick={() =>
-                        setTags(
+                        setQnaPresetTags(
                           prevTags =>
-                            prevTags.includes(tag) ? prevTags.filter(t => t !== tag) : [...prevTags, tag].slice(0, 2), // 태그 선택 2개만 가능하게
+                            prevTags.includes(qnaPresetTagKey)
+                              ? prevTags.filter(tag => tag !== qnaPresetTagKey)
+                              : [...prevTags, qnaPresetTagKey].slice(0, 2), // 최대 2개 선택 제한
                         )
                       }
                       className={`font-pretendard-bold rounded-[40px] border-2 border-custom-blue-500 px-3 py-1 text-xs ${
-                        tags.includes(tag) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
+                        qnaPresetTags.includes(qnaPresetTagKey)
+                          ? "bg-custom-blue-500 text-white"
+                          : "text-custom-blue-500"
                       }`}
                     >
-                      {tag}
+                      {QnaPresetTags[qnaPresetTagKey]} {/* 한글 라벨 표시 */}
                     </button>
                   ))}
                 </div>
+
                 <button
                   onClick={() => {
                     resetFilters(); // 필터 초기화

@@ -25,7 +25,7 @@ export default function QuestionBoardPage() {
   const filterOptions = useSelector((state: RootState) => state.filterOptions);
 
   // "전체" 버튼 상태
-  const [isAllFacultySelected, setIsAllFacultySelected] = useState(false);
+  const [isAllFacultySelected, setIsAllFacultySelected] = useState(true);
 
   // 데이터 상태
   const [unansweredQNAs, setUnansweredQNAs] = useState<null | any[]>(null);
@@ -54,11 +54,11 @@ export default function QuestionBoardPage() {
 
       // 필터된 질문
       const params = {
-        questionPresetTags: filterOptions.tags,
+        qnaPresetTags: filterOptions.qnaPresetTags,
         faculty,
-        isChaetaek: filterOptions.isChaeTaek,
-        sortOption: filterOptions.sortOption,
-        pageNumber: pageNumber - 1, // 0-based
+        chaetaekStatus: filterOptions.chaetaekStatus,
+        sortType: filterOptions.sortType,
+        pageNumber: pageNumber - 1,
         pageSize,
       };
       const categoryData = await getCategoryQNAs(params);

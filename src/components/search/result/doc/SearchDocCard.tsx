@@ -4,13 +4,7 @@ import getDateDiff from "@/utils/getDateDiff";
 import { DocCardProps } from "@/types/docCard.type";
 import ImageWrapper from "@/components/board/tags/ImageWrapper";
 import SubjectTag from "@/components/board/document/tags/SubjectTag";
-
-const tagTranslations: { [key: string]: string } = {
-  CHEONMIN: "천민 게시판",
-  JUNGIN: "중인 게시판",
-  YANGBAN: "양반 게시판",
-  KING: "왕 게시판",
-};
+import { PostTiers, PostTiersKey, PostTiersKeys } from "@/lib/constants/postTiers";
 
 export default function SearchDocCard({
   subject,
@@ -56,7 +50,9 @@ export default function SearchDocCard({
           <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
             <div className="flex flex-wrap items-center">
               <span className="font-pretendard-medium mr-3.5 text-xs text-custom-blue-500">
-                {tagTranslations[postTier as string] || "알 수 없는 게시판"}
+                {PostTiersKeys.includes(postTier as PostTiersKey)
+                  ? `${PostTiers[postTier as PostTiersKey]} 게시판`
+                  : "알 수 없는 게시판"}
               </span>
             </div>
             <div className="flex flex-wrap items-center">

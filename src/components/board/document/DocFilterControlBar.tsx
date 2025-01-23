@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
+import { DocTypes, DocTypesKey } from "@/lib/constants/docTypes";
+import { sortTypeLabels } from "@/lib/constants/sortTypes";
 import DocFilterOptionsModal from "./DocFilterOptionsModal";
 import JiJeongTag from "../tags/JiJeongTag";
 
@@ -16,22 +18,23 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
   const closeModal = () => setIsModalOpen(false);
 
   // 태그 삭제 핸들러
-  const handleRemoveTag = (tagToRemove: string) => {
-    const updatedTags = filterOptions.tags.filter(tag => tag !== tagToRemove);
-    onFilterChange({ ...filterOptions, tags: updatedTags });
+  const handleRemoveTag = (tagToRemove: DocTypesKey) => {
+    const updatedTags = filterOptions.docTypes.filter(tag => tag !== tagToRemove); // 해당 태그를 제거한 새 배열 생성
+    onFilterChange({ ...filterOptions, docTypes: updatedTags }); // 부모 컴포넌트에 반영
   };
 
   const handleRemoveSortOption = () => {
-    onFilterChange({ ...filterOptions, sortOption: "" });
+    onFilterChange({ ...filterOptions, sortType: undefined });
   };
 
   return (
     <div className="flex justify-between px-5 py-3">
       <div className="flex overflow-x-auto scrollbar-hide">
-        {filterOptions.sortOption && (
+        {/* 필터링바에 sortType 표시. null이 아닐 경우만. null은 sortType 선택안됨을 의미 */}
+        {filterOptions.sortType && (
           <JiJeongTag
-            key={filterOptions.sortOption}
-            label={`${filterOptions.sortOption} ×`}
+            key={filterOptions.sortType}
+            label={`${sortTypeLabels[filterOptions.sortType]} ×`}
             onClick={handleRemoveSortOption}
             style={{
               backgroundColor: "#74D7CB",
@@ -39,12 +42,13 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
             }}
           />
         )}
-        {filterOptions.tags.length > 0 &&
-          filterOptions.tags.map(tag => (
+        {/* 필터링바에 docType 표시 */}
+        {filterOptions.docTypes.length > 0 &&
+          filterOptions.docTypes.map(docTypesTag => (
             <JiJeongTag
-              key={tag}
-              label={`${tag} ×`}
-              onClick={() => handleRemoveTag(tag)}
+              key={docTypesTag}
+              label={`${DocTypes[docTypesTag]} x`}
+              onClick={() => handleRemoveTag(docTypesTag)}
               style={{
                 backgroundColor: "#0062D2",
                 cursor: "pointer",

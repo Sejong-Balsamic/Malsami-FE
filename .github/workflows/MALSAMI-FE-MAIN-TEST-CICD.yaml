@@ -112,8 +112,23 @@ jobs:
             fi
 
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-            echo $PW | sudo -S docker stop $CONTAINER_NAME || true
-            echo $PW | sudo -S docker rm $CONTAINER_NAME || true
+
+            # 실행 중인 컨테이너가 있으면 중지 후 삭제
+            if [ "$(sudo docker ps -q -f name=$CONTAINER_NAME)" ]; then
+              echo $PW | sudo -S docker stop $CONTAINER_NAME
+            fi
+
+            # 컨테이너가 존재하면 삭제
+            if [ "$(sudo docker ps -a -q -f name=$CONTAINER_NAME)" ]; then
+              echo $PW | sudo -S docker rm -f $CONTAINER_NAME
+              sleep 3
+            fi
+
+            # 컨테이너 삭제가 정상적으로 완료되었는지 확인
+            if [ "$(sudo docker ps -a -q -f name=$CONTAINER_NAME)" ]; then
+              echo "Container deletion failed, retrying..."
+              echo $PW | sudo -S docker rm -f $CONTAINER_NAME
+            fi
 
             echo $PW | sudo -S docker run -d \
               -p ${PORT}:3000 \
