@@ -2,7 +2,7 @@
 
 import { getMessaging, getToken, onMessage } from "firebase/messaging";
 import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "@/../firebaseConfig";
+import firebaseConfig from "@/../firebaseConfig";
 
 // Firebase 앱 초기화
 const app = initializeApp(firebaseConfig);
@@ -11,8 +11,11 @@ const messaging = getMessaging(app);
 // FCM 토큰 가져오기 함수
 export async function getFcmToken(): Promise<string | null> {
   try {
+    const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js");
+
     const currentToken = await getToken(messaging, {
       vapidKey: "BGMza-Lw4pEyFJ-HxbXbLaHxdfI-xhF6zUdYaIUJ9-q3kxWBDGConYfYaqaNjxUskLWRYKh4VMlJtay1BwVcCZI",
+      serviceWorkerRegistration: registration, // 서비스 워커 등록 객체 전달
     });
     if (currentToken) {
       console.log("FCM 토큰:", currentToken);

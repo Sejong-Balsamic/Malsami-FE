@@ -1,23 +1,19 @@
-// FCM 토큰 전송 함수
-
-import { apiClient } from "@/apis/clients/appClient"; // apiClient를 import
+import { apiClient } from "@/apis/clients/appClient";
 
 interface FcmResponse {
-  fcmToken: string; // 반환 값에 대한 타입 정의 (백엔드에서 반환하는 형태에 맞게 수정 필요)
+  fcmToken: string;
 }
 
-async function sendFcmTokenToServer(token: string): Promise<FcmResponse | null> {
+async function sendFcmTokenToServer(fcmToken: string): Promise<FcmResponse | null> {
   try {
+    console.log("전달받은 FCM 토큰:", fcmToken); // 전달된 FCM 토큰 확인
+
     // FormData 객체 생성
     const formData = new FormData();
-    formData.append("token", token); // Firebase에서 발급받은 토큰 [필수]
+    formData.append("fcmToken", fcmToken); // Firebase에서 발급받은 토큰
 
     // API 호출
-    const response = await apiClient.post<FcmResponse>("/api/auth/fcm/token", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data", // Content-Type 설정
-      },
-    });
+    const response = await apiClient.post<FcmResponse>("/api/auth/fcm/token", formData);
 
     console.log("FCM 토큰 서버로 전송 성공:", response.data);
     return response.data; // 반환된 FCM 정보

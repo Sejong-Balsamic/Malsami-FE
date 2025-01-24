@@ -1,5 +1,5 @@
 import { initializeApp, getApps } from "firebase/app";
-import { firebaseConfig } from "@/../firebaseConfig";
+import firebaseConfig from "@/../firebaseConfig";
 
 // Firebase 초기화 함수
 function initializeFirebase() {
