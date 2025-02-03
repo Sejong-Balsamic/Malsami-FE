@@ -11,6 +11,14 @@ import { showToast } from "@/utils/toastUtils";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
+// 게시판 컴포넌트 매핑
+const BoardComponents: Record<PostTiersKey, JSX.Element> = {
+  CHEONMIN: <CheonminBoard />,
+  JUNGIN: <JunginBoard />,
+  YANGBAN: <YangbanBoard />,
+  KING: <KingBoard />,
+};
+
 // 동적 라우팅
 function BoardPage({ params }: { params: { postTier?: string } }) {
   const router = useRouter();
@@ -26,6 +34,7 @@ function BoardPage({ params }: { params: { postTier?: string } }) {
     // 허용된 카테고리가 아니면 notFound 페이지로 리다이렉트
     if (!PostTiersKeys.includes(upperCasePostTier)) {
       notFound();
+      return;
     }
 
     // 티어 권한 검사
@@ -45,23 +54,7 @@ function BoardPage({ params }: { params: { postTier?: string } }) {
     setHasAccessChecked(true); // 권한 확인이 완료되었음을 설정
   }, [upperCasePostTier, userPermissions]);
 
-  // 게시판 렌더링
-  const renderBoard = () => {
-    switch (upperCasePostTier) {
-      case "CHEONMIN":
-        return <CheonminBoard />;
-      case "JUNGIN":
-        return <JunginBoard />;
-      case "YANGBAN":
-        return <YangbanBoard />;
-      case "KING":
-        return <KingBoard />;
-      default:
-        return <p>해당 게시판을 찾을 수 없습니다.</p>;
-    }
-  };
-
-  return <div>{renderBoard()}</div>;
+  return <div>{BoardComponents[upperCasePostTier]}</div>;
 }
 
 export default BoardPage;
