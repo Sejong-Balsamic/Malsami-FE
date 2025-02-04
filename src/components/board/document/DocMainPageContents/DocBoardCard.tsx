@@ -1,45 +1,26 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { PostTiers, PostTiersKey } from "@/lib/constants/postTiers";
 
 interface DocCategoryCardProps {
-  title: string; // 게시판 카테고리 제목
+  tier: PostTiersKey; // 게시판 카테고리 제목
   link: string; // 접근 가능한 경우 이동할 링크
   accessible: boolean; // 접근 가능 여부
 }
 
-export default function DocBoardCard({ title, link, accessible }: DocCategoryCardProps) {
+export default function DocBoardCard({ tier, link, accessible }: DocCategoryCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
 
-  // 이미지 경로를 title에 따라 동적으로 설정
+  // 이미지 경로를 tier에 맞춰 동적으로 설정
   const getImageSrc = () => {
-    switch (title) {
-      case "CHEONMIN":
-        return accessible ? "/icons/CheonminIcon.svg" : "/icons/CheonminIcon.svg";
-      case "JUNGIN":
-        return accessible ? "/icons/JunginIcon.svg" : "/icons/JunginIcon.svg";
-      case "YANGBAN":
-        return accessible ? "/icons/YangbanIcon.svg" : "/icons/YangbanIcon.svg";
-      case "KING":
-        return accessible ? "/icons/KingIcon.svg" : "/icons/KingIcon.svg";
-      default:
-        return "/icons/CheonminIcon.svg"; // 기본값을 설정하여 undefined 방지
-    }
+    return accessible ? `/icons/tier/${tier}Icon.svg` : `/icons/tier/${tier}Icon.svg`;
+    // 추후 디자인 부탁해서 수정해야함
   };
   const getImageNoDurumariSrc = () => {
-    switch (title) {
-      case "CHEONMIN":
-        return "/icons/tier/CheonminNoDurumari.svg";
-      case "JUNGIN":
-        return "/icons/tier/JunginNoDurumari.svg";
-      case "YANGBAN":
-        return "/icons/tier/YangbanNoDurumari.svg";
-      case "KING":
-        return "/icons/tier/KingNoDurumari.svg";
-      default:
-        return "/icons/tier/CheonminNoDurumari.svg"; // 기본값을 설정하여 undefined 방지
-    }
+    return `/icons/tier/${tier}NoDurumari.svg`;
   };
+
   const imageSrc = getImageSrc();
   const imageNoDurumariSrc = getImageNoDurumariSrc();
 
@@ -57,25 +38,16 @@ export default function DocBoardCard({ title, link, accessible }: DocCategoryCar
   return (
     <>
       <div className="flex flex-col items-center space-y-2">
-        {/* {accessible ? (
-        <Link href={link} className="rounded-full transition-transform hover:scale-105">
-          <Image src={imageSrc} alt={title} width={66} height={66} className="rounded-full" />
-        </Link>
-      ) : (
-        <div className="h-[66px] w-[66px] rounded-[14px] bg-gray-300 shadow-md">
-          <p className="mt-1 text-center text-sm text-gray-400">접근 불가</p>
-        </div>
-      )} */}
         <Link
           href={accessible ? link : "#"}
           onClick={handleCardClick}
           className="rounded-full transition-transform hover:scale-105"
         >
-          <Image src={imageNoDurumariSrc} alt={title} width={66} height={66} className="rounded-full" />
+          <Image src={imageNoDurumariSrc} alt={tier} width={66} height={66} className="rounded-full" />
         </Link>
         {/* 게시판 카테고리 제목 */}
         <span className={`font-pretendard-medium text-xs ${accessible ? "text-black" : "text-gray-400"}`}>
-          {title} 게시판
+          {PostTiers[tier].KR} 게시판 {/* PostTiers에서 KR 값 가져오기 */}
         </span>
       </div>
 
@@ -94,10 +66,11 @@ export default function DocBoardCard({ title, link, accessible }: DocCategoryCar
 
             {/* 알림 이미지와 내용 */}
             <div className="flex flex-col items-center text-center">
-              <Image src={imageSrc} alt={title} width={170} height={170} className="mb-4 rounded-full" />
+              <Image src={imageSrc} alt={tier} width={170} height={170} className="mb-4 rounded-full" />
               <h1 className="font-pretendard-bold text-lg">게시판 입장 제한</h1>
               <p className="mt-2 text-sm text-gray-600">
-                해당 게시판은 게시판 등급이 <span className="font-bold">{title} 이상</span>일 경우에만 입장이 가능합니다
+                해당 게시판은 게시판 등급이 <span className="font-bold">{PostTiers[tier].KR} 이상</span>일 경우에만
+                입장이 가능합니다
               </p>
               <button
                 type="button"

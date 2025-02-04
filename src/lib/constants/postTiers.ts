@@ -8,11 +8,11 @@ export const PostTiersKeys = ["CHEONMIN", "JUNGIN", "YANGBAN", "KING"] as const;
 export type PostTiersKey = (typeof PostTiersKeys)[number];
 
 // 매핑 객체. 객체의 키가 정의된 PostTiersKey 타입 내에서만 허용.
-export const PostTiers: Record<PostTiersKey, string> = {
-  CHEONMIN: "천민",
-  JUNGIN: "중인",
-  YANGBAN: "양반",
-  KING: "왕",
+export const PostTiers: Record<PostTiersKey, { EN: string; KR: string }> = {
+  CHEONMIN: { EN: "CHEONMIN", KR: "천민" },
+  JUNGIN: { EN: "JUNGIN", KR: "중인" },
+  YANGBAN: { EN: "YANGBAN", KR: "양반" },
+  KING: { EN: "KING", KR: "왕" },
 };
 
 export default PostTiers;

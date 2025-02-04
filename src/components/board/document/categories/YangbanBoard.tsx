@@ -3,7 +3,7 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { DocCardProps } from "@/types/docCard.type";
-import { PostTiersKeys } from "@/lib/constants/postTiers";
+import { PostTiersKeys, PostTiers } from "@/lib/constants/postTiers";
 import Pagination from "@/components/common/Pagination";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
@@ -67,7 +67,7 @@ export default function YangbanBoard() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <DocTierPageNav subTitle="양반 게시판" />
+      <DocTierPageNav subTitle={`${PostTiers.YANGBAN.KR} 게시판`} />
       <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
         <DocFilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
         <div className="h-0.5 bg-[#EEEEEE]" />
