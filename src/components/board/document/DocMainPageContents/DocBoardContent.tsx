@@ -1,12 +1,12 @@
 import useUserPermissions from "@/utils/useUserPermissions";
-import { PostTiersKeys } from "@/lib/constants/postTiers"; // PostTiers와 PostTiersKeys 가져오기
+import { PostTiersKeys } from "@/lib/constants/postTiers";
 import DocBoardCard from "./DocBoardCard";
 
 export default function DocBoardContent() {
   const { canAccessCheonmin, canAccessJungin, canAccessYangban, canAccessKing } = useUserPermissions();
 
   // 권한 객체를 만들어서 PostTiersKeys와 연결
-  const permissions = {
+  const tierPermissions = {
     CHEONMIN: canAccessCheonmin,
     JUNGIN: canAccessJungin,
     YANGBAN: canAccessYangban,
@@ -22,7 +22,7 @@ export default function DocBoardContent() {
             key={tier}
             tier={tier}
             link={`/board/document/tier/${tier.toLowerCase()}`}
-            accessible={permissions[tier]}
+            accessible={tierPermissions[tier]}
           />
         ))}
       </div>

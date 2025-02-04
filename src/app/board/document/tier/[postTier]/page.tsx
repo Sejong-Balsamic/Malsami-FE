@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 
 // 게시판 컴포넌트 매핑
-const BoardComponents: Record<PostTiersKey, JSX.Element> = {
+const MainDocTierComponents: Record<PostTiersKey, JSX.Element> = {
   CHEONMIN: <CheonminBoard />,
   JUNGIN: <JunginBoard />,
   YANGBAN: <YangbanBoard />,
@@ -54,7 +54,7 @@ function BoardPage({ params }: { params: { postTier?: string } }) {
     setHasAccessChecked(true); // 권한 확인이 완료되었음을 설정
   }, [upperCasePostTier, userPermissions]);
 
-  return <div>{BoardComponents[upperCasePostTier]}</div>;
+  return <div>{MainDocTierComponents[upperCasePostTier]}</div>;
 }
 
 export default BoardPage;
