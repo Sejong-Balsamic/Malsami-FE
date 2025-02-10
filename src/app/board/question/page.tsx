@@ -11,7 +11,7 @@ import QnaFilterControlBar from "@/components/board/question/QnaFilterControlBar
 import QnaPageNav from "@/components/nav/QnaPageNav";
 import getUnansweredQNAs from "@/apis/question/getUnansweredQNAs";
 import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
-import UploadQFAB from "@/components/common/UploadQFAB";
+import UploadQFAB from "@/components/common/FABs/UploadQFAB";
 import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { QnaCard } from "@/types/QnaCard";

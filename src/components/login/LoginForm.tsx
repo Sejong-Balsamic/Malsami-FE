@@ -3,6 +3,8 @@
 import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "@/apis/auth/auth";
+import Image from "next/image";
+import Input from "../common/input/Input";
 import LoginSuccessModal from "./LoginSuccessModal";
 
 export default function LoginForm() {
@@ -46,51 +48,38 @@ export default function LoginForm() {
 
   return (
     <div className="w-full">
-      <form onSubmit={handleLogin} className="space-y-2">
-        {/* 아이디 입력 */}
+      <form onSubmit={handleLogin} className="space-y-10">
         <div>
-          <input
-            type="text"
-            id="id"
-            value={id}
-            onChange={e => setId(e.target.value)}
-            required
-            className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-1 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-200"
-            placeholder="학번 (테스트학번: 99999999)"
-          />
-        </div>
-        {/* 비밀번호 입력 */}
-        <div>
-          <input
-            type="password"
-            id="password"
+          <Input label="학번" placeholder="학번을 입력해주세요." value={id} onChange={e => setId(e.target.value)} />
+          <Input
+            label="비밀번호"
+            placeholder="비밀번호를 입력해주세요."
             value={password}
             onChange={e => setPassword(e.target.value)}
-            required
-            className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-1 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-300"
-            placeholder="비밀번호 (테스트비번: 99999999)"
           />
-        </div>
 
-        {/* 에러 메시지 */}
-        {errorMessage && <p className="mb-4 text-center text-sm text-red-500">{errorMessage}</p>}
+          {/* 에러 메시지 */}
+          {errorMessage && (
+            <div className="flex items-center">
+              <Image src="/icons/ErrorExclamation.svg" alt="ErrorExclamation" width={18} height={18} />
+              <p className="ml-2 text-SUIT_14 font-medium text-[#FF3232]">{errorMessage}</p>
+            </div>
+          )}
+        </div>
 
         {/* 로그인 제출 버튼 */}
         <button
           type="submit"
-          className={`mt-10 w-full rounded-lg px-4 py-2 text-white ${
-            isFormValid ? "bg-custom-blue-300 hover:bg-custom-blue-500 focus:ring-custom-blue-400" : "bg-[#D9D9D9]"
+          className={`mt-[300px] w-full rounded-md py-4 text-SUIT_16 font-extrabold text-white ${
+            isFormValid
+              ? "bg-gradient-to-r from-[#08E4BB] to-[#5FF48D] hover:from-[#07D1AA] hover:to-[#50E47F]"
+              : "bg-[#D1D1D1]"
           }`}
           disabled={!isFormValid || isLoading}
         >
           {isLoading ? "로그인 중..." : "로그인"}
         </button>
       </form>
-
-      {/* 안내 메시지 */}
-      <div className="mt-4 text-center text-xs text-gray-500">
-        입력하신 비밀번호는 서버에 저장되지 않으며, <br /> 암호화된 상태로 처리됩니다.
-      </div>
 
       {/* 로그인 성공 모달 */}
       {isModalOpen && <LoginSuccessModal onClose={handleModalClose} userName={userName} />}
