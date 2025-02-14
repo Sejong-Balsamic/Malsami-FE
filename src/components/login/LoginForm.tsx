@@ -6,6 +6,7 @@ import { login } from "@/apis/auth/auth";
 import Image from "next/image";
 import Input from "../common/input/Input";
 import LoginSuccessModal from "./LoginSuccessModal";
+import LoadingSpinner from "../common/loadingSpinner/LoadingSpinner";
 
 export default function LoginForm() {
   const [id, setId] = useState<string>("");
@@ -60,7 +61,7 @@ export default function LoginForm() {
 
           {/* 에러 메시지 */}
           {errorMessage && (
-            <div className="flex items-center">
+            <div className="mt-5 flex items-center">
               <Image src="/icons/ErrorExclamation.svg" alt="ErrorExclamation" width={18} height={18} />
               <p className="ml-2 text-SUIT_14 font-medium text-[#FF3232]">{errorMessage}</p>
             </div>
@@ -80,6 +81,8 @@ export default function LoginForm() {
           {isLoading ? "로그인 중..." : "로그인"}
         </button>
       </form>
+
+      <LoadingSpinner />
 
       {/* 로그인 성공 모달 */}
       {isModalOpen && <LoginSuccessModal onClose={handleModalClose} userName={userName} />}
