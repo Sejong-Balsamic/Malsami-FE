@@ -72,7 +72,7 @@ function Input({ label, className, ...props }: InputProps) {
         onFocus={handleFocus} // input 요소에 focus 되었을 때 handleFocus 함수 호출
         onBlur={handleBlur} // input 요소에서 focus가 해제되었을 때 handleBlur 함수 호출
         // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props}
+        {...props} // 비밀번호 Input에서 props에 type="password"가 적용됨
       />
     </label>
   );

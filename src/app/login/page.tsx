@@ -7,7 +7,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <div className="flex h-screen w-full min-w-[386px] max-w-[640px] flex-col bg-white px-5 pb-[60px]">
+      <div className="flex h-screen w-full min-w-[386px] max-w-[640px] flex-col bg-white px-5">
         <div>공용컴포넌트 header 자리</div>
         <span className="mb-4 text-SUIT_20 font-medium">
           환영합니다! <span className="font-bold">세종말싸미</span> 입니다.
