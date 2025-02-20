@@ -1,8 +1,8 @@
 const firebaseConfig = {
-  apiKey: "AIzaSyBLTIxTCv8V8tDc_TgHBLulTloHv0xp6OI",
-  projectId: "sejong-malsami-32064",
-  messagingSenderId: "550675191615",
-  appId: "1:550675191615:web:51d6aabd5988842005658a",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 };
 
 export default firebaseConfig;
