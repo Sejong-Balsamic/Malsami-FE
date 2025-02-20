@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import Nav from "@/components/nav/LandingNav";
+import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { showToast } from "@/utils/toastUtils";
+
+import LandingHeader from "@/components/nav/LandingHeader";
 import FlyingBooks from "@/components/landing/FlyingBooks";
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
@@ -15,10 +19,7 @@ import getMyInfo from "@/apis/member/getMyInfo";
 import UploadFAB from "@/components/common/UploadLandingFAB";
 import ScrollFAB from "@/components/common/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
-import Image from "next/image";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import { useDispatch } from "react-redux";
-import { showToast } from "@/utils/toastUtils";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);
@@ -34,37 +35,28 @@ function Page() {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
-      let threshold = 1800;
 
+      // 스크린 크기에 따른 검색바 노출 임계값 계산
+      let threshold = 1800;
       if (window.innerWidth >= 640) {
         threshold = 3000;
       } else if (window.innerWidth <= 375) {
         threshold = 1400;
       }
-
       setScrollY(Math.min(currentScrollY, 3000));
       setSearchVisible(currentScrollY < threshold);
+
+      // FAB(스크롤 위로) 표시 여부 계산
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      setShowScrollFAB(currentScrollY + windowHeight < documentHeight - 100);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  useEffect(() => {
-    const handleScrollForFAB = () => {
-      const currentScrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-
-      // 맨 아래에서 100px 여유를 둔 위치까지 스크롤하면 ScrollFAB 숨김
-      setShowScrollFAB(currentScrollY + windowHeight < documentHeight - 100);
-    };
-
-    window.addEventListener("scroll", handleScrollForFAB);
-    return () => window.removeEventListener("scroll", handleScrollForFAB);
-  }, []);
-
-  // storeUserName 래핑
+  // 사용자 이름 가져오기
   const storeUserName = useCallback(async (): Promise<void> => {
     try {
       const memberInfo = await getMyInfo();
@@ -81,14 +73,12 @@ function Page() {
   useEffect(() => {
     const initializeUserName = async () => {
       const accessToken = sessionStorage.getItem("accessToken");
-
       if (accessToken) {
         await storeUserName();
       } else {
         setUserName("종이");
       }
     };
-
     initializeUserName();
   }, [storeUserName]);
 
@@ -96,15 +86,14 @@ function Page() {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const data = await getAllDocuments(); // API 호출
-        const allDocuments = data.documentPostsPage?.content || []; // 전체 질문 리스트 추출
-        setDocuments(allDocuments); // 상태에 저장
+        const data = await getAllDocuments();
+        const allDocuments = data.documentPostsPage?.content || [];
+        setDocuments(allDocuments);
       } catch (error) {
         const message = "자료를 불러오지 못했습니다.";
-        showToast(dispatch, message, "orange"); // Toast로 에러 메시지 표시
+        showToast(dispatch, message, "orange");
       }
     };
-
     fetchDocuments();
   }, [dispatch]);
 
@@ -112,56 +101,61 @@ function Page() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const data = await getAllQuestions(); // API 호출
-        const allQuestions = data.questionPostsPage?.content || []; // 전체 질문 리스트 추출
-        setQuestions(allQuestions); // 상태에 저장
+        const data = await getAllQuestions();
+        const allQuestions = data.questionPostsPage?.content || [];
+        setQuestions(allQuestions);
       } catch (error) {
         const message = "질문을 불러오지 못했습니다.";
-        showToast(dispatch, message, "orange"); // Toast로 에러 메시지 표시
+        showToast(dispatch, message, "orange");
       }
     };
-
     fetchQuestions();
   }, [dispatch]);
 
   return (
-    <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
-      <ScrollToTopOnLoad />
-      <Nav />
-      <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
-        {/* 배경 이미지 */}
-        <div className="relative z-0 w-full">
-          <Image
-            src="/landing/LandingBackgroundImage.png"
-            alt="배경"
-            width={640}
-            height={2310}
-            className="h-auto w-full object-cover"
-            priority
-          />
-        </div>
-        {/* 플라잉 북 */}
-        <div className="z-10">
-          <FlyingBooks scrollY={scrollY} studentName={userName} />
-        </div>
-        <div className="relative z-40 flex flex-col items-center justify-center px-[20px]">
-          <div ref={hotDocumentRef} className="w-full">
-            <HotDocument />
+    <main className="relative">
+      {/* 헤더: LandingHeader에서 알림 아이콘은 하드코딩으로 true (TODO: 알림 기능 구현) */}
+      <LandingHeader />
+
+      <div className="mx-auto w-full max-w-[640px]">
+        <ScrollToTopOnLoad />
+        {/* 상단 패딩은 헤더 높이(56px)만큼 추가 */}
+        <div className="relative min-h-screen w-full bg-white pt-[56px]">
+          {/* 배경 이미지 */}
+          <div className="relative z-0 w-full">
+            <Image
+              src="/landing/LandingBackgroundImage.png"
+              alt="배경"
+              width={640}
+              height={2310}
+              className="h-auto w-full object-cover"
+              priority
+            />
           </div>
-          <AllDocument documents={documents} />
-          <HotQuestion />
-          <AllQuestion questions={questions} />
-          {searchVisible && <SearchBar userName={userName} />}
-        </div>
-        {/* FAB */}
-        <div className="fixed bottom-[30px] right-[20px] z-50">
-          <div className="flex flex-col items-center space-y-4">
-            <UploadFAB />
-            {showScrollFAB && <ScrollFAB targetRef={hotDocumentRef} />}
+          {/* 플라잉 북 */}
+          <div className="z-10">
+            <FlyingBooks scrollY={scrollY} studentName={userName} />
+          </div>
+          {/* 콘텐츠 영역 */}
+          <div className="relative z-40 flex flex-col items-center justify-center px-[20px]">
+            <div ref={hotDocumentRef} className="w-full">
+              <HotDocument />
+            </div>
+            <AllDocument documents={documents} />
+            <HotQuestion />
+            <AllQuestion questions={questions} />
+            {searchVisible && <SearchBar userName={userName} />}
+          </div>
+          {/* FAB */}
+          <div className="fixed bottom-[30px] right-[20px] z-50">
+            <div className="flex flex-col items-center space-y-4">
+              <UploadFAB />
+              {showScrollFAB && <ScrollFAB targetRef={hotDocumentRef} />}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
