@@ -6,10 +6,21 @@ import firebaseConfig from "@/../firebaseConfig";
 
 // Firebase 앱 초기화
 const app = initializeApp(firebaseConfig);
-const messaging = getMessaging(app);
+
+// 브라우저 환경에서만 messaging 객체 생성
+let messaging: ReturnType<typeof getMessaging> | null = null;
+
+if (typeof window !== "undefined" && "serviceWorker" in navigator) {
+  messaging = getMessaging(app);
+}
 
 // FCM 토큰 가져오기 함수
 export async function getFcmToken(): Promise<string | null> {
+  if (!messaging) {
+    console.warn("FCM은 브라우저 환경에서만 사용할 수 있습니다.");
+    return null;
+  }
+
   try {
     const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js");
 
@@ -31,8 +42,9 @@ export async function getFcmToken(): Promise<string | null> {
 
 // Foreground 알림 처리 함수 (사용자의 화면에 활성화된 상태)
 export function onMessageListener() {
+  if (!messaging) return;
+
   onMessage(messaging, payload => {
-    console.log("메세지 수신", payload);
-    // UI 업데이트나 사용자 알림 표시 추가해야함
+    console.log("💡 메세지 수신:", payload);
   });
 }

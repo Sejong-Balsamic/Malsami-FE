@@ -16,6 +16,12 @@ export default function FcmInitializer() {
 
   useEffect(() => {
     async function fetchAndSendToken() {
+      // 0. SSR 환경 방지: 브라우저에서만 실행
+      if (typeof window === "undefined" || !("serviceWorker" in navigator)) {
+        console.warn("⚠️ 브라우저 환경에서만 FCM을 사용할 수 있습니다.");
+        return;
+      }
+
       // 1. 로그인 상태 확인 (세션 스토리지에서 accessToken 확인)
       const accessToken = sessionStorage.getItem("accessToken");
 
@@ -61,8 +67,10 @@ export default function FcmInitializer() {
       }
     }
 
-    // useEffect 내에서 FCM 토큰 발급 및 전송 함수 호출
-    fetchAndSendToken();
+    // 클라이언트 환경에서만 FCM 초기화
+    if (typeof window !== "undefined") {
+      fetchAndSendToken();
+    }
   }, [dispatch, fcmToken, isFcmTokenSentToServer]); // 의존성 배열에 Redux 상태 추가
 
   return null;
