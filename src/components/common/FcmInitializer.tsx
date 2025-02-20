@@ -24,10 +24,10 @@ export default function FcmInitializer() {
       // FCM 토큰 검색 및 전송
       try {
         const existingToken = localStorage.getItem("fcmToken");
-        const tokenSentToServer = localStorage.getItem("fcmTokenSentToServer");
+        const isFcmTokenSentToServer = localStorage.getItem("fcmTokenSentToServer");
 
         // 기존 토큰이 이미 저장되고 서버로 전송된 경우, 작업 생략
-        if (existingToken && tokenSentToServer === "true") {
+        if (existingToken && isFcmTokenSentToServer === "true") {
           console.log("FCM 토큰이 이미 서버로 전송되었습니다. 작업을 생략합니다.");
           return;
         }
