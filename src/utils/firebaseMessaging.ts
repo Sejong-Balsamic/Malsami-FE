@@ -14,7 +14,7 @@ export async function getFcmToken(): Promise<string | null> {
     const registration = await navigator.serviceWorker.register("/firebase-messaging-sw.js");
 
     const currentToken = await getToken(messaging, {
-      vapidKey: "BGMza-Lw4pEyFJ-HxbXbLaHxdfI-xhF6zUdYaIUJ9-q3kxWBDGConYfYaqaNjxUskLWRYKh4VMlJtay1BwVcCZI",
+      vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY, // 환경 변수로 VAPID 키 불러오기
       serviceWorkerRegistration: registration, // 서비스 워커 등록 객체 전달
     });
     if (currentToken) {
