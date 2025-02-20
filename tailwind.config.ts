@@ -132,11 +132,11 @@ const config: Config = {
         "toast-bg": "url('/image/ToastBG.png')",
       },
       fontSize: {
-        SUIT_XL: "20px", // 제목
-        SUIT_L: "18px", // 소제목
-        SUIT_M: "16px", // 본문
-        SUIT_S: "14px", // 세부사항
-        SUIT_XS: "12px", // 태그
+        SUIT_20: ["20px", { fontWeight: "700" }], // 제목
+        SUIT_18: ["18px", { fontWeight: "600" }], // 소제목목
+        SUIT_16: ["16px", { fontWeight: "500" }], // 본문문
+        SUIT_14: ["14px", { fontWeight: "500" }], // 세부사항
+        SUIT_12: ["12px", { fontWeight: "500" }], // 태그
       },
     },
   },
