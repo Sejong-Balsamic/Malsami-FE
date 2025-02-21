@@ -111,12 +111,15 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 2022
           script: |
+            set -e  # 에러 발생 시 스크립트 중단
+
             echo "배포를 시작합니다..."
             export PATH=$PATH:/usr/local/bin
             export PW=${{ secrets.SERVER_PASSWORD }}
             BRANCH=${{ github.ref_name }}
             PORT=3000
             CONTAINER_NAME="sejong-malsami-front"
+
             if [ "$BRANCH" == "main" ]; then
               PORT=3004
               echo "메인 브랜치로 배포합니다. 포트는 $PORT입니다."
@@ -125,25 +128,21 @@ jobs:
               PORT=3003
               echo "테스트 브랜치로 배포합니다. 컨테이너 이름은 $CONTAINER_NAME, 포트는 $PORT입니다."
             fi
+
             echo "도커 이미지를 풀링 중입니다: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}"
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-            # 실행 중인 컨테이너가 있으면 중지 후 삭제
-            if [ "$(sudo docker ps -q -f name=$CONTAINER_NAME)" ]; then
-              echo $PW | sudo -S docker stop $CONTAINER_NAME
-            fi
-            # 컨테이너가 존재하면 삭제
-            if [ "$(sudo docker ps -a -q -f name=$CONTAINER_NAME)" ]; then
+
+            echo "컨테이너 $CONTAINER_NAME 존재 여부 확인 중..."
+            if sudo docker ps -a --format '{{.Names}}' | grep -Eq "^${CONTAINER_NAME}\$"; then
+              echo "컨테이너 $CONTAINER_NAME 이(가) 존재합니다. 중지 및 삭제 중..."
               echo $PW | sudo -S docker rm -f $CONTAINER_NAME
-              sleep 3
+              echo "컨테이너 $CONTAINER_NAME 이(가) 삭제되었습니다."
+            else
+              echo "존재하는 컨테이너 $CONTAINER_NAME 이(가) 없습니다."
             fi
-            # 컨테이너 삭제가 정상적으로 완료되었는지 확인
-            if [ "$(sudo docker ps -a -q -f name=$CONTAINER_NAME)" ]; then
-              echo "Container deletion failed, retrying..."
-              echo $PW | sudo -S docker rm -f $CONTAINER_NAME
-            fi
-            echo $PW | sudo -S docker run -d \
-              -p ${PORT}:3000 \
-              --name $CONTAINER_NAME \
+
+            echo "새로운 컨테이너 $CONTAINER_NAME 실행 중..."
+            echo $PW | sudo -S docker run -d -p ${PORT}:3000 --name $CONTAINER_NAME \
               --network sejong-malsami-network \
               -v /var/run/docker.sock:/var/run/docker.sock \
               -e NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
