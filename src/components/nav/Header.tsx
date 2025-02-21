@@ -1,7 +1,7 @@
-// src/components/common/Header.tsx
-import React from "react";
+// src/components/nav/Header.tsx
 
-import { LEFT_ITEM, HeaderLeftItemType, RIGHT_ITEM, HeaderRightItemType } from "@/types/header";
+import React from "react";
+import { LEFT_ITEM, LeftItemType, RIGHT_ITEM, RightItemType } from "@/types/header";
 import BackIcon from "@/components/icons/BackIcon";
 import LogoIcon from "@/components/icons/LogoIcon";
 import CloseIcon from "@/components/icons/CloseIcon";
@@ -9,39 +9,49 @@ import MenuIcon from "@/components/icons/MenuIcon";
 import BellIcon from "@/components/icons/BellIcon";
 
 interface HeaderProps {
-  // eslint-disable-next-line react/no-unused-prop-types
+  // eslint-disable-next-line react/require-default-props
   title?: string;
-  leftType?: HeaderLeftItemType;
-  rightType?: HeaderRightItemType;
+  // eslint-disable-next-line react/require-default-props
+  leftType?: LeftItemType;
+  // eslint-disable-next-line react/require-default-props
+  rightType?: RightItemType;
+  // eslint-disable-next-line react/require-default-props
   onLeftClick?: () => void;
+  // eslint-disable-next-line react/require-default-props
   onRightClick?: () => void;
-  hasNotification?: boolean; // 벨 아이콘에 알림 여부
+  // eslint-disable-next-line react/require-default-props
+  hasNotification?: boolean;
 }
 
-// eslint-disable-next-line react/function-component-definition
-const Header: React.FC<HeaderProps> = ({ leftType, rightType, onLeftClick, onRightClick, hasNotification }) => {
+function Header({
+  title = "",
+  leftType = LEFT_ITEM.NONE,
+  rightType = RIGHT_ITEM.NONE,
+  onLeftClick = () => {},
+  onRightClick = () => {},
+  hasNotification = false,
+}: HeaderProps) {
+  // 왼쪽 아이콘 결정
   const renderLeftItem = () => {
     switch (leftType) {
       case LEFT_ITEM.BACK:
         return <BackIcon />;
       case LEFT_ITEM.LOGO:
         return <LogoIcon />;
-      case LEFT_ITEM.NONE:
       default:
         return null;
     }
   };
 
+  // 오른쪽 아이콘 결정
   const renderRightItem = () => {
     switch (rightType) {
       case RIGHT_ITEM.BELL:
-        // BellIcon을 사용하여 hasNotification 값에 따라 아이콘을 분류해서 보여줌
         return <BellIcon hasNotification={hasNotification} />;
       case RIGHT_ITEM.CLOSE:
         return <CloseIcon />;
       case RIGHT_ITEM.MENU:
         return <MenuIcon />;
-      case RIGHT_ITEM.NONE:
       default:
         return null;
     }
@@ -49,23 +59,20 @@ const Header: React.FC<HeaderProps> = ({ leftType, rightType, onLeftClick, onRig
 
   return (
     <header className="flex h-14 items-center justify-between bg-white px-5 shadow">
+      {/* 왼쪽 버튼 */}
       <button type="button" onClick={onLeftClick} className="flex items-center">
         {renderLeftItem()}
       </button>
+
+      {/* 중앙 타이틀 */}
+      <div className="text-base font-semibold">{title}</div>
+
+      {/* 오른쪽 버튼 */}
       <button type="button" onClick={onRightClick} className="flex items-center">
         {renderRightItem()}
       </button>
     </header>
   );
-};
-
-Header.defaultProps = {
-  title: "",
-  leftType: LEFT_ITEM.NONE,
-  rightType: RIGHT_ITEM.NONE,
-  onLeftClick: () => {},
-  onRightClick: () => {},
-  hasNotification: false,
-};
+}
 
 export default Header;
