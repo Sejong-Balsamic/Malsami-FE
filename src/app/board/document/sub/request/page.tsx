@@ -5,11 +5,11 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import Pagination from "@/components/common/Pagination";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
-import DocRequestFilterControlBar from "@/components/board/document/DocRequestFilterControlBar";
 import getRequestDocs from "@/apis/document/getRequestDocs";
 import { DocRequestCardProps } from "@/types/DocRequestCardProps";
-import DocCard from "@/components/board/document/DocCard";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import DocRequestFilterControlBar from "@/components/documentMain/DocRequestFilterControlBar";
+import DocCard from "@/components/documentMain/DocCard";
 
 export default function DocRequestPage() {
   const [docCards, setDocCards] = useState<DocRequestCardProps[]>([]); // API 결과값 저장

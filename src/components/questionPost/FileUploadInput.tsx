@@ -1,4 +1,4 @@
-import QnaPostFileUpload from "@/components/question/questionPost/QnaPostFileUpload";
+import QnaPostFileUpload from "@/components/questionPost/QnaPostFileUpload";
 
 interface FileUploadProps {
   mediaFiles: File[];

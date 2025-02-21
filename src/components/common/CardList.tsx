@@ -1,5 +1,5 @@
 import Image from "next/image";
-import SubjectTag from "./tags/SubjectTag";
+import SubjectTag from "@/components/common/tags/SubjectTag";
 import CustomTag from "./tags/CustomTag";
 
 // TODO: 목데이터로 삭제해야 함 + api연동

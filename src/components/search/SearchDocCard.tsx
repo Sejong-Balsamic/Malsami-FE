@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import getDateDiff from "@/global/getDateDiff";
 import { DocCardProps } from "@/types/docCard.type";
 import ImageWrapper from "@/components/deprecated/ImageWrapper";
-import SubjectTag from "@/components/board/document/tags/SubjectTag";
+import SubjectTag from "@/components/common/tags/SubjectTag";
 import { PostTiers, PostTiersKey, PostTiersKeys } from "@/types/postTiers";
 
 export default function SearchDocCard({

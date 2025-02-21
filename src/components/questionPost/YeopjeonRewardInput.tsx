@@ -1,4 +1,4 @@
-import YeopjeonTag from "../../deprecated/YeopjeonTag";
+import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
 
 interface YeopjeonRewardProps {
   reward: number;

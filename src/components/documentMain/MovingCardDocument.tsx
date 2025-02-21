@@ -4,7 +4,7 @@ import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import { CardProps } from "@/types/DocCardProps.type";
-import DocMainCard from "./DocMainCard";
+import DocMainCard from "@/components/documentMain/DocMainCard";
 
 interface MovingCardQuestionProps {
   data: CardProps[];

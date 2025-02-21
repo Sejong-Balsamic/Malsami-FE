@@ -3,7 +3,7 @@ import { Toaster } from "@/components/shadcn/toaster";
 import LoginDirectModal from "@/components/common/LoginDirectModal";
 import FcmInitializer from "@/components/common/FcmInitializer"; // FCM 초기화 컴포넌트
 import { initializeFirebase } from "@/global/firebaseUtil";
-import Providers from "./providers"; // Redux Provider 컴포넌트
+import Providers from "@/app/providers"; // Redux Provider 컴포넌트
 import "./globals.css";
 
 export const metadata: Metadata = {

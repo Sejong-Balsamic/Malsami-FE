@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../../../global/store";
 import { setSelectedFaculty } from "@/global/store/facultySlice";
-import ImageWrapper from "../../deprecated/ImageWrapper";
+import ImageWrapper from "@/components/deprecated/ImageWrapper";
 import QnaSelectFacultyModal from "./QnaSelectFacultyModal";
 
 // 부모에서 전달받을 props 인터페이스

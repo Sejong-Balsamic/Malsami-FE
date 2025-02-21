@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import WeeklyPopularContent from "@/components/board/document/DocMainPageContents/WeeklyPopularContent";
-import DailyPopularContent from "@/components/board/document/DocMainPageContents/DailyPopularContent";
-import DocBoardContent from "@/components/board/document/DocMainPageContents/DocBoardContent";
-import HotDownloadContent from "@/components/board/document/DocMainPageContents/HotDownloadContent";
-import MyFacultyContent from "@/components/board/document/DocMainPageContents/MyFacultyContent";
-import DocRequestContent from "@/components/board/document/DocMainPageContents/DocRequestContent";
 import UploadDocumentFAB from "@/components/common/FABs/UploadDocumentFAB";
 import getMyShortInfo from "@/apis/document/getMyShortInfo";
 import DocMainPageNav from "@/components/nav/DocMainPageNav";
+import HotDownloadContent from "@/components/documentMain/HotDownloadContent";
+import MyFacultyContent from "@/components/documentMain/MyFacultyContent";
+import WeeklyPopularContent from "@/components/documentMain/WeeklyPopularContent";
+import DailyPopularContent from "@/components/documentMain/DailyPopularContent";
+import DocRequestContent from "@/components/documentMain/DocRequestContent";
+import DocBoardContent from "@/components/documentMain/DocBoardContent";
 
 export default function DocumentBoardPage() {
   const [facultys, setFacultys] = useState<string[]>([]);

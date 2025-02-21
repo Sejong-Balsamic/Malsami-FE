@@ -8,7 +8,7 @@ import getDateDiff from "@/global/getDateDiff";
 import { DocumentData } from "@/types/DocumentDetailData";
 import CommentSection from "@/components/documentDetail/DCommentSection";
 import sameMember from "@/global/sameMember";
-import DownloadFile from "./DownloadFile";
+import DownloadFile from "@/components/documentDetail/DownloadFile";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {

@@ -3,17 +3,17 @@
 import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../../../global/store";
 import { setDocMyFacultyFilterOptions } from "@/global/store/docMyFacultyFilterOptionsSlice";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import Pagination from "@/components/common/Pagination";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import getMyShortInfo from "@/apis/document/getMyShortInfo";
-import DocFilterControlBar from "@/components/board/document/DocFilterControlBar";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
 import { DocCardProps } from "@/types/docCard.type";
-import DocCard from "@/components/board/document/DocCard";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { RootState } from "@/global/store";
+import DocFilterControlBar from "@/components/documentMain/DocFilterControlBar";
+import DocCard from "@/components/documentMain/DocCard";
 
 export default function DocMyFacultyPage() {
   const [facultys, setFacultys] = useState<string[]>([]);

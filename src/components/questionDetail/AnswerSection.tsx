@@ -9,7 +9,7 @@ import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import sameMember from "@/global/sameMember";
 import CommentSection from "./ACommentSection";
 import ChaetaekCheckModal from "./ChaetaekCheckModal";
-import AttachedFiles from "../../../common/AttachedFiles";
+import AttachedFiles from "@/components/common/AttachedFiles";
 
 interface AnswerSectionProps {
   postId: string;

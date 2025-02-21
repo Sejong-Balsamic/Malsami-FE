@@ -4,7 +4,7 @@ import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import { DocumentPost } from "@/types/documentPost.types";
-import CategoryCard from "../common/DocumentCard";
+import CategoryCard from "@/components/common/DocumentCard";
 
 interface MovingCardDocumentProps {
   data: DocumentPost[];

@@ -6,14 +6,14 @@ import axios from "axios";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import AnswerPageNav from "@/components/nav/AnswerPageNav";
-import AnswerInput from "@/components/board/question/answer/AnswerInput";
-import FileUploadInput from "@/components/board/question/post/formInputs/FileUploadInput";
-import PrivateSettingInput from "@/components/board/question/post/formInputs/PrivateSettingInput";
 import postAnswer from "@/apis/question/postAnswer";
-import OriginalQuestion from "@/components/board/question/answer/OriginalQuestion";
 import { useDispatch } from "react-redux";
 import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
 import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import AnswerInput from "@/components/questionAnswer/AnswerInput";
+import FileUploadInput from "@/components/questionPost/FileUploadInput";
+import PrivateSettingInput from "@/components/questionPost/PrivateSettingInput";
+import OriginalQuestion from "@/components/questionAnswer/OriginalQuestion";
 
 interface AnswerPostFormData {
   content: string;

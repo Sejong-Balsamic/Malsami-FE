@@ -1,9 +1,10 @@
 import Image from "next/image";
 import getDateDiff from "@/global/getDateDiff";
-import ImageWrapper from "../../deprecated/ImageWrapper";
-import ChaeTaekTag from "../../deprecated/ChaeTaekTag";
-import YeopjeonTag from "../../deprecated/YeopjeonTag";
-import SubjectTag from "../../deprecated/SubjectTag";
+import ImageWrapper from "@/components/deprecated/ImageWrapper";
+import ChaeTaekTag from "@/components/deprecated/ChaeTaekTag";
+import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
+import SubjectTag from "@/components/deprecated/SubjectTag";
+import JiJeongTag from "@/components/common/tags/JiJeongTag";
 
 interface QuestionCardProps {
   title: string;

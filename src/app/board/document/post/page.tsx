@@ -7,22 +7,22 @@ import DocPostNav from "@/components/nav/DocPostNav";
 import subjects from "@/types/subjects";
 import { docMediaAllowedTypes } from "@/types/docMediaAllowedTypes";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import TitleInput from "@/components/board/question/post/formInputs/TitleInput";
-import CategoryInput from "@/components/board/document/post/formInputs/CategoryInput";
-import ContentInput from "@/components/board/document/post/formInputs/ContentInput";
-import FileUploadInput from "@/components/board/document/post/formInputs/FileUploadInput";
-import StudyYearInput from "@/components/board/document/post/formInputs/studyYearInput";
-import SubjectSearchInputComponent from "@/components/board/question/post/formInputs/SubjectSearchInputComponent";
-import CustomTagsInput from "@/components/board/document/post/formInputs/CustomTagsInput";
-import PrivateSettingInput from "@/components/board/question/post/formInputs/PrivateSettingInput";
-import DocPostCateogryTagsModal from "@/components/board/document/post/DocPostCategoryTagsModal";
-import QnaPostSubjectModal from "@/components/board/question/post/QnaPostSubjectModal";
-import QnaPostCustomTagsModal from "@/components/board/question/post/QnaPostCustomTagsModal";
-import DocPostStudyYearModal from "@/components/board/document/post/DocPostStudyYearModal";
 import postNewDoc from "@/apis/document/postNewDoc";
 import { useDispatch } from "react-redux";
 import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
 import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import TitleInput from "@/components/questionPost/TitleInput";
+import ContentInput from "@/components/documentPost/ContentInput";
+import FileUploadInput from "@/components/documentPost/FileUploadInput";
+import SubjectSearchInputComponent from "@/components/questionPost/SubjectSearchInputComponent";
+import CategoryInput from "@/components/documentPost/CategoryInput";
+import StudyYearInput from "@/components/documentPost/studyYearInput";
+import CustomTagsInput from "@/components/documentPost/CustomTagsInput";
+import PrivateSettingInput from "@/components/questionPost/PrivateSettingInput";
+import QnaPostSubjectModal from "@/components/questionPost/QnaPostSubjectModal";
+import QnaPostCustomTagsModal from "@/components/questionPost/QnaPostCustomTagsModal";
+import DocPostStudyYearModal from "@/components/documentPost/DocPostStudyYearModal";
+import DocPostCategoryTagsModal from "@/components/documentPost/DocPostCategoryTagsModal";
 
 interface DocPostFormData {
   title: string;
@@ -317,7 +317,7 @@ export default function QnaPostPage() {
           )}
           {/* 카테고리 선택 모달 */}
           {isCategoryTagsModalOpen && (
-            <DocPostCateogryTagsModal
+            <DocPostCategoryTagsModal
               isVisible={isCategoryTagsModalOpen}
               onClose={toggleCategoryTagsModal}
               selectedTags={formData.categoryTags}

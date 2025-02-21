@@ -1,7 +1,6 @@
 /* eslint-disable */
 import * as React from "react";
-
-import { cn } from "../../../types/shadcn";
+import { cn } from "@/types/shadcn";
 
 const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(({ className, ...props }, ref) => (
   <div ref={ref} className={cn("rounded-lg text-card-foreground", className)} {...props} />

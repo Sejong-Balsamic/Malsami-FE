@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/shadcn/drawer";
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import AnswerSection from "./AnswerSection";
@@ -10,7 +9,8 @@ import getDateDiff from "@/global/getDateDiff";
 import { QuestionData } from "@/types/apiTypes/QuestionDetailData";
 import CommentSection from "./QCommentSection";
 import sameMember from "@/global/sameMember";
-import AttachedFiles from "../../../common/AttachedFiles";
+import AttachedFiles from "@/components/common/AttachedFiles";
+import JiJeongTag from "@/components/deprecated/JiJeongTag";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -105,7 +105,6 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
             <div className="flex h-full w-full items-center gap-[4px]">
               {questionData.customTags.map((tag, index) => (
                 <JiJeongTag
-                  // eslint-disable-next-line react/no-array-index-key
                   key={index}
                   title={tag}
                   color="#aaaaaa"

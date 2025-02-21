@@ -5,9 +5,9 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import { DocCardProps } from "@/types/docCard.type";
 import Pagination from "@/components/common/Pagination";
-import DocCard from "@/components/board/document/DocCard";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import getDocDailyPopulars from "@/apis/document/docMainPage/getDocDailyPopulars";
+import DocCard from "@/components/documentMain/DocCard";
 
 export default function PopularWeekly() {
   const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장

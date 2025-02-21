@@ -16,7 +16,9 @@
 
 import React from "react";
 import JiJeongTag from "./tags/JiJeongTag";
-import YeopjeonTag from "./tags/YeopjeonTag";
+import SubjectTag from "@/components/common/tags/SubjectTag";
+import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
+import ChaeTaekTag from "@/components/deprecated/ChaeTaekTag";
 import ImageWrapper from "@/components/deprecated/ImageWrapper";
 
 interface CategoryCardProps {

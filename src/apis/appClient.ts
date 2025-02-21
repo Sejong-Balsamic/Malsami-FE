@@ -2,7 +2,7 @@
 
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from "axios";
 import { refreshAccessToken } from "./auth/refresh";
-import { store } from "../global/store";
+import { store } from "@/global/store";
 import { showModal } from "@/global/store/modalSlice";
 
 // 사용법: axios 대신 apiClient import해서 사용

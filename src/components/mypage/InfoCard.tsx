@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/effect-flip";
 import Image from "next/image";
 import AnimatedNumber from "@/components/mypage/AnimatedNumber";
-import ExpBar from "./ExpBar";
+import ExpBar from "@/components/mypage/ExpBar";
 import { ScrollArea } from "@/components/shadcn/scroll-area";
 
 interface InfoProps {

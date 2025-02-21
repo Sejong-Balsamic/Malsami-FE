@@ -2,9 +2,9 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import getDateDiff from "@/global/getDateDiff";
 import { DocCardProps } from "@/types/docCard.type";
-import ImageWrapper from "../../deprecated/ImageWrapper";
-import SubjectTag from "../../deprecated/conflict/SubjectTag";
-import DocJiJeongTag from "../../deprecated/DocJiJeongTag";
+import ImageWrapper from "@/components/deprecated/ImageWrapper";
+import SubjectTag from "@/components/common/tags/SubjectTag";
+import DocJiJeongTag from "@/components/common/tags/JiJeongTag";
 
 const tagTranslations: { [key: string]: string } = {
   DOCUMENT: "강의_자료",

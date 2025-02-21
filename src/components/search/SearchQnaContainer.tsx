@@ -1,4 +1,4 @@
-import QuestionCardList from "@/components/board/question/QuestionCardList";
+import QuestionCardList from "@/components/questionMain/QuestionCardList";
 import { QnaCard } from "@/types/QnaCard";
 
 interface SearchQnaContainerProps {

@@ -2,12 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../global/store";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import QnaFilterFacultyCategory from "@/components/board/question/QnaFilterFacultyCategory";
-import QuestionCardList from "@/components/board/question/QuestionCardList";
 import MovingCardQuestion from "@/components/landing/MovingCardQuestion";
-import QnaFilterControlBar from "@/components/board/question/QnaFilterControlBar";
 import QnaPageNav from "@/components/nav/QnaPageNav";
 import getUnansweredQNAs from "@/apis/question/getUnansweredQNAs";
 import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
@@ -16,6 +12,10 @@ import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { QnaCard } from "@/types/QnaCard";
 import { setFilterOptions } from "@/global/store/filterOptionsSlice";
+import { RootState } from "@/global/store";
+import QnaFilterFacultyCategory from "@/components/questionMain/QnaFilterFacultyCategory";
+import QnaFilterControlBar from "@/components/questionMain/QnaFilterControlBar";
+import QuestionCardList from "@/components/questionMain/QuestionCardList";
 
 export default function QuestionBoardPage() {
   const dispatch = useDispatch();
