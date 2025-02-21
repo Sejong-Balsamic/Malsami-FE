@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
-import Nav from "@/components/nav/LandingNav";
+import Image from "next/image";
+import LandingHeader from "@/components/nav/LandingHeader";
 import FlyingBooks from "@/components/landing/FlyingBooks";
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
@@ -15,7 +16,6 @@ import getMyInfo from "@/apis/member/getMyInfo";
 import UploadFAB from "@/components/common/FABs/UploadLandingFAB";
 import ScrollFAB from "@/components/common/FABs/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
-import Image from "next/image";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useDispatch } from "react-redux";
 import { showToast } from "@/utils/toastUtils";
@@ -128,7 +128,7 @@ function Page() {
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
       <ScrollToTopOnLoad />
-      <Nav />
+      <LandingHeader />
       <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
         {/* 배경 이미지 */}
         <div className="relative z-0 w-full">
