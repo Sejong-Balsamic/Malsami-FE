@@ -1,34 +1,47 @@
 import React from "react";
 
 interface JiJeongTagProps {
-  label: string;
-  style?: React.CSSProperties; // 스타일 속성
-  onClick?: () => void; // 클릭 이벤트 추가
+  // eslint-disable-next-line react/require-default-props
+  label?: string;
+  // eslint-disable-next-line react/require-default-props
+  title?: string; // label과 동일한 역할 (호환성을 위해 추가)
+  color?: string; // 배경색을 변경할 수 있도록 함
+  style?: React.CSSProperties; // 추가 스타일
+  onClick?: () => void; // 클릭 이벤트 핸들러
 }
 
-function JiJeongTag({ label, style, onClick }: JiJeongTagProps) {
+function JiJeongTag({ label, title, color, style, onClick }: JiJeongTagProps) {
+  // label이 있으면 사용, 없으면 title 사용
+  const displayLabel = label || title || "";
+
+  // 전달받은 style에 color prop이 있다면 배경색으로 병합
+  const computedStyle: React.CSSProperties = {
+    backgroundColor: color || "#3b82f6", // color가 없으면 기본 파란색 (예시)
+    ...style,
+  };
+
   return (
     <span
-      className="font-pretendard-medium mr-1 inline-block cursor-pointer rounded-[33px] bg-custom-blue-500 px-3 py-1 text-xs text-white"
-      style={style} // 전달받은 스타일 적용
-      onClick={onClick} // 클릭 이벤트
+      className="font-pretendard-medium mr-1 inline-block cursor-pointer rounded-[33px] px-3 py-1 text-xs text-white"
+      style={computedStyle}
+      onClick={onClick}
       onKeyDown={e => {
         if ((e.key === "Enter" || e.key === " ") && onClick) {
           onClick();
         }
-      }} // 키보드 이벤트 추가
-      tabIndex={0} // 키보드 포커스 가능하게 설정
-      role="button" // 접근성을 위한 역할 추가
+      }}
+      tabIndex={0}
+      role="button"
     >
-      {label}
+      {displayLabel}
     </span>
   );
 }
 
-// 기본값 설정
 JiJeongTag.defaultProps = {
-  style: {}, // 기본 스타일
-  onClick: undefined, // 기본 클릭 이벤트 없음
+  style: {},
+  onClick: undefined,
+  color: "#3b82f6",
 };
 
 export default JiJeongTag;

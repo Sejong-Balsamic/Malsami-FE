@@ -1,25 +1,37 @@
 import React from "react";
 
 interface JiJeongTagProps {
-  tag: string;
-  onRemove?: (tag: string) => void;
-  isRemovable?: boolean;
+  label?: string;
+  title?: string;
+  style?: React.CSSProperties;
+  onClick?: () => void;
 }
 
-const JiJeongTag: React.FC<JiJeongTagProps> = ({ tag, onRemove, isRemovable = false }) => {
+function JiJeongTag({ label, title, style, onClick }: JiJeongTagProps) {
+  const displayLabel = label || title || "";
   return (
-    <div className="flex items-center gap-1 rounded-[10px] bg-[#F5F5F5] px-2 py-1 text-sm text-[#666666]">
-      {tag}
-      {isRemovable && (
-        <button
-          onClick={() => onRemove?.(tag)}
-          className="ml-1 flex h-4 w-4 items-center justify-center rounded-full bg-gray-300 text-white hover:bg-gray-400"
-        >
-          ×
-        </button>
-      )}
-    </div>
+    <span
+      className="font-pretendard-medium mr-1 inline-block cursor-pointer rounded-[33px] bg-custom-blue-500 px-3 py-1 text-xs text-white"
+      style={style}
+      onClick={onClick}
+      onKeyDown={e => {
+        if ((e.key === "Enter" || e.key === " ") && onClick) {
+          onClick();
+        }
+      }}
+      tabIndex={0}
+      role="button"
+    >
+      {displayLabel}
+    </span>
   );
+}
+
+JiJeongTag.defaultProps = {
+  label: "",
+  title: "",
+  style: {},
+  onClick: undefined,
 };
 
 export default JiJeongTag;

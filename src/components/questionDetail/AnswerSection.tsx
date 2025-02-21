@@ -7,9 +7,9 @@ import getDateDiff from "@/global/getDateDiff";
 import getAnswer from "@/apis/question/getAnswer";
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import sameMember from "@/global/sameMember";
+import AttachedFiles from "@/components/common/AttachedFiles";
 import CommentSection from "./ACommentSection";
 import ChaetaekCheckModal from "./ChaetaekCheckModal";
-import AttachedFiles from "@/components/common/AttachedFiles";
 
 interface AnswerSectionProps {
   postId: string;

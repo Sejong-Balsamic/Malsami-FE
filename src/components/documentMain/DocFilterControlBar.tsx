@@ -3,8 +3,8 @@ import Image from "next/image";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { DocTypes, DocTypesKey } from "@/types/docTypes";
 import { sortTypeLabels } from "@/types/sortTypes";
+import JiJeongTag from "@/components/deprecated/JiJeongTag";
 import DocFilterOptionsModal from "./DocFilterOptionsModal";
-import JiJeongTag from "@/components/common/tags/JiJeongTag";
 
 interface FilterControlBarProps {
   filterOptions: DocFilterOptions; // 초기 필터 옵션

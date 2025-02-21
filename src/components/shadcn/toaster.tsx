@@ -2,9 +2,9 @@
 "use client";
 
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../global/store"; // Redux RootState 타입
 import { Toast, ToastDescription, ToastProvider, ToastTitle, ToastViewport } from "@/components/shadcn/toast";
-import { removeToast } from "@/global/store/toastSlice"; // removeToast 액션
+import { removeToast } from "@/global/store/toastSlice";
+import { RootState } from "@/global/store"; // removeToast 액션
 
 export function Toaster() {
   // Redux에서 toasts 상태 가져오기

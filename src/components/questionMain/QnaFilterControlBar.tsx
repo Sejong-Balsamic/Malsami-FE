@@ -4,8 +4,8 @@ import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import { QnaPresetTags, QnaPresetTagsKey } from "@/types/qnaPresetTags";
 import { sortTypeLabels } from "@/types/sortTypes";
 import { ChaetaekStatusKey, ChaetaekStatus } from "@/types/chaetaekStatus";
+import JiJeongTag from "@/components/deprecated/JiJeongTag";
 import QnaFilterOptionsModal from "./QnaFilterOptionsModal";
-import JiJeongTag from "@/components/common/tags/JiJeongTag";
 
 interface FilterControlBarProps {
   filterOptions: QnaFilterOptions; // 초기 질문게시판 필터 옵션

@@ -1,8 +1,8 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { RootState } from "@/global/store";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "../../../global/store";
 import { setFacultiesList } from "@/global/store/facultySlice";
 import getFaculties from "@/apis/question/getFaculties";
 import BottomSheetModal from "@/components/common/BottomSheetModal";

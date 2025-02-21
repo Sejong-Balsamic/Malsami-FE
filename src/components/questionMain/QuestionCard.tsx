@@ -4,7 +4,6 @@ import ImageWrapper from "@/components/deprecated/ImageWrapper";
 import ChaeTaekTag from "@/components/deprecated/ChaeTaekTag";
 import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
 import SubjectTag from "@/components/deprecated/SubjectTag";
-import JiJeongTag from "@/components/common/tags/JiJeongTag";
 
 interface QuestionCardProps {
   title: string;

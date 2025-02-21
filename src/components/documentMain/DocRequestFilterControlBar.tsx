@@ -4,8 +4,8 @@ import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { DocTypes, DocTypesKey } from "@/types/docTypes";
 import { sortTypeLabels } from "@/types/sortTypes";
 import FacultyTag from "@/components/common/tags/FacultyTag";
-import DocRequestFilterOptionsModal from "./DocRequestFilterOptionsModal";
 import JiJeongTag from "@/components/deprecated/JiJeongTag";
+import DocRequestFilterOptionsModal from "./DocRequestFilterOptionsModal";
 
 interface RequestFilterControlBarProps {
   filterOptions: DocFilterOptions; // 초기 필터 옵션

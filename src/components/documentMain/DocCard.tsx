@@ -55,7 +55,7 @@ export default function DocCard({
           {/* 태그 및 기타 정보 */}
           <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
             <div className="flex flex-wrap items-center">
-              {documentTypes?.[0] && <DocJiJeongTag tag={tagTranslations[documentTypes[0]] || "알 수 없는 태그"} />}
+              {documentTypes?.[0] && <DocJiJeongTag label={tagTranslations[documentTypes[0]] || "알 수 없는 태그"} />}
             </div>
             <div className="flex flex-wrap items-center">
               <span className="flex items-center">

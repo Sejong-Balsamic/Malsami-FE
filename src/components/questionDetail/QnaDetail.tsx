@@ -104,11 +104,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
           <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
             <div className="flex h-full w-full items-center gap-[4px]">
               {questionData.customTags.map((tag, index) => (
-                <JiJeongTag
-                  key={index}
-                  title={tag}
-                  color="#aaaaaa"
-                />
+                <JiJeongTag key={index} title={tag} color="#aaaaaa" />
               ))}
             </div>
           </div>
