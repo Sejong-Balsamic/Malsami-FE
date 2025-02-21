@@ -1,0 +1,21 @@
+{
+  "emulators": {
+    "auth": {
+      "port": 3100
+    },
+    "functions": {
+      "port": 3101
+    },
+    "firestore": {
+      "port": 3102
+    },
+    "pubsub": {
+      "port": 3103
+    },
+    "ui": {
+      "enabled": true,
+      "port": 3104
+    },
+    "singleProjectMode": true
+  }
+}
