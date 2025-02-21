@@ -20,7 +20,7 @@ const dats = [
     content: "과제는 이렇게 푸는 겁니다 ㅋ이렇게 저렇게과제는 이렇게 푸는 겁니다 ㅋ이렇게 저렇게",
     customTags: ["커스텀태그", "커스텀태그"],
     likeCount: 6,
-    commentCount: 14,
+    commentCount: 143,
   },
   {
     id: 3,
@@ -52,7 +52,7 @@ export default function CardList() {
               ))}
             </div>
             {/* 좋아요, 댓글 */}
-            <div className="flex items-center text-[##929292]">
+            <div className="flex items-center text-SUIT_14 font-medium text-[#929292]">
               <span className="flex">
                 <Image src="/icons/actions/like-uncliked.svg" alt="좋아요" width={16} height={16} />
                 <span className="ml-1">{data.likeCount}</span>
