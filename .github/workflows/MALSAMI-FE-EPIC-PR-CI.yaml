@@ -1,11 +1,11 @@
 name: MALSAMI-FE-EPIC-PR-CI
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
       - test
-  workflow_dispatch: {}
 
 jobs:
   build:
@@ -14,10 +14,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js 18
+      # .env.local 파일 생성
+      - name: Create .env.local file
+        run: echo "ENV=${{ secrets.ENV }}" > .env.local
+
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "18"
+          node-version: "20.15.0"
           cache: "npm"
 
       - name: Log - Cache Setup
