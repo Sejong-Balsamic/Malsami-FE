@@ -19,6 +19,7 @@ import Image from "next/image";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useDispatch } from "react-redux";
 import { showToast } from "@/utils/toastUtils";
+import CardList from "@/components/common/cards/CardList";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);
@@ -149,6 +150,8 @@ function Page() {
             <HotDocument />
           </div>
           <AllDocument documents={documents} />
+          {/* TODO: CardList테스트, 삭제 필요 */}
+          <CardList />
           <HotQuestion />
           <AllQuestion questions={questions} />
           {searchVisible && <SearchBar userName={userName} />}
