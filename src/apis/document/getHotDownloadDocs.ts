@@ -1,4 +1,4 @@
-import { apiClient } from "@/apis/clients/appClient";
+import { apiClient } from "@/apis/appClient";
 
 interface FilteringDocListParams {
   pageNumber?: number; // 페이지 번호 (default = 0)

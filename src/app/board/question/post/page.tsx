@@ -4,24 +4,24 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import QnaPostNav from "@/components/nav/QnaPostNav";
-import subjects from "@/lib/subjects";
+import subjects from "@/types/subjects";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import TitleInput from "@/components/board/question/post/formInputs/TitleInput";
-import ContentInput from "@/components/board/question/post/formInputs/ContentInput";
-import FileUploadInput from "@/components/board/question/post/formInputs/FileUploadInput";
-import SubjectSearchInputComponent from "@/components/board/question/post/formInputs/SubjectSearchInputComponent";
-import YeopjeonRewardInput from "@/components/board/question/post/formInputs/YeopjeonRewardInput";
-import CustomTagsInput from "@/components/board/question/post/formInputs/CustomTagsInput";
-import JiJeongTagInput from "@/components/board/question/post/formInputs/JijeongTagInput";
-import PrivateSettingInput from "@/components/board/question/post/formInputs/PrivateSettingInput";
-import QnaPostRewardModal from "@/components/board/question/post/QnaPostRewardModal";
-import QnaPostJiJeongTagModal from "@/components/board/question/post/QnaPostJiJeongTagModal";
-import QnaPostSubjectModal from "@/components/board/question/post/QnaPostSubjectModal";
 import postNewQna from "@/apis/question/postNewQna";
-import QnaPostCustomTagsModal from "@/components/board/question/post/QnaPostCustomTagsModal";
 import { useDispatch } from "react-redux";
-import { addToast } from "@/store/toastSlice"; // Toast 액션 가져오기
-import { ToastIcon, ToastAction } from "@/components/ui/toast";
+import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
+import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import TitleInput from "@/components/questionPost/TitleInput";
+import ContentInput from "@/components/questionPost/ContentInput";
+import FileUploadInput from "@/components/questionPost/FileUploadInput";
+import SubjectSearchInputComponent from "@/components/questionPost/SubjectSearchInputComponent";
+import JiJeongTagInput from "@/components/questionPost/JijeongTagInput";
+import YeopjeonRewardInput from "@/components/questionPost/YeopjeonRewardInput";
+import CustomTagsInput from "@/components/questionPost/CustomTagsInput";
+import PrivateSettingInput from "@/components/questionPost/PrivateSettingInput";
+import QnaPostSubjectModal from "@/components/questionPost/QnaPostSubjectModal";
+import QnaPostRewardModal from "@/components/questionPost/QnaPostRewardModal";
+import QnaPostJiJeongTagModal from "@/components/questionPost/QnaPostJiJeongTagModal";
+import QnaPostCustomTagsModal from "@/components/questionPost/QnaPostCustomTagsModal";
 
 interface QnaPostFormData {
   title: string;

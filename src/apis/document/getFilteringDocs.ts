@@ -1,7 +1,7 @@
-import { apiClient } from "@/apis/clients/appClient";
-import { SortTypeKey } from "@/lib/constants/sortTypes";
-import { DocTypesKey } from "@/lib/constants/docTypes";
-import { PostTiersKey } from "@/lib/constants/postTiers";
+import { apiClient } from "@/apis/appClient";
+import { SortTypeKey } from "@/types/sortTypes";
+import { DocTypesKey } from "@/types/docTypes";
+import { PostTiersKey } from "@/types/postTiers";
 
 interface FilteringDocListParams {
   subject?: string; // 교과목명 (선택)

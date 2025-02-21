@@ -1,4 +1,4 @@
-import { apiClient } from "@/apis/clients/appClient";
+import { apiClient } from "@/apis/appClient";
 
 export default async function getSearchResult({ params }: { params: { query: string; subject: string } }) {
   try {

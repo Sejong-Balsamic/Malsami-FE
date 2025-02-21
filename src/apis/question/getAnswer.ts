@@ -1,5 +1,5 @@
-import { Answer } from "@/types/answer";
-import { apiClient } from "../clients/appClient";
+import { Answer } from "@/types/apiTypes/answer";
+import { apiClient } from "../appClient";
 
 interface GetAnswerResponse {
   answerPosts: Answer[];

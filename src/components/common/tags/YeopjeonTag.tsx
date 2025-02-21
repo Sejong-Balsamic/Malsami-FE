@@ -1,5 +1,5 @@
 import React from "react";
-import ImageWrapper from "@/components/board/tags/ImageWrapper";
+import ImageWrapper from "@/components/deprecated/ImageWrapper";
 
 function YeopjeonTag({ point }: { point: number }) {
   return (

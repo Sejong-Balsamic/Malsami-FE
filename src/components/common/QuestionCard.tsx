@@ -15,9 +15,9 @@
 // return(<CategoryCardList categoryCardDatas={categoryCardDatass} />)
 
 import React from "react";
-import JiJeongTag from "./tags/JiJeongTag";
-import YeopjeonTag from "./tags/YeopjeonTag";
-import ImageWrapper from "../board/tags/ImageWrapper";
+import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
+import ImageWrapper from "@/components/deprecated/ImageWrapper";
+import JiJeongTag from "@/components/deprecated/JiJeongTag";
 
 interface CategoryCardProps {
   title: string;

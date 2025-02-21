@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import subjects from "@/lib/subjects";
-import AutoCompleteSuggestionList from "./inputElement/AutoCompleteSuggestionList";
-import SearchInputField from "./inputElement/SearchInputField";
-import SearchClearBtn from "./inputElement/SearchClearBtn";
-import SearchBtn from "./inputElement/SearchBtn";
+import subjects from "@/types/subjects";
+import AutoCompleteSuggestionList from "./AutoCompleteSuggestionList";
+import SearchInputField from "./SearchInputField";
+import SearchClearBtn from "./SearchClearBtn";
+import SearchBtn from "./SearchBtn";
 
 const savedSearchTerms: string[] = subjects;
 

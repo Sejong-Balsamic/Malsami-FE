@@ -1,5 +1,5 @@
 import getComments from "@/apis/question/getComments";
-import { Comment } from "@/types/comment";
+import { Comment } from "@/types/apiTypes/comment";
 
 interface RefreshCommentsParams {
   postId: string;

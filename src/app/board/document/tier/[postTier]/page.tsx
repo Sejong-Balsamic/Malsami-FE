@@ -1,15 +1,15 @@
 "use client";
 
 import { useRouter, notFound } from "next/navigation";
-import { PostTiersKeys, PostTiersKey } from "@/lib/constants/postTiers";
-import CheonminBoard from "@/components/board/document/categories/CheonminBoard";
-import JunginBoard from "@/components/board/document/categories/JunginBoard";
-import YangbanBoard from "@/components/board/document/categories/YangbanBoard";
-import KingBoard from "@/components/board/document/categories/KingBoard";
-import useUserPermissions from "@/utils/useUserPermissions";
-import { showToast } from "@/utils/toastUtils";
+import { PostTiersKeys, PostTiersKey } from "@/types/postTiers";
+import useUserPermissions from "@/global/useUserPermissions";
+import { showToast } from "@/global/toastUtils";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import CheonminBoard from "@/components/documentMain/CheonminBoard";
+import JunginBoard from "@/components/documentMain/JunginBoard";
+import YangbanBoard from "@/components/documentMain/YangbanBoard";
+import KingBoard from "@/components/documentMain/KingBoard";
 
 // 게시판 컴포넌트 매핑
 const MainDocTierComponents: Record<PostTiersKey, JSX.Element> = {

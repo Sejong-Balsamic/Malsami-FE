@@ -1,4 +1,4 @@
-import { apiClient } from "../clients/appClient";
+import { apiClient } from "../appClient";
 
 const logOut = async (): Promise<void> => {
   try {

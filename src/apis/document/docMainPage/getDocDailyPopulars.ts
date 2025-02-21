@@ -1,4 +1,4 @@
-import { apiClient } from "@/apis/clients/appClient";
+import { apiClient } from "@/apis/appClient";
 
 interface GetDocDailyPopularsParams {
   pageNumber?: number; // 페이지 번호 (default = 0)

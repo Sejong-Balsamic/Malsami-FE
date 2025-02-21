@@ -1,7 +1,7 @@
-import { ChaetaekStatusKey } from "@/lib/constants/chaetaekStatus";
-import { QnaPresetTagsKey } from "@/lib/constants/qnaPresetTags";
-import { SortTypeKey } from "@/lib/constants/sortTypes";
-import { apiClient } from "../clients/appClient";
+import { ChaetaekStatusKey } from "@/types/chaetaekStatus";
+import { QnaPresetTagsKey } from "@/types/qnaPresetTags";
+import { SortTypeKey } from "@/types/sortTypes";
+import { apiClient } from "../appClient";
 
 interface GetCategoryQnasProps {
   subject?: string; // 교과목명 필터링

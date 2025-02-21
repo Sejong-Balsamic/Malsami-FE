@@ -4,7 +4,7 @@ import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import { QuestionPost } from "@/types/questionPost.types";
-import QuestionCard from "../common/QuestionCard";
+import QuestionCard from "@/components/common/QuestionCard";
 
 interface MovingCardQuestionProps {
   data: QuestionPost[];

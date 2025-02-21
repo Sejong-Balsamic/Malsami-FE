@@ -4,8 +4,8 @@ import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import logOut from "@/apis/auth/logOut";
 import { useDispatch } from "react-redux";
-import { addToast } from "@/store/toastSlice";
-import { ToastIcon, ToastAction } from "@/components/ui/toast";
+import { addToast } from "@/global/store/toastSlice";
+import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
 
 export default function MyPage() {
   const router = useRouter();

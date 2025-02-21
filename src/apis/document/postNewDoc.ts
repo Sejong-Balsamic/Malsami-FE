@@ -1,5 +1,5 @@
 // src/apis/questionBoard/postNewQna.ts
-import { apiClient } from "../clients/appClient";
+import { apiClient } from "../appClient";
 
 interface DocPostFormData {
   title: string; // 필수

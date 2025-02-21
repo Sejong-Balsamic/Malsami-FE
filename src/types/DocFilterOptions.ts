@@ -1,5 +1,5 @@
-import { SortTypeKey } from "@/lib/constants/sortTypes";
-import { DocTypesKey } from "@/lib/constants/docTypes";
+import { SortTypeKey } from "@/types/sortTypes";
+import { DocTypesKey } from "@/types/docTypes";
 
 export interface DocFilterOptions {
   docTypes: DocTypesKey[];

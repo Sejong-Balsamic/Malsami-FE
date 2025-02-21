@@ -3,17 +3,17 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store";
-import { setActiveTab } from "@/store/activeTabSlice";
+import { setActiveTab } from "@/global/store/activeTabSlice";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import getSearchResult from "@/apis/search/getSearchResult";
-import SearchResultNav from "@/components/search/result/SearchResultNav";
-import SearchBoardTab from "@/components/search/result/SearchBoardTab";
-import SearchDocContainer from "@/components/search/result/doc/SearchDocContainer";
-import SearchQnaContainer from "@/components/search/result/qna/SearchQnaContainer";
+import SearchResultNav from "@/components/search/SearchResultNav";
+import SearchBoardTab from "@/components/search/SearchBoardTab";
+import SearchDocContainer from "@/components/search/SearchDocContainer";
+import SearchQnaContainer from "@/components/search/SearchQnaContainer";
 import { DocCardProps } from "@/types/docCard.type";
 import { QnaCard } from "@/types/QnaCard";
+import { RootState } from "@/global/store";
 
 export default function SearchResultPage() {
   const router = useRouter();

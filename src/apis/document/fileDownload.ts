@@ -1,4 +1,4 @@
-import { apiClient } from "../clients/appClient";
+import { apiClient } from "../appClient";
 
 // 자료 파일 다운로드 함수
 export default async function fileDownload(documentFileId: string, originalFileName: string): Promise<void> {

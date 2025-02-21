@@ -3,16 +3,16 @@
 import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store";
+import { RootState } from "@/global/store";
 import Pagination from "@/components/common/Pagination";
-import { setDocHotDownFilterOptions } from "@/store/docFilterOptions/docHotDownFilterOptionsSlice";
+import { setDocHotDownFilterOptions } from "@/global/store/docHotDownFilterOptionsSlice";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
-import DocFilterControlBar from "@/components/board/document/DocFilterControlBar";
 import getHotDownloadDocs from "@/apis/document/getHotDownloadDocs";
 import { DocCardProps } from "@/types/docCard.type";
-import DocCard from "@/components/board/document/DocCard";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import DocFilterControlBar from "@/components/documentMain/DocFilterControlBar";
+import DocCard from "@/components/documentMain/DocCard";
 
 export default function DocHotdownloadPage() {
   const dispatch = useDispatch();

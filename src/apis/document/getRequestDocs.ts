@@ -1,4 +1,4 @@
-import { apiClient } from "@/apis/clients/appClient";
+import { apiClient } from "@/apis/appClient";
 
 interface FilteringDocListParams {
   documentTypes?: string[]; // 태그 필터링 (최대 2개, 선택)

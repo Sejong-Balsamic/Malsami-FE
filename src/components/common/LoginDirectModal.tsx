@@ -2,8 +2,8 @@
 
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store";
-import { closeModal } from "@/store/modalSlice";
+import { closeModal } from "@/global/store/modalSlice";
+import { RootState } from "@/global/store";
 
 function LoginDirectModal() {
   const dispatch = useDispatch();
