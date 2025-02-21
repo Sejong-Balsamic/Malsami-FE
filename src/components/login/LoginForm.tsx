@@ -3,14 +3,17 @@
 import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "@/apis/auth/auth";
+import Image from "next/image";
+import Input from "../common/input/Input";
 import LoginSuccessModal from "./LoginSuccessModal";
+import LoadingSpinner from "../common/loadingSpinner/LoadingSpinner";
 
 export default function LoginForm() {
-  const [id, setId] = useState<string>("");
+  const [studentId, setStudentId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [loginFailedMessage, setLoginFailedMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
   const [isFirstLogin, setIsFirstLogin] = useState<boolean>(false);
   const [userName, setUserName] = useState<string>(""); // 사용자 이름 상태 추가
   const [isFormValid, setIsFormValid] = useState<boolean>(false); // 폼 유효성 상태 추가
@@ -18,82 +21,81 @@ export default function LoginForm() {
   const router = useRouter(); // useRouter 사용
 
   useEffect(() => {
-    setIsFormValid(!!id.trim() && !!password.trim()); // 학번,비밀번호가 비어있는지 확인
-  }, [id, password]);
+    setIsFormValid(!!studentId.trim() && !!password.trim()); // 학번,비밀번호가 비어있는지 확인
+  }, [studentId, password]);
 
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
-      const getUserInfo = await login(id, password);
-      setErrorMessage(null);
+      const getUserInfo = await login(studentId, password);
+      setLoginFailedMessage(null);
       setUserName(getUserInfo.member.studentName);
       setIsFirstLogin(getUserInfo.member.isFirstLogin);
-      if (isFirstLogin) setIsModalOpen(true);
+      if (isFirstLogin) setIsLoginModalOpen(true);
       else router.push("/");
     } catch (error) {
-      setErrorMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+      setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleModalClose = () => {
-    setIsModalOpen(false); // 모달 닫기
+    setIsLoginModalOpen(false); // 모달 닫기
     router.push("/"); // 홈 화면으로 이동
   };
 
   return (
-    <div className="w-full">
-      <form onSubmit={handleLogin} className="space-y-2">
-        {/* 아이디 입력 */}
-        <div>
-          <input
-            type="text"
-            id="id"
-            value={id}
-            onChange={e => setId(e.target.value)}
-            required
-            className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-1 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-200"
-            placeholder="학번 (테스트학번: 99999999)"
+    <>
+      <form onSubmit={handleLogin} className="flex flex-1 flex-col">
+        {/* 상단 Input 영역 */}
+        <div className="flex flex-col space-y-8">
+          <Input
+            label="학번"
+            placeholder="학번을 입력해주세요."
+            value={studentId}
+            onChange={e => setStudentId(e.target.value)}
           />
-        </div>
-        {/* 비밀번호 입력 */}
-        <div>
-          <input
+          <Input
+            label="비밀번호"
             type="password"
-            id="password"
+            placeholder="비밀번호를 입력해주세요."
             value={password}
             onChange={e => setPassword(e.target.value)}
-            required
-            className="mt-1 block w-full rounded-lg px-3 py-2 caret-custom-blue-400 shadow-sm outline-none ring-1 ring-gray-300 valid:ring-custom-blue-400 invalid:ring-gray-300 focus:ring-custom-blue-300"
-            placeholder="비밀번호 (테스트비번: 99999999)"
           />
+
+          {/* 에러 메시지 */}
+          {loginFailedMessage && (
+            <div className="flex items-center">
+              <Image src="/icons/ErrorExclamation.svg" alt="ErrorExclamation" width={18} height={18} />
+              <p className="ml-2 text-SUIT_14 font-medium text-[#FF3232]">{loginFailedMessage}</p>
+            </div>
+          )}
         </div>
 
-        {/* 에러 메시지 */}
-        {errorMessage && <p className="mb-4 text-center text-sm text-red-500">{errorMessage}</p>}
+        {/* Todo: 나중에 삭제해야함.  */}
+        <LoadingSpinner />
 
-        {/* 로그인 제출 버튼 */}
-        <button
-          type="submit"
-          className={`mt-10 w-full rounded-lg px-4 py-2 text-white ${
-            isFormValid ? "bg-custom-blue-300 hover:bg-custom-blue-500 focus:ring-custom-blue-400" : "bg-[#D9D9D9]"
-          }`}
-          disabled={!isFormValid || isLoading}
-        >
-          {isLoading ? "로그인 중..." : "로그인"}
-        </button>
+        {/* 로그인 제출 버튼. 하단 버튼 영역 */}
+        <div className="mb-[60px] mt-auto">
+          <button
+            type="submit"
+            className={`w-full rounded-md py-4 text-SUIT_16 font-extrabold text-white ${
+              isFormValid
+                ? "bg-gradient-to-r from-[#08E4BB] to-[#5FF48D] hover:from-[#07D1AA] hover:to-[#50E47F]"
+                : "bg-[#D1D1D1]"
+            }`}
+            disabled={!isFormValid || isLoading}
+          >
+            {isLoading ? "로그인 중..." : "로그인"}
+          </button>
+        </div>
       </form>
 
-      {/* 안내 메시지 */}
-      <div className="mt-4 text-center text-xs text-gray-500">
-        입력하신 비밀번호는 서버에 저장되지 않으며, <br /> 암호화된 상태로 처리됩니다.
-      </div>
-
       {/* 로그인 성공 모달 */}
-      {isModalOpen && <LoginSuccessModal onClose={handleModalClose} userName={userName} />}
-    </div>
+      {isLoginModalOpen && <LoginSuccessModal onClose={handleModalClose} userName={userName} />}
+    </>
   );
 }

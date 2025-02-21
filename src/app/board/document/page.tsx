@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import DocMainPageNav from "@/components/nav/DocMainPageNav";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import WeeklyPopularContent from "@/components/board/document/DocMainPageContents/WeeklyPopularContent";
 import DailyPopularContent from "@/components/board/document/DocMainPageContents/DailyPopularContent";
@@ -9,8 +8,9 @@ import DocBoardContent from "@/components/board/document/DocMainPageContents/Doc
 import HotDownloadContent from "@/components/board/document/DocMainPageContents/HotDownloadContent";
 import MyFacultyContent from "@/components/board/document/DocMainPageContents/MyFacultyContent";
 import DocRequestContent from "@/components/board/document/DocMainPageContents/DocRequestContent";
-import UploadDocFAB from "@/components/common/UploadDocFAB";
+import UploadDocFAB from "@/components/common/FABs/UploadDocFAB";
 import getMyShortInfo from "@/apis/document/getMyShortInfo";
+import DocMainPageNav from "@/components/nav/DocMainPageNav";
 
 export default function DocumentBoardPage() {
   const [facultys, setFacultys] = useState<string[]>([]);
