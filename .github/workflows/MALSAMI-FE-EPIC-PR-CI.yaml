@@ -1,10 +1,11 @@
-name: MALSAMI-FE-INTEGRATION-CICD
+name: MALSAMI-FE-EPIC-PR-CI
+
 on:
   push:
     branches:
       - main
       - test
-  workflow_dispatch:
+  workflow_dispatch: {}
 
 jobs:
   build:
@@ -16,8 +17,9 @@ jobs:
       - name: Set up Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          
+          node-version: "18"
+          cache: "npm"
+
       - name: Log - Cache Setup
         run: echo "캐시 설정을 시작합니다..."
 
@@ -29,11 +31,18 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-npm-
 
-      - name: Log - Installing dependencies
-        run: echo "의존성을 설치 중입니다..."
+      - name: Cache node_modules
+        id: node-modules-cache
+        uses: actions/cache@v3
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
 
       - name: Install dependencies
-        run: npm ci
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci --prefer-offline --no-audit
 
       - name: Cache Next.js build
         uses: actions/cache@v3
@@ -46,7 +55,6 @@ jobs:
 
       - name: Log - Building project
         run: echo "프로젝트를 빌드 중입니다..."
-
       - name: Build with npm
         run: npm run build
 
@@ -61,7 +69,6 @@ jobs:
 
       - name: Log - Setting up Docker cache
         run: echo "Docker 레이어 캐시를 설정 중입니다..."
-
       - name: Cache Docker layers
         uses: actions/cache@v3
         with:
@@ -72,7 +79,6 @@ jobs:
 
       - name: Log - Building and pushing Docker image
         run: echo "Docker 이미지를 빌드하고 푸시 중입니다..."
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
@@ -84,7 +90,6 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
           build-args: |
             NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
-          
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -108,7 +113,6 @@ jobs:
             BRANCH=${{ github.ref_name }}
             PORT=3000
             CONTAINER_NAME="sejong-malsami-front"
-            
             if [ "$BRANCH" == "main" ]; then
               PORT=3004
               echo "메인 브랜치로 배포합니다. 포트는 $PORT입니다."
@@ -117,20 +121,27 @@ jobs:
               PORT=3003
               echo "테스트 브랜치로 배포합니다. 컨테이너 이름은 $CONTAINER_NAME, 포트는 $PORT입니다."
             fi
-            
             echo "도커 이미지를 풀링 중입니다: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}"
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-            
-            echo "기존 컨테이너를 중지합니다: $CONTAINER_NAME"
-            echo $PW | sudo -S docker stop $CONTAINER_NAME || true
-            
-            echo "기존 컨테이너를 제거합니다: $CONTAINER_NAME"
-            echo $PW | sudo -S docker rm $CONTAINER_NAME || true
-            
-            echo "새로운 컨테이너를 실행합니다: $CONTAINER_NAME on port $PORT"
+            # 실행 중인 컨테이너가 있으면 중지 후 삭제
+            if [ "$(sudo docker ps -q -f name=$CONTAINER_NAME)" ]; then
+              echo $PW | sudo -S docker stop $CONTAINER_NAME
+            fi
+            # 컨테이너가 존재하면 삭제
+            if [ "$(sudo docker ps -a -q -f name=$CONTAINER_NAME)" ]; then
+              echo $PW | sudo -S docker rm -f $CONTAINER_NAME
+              sleep 3
+            fi
+            # 컨테이너 삭제가 정상적으로 완료되었는지 확인
+            if [ "$(sudo docker ps -a -q -f name=$CONTAINER_NAME)" ]; then
+              echo "Container deletion failed, retrying..."
+              echo $PW | sudo -S docker rm -f $CONTAINER_NAME
+            fi
             echo $PW | sudo -S docker run -d \
               -p ${PORT}:3000 \
               --name $CONTAINER_NAME \
+              --network sejong-malsami-network \
+              -v /var/run/docker.sock:/var/run/docker.sock \
               -e NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
               ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
             

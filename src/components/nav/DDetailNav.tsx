@@ -22,7 +22,7 @@ function DetailPageNav({ documentData }: { documentData: DocumentData }) {
         <span className="font-pretendard-medium text-[12px] text-[#09bba2]">
           {/* 허용된 postTiersKey의 형식은 string이 아닌 PostTiersKeys이기에 조건문으로 구분해 알맞은 키타입인지 확인 */}
           {PostTiersKeys.includes(documentData.documentPost.postTier as PostTiersKey) ? (
-            <p>{PostTiers[documentData.documentPost.postTier as PostTiersKey]} 등급</p>
+            <p>{PostTiers[documentData.documentPost.postTier as PostTiersKey].KR} 등급</p>
           ) : (
             <p>잘못된 등급 정보</p>
           )}
