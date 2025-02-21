@@ -144,5 +144,5 @@ jobs:
               -v /var/run/docker.sock:/var/run/docker.sock \
               -e NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
               ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-            
+
             echo "배포가 완료되었습니다."
