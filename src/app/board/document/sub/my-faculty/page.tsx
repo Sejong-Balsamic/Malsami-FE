@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store";
-import { setDocMyFacultyFilterOptions } from "@/store/docFilterOptions/docMyFacultyFilterOptionsSlice";
+import { RootState } from "../../../../../global/store";
+import { setDocMyFacultyFilterOptions } from "@/global/store/docMyFacultyFilterOptionsSlice";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import Pagination from "@/components/common/Pagination";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";

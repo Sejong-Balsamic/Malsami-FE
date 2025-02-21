@@ -1,13 +1,13 @@
 "use client";
 
 import { useRouter, notFound } from "next/navigation";
-import { PostTiersKeys, PostTiersKey } from "@/lib/constants/postTiers";
+import { PostTiersKeys, PostTiersKey } from "@/types/postTiers";
 import CheonminBoard from "@/components/board/document/categories/CheonminBoard";
 import JunginBoard from "@/components/board/document/categories/JunginBoard";
 import YangbanBoard from "@/components/board/document/categories/YangbanBoard";
 import KingBoard from "@/components/board/document/categories/KingBoard";
-import useUserPermissions from "@/utils/useUserPermissions";
-import { showToast } from "@/utils/toastUtils";
+import useUserPermissions from "@/global/useUserPermissions";
+import { showToast } from "@/global/toastUtils";
 import { useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 

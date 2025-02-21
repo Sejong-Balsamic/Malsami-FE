@@ -1,5 +1,5 @@
-import { apiClient } from "@/apis/clients/appClient";
-import { QuestionData } from "@/types/question";
+import { apiClient } from "@/apis/appClient";
+import { QuestionData } from "@/types/apiTypes/question";
 
 export default async function getAllQuestions(): Promise<QuestionData> {
   try {

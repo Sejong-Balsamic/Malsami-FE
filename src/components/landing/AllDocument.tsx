@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { DocumentPost } from "@/types/document";
+import { DocumentPost } from "@/types/apiTypes/document";
 
 interface AllDocumentProps {
   documents: DocumentPost[];

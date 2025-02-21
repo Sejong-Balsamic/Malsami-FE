@@ -3,9 +3,9 @@
 import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useSelector, useDispatch } from "react-redux";
-import { RootState } from "@/store";
+import { RootState } from "../../../../../global/store";
 import Pagination from "@/components/common/Pagination";
-import { setDocHotDownFilterOptions } from "@/store/docFilterOptions/docHotDownFilterOptionsSlice";
+import { setDocHotDownFilterOptions } from "@/global/store/docHotDownFilterOptionsSlice";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import DocFilterControlBar from "@/components/board/document/DocFilterControlBar";

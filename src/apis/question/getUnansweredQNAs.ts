@@ -1,4 +1,4 @@
-import { apiClient } from "../clients/appClient";
+import { apiClient } from "../appClient";
 
 interface GetUnansweredQNAsProps {
   faculty?: string;

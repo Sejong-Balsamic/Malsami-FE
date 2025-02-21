@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import subjects from "@/lib/subjects";
+import subjects from "@/types/subjects";
 
 const savedSearchTerms: string[] = subjects;
 

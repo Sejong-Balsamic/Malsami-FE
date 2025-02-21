@@ -1,4 +1,4 @@
-import { apiClient } from "../clients/appClient";
+import { apiClient } from "../appClient";
 
 const getFaculties = async () => {
   try {

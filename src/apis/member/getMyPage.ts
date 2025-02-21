@@ -1,5 +1,5 @@
-import { apiClient } from "@/apis/clients/appClient";
-import { MemberDto } from "@/types/member";
+import { apiClient } from "@/apis/appClient";
+import { MemberDto } from "@/types/apiTypes/member";
 
 export default async function getMyPage(): Promise<MemberDto> {
   try {

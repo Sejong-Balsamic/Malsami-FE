@@ -8,7 +8,7 @@ import DocBoardContent from "@/components/board/document/DocMainPageContents/Doc
 import HotDownloadContent from "@/components/board/document/DocMainPageContents/HotDownloadContent";
 import MyFacultyContent from "@/components/board/document/DocMainPageContents/MyFacultyContent";
 import DocRequestContent from "@/components/board/document/DocMainPageContents/DocRequestContent";
-import UploadDocFAB from "@/components/common/FABs/UploadDocFAB";
+import UploadDocumentFAB from "@/components/common/FABs/UploadDocumentFAB";
 import getMyShortInfo from "@/apis/document/getMyShortInfo";
 import DocMainPageNav from "@/components/nav/DocMainPageNav";
 
@@ -60,7 +60,7 @@ export default function DocumentBoardPage() {
         </div>
       </div>
 
-      <UploadDocFAB isFABVisible={isFABVisible} />
+      <UploadDocumentFAB isFABVisible={isFABVisible} />
     </div>
   );
 }

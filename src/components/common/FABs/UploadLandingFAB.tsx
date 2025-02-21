@@ -7,7 +7,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from "@/components/shadcn/dropdown-menu";
 import Close from "@/../public/icons/Close.svg";
 import DocumentIcon from "@/../public/icons/Document.svg";
 import QuestionIcon from "@/../public/icons/Question.svg";

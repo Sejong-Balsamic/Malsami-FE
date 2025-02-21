@@ -15,7 +15,7 @@
 // return(<CategoryCardList categoryCardDatas={categoryCardDatass} />)
 
 import React from "react";
-import ImageWrapper from "../board/tags/ImageWrapper";
+import ImageWrapper from "@/components/deprecated/ImageWrapper";
 
 interface CategoryCardProps {
   title: string;

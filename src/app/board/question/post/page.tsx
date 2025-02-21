@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import QnaPostNav from "@/components/nav/QnaPostNav";
-import subjects from "@/lib/subjects";
+import subjects from "@/types/subjects";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import TitleInput from "@/components/board/question/post/formInputs/TitleInput";
 import ContentInput from "@/components/board/question/post/formInputs/ContentInput";
@@ -20,8 +20,8 @@ import QnaPostSubjectModal from "@/components/board/question/post/QnaPostSubject
 import postNewQna from "@/apis/question/postNewQna";
 import QnaPostCustomTagsModal from "@/components/board/question/post/QnaPostCustomTagsModal";
 import { useDispatch } from "react-redux";
-import { addToast } from "@/store/toastSlice"; // Toast 액션 가져오기
-import { ToastIcon, ToastAction } from "@/components/ui/toast";
+import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
+import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
 
 interface QnaPostFormData {
   title: string;

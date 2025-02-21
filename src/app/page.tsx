@@ -10,16 +10,16 @@ import AllDocument from "@/components/landing/AllDocument";
 import AllQuestion from "@/components/landing/AllQuestion";
 import getAllDocuments from "@/apis/landing/getAllDocument";
 import getAllQuestions from "@/apis/landing/getAllQuestion";
-import { QuestionPost } from "@/types/question";
-import { DocumentPost } from "@/types/document";
+import { QuestionPost } from "@/types/apiTypes/question";
+import { DocumentPost } from "@/types/apiTypes/document";
 import getMyInfo from "@/apis/member/getMyInfo";
 import UploadFAB from "@/components/common/FABs/UploadLandingFAB";
 import ScrollFAB from "@/components/common/FABs/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useDispatch } from "react-redux";
-import { showToast } from "@/utils/toastUtils";
-import CardList from "@/components/common/cards/CardList";
+import { showToast } from "@/global/toastUtils";
+import CardList from "@/components/common/CardList";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);

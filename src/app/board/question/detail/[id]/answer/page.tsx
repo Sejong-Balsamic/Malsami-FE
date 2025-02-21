@@ -12,8 +12,8 @@ import PrivateSettingInput from "@/components/board/question/post/formInputs/Pri
 import postAnswer from "@/apis/question/postAnswer";
 import OriginalQuestion from "@/components/board/question/answer/OriginalQuestion";
 import { useDispatch } from "react-redux";
-import { addToast } from "@/store/toastSlice"; // Toast 액션 가져오기
-import { ToastIcon, ToastAction } from "@/components/ui/toast";
+import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
+import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
 
 interface AnswerPostFormData {
   content: string;

@@ -4,9 +4,9 @@ import { EffectFlip } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/effect-flip";
 import Image from "next/image";
-import AnimatedNumber from "@/utils/AnimatedNumber";
+import AnimatedNumber from "@/components/mypage/AnimatedNumber";
 import ExpBar from "./ExpBar";
-import { ScrollArea } from "../ui/scroll-area";
+import { ScrollArea } from "@/components/shadcn/scroll-area";
 
 interface InfoProps {
   memberInfo: {

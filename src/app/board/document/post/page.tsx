@@ -4,8 +4,8 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import DocPostNav from "@/components/nav/DocPostNav";
-import subjects from "@/lib/subjects";
-import { docMediaAllowedTypes } from "@/lib/docMediaAllowedTypes";
+import subjects from "@/types/subjects";
+import { docMediaAllowedTypes } from "@/types/docMediaAllowedTypes";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import TitleInput from "@/components/board/question/post/formInputs/TitleInput";
 import CategoryInput from "@/components/board/document/post/formInputs/CategoryInput";
@@ -21,8 +21,8 @@ import QnaPostCustomTagsModal from "@/components/board/question/post/QnaPostCust
 import DocPostStudyYearModal from "@/components/board/document/post/DocPostStudyYearModal";
 import postNewDoc from "@/apis/document/postNewDoc";
 import { useDispatch } from "react-redux";
-import { addToast } from "@/store/toastSlice"; // Toast 액션 가져오기
-import { ToastIcon, ToastAction } from "@/components/ui/toast";
+import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
+import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
 
 interface DocPostFormData {
   title: string;

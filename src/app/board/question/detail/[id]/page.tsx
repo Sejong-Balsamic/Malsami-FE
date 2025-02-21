@@ -6,10 +6,10 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
-import { QuestionData } from "@/types/QuestionDetailData";
+import { QuestionData } from "@/types/apiTypes/QuestionDetailData";
 import AnswerFAB from "@/components/board/question/detail/AnswerFAB";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import sameMember from "@/utils/sameMember";
+import sameMember from "@/global/sameMember";
 
 export default function Page() {
   const router = useRouter();

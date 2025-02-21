@@ -2,10 +2,10 @@
 
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getFcmToken } from "@/utils/firebaseMessaging"; // FCM 토큰 발급 함수
-import sendFcmTokenToServer from "@/utils/sendFcmToken"; // FCM 토큰 서버 전송 함수
-import { RootState, AppDispatch } from "@/store"; // Redux Store 타입
-import { setFcmToken, setIsFcmTokenSentToServer } from "@/store/fcmSlice"; // Redux 액션
+import { getFcmToken } from "@/global/firebaseUtil"; // FCM 토큰 발급 함수
+import sendFcmTokenToServer from "@/global/sendFcmToken"; // FCM 토큰 서버 전송 함수
+import { RootState, AppDispatch } from "@/global/store"; // Redux Store 타입
+import { setFcmToken, setIsFcmTokenSentToServer } from "@/global/store/fcmSlice"; // Redux 액션
 
 export default function FcmInitializer() {
   // Redux의 dispatch를 사용하여 상태 변경

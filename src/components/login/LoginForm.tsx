@@ -4,9 +4,9 @@ import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { login } from "@/apis/auth/auth";
 import Image from "next/image";
-import Input from "../common/input/Input";
+import CustomInput from "../common/CustomInput";
 import LoginSuccessModal from "./LoginSuccessModal";
-import LoadingSpinner from "../common/loadingSpinner/LoadingSpinner";
+import NewLoadingSpinner from "../common/NewLoadingSpinner";
 
 export default function LoginForm() {
   const [studentId, setStudentId] = useState<string>("");
@@ -52,13 +52,13 @@ export default function LoginForm() {
       <form onSubmit={handleLogin} className="flex flex-1 flex-col">
         {/* 상단 Input 영역 */}
         <div className="flex flex-col space-y-8">
-          <Input
+          <CustomInput
             label="학번"
             placeholder="학번을 입력해주세요."
             value={studentId}
             onChange={e => setStudentId(e.target.value)}
           />
-          <Input
+          <CustomInput
             label="비밀번호"
             type="password"
             placeholder="비밀번호를 입력해주세요."
@@ -76,7 +76,7 @@ export default function LoginForm() {
         </div>
 
         {/* Todo: 나중에 삭제해야함.  */}
-        <LoadingSpinner />
+        <NewLoadingSpinner />
 
         {/* 로그인 제출 버튼. 하단 버튼 영역 */}
         <div className="mb-[60px] mt-auto">

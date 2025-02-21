@@ -1,5 +1,5 @@
-import { QuestionData } from "@/types/QuestionDetailData";
-import { apiClient } from "../clients/appClient";
+import { QuestionData } from "@/types/apiTypes/QuestionDetailData";
+import { apiClient } from "../appClient";
 
 interface ChaetaekResponse {
   questionDto: QuestionData; // 질문 정보

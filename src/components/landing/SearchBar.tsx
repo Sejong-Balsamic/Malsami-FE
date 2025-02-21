@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Input } from "@/components/ui/input";
+import { Input } from "@/components/shadcn/input";
 import { useRouter } from "next/navigation";
 
 interface SearchBarProps {

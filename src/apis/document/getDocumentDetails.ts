@@ -1,5 +1,5 @@
 import { DocumentData } from "@/types/DocumentDetailData";
-import { apiClient } from "../clients/appClient";
+import { apiClient } from "../appClient";
 
 // 특정 문서 글을 조회하는 함수
 export default async function getDocumentDetails(documentPostId: string): Promise<DocumentData> {

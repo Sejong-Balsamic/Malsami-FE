@@ -1,5 +1,5 @@
 // src/apis/questionBoard/postNewQna.ts
-import { apiClient } from "../clients/appClient";
+import { apiClient } from "../appClient";
 
 interface QnaPostFormData {
   title: string;

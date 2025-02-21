@@ -1,9 +1,9 @@
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { Drawer, DrawerContent, DrawerTitle, DrawerDescription, DrawerTrigger } from "@/components/ui/drawer";
+import { Drawer, DrawerContent, DrawerTitle, DrawerDescription, DrawerTrigger } from "@/components/shadcn/drawer";
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
-import { Button } from "../ui/button";
+import { Button } from "@/components/shadcn/button";
 
 function DetailPageNav() {
   const router = useRouter();

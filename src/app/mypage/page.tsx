@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MemberDto } from "@/types/member";
+import { MemberDto } from "@/types/apiTypes/member";
 import getMyInfo from "@/apis/member/getMyPage";
 import MyPageNav from "@/components/nav/MyPageNav";
 import TierImage from "@/components/mypage/TierImage";

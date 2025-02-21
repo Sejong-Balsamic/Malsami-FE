@@ -2,7 +2,7 @@
 
 import { ReactNode } from "react";
 import { Provider } from "react-redux";
-import { store } from "@/store";
+import { store } from "../global/store";
 
 // Redux Provider 컴포넌트
 export default function Providers({ children }: { children: ReactNode }) {

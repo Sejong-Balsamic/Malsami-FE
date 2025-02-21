@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Progress } from "@/components/ui/progress";
+import { Progress } from "@/components/shadcn/progress";
 
 interface ExpBarProps {
   value: number; // 상위 컴포넌트에서 전달받을 경험치 값
