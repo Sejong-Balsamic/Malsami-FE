@@ -1,44 +1,6 @@
+import Image from "next/image";
 import SubjectTag from "../tags/SubjectTag";
 import CustomTag from "../tags/CustomTag";
-import Image from "next/image";
-
-function CardList() {
-  return (
-    <div className="w-full divide-y divide-[#EAEAEA] rounded-[22px] border border-[#F1F1F1] bg-white px-6 shadow-lg shadow-gray-200">
-      {dats.map(data => (
-        <div key={data.id} className="py-5">
-          {/* 상단 부분 */}
-          <SubjectTag subject={data.subject} />
-          <p className="mb-3 mt-4 line-clamp-1 text-SUIT_16 font-bold leading-6">{data.title}</p>
-          <p className="mb-6 line-clamp-1 text-SUIT_16 font-medium text-[#676767]">{data.content}</p>
-
-          {/* 하단 부분*/}
-          <div className="flex justify-between">
-            {/* 커스텀 태그 */}
-            <div className="flex gap-1">
-              {data.customTags.map((customTag, index) => (
-                <CustomTag key={index} tagName={customTag} />
-              ))}
-            </div>
-            {/* 좋아요, 댓글 */}
-            <div className="flex items-center text-[##929292]">
-              <span className="flex">
-                <Image src="/icons/actions/like-uncliked.svg" alt="좋아요" width={16} height={16} />
-                <span className="ml-1">{data.likeCount}</span>
-              </span>
-              <span className="ml-2 flex items-center">
-                <Image src="/icons/actions/comment.svg" alt="댓글" width={16} height={16} />
-                <span className="ml-1">{data.commentCount}</span>
-              </span>
-            </div>
-          </div>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-export default CardList;
 
 // TODO: 목데이터로 삭제해야 함 + api연동
 const dats = [
@@ -70,3 +32,39 @@ const dats = [
     commentCount: 14,
   },
 ];
+
+export default function CardList() {
+  return (
+    <div className="w-full divide-y divide-[#EAEAEA] rounded-[22px] border border-[#F1F1F1] bg-white px-6 shadow-lg shadow-gray-200">
+      {dats.map(data => (
+        <div key={data.id} className="py-5">
+          {/* 상단 부분 */}
+          <SubjectTag subject={data.subject} />
+          <p className="mb-3 mt-4 line-clamp-1 text-SUIT_16 font-bold leading-6">{data.title}</p>
+          <p className="mb-6 line-clamp-1 text-SUIT_16 font-medium text-[#676767]">{data.content}</p>
+
+          {/* 하단 부분 */}
+          <div className="flex justify-between">
+            {/* 커스텀 태그 */}
+            <div className="flex gap-1">
+              {data.customTags.map(customTag => (
+                <CustomTag key={customTag} tagName={customTag} />
+              ))}
+            </div>
+            {/* 좋아요, 댓글 */}
+            <div className="flex items-center text-[##929292]">
+              <span className="flex">
+                <Image src="/icons/actions/like-uncliked.svg" alt="좋아요" width={16} height={16} />
+                <span className="ml-1">{data.likeCount}</span>
+              </span>
+              <span className="ml-2 flex items-center">
+                <Image src="/icons/actions/comment.svg" alt="댓글" width={16} height={16} />
+                <span className="ml-1">{data.commentCount}</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
