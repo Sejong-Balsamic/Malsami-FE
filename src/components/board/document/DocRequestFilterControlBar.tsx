@@ -3,8 +3,8 @@ import Image from "next/image";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { DocTypes, DocTypesKey } from "@/lib/constants/docTypes";
 import { sortTypeLabels } from "@/lib/constants/sortTypes";
-import FacultyTag from "@/components/common/tags/FacultyTag";
 import DocRequestFilterOptionsModal from "./DocRequestFilterOptionsModal";
+import FacultyTag from "@/components/common/tags/FacultyTag";
 import JiJeongTag from "../tags/JiJeongTag";
 
 interface RequestFilterControlBarProps {
