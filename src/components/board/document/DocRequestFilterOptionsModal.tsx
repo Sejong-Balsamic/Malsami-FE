@@ -2,10 +2,10 @@
 
 import React, { ReactNode, useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import facultys from "@/lib/facultys";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import { DocTypesKeys, DocTypes } from "@/lib/constants/docTypes";
 import { DocSortTypeKeys, sortTypeLabels } from "@/lib/constants/sortTypes";
-import facultys from "@/lib/facultys";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 
 interface DocRequestFilterOptionsModalProps {
