@@ -3,7 +3,7 @@ import { Button } from "@/components/shadcn/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/shadcn/accordion";
 import Image from "next/image";
 import { Answer } from "@/types/apiTypes/answer";
-import getDateDiff from "@/global/getDateDiff";
+import { getDateDiff } from "@/global/time";
 import getAnswer from "@/apis/question/getAnswer";
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import sameMember from "@/global/sameMember";

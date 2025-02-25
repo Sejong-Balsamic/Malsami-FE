@@ -5,7 +5,7 @@ import Image from "next/image";
 import postComment from "@/apis/question/postComment";
 import refreshComments from "@/apis/question/refreshComments";
 import { Comment } from "@/types/apiTypes/comment";
-import getDateDiff from "@/global/getDateDiff";
+import { getDateDiff } from "@/global/time";
 import postLikeComment from "@/apis/question/postLikeComment";
 import sameMember from "@/global/sameMember";
 

@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import getDateDiff from "@/global/getDateDiff";
+import { getDateDiff } from "@/global/time";
 import { DocCardProps } from "@/types/docCard.type";
-import ImageWrapper from "@/components/deprecated/ImageWrapper";
 import SubjectTag from "@/components/common/tags/SubjectTag";
 import { PostTiers, PostTiersKey, PostTiersKeys } from "@/types/postTiers";
 
@@ -57,11 +56,11 @@ export default function SearchDocCard({
             </div>
             <div className="flex flex-wrap items-center">
               <span className="flex items-center">
-                <ImageWrapper src="/icons/LikeIcon.svg" />
+                <Image src="/icons/LikeIcon.svg" width={14} height={14} alt="LikeIcon" />
                 <span className="ml-1 text-xs">{likeCount > 999 ? "999+" : likeCount}</span>
               </span>
               <span className="mx-1.5">·</span>
-              <ImageWrapper src="/icons/ViewCountIcon.svg" />
+              <Image src="/icons/ViewCountIcon.svg" width={14} height={14} alt="ViewCountIcon" />
               <span className="ml-1">{viewCount > 999 ? "999+" : viewCount}</span>
               <span className="mx-1.5">·</span>
               <span>{getDateDiff(createdDate)}</span>

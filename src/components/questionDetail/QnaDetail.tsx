@@ -5,7 +5,7 @@ import Image from "next/image";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/shadcn/drawer";
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import AnswerSection from "./AnswerSection";
-import getDateDiff from "@/global/getDateDiff";
+import { getDateDiff } from "@/global/time";
 import { QuestionData } from "@/types/apiTypes/QuestionDetailData";
 import CommentSection from "./QCommentSection";
 import sameMember from "@/global/sameMember";
