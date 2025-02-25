@@ -43,7 +43,7 @@ export default function DocCard({
         }
       }}
     >
-      <SubjectTag subject={subject} />
+      <SubjectTag subjectName={subject} />
       <div className="flex flex-row items-center justify-between">
         {/* 왼쪽 텍스트 콘텐츠 */}
         <div className="flex flex-col">
