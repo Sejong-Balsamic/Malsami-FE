@@ -39,7 +39,7 @@ export default function CardList() {
       {dats.map(data => (
         <div key={data.id} className="py-5">
           {/* 상단 부분 */}
-          <SubjectTag subject={data.subject} />
+          <SubjectTag subjectName={data.subject} />
           <p className="mb-3 mt-4 line-clamp-1 text-SUIT_16 font-bold leading-6">{data.title}</p>
           <p className="mb-6 line-clamp-1 text-SUIT_16 font-medium text-[#676767]">{data.content}</p>
 

@@ -1,8 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import getDateDiff from "@/global/getDateDiff";
+import { getDateDiff } from "@/global/time";
 import { DocCardProps } from "@/types/docCard.type";
-import ImageWrapper from "@/components/deprecated/ImageWrapper";
 import SubjectTag from "@/components/common/tags/SubjectTag";
 import DocJiJeongTag from "@/components/common/tags/JiJeongTag";
 
@@ -44,7 +43,7 @@ export default function DocCard({
         }
       }}
     >
-      <SubjectTag subject={subject} />
+      <SubjectTag subjectName={subject} />
       <div className="flex flex-row items-center justify-between">
         {/* 왼쪽 텍스트 콘텐츠 */}
         <div className="flex flex-col">
@@ -59,11 +58,11 @@ export default function DocCard({
             </div>
             <div className="flex flex-wrap items-center">
               <span className="flex items-center">
-                <ImageWrapper src="/icons/LikeIcon.svg" />
+                <Image src="/icons/LikeIcon.svg" width={14} height={14} alt="LikeIcon" />
                 <span className="ml-1 text-xs">{likeCount > 999 ? "999+" : likeCount}</span>
               </span>
               <span className="mx-1.5">·</span>
-              <ImageWrapper src="/icons/ViewCountIcon.svg" />
+              <Image src="/icons/ViewCountIcon.svg" width={14} height={14} alt="LikeIcon" />
               <span className="ml-1">{viewCount > 999 ? "999+" : viewCount}</span>
               <span className="mx-1.5">·</span>
               <span>{getDateDiff(createdDate)}</span>

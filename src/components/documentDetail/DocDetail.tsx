@@ -4,7 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/shadcn/drawer";
 import postLikeDocument from "@/apis/document/postLikeDocument";
-import getDateDiff from "@/global/getDateDiff";
+import { getDateDiff } from "@/global/time";
 import { DocumentData } from "@/types/DocumentDetailData";
 import CommentSection from "@/components/documentDetail/DCommentSection";
 import sameMember from "@/global/sameMember";

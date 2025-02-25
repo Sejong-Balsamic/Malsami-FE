@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setSelectedFaculty } from "@/global/store/facultySlice";
-import ImageWrapper from "@/components/deprecated/ImageWrapper";
+import Image from "next/image";
 import { RootState } from "@/global/store";
 import QnaSelectFacultyModal from "./QnaSelectFacultyModal";
 
@@ -107,7 +107,7 @@ function QnaFilterFacultyCategory({
               </button>
               {/* 토글 아이콘 */}
               <button type="button" onClick={openModal} className="px-2">
-                <ImageWrapper src="/icons/ToggleIcon.svg" />
+                <Image src="/icons/ToggleIcon.svg" width={14} height={14} alt="ToggleIcon" />
               </button>
             </>
           )}

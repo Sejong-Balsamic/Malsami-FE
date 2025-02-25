@@ -16,7 +16,7 @@
 
 import React from "react";
 import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
-import ImageWrapper from "@/components/deprecated/ImageWrapper";
+import Image from "next/image";
 import JiJeongTag from "@/components/deprecated/JiJeongTag";
 
 interface CategoryCardProps {
@@ -73,11 +73,11 @@ function QuestionCard({
             <YeopjeonTag point={rewardYeopjeon} />
             <div>
               <span className="mr-1.5">
-                <ImageWrapper src="/icons/LikeIcon.svg" />
+                <Image src="/icons/LikeIcon.svg" width={14} height={14} alt="LikeIcon" />
                 <span className="font-pretendard-medium ml-1 text-xs">{likeCount}</span>
               </span>
               <span>
-                <ImageWrapper src="/icons/CommentIcon.svg" />
+                <Image src="/icons/CommentIcon.svg" width={14} height={14} alt="CommentIcon" />
                 <span className="font-pretendard-medium ml-1 text-xs">{commentCount}</span>
               </span>
             </div>

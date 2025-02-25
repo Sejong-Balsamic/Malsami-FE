@@ -15,7 +15,7 @@
 // return(<CategoryCardList categoryCardDatas={categoryCardDatass} />)
 
 import React from "react";
-import ImageWrapper from "@/components/deprecated/ImageWrapper";
+import Image from "next/image";
 
 interface CategoryCardProps {
   title: string;
@@ -45,11 +45,12 @@ function CategoryCard({ title, color, subject, likeCount, commentCount }: Catego
           <div className="font-pretendard-semibold flex flex-row justify-end text-xs text-[#D0D0D0]">
             <div>
               <span className="mr-1.5">
-                <ImageWrapper src="/icons/LikeIcon.svg" />
+                <Image src="/icons/LikeIcon.svg" width={14} height={14} alt="LikeIcon" />
                 <span className="font-pretendard-medium ml-1 text-xs">{likeCount}</span>
               </span>
               <span>
-                <ImageWrapper src="/icons/CommentIcon.svg" />
+                <Image src="/icons/CommentIcon.svg" width={14} height={14} alt="CommentIcon" />
+
                 <span className="font-pretendard-medium ml-1 text-xs">{commentCount}</span>
               </span>
             </div>

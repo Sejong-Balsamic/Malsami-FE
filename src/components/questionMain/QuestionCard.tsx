@@ -1,6 +1,5 @@
 import Image from "next/image";
-import getDateDiff from "@/global/getDateDiff";
-import ImageWrapper from "@/components/deprecated/ImageWrapper";
+import { getDateDiff } from "@/global/time";
 import ChaeTaekTag from "@/components/deprecated/ChaeTaekTag";
 import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
 import SubjectTag from "@/components/deprecated/SubjectTag";
@@ -46,11 +45,11 @@ function QuestionCard({
           <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
             <div className="flex flex-wrap items-center">
               <span className="flex items-center">
-                <ImageWrapper src="/icons/LikeIcon.svg" />
+                <Image src="/icons/LikeIcon.svg" width={14} height={14} alt="LikeIcon" />
                 <span className="ml-1 text-xs">{likeCount > 999 ? "999+" : likeCount}</span>
               </span>
               <span className="mx-1.5">·</span>
-              <ImageWrapper src="/icons/ViewCountIcon.svg" />
+              <Image src="/icons/ViewCountIcon.svg" width={14} height={14} alt="ViewCountIcon" />
               <span className="ml-1">{viewCount > 999 ? "999+" : viewCount}</span>
               <span className="mx-1.5">·</span>
               <span>{getDateDiff(createdDate)}</span>
