@@ -3,7 +3,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import LandingHeader from "@/components/nav/LandingHeader";
-import FlyingBooks from "@/components/landing/FlyingBooks";
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
 import AllDocument from "@/components/landing/AllDocument";
@@ -126,10 +125,10 @@ function Page() {
   }, [dispatch]);
 
   return (
-    <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
+    <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <LandingHeader />
-      <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
+      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
         {/* 배경 이미지 */}
         <div className="relative z-0 w-full">
           <Image
@@ -141,10 +140,7 @@ function Page() {
             priority
           />
         </div>
-        {/* 플라잉 북 */}
-        <div className="z-10">
-          <FlyingBooks scrollY={scrollY} studentName={userName} />
-        </div>
+
         <div className="relative z-40 flex flex-col items-center justify-center px-[20px]">
           <div ref={hotDocumentRef} className="w-full">
             <HotDocument />
