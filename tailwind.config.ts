@@ -13,6 +13,9 @@ const config: Config = {
         pretendard: ["Pretendard", "Apple SD Gothic Neo", "Roboto", "Arial", "sans-serif"], // 대체 폰트 포함
         suit: ["SUIT", "sans-serif"], // 추가된 SUIT 폰트
       },
+      boxShadow: {
+        "left-custom": "-5px 0px 5px -5px rgba(128, 128, 128, 1)",
+      },
       fontSynthesis: {
         none: "none",
       },

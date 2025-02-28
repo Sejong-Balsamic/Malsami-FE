@@ -3,6 +3,7 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import LandingHeader from "@/components/nav/LandingHeader";
+import BottomSheet, { BottomSheetTrigger } from "@/components/common/BottomSheet";
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
 import AllDocument from "@/components/landing/AllDocument";
@@ -30,6 +31,14 @@ function Page() {
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
   const dispatch = useDispatch();
 
+  const handleBottomSheetReset = () => {
+    console.log("필터 초기화");
+  };
+
+  const handleBottomSheetConfirm = () => {
+    console.log("필터 확인");
+  };
+
   // 스크롤 이벤트
   useEffect(() => {
     const handleScroll = () => {
@@ -43,6 +52,7 @@ function Page() {
       }
 
       setScrollY(Math.min(currentScrollY, 3000));
+      console.log(scrollY); // TODO: 지워야함. eslint임시
       setSearchVisible(currentScrollY < threshold);
     };
 
@@ -146,7 +156,29 @@ function Page() {
             <HotDocument />
           </div>
           <AllDocument documents={documents} />
-          {/* TODO: CardList테스트, 삭제 필요 */}
+          {/* TODO: CardList, BottomSheet 테스트. 삭제 필요 */}
+          <BottomSheet
+            onReset={handleBottomSheetReset}
+            onConfirm={handleBottomSheetConfirm}
+            trigger={BottomSheetTrigger}
+          >
+            <div>asdf</div>
+            <div>asdf</div>
+            <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div>
+          </BottomSheet>
           <CardList />
           <HotQuestion />
           <AllQuestion questions={questions} />

@@ -1,41 +1,67 @@
-/* eslint-disable */
-
 import * as React from "react";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetClose } from "@/components/shadcn/sheet"; // shadcn/ui Sheet 경로에 맞게 조정
-import { Button } from "@/components/shadcn/button"; // shadcn/ui Button 사용 (필요 시 추가)
+import {
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerClose,
+  DrawerTrigger,
+} from "@/components/shadcn/drawer";
+import { Button } from "@/components/shadcn/button";
+import { useDispatch, useSelector } from "react-redux";
+import { setIsOpen } from "@/global/store/bottomSheetSlice";
+import { RootState } from "@/global/store";
+import IconWrapper21x21 from "./IconWrapper21x21";
 
 interface BottomSheetProps {
-  isOpen: boolean; // Sheet 열림 상태 (page.tsx에서 관리)
-  setIsOpen: (open: boolean) => void; // Sheet 상태 변경 콜백
-  onReset?: () => void; // 초기화 함수 (선택적)
-  onConfirm?: () => void; // 확인 함수 (선택적)
-  children?: React.ReactNode; // 내용 (동적으로 props로 전달)
+  onReset: () => void; // 초기화버튼 함수
+  onConfirm: () => void; // 확인버튼 함수
+  children: React.ReactNode; // 메인컨텐츠
+  trigger: React.ReactNode; // BottomSheet 열 트리거 (버튼, 아이콘 등등 사용하고 싶은 곳에서 커스텀하기)
 }
 
-export default function BottomSheet({ isOpen, setIsOpen, onReset, onConfirm, children }: BottomSheetProps) {
-  const handleReset = () => {
-    onReset?.(); // 초기화 함수 호출
-  };
+// BottomSheet 열 트리거 (버튼, 아이콘 등등 사용하고 싶은 곳에서 커스텀하기)
+export const BottomSheetTrigger = (
+  // eslint-disable-next-line
+  <button type="button" className="shadow-left-custom bg-white p-[14px] hover:bg-gray-100">
+    <IconWrapper21x21 src="/icons/actions/filter-right.svg" />
+  </button>
+);
 
+export default function BottomSheet({ onReset, onConfirm, children: mainContent, trigger }: BottomSheetProps) {
+  const dispatch = useDispatch();
+  const isOpen = useSelector((state: RootState) => state.bottomSheet.isOpen);
+
+  // 초기화 함수
+  const handleReset = () => onReset();
+  // 바텀시트 닫는 함수
+  const handleClose = () => dispatch(setIsOpen(false));
+  // 확인 함수: 확인 후 닫기
   const handleConfirm = () => {
-    onConfirm?.(); // 확인 함수 호출
-    setIsOpen(false); // 확인 후 닫기
+    onConfirm();
+    dispatch(setIsOpen(false)); // 확인 후 닫기
   };
 
   return (
-    <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetContent side="bottom" className="flex max-h-[90vh] flex-col p-0">
-        {/* 1. 헤더: 고정 (필터링과 X 버튼) */}
-        <SheetHeader className="sticky top-0 flex flex-row items-center justify-between border-b-2 border-[#F3F3F3] p-[30px]">
-          <SheetTitle className="text-lg font-bold">필터링</SheetTitle>
-          <SheetClose className="flex text-gray-500">
-            <span>X</span>
-          </SheetClose>
-        </SheetHeader>
-        {/* 2. 내용: props로 동적으로 전달받음, 유연한 높이로 조정 */}
-        <div className="flex-1 overflow-y-auto p-4">{children}</div>
-        {/* 3. 초기화 버튼 & 4. 확인 버튼 */}
-        <div className="sticky bottom-0 flex justify-between border-t p-4">
+    <Drawer open={isOpen} onOpenChange={open => dispatch(setIsOpen(open))}>
+      {/* BottomSheet 열 트리거. props로 전달받아 UI에 보여줌 */}
+      {trigger && <DrawerTrigger asChild>{trigger}</DrawerTrigger>}
+
+      <DrawerContent className="mx-auto flex max-h-[80vh] w-full max-w-[640px] flex-col rounded-t-[30px] p-0">
+        {/* 헤더: 필터링, X버튼 */}
+        <DrawerHeader className="sticky top-0 flex flex-row items-center justify-between rounded-t-[30px] border-b-2 border-[#F3F3F3] px-[30px] pb-[26px] pt-[10px]">
+          <DrawerTitle className="text-SUIT_18 font-semibold">필터링</DrawerTitle>
+          <DrawerClose onClick={handleClose}>
+            <IconWrapper21x21 src="/icons/actions/x-lg.svg" />
+          </DrawerClose>
+        </DrawerHeader>
+
+        {/* 메인내용: props로 동적으로 전달받음 */}
+        <div className="overflow-y-auto px-[30px] pt-[26px]">{mainContent}</div>
+
+        {/* 하단: 초기화 버튼, 확인 버튼 */}
+        {/* TODO: 피그마의 버튼으로 바꾸어야 함 */}
+        <div className="sticky bottom-0 flex justify-between p-6">
           <Button variant="outline" className="rounded-full bg-gray-200 px-4 py-2 text-black" onClick={handleReset}>
             초기화
           </Button>
@@ -43,7 +69,7 @@ export default function BottomSheet({ isOpen, setIsOpen, onReset, onConfirm, chi
             확인
           </Button>
         </div>
-      </SheetContent>
-    </Sheet>
+      </DrawerContent>
+    </Drawer>
   );
 }
