@@ -47,7 +47,7 @@ function Header({
   const renderRightItem = () => {
     switch (rightType) {
       case RIGHT_ITEM.BELL:
-        return <BellIcon hasNotification={hasNotification} />;
+        return <BellIcon isNotificationExist={hasNotification} />;
       case RIGHT_ITEM.CLOSE:
         return <CloseIcon />;
       case RIGHT_ITEM.MENU:

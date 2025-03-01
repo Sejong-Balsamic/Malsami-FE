@@ -6,6 +6,8 @@ import logOut from "@/apis/auth/logOut";
 import { useDispatch } from "react-redux";
 import { addToast } from "@/global/store/toastSlice";
 import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import CommonHeader from "@/components/header/CommonHeader";
+import { RIGHT_ITEM } from "@/types/header";
 
 export default function MyPage() {
   const router = useRouter();
@@ -40,14 +42,18 @@ export default function MyPage() {
   return (
     <div className="bg-gray-white">
       <ScrollToTopOnLoad />
-      <div className="flex min-h-screen flex-col items-center justify-center">
-        <button
-          type="button"
-          onClick={handleLogout}
-          className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
-        >
-          Log Out
-        </button>
+      <CommonHeader title="로그아웃" rightType={RIGHT_ITEM.NONE} />
+      {/* 헤더 아래 여백 추가 */}
+      <div className="mt-[64px]">
+        <div className="flex min-h-screen flex-col items-center justify-center">
+          <button
+            type="button"
+            onClick={handleLogout}
+            className="rounded bg-red-500 px-4 py-2 text-white hover:bg-red-700"
+          >
+            Log Out
+          </button>
+        </div>
       </div>
     </div>
   );

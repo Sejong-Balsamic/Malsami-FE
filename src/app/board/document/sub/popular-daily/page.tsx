@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import DocTierPageNav from "@/components/nav/DocTierPageNav";
+import CommonHeader from "@/components/header/CommonHeader";
+import { RIGHT_ITEM } from "@/types/header";
 import { DocCardProps } from "@/types/docCard.type";
 import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
@@ -50,31 +51,34 @@ export default function PopularWeekly() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <DocTierPageNav subTitle="일간 인기글" />
-      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
-        <div className="h-0.5 bg-[#EEEEEE]" />
-        <div className="p-5">
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            docCards.map((card: DocCardProps) => (
-              <DocCard
-                key={card.documentPostId}
-                documentPostId={card.documentPostId}
-                subject={card.subject || "과목명"}
-                title={card.title || "타이틀"}
-                content={card.content || "내용이 없습니다."}
-                documentTypes={card.documentTypes}
-                createdDate={card.createdDate || ""}
-                thumbnailUrl={card.thumbnailUrl || ""}
-                viewCount={card.viewCount || 0}
-                likeCount={card.likeCount || 0}
-              />
-            ))
-          )}
+      <CommonHeader title="일간 인기글" rightType={RIGHT_ITEM.NONE} />
+      {/* 헤더 아래 여백 추가 */}
+      <div className="mt-[64px]">
+        <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
+          <div className="h-0.5 bg-[#EEEEEE]" />
+          <div className="p-5">
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              docCards.map((card: DocCardProps) => (
+                <DocCard
+                  key={card.documentPostId}
+                  documentPostId={card.documentPostId}
+                  subject={card.subject || "과목명"}
+                  title={card.title || "타이틀"}
+                  content={card.content || "내용이 없습니다."}
+                  documentTypes={card.documentTypes}
+                  createdDate={card.createdDate || ""}
+                  thumbnailUrl={card.thumbnailUrl || ""}
+                  viewCount={card.viewCount || 0}
+                  likeCount={card.likeCount || 0}
+                />
+              ))
+            )}
+          </div>
+          {/* 페이지네이션 컴포넌트 */}
+          <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
-        {/* 페이지네이션 컴포넌트 */}
-        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
   );
