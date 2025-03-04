@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
-import LandingHeader from "@/components/nav/LandingHeader";
+import LandingHeader from "@/components/header/LandingHeader";
 import FlyingBooks from "@/components/landing/FlyingBooks";
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";

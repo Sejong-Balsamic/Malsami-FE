@@ -4,13 +4,14 @@ import { useEffect, useState } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import UploadDocumentFAB from "@/components/common/FABs/UploadDocumentFAB";
 import getMyShortInfo from "@/apis/document/getMyShortInfo";
-import DocMainPageNav from "@/components/nav/DocMainPageNav";
 import HotDownloadContent from "@/components/documentMain/HotDownloadContent";
 import MyFacultyContent from "@/components/documentMain/MyFacultyContent";
 import WeeklyPopularContent from "@/components/documentMain/WeeklyPopularContent";
 import DailyPopularContent from "@/components/documentMain/DailyPopularContent";
 import DocRequestContent from "@/components/documentMain/DocRequestContent";
 import DocBoardContent from "@/components/documentMain/DocBoardContent";
+import CommonHeader from "@/components/header/CommonHeader";
+import { RIGHT_ITEM } from "@/types/header";
 
 export default function DocumentBoardPage() {
   const [facultys, setFacultys] = useState<string[]>([]);
@@ -47,19 +48,20 @@ export default function DocumentBoardPage() {
     <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
-        <DocMainPageNav />
-        <div className="h-[2px] w-full bg-[#EEEEEE]" />
-        <DocBoardContent />
-        <div className="h-[2px] w-full bg-[#EEEEEE]" />
-        <div className="p-5">
-          <HotDownloadContent />
-          <MyFacultyContent facultys={facultys} />
-          <WeeklyPopularContent />
-          <DailyPopularContent />
-          <DocRequestContent />
+        <CommonHeader title="자료 게시판" rightType={RIGHT_ITEM.NONE} />
+        {/* 헤더 여백 추가 */}
+        <div className="mt-[64px]">
+          <DocBoardContent />
+          <div className="h-[2px] w-full bg-[#EEEEEE]" />
+          <div className="p-5">
+            <HotDownloadContent />
+            <MyFacultyContent facultys={facultys} />
+            <WeeklyPopularContent />
+            <DailyPopularContent />
+            <DocRequestContent />
+          </div>
         </div>
       </div>
-
       <UploadDocumentFAB isFABVisible={isFABVisible} />
     </div>
   );

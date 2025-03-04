@@ -7,7 +7,8 @@ import { RootState } from "@/global/store";
 import Pagination from "@/components/common/Pagination";
 import { setDocHotDownFilterOptions } from "@/global/store/docHotDownFilterOptionsSlice";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
-import DocTierPageNav from "@/components/nav/DocTierPageNav";
+import CommonHeader from "@/components/header/CommonHeader";
+import { RIGHT_ITEM } from "@/types/header";
 import getHotDownloadDocs from "@/apis/document/getHotDownloadDocs";
 import { DocCardProps } from "@/types/docCard.type";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
@@ -69,32 +70,35 @@ export default function DocHotdownloadPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <DocTierPageNav subTitle="HOT 다운로드" />
-      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
-        <DocFilterControlBar filterOptions={docHotDownFilterOptions} onFilterChange={handleFilterChange} />
-        <div className="h-0.5 bg-[#EEEEEE]" />
-        <div className="p-5">
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            docCards.map((card: DocCardProps) => (
-              <DocCard
-                key={card.documentPostId}
-                documentPostId={card.documentPostId}
-                subject={card.subject || "과목명"}
-                title={card.title || "타이틀"}
-                content={card.content || "내용이 없습니다."}
-                documentTypes={card.documentTypes}
-                createdDate={card.createdDate || ""}
-                thumbnailUrl={card.thumbnailUrl || ""}
-                viewCount={card.viewCount || 0}
-                likeCount={card.likeCount || 0}
-              />
-            ))
-          )}
+      <CommonHeader title="HOT 다운로드" rightType={RIGHT_ITEM.NONE} />
+      {/* 헤더 아래 여백 추가 */}
+      <div className="mt-[64px]">
+        <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
+          <DocFilterControlBar filterOptions={docHotDownFilterOptions} onFilterChange={handleFilterChange} />
+          <div className="h-0.5 bg-[#EEEEEE]" />
+          <div className="p-5">
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              docCards.map((card: DocCardProps) => (
+                <DocCard
+                  key={card.documentPostId}
+                  documentPostId={card.documentPostId}
+                  subject={card.subject || "과목명"}
+                  title={card.title || "타이틀"}
+                  content={card.content || "내용이 없습니다."}
+                  documentTypes={card.documentTypes}
+                  createdDate={card.createdDate || ""}
+                  thumbnailUrl={card.thumbnailUrl || ""}
+                  viewCount={card.viewCount || 0}
+                  likeCount={card.likeCount || 0}
+                />
+              ))
+            )}
+          </div>
+          {/* 페이지네이션 컴포넌트 */}
+          <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
-        {/* 페이지네이션 컴포넌트 */}
-        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
   );
