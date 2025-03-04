@@ -4,7 +4,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation"; // next/navigation 사용
-import Header from "@/components/nav/Header";
+import Header from "@/components/header/Header";
 import { LEFT_ITEM, RIGHT_ITEM, RightItemType } from "@/types/header";
 
 /**

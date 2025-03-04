@@ -6,7 +6,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setDocMyFacultyFilterOptions } from "@/global/store/docMyFacultyFilterOptionsSlice";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import Pagination from "@/components/common/Pagination";
-import DocTierPageNav from "@/components/nav/DocTierPageNav";
+import CommonHeader from "@/components/header/CommonHeader";
+import { RIGHT_ITEM } from "@/types/header";
 import getMyShortInfo from "@/apis/document/getMyShortInfo";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
 import { DocCardProps } from "@/types/docCard.type";
@@ -87,32 +88,35 @@ export default function DocMyFacultyPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <DocTierPageNav subTitle="내 전공 관련 자료" />
-      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
-        <DocFilterControlBar filterOptions={docMyFacultyFilterOptions} onFilterChange={handleFilterChange} />
-        <div className="h-0.5 bg-[#EEEEEE]" />
-        <div className="p-5">
-          {isLoading ? (
-            <LoadingSpinner />
-          ) : (
-            docCards.map((card: DocCardProps) => (
-              <DocCard
-                key={card.documentPostId}
-                documentPostId={card.documentPostId}
-                subject={card.subject || "과목명"}
-                title={card.title || "타이틀"}
-                content={card.content || "내용이 없습니다."}
-                documentTypes={card.documentTypes}
-                createdDate={card.createdDate || ""}
-                thumbnailUrl={card.thumbnailUrl || ""}
-                viewCount={card.viewCount || 0}
-                likeCount={card.likeCount || 0}
-              />
-            ))
-          )}
+      <CommonHeader title="내 전공 관련 자료" rightType={RIGHT_ITEM.NONE} />
+      {/* 헤더 아래 여백 추가 */}
+      <div className="mt-[64px]">
+        <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
+          <DocFilterControlBar filterOptions={docMyFacultyFilterOptions} onFilterChange={handleFilterChange} />
+          <div className="h-0.5 bg-[#EEEEEE]" />
+          <div className="p-5">
+            {isLoading ? (
+              <LoadingSpinner />
+            ) : (
+              docCards.map((card: DocCardProps) => (
+                <DocCard
+                  key={card.documentPostId}
+                  documentPostId={card.documentPostId}
+                  subject={card.subject || "과목명"}
+                  title={card.title || "타이틀"}
+                  content={card.content || "내용이 없습니다."}
+                  documentTypes={card.documentTypes}
+                  createdDate={card.createdDate || ""}
+                  thumbnailUrl={card.thumbnailUrl || ""}
+                  viewCount={card.viewCount || 0}
+                  likeCount={card.likeCount || 0}
+                />
+              ))
+            )}
+          </div>
+          {/* 페이지네이션 컴포넌트 */}
+          <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
-        {/* 페이지네이션 컴포넌트 */}
-        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
       </div>
     </div>
   );
