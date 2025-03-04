@@ -12,9 +12,9 @@ import sameMember from "@/global/sameMember";
 import QnaDetail from "@/components/questionDetail/QnaDetail";
 import AnswerFAB from "@/components/questionDetail/AnswerFAB";
 import { Drawer, DrawerContent } from "@/components/shadcn/drawer";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Image from "next/image";
 import { Button } from "@/components/shadcn/button";
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 
 export default function Page() {
   const router = useRouter();

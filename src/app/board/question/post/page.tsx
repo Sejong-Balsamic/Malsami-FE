@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import QnaPostNav from "@/components/nav/QnaPostNav";
 import subjects from "@/types/subjects";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import postNewQna from "@/apis/question/postNewQna";
@@ -75,23 +74,23 @@ export default function QnaPostPage() {
     );
   };
 
-  // 로컬 스토리지에 저장하는 함수
-  const saveToLocalStorage = () => {
-    localStorage.setItem("qnaPostFormData", JSON.stringify(formData));
-    showToast("임시저장 되었습니다!");
-  };
-  // 로컬 스토리지에서 데이터를 불러오는 함수
-  const loadFromLocalStorage = () => {
-    const savedData = localStorage.getItem("qnaPostFormData");
-    if (savedData) {
-      setFormData(JSON.parse(savedData));
-      showToast("임시저장 데이터를 불러왔습니다.");
-    }
-  };
-  // 컴포넌트가 로드될 때 로컬 스토리지 데이터를 불러오기
-  useEffect(() => {
-    loadFromLocalStorage();
-  }, []);
+  // // 로컬 스토리지에 저장하는 함수
+  // const saveToLocalStorage = () => {
+  //   localStorage.setItem("qnaPostFormData", JSON.stringify(formData));
+  //   showToast("임시저장 되었습니다!");
+  // };
+  // // 로컬 스토리지에서 데이터를 불러오는 함수
+  // const loadFromLocalStorage = () => {
+  //   const savedData = localStorage.getItem("qnaPostFormData");
+  //   if (savedData) {
+  //     setFormData(JSON.parse(savedData));
+  //     showToast("임시저장 데이터를 불러왔습니다.");
+  //   }
+  // };
+  // // 컴포넌트가 로드될 때 로컬 스토리지 데이터를 불러오기
+  // useEffect(() => {
+  //   loadFromLocalStorage();
+  // }, []);
 
   // 태그 삭제 함수
   const removeTag = (tag: string): void => {

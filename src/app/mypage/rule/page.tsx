@@ -1,6 +1,5 @@
 "use client";
 
-import MyPageNav from "@/components/nav/MyPageDetailNav";
 import Image from "next/image";
 import { useToast } from "@/global/hook/useToast";
 import { ToastAction, ToastIcon } from "@/components/shadcn/toast";

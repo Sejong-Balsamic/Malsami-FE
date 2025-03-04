@@ -5,12 +5,11 @@ import { DocCardProps } from "@/types/docCard.type";
 import Pagination from "@/components/common/Pagination";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { PostTiers, PostTiersKeys } from "@/types/postTiers";
-import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
-import DocFilterControlBar from "./DocFilterControlBar";
-import DocCard from "./DocCard";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
+import DocFilterControlBar from "./DocFilterControlBar";
+import DocCard from "./DocCard";
 
 export default function JunginBoard() {
   const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장

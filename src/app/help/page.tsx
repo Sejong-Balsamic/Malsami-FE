@@ -1,4 +1,3 @@
-import Nav from "@/components/nav/NoticeHelpNav";
 import Image from "next/image";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
