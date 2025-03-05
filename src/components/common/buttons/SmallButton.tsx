@@ -2,6 +2,7 @@ import React from "react";
 
 /**
  * SmallButton 컴포넌트
+ *
  * [ History ]
  * 2025.03.05: 이유진 : ButtomSmall init
  * 2025.03.05: 서새찬 : Component 이름 변경 ButtonSmall -> SmallButton

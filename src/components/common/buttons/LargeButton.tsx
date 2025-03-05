@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 /**
  * LargeButton 컴포넌트
+ *
  * [ History ]
  * 2025.03.05: 이유진 : LargeButton init
  * 2025.03.05: 서새찬 : Component 이름 변경 : ButtonLarge -> LargeButton
