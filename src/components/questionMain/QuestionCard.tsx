@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { getDateDiff } from "@/global/time";
-import ChaeTaekTag from "@/components/deprecated/ChaeTaekTag";
 import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
-import SubjectTag from "@/components/deprecated/SubjectTag";
+import SubjectTag from "@/deprecated/SubjectTag";
+import ChaeTaekTag from "@/deprecated/ChaeTaekTag";
 
 interface QuestionCardProps {
   title: string;

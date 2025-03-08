@@ -3,8 +3,8 @@ import Image from "next/image";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import { QnaPresetTags, QnaPresetTagsKey } from "@/types/qnaPresetTags";
 import { ChaetaekStatusKey, ChaetaekStatus } from "@/types/chaetaekStatus";
-import JiJeongTag from "@/components/deprecated/JiJeongTag";
 import { sortTypeLabels } from "@/types/api/constants/sortTypes";
+import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import QnaFilterOptionsModal from "./QnaFilterOptionsModal";
 
 interface FilterControlBarProps {
