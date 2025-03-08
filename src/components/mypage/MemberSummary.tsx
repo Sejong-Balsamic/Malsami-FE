@@ -1,32 +1,23 @@
 import Image from "next/image";
+import { MemberDto } from "@/types/api/responses/memberDto"; // 경로 확인 필요
 
-interface BasicInfoProps {
-  memberInfo: {
-    member: {
-      studentName: string;
-      uuidNickname: string;
-      studentId: number;
-      major: string;
-    };
-    yeopjeon: {
-      yeopjeon: number;
-    };
-  } | null;
-}
-
-function BasicInfo({ memberInfo }: BasicInfoProps) {
+function MemberSummary({ memberInfo }: { memberInfo: MemberDto | null }) {
   return (
     <div className="flex">
       <div className="float-right pb-[10px] pt-[30px]">
         <div className="flex w-full pb-[10px]">
           <div className="flex flex-col items-end">
             <div className="flex items-end gap-[6px]">
-              <span className="font-pretendard-semibold text-[18px]">{memberInfo?.member.studentName || "사용자"}</span>
-              <span className="font-pretendard-medium text-[14px]">@{memberInfo?.member.uuidNickname || "아이디"}</span>
+              <span className="font-pretendard-semibold text-[18px]">
+                {memberInfo?.member?.studentName || "사용자"}
+              </span>
+              <span className="font-pretendard-medium text-[14px]">
+                @{memberInfo?.member?.uuidNickname || "아이디"}
+              </span>
             </div>
             <div>
               <span className="font-pretendard-medium text-[14px] text-[#737373]">
-                {memberInfo?.member.studentId} | {memberInfo?.member.major}
+                {memberInfo?.member?.studentId} | {memberInfo?.member?.major}
               </span>
             </div>
           </div>
@@ -38,7 +29,7 @@ function BasicInfo({ memberInfo }: BasicInfoProps) {
           >
             <Image src="/icons/Yeopjeon.svg" alt="Yeopjeon" width={16} height={16} className="h-[16px] w-[16px]" />
             <span className="font-pretendard-semibold text-[14px] text-[#03b89e]">
-              {memberInfo?.yeopjeon.yeopjeon || "0"}
+              {memberInfo?.yeopjeon?.yeopjeon || "0"}
             </span>
             <Image src="/icons/Move.svg" alt="Move" width={6} height={12} className="h-[12px] w-[6px]" />
           </button>
@@ -48,4 +39,4 @@ function BasicInfo({ memberInfo }: BasicInfoProps) {
   );
 }
 
-export default BasicInfo;
+export default MemberSummary;

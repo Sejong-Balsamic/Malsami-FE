@@ -6,7 +6,7 @@ import { RIGHT_ITEM } from "@/types/header";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
-import { QuestionData } from "@/types/apiTypes/QuestionDetailData";
+import { QuestionData } from "@/types/api/QuestionDetailData";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import sameMember from "@/global/sameMember";
 import QnaDetail from "@/components/questionDetail/QnaDetail";

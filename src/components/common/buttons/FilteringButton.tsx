@@ -1,11 +1,11 @@
 import React from "react";
 
-interface FilteringButtonProps {
-  type: "refresh" | "submit";
-}
-
 /**
  * FilteringButton 컴포넌트
+ *
+ * [ History ]
+ * 2025.03.05: 이유진 : LargeButton init
+ * 2025.03.05: 서새찬 : Component 이름 변경 : ButtonLarge -> LargeButton
  *
  * 초기화 버튼 (흰 배경, 회색 글자)
  * <FilteringButton type="refresh" />
@@ -13,6 +13,10 @@ interface FilteringButtonProps {
  * 확인 버튼 (그라디언트 배경, 흰색 글자)
  * <FilteringButton type="submit" />
  */
+
+interface FilteringButtonProps {
+  type: "refresh" | "submit";
+}
 
 function FilteringButton({ type }: FilteringButtonProps): JSX.Element {
   const buttonStyles = {
