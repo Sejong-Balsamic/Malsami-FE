@@ -2,9 +2,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import { QnaPresetTags, QnaPresetTagsKey } from "@/types/qnaPresetTags";
-import { sortTypeLabels } from "@/types/sortTypes";
 import { ChaetaekStatusKey, ChaetaekStatus } from "@/types/chaetaekStatus";
-import JiJeongTag from "@/components/deprecated/JiJeongTag";
+import { sortTypeLabels } from "@/types/api/constants/sortTypes";
+import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import QnaFilterOptionsModal from "./QnaFilterOptionsModal";
 
 interface FilterControlBarProps {
@@ -42,11 +42,8 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
           <JiJeongTag
             key={filterOptions.sortType}
             label={`${sortTypeLabels[filterOptions.sortType]} ×`}
-            onClick={handleRemoveSortType} // 정렬 옵션 삭제
-            style={{
-              backgroundColor: "#74D7CB",
-              cursor: "pointer",
-            }}
+            onClick={handleRemoveSortType}
+            style={{ backgroundColor: "#74D7CB", cursor: "pointer" }}
           />
         )}
 

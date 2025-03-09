@@ -1,15 +1,15 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { MemberDto } from "@/types/apiTypes/member";
-import getMyInfo from "@/apis/member/getMyPage";
 import MyPageNav from "@/components/nav/MyPageNav";
 import TierImage from "@/components/mypage/TierImage";
-import BasicInfo from "@/components/mypage/BasicInfo";
+import MemberSummary from "@/components/mypage/MemberSummary";
 import InfoCard from "@/components/mypage/InfoCard";
 import InfoList from "@/components/mypage/InfoList";
 import Facility from "@/components/mypage/Facility";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { MemberDto } from "@/types/api/responses/memberDto";
+import memberApi from "@/apis/memberApi";
 
 function Page() {
   const [memberInfo, setMemberInfo] = useState<MemberDto | null>(null);
@@ -18,7 +18,7 @@ function Page() {
   useEffect(() => {
     const fetchMemberInfo = async () => {
       setIsLoading(true);
-      const data = await getMyInfo();
+      const data = await memberApi.getMyInfo();
       setMemberInfo(data || {});
       setIsLoading(false);
     };
@@ -34,7 +34,7 @@ function Page() {
       </div>
       <div className="p-[20px]">
         <div className="flex justify-end">
-          <BasicInfo memberInfo={memberInfo} />
+          <MemberSummary memberInfo={memberInfo} />
         </div>
         <div className="relative flex">
           <TierImage memberInfo={memberInfo} />
@@ -43,7 +43,7 @@ function Page() {
           </div>
         </div>
         <div>
-          <InfoList memberInfo={memberInfo} />
+          <InfoList memberDto={memberInfo} />
         </div>
         <div>
           <Facility />

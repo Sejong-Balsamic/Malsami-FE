@@ -1,8 +1,8 @@
-import { SortTypeKey } from "@/types/sortTypes";
 import { DocTypesKey } from "@/types/docTypes";
+import { CommonSortType } from "@/types/api/constants/sortTypes";
 
 export interface DocFilterOptions {
   docTypes: DocTypesKey[];
-  sortType?: SortTypeKey; // `SortTypeKey | undefined`와 동일
-  faculty?: string; // string이면 안됨. 바꾸어야 함
+  sortType?: CommonSortType;
+  faculty?: string; // FIXME: string이면 안됨. 바꾸어야 함
 }
