@@ -20,8 +20,9 @@ jobs:
 
       # .env.local 파일 생성
       - name: Create .env.local file
-        run: echo "ENV=${{ secrets.ENV }}" > .env.local
-
+        run: |
+          echo -e "${{ secrets.ENV }}" > .env.local
+          
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
