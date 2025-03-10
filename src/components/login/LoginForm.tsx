@@ -75,9 +75,6 @@ export default function LoginForm() {
           )}
         </div>
 
-        {/* Todo: 나중에 삭제해야함.  */}
-        <NewLoadingSpinner />
-
         {/* 로그인 제출 버튼. 하단 버튼 영역 */}
         <div className="mb-[60px] mt-auto">
           <button
@@ -93,6 +90,13 @@ export default function LoginForm() {
           </button>
         </div>
       </form>
+
+      {/* 로딩 스피너: isLoading이 true일 때만 표시. overlay느낌으로 화면정중앙에 */}
+      {isLoading && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+          <NewLoadingSpinner />
+        </div>
+      )}
 
       {/* 로그인 성공 모달 */}
       {isLoginModalOpen && <LoginSuccessModal onClose={handleModalClose} userName={userName} />}

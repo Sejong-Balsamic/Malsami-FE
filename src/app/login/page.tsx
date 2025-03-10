@@ -9,10 +9,10 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <div className="flex h-screen w-full min-w-[386px] max-w-[640px] flex-col bg-white px-5">
-        <CommonHeader title="로그인 " rightType={RIGHT_ITEM.NONE} />
+      <div className="flex h-screen w-full min-w-[386px] max-w-[640px] flex-col bg-white">
+        <CommonHeader title="로그인" rightType={RIGHT_ITEM.NONE} />
         {/* 헤더 아래 여백 추가 */}
-        <div className="mt-[64px]">
+        <div className="mt-[64px] px-5">
           <span className="mb-4 text-SUIT_20 font-medium">
             환영합니다! <span className="font-bold">세종말싸미</span> 입니다.
           </span>
