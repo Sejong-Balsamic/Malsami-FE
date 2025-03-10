@@ -1,5 +1,4 @@
 name: MALSAMI-FE-EPIC-PR-CI
-
 on:
   workflow_dispatch:
   push:
@@ -9,10 +8,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # .env.local 파일 생성
       - name: Create .env.local file
@@ -20,16 +19,13 @@ jobs:
           echo -e "${{ secrets.ENV }}" > .env.local
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "20.15.0"
           cache: "npm"
 
-      - name: Log - Cache Setup
-        run: echo "캐시 설정을 시작합니다..."
-
       - name: Cache npm dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
@@ -38,7 +34,7 @@ jobs:
 
       - name: Cache node_modules
         id: node-modules-cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: "**/node_modules"
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
@@ -47,20 +43,17 @@ jobs:
 
       - name: Install dependencies
         if: steps.node-modules-cache.outputs.cache-hit != 'true'
-        run: npm ci --prefer-offline --no-audit
+        run: npm ci
 
       - name: Cache Next.js build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
-          path: |
-            .next/cache
+          path: .next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-
 
-      - name: Log - Building project
-        run: echo "프로젝트를 빌드 중입니다..."
-      - name: Build with npm
+      - name: Build project
         run: npm run build
 
       - name: Docker setup
@@ -72,20 +65,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Log - Setting up Docker cache
-        run: echo "Docker 레이어 캐시를 설정 중입니다..."
       - name: Cache Docker layers
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Log - Building and pushing Docker image
-        run: echo "Docker 이미지를 빌드하고 푸시 중입니다..."
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
@@ -95,6 +84,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
           build-args: |
             NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -102,7 +92,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@v1.0.3

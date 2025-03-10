@@ -6,11 +6,11 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from 
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import AnswerSection from "./AnswerSection";
 import { getDateDiff } from "@/global/time";
-import { QuestionData } from "@/types/apiTypes/QuestionDetailData";
+import { QuestionData } from "@/types/api/QuestionDetailData";
 import CommentSection from "./QCommentSection";
 import sameMember from "@/global/sameMember";
 import AttachedFiles from "@/components/common/AttachedFiles";
-import JiJeongTag from "@/components/deprecated/JiJeongTag";
+import JiJeongTag from "@/deprecated/JiJeongTag";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {

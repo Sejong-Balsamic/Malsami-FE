@@ -17,7 +17,7 @@
 import React from "react";
 import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
 import Image from "next/image";
-import JiJeongTag from "@/components/deprecated/JiJeongTag";
+import JiJeongTag from "@/deprecated/JiJeongTag";
 
 interface CategoryCardProps {
   title: string;

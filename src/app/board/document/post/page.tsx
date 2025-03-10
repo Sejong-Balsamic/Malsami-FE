@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import DocPostNav from "@/components/nav/DocPostNav";
+import CommonHeader from "@/components/header/CommonHeader";
+import { RIGHT_ITEM } from "@/types/header";
 import subjects from "@/types/subjects";
 import { docMediaAllowedTypes } from "@/types/docMediaAllowedTypes";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
@@ -73,22 +74,23 @@ export default function QnaPostPage() {
     );
   };
 
-  // 로컬 스토리지에 저장하는 함수
-  const saveToLocalStorage = () => {
-    localStorage.setItem("docPostFormData", JSON.stringify(formData));
-    showToast("임시저장 되었습니다!");
-  };
-  // 로컬 스토리지에서 데이터를 불러오는 함수
-  const loadFromLocalStorage = () => {
-    const savedData = localStorage.getItem("docPostFormData");
-    if (savedData) {
-      setFormData(JSON.parse(savedData));
-    }
-  };
-  // 컴포넌트가 로드될 때 로컬 스토리지 데이터를 불러오기
-  useEffect(() => {
-    loadFromLocalStorage();
-  }, []);
+  // FIXME: 로컬스토리지 저장 로직 삭제 (임시저장 로직 삭제)
+  // // 로컬 스토리지에 저장하는 함수
+  // const saveToLocalStorage = () => {
+  //   localStorage.setItem("docPostFormData", JSON.stringify(formData));
+  //   showToast("임시저장 되었습니다!");
+  // };
+  // // 로컬 스토리지에서 데이터를 불러오는 함수
+  // const loadFromLocalStorage = () => {
+  //   const savedData = localStorage.getItem("docPostFormData");
+  //   if (savedData) {
+  //     setFormData(JSON.parse(savedData));
+  //   }
+  // };
+  // // 컴포넌트가 로드될 때 로컬 스토리지 데이터를 불러오기
+  // useEffect(() => {
+  //   loadFromLocalStorage();
+  // }, []);
 
   // 태그 삭제 함수
   const removeTag = (tag: string): void => {
@@ -263,85 +265,88 @@ export default function QnaPostPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <DocPostNav onSave={saveToLocalStorage} />
-      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white p-5">
-        <div className="rounded-lg">
-          {/* 로딩 중일 때 */}
-          {isUploading ? (
-            <div className="flex h-[500px] items-center justify-center">
-              <LoadingSpinner />
-            </div>
-          ) : (
-            //  업로딩 중이 아닐 때 폼 내용 표시
-            <form>
-              {/* 제목 */}
-              <TitleInput value={formData.title} onChange={handleChange} />
-              {/* 설명 */}
-              <ContentInput value={formData.content} onChange={handleChange} />
-              {/* 파일 업로드 */}
-              <FileUploadInput
-                mediaFiles={formData.mediaFiles}
-                onFileChange={handleFileChange}
-                onFileDelete={handleFileDelete}
-              />
-              {/* 교과목명 검색 */}
-              <SubjectSearchInputComponent value={formData.subject} onClick={toggleSubjectModal} />
-              {/* 카테고리 선택 */}
-              <CategoryInput tags={formData.categoryTags} onOpenModal={toggleCategoryTagsModal} />
-              {/* 수강년도 선택 */}
-              <StudyYearInput year={formData.studyYear} onOpenModal={toggleStudyYearModal} />
-              {/* 커스텀 태그 */}
-              <CustomTagsInput tags={formData.customTags} onClick={toggleCustomTagsModal} onRemoveTag={removeTag} />
-              {/* 추가 설정 */}
-              <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={handleIsPrivate} />
+      <CommonHeader title="자료 작성하기" rightType={RIGHT_ITEM.NONE} />
+      {/* 헤더 아래 여백 추가 */}
+      <div className="mt-[64px]">
+        <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white p-5">
+          <div className="rounded-lg">
+            {/* 로딩 중일 때 */}
+            {isUploading ? (
+              <div className="flex h-[500px] items-center justify-center">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              //  업로딩 중이 아닐 때 폼 내용 표시
+              <form>
+                {/* 제목 */}
+                <TitleInput value={formData.title} onChange={handleChange} />
+                {/* 설명 */}
+                <ContentInput value={formData.content} onChange={handleChange} />
+                {/* 파일 업로드 */}
+                <FileUploadInput
+                  mediaFiles={formData.mediaFiles}
+                  onFileChange={handleFileChange}
+                  onFileDelete={handleFileDelete}
+                />
+                {/* 교과목명 검색 */}
+                <SubjectSearchInputComponent value={formData.subject} onClick={toggleSubjectModal} />
+                {/* 카테고리 선택 */}
+                <CategoryInput tags={formData.categoryTags} onOpenModal={toggleCategoryTagsModal} />
+                {/* 수강년도 선택 */}
+                <StudyYearInput year={formData.studyYear} onOpenModal={toggleStudyYearModal} />
+                {/* 커스텀 태그 */}
+                <CustomTagsInput tags={formData.customTags} onClick={toggleCustomTagsModal} onRemoveTag={removeTag} />
+                {/* 추가 설정 */}
+                <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={handleIsPrivate} />
 
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={!isFormValid}
-                className={`w-full rounded-[10px] p-2 text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
-              >
-                작성완료
-              </button>
-            </form>
-          )}
-          {/* 모달들 */}
-          {/* 교과목명 검색 모달 */}
-          {isSubjectModalOpen && (
-            <QnaPostSubjectModal
-              isVisible={isSubjectModalOpen}
-              subject={formData.subject}
-              onClose={toggleSubjectModal}
-              onSelectSubject={handleSubjectChange}
-            />
-          )}
-          {/* 카테고리 선택 모달 */}
-          {isCategoryTagsModalOpen && (
-            <DocPostCategoryTagsModal
-              isVisible={isCategoryTagsModalOpen}
-              onClose={toggleCategoryTagsModal}
-              selectedTags={formData.categoryTags}
-              onSubmitTags={handleCategoryTagsSelect}
-            />
-          )}
-          {/* 커스텀 태그 선택 모달 */}
-          {isCustomTagsModalOpen && (
-            <QnaPostCustomTagsModal
-              isVisible={isCustomTagsModalOpen}
-              onClose={toggleCustomTagsModal}
-              initialTags={formData.customTags}
-              onTagsSubmit={handleCustomTagsSubmit}
-            />
-          )}
-          {/* 수강년도 선택 모달 */}
-          {isStudyYearModalOpen && (
-            <DocPostStudyYearModal
-              isVisible={isStudyYearModalOpen}
-              onClose={toggleStudyYearModal}
-              studyYear={formData.studyYear}
-              onSubmitStudyYear={handleYearSubmit}
-            />
-          )}
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={!isFormValid}
+                  className={`w-full rounded-[10px] p-2 text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
+                >
+                  작성완료
+                </button>
+              </form>
+            )}
+            {/* 모달들 */}
+            {/* 교과목명 검색 모달 */}
+            {isSubjectModalOpen && (
+              <QnaPostSubjectModal
+                isVisible={isSubjectModalOpen}
+                subject={formData.subject}
+                onClose={toggleSubjectModal}
+                onSelectSubject={handleSubjectChange}
+              />
+            )}
+            {/* 카테고리 선택 모달 */}
+            {isCategoryTagsModalOpen && (
+              <DocPostCategoryTagsModal
+                isVisible={isCategoryTagsModalOpen}
+                onClose={toggleCategoryTagsModal}
+                selectedTags={formData.categoryTags}
+                onSubmitTags={handleCategoryTagsSelect}
+              />
+            )}
+            {/* 커스텀 태그 선택 모달 */}
+            {isCustomTagsModalOpen && (
+              <QnaPostCustomTagsModal
+                isVisible={isCustomTagsModalOpen}
+                onClose={toggleCustomTagsModal}
+                initialTags={formData.customTags}
+                onTagsSubmit={handleCustomTagsSubmit}
+              />
+            )}
+            {/* 수강년도 선택 모달 */}
+            {isStudyYearModalOpen && (
+              <DocPostStudyYearModal
+                isVisible={isStudyYearModalOpen}
+                onClose={toggleStudyYearModal}
+                studyYear={formData.studyYear}
+                onSubmitStudyYear={handleYearSubmit}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

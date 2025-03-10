@@ -1,4 +1,4 @@
-import { QuestionData } from "@/types/apiTypes/QuestionDetailData";
+import { QuestionData } from "@/types/api/QuestionDetailData";
 import { apiClient } from "../appClient";
 
 // 특정 질문 글을 조회하는 함수

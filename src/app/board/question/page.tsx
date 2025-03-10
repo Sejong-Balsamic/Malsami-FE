@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import MovingCardQuestion from "@/components/landing/MovingCardQuestion";
-import QnaPageNav from "@/components/nav/QnaPageNav";
 import getUnansweredQNAs from "@/apis/question/getUnansweredQNAs";
 import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
 import UploadQuestionFAB from "@/components/common/FABs/UploadQuestionFAB";
@@ -16,6 +15,8 @@ import { RootState } from "@/global/store";
 import QnaFilterFacultyCategory from "@/components/questionMain/QnaFilterFacultyCategory";
 import QnaFilterControlBar from "@/components/questionMain/QnaFilterControlBar";
 import QuestionCardList from "@/components/questionMain/QuestionCardList";
+import { RIGHT_ITEM } from "@/types/header";
+import CommonHeader from "@/components/header/CommonHeader";
 
 export default function QuestionBoardPage() {
   const dispatch = useDispatch();
@@ -74,7 +75,6 @@ export default function QuestionBoardPage() {
 
   // 단과대/필터 변경 시 페이지 번호 리셋
   useEffect(() => {
-    // 단과대나 필터가 바뀌면 첫 페이지로
     setPageNumber(1);
   }, [selectedFaculty, isAllFacultySelected, filterOptions]);
 
@@ -104,55 +104,56 @@ export default function QuestionBoardPage() {
     <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <div className="relative mx-auto min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
-        <QnaPageNav />
+        <CommonHeader title="질문 게시판" rightType={RIGHT_ITEM.NONE} />
+        {/* 헤더 아래 여백 추가 */}
+        <div className="mt-[64px]">
+          {/* 단과대 필터 */}
+          <QnaFilterFacultyCategory
+            onAllFacultySelect={() => setIsAllFacultySelected(true)}
+            onFacultySelect={() => setIsAllFacultySelected(false)}
+            isAllFacultySelected={isAllFacultySelected}
+          />
 
-        {/* 단과대 필터 */}
-        <QnaFilterFacultyCategory
-          onAllFacultySelect={() => {
-            // 전체 선택
-            setIsAllFacultySelected(true);
-          }}
-          onFacultySelect={() => {
-            // 특정 단과대 선택
-            setIsAllFacultySelected(false);
-          }}
-          isAllFacultySelected={isAllFacultySelected}
-        />
+          {/* 미답변 질문 영역 */}
+          <div className="font-pretendard-semibold px-5 pb-3 pt-4 text-lg text-custom-blue-500">
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {isUnansweredLoading || unansweredQNAs === null
+              ? "로딩 중..."
+              : unansweredQNAs.length === 0
+                ? "전부 답변했어요!"
+                : "아직 답변 안 했어요!"}
+          </div>
+          <div className="flex items-center justify-center bg-[#EEEEEE]">
+            {isUnansweredLoading || unansweredQNAs === null ? (
+              <LoadingSpinner />
+            ) : (
+              <MovingCardQuestion data={unansweredQNAs} />
+            )}
+          </div>
 
-        {/* 미답변 질문 영역 */}
-        <div className="font-pretendard-semibold px-5 pb-3 pt-4 text-lg text-custom-blue-500">
-          {/* eslint-disable-next-line no-nested-ternary */}
-          {isUnansweredLoading || unansweredQNAs === null
-            ? "로딩 중..."
-            : unansweredQNAs.length === 0
-              ? "전부 답변했어요!"
-              : "아직 답변 안 했어요!"}
-        </div>
-        <div className="flex items-center justify-center bg-[#EEEEEE]">
-          {isUnansweredLoading || unansweredQNAs === null ? (
-            <LoadingSpinner />
-          ) : (
-            <MovingCardQuestion data={unansweredQNAs} />
-          )}
-        </div>
+          <div className="h-[2px] w-full bg-[#EEEEEE]" />
 
-        <div className="h-[2px] w-full bg-[#EEEEEE]" />
+          {/* 상단 필터 바 */}
+          <QnaFilterControlBar
+            filterOptions={filterOptions}
+            onFilterChange={newFilterOptions => dispatch(setFilterOptions(newFilterOptions))}
+          />
 
-        {/* 상단 필터 바 */}
-        <QnaFilterControlBar
-          filterOptions={filterOptions}
-          onFilterChange={newFilterOptions => dispatch(setFilterOptions(newFilterOptions))}
-        />
+          <div className="h-0.5 bg-[#EEEEEE]" />
 
-        <div className="h-0.5 bg-[#EEEEEE]" />
+          {/* 질문 카드 목록 */}
+          <div className="px-5 py-4">
+            {isLoading ? <LoadingSpinner /> : <QuestionCardList categoryQNAs={categoryQNAs} />}
+          </div>
 
-        {/* 질문 카드 목록 */}
-        <div className="px-5 py-4">
-          {isLoading ? <LoadingSpinner /> : <QuestionCardList categoryQNAs={categoryQNAs} />}
-        </div>
-
-        {/* 페이지네이션 */}
-        <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={newPage => setPageNumber(newPage)} />
+          {/* 페이지네이션 */}
+          <Pagination
+            pageNumber={pageNumber}
+            totalPages={totalPages}
+            onPageChange={newPage => setPageNumber(newPage)}
+          />
+        </div>{" "}
+        {/* 닫는 태그 추가 */}
       </div>
 
       <UploadQuestionFAB isFABVisible={isFABVisible} />

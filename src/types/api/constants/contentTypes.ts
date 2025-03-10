@@ -1,5 +1,5 @@
-// 유니언 타입 정의. 키를 영어로 사용해 백엔드와 동일한 컨벤션 유지.
-type ContentTypesKey =
+// src/types/contentTypes.ts
+export type ContentType =
   | "THUMBNAIL"
   | "COMMENT"
   | "QUESTION"
@@ -9,8 +9,8 @@ type ContentTypesKey =
   | "COURSES"
   | "DOCUMENT_REQUEST";
 
-// 매핑 객체. 객체의 키가 정의된 ContentTypeKey 타입 내에서만 허용.
-export const ContentTypes: Record<ContentTypesKey, string> = {
+// UI용 매핑 객체 (필요 시 사용)
+export const ContentTypeLabels: Record<ContentType, string> = {
   THUMBNAIL: "썸네일",
   COMMENT: "댓글",
   QUESTION: "질문글",
@@ -20,5 +20,3 @@ export const ContentTypes: Record<ContentTypesKey, string> = {
   COURSES: "교과목",
   DOCUMENT_REQUEST: "자료요청글",
 };
-
-export default ContentTypes;

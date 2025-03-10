@@ -1,9 +1,10 @@
-import { SortTypeKey } from "@/types/sortTypes";
+// src/types/QnaFilterOptions.ts
 import { ChaetaekStatusKey } from "@/types/chaetaekStatus";
 import { QnaPresetTagsKey } from "@/types/qnaPresetTags";
+import { QnaSortType } from "@/types/api/constants/sortTypes";
 
 export interface QnaFilterOptions {
-  chaetaekStatus?: ChaetaekStatusKey; // `ChaetaekStatusKey | undefined`와 동일
+  chaetaekStatus?: ChaetaekStatusKey;
   qnaPresetTags: QnaPresetTagsKey[];
-  sortType?: SortTypeKey; // `SortTypeKey | undefined`와 동일
+  sortType?: QnaSortType;
 }

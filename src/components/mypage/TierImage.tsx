@@ -1,17 +1,9 @@
 /* eslint-disable no-dupe-else-if */
 import Image from "next/image";
+import { MemberDto } from "@/types/api/responses/memberDto";
 
-interface InfoProps {
-  memberInfo: {
-    canAccessCheonmin: boolean;
-    canAccessJungin: boolean;
-    canAccessYangban: boolean;
-    canAccessKing: boolean;
-  } | null;
-}
-
-function TierImage({ memberInfo }: InfoProps) {
-  if (!memberInfo) return null; // memberInfo가 null이면 아무것도 렌더링하지 않음
+function TierImage({ memberInfo }: { memberInfo: MemberDto | null }) {
+  if (!memberInfo) return null;
 
   let tierImage = "";
   let altText = "";
