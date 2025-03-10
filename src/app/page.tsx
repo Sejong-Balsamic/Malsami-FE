@@ -20,6 +20,7 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useDispatch } from "react-redux";
 import { showToast } from "@/global/toastUtils";
 import CardList from "@/components/common/CardList";
+import Card from "@/components/common/Card";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);
@@ -150,8 +151,20 @@ function Page() {
             <HotDocument />
           </div>
           <AllDocument documents={documents} />
-          {/* TODO: CardList테스트, 삭제 필요 */}
+          {/* TODO: CardList Card테스트, 삭제 필요 */}
           <CardList />
+          <Card
+            number={1}
+            subject="기초 3D 그래픽스"
+            title="기초 3D 그래픽스제목인데 길게 함 해봐야겠다"
+            content="A+비법 전수해준다. CAD옥테인 블랜더고인, 이렇게 설치 해요. 본문인데"
+            isCurrentlyPopular
+            likeCount={35}
+            customTags={["커스텀태그", "커스텀태그2"]}
+            isLiked
+            onClick={() => console.log("카드 클릭됨")}
+          />
+
           <HotQuestion />
           <AllQuestion questions={questions} />
           {searchVisible && <SearchBar userName={userName} />}
