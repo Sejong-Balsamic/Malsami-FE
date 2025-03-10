@@ -2,7 +2,7 @@ import Image from "next/image";
 import SubjectTag from "@/components/common/tags/SubjectTag";
 import CustomTag from "./tags/CustomTag";
 
-// TODO: 목데이터로 삭제해야 함 + api연동
+// TODO: 목데이터로 삭제해야 함 + api연동 (type정의필요)
 const dats = [
   {
     id: 1,
@@ -12,6 +12,7 @@ const dats = [
     customTags: ["커스텀태그", "커스텀태그"],
     likeCount: 6,
     commentCount: 14,
+    isLiked: true,
   },
   {
     id: 2,
@@ -21,6 +22,7 @@ const dats = [
     customTags: ["커스텀태그", "커스텀태그"],
     likeCount: 6,
     commentCount: 143,
+    isLiked: true,
   },
   {
     id: 3,
@@ -30,6 +32,7 @@ const dats = [
     customTags: ["커스텀태그", "커스텀태그"],
     likeCount: 6,
     commentCount: 14,
+    isLiked: false,
   },
 ];
 
@@ -54,7 +57,11 @@ export default function CardList() {
             {/* 좋아요, 댓글 */}
             <div className="flex items-center text-SUIT_14 font-medium text-[#929292]">
               <span className="flex">
-                <Image src="/icons/actions/like-uncliked.svg" alt="좋아요" width={16} height={16} />
+                {data.isLiked ? (
+                  <Image src="/icons/actions/like-clicked.svg" alt="좋아요" width={16} height={16} />
+                ) : (
+                  <Image src="/icons/actions/like-unclicked.svg" alt="좋아요" width={16} height={16} />
+                )}
                 <span className="ml-1">{data.likeCount}</span>
               </span>
               <span className="ml-2 flex items-center">
