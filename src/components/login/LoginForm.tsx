@@ -49,7 +49,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <form onSubmit={handleLogin} className="flex flex-1 flex-col">
+      <form onSubmit={handleLogin} className="flex flex-1 flex-col px-5">
         {/* 상단 Input 영역 */}
         <div className="flex flex-col space-y-8">
           <CustomInput
