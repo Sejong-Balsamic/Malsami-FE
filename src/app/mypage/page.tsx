@@ -18,7 +18,7 @@ function Page() {
   useEffect(() => {
     const fetchMemberInfo = async () => {
       setIsLoading(true);
-      const data = await memberApi.getMyInfo();
+      const data = await memberApi.getMyPage();
       setMemberInfo(data || {});
       setIsLoading(false);
     };
