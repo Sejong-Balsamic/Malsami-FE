@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import { Input } from "@/components/shadcn/input";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import Image from "next/image";
+import { Comment } from "@/types/api/entities/comment";
 import postComment from "@/apis/question/postComment";
 import refreshComments from "@/apis/question/refreshComments";
-import { Comment } from "@/types/apiTypes/comment";
 
 interface CommentInputProps {
   postId: string;

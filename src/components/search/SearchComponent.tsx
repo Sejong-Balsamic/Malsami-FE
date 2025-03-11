@@ -1,12 +1,9 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 // import { useState, useEffect } from "react";
-import Image from "next/image";
 import SearchPageInput from "./SearchPageInput";
 
 export default function SearchComponent() {
-  const router = useRouter();
   // const [searchTerm, setSearchTerm] = useState("");
   // const [recentSearches, setRecentSearches] = useState(["검색기록", "검색기록1", "검색기록2"]);
 
@@ -19,15 +16,7 @@ export default function SearchComponent() {
   // };
 
   return (
-    <div className="h-screen bg-[#EEEEEE]">
-      {/* 헤더 */}
-      <div className="flex h-[64px] items-center border-b-[2px] bg-white p-5">
-        <button type="button" onClick={() => router.back()} className="ml-0">
-          <Image src="/icons/BackIcon.svg" alt="Back" width={10} height={20} />
-        </button>
-        <h1 className="font-pretendard-bold text absolute left-1/2 -translate-x-1/2 transform text-xl">검색하기</h1>
-      </div>
-
+    <div className="mt-[64px] h-screen bg-[#EEEEEE]">
       {/* 검색 입력 */}
       <SearchPageInput />
 

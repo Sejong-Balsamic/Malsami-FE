@@ -5,8 +5,9 @@ import { DocCardProps } from "@/types/docCard.type";
 import Pagination from "@/components/common/Pagination";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { PostTiers, PostTiersKeys } from "@/types/postTiers";
-import DocTierPageNav from "@/components/nav/DocTierPageNav";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
+import CommonHeader from "@/components/header/CommonHeader";
+import { RIGHT_ITEM } from "@/types/header";
 import DocFilterControlBar from "./DocFilterControlBar";
 import DocCard from "./DocCard";
 
@@ -67,8 +68,9 @@ export default function JunginBoard() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <DocTierPageNav subTitle={`${PostTiers.JUNGIN.KR} 게시판`} />
-      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
+      <CommonHeader title={`${PostTiers.CHEONMIN.KR} 게시판`} rightType={RIGHT_ITEM.NONE} />
+      {/* 헤더 아래 여백 추가 */}
+      <div className="mt-[64px] min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
         <DocFilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
         <div className="h-0.5 bg-[#EEEEEE]" />
         <div className="p-5">

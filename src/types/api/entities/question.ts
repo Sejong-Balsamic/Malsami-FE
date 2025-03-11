@@ -1,4 +1,4 @@
-import { Member } from "@/types/apiTypes/member";
+import { Member } from "@/types/api/entities/member";
 
 export interface MediaFile {
   createdDate: string;

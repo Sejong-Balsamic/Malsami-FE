@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import QnaPostNav from "@/components/nav/QnaPostNav";
 import subjects from "@/types/subjects";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import postNewQna from "@/apis/question/postNewQna";
@@ -22,6 +21,8 @@ import QnaPostSubjectModal from "@/components/questionPost/QnaPostSubjectModal";
 import QnaPostRewardModal from "@/components/questionPost/QnaPostRewardModal";
 import QnaPostJiJeongTagModal from "@/components/questionPost/QnaPostJiJeongTagModal";
 import QnaPostCustomTagsModal from "@/components/questionPost/QnaPostCustomTagsModal";
+import CommonHeader from "@/components/header/CommonHeader";
+import { RIGHT_ITEM } from "@/types/header";
 
 interface QnaPostFormData {
   title: string;
@@ -73,23 +74,23 @@ export default function QnaPostPage() {
     );
   };
 
-  // 로컬 스토리지에 저장하는 함수
-  const saveToLocalStorage = () => {
-    localStorage.setItem("qnaPostFormData", JSON.stringify(formData));
-    showToast("임시저장 되었습니다!");
-  };
-  // 로컬 스토리지에서 데이터를 불러오는 함수
-  const loadFromLocalStorage = () => {
-    const savedData = localStorage.getItem("qnaPostFormData");
-    if (savedData) {
-      setFormData(JSON.parse(savedData));
-      showToast("임시저장 데이터를 불러왔습니다.");
-    }
-  };
-  // 컴포넌트가 로드될 때 로컬 스토리지 데이터를 불러오기
-  useEffect(() => {
-    loadFromLocalStorage();
-  }, []);
+  // // 로컬 스토리지에 저장하는 함수
+  // const saveToLocalStorage = () => {
+  //   localStorage.setItem("qnaPostFormData", JSON.stringify(formData));
+  //   showToast("임시저장 되었습니다!");
+  // };
+  // // 로컬 스토리지에서 데이터를 불러오는 함수
+  // const loadFromLocalStorage = () => {
+  //   const savedData = localStorage.getItem("qnaPostFormData");
+  //   if (savedData) {
+  //     setFormData(JSON.parse(savedData));
+  //     showToast("임시저장 데이터를 불러왔습니다.");
+  //   }
+  // };
+  // // 컴포넌트가 로드될 때 로컬 스토리지 데이터를 불러오기
+  // useEffect(() => {
+  //   loadFromLocalStorage();
+  // }, []);
 
   // 태그 삭제 함수
   const removeTag = (tag: string): void => {
@@ -226,82 +227,85 @@ export default function QnaPostPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <QnaPostNav onSave={saveToLocalStorage} />
-      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white p-5">
-        <div className="rounded-lg">
-          {/* 로딩 중일 때 */}
-          {isUploading ? (
-            <div className="flex h-[500px] items-center justify-center">
-              <LoadingSpinner />
-            </div>
-          ) : (
-            //  업로딩 중이 아닐 때 폼 내용 표시
-            <form>
-              {/* 제목 */}
-              <TitleInput value={formData.title} onChange={handleChange} />
-              {/* 질문 */}
-              <ContentInput value={formData.content} onChange={handleChange} />
-              {/* 파일 업로드 */}
-              <FileUploadInput
-                mediaFiles={formData.mediaFiles}
-                onFileChange={handleFileChange}
-                onFileDelete={handleFileDelete}
+      <CommonHeader title="질문 작성" rightType={RIGHT_ITEM.NONE} />
+      {/* 헤더 여백 추가 */}
+      <div className="mt-[64px]">
+        <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white p-5">
+          <div className="rounded-lg">
+            {/* 로딩 중일 때 */}
+            {isUploading ? (
+              <div className="flex h-[500px] items-center justify-center">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              //  업로딩 중이 아닐 때 폼 내용 표시
+              <form>
+                {/* 제목 */}
+                <TitleInput value={formData.title} onChange={handleChange} />
+                {/* 질문 */}
+                <ContentInput value={formData.content} onChange={handleChange} />
+                {/* 파일 업로드 */}
+                <FileUploadInput
+                  mediaFiles={formData.mediaFiles}
+                  onFileChange={handleFileChange}
+                  onFileDelete={handleFileDelete}
+                />
+                {/* 교과목명 검색 */}
+                <SubjectSearchInputComponent value={formData.subject} onClick={toggleSubjectModal} />
+                {/* 정적 태그 */}
+                <JiJeongTagInput tags={formData.questionPresetTags} onOpenModal={toggleJiJeongTagModal} />
+                {/* 엽전 현상금 */}
+                <YeopjeonRewardInput reward={formData.reward} onClick={toggleRewardModal} />
+                {/* 커스텀 태그 */}
+                <CustomTagsInput tags={formData.customTags} onClick={toggleCustomTagsModal} onRemoveTag={removeTag} />
+                {/* 추가 설정 */}
+                <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={handleIsPrivate} />
+
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={!isFormValid}
+                  className={`font-pretendard-semibold w-full rounded-[10px] p-2 text-base text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
+                >
+                  작성완료
+                </button>
+              </form>
+            )}
+
+            {/* 모달들 */}
+            {isSubjectModalOpen && (
+              <QnaPostSubjectModal
+                isVisible={isSubjectModalOpen}
+                subject={formData.subject}
+                onClose={toggleSubjectModal}
+                onSelectSubject={handleSubjectChange} // subject을 변경할 함수 전달
               />
-              {/* 교과목명 검색 */}
-              <SubjectSearchInputComponent value={formData.subject} onClick={toggleSubjectModal} />
-              {/* 정적 태그 */}
-              <JiJeongTagInput tags={formData.questionPresetTags} onOpenModal={toggleJiJeongTagModal} />
-              {/* 엽전 현상금 */}
-              <YeopjeonRewardInput reward={formData.reward} onClick={toggleRewardModal} />
-              {/* 커스텀 태그 */}
-              <CustomTagsInput tags={formData.customTags} onClick={toggleCustomTagsModal} onRemoveTag={removeTag} />
-              {/* 추가 설정 */}
-              <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={handleIsPrivate} />
-
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={!isFormValid}
-                className={`font-pretendard-semibold w-full rounded-[10px] p-2 text-base text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
-              >
-                작성완료
-              </button>
-            </form>
-          )}
-
-          {/* 모달들 */}
-          {isSubjectModalOpen && (
-            <QnaPostSubjectModal
-              isVisible={isSubjectModalOpen}
-              subject={formData.subject}
-              onClose={toggleSubjectModal}
-              onSelectSubject={handleSubjectChange} // subject을 변경할 함수 전달
-            />
-          )}
-          {isRewardModalOpen && (
-            <QnaPostRewardModal
-              isVisible={isRewardModalOpen}
-              reward={formData.reward}
-              onClose={toggleRewardModal}
-              onSelectReward={handleReward} // reward 값을 변경할 함수 전달
-            />
-          )}
-          {isJiJeongTagModalOpen && (
-            <QnaPostJiJeongTagModal
-              isVisible={isJiJeongTagModalOpen}
-              onClose={toggleJiJeongTagModal}
-              selectedTags={formData.questionPresetTags}
-              onSubmitTags={handleJiJeongTagSelect}
-            />
-          )}
-          {isCustomTagsModalOpen && (
-            <QnaPostCustomTagsModal
-              isVisible={isCustomTagsModalOpen}
-              onClose={toggleCustomTagsModal}
-              initialTags={formData.customTags}
-              onTagsSubmit={handleCustomTagsSubmit}
-            />
-          )}
+            )}
+            {isRewardModalOpen && (
+              <QnaPostRewardModal
+                isVisible={isRewardModalOpen}
+                reward={formData.reward}
+                onClose={toggleRewardModal}
+                onSelectReward={handleReward} // reward 값을 변경할 함수 전달
+              />
+            )}
+            {isJiJeongTagModalOpen && (
+              <QnaPostJiJeongTagModal
+                isVisible={isJiJeongTagModalOpen}
+                onClose={toggleJiJeongTagModal}
+                selectedTags={formData.questionPresetTags}
+                onSubmitTags={handleJiJeongTagSelect}
+              />
+            )}
+            {isCustomTagsModalOpen && (
+              <QnaPostCustomTagsModal
+                isVisible={isCustomTagsModalOpen}
+                onClose={toggleCustomTagsModal}
+                initialTags={formData.customTags}
+                onTagsSubmit={handleCustomTagsSubmit}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

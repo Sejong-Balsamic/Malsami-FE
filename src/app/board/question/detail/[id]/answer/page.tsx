@@ -5,7 +5,6 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import AnswerPageNav from "@/components/nav/AnswerPageNav";
 import postAnswer from "@/apis/question/postAnswer";
 import { useDispatch } from "react-redux";
 import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
@@ -14,6 +13,8 @@ import AnswerInput from "@/components/questionAnswer/AnswerInput";
 import FileUploadInput from "@/components/questionPost/FileUploadInput";
 import PrivateSettingInput from "@/components/questionPost/PrivateSettingInput";
 import OriginalQuestion from "@/components/questionAnswer/OriginalQuestion";
+import CommonHeader from "@/components/header/CommonHeader";
+import { RIGHT_ITEM } from "@/types/header";
 
 interface AnswerPostFormData {
   content: string;
@@ -145,43 +146,47 @@ export default function AnswerPostPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <ScrollToTopOnLoad />
-      <AnswerPageNav />
-      <div className="w-full min-w-[386px] max-w-[640px] bg-white p-5">
-        <div>
+      <CommonHeader title="답변 작성" rightType={RIGHT_ITEM.NONE} />
+      {/* 헤더 아래 여백 추가 */}
+      <div className="mt-[64px]">
+        {" "}
+        <div className="w-full min-w-[386px] max-w-[640px] bg-white p-5">
           <div>
-            {/* 원문 */}
-            <OriginalQuestion questionPostId={questionPostId} />
-          </div>
-          {/* 로딩 중일 때 */}
-          {isSubmitting ? (
-            <div className="flex h-[500px] items-center justify-center">
-              <LoadingSpinner />
+            <div>
+              {/* 원문 */}
+              <OriginalQuestion questionPostId={questionPostId} />
             </div>
-          ) : (
-            <form>
-              {/* 답변 */}
-              <AnswerInput value={formData.content} onChange={handleChange} />
-              {/* 파일 업로드 */}
-              <FileUploadInput
-                mediaFiles={formData.mediaFiles}
-                onFileChange={handleFileChange}
-                onFileDelete={handleFileDelete}
-              />
-              {/* 추가 설정 */}
-              <PrivateSettingInput
-                isPrivate={formData.isPrivate}
-                onToggle={() => setFormData(prev => ({ ...prev, isPrivate: !prev.isPrivate }))}
-              />
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={!isFormValid}
-                className={`w-full rounded-md p-2 text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
-              >
-                답변 등록
-              </button>
-            </form>
-          )}
+            {/* 로딩 중일 때 */}
+            {isSubmitting ? (
+              <div className="flex h-[500px] items-center justify-center">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              <form>
+                {/* 답변 */}
+                <AnswerInput value={formData.content} onChange={handleChange} />
+                {/* 파일 업로드 */}
+                <FileUploadInput
+                  mediaFiles={formData.mediaFiles}
+                  onFileChange={handleFileChange}
+                  onFileDelete={handleFileDelete}
+                />
+                {/* 추가 설정 */}
+                <PrivateSettingInput
+                  isPrivate={formData.isPrivate}
+                  onToggle={() => setFormData(prev => ({ ...prev, isPrivate: !prev.isPrivate }))}
+                />
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={!isFormValid}
+                  className={`w-full rounded-md p-2 text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
+                >
+                  답변 등록
+                </button>
+              </form>
+            )}
+          </div>
         </div>
       </div>
     </div>

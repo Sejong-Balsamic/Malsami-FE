@@ -1,15 +1,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { MemberDto } from "@/types/api/responses/memberDto";
 
-interface InfoProps {
-  memberInfo: {
-    totalPopularPostCount: number;
-    totalCommentCount: number;
-    totalPostCount: number;
-  } | null;
-}
-
-function InfoList({ memberInfo }: InfoProps) {
+function InfoList({ memberDto }: { memberDto: MemberDto | null }) {
   const router = useRouter();
 
   return (
@@ -22,7 +15,7 @@ function InfoList({ memberInfo }: InfoProps) {
         >
           <div className="flex items-center gap-2">
             <Image src="/icons/mypage/Comment.svg" alt="Comment" width={18} height={18} className="h-[18px] w-[18px]" />
-            <span className="font-pretendard-medium text-[16px]">{memberInfo?.totalCommentCount}</span>
+            <span className="font-pretendard-medium text-[16px]">{memberDto?.totalCommentCount ?? 0}</span>
           </div>
           <div className="font-pretendard-medium text-[14px] text-[#737373]">내 댓글</div>
         </button>
@@ -34,7 +27,7 @@ function InfoList({ memberInfo }: InfoProps) {
         >
           <div className="flex items-center gap-2">
             <Image src="/icons/mypage/Post.svg" alt="Post" width={18} height={18} className="h-[18px] w-[18px]" />
-            <span className="font-pretendard-medium text-[16px]">{memberInfo?.totalPostCount}</span>
+            <span className="font-pretendard-medium text-[16px]">{memberDto?.totalPostCount ?? 0}</span>
           </div>
           <div className="font-pretendard-medium text-[14px] text-[#737373]">내 작성글</div>
         </button>
@@ -46,7 +39,7 @@ function InfoList({ memberInfo }: InfoProps) {
         >
           <div className="flex items-center gap-2">
             <Image src="/icons/mypage/Star.svg" alt="Star" width={18} height={18} className="h-[18px] w-[18px]" />
-            <span className="font-pretendard-medium text-[16px]">{memberInfo?.totalPopularPostCount}</span>
+            <span className="font-pretendard-medium text-[16px]">{memberDto?.totalPopularPostCount ?? 0}</span>
           </div>
           <div className="font-pretendard-medium text-[14px] text-[#737373]">인기 자료</div>
         </button>

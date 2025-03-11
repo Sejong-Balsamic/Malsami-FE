@@ -8,6 +8,7 @@ export const PostTiersKeys = ["CHEONMIN", "JUNGIN", "YANGBAN", "KING"] as const;
 export type PostTiersKey = (typeof PostTiersKeys)[number];
 
 // 매핑 객체. 객체의 키가 정의된 PostTiersKey 타입 내에서만 허용.
+// FIXME: 전체적으로 삭제 필요: types/api/constants/postTires.ts 사용합니다
 export const PostTiers: Record<PostTiersKey, { EN: string; KR: string }> = {
   CHEONMIN: { EN: "CHEONMIN", KR: "천민" },
   JUNGIN: { EN: "JUNGIN", KR: "중인" },

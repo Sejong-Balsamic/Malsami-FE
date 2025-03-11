@@ -2,17 +2,15 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
-import LandingHeader from "@/components/nav/LandingHeader";
 import BottomSheet, { BottomSheetTrigger } from "@/components/common/BottomSheet";
+import LandingHeader from "@/components/header/LandingHeader";
+
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
 import AllDocument from "@/components/landing/AllDocument";
 import AllQuestion from "@/components/landing/AllQuestion";
 import getAllDocuments from "@/apis/landing/getAllDocument";
 import getAllQuestions from "@/apis/landing/getAllQuestion";
-import { QuestionPost } from "@/types/apiTypes/question";
-import { DocumentPost } from "@/types/apiTypes/document";
-import getMyInfo from "@/apis/member/getMyInfo";
 import UploadFAB from "@/components/common/FABs/UploadLandingFAB";
 import ScrollFAB from "@/components/common/FABs/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
@@ -20,6 +18,10 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useDispatch } from "react-redux";
 import { showToast } from "@/global/toastUtils";
 import CardList from "@/components/common/CardList";
+import Card from "@/components/common/Card";
+import memberApi from "@/apis/memberApi";
+import { DocumentPost } from "@/types/api/entities/document";
+import { QuestionPost } from "@/types/api/entities/question";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);
@@ -66,7 +68,6 @@ function Page() {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
 
-      // 맨 아래에서 100px 여유를 둔 위치까지 스크롤하면 ScrollFAB 숨김
       setShowScrollFAB(currentScrollY + windowHeight < documentHeight - 100);
     };
 
@@ -74,10 +75,9 @@ function Page() {
     return () => window.removeEventListener("scroll", handleScrollForFAB);
   }, []);
 
-  // storeUserName 래핑
   const storeUserName = useCallback(async (): Promise<void> => {
     try {
-      const memberInfo = await getMyInfo();
+      const memberInfo = await memberApi.getMyInfo();
       const studentName = memberInfo?.member?.studentName || "종이";
       setUserName(studentName);
     } catch (error) {
@@ -87,7 +87,6 @@ function Page() {
     }
   }, [dispatch]);
 
-  // useEffect 의존성 배열 정리
   useEffect(() => {
     const initializeUserName = async () => {
       const accessToken = sessionStorage.getItem("accessToken");
@@ -102,7 +101,6 @@ function Page() {
     initializeUserName();
   }, [storeUserName]);
 
-  // 자료 출력
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
@@ -111,14 +109,13 @@ function Page() {
         setDocuments(allDocuments); // 상태에 저장
       } catch (error) {
         const message = "자료를 불러오지 못했습니다.";
-        showToast(dispatch, message, "orange"); // Toast로 에러 메시지 표시
+        showToast(dispatch, message, "orange");
       }
     };
 
     fetchDocuments();
   }, [dispatch]);
 
-  // 질문 출력
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -138,8 +135,7 @@ function Page() {
     <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <LandingHeader />
-      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
-        {/* 배경 이미지 */}
+      <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
         <div className="relative z-0 w-full">
           <Image
             src="/landing/LandingBackgroundImage.png"
@@ -150,13 +146,14 @@ function Page() {
             priority
           />
         </div>
-
+        
         <div className="relative z-40 flex flex-col items-center justify-center px-[20px]">
           <div ref={hotDocumentRef} className="w-full">
             <HotDocument />
           </div>
           <AllDocument documents={documents} />
-          {/* TODO: CardList, BottomSheet 테스트. 삭제 필요 */}
+
+          {/* FIX: CardList, BottomSheet 테스트. 삭제 필요 */}
           <BottomSheet
             onReset={handleBottomSheetReset}
             onConfirm={handleBottomSheetConfirm}
@@ -180,11 +177,22 @@ function Page() {
             <div>asdf</div>
           </BottomSheet>
           <CardList />
+          <Card
+            number={1}
+            subject="기초 3D 그래픽스"
+            title="기초 3D 그래픽스제목인데 길게 함 해봐야겠다"
+            content="A+비법 전수해준다. CAD옥테인 블랜더고인, 이렇게 설치 해요. 본문인데"
+            isCurrentlyPopular
+            likeCount={35}
+            customTags={["커스텀태그", "커스텀태그2"]}
+            isLiked
+            onClick={() => console.log("카드 클릭됨")}
+          />
+
           <HotQuestion />
           <AllQuestion questions={questions} />
           {searchVisible && <SearchBar userName={userName} />}
         </div>
-        {/* FAB */}
         <div className="fixed bottom-[30px] right-[20px] z-50">
           <div className="flex flex-col items-center space-y-4">
             <UploadFAB />

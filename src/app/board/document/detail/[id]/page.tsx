@@ -1,9 +1,10 @@
 "use client";
 
 import axios from "axios";
-import DetailPageNav from "@/components/nav/DDetailNav";
-import DocDetail from "@/components/documentDetail/DocDetail";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
+import CommonHeader from "@/components/header/CommonHeader";
+import { RIGHT_ITEM } from "@/types/header";
+import DocDetail from "@/components/documentDetail/DocDetail";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import getDocumentDetails from "@/apis/document/getDocumentDetails";
@@ -11,6 +12,11 @@ import { DocumentData } from "@/types/DocumentDetailData";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { useDispatch } from "react-redux";
 import { showToast } from "@/global/toastUtils";
+import { Drawer, DrawerContent } from "@/components/shadcn/drawer";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import Image from "next/image";
+import { Button } from "@/components/shadcn/button";
 
 export default function Page() {
   const router = useRouter();
@@ -24,6 +30,10 @@ export default function Page() {
   const [documentDetails, setDocumentDetails] = useState<DocumentData | null>(null);
   const [isloading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  // Drawer 열기/닫기 핸들러
+  const toggleDrawer = () => setIsDrawerOpen(prev => !prev);
 
   // API 호출 (postId 변경 시마다)
   useEffect(() => {
@@ -72,7 +82,7 @@ export default function Page() {
     return () => {
       isMounted = false;
     };
-  }, [postId, error, router]);
+  }, [postId, error, router, dispatch]);
 
   // 로딩 상태 처리
   if (isloading) return <LoadingSpinner />;
@@ -82,8 +92,34 @@ export default function Page() {
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
       <ScrollToTopOnLoad />
-      {documentDetails && <DetailPageNav documentData={documentDetails} />}
-      {documentDetails && <DocDetail documentData={documentDetails} />}
+      <CommonHeader title="자료 상세보기" rightType={RIGHT_ITEM.MENU} onRightClick={toggleDrawer} />
+      {/* 헤더 아래 여백 추가 */}
+      <div className="mt-[64px]">
+        {documentDetails && <DocDetail documentData={documentDetails} />}
+        {/* Drawer 컴포넌트 */}
+        <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
+          <DrawerContent>
+            <VisuallyHidden>
+              <h1>Options</h1>
+              <p>차피 안 보이는 부분</p>
+            </VisuallyHidden>
+            <div className="flex flex-col pb-[30px]">
+              <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
+                <Image src="/icons/Share.svg" alt="option" width={12} height={15} />
+                공유하기
+              </Button>
+              <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
+                <Image src="/icons/Block.svg" alt="option" width={12} height={12} />
+                차단하기
+              </Button>
+              <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
+                <Image src="/icons/Report.svg" alt="option" width={12} height={12} />
+                신고하기
+              </Button>
+            </div>
+          </DrawerContent>
+        </Drawer>
+      </div>
     </div>
   );
 }
