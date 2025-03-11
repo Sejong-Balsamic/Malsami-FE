@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
+import BottomSheet, { BottomSheetTrigger } from "@/components/common/BottomSheet";
 import LandingHeader from "@/components/header/LandingHeader";
-import FlyingBooks from "@/components/landing/FlyingBooks";
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
 import AllDocument from "@/components/landing/AllDocument";
@@ -32,6 +32,15 @@ function Page() {
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
   const dispatch = useDispatch();
 
+  const handleBottomSheetReset = () => {
+    console.log("필터 초기화");
+  };
+
+  const handleBottomSheetConfirm = () => {
+    console.log("필터 확인");
+  };
+
+  // 스크롤 이벤트
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -44,6 +53,7 @@ function Page() {
       }
 
       setScrollY(Math.min(currentScrollY, 3000));
+      console.log(scrollY); // TODO: 지워야함. eslint임시
       setSearchVisible(currentScrollY < threshold);
     };
 
@@ -121,7 +131,7 @@ function Page() {
   }, [dispatch]);
 
   return (
-    <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
+    <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <LandingHeader />
       <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
@@ -135,15 +145,37 @@ function Page() {
             priority
           />
         </div>
-        <div className="z-10">
-          <FlyingBooks scrollY={scrollY} studentName={userName} />
-        </div>
+
         <div className="relative z-40 flex flex-col items-center justify-center px-[20px]">
           <div ref={hotDocumentRef} className="w-full">
             <HotDocument />
           </div>
           <AllDocument documents={documents} />
-          {/* FIX: CardList Card테스트, 삭제 필요 */}
+
+          {/* FIX: CardList, BottomSheet 테스트. 삭제 필요 */}
+          <BottomSheet
+            onReset={handleBottomSheetReset}
+            onConfirm={handleBottomSheetConfirm}
+            trigger={BottomSheetTrigger}
+          >
+            <div>asdf</div>
+            <div>asdf</div>
+            <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div> <div>asdf</div>
+            <div>asdf</div>
+          </BottomSheet>
+
           <CardList />
           <Card
             number={1}

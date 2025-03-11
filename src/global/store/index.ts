@@ -8,6 +8,7 @@ import activeTab from "@/global/store/activeTabSlice";
 import toast from "@/global/store/toastSlice";
 import modal from "@/global/store/modalSlice";
 import fcmReducer from "@/global/store/fcmSlice";
+import bottomSheet from "@/global/store/bottomSheetSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,6 +21,7 @@ export const store = configureStore({
     docMyFacultyFilterOptions,
     docRequestFilterOptions,
     fcm: fcmReducer,
+    bottomSheet,
   },
 });
 
