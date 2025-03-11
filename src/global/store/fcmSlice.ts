@@ -1,3 +1,4 @@
+// src/global/store/fcmSlice.ts
 /* eslint-disable no-param-reassign */
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 

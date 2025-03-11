@@ -1,3 +1,4 @@
+// src/global/store/index.ts
 import { configureStore } from "@reduxjs/toolkit";
 import docHotDownFilterOptions from "@/global/store/docHotDownFilterOptionsSlice";
 import docMyFacultyFilterOptions from "@/global/store/docMyFacultyFilterOptionsSlice";

@@ -27,13 +27,13 @@ export function createFormData<T extends ApiCommand>(command: Partial<T>): FormD
 // 공통 POST 요청 메서드
 export async function postApiRequest<T extends ApiCommand, R>(url: string, command: Partial<T>): Promise<R> {
   const formData = createFormData(command);
+  // eslint-disable-next-line no-useless-catch
   try {
     const response = await apiClient.post<R>(url, formData, {
       headers: getAuthHeaders(),
     });
     return response.data;
   } catch (error) {
-    console.error(`${url} 요청 실패:`, error);
-    throw error;
+    throw error; // console.error 제거
   }
 }
