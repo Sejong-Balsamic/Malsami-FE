@@ -1,10 +1,10 @@
 import React from "react";
-import Image from "next/image";
+import IconWrapper21x21 from "../IconWrapper21x21";
 
 function YeopjeonTag({ point }: { point: number }) {
   return (
-    <span className="font-pretendard-semibold inline-block text-[12px] text-black">
-      <Image src="/icons/Yeopjeon.svg" width={14} height={14} alt="Yeopjeon" />
+    <span className="font-pretendard-semibold flex items-center text-[12px] text-black">
+      <IconWrapper21x21 src="/icons/custom/Yeopjeon.svg" />
       <span className="ml-1">{point}</span>
     </span>
   );
