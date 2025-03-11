@@ -4,7 +4,6 @@ import React, { useEffect, useState, useRef, useCallback } from "react";
 import Image from "next/image";
 import BottomSheet, { BottomSheetTrigger } from "@/components/common/BottomSheet";
 import LandingHeader from "@/components/header/LandingHeader";
-
 import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
 import AllDocument from "@/components/landing/AllDocument";
@@ -146,7 +145,7 @@ function Page() {
             priority
           />
         </div>
-        
+
         <div className="relative z-40 flex flex-col items-center justify-center px-[20px]">
           <div ref={hotDocumentRef} className="w-full">
             <HotDocument />
@@ -176,6 +175,7 @@ function Page() {
             <div>asdf</div> <div>asdf</div>
             <div>asdf</div>
           </BottomSheet>
+
           <CardList />
           <Card
             number={1}
