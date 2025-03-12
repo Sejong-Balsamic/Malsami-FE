@@ -1,3 +1,4 @@
+// src/apis/memberApi.ts
 import { MemberCommand } from "@/types/api/requests/memberCommand";
 import { MemberDto } from "@/types/api/responses/memberDto";
 import { postApiRequest } from "./apiUtils";
