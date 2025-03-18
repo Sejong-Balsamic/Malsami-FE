@@ -211,10 +211,13 @@ export default function QnaPostPage() {
       setIsUploading(true); // 업로딩 시작
       try {
         // 한글 태그를 API에서 사용하는 코드로 변환
-        const tagMapping = Object.entries(questionPresetTagLabels).reduce((acc, [code, label]) => {
-          acc[label] = code;
-          return acc;
-        }, {} as Record<string, string>);
+        const tagMapping = Object.entries(questionPresetTagLabels).reduce(
+          (acc, [code, label]) => {
+            acc[label] = code;
+            return acc;
+          },
+          {} as Record<string, string>,
+        );
 
         // questionApi 호출
         await questionApi.saveQuestionPost({
@@ -225,7 +228,7 @@ export default function QnaPostPage() {
           customTags: formData.customTags,
           rewardYeopjeon: formData.reward,
           isPrivate: formData.isPrivate,
-          attachmentFiles: formData.mediaFiles // 파일 첨부
+          attachmentFiles: formData.mediaFiles, // 파일 첨부
         });
 
         localStorage.removeItem("qnaPostFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
