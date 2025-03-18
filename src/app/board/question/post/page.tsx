@@ -23,6 +23,8 @@ import QnaPostJiJeongTagModal from "@/components/questionPost/QnaPostJiJeongTagM
 import QnaPostCustomTagsModal from "@/components/questionPost/QnaPostCustomTagsModal";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
+import questionApi from "@/apis/questionApi";
+import { QuestionPresetTag, questionPresetTagLabels } from "@/types/api/constants/questionPresetTag";
 
 interface QnaPostFormData {
   title: string;
@@ -190,9 +192,8 @@ export default function QnaPostPage() {
     }));
   };
 
-  // 폼 제출 핸들러
   const handleSubmit = async () => {
-    // 제목에 공백만 입력된 경우 확인
+    // 유효성 검사 (기존 코드 유지)
     if (!formData.title.trim()) {
       showToast("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
@@ -209,7 +210,24 @@ export default function QnaPostPage() {
     if (isFormValid) {
       setIsUploading(true); // 업로딩 시작
       try {
-        await postNewQna(formData); // API 호출
+        // 한글 태그를 API에서 사용하는 코드로 변환
+        const tagMapping = Object.entries(questionPresetTagLabels).reduce((acc, [code, label]) => {
+          acc[label] = code;
+          return acc;
+        }, {} as Record<string, string>);
+
+        // questionApi 호출
+        await questionApi.saveQuestionPost({
+          title: formData.title,
+          content: formData.content,
+          subject: formData.subject,
+          questionPresetTags: formData.questionPresetTags.map(tag => tagMapping[tag] as QuestionPresetTag),
+          customTags: formData.customTags,
+          rewardYeopjeon: formData.reward,
+          isPrivate: formData.isPrivate,
+          attachmentFiles: formData.mediaFiles // 파일 첨부
+        });
+
         localStorage.removeItem("qnaPostFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
         showToast("Q&A 게시글이 성공적으로 등록되었습니다.");
         router.push("/board/question");

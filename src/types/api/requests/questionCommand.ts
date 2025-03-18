@@ -16,6 +16,7 @@ export interface QuestionCommand {
   thumbnailUrl?: string;
   rewardYeopjeon?: number;
   customTags?: string[];
+  attachmentFiles?: File[]
 
   // 답변 관련
   answerPostId?: string;
