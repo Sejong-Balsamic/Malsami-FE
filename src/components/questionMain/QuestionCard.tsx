@@ -1,8 +1,8 @@
 import Image from "next/image";
 import { getDateDiff } from "@/global/time";
 import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
-import SubjectTag from "@/deprecated/SubjectTag";
 import ChaeTaekTag from "@/deprecated/ChaeTaekTag";
+import SubjectTag from "../common/tags/SubjectTag";
 
 interface QuestionCardProps {
   title: string;
@@ -30,7 +30,7 @@ function QuestionCard({
   return (
     <div className="... mb-3 flex flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]">
       <div className="mb-2.5 flex">
-        <SubjectTag subject={subject} />
+        <SubjectTag subjectName={subject} />
         {!chaetaekStatus && rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
         {chaetaekStatus && <ChaeTaekTag />}
       </div>

@@ -17,7 +17,7 @@
 import React from "react";
 import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
 import Image from "next/image";
-import JiJeongTag from "@/deprecated/JiJeongTag";
+import JiJeongTag from "@/components/common/tags/JiJeongTag";
 
 interface CategoryCardProps {
   title: string;
@@ -63,7 +63,7 @@ function QuestionCard({
             <div className="font-pretendard-bold line-clamp-2 pr-2 text-sm leading-[20px]">{title}</div>
             <div className="my-2 flex flex-wrap gap-1">
               {JiJeongTags.map(tag => (
-                <JiJeongTag key={tag} title={tagTranslations[tag] ?? tag} color={color} />
+                <JiJeongTag key={tag} title={tagTranslations[tag] ?? tag} />
               ))}
             </div>
           </div>
