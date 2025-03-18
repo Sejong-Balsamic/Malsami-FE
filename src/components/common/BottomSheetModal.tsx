@@ -1,5 +1,6 @@
 /* eslint-disable */
 
+// 삭제해야함. BottomSheet.tsx로 대체.
 import React, { ReactNode, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 

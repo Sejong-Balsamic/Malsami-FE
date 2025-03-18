@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import memberApi from "@/apis/memberApi";
 import { MemberCommand } from "@/types/api/requests/memberCommand";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import CustomInput from "../common/CustomInput";
 import LoginSuccessModal from "./LoginSuccessModal";
-import NewLoadingSpinner from "../common/NewLoadingSpinner";
 
 export default function LoginForm() {
   const [studentId, setStudentId] = useState<string>("");
@@ -91,7 +91,7 @@ export default function LoginForm() {
         </div>
 
         {/* Todo: 나중에 삭제해야함. */}
-        <NewLoadingSpinner />
+        <LoadingSpinner />
 
         {/* 로그인 제출 버튼 */}
         <div className="mb-[60px] mt-auto">
