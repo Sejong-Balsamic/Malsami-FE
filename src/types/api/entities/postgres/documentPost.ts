@@ -1,8 +1,9 @@
-// src/types/api/entities/documentPost.ts
+// src/types/api/entities/postgrs/documentPost.ts
 import { PostTier } from "@/types/api/constants/postTier";
-import { Member } from "./member";
+import { BasePost } from "@/types/api/entities/interface/basePost";
+import { Member } from "@/types/api/entities/postgres/member";
 
-export interface DocumentPost {
+export interface DocumentPost extends BasePost {
   documentPostId?: string;
   member?: Member;
   title?: string;
@@ -19,10 +20,4 @@ export interface DocumentPost {
   dailyScore?: number;
   weeklyScore?: number;
   isLiked?: boolean;
-  likeCount?: number;
-  viewCount?: number;
-  commentCount?: number;
-  isPrivate?: boolean;
-  createdDate?: string;
-  updatedDate?: string;
 }

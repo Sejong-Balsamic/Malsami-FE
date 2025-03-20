@@ -1,6 +1,6 @@
-// src/types/api/entities/exp.ts
+// src/types/api/entities/postgres/exp.ts
 import { ExpTier } from "@/types/api/constants/expTier";
-import { Member } from "./member";
+import { Member } from "@/types/api/entities/member";
 
 export interface Exp {
   expId?: string;

@@ -1,4 +1,4 @@
-// src/types/api/entities/questionPost.ts
+// src/types/api/entities/postgres/questionPost.ts
 import { BasePost } from "@/types/api/entities/interface/basePost";
 import { QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
 import { Member } from "./member";

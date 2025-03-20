@@ -1,4 +1,8 @@
 // src/types/api/requests/questionCommand.ts
+import { QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
+import { ContentType } from "@/types/api/constants/contentType";
+import { SortType } from "@/types/api/constants/sortType";
+import { ChaetaekStatus } from "@/types/api/constants/chaetaekStatus";
 
 export interface QuestionCommand {
   postId?: string;
@@ -8,14 +12,14 @@ export interface QuestionCommand {
   content?: string;
   subject?: string;
   attachmentFiles?: File[];
-  questionPresetTags?: QuestionPresetTagType[];
+  questionPresetTags?: QuestionPresetTag[];
   customTags?: string[];
   rewardYeopjeon?: number;
-  contentType?: ContentTypeType;
+  contentType?: ContentType;
   isPrivate?: boolean;
   pageNumber?: number;
   pageSize?: number;
   faculty?: string;
-  sortType?: SortTypeType;
-  chaetaekStatus?: ChaetaekStatusType;
+  sortType?: SortType;
+  chaetaekStatus?: ChaetaekStatus;
 }

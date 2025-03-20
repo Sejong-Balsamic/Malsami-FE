@@ -1,4 +1,4 @@
-// src/types/api/entities/mediaFile.ts
+// src/types/api/entities/postgres/mediaFile.ts
 import { ContentType } from "@/types/api/constants/contentType";
 import { BaseEntity } from "@/types/api/entities/interface/baseEntity";
 

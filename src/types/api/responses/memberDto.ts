@@ -1,14 +1,18 @@
 // src/types/api/response/memberDto.ts
-import { Page } from "@/types/api/entities/page";
-import { Member } from "../entities/member";
-import { Yeopjeon } from "../entities/yeopjeon";
-import { Exp } from "../entities/exp";
-import { QuestionPost } from "../entities/questionPost";
-import { DocumentPost } from "../entities/documentPost";
-import { DocumentRequestPost } from "../entities/documentRequestPost";
+
+import { TestMember } from "@/types/api/entities/postgres/testMember";
+import { Page } from "@/types/api/entities/interface/page";
+import { Yeopjeon } from "@/types/api/entities/postgres/yeopjeon";
+import { Exp } from "@/types/api/entities/postgres/exp";
+import { Member } from "@/types/api/entities/postgres/member";
+import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
+import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
+import { DocumentRequestPost } from "@/types/api/entities/postgres/documentRequestPost";
 
 export interface MemberDto {
   member?: Member;
+  testMember?: TestMember;
+  testMembersPage?: Page<TestMember>;
   major?: string;
   studentIdString?: string;
   studentName?: string;

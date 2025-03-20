@@ -1,4 +1,4 @@
-// src/types/api/entities/yeopjeon.ts
+// src/types/api/entities/postgres/yeopjeon.ts
 import { Member } from "./member";
 
 export interface Yeopjeon {

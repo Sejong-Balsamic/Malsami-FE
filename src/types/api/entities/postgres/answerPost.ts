@@ -1,9 +1,9 @@
-// src/types/api/entities/answerPost.ts
+// src/types/api/entities/postgres/answerPost.ts
 
 import { QuestionPost } from "@/types/api/entities/questionPost";
 import { MediaFile } from "@/types/api/entities/mediaFile";
 import { BasePost } from "@/types/api/entities/interface/basePost";
-import { Member } from "./member";
+import { Member } from "@/types/api/entities/member";
 
 export interface AnswerPost extends BasePost {
   answerPostId?: string;

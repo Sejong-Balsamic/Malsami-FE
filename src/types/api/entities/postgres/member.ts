@@ -1,9 +1,10 @@
-// src/types/api/entities/member.ts
+// src/types/api/entities/postgres/member.ts
 
 import { Role } from "@/types/api/constants/role";
 import { AccountStatus } from "@/types/api/constants/accountStatus";
+import { BaseEntity } from "@/types/api/entities/interface/baseEntity";
 
-export interface Member {
+export interface Member extends BaseEntity {
   memberId?: string;
   studentId?: number;
   studentName?: string;
