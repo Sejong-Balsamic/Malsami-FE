@@ -6,7 +6,7 @@ import facultys from "@/types/facultys";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import { DocTypesKeys, DocTypes } from "@/types/docTypes";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
-import { DocSortType, sortTypeLabels } from "@/types/api/constants/sortTypes";
+import { DocSortType, sortTypeLabels } from "@/types/api/constants/sortType";
 
 interface DocRequestFilterOptionsModalProps {
   isVisible: boolean; // 모달 표시 여부

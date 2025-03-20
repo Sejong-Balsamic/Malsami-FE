@@ -1,4 +1,5 @@
-import { DocumentType } from "@/types/api/constants/documentTypes";
+// src/types/api/entities/documentRequestPost.ts
+import { DocumentType } from "@/types/api/constants/documentType";
 import { Member } from "./member";
 
 export interface DocumentRequestPost {

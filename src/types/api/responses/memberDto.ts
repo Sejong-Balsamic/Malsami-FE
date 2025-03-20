@@ -1,18 +1,11 @@
 // src/types/api/response/memberDto.ts
+import { Page } from "@/types/api/entities/page";
 import { Member } from "../entities/member";
 import { Yeopjeon } from "../entities/yeopjeon";
 import { Exp } from "../entities/exp";
 import { QuestionPost } from "../entities/questionPost";
 import { DocumentPost } from "../entities/documentPost";
 import { DocumentRequestPost } from "../entities/documentRequestPost";
-
-export interface Page<T> {
-  content: T[];
-  totalElements: number;
-  totalPages: number;
-  number: number;
-  size: number;
-}
 
 export interface MemberDto {
   member?: Member;

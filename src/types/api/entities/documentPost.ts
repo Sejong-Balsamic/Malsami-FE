@@ -1,5 +1,5 @@
 // src/types/api/entities/documentPost.ts
-import { PostTier } from "@/types/api/constants/postTiers";
+import { PostTier } from "@/types/api/constants/postTier";
 import { Member } from "./member";
 
 export interface DocumentPost {

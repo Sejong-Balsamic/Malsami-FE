@@ -1,6 +1,7 @@
-// src/types/api/entities/questionBoardLike.ts
-import { ContentType } from "../constants/contentTypes";
-import { BaseMongoEntity } from "./baseMongoEntity";
+// src/types/api/entities/mongo/questionBoardLike.ts
+
+import { ContentType } from "@/types/api/constants/contentType";
+import { BaseMongoEntity } from "@/types/api/entities/interface/baseMongoEntity";
 
 export interface QuestionBoardLike extends BaseMongoEntity {
   questionBoardLikeId?: string;

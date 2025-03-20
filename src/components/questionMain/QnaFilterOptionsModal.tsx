@@ -6,7 +6,7 @@ import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import { ChaetaekStatusKeys, ChaetaekStatus } from "@/types/chaetaekStatus";
 import { QnaPresetTagKeys, QnaPresetTags } from "@/types/qnaPresetTags";
-import { QnaSortType, sortTypeLabels } from "@/types/api/constants/sortTypes";
+import { QnaSortType, sortTypeLabels } from "@/types/api/constants/sortType";
 
 interface QnaFilterOptionsModalProps {
   isVisible: boolean; // 모달 표시 여부

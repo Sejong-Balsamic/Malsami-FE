@@ -1,7 +1,7 @@
-import { ContentType } from "@/types/api/constants/contentTypes";
-import { CommonSortType } from "@/types/api/constants/sortTypes";
+import { CommonSortType } from "@/types/api/constants/sortType";
 import { AccountStatus } from "@/types/api/constants/accountStatus";
 import { Role } from "@/types/api/constants/role";
+import { ContentType } from "@/types/api/constants/contentTypes";
 
 export interface MemberCommand {
   memberId?: string;

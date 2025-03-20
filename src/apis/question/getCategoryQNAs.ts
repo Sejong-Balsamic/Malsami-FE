@@ -1,6 +1,6 @@
 import { ChaetaekStatusKey } from "@/types/chaetaekStatus";
 import { QnaPresetTagsKey } from "@/types/qnaPresetTags";
-import { QnaSortType } from "@/types/api/constants/sortTypes";
+import { SortType } from "@/types/api/constants/sortType";
 import { apiClient } from "../appClient";
 
 interface GetCategoryQnasProps {
@@ -9,7 +9,7 @@ interface GetCategoryQnasProps {
   maxYeopjeon?: number; // 엽전 현상금 최대 개수
   qnaPresetTags?: QnaPresetTagsKey[]; // 정적 태그 필터링
   chaetaekStatus?: ChaetaekStatusKey; // 채택여부 필터링
-  sortType?: QnaSortType; // 정렬 조건
+  sortType?: SortType; // 정렬 조건
   faculty?: string; // 단과대 필터링 (REDUX: selectedFacultyMapByBoard["question"]의 value)
   isAllFacultySelected?: boolean; // 단고대가 "전체"로 선택된 여부
   pageNumber?: number; // 조회하고 싶은 페이지 번호 (기본값 0)

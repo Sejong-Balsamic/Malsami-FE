@@ -1,5 +1,5 @@
 import { apiClient } from "@/apis/appClient";
-import { DocumentData } from "@/types/api/entities/document";
+import { DocumentData } from "@/types/api/document";
 
 export default async function getAllDocuments(): Promise<DocumentData> {
   try {

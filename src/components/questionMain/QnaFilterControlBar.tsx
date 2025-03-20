@@ -3,7 +3,7 @@ import Image from "next/image";
 import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import { QnaPresetTags, QnaPresetTagsKey } from "@/types/qnaPresetTags";
 import { ChaetaekStatusKey, ChaetaekStatus } from "@/types/chaetaekStatus";
-import { sortTypeLabels } from "@/types/api/constants/sortTypes";
+import { sortTypeLabels } from "@/types/api/constants/sortType";
 import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import QnaFilterOptionsModal from "./QnaFilterOptionsModal";
 

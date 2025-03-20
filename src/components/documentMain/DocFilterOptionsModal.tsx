@@ -5,7 +5,7 @@ import Image from "next/image";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { DocTypesKeys, DocTypes } from "@/types/docTypes";
-import { DocSortType, sortTypeLabels } from "@/types/api/constants/sortTypes";
+import { DocSortType, sortTypeLabels } from "@/types/api/constants/sortType";
 
 interface DocFilterOptionsModalProps {
   isVisible: boolean; // 모달 표시 여부

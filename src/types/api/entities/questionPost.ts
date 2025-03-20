@@ -1,13 +1,16 @@
 // src/types/api/entities/questionPost.ts
+import { BasePost } from "@/types/api/entities/interface/basePost";
+import { QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
 import { Member } from "./member";
 
-export interface QuestionPost {
+export interface QuestionPost extends BasePost {
   questionPostId?: string;
   member?: Member;
   title?: string;
   content?: string;
   subject?: string;
   faculties?: string[];
+  questionPresetTags?: QuestionPresetTag[];
   thumbnailUrl?: string;
   answerCount?: number;
   rewardYeopjeon?: number;
@@ -15,10 +18,5 @@ export interface QuestionPost {
   dailyScore?: number;
   weeklyScore?: number;
   isLiked?: boolean;
-  likeCount?: number;
-  viewCount?: number;
-  commentCount?: number;
-  isPrivate?: boolean;
-  createdDate?: string;
-  updatedDate?: string;
+  customTags?: string[];
 }

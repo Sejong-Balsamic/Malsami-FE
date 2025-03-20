@@ -1,5 +1,5 @@
 import { DocTypesKey } from "@/types/docTypes";
-import { CommonSortType } from "@/types/api/constants/sortTypes";
+import { CommonSortType } from "@/types/api/constants/sortType";
 
 export interface DocFilterOptions {
   docTypes: DocTypesKey[];

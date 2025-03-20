@@ -1,4 +1,4 @@
-// src/types/api/entities/baseEntity.ts
+// src/types/api/entities/interface/baseEntity.ts
 export interface BaseEntity {
   createdDate?: string;
   updatedDate?: string;

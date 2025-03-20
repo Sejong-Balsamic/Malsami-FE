@@ -1,4 +1,4 @@
-import { Answer } from "@/types/api/entities/answer";
+import { Answer } from "@/types/api/answer";
 import { apiClient } from "../appClient";
 
 interface GetAnswerResponse {
