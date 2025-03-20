@@ -2,8 +2,9 @@
 
 import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { login } from "@/apis/auth/auth";
 import Image from "next/image";
+import memberApi from "@/apis/memberApi";
+import { MemberCommand } from "@/types/api/requests/memberCommand";
 import CustomInput from "../common/CustomInput";
 import LoginSuccessModal from "./LoginSuccessModal";
 import NewLoadingSpinner from "../common/NewLoadingSpinner";
@@ -14,14 +15,14 @@ export default function LoginForm() {
   const [loginFailedMessage, setLoginFailedMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
-  const [isFirstLogin, setIsFirstLogin] = useState<boolean>(false);
-  const [userName, setUserName] = useState<string>(""); // 사용자 이름 상태 추가
-  const [isFormValid, setIsFormValid] = useState<boolean>(false); // 폼 유효성 상태 추가
+  const [, setIsFirstLogin] = useState<boolean>(false);
+  const [userName, setUserName] = useState<string>("");
+  const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
-  const router = useRouter(); // useRouter 사용
+  const router = useRouter();
 
   useEffect(() => {
-    setIsFormValid(!!studentId.trim() && !!password.trim()); // 학번,비밀번호가 비어있는지 확인
+    setIsFormValid(!!studentId.trim() && !!password.trim());
   }, [studentId, password]);
 
   const handleLogin = async (e: FormEvent) => {
@@ -29,13 +30,27 @@ export default function LoginForm() {
     setIsLoading(true);
 
     try {
-      const getUserInfo = await login(studentId, password);
-      setLoginFailedMessage(null);
-      setUserName(getUserInfo.member.studentName);
-      setIsFirstLogin(getUserInfo.member.isFirstLogin);
-      if (isFirstLogin) setIsLoginModalOpen(true);
-      else router.push("/");
+      const command: Partial<MemberCommand> = {
+        sejongPortalId: studentId,
+        sejongPortalPassword: password,
+      };
+      const getUserInfo = await memberApi.signIn(command);
+
+      if (getUserInfo.member) {
+        setUserName(getUserInfo.member.studentName || "");
+        setIsFirstLogin(getUserInfo.isFirstLogin || false);
+        setLoginFailedMessage(null);
+
+        if (getUserInfo.isFirstLogin) {
+          setIsLoginModalOpen(true);
+        } else {
+          router.push("/");
+        }
+      } else {
+        setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+      }
     } catch (error) {
+      console.error("로그인 실패:", error);
       setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsLoading(false);
@@ -43,8 +58,8 @@ export default function LoginForm() {
   };
 
   const handleModalClose = () => {
-    setIsLoginModalOpen(false); // 모달 닫기
-    router.push("/"); // 홈 화면으로 이동
+    setIsLoginModalOpen(false);
+    router.push("/");
   };
 
   return (

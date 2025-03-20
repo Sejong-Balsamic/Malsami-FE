@@ -10,7 +10,7 @@ import { QuestionData } from "@/types/api/QuestionDetailData";
 import CommentSection from "./QCommentSection";
 import sameMember from "@/global/sameMember";
 import AttachedFiles from "@/components/common/AttachedFiles";
-import JiJeongTag from "@/deprecated/JiJeongTag";
+import JiJeongTag from "@/components/common/tags/JiJeongTag";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -104,7 +104,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
           <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
             <div className="flex h-full w-full items-center gap-[4px]">
               {questionData.customTags.map((tag, index) => (
-                <JiJeongTag key={index} title={tag} color="#aaaaaa" />
+                <JiJeongTag key={index} title={tag} />
               ))}
             </div>
           </div>

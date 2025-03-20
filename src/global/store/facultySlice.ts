@@ -19,7 +19,7 @@ const initialState: FacultyState = {
 };
 
 const facultySlice = createSlice({
-  name: "facultyState",
+  name: "faculty",
   initialState,
   reducers: {
     // 게시판별 선택 단과대 설정
