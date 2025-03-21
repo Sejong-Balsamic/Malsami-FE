@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/shadcn/checkbox";
 import Image from "next/image";
 import postComment from "@/apis/question/postComment";
 import refreshComments from "@/apis/question/refreshComments";
-import { Comment } from "@/types/api/entities/comment";
+import { Comment } from "@/types/api/entities/postgres/comment";
 import { getDateDiff } from "@/global/time";
 import postLikeComment from "@/apis/question/postLikeComment";
 import sameMember from "@/global/sameMember";

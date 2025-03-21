@@ -4,12 +4,12 @@ import { ContentType } from "@/types/api/constants/contentType";
 import { Member } from "@/types/api/entities/postgres/member";
 
 export interface Comment extends BaseEntity {
-  commentId?: string;
-  member?: Member;
-  postId?: string;
-  content?: string;
-  likeCount?: number;
-  contentType?: ContentType;
-  isPrivate?: boolean;
-  isLiked?: boolean;
+  commentId: string;
+  member: Member;
+  postId: string;
+  content: string;
+  likeCount: number;
+  contentType: ContentType;
+  isPrivate: boolean;
+  isLiked: boolean;
 }

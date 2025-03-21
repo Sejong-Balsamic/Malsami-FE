@@ -23,7 +23,7 @@ import QnaPostCustomTagsModal from "@/components/questionPost/QnaPostCustomTagsM
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import questionApi from "@/apis/questionApi";
-import { QuestionPresetTag, questionPresetTagLabels } from "@/types/api/constants/questionPresetTag";
+import { QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
 
 interface QnaPostFormData {
   title: string;
@@ -210,7 +210,7 @@ export default function QnaPostPage() {
       setIsUploading(true); // 업로딩 시작
       try {
         // 한글 태그를 API에서 사용하는 코드로 변환
-        const tagMapping = Object.entries(questionPresetTagLabels).reduce(
+        const tagMapping = Object.entries(QuestionPresetTag).reduce(
           (acc, [code, label]) => {
             acc[label] = code;
             return acc;

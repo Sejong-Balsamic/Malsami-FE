@@ -1,9 +1,10 @@
+import { ContentType } from "@/types/api/constants/contentType";
 import { apiClient } from "../appClient";
 
 interface PostCommentParams {
   content: string;
   postId: string;
-  contentType: "QUESTION" | "ANSWER" | "DOCUMENT" | "DOCUMENT_REQUEST";
+  contentType: ContentType;
   isPrivate?: boolean;
 }
 

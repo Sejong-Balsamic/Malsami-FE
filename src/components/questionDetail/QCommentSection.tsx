@@ -4,7 +4,7 @@ import { Checkbox } from "@/components/shadcn/checkbox";
 import Image from "next/image";
 import postComment from "@/apis/question/postComment";
 import refreshComments from "@/apis/question/refreshComments";
-import { Comment } from "@/types/api/entities/comment";
+import { Comment } from "@/types/api/entities/postgres/comment";
 import { getDateDiff } from "@/global/time";
 import postLikeComment from "@/apis/question/postLikeComment";
 import sameMember from "@/global/sameMember";
@@ -83,20 +83,21 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
 
     const comment = updatedComments[commentIndex];
     if (comment.isLiked) return; // 이미 좋아요를 눌렀다면 실행하지 않음
-    if (sameMember(comment.member.memberId)) return; // 작성자가 좋아요를 누르지 못하도록 차단
+    if (!sameMember(comment.member?.memberId as string)) {
+      try {
+        updatedComments[commentIndex].isLiked = true; // 즉시 반영: 버튼 비활성화 및 색상 변경
+        updatedComments[commentIndex].likeCount += 1; // 즉시 반영: 좋아요 숫자 증가
+        setComments(updatedComments);
 
-    try {
-      updatedComments[commentIndex].isLiked = true; // 즉시 반영: 버튼 비활성화 및 색상 변경
-      updatedComments[commentIndex].likeCount += 1; // 즉시 반영: 좋아요 숫자 증가
-      setComments(updatedComments);
-
-      await postLikeComment(commentId); // API 호출
-    } catch (error) {
-      console.error("댓글 좋아요 실패:", error);
-      updatedComments[commentIndex].isLiked = false; // 실패 시 롤백
-      updatedComments[commentIndex].likeCount -= 1; // 숫자도 원래대로 롤백
-      setComments(updatedComments);
-    }
+        await postLikeComment(commentId); // API 호출
+      } catch (error) {
+        console.error("댓글 좋아요 실패:", error);
+        updatedComments[commentIndex].isLiked = false; // 실패 시 롤백
+        updatedComments[commentIndex].likeCount -= 1; // 숫자도 원래대로 롤백
+        setComments(updatedComments);
+      }
+    } else {
+    } // 작성자가 좋아요를 누르지 못하도록 차단
   };
 
   return (
@@ -146,13 +147,13 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
               <div className="flex items-center gap-[8px]">
                 {!comment.isPrivate ? (
                   <span className="font-pretendard-bold text-[14px] text-[#09bba2]">
-                    @{comment.member.uuidNickname}
+                    @{comment.member?.uuidNickname as string}
                   </span>
                 ) : (
                   <span className="font-pretendard-bold text-[14px]">익명</span>
                 )}
                 <div className="font-pretendard-medium text-[12px] text-[#bcbcbc]">
-                  {getDateDiff(comment.createdDate)}
+                  {getDateDiff(comment.createdDate as string)}
                 </div>
               </div>
               <p className="font-pretendard-medium my-[10px] min-h-[20px] w-full text-[14px] text-[#7b7b7c]">
@@ -161,7 +162,7 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
               <div className="flex justify-end">
                 <button
                   type="button" // 명시적으로 type을 설정
-                  onClick={() => handleLikeClick(comment.commentId)} // 좋아요 클릭 핸들러
+                  onClick={() => handleLikeClick(comment.commentId as string)} // 좋아요 클릭 핸들러
                   disabled={comment.isLiked} // 좋아요가 눌린 상태라면 버튼 비활성화
                   className={`flex h-[30px] items-center justify-center gap-[5px] border-none bg-transparent ${
                     comment.isLiked ? "cursor-default text-[#03b89e]" : "cursor-pointer text-[#aaaaaa]"
