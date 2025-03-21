@@ -11,7 +11,7 @@ function OriginalQuestion({ questionPostId }: { questionPostId: string }) {
     const fetchQuestionContent = async () => {
       try {
         const response = await getQuestionDetails(questionPostId);
-        setContent(response.questionPost.content);
+        setContent(response.questionPost?.content as string);
       } catch (error) {
         console.error("Failed to fetch question content:", error);
         setContent("질문 내용을 불러오는 데 실패했습니다.");

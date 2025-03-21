@@ -10,4 +10,5 @@ export const ContentType = {
   DOCUMENT_REQUEST: "DOCUMENT_REQUEST",
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type ContentType = keyof typeof ContentType;

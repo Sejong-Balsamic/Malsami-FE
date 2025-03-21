@@ -6,6 +6,7 @@ export const ImageQuality = {
   LOW: "LOW",
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type ImageQuality = keyof typeof ImageQuality;
 
 export const imageQualitySettings: Record<ImageQuality, { scale: number; outputQuality: number }> = {

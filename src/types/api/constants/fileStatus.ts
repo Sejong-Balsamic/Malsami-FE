@@ -12,4 +12,5 @@ export const FileStatus = {
   FAILURE: "FAILURE",
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type FileStatus = keyof typeof FileStatus;

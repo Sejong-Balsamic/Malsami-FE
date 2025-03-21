@@ -9,4 +9,5 @@ export const QuestionPresetTag = {
   ADVICE_REQUEST: "ADVICE_REQUEST",
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type QuestionPresetTag = keyof typeof QuestionPresetTag;

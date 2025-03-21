@@ -97,6 +97,7 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
         setComments(updatedComments);
       }
     } else {
+      /* empty */
     } // 작성자가 좋아요를 누르지 못하도록 차단
   };
 

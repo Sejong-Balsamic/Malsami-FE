@@ -14,4 +14,5 @@ export const ReportReason = {
   OTHER: "OTHER",
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type ReportReason = keyof typeof ReportReason;

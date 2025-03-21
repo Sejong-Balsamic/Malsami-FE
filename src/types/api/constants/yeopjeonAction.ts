@@ -21,4 +21,5 @@ export const YeopjeonAction = {
   ADMIN_ADJUST: "ADMIN_ADJUST",
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type YeopjeonAction = keyof typeof YeopjeonAction;

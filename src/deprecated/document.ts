@@ -1,4 +1,4 @@
-import { Member } from "@/types/api/entities/member";
+import { Member } from "@/types/api/entities/postgres/member";
 
 export interface DocumentPost {
   createdDate: string;

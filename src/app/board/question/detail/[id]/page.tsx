@@ -87,7 +87,7 @@ export default function Page() {
       <div className="mt-[64px]">
         {questionDetails && (
           <>
-            <QnaDetail questionData={questionDetails} />
+            <QnaDetail questionDto={questionDetails} />
             {!isAuthor && <AnswerFAB postId={questionDetails.questionPost?.questionPostId as string} />}
           </>
         )}

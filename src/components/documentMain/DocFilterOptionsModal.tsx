@@ -5,24 +5,27 @@ import Image from "next/image";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { DocTypesKeys, DocTypes } from "@/types/docTypes";
-import { DocSortType, sortTypeLabels } from "@/types/api/constants/sortType";
+import { SortType, sortTypeLabels } from "@/types/api/constants/sortType";
 
 interface DocFilterOptionsModalProps {
-  isVisible: boolean; // 모달 표시 여부
-  onClose: () => void; // 모달을 닫는 함수
-  initialFilterOptions: DocFilterOptions; // 필터 옵션의 초기값
-  onApplyFilter: (filters: DocFilterOptions) => void; // 필터 적용 함수
-  children?: ReactNode; // 모달 내용으로 표시할 컴포넌트나 요소들
+  isVisible: boolean;
+  onClose: () => void;
+  initialFilterOptions: DocFilterOptions;
+  onApplyFilter: (filters: DocFilterOptions) => void;
+  children?: ReactNode;
 }
 
+// SortType의 키 배열을 상수로 정의
+const SORT_TYPE_KEYS = Object.keys(sortTypeLabels) as SortType[];
+
 const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
-  isVisible,
-  onClose,
-  initialFilterOptions,
-  onApplyFilter,
-}) => {
+                                                                       isVisible,
+                                                                       onClose,
+                                                                       initialFilterOptions,
+                                                                       onApplyFilter,
+                                                                     }) => {
   const [showModal, setShowModal] = useState(false);
-  const [modalHeight, setModalHeight] = useState("50vh"); // 초기 modalHeight 50%로 설정
+  const [modalHeight, setModalHeight] = useState("50vh");
   const contentRef = useRef<HTMLDivElement>(null);
 
   const [docTypes, setDocTypes] = useState(initialFilterOptions.docTypes);
@@ -32,7 +35,6 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
     onApplyFilter({ docTypes, sortType });
   };
 
-  // 필터 초기화 함수
   const resetFilters = () => {
     setDocTypes([]);
     setSortType(undefined);
@@ -43,21 +45,20 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
   useEffect(() => {
     if (isVisible) {
       setShowModal(true);
-      document.body.style.overflow = "hidden"; // 배경 스크롤 비활성화
+      document.body.style.overflow = "hidden";
     } else {
-      setTimeout(() => setShowModal(false), 300); // 애니메이션 후 숨김 처리
-      document.body.style.overflow = ""; // 스크롤 복구
+      setTimeout(() => setShowModal(false), 300);
+      document.body.style.overflow = "";
     }
     return () => {
-      document.body.style.overflow = ""; // 모달이 사라질 때 스크롤 복구
+      document.body.style.overflow = "";
     };
   }, [isVisible]);
 
-  // 스크롤 하면 모달 창 크게하는 함수 (height 50% -> 75%로)
   const handleScroll = () => {
     const content = contentRef.current;
     if (content) {
-      const scrollThreshold = 30; // 스크롤이 30px 이상 내려가면 모달 크기를 확장
+      const scrollThreshold = 30;
       if (content.scrollTop > scrollThreshold && modalHeight === "50vh") {
         setModalHeight("75vh");
       }
@@ -72,11 +73,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
             isVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          {/* 반투명한 배경 오버레이 */}
           <div className="absolute inset-0 bg-black opacity-50" onClick={onClose} />
-
-          {/* 모달 컨텐츠 */}
-          {/* 스크롤바 없애기 */}
           <style jsx>{`
             div::-webkit-scrollbar {
               display: none;
@@ -87,20 +84,17 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
             style={{
               maxHeight: modalHeight,
               transform: isVisible ? "translateY(0)" : "translateY(100%)",
-              transition: "transform 0.5s ease-out, max-height 0.5s ease", // transform에 대한 트랜지션 추가
+              transition: "transform 0.5s ease-out, max-height 0.5s ease",
             }}
             onClick={e => e.stopPropagation()}
           >
-            {/* 닫기 버튼 */}
             <button onClick={onClose} className="absolute right-[30px] top-[38px]">
               <Image src="/icons/CloseIcon.svg" alt="Close" width={20} height={20} />
             </button>
-
-            {/* 모달 스크롤 가능한 컨텐츠 */}
             <div
               className="overflow-y-auto"
               style={{
-                height: `calc(${modalHeight} - 72px)`, // 72px 하단영역을 제외한 높이 설정
+                height: `calc(${modalHeight} - 72px)`,
                 paddingBottom: "70px",
               }}
               onScroll={handleScroll}
@@ -109,7 +103,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
               <>
                 <h1 className="font-pretendard-bold mb-[20px] text-xl">정렬</h1>
                 <div className="mb-[30px] flex flex-col">
-                  {DocSortType.map(docSortType => (
+                  {SORT_TYPE_KEYS.map(docSortType => (
                     <li key={docSortType} className="flex rounded-xl py-[10px]">
                       <div
                         className="flex w-full cursor-pointer flex-row justify-between"
@@ -118,11 +112,12 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                       >
                         {sortType === docSortType ? (
                           <span className="font-pretendard-bold text-base text-custom-blue-500">
-                            {/* docSortTypeKey로 라벨링 매핑 */}
                             {sortTypeLabels[docSortType]}
                           </span>
                         ) : (
-                          <span className="font-pretendard-medium text-base">{sortTypeLabels[docSortType]}</span>
+                          <span className="font-pretendard-medium text-base">
+                            {sortTypeLabels[docSortType]}
+                          </span>
                         )}
                         {sortType === docSortType ? (
                           <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
@@ -142,25 +137,22 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                     <button
                       key={docTypeKey}
                       onClick={() =>
-                        setDocTypes(
-                          prevTags =>
-                            prevTags.includes(docTypeKey)
-                              ? prevTags.filter(t => t !== docTypeKey)
-                              : [...prevTags, docTypeKey].slice(0, 2), // 태그 선택 2개만 가능하게
+                        setDocTypes(prevTags =>
+                          prevTags.includes(docTypeKey)
+                            ? prevTags.filter(t => t !== docTypeKey)
+                            : [...prevTags, docTypeKey].slice(0, 2),
                         )
                       }
                       className={`font-pretendard-bold rounded-[40px] border-2 border-custom-blue-500 px-3 py-1 text-xs ${
                         docTypes.includes(docTypeKey) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
                       }`}
                     >
-                      {DocTypes[docTypeKey]} {/* 한글 라벨 표시 */}
+                      {DocTypes[docTypeKey]}
                     </button>
                   ))}
                 </div>
                 <button
-                  onClick={() => {
-                    resetFilters(); // 필터 초기화
-                  }}
+                  onClick={resetFilters}
                   className="font-pretendard-medium flex flex-row gap-x-1 text-sm text-[#A4A4A4]"
                 >
                   <Image src="/icons/ResetIcon.svg" alt="Reset" width={14} height={17} />
@@ -168,8 +160,6 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                 </button>
               </>
             </div>
-
-            {/* 고정된 SubmitFormBtn */}
             <div className="absolute bottom-0 left-0 w-full bg-white px-[30px] py-4">
               <SubmitFormBtn onClick={handleApply} />
             </div>

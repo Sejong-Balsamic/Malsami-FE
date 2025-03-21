@@ -5,4 +5,5 @@ export const DocumentType = {
   SOLUTION: "SOLUTION",
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type DocumentType = keyof typeof DocumentType;

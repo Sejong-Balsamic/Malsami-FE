@@ -6,4 +6,5 @@ export const UploadType = {
   MUSIC: "MUSIC",
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type UploadType = keyof typeof UploadType;

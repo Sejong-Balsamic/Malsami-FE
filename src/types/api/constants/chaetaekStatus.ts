@@ -5,4 +5,5 @@ export const ChaetaekStatus = {
   NO_CHAETAEK: "NO_CHAETAEK",
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type ChaetaekStatus = keyof typeof ChaetaekStatus;

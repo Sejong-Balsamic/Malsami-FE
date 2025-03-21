@@ -6,4 +6,5 @@ export const PostTier = {
   KING: "KING",
 } as const;
 
+// eslint-disable-next-line @typescript-eslint/no-redeclare
 export type PostTier = keyof typeof PostTier;

@@ -1,7 +1,7 @@
 // src/types/api/entities/postgres/documentRequestPost.ts
 import { DocumentType } from "@/types/api/constants/documentType";
 import { BasePost } from "@/types/api/entities/interface/basePost";
-import { Member } from "@/types/api/entities/member";
+import { Member } from "@/types/api/entities/postgres/member";
 
 export interface DocumentRequestPost extends BasePost {
   documentRequestPostId?: string;
