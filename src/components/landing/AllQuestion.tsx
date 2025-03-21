@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
-import { QuestionPost } from "@/types/api/entities/questionPost";
+import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 
 interface AllQuestionProps {
   questions: QuestionPost[];

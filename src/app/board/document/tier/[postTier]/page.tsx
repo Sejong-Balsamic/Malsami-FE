@@ -8,7 +8,7 @@ import CheonminBoard from "@/components/documentMain/CheonminBoard";
 import JunginBoard from "@/components/documentMain/JunginBoard";
 import YangbanBoard from "@/components/documentMain/YangbanBoard";
 import KingBoard from "@/components/documentMain/KingBoard";
-import { PostTier } from "@/types/api/constants/postTiers";
+import { PostTier } from "@/types/api/constants/postTier";
 import useUserPermissions from "@/global/useUserPermissions";
 
 // 게시판 컴포넌트 매핑

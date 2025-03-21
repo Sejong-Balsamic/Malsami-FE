@@ -10,12 +10,12 @@ import AnimatedNumber from "@/components/mypage/AnimatedNumber";
 import ExpBar from "@/components/mypage/ExpBar";
 import { ScrollArea } from "@/components/shadcn/scroll-area";
 import { MemberDto } from "@/types/api/responses/memberDto";
-import { expTierRanges, ExpTierType } from "@/types/api/constants/expTier";
+import { expTierRanges, ExpTier } from "@/types/api/constants/expTier";
 
 function InfoCard({ memberInfo }: { memberInfo: MemberDto | null }) {
-  const expTier = (memberInfo?.exp?.expTier || "R") as ExpTierType;
+  const expTier = (memberInfo?.exp?.expTier || "R") as ExpTier;
   const currentRank = expTierRanges[expTier].label;
-  const nextTier = expTier > "A" ? (String.fromCharCode(expTier.charCodeAt(0) - 1) as ExpTierType) : null;
+  const nextTier = expTier > "A" ? (String.fromCharCode(expTier.charCodeAt(0) - 1) as ExpTier) : null;
   const nextRank = nextTier ? expTierRanges[nextTier].label : "최고 등급";
 
   return (

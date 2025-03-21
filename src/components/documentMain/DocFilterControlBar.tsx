@@ -2,7 +2,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { DocTypes, DocTypesKey } from "@/types/docTypes";
-import { sortTypeLabels } from "@/types/api/constants/sortTypes";
+import { SortType, sortTypeLabels } from "@/types/api/constants/sortType"; // SortType 추가
 import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import DocFilterOptionsModal from "./DocFilterOptionsModal";
 
@@ -19,8 +19,8 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
 
   // 태그 삭제 핸들러
   const handleRemoveTag = (tagToRemove: DocTypesKey) => {
-    const updatedTags = filterOptions.docTypes.filter(tag => tag !== tagToRemove); // 해당 태그를 제거한 새 배열 생성
-    onFilterChange({ ...filterOptions, docTypes: updatedTags }); // 부모 컴포넌트에 반영
+    const updatedTags = filterOptions.docTypes.filter(tag => tag !== tagToRemove);
+    onFilterChange({ ...filterOptions, docTypes: updatedTags });
   };
 
   const handleRemoveSortOption = () => {
@@ -30,11 +30,11 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
   return (
     <div className="flex justify-between px-5 py-3">
       <div className="flex overflow-x-auto scrollbar-hide">
-        {/* 필터링바에 sortType 표시. null이 아닐 경우만. null은 sortType 선택안됨을 의미 */}
+        {/* sortType 표시 */}
         {filterOptions.sortType && (
           <JiJeongTag
             key={filterOptions.sortType}
-            label={`${sortTypeLabels[filterOptions.sortType]} ×`}
+            label={`${sortTypeLabels[filterOptions.sortType as SortType]} ×`} // 한국어 라벨 사용
             onClick={handleRemoveSortOption}
             style={{
               backgroundColor: "#74D7CB",
@@ -42,12 +42,12 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
             }}
           />
         )}
-        {/* 필터링바에 docType 표시 */}
+        {/* docType 표시 */}
         {filterOptions.docTypes.length > 0 &&
           filterOptions.docTypes.map(docTypesTag => (
             <JiJeongTag
               key={docTypesTag}
-              label={`${DocTypes[docTypesTag]} x`}
+              label={`${DocTypes[docTypesTag]} ×`}
               onClick={() => handleRemoveTag(docTypesTag)}
               style={{
                 backgroundColor: "#0062D2",

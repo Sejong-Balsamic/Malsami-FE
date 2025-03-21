@@ -19,8 +19,8 @@ import { showToast } from "@/global/toastUtils";
 import CardList from "@/components/common/CardList";
 import Card from "@/components/common/Card";
 import memberApi from "@/apis/memberApi";
-import { DocumentPost } from "@/types/api/entities/document";
-import { QuestionPost } from "@/types/api/entities/question";
+import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
+import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);

@@ -1,14 +1,14 @@
 import { apiClient } from "@/apis/appClient";
-import { QuestionData } from "@/types/api/entities/question";
+import { QuestionDto } from "@/types/api/responses/questionDto";
 
-export default async function getAllQuestions(): Promise<QuestionData> {
+export default async function getAllQuestions(): Promise<QuestionDto> {
   try {
     // FormData 객체 생성
     const formData = new FormData();
     formData.append("pageSize", "5"); // 한 페이지에 조회할 글 개수 5개
 
     // POST 요청으로 회원 정보 조회
-    const response = await apiClient.post<QuestionData>("/api/landing/question", formData, {
+    const response = await apiClient.post<QuestionDto>("/api/landing/question", formData, {
       headers: {
         "Content-Type": "multipart/form-data", // Content-Type 설정
       },

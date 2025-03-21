@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import { MemberDto } from "@/types/api/responses/memberDto";
 import memberApi from "@/apis/memberApi";

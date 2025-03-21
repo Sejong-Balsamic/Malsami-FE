@@ -4,9 +4,9 @@ import React, { useState } from "react";
 import { Input } from "@/components/shadcn/input";
 import { Checkbox } from "@/components/shadcn/checkbox";
 import Image from "next/image";
-import { Comment } from "@/types/api/entities/comment";
 import postComment from "@/apis/question/postComment";
 import refreshComments from "@/apis/question/refreshComments";
+import { Comment } from "@/types/api/entities/postgres/comment";
 
 interface CommentInputProps {
   postId: string;
@@ -50,12 +50,14 @@ function CommentInput({ postId, contentType, setComments, setTotalComments }: Co
       // 댓글 입력란 초기화
       setContent("");
 
-      // 댓글 새로고침
+      // 댓글 새로고침 (페이지네이션 기본값 명시)
       await refreshComments({
         postId,
         contentType,
         setComments,
         setTotalComments,
+        pageNumber: 0, // 첫 페이지로 설정
+        pageSize: 30, // 기본 페이지 크기 설정
       });
     } catch (error) {
       console.error("Error posting comment:", error);

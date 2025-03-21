@@ -1,5 +1,6 @@
 // src/types/api/responses/authDto.ts
-import { FcmToken } from "@/types/api/entities/fcmToken";
+
+import { FcmToken } from "@/types/api/entities/mongo/fcmToken";
 
 export interface AuthDto {
   accessToken?: string;

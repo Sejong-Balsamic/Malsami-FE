@@ -1,4 +1,3 @@
-import { Comment } from "@/types/api/entities/comment";
 import { apiClient } from "../appClient";
 
 interface CommentLikeResponse {
