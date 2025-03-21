@@ -1,5 +1,3 @@
-import React from "react";
-
 interface JiJeongTagProps {
   label?: string;
   title?: string;
@@ -7,6 +5,7 @@ interface JiJeongTagProps {
   onClick?: () => void;
 }
 
+// FIX: 지정태그 디자인 나오면 수정해야함.
 function JiJeongTag({ label, title, style, onClick }: JiJeongTagProps) {
   const displayLabel = label || title || "";
   return (
