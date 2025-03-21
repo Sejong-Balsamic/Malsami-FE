@@ -10,4 +10,12 @@ export interface Page<T> {
   last?: boolean;
   numberOfElements?: number;
   empty?: boolean;
+  pageable: {
+    pageNumber: number;
+    pageSize: number;
+    sort?: any;
+    offset: number;
+    paged: boolean;
+    unpaged: boolean;
+  };
 }
