@@ -11,10 +11,6 @@ export const questionPostApi = {
   getQuestionPost: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
     postApiRequest<QuestionCommand, QuestionDto>("/api/question/get", command),
 
-  // 모든 질문 게시글 조회
-  getAllQuestionPost: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/get/all", command),
-
   // 답변 없는 질문 게시글 조회
   getAllQuestionPostsNotAnswered: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
     postApiRequest<QuestionCommand, QuestionDto>("/api/question/unanswered", command),
@@ -30,6 +26,22 @@ export const questionPostApi = {
   // 주간 인기 질문 게시글 조회
   getWeeklyPopularQuestionPost: async (): Promise<QuestionDto> =>
     postApiRequest<QuestionCommand, QuestionDto>("/api/question/popular/weekly", {}),
+
+  // 질문 게시판 좋아요
+  questionBoardLike: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/like", command),
+
+  // 답변글 저장
+  saveAnswerPost: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/post", command),
+
+  // 질문에 대한 답변글 조회
+  getAnswersByQuestion: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/get/all", command),
+
+  // 채택된 답변글 처리
+  chaetaekAnswerPost: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/chaetaek", command),
 };
 
 export default questionPostApi;

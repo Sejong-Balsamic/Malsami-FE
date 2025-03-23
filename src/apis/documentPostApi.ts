@@ -30,6 +30,10 @@ export const documentPostApi = {
   // 핫 다운로드 자료 조회
   getHotDownload: async (command: Partial<DocumentCommand>): Promise<DocumentDto> =>
     postApiRequest<DocumentCommand, DocumentDto>("/api/document/hot-download", command),
+
+  // 자료 게시판 좋아요
+  documentBoardLike: async (command: Partial<DocumentCommand>): Promise<DocumentDto> =>
+    postApiRequest<DocumentCommand, DocumentDto>("/api/document/like", command),
 };
 
 export default documentPostApi;
