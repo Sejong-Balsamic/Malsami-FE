@@ -5,7 +5,7 @@ import { DocCardProps } from "@/types/docCard.type";
 import Pagination from "@/components/common/Pagination";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { PostTiers, PostTiersKeys } from "@/types/postTiers";
-import DocTierPageNav from "@/components/nav/DocTierPageNav";
+import DocTierPageNav from "@/deprecated/DocTierPageNav";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
 import DocFilterControlBar from "./DocFilterControlBar";
 import DocCard from "./DocCard";

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import MyPageNav from "@/components/nav/MyPageNav";
+import MyPageNav from "@/deprecated/MyPageNav";
 import TierImage from "@/components/mypage/TierImage";
 import MemberSummary from "@/components/mypage/MemberSummary";
 import InfoCard from "@/components/mypage/InfoCard";
