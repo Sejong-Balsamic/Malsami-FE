@@ -1,3 +1,4 @@
+// src/apis/documentPostApi.ts
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { DocumentDto } from "@/types/api/responses/documentDto";
 import { postApiRequest } from "./apiUtils";
@@ -7,13 +8,13 @@ export const documentPostApi = {
   saveDocumentPost: async (command: Partial<DocumentCommand>): Promise<DocumentDto> =>
     postApiRequest<DocumentCommand, DocumentDto>("/api/document/post", command),
 
-  // 일간 인기 자료 게시글 조회
-  getDailyPopularDocumentPost: async (): Promise<DocumentDto> =>
-    postApiRequest<DocumentCommand, DocumentDto>("/api/document/popular/daily", {}),
+  // 일간 인기 자료 게시글 조회 (파라미터 추가)
+  getDailyPopularDocumentPost: async (command: Partial<DocumentCommand> = {}): Promise<DocumentDto> =>
+    postApiRequest<DocumentCommand, DocumentDto>("/api/document/popular/daily", command),
 
   // 주간 인기 자료 게시글 조회
-  getWeeklyPopularDocumentPost: async (): Promise<DocumentDto> =>
-    postApiRequest<DocumentCommand, DocumentDto>("/api/document/popular/weekly", {}),
+  getWeeklyPopularDocumentPost: async (command: Partial<DocumentCommand> = {}): Promise<DocumentDto> =>
+    postApiRequest<DocumentCommand, DocumentDto>("/api/document/popular/weekly", command),
 
   // 자료 게시글 조회
   getDocumentPost: async (command: Partial<DocumentCommand>): Promise<DocumentDto> =>

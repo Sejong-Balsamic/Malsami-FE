@@ -7,7 +7,7 @@ import { RIGHT_ITEM } from "@/types/header";
 import { DocCardProps } from "@/types/docCard.type";
 import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import getDocWeeklyPopulars from "@/apis/document/docMainPage/getDocWeeklyPopulars";
+import getDocWeeklyPopulars from "@/deprecated/getDocWeeklyPopulars";
 import DocCard from "@/components/documentMain/DocCard";
 
 export default function PopularWeekly() {

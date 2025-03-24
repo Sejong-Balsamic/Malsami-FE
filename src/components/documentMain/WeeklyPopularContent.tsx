@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import getDocWeeklyPopulars from "@/apis/document/docMainPage/getDocWeeklyPopulars";
+import getDocWeeklyPopulars from "@/deprecated/getDocWeeklyPopulars";
 import { PopularItem } from "@/types/DocPopularItem.type";
 import { useRouter } from "next/navigation";
 import DocPopularContainer from "./DocPopularContainer";
