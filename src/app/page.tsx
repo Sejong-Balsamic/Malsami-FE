@@ -8,8 +8,6 @@ import HotDocument from "@/components/landing/HotDocument";
 import HotQuestion from "@/components/landing/HotQuestion";
 import AllDocument from "@/components/landing/AllDocument";
 import AllQuestion from "@/components/landing/AllQuestion";
-import getAllDocuments from "@/apis/landing/getAllDocument";
-import getAllQuestions from "@/apis/landing/getAllQuestion";
 import UploadFAB from "@/components/common/FABs/UploadLandingFAB";
 import ScrollFAB from "@/components/common/FABs/ScrollFAB";
 import SearchBar from "@/components/landing/SearchBar";
@@ -21,6 +19,10 @@ import Card from "@/components/common/Card";
 import memberApi from "@/apis/memberApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
+import documentPostApi from "@/apis/documentPostApi";
+import questionPostApi from "@/apis/questionPostApi";
+import { QuestionCommand } from "@/types/api/requests/questionCommand";
+import { DocumentCommand } from "@/types/api/requests/documentCommand";
 
 function Page() {
   const [scrollY, setScrollY] = useState(0);
@@ -103,7 +105,11 @@ function Page() {
   useEffect(() => {
     const fetchDocuments = async () => {
       try {
-        const data = await getAllDocuments(); // API 호출
+        const command: Partial<DocumentCommand> = {
+          pageNumber: 0, // 첫 페이지
+          pageSize: 5, // 5개 표시
+        };
+        const data = await documentPostApi.getDailyPopularDocumentPost(command);
         const allDocuments = data.documentPostsPage?.content || []; // 전체 질문 리스트 추출
         setDocuments(allDocuments); // 상태에 저장
       } catch (error) {
@@ -118,7 +124,11 @@ function Page() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const data = await getAllQuestions(); // API 호출
+        const command: Partial<QuestionCommand> = {
+          pageNumber: 0, // 첫 페이지
+          pageSize: 5, // 5개 표시
+        };
+        const data = await questionPostApi.getDailyPopularQuestionPost(command);
         const allQuestions = data.questionPostsPage?.content || []; // 전체 질문 리스트 추출
         setQuestions(allQuestions); // 상태에 저장
       } catch (error) {

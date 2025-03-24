@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/shadcn/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/shadcn/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/tabs";
-import { fetchWeeklyHotDocuments, fetchDailyHotDocuments } from "@/apis/landing/fetchHot";
+import { fetchWeeklyHotDocuments, fetchDailyHotDocuments } from "@/deprecated/fetchHot";
 import { DocumentPost } from "@/types/documentPost.types";
 import MovingCardDocument from "./MovingCardDocument";
 

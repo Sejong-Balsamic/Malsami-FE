@@ -3,8 +3,8 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/shadcn/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/shadcn/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/tabs";
-import { fetchWeeklyHotQuestions, fetchDailyHotQuestions } from "@/apis/landing/fetchHot";
-import { QuestionPost } from "@/types/questionPost.types";
+import { questionPostApi } from "@/apis/questionPostApi"; // questionPostApi 임포트
+import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import MovingCardQuestion from "./MovingCardQuestion";
 
 function HotQuestion() {
@@ -14,13 +14,25 @@ function HotQuestion() {
 
   useEffect(() => {
     const getWeeklyData = async () => {
-      const data = await fetchWeeklyHotQuestions();
-      setWeekData(data);
+      try {
+        const data = await questionPostApi.getWeeklyPopularQuestionPost();
+        const weeklyQuestions = data.questionPostsPage?.content as QuestionPost[];
+        setWeekData(weeklyQuestions);
+      } catch (error) {
+        console.error("주간 인기 질문 가져오기 실패:", error);
+        setWeekData([]);
+      }
     };
 
     const getDailyData = async () => {
-      const data = await fetchDailyHotQuestions();
-      setDayData(data);
+      try {
+        const data = await questionPostApi.getDailyPopularQuestionPost();
+        const dailyQuestions = data.questionPostsPage?.content || []; // QuestionPost[] 추출
+        setDayData(dailyQuestions);
+      } catch (error) {
+        console.error("일간 인기 질문 가져오기 실패:", error);
+        setDayData([]);
+      }
     };
 
     getWeeklyData();

@@ -20,8 +20,8 @@ export const questionPostApi = {
     postApiRequest<QuestionCommand, QuestionDto>("/api/question/filter", command),
 
   // 일간 인기 질문 게시글 조회
-  getDailyPopularQuestionPost: async (): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/popular/daily", {}),
+  getDailyPopularQuestionPost: async (command: Partial<QuestionCommand> = {}): Promise<QuestionDto> =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/popular/daily", command),
 
   // 주간 인기 질문 게시글 조회
   getWeeklyPopularQuestionPost: async (): Promise<QuestionDto> =>
