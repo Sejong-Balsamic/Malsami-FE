@@ -22,8 +22,8 @@ import QnaPostJiJeongTagModal from "@/components/questionPost/QnaPostJiJeongTagM
 import QnaPostCustomTagsModal from "@/components/questionPost/QnaPostCustomTagsModal";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
-import questionApi from "@/apis/questionApi";
 import { QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
+import questionPostApi from "@/apis/questionPostApi";
 
 interface QnaPostFormData {
   title: string;
@@ -219,7 +219,7 @@ export default function QnaPostPage() {
         );
 
         // questionApi 호출
-        await questionApi.saveQuestionPost({
+        await questionPostApi.saveQuestionPost({
           title: formData.title,
           content: formData.content,
           subject: formData.subject,

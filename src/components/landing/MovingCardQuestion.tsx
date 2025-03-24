@@ -3,8 +3,8 @@ import "swiper/css";
 import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
-import { QuestionPost } from "@/types/questionPost.types";
 import QuestionCard from "@/components/common/QuestionCard";
+import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 
 interface MovingCardQuestionProps {
   data: QuestionPost[];
@@ -50,10 +50,10 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
         }}
         className="w-full"
       >
-        {data.map((document, index) => {
+        {data.map((questionPost, index) => {
           return (
             <SwiperSlide
-              key={document.postId || document.title || index}
+              key={questionPost.questionPostId || questionPost.title || index}
               style={{
                 display: "flex",
                 justifyContent: "center",
@@ -63,25 +63,27 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
             >
               <div
                 onClick={() => {
-                  if (document.postId) {
-                    handleCardClick(document.postId);
+                  if (questionPost.questionPostId) {
+                    handleCardClick(questionPost.questionPostId);
                   } else {
-                    console.error("Invalid or undefined postId:", document);
+                    console.error("Invalid or undefined postId:", questionPost);
                   }
                 }}
-                onKeyDown={e => e.key === "Enter" && document.postId && handleCardClick(document.postId)}
+                onKeyDown={e =>
+                  e.key === "Enter" && questionPost.questionPostId && handleCardClick(questionPost.questionPostId)
+                }
                 className="cursor-pointer"
                 role="button"
                 tabIndex={0}
               >
                 <QuestionCard
-                  title={document.title}
+                  title={questionPost.title as string}
                   color={colors[index % colors.length]}
-                  subject={document.subject}
-                  JiJeongTags={document.JiJeongTags}
-                  rewardYeopjeon={document.rewardYeopjeon || 0}
-                  likeCount={document.likeCount}
-                  commentCount={document.commentCount}
+                  subject={questionPost.subject as string}
+                  JiJeongTags={questionPost.questionPresetTags as string[]}
+                  rewardYeopjeon={questionPost.rewardYeopjeon || 0}
+                  likeCount={questionPost.likeCount as number}
+                  commentCount={questionPost.commentCount as number}
                 />
               </div>
             </SwiperSlide>

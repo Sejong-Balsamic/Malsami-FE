@@ -8,7 +8,7 @@ export const documentPostApi = {
   saveDocumentPost: async (command: Partial<DocumentCommand>): Promise<DocumentDto> =>
     postApiRequest<DocumentCommand, DocumentDto>("/api/document/post", command),
 
-  // 일간 인기 자료 게시글 조회 (파라미터 추가)
+  // 일간 인기 자료 게시글 조회
   getDailyPopularDocumentPost: async (command: Partial<DocumentCommand> = {}): Promise<DocumentDto> =>
     postApiRequest<DocumentCommand, DocumentDto>("/api/document/popular/daily", command),
 
