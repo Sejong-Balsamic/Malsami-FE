@@ -1,17 +1,8 @@
 import { useState } from "react";
 import Image from "next/image";
+import { DocumentDto } from "@/types/api/responses/documentDto";
+import { DocumentFile } from "@/types/api/entities/postgres/documentFile";
 import DownloadCheckModal from "./DownloadCheckModal";
-
-interface DocumentFile {
-  documentFileId: string;
-  originalFileName: string;
-  fileSize: number;
-  totalDownloadCount: number;
-}
-
-interface DownloadFileProps {
-  documentFiles: DocumentFile[];
-}
 
 function formatFileSize(fileSize: number): string {
   if (fileSize < 1024) {
@@ -30,7 +21,7 @@ function formatFileSize(fileSize: number): string {
   }
 }
 
-function DownloadFile({ documentFiles }: DownloadFileProps) {
+function DownloadFile({ documentFiles }: DocumentDto) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedFile, setSelectedFile] = useState<{
     documentFileId: string;
@@ -39,8 +30,8 @@ function DownloadFile({ documentFiles }: DownloadFileProps) {
 
   const handleDownloadClick = (file: DocumentFile) => {
     setSelectedFile({
-      documentFileId: file.documentFileId,
-      originalFileName: file.originalFileName,
+      documentFileId: file.documentFileId as string,
+      originalFileName: file.originalFileName as string,
     });
     setIsModalOpen(true);
   };
@@ -52,7 +43,7 @@ function DownloadFile({ documentFiles }: DownloadFileProps) {
 
   return (
     <div className="my-[30px] flex flex-col gap-4">
-      {documentFiles.map(file => (
+      {documentFiles?.map(file => (
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
           key={file.documentFileId} // documentFileId를 key로 사용
@@ -61,7 +52,9 @@ function DownloadFile({ documentFiles }: DownloadFileProps) {
         >
           <div className="flex flex-col">
             <div className="font-pretendard-medium text-[12px]">{file.originalFileName}</div>
-            <div className="font-pretendard-medium text-[12px] text-[#737373]">{formatFileSize(file.fileSize)}</div>
+            <div className="font-pretendard-medium text-[12px] text-[#737373]">
+              {formatFileSize(file.fileSize as number)}
+            </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-1">
             <Image src="/icons/Download.svg" alt="Download" width={12} height={15} />
