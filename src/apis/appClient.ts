@@ -31,7 +31,7 @@ apiClient.interceptors.request.use(
     }
     return requestConfig;
   },
-  (error: AxiosError) => Promise.reject(error)
+  (error: AxiosError) => Promise.reject(error),
 );
 
 // Prevent multiple modal popups during redirects
@@ -75,5 +75,5 @@ apiClient.interceptors.response.use(
         : "서버에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.";
     console.error("apiClient 오류:", errorMessage);
     return Promise.reject(error);
-  }
+  },
 );

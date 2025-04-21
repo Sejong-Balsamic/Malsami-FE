@@ -5,7 +5,7 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { DocCardProps } from "@/types/docCard.type";
 import { PostTiersKeys, PostTiers } from "@/types/postTiers";
 import Pagination from "@/components/common/Pagination";
-import DocTierPageNav from "@/components/nav/DocTierPageNav";
+import DocTierPageNav from "@/deprecated/DocTierPageNav";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
 import DocFilterControlBar from "./DocFilterControlBar";
 import DocCard from "./DocCard";

@@ -6,11 +6,11 @@ import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from 
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import AnswerSection from "./AnswerSection";
 import { getDateDiff } from "@/global/time";
-import { QuestionData } from "@/types/api/QuestionDetailData";
 import CommentSection from "./QCommentSection";
 import sameMember from "@/global/sameMember";
 import AttachedFiles from "@/components/common/AttachedFiles";
-import JiJeongTag from "@/deprecated/JiJeongTag";
+import JiJeongTag from "@/components/common/tags/JiJeongTag";
+import { QuestionDto } from "@/types/api/responses/questionDto";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -28,21 +28,21 @@ const getKoreanTag = (englishTag: string): string => {
   return tagMapping[englishTag] || englishTag; // 매핑되지 않은 경우 원래의 태그 반환
 };
 
-function QnaDetail({ questionData }: { questionData: QuestionData }) {
-  const [isLiked, setIsLiked] = useState(questionData.questionPost.isLiked); // API 응답 값으로 초기화
-  const [currentLikeCount, setCurrentLikeCount] = useState(questionData.questionPost.likeCount);
+function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
+  const [isLiked, setIsLiked] = useState(questionDto.questionPost?.isLiked); // API 응답 값으로 초기화
+  const [currentLikeCount, setCurrentLikeCount] = useState(questionDto.questionPost?.likeCount as number);
 
-  const isAuthor: boolean = sameMember(questionData.questionPost.member.memberId); // 작성자 여부 확인
+  const isAuthor: boolean = sameMember(questionDto.questionPost?.member?.memberId as string); // 작성자 여부 확인
 
   const handleLikeClick = async () => {
     if (isLiked) return; // 이미 좋아요를 누른 상태라면 실행하지 않음
-    if (sameMember(questionData.questionPost.member.memberId)) return; // 작성자가 좋아요를 누르지 못하도록 차단
+    if (sameMember(questionDto.questionPost?.member?.memberId as string)) return; // 작성자가 좋아요를 누르지 못하도록 차단
 
     try {
       setIsLiked(true); // 즉시 반영: 버튼 비활성화 및 색상 변경
       setCurrentLikeCount(currentLikeCount + 1); // 즉시 반영: 좋아요 숫자 증가
 
-      await postLikeQuestion(questionData.questionPost.questionPostId, "QUESTION");
+      await postLikeQuestion(questionDto.questionPost?.questionPostId as string, "QUESTION");
     } catch (error) {
       console.error("좋아요 업데이트 실패");
       setIsLiked(false); // 실패 시 롤백
@@ -54,36 +54,36 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
     ? "border-[#03b89e] text-[#03b89e] cursor-default" // 눌린 상태
     : "border-[#e7e7e7] text-[#aaaaaa] cursor-pointer"; // 기본 상태
 
-  const [commentCount, setCommentCount] = useState(questionData.questionPost.commentCount);
+  const [commentCount, setCommentCount] = useState(questionDto.questionPost?.commentCount);
   const incrementCommentCount = () => {
-    setCommentCount(prevCount => prevCount + 1);
+    setCommentCount(prevCount => prevCount as number + 1);
   };
 
-  const files = questionData.mediaFiles.map(file => file.uploadedImageUrl);
+  const files = questionDto.mediaFiles?.map(file => file.uploadedImageUrl) as string[];
 
   return (
     <div className="flex flex-col justify-center px-[20px]">
       {/* 교과목명 현상금  */}
       <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
         <div className="flex items-center gap-[6px]">
-          {questionData.questionPost.chaetaekStatus ? (
+          {questionDto.questionPost?.chaetaekStatus ? (
             <>
               <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#0062D2] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
                 채택됨
               </div>
               <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
-                {questionData.questionPost.subject}
+                {questionDto.questionPost.subject}
               </div>
             </>
           ) : (
             <>
               <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
-                {questionData.questionPost.subject}
+                {questionDto.questionPost?.subject}
               </div>
-              {questionData.questionPost.rewardYeopjeon > 0 && (
+              {questionDto.questionPost?.rewardYeopjeon as number > 0 && (
                 <span className="font-pretendard-semibold mr-1 inline-flex h-[26px] items-center rounded-[33px] bg-custom-orange-500 px-2 py-[3px] text-xs text-white">
                   <img src="/icons/Yeopjeon.svg" alt="Yeopjeon" className="inline-block h-[14px] w-[14px]" />
-                  <span className="ml-1">{questionData.questionPost.rewardYeopjeon}</span>
+                  <span className="ml-1">{questionDto.questionPost?.rewardYeopjeon}</span>
                 </span>
               )}
             </>
@@ -93,18 +93,18 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
       {/* 글 정보 */}
       <div className="flex h-auto min-w-[336px] max-w-[640px] flex-col">
         <div className="mt-[20px]">
-          <span className="font-pretendard-bold text-[18px]">{questionData.questionPost.title}</span>
+          <span className="font-pretendard-bold text-[18px]">{questionDto.questionPost?.title}</span>
           <div className="font-pretendard-medium mt-[10px] text-[14px] leading-normal text-[#727272]">
-            {questionData.questionPost.content}
+            {questionDto.questionPost?.content}
           </div>
         </div>
 
         {/* 커스텀태그 */}
-        {questionData.customTags && questionData.customTags.length > 0 && (
+        {questionDto.customTags && questionDto.customTags.length > 0 && (
           <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
             <div className="flex h-full w-full items-center gap-[4px]">
-              {questionData.customTags.map((tag, index) => (
-                <JiJeongTag key={index} title={tag} color="#aaaaaa" />
+              {questionDto.customTags.map((tag, index) => (
+                <JiJeongTag key={index} title={tag} />
               ))}
             </div>
           </div>
@@ -119,7 +119,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
         {/* 지정태그 */}
         <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
           <div className="flex items-center gap-[10px]">
-            {questionData.questionPost.questionPresetTags.map((tag, index) => (
+            {questionDto.questionPost?.questionPresetTags?.map((tag, index) => (
               <div
                 // eslint-disable-next-line react/no-array-index-key
                 key={index}
@@ -135,15 +135,15 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
           <div className="mt-[20px] text-right">
             <div>
               <span className="font-pretendard-medium mb-[4px] text-[12px]">
-                {questionData.questionPost.isPrivate ? "익명" : `@${questionData.questionPost.member.uuidNickname}`}
+                {questionDto.questionPost?.isPrivate ? "익명" : `@${questionDto.questionPost?.member?.uuidNickname}`}
               </span>
             </div>
             <div>
               <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">
-                {getDateDiff(questionData.questionPost.createdDate)}
+                {getDateDiff(questionDto.questionPost?.createdDate as string)}
               </span>
               <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">
-                • 조회수 {questionData.questionPost.viewCount}
+                • 조회수 {questionDto.questionPost?.viewCount}
               </span>
             </div>
           </div>
@@ -181,7 +181,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
                 </DrawerHeader>
                 <div className="max-h-[400px] overflow-y-auto">
                   <CommentSection
-                    postId={questionData.questionPost.questionPostId}
+                    postId={questionDto.questionPost?.questionPostId as string}
                     contentType="QUESTION"
                     onCommentAdded={incrementCommentCount}
                   />
@@ -192,7 +192,7 @@ function QnaDetail({ questionData }: { questionData: QuestionData }) {
         </div>
       </div>
       {/* 답변 */}
-      <AnswerSection postId={questionData.questionPost.questionPostId} isAuthor={isAuthor} />
+      <AnswerSection postId={questionDto.questionPost?.questionPostId as string} isAuthor={isAuthor} />
     </div>
   );
 }

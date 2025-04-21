@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import CommonNav from "@/components/nav/CommonNav";
+import CommonNav from "@/components/common/CommonNav";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();

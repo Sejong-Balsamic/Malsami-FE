@@ -6,7 +6,6 @@ import { RIGHT_ITEM } from "@/types/header";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
-import { QuestionData } from "@/types/api/QuestionDetailData";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import sameMember from "@/global/sameMember";
 import QnaDetail from "@/components/questionDetail/QnaDetail";
@@ -15,6 +14,7 @@ import { Drawer, DrawerContent } from "@/components/shadcn/drawer";
 import Image from "next/image";
 import { Button } from "@/components/shadcn/button";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import { QuestionDto } from "@/types/api/responses/questionDto";
 
 export default function Page() {
   const router = useRouter();
@@ -24,7 +24,7 @@ export default function Page() {
   const postId = Array.isArray(params.id) ? params.id[0] : params.id;
 
   // 상태 관리
-  const [questionDetails, setQuestionDetails] = useState<QuestionData | null>(null);
+  const [questionDetails, setQuestionDetails] = useState<QuestionDto | null>(null);
   const [isloading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -77,7 +77,7 @@ export default function Page() {
   // 오류 상태 처리
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
-  const isAuthor = questionDetails && sameMember(questionDetails.questionPost.member.memberId);
+  const isAuthor = questionDetails && sameMember(questionDetails.questionPost?.member?.memberId as string);
 
   return (
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
@@ -87,8 +87,8 @@ export default function Page() {
       <div className="mt-[64px]">
         {questionDetails && (
           <>
-            <QnaDetail questionData={questionDetails} />
-            {!isAuthor && <AnswerFAB postId={questionDetails.questionPost.questionPostId} />}
+            <QnaDetail questionDto={questionDetails} />
+            {!isAuthor && <AnswerFAB postId={questionDetails.questionPost?.questionPostId as string} />}
           </>
         )}
         {/* Drawer 컴포넌트 */}

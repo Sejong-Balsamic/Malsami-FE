@@ -3,7 +3,7 @@ import Image from "next/image";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { DocTypes, DocTypesKey } from "@/types/docTypes";
 import FacultyTag from "@/components/common/tags/FacultyTag";
-import { sortTypeLabels } from "@/types/api/constants/sortTypes";
+import { sortTypeLabels } from "@/types/api/constants/sortType";
 import JiJeongTag from "@/components/common/tags/JiJeongTag";
 import DocRequestFilterOptionsModal from "./DocRequestFilterOptionsModal";
 

@@ -3,9 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/shadcn/drawer";
-import postLikeDocument from "@/apis/document/postLikeDocument";
+import { documentPostApi } from "@/apis/documentPostApi"; // API 호출로 변경
+import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { getDateDiff } from "@/global/time";
-import { DocumentData } from "@/types/DocumentDetailData";
+import { DocumentDto } from "@/types/api/responses/documentDto";
 import CommentSection from "@/components/documentDetail/DCommentSection";
 import sameMember from "@/global/sameMember";
 import DownloadFile from "@/components/documentDetail/DownloadFile";
@@ -19,53 +20,63 @@ const tagMapping: { [key: string]: string } = {
 
 // 영어 태그를 한국어로 변환하는 함수
 const getKoreanTag = (englishTag: string): string => {
-  return tagMapping[englishTag] || englishTag; // 매핑되지 않은 경우 원래의 태그 반환
+  return tagMapping[englishTag] || englishTag;
 };
 
-function DocDetail({ documentData }: { documentData: DocumentData }) {
-  const [isLiked, setIsLiked] = useState(documentData.documentPost.isLiked);
-  const [currentLikeCount, setCurrentLikeCount] = useState(documentData.documentPost.likeCount);
-  const [currentDislikeCount, setCurrentDislikeCount] = useState(documentData.documentPost.dislikeCount);
+function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
+  const [isLiked, setIsLiked] = useState(documentDto.documentPost?.isLiked || false);
+  const [currentLikeCount, setCurrentLikeCount] = useState(documentDto.documentPost?.likeCount || 0);
+  const [currentDislikeCount, setCurrentDislikeCount] = useState(documentDto.documentPost?.dislikeCount || 0);
   const [isDisliked, setIsDisliked] = useState(false);
+  const [commentCount, setCommentCount] = useState(documentDto.documentPost?.commentCount || 0);
 
   const handleLikeClick = async () => {
-    if (isLiked || isDisliked) return; // 이미 좋아요 또는 싫어요를 누른 경우
-    if (sameMember(documentData.documentPost.member.memberId)) return; // 작성자가 좋아요를 누르지 못하도록 차단
+    if (isLiked || isDisliked) return;
+    if (sameMember(documentDto.documentPost?.member?.memberId || "")) return;
 
     try {
-      setIsLiked(true); // 즉시 반영: 버튼 비활성화 및 색상 변경
-      setCurrentLikeCount(currentLikeCount + 1); // 즉시 반영: 좋아요 숫자 증가
+      setIsLiked(true);
+      setCurrentLikeCount(prev => prev + 1);
 
-      await postLikeDocument(documentData.documentPost.documentPostId, "DOCUMENT", "LIKE");
+      const command: Partial<DocumentCommand> = {
+        documentPostId: documentDto.documentPost?.documentPostId,
+        contentType: "DOCUMENT",
+        likeType: "LIKE",
+      };
+      await documentPostApi.documentBoardLike(command); // API 호출
     } catch (error) {
-      console.error("좋아요 업데이트 실패");
-      setIsLiked(false); // 실패 시 롤백
-      setCurrentLikeCount(currentLikeCount - 1); // 숫자도 원래대로 롤백
+      console.error("좋아요 업데이트 실패:", error);
+      setIsLiked(false);
+      setCurrentLikeCount(prev => prev - 1);
     }
   };
 
   const handleDisLikeClick = async () => {
-    if (isLiked || isDisliked) return; // 이미 좋아요 또는 싫어요를 누른 경우
-    if (sameMember(documentData.documentPost.member.memberId)) return; // 작성자가 싫어요를 누르지 못하도록 차단
+    if (isLiked || isDisliked) return;
+    if (sameMember(documentDto.documentPost?.member?.memberId || "")) return;
 
     try {
-      setIsDisliked(true); // 즉시 반영: 버튼 비활성화 및 색상 변경
-      setCurrentDislikeCount(currentDislikeCount + 1); // 즉시 반영: 싫어요 숫자 증가
+      setIsDisliked(true);
+      setCurrentDislikeCount(prev => prev + 1);
 
-      await postLikeDocument(documentData.documentPost.documentPostId, "DOCUMENT", "DISLIKE");
+      const command: Partial<DocumentCommand> = {
+        documentPostId: documentDto.documentPost?.documentPostId,
+        contentType: "DOCUMENT",
+        likeType: "DISLIKE",
+      };
+      await documentPostApi.documentBoardLike(command); // API 호출
     } catch (error) {
-      console.error("싫어요 업데이트 실패");
-      setIsDisliked(false); // 실패 시 롤백
-      setCurrentDislikeCount(currentDislikeCount - 1); // 숫자도 원래대로 롤백
+      console.error("싫어요 업데이트 실패:", error);
+      setIsDisliked(false);
+      setCurrentDislikeCount(prev => prev - 1);
     }
   };
 
   const buttonClass = (isActive: boolean) =>
     isActive ? "border-[#03b89e] text-[#03b89e] cursor-default" : "border-[#e7e7e7] text-[#aaaaaa] cursor-pointer";
 
-  const [commentCount, setCommentCount] = useState(documentData.documentPost.commentCount);
   const incrementCommentCount = () => {
-    setCommentCount(prevCount => prevCount + 1);
+    setCommentCount(prev => (prev !== undefined ? prev + 1 : 1));
   };
 
   return (
@@ -74,7 +85,7 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
       <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
         <div className="flex items-center">
           <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
-            {documentData.documentPost.subject}
+            {documentDto.documentPost?.subject || "과목명 없음"}
           </div>
         </div>
       </div>
@@ -82,23 +93,23 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
       {/* 글 정보 */}
       <div className="flex h-auto min-w-[336px] max-w-[640px] flex-col">
         <div className="mt-[20px]">
-          <span className="font-pretendard-bold text-[18px]">{documentData.documentPost.title}</span>
+          <span className="font-pretendard-bold text-[18px]">{documentDto.documentPost?.title || "제목 없음"}</span>
           <div className="font-pretendard-medium mt-[10px] text-[14px] leading-normal text-[#727272]">
-            {documentData.documentPost.content}
+            {documentDto.documentPost?.content || "내용 없음"}
           </div>
         </div>
-        <DownloadFile documentFiles={documentData.documentFiles} />
+        <DownloadFile documentFiles={documentDto.documentFiles || []} /> {/* 기본값 제공 */}
         {/* 카테고리 */}
         <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
           <div className="flex items-center gap-[10px]">
-            {documentData.documentPost.documentTypes.map((tag, index) => (
+            {documentDto.documentPost?.documentTypes?.map((tag, index) => (
               <div
                 key={index}
                 className="flex h-[25px] w-auto items-center justify-center rounded-[28px] border border-[#e7e7e7] px-[10px]"
               >
                 <span className="font-pretendard-medium text-[14px] text-[#aaaaaa]">{getKoreanTag(tag)}</span>
               </div>
-            ))}
+            )) || <span>태그 없음</span>}
           </div>
         </div>
 
@@ -107,15 +118,15 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
           <div className="mt-[20px] text-right">
             <div>
               <span className="font-pretendard-medium mb-[4px] text-[12px]">
-                @{documentData.documentPost.member.uuidNickname}
+                @{documentDto.documentPost?.member?.uuidNickname || "익명"}
               </span>
             </div>
             <div>
               <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">
-                {getDateDiff(documentData.documentPost.createdDate)}
+                {getDateDiff(documentDto.documentPost?.createdDate || "") || "날짜 없음"}
               </span>
               <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">
-                • 조회수 {documentData.documentPost.viewCount}
+                • 조회수 {documentDto.documentPost?.viewCount || 0}
               </span>
             </div>
           </div>
@@ -128,7 +139,7 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
               <div
                 onClick={!isLiked ? handleLikeClick : undefined}
                 className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
-                  isLiked,
+                  isLiked
                 )}`}
               >
                 <Image
@@ -137,9 +148,7 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
                   width={16}
                   height={16}
                 />
-                <span
-                  className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}
-                >
+                <span className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}>
                   {currentLikeCount}
                 </span>
               </div>
@@ -147,7 +156,7 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
               <div
                 onClick={!isDisliked ? handleDisLikeClick : undefined}
                 className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
-                  isDisliked,
+                  isDisliked
                 )}`}
               >
                 <Image
@@ -179,7 +188,7 @@ function DocDetail({ documentData }: { documentData: DocumentData }) {
                 </DrawerHeader>
                 <div className="max-h-[400px] overflow-y-auto">
                   <CommentSection
-                    postId={documentData.documentPost.documentPostId}
+                    postId={documentDto.documentPost?.documentPostId || ""}
                     contentType="DOCUMENT"
                     onCommentAdded={incrementCommentCount}
                   />

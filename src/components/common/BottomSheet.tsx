@@ -23,7 +23,7 @@ interface BottomSheetProps {
 // BottomSheet 열 트리거 (버튼, 아이콘 등등 사용하고 싶은 곳에서 커스텀하기)
 export const BottomSheetTrigger = (
   // eslint-disable-next-line
-  <button type="button" className="shadow-left-custom bg-white p-[14px] hover:bg-gray-100">
+  <button type="button" className="bg-white p-[14px] shadow-left-custom hover:bg-gray-100">
     <IconWrapper21x21 src="/icons/actions/filter-right.svg" />
   </button>
 );

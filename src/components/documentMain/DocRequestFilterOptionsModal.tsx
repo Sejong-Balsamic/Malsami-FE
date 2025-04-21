@@ -6,7 +6,7 @@ import facultys from "@/types/facultys";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import { DocTypesKeys, DocTypes } from "@/types/docTypes";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
-import { DocSortType, sortTypeLabels } from "@/types/api/constants/sortTypes";
+import { SortType, sortTypeLabels } from "@/types/api/constants/sortType";
 
 interface DocRequestFilterOptionsModalProps {
   isVisible: boolean; // 모달 표시 여부
@@ -17,11 +17,11 @@ interface DocRequestFilterOptionsModalProps {
 }
 
 const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> = ({
-  isVisible,
-  onClose,
-  initialFilterOptions,
-  onApplyFilter,
-}) => {
+                                                                                     isVisible,
+                                                                                     onClose,
+                                                                                     initialFilterOptions,
+                                                                                     onApplyFilter,
+                                                                                   }) => {
   const [showModal, setShowModal] = useState(false);
   const [modalHeight, setModalHeight] = useState("50vh"); // 초기 modalHeight 50%로 설정
   const contentRef = useRef<HTMLDivElement>(null);
@@ -112,20 +112,21 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
               <>
                 <h1 className="font-pretendard-bold mb-[20px] text-xl">정렬</h1>
                 <div className="mb-[30px] flex flex-col">
-                  {DocSortType.map(docSortType => (
+                  {Object.keys(sortTypeLabels).map(docSortType => (
                     <li key={docSortType} className="flex rounded-xl py-[10px]">
                       <div
                         className="flex w-full cursor-pointer flex-row justify-between"
-                        onClick={() => setSortType(docSortType)}
-                        onKeyDown={e => e.key === "Enter" && setSortType(docSortType)}
+                        onClick={() => setSortType(docSortType as SortType)}
+                        onKeyDown={e => e.key === "Enter" && setSortType(docSortType as SortType)}
                       >
                         {sortType === docSortType ? (
                           <span className="font-pretendard-bold text-base text-custom-blue-500">
-                            {/* docSortTypeKey로 라벨링 매핑 */}
-                            {sortTypeLabels[docSortType]}
+                            {sortTypeLabels[docSortType as SortType]}
                           </span>
                         ) : (
-                          <span className="font-pretendard-medium text-base">{sortTypeLabels[docSortType]} </span>
+                          <span className="font-pretendard-medium text-base">
+                            {sortTypeLabels[docSortType as SortType]}
+                          </span>
                         )}
                         {sortType === docSortType ? (
                           <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />

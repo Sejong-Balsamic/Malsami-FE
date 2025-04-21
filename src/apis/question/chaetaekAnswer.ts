@@ -1,29 +1,14 @@
-import { QuestionData } from "@/types/api/QuestionDetailData";
+import { QuestionDto } from "@/types/api/responses/questionDto";
 import { apiClient } from "../appClient";
 
-interface ChaetaekResponse {
-  questionDto: QuestionData; // 질문 정보
-  answerPost: {
-    answerPostId: string;
-    content: string;
-    member: {
-      memberId: string;
-      uuidNickname: string;
-    };
-    createdDate: string;
-    likeCount: number;
-    commentCount: number;
-  };
-}
-
-export default async function chaetaekAnswer(postId: string): Promise<ChaetaekResponse> {
+export default async function chaetaekAnswer(postId: string): Promise<QuestionDto> {
   try {
     // 요청 데이터를 FormData로 생성
     const formData = new FormData();
     formData.append("postId", postId);
 
     // 채택 요청
-    const response = await apiClient.post<ChaetaekResponse>("/api/answer/chaetaek", formData, {
+    const response = await apiClient.post<QuestionDto>("/api/answer/chaetaek", formData, {
       headers: {
         "Content-Type": "multipart/form-data", // Content-Type 설정
       },

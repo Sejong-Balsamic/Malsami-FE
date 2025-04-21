@@ -1,14 +1,14 @@
 import { apiClient } from "@/apis/appClient";
 import { DocTypesKey } from "@/types/docTypes";
 import { PostTiersKey } from "@/types/postTiers";
-import { CommonSortType } from "@/types/api/constants/sortTypes";
+import { SortType } from "@/types/api/constants/sortType";
 
 interface FilteringDocListParams {
   subject?: string; // 교과목명 (선택)
   docTypes?: DocTypesKey[]; // 태그 필터링 (최대 2개, 선택)
   faculty?: string; // 단과대 필터링 (선택)
   postTier?: PostTiersKey; // 자료 등급별 필터링 (선택)
-  sortType?: CommonSortType; // 정렬 기준 (default = 최신순)
+  sortType?: SortType; // 정렬 기준 (default = 최신순)
   pageNumber?: number; // 페이지 번호 (default = 0)
   pageSize?: number; // 한 페이지 조회 글 개수 (default = 30)
 }

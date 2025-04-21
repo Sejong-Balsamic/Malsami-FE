@@ -1,15 +1,15 @@
-import { QuestionData } from "@/types/api/QuestionDetailData";
+import { QuestionDto } from "@/types/api/responses/questionDto";
 import { apiClient } from "../appClient";
 
 // 특정 질문 글을 조회하는 함수
-export default async function getQuestionDetails(postId: string): Promise<QuestionData> {
+export default async function getQuestionDetails(postId: string): Promise<QuestionDto> {
   try {
     // `FormData` 객체를 생성해 `postId` 추가
     const formData = new FormData();
     formData.append("postId", postId);
 
     // 특정 질문 글을 조회하기 위한 POST 요청을 보냄 (multipart/form-data 사용)
-    const response = await apiClient.post<QuestionData>("/api/question/get", formData, {
+    const response = await apiClient.post<QuestionDto>("/api/question/get", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },
