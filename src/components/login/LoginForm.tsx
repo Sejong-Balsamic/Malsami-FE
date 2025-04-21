@@ -90,9 +90,6 @@ export default function LoginForm() {
           )}
         </div>
 
-        {/* Todo: 나중에 삭제해야함. */}
-        <LoadingSpinner />
-
         {/* 로그인 제출 버튼 */}
         <div className="mb-[60px] mt-auto">
           <button
