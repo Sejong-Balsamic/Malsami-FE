@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import memberApi from "@/apis/memberApi";
 import { MemberCommand } from "@/types/api/requests/memberCommand";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import NewLoadingSpinner from "../common/NewLoadingSpinner";
 import CustomInput from "../common/CustomInput";
 import LoginSuccessModal from "./LoginSuccessModal";
 
