@@ -23,7 +23,7 @@ import QnaPostCustomTagsModal from "@/components/questionPost/QnaPostCustomTagsM
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import { QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
-import questionPostApi from "@/apis/questionPostApi";
+import { questionPostApi } from "@/apis/questionPostApi";
 
 interface QnaPostFormData {
   title: string;

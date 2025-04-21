@@ -12,8 +12,8 @@ import { ScrollArea } from "@/components/shadcn/scroll-area";
 import { MemberDto } from "@/types/api/responses/memberDto";
 import { expTierRanges, ExpTier } from "@/types/api/constants/expTier";
 
-function InfoCard({ memberInfo }: { memberInfo: MemberDto | null }) {
-  const expTier = (memberInfo?.exp?.expTier || "R") as ExpTier;
+function InfoCard({ memberDto }: { memberDto: MemberDto | null }) {
+  const expTier = (memberDto?.exp?.expTier || "R") as ExpTier;
   const currentRank = expTierRanges[expTier].label;
   const nextTier = expTier > "A" ? (String.fromCharCode(expTier.charCodeAt(0) - 1) as ExpTier) : null;
   const nextRank = nextTier ? expTierRanges[nextTier].label : "최고 등급";
@@ -27,13 +27,13 @@ function InfoCard({ memberInfo }: { memberInfo: MemberDto | null }) {
               <div className="flex items-center justify-between">
                 <div className="font-pretendard-medium text-[14px]">경험치</div>
                 <div className="flex items-center gap-1">
-                  <span className="font-pretendard-semibold text-[20px]">{memberInfo?.exp?.exp || "0"}</span>
+                  <span className="font-pretendard-semibold text-[20px]">{memberDto?.exp?.exp || "0"}</span>
                   <span className="font-pretendard-medium text-[14px]">EXP</span>
                   <Image src="/icons/Move.svg" alt="Move" width={6} height={12} className="h-[12px] w-[6px]" />
                 </div>
               </div>
               <div className="py-2">
-                <ExpBar value={memberInfo?.exp?.exp || 0} />
+                <ExpBar value={memberDto?.exp?.exp || 0} />
               </div>
               <div className="flex items-center justify-between">
                 <div className="font-pretendard-medium text-[14px]">{currentRank}</div>
@@ -48,7 +48,7 @@ function InfoCard({ memberInfo }: { memberInfo: MemberDto | null }) {
                 <div className="flex items-center gap-2">
                   <Image src="/icons/mypage/Rank.svg" alt="Rank" width={18} height={18} className="h-[18px] w-[18px]" />
                   <span className="font-pretendard-semibold text-[20px]">
-                    {memberInfo ? <AnimatedNumber target={memberInfo.expPercentile || 0} /> : "0"}%
+                    {memberDto ? <AnimatedNumber target={memberDto.expPercentile || 0} /> : "0"}%
                   </span>
                 </div>
               </div>
@@ -58,7 +58,7 @@ function InfoCard({ memberInfo }: { memberInfo: MemberDto | null }) {
                 <div className="flex items-center gap-2">
                   <Image src="/icons/mypage/Like.svg" alt="Like" width={18} height={18} className="h-[18px] w-[18px]" />
                   <span className="font-pretendard-semibold text-[20px]">
-                    {memberInfo ? <AnimatedNumber target={memberInfo.totalLikeCount || 0} /> : "0"}
+                    {memberDto ? <AnimatedNumber target={memberDto.totalLikeCount || 0} /> : "0"}
                   </span>
                 </div>
               </div>

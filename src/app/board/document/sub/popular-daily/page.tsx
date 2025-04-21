@@ -29,13 +29,14 @@ export default function PopularDaily() {
   };
 
   const fetchDocs = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const command: Partial<DocumentCommand> = {
       pageNumber: pageNumber - 1, // 백엔드에서 0-based index를 사용하므로 -1
       pageSize,
     };
     setIsLoading(true);
     try {
-      const response = await documentPostApi.getDailyPopularDocumentPost(command);
+      const response = await documentPostApi.getDailyPopularDocumentPost();
       const content = response.documentPostsPage?.content;
       if (content) {
         setDocCards(content); // DocCardProps와 일치하는 데이터로 설정

@@ -21,4 +21,5 @@ export interface DocumentPost extends BasePost {
   dailyScore?: number;
   weeklyScore?: number;
   isLiked?: boolean;
+  customTags?: string[];
 }

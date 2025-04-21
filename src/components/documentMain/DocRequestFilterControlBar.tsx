@@ -2,9 +2,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { DocTypes, DocTypesKey } from "@/types/docTypes";
-import FacultyTag from "@/components/common/tags/FacultyTag";
 import { sortTypeLabels } from "@/types/api/constants/sortType";
 import JiJeongTag from "@/components/common/tags/JiJeongTag";
+import FacultyTag from "@/components/common/tags/facultyTag";
 import DocRequestFilterOptionsModal from "./DocRequestFilterOptionsModal";
 
 interface RequestFilterControlBarProps {
