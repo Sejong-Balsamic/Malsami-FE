@@ -14,6 +14,7 @@ import SearchBar from "@/components/landing/SearchBar";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import { useDispatch } from "react-redux";
 import { showToast } from "@/global/toastUtils";
+import LandingCardList from "@/components/common/LandingCardList";
 import CardList from "@/components/common/CardList";
 import Card from "@/components/common/Card";
 import memberApi from "@/apis/memberApi";
@@ -186,7 +187,7 @@ function Page() {
             <div>asdf</div>
           </BottomSheet>
 
-          <CardList />
+          <LandingCardList />
           <Card
             number={1}
             subject="기초 3D 그래픽스"
@@ -198,6 +199,7 @@ function Page() {
             isLiked
             onClick={() => console.log("카드 클릭됨")}
           />
+          <CardList />
 
           <HotQuestion />
           <AllQuestion questions={questions} />
