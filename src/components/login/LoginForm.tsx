@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import memberApi from "@/apis/memberApi";
 import { MemberCommand } from "@/types/api/requests/memberCommand";
-import NewLoadingSpinner from "../common/NewLoadingSpinner";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import CustomInput from "../common/CustomInput";
 import LoginSuccessModal from "./LoginSuccessModal";
 
@@ -64,7 +64,7 @@ export default function LoginForm() {
 
   return (
     <>
-      <form onSubmit={handleLogin} className="flex flex-1 flex-col px-5">
+      <form onSubmit={handleLogin} className="flex flex-1 flex-col">
         {/* 상단 Input 영역 */}
         <div className="flex flex-col space-y-8">
           <CustomInput
@@ -90,6 +90,9 @@ export default function LoginForm() {
           )}
         </div>
 
+        {/* Todo: 나중에 삭제해야함. */}
+        <LoadingSpinner />
+
         {/* 로그인 제출 버튼 */}
         <div className="mb-[60px] mt-auto">
           <button
@@ -105,13 +108,6 @@ export default function LoginForm() {
           </button>
         </div>
       </form>
-
-      {/* 로딩 스피너: isLoading이 true일 때만 표시. overlay느낌으로 화면정중앙에 */}
-      {isLoading && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-          <NewLoadingSpinner />
-        </div>
-      )}
 
       {/* 로그인 성공 모달 */}
       {isLoginModalOpen && <LoginSuccessModal onClose={handleModalClose} userName={userName} />}
