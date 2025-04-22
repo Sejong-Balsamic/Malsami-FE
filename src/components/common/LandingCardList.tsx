@@ -43,6 +43,7 @@ export default function LandingCardList() {
         <div key={data.id} className="py-5">
           {/* 상단 부분 */}
           <SubjectTag subjectName={data.subject} />
+          {/* 게시물 제목, 내용 - 한 줄로 줄임 처리, 줄간격 설정 */}
           <p className="mb-3 mt-4 line-clamp-1 text-SUIT_16 font-bold leading-6">{data.title}</p>
           <p className="mb-6 line-clamp-1 text-SUIT_16 font-medium text-[#676767]">{data.content}</p>
 
@@ -54,16 +55,17 @@ export default function LandingCardList() {
                 <CustomTag key={customTag} tagName={customTag} />
               ))}
             </div>
-            {/* 좋아요, 댓글 */}
+            {/* 좋아요 */}
             <div className="flex items-center text-SUIT_14 font-medium text-[#929292]">
               <span className="flex">
                 {data.isLiked ? (
-                  <Image src="/icons/actions/like-clicked.svg" alt="좋아요" width={16} height={16} />
+                  <Image src="/icons/actions/like-clicked.svg" alt="좋아요 됨" width={16} height={16} />
                 ) : (
-                  <Image src="/icons/actions/like-unclicked.svg" alt="좋아요" width={16} height={16} />
+                  <Image src="/icons/actions/like-unclicked.svg" alt="좋아요 안됨" width={16} height={16} />
                 )}
                 <span className="ml-1">{data.likeCount}</span>
               </span>
+              {/* 댓글 */}
               <span className="ml-2 flex items-center">
                 <Image src="/icons/actions/comment.svg" alt="댓글" width={16} height={16} />
                 <span className="ml-1">{data.commentCount}</span>
