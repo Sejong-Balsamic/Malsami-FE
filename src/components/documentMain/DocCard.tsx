@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation";
 import { getDateDiff } from "@/global/time";
 import { DocCardProps } from "@/types/docCard.type";
 import SubjectTag from "@/components/common/tags/SubjectTag";
-import DocJiJeongTag from "@/components/common/tags/JiJeongTag";
+import DocJiJeongTag from "@/components/common/tags/PresetTag";
 
 const tagTranslations: { [key: string]: string } = {
   DOCUMENT: "강의_자료",

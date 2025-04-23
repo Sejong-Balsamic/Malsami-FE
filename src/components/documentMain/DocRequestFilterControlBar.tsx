@@ -4,7 +4,7 @@ import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { DocTypes, DocTypesKey } from "@/types/docTypes";
 import FacultyTag from "@/components/common/tags/FacultyTag";
 import { sortTypeLabels } from "@/types/api/constants/sortType";
-import JiJeongTag from "@/components/common/tags/JiJeongTag";
+import PresetTag from "@/components/common/tags/PresetTag";
 import DocRequestFilterOptionsModal from "./DocRequestFilterOptionsModal";
 
 interface RequestFilterControlBarProps {
@@ -37,7 +37,7 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
       <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
         {/* 필터링바에 sortType 표시. null이 아닐 경우만. null은 sortType 선택안됨을 의미 */}
         {filterOptions.sortType && (
-          <JiJeongTag
+          <PresetTag
             key={filterOptions.sortType}
             label={`${sortTypeLabels[filterOptions.sortType]} ×`}
             onClick={handleRemoveSortOption}
@@ -52,7 +52,7 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
         {/* 필터링바에 docType 표시 */}
         {filterOptions.docTypes.length > 0 &&
           filterOptions.docTypes.map(tag => (
-            <JiJeongTag
+            <PresetTag
               key={tag}
               label={`${DocTypes[tag as keyof typeof DocTypes]} ×`}
               onClick={() => handleRemoveTag(tag)}

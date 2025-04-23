@@ -66,7 +66,7 @@ function QnaMovingCard({ unansweredQNAs }: QnaMovingCardProps) {
                 title={category.title}
                 color={color}
                 subject={category.subject}
-                JiJeongTags={category.questionPresetTags}
+                questionPresetTags={category.questionPresetTags}
                 rewardYeopjeon={category.rewardYeopjeon}
                 likeCount={category.likeCount}
                 commentCount={category.commentCount}

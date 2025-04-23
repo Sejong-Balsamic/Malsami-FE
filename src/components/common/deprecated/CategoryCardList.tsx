@@ -28,7 +28,7 @@ export default function CategoryCardList({ categoryCardDatas }: CategoryCardList
             title={category.title}
             color={color} // 계산된 색상 전달
             subject={category.subject}
-            JiJeongTags={category.JiJeongTags}
+            questionPresetTags={category.JiJeongTags}
             rewardYeopjeon={category.rewardYeopjeon}
             likeCount={category.likeCount}
             commentCount={category.commentCount}

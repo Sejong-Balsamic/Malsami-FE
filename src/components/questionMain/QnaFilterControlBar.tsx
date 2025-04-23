@@ -4,7 +4,7 @@ import { QnaFilterOptions } from "@/types/QnaFilterOptions";
 import { QnaPresetTags, QnaPresetTagsKey } from "@/types/qnaPresetTags";
 import { ChaetaekStatusKey, ChaetaekStatus } from "@/types/chaetaekStatus";
 import { sortTypeLabels } from "@/types/api/constants/sortType";
-import JiJeongTag from "@/components/common/tags/JiJeongTag";
+import PresetTag from "@/components/common/tags/PresetTag";
 import QnaFilterOptionsModal from "./QnaFilterOptionsModal";
 
 interface FilterControlBarProps {
@@ -39,7 +39,7 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
       <div className="flex overflow-x-auto whitespace-nowrap scrollbar-hide">
         {/* 필터링바에 sortType 표시. null이 아닐 경우만. null은 sortType 선택안됨을 의미 */}
         {filterOptions.sortType && (
-          <JiJeongTag
+          <PresetTag
             key={filterOptions.sortType}
             label={`${sortTypeLabels[filterOptions.sortType]} ×`}
             onClick={handleRemoveSortType}
@@ -49,7 +49,7 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
 
         {/* 필터링바에 채택여부 표시. 채택됨, 미채택만 표시 */}
         {["CHAETAEK", "NO_CHAETAEK"].includes(filterOptions.chaetaekStatus as ChaetaekStatusKey) && (
-          <JiJeongTag
+          <PresetTag
             key="chaetaekStatus"
             label={`${ChaetaekStatus[filterOptions.chaetaekStatus as ChaetaekStatusKey]} ×`} // 값에 따라 "채택 ×" 또는 "미채택 ×" 표시
             onClick={handleRemoveChaeTaek} // 채택 상태 삭제
@@ -62,7 +62,7 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
 
         {/* 필터링바에 질문태그 표시 */}
         {filterOptions.qnaPresetTags.map(tag => (
-          <JiJeongTag
+          <PresetTag
             key={tag}
             label={`${QnaPresetTags[tag as keyof typeof QnaPresetTags]} ×`}
             onClick={() => handleRemoveTag(tag)} // 태그 삭제
