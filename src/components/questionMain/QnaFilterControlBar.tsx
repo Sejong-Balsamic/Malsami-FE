@@ -76,7 +76,7 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
 
       <div className="flex items-center">
         <Image
-          src="/icons/FilterIcon.svg"
+          src="/icons/actions/filter-right.svg"
           alt="filter"
           width={18}
           height={18}

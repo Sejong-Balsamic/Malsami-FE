@@ -5,7 +5,6 @@ import { useSelector, useDispatch } from "react-redux";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import MovingCardQuestion from "@/components/landing/MovingCardQuestion";
 import questionPostApi from "@/apis/questionPostApi";
-import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
 import UploadQuestionFAB from "@/components/common/FABs/UploadQuestionFAB";
 import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
@@ -34,8 +33,8 @@ export default function QuestionBoardPage() {
   const [filteredQuestionDto, setFilteredQuestionDto] = useState<QuestionDto>();
 
   // 로딩 상태
-  const [isLoading, setIsLoading] = useState(false);
-  const [isUnansweredLoading, setIsUnansweredLoading] = useState(false);
+  const [isUnansweredQuestionLoading, setIsUnansweredQuestionLoading] = useState(false);
+  const [isFilteredQuestionLoading, setIsFilteredQuestionLoading] = useState(false);
 
   // 페이지네이션 상태
   const [pageNumber, setPageNumber] = useState(1);
@@ -47,8 +46,8 @@ export default function QuestionBoardPage() {
 
   // API 호출 함수
   const loadAllData = async (faculty: string | undefined) => {
-    setIsLoading(true);
-    setIsUnansweredLoading(true);
+    setIsFilteredQuestionLoading(true);
+    setIsUnansweredQuestionLoading(true);
     try {
       // 미답변 질문
       const unansweredQuestionCommand: Partial<QuestionCommand> = {
@@ -70,8 +69,8 @@ export default function QuestionBoardPage() {
     } catch (error) {
       console.error("데이터 로드 중 오류 발생:", error);
     } finally {
-      setIsLoading(false);
-      setIsUnansweredLoading(false);
+      setIsFilteredQuestionLoading(false);
+      setIsUnansweredQuestionLoading(false);
     }
   };
 
@@ -119,14 +118,14 @@ export default function QuestionBoardPage() {
           {/* 미답변 질문 영역 */}
           <div className="font-pretendard-semibold px-5 pb-3 pt-4 text-lg text-custom-blue-500">
             {/* eslint-disable-next-line no-nested-ternary */}
-            {isUnansweredLoading || unansweredQuestionDto === null
+            {isUnansweredQuestionLoading || unansweredQuestionDto === null
               ? "로딩 중..."
               : unansweredQuestionDto?.questionPostsPage?.content.length === 0
                 ? "전부 답변했어요!"
                 : "아직 답변 안 했어요!"}
           </div>
           <div className="flex items-center justify-center bg-[#EEEEEE]">
-            {isUnansweredLoading || unansweredQuestionDto === null ? (
+            {isUnansweredQuestionLoading || unansweredQuestionDto === null ? (
               <LoadingSpinner />
             ) : (
               <MovingCardQuestion data={unansweredQuestionDto?.questionPostsPage?.content ?? []} />
@@ -145,7 +144,11 @@ export default function QuestionBoardPage() {
 
           {/* 질문 카드 목록 */}
           <div className="px-5 py-4">
-            {isLoading ? <LoadingSpinner /> : <QuestionCardList categoryQNAs={filteredQuestionDto} />}
+            {isFilteredQuestionLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <QuestionCardList data={filteredQuestionDto?.questionPostsPage?.content ?? []} />
+            )}
           </div>
 
           {/* 페이지네이션 */}

@@ -1,17 +1,17 @@
 import QuestionCardList from "@/components/questionMain/QuestionCardList";
-import { QnaCard } from "@/types/QnaCard";
+import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 
 interface SearchQnaContainerProps {
-  qnaResults: QnaCard[];
+  data: QuestionPost[];
   searchValue: string;
   subject: string;
 }
 
-function SearchQnaContainer({ qnaResults, searchValue, subject }: SearchQnaContainerProps) {
+function SearchQnaContainer({ data, searchValue, subject }: SearchQnaContainerProps) {
   return (
     <div className="p-5">
-      {qnaResults.length > 0 ? (
-        <QuestionCardList categoryQNAs={qnaResults} />
+      {data.length > 0 ? (
+        <QuestionCardList data={data} />
       ) : (
         <p className="font-pretendard-medium text-center text-gray-500">
           <span className="font-pretendard-bold">{subject} </span>
