@@ -5,6 +5,7 @@ import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import QuestionCard from "@/components/common/QuestionCard";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
+import { QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
 
 interface MovingCardQuestionProps {
   data: QuestionPost[];
@@ -80,7 +81,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
                   title={questionPost.title as string}
                   color={colors[index % colors.length]}
                   subject={questionPost.subject as string}
-                  JiJeongTags={questionPost.questionPresetTags as string[]}
+                  questionPresetTags={questionPost.questionPresetTags as QuestionPresetTag[]}
                   rewardYeopjeon={questionPost.rewardYeopjeon || 0}
                   likeCount={questionPost.likeCount as number}
                   commentCount={questionPost.commentCount as number}

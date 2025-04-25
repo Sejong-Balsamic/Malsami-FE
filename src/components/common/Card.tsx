@@ -70,9 +70,9 @@ export default function Card({
         <div className="flex gap-2">{customTags && customTags.map(label => <CustomTag tagName={label} />)}</div>
         <span className="ml-auto flex items-center gap-1.5 text-SUIT_14 text-[#929292]">
           {isLiked ? (
-            <Image src="/icons/actions/like-clicked.svg" alt="좋아요" width={16} height={16} />
+            <Image src="/icons/actions/hand-thumbs-up-fill.svg" alt="좋아요" width={16} height={16} />
           ) : (
-            <Image src="/icons/actions/like-unclicked.svg" alt="좋아요" width={16} height={16} />
+            <Image src="/icons/actions/hand-thumbs-up.svg" alt="좋아요" width={16} height={16} />
           )}
           {likeCount}
         </span>

@@ -4,12 +4,10 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import MovingCardQuestion from "@/components/landing/MovingCardQuestion";
-import getUnansweredQNAs from "@/apis/question/getUnansweredQNAs";
-import getCategoryQNAs from "@/apis/question/getCategoryQNAs";
+import questionPostApi from "@/apis/questionPostApi";
 import UploadQuestionFAB from "@/components/common/FABs/UploadQuestionFAB";
 import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { QnaCard } from "@/types/QnaCard";
 import { setFilterOptions } from "@/global/store/filterOptionsSlice";
 import { RootState } from "@/global/store";
 import QnaFilterFacultyCategory from "@/components/questionMain/QnaFilterFacultyCategory";
@@ -17,6 +15,8 @@ import QnaFilterControlBar from "@/components/questionMain/QnaFilterControlBar";
 import QuestionCardList from "@/components/questionMain/QuestionCardList";
 import { RIGHT_ITEM } from "@/types/header";
 import CommonHeader from "@/components/header/CommonHeader";
+import { QuestionDto } from "@/types/api/responses/questionDto";
+import { QuestionCommand } from "@/types/api/requests/questionCommand";
 
 export default function QuestionBoardPage() {
   const dispatch = useDispatch();
@@ -29,12 +29,12 @@ export default function QuestionBoardPage() {
   const [isAllFacultySelected, setIsAllFacultySelected] = useState(true);
 
   // 데이터 상태
-  const [unansweredQNAs, setUnansweredQNAs] = useState<null | any[]>(null);
-  const [categoryQNAs, setCategoryQNAs] = useState<QnaCard[]>([]);
+  const [unansweredQuestionDto, setUnansweredQuestionDto] = useState<QuestionDto>();
+  const [filteredQuestionDto, setFilteredQuestionDto] = useState<QuestionDto>();
 
   // 로딩 상태
-  const [isLoading, setIsLoading] = useState(false);
-  const [isUnansweredLoading, setIsUnansweredLoading] = useState(false);
+  const [isUnansweredQuestionLoading, setIsUnansweredQuestionLoading] = useState(false);
+  const [isFilteredQuestionLoading, setIsFilteredQuestionLoading] = useState(false);
 
   // 페이지네이션 상태
   const [pageNumber, setPageNumber] = useState(1);
@@ -46,15 +46,17 @@ export default function QuestionBoardPage() {
 
   // API 호출 함수
   const loadAllData = async (faculty: string | undefined) => {
-    setIsLoading(true);
-    setIsUnansweredLoading(true);
+    setIsFilteredQuestionLoading(true);
+    setIsUnansweredQuestionLoading(true);
     try {
       // 미답변 질문
-      const unansweredData = await getUnansweredQNAs({ faculty });
-      setUnansweredQNAs(unansweredData);
+      const unansweredQuestionCommand: Partial<QuestionCommand> = {
+        faculty,
+      };
+      setUnansweredQuestionDto(await questionPostApi.getAllQuestionPostsNotAnswered(unansweredQuestionCommand));
 
       // 필터된 질문
-      const params = {
+      const filteredQuestionCommand = {
         qnaPresetTags: filterOptions.qnaPresetTags,
         faculty,
         chaetaekStatus: filterOptions.chaetaekStatus,
@@ -62,14 +64,13 @@ export default function QuestionBoardPage() {
         pageNumber: pageNumber - 1,
         pageSize,
       };
-      const categoryData = await getCategoryQNAs(params);
-      setCategoryQNAs(categoryData.content || []);
-      setTotalPages(categoryData.totalPages || 1);
+      setFilteredQuestionDto(await questionPostApi.getFilteredQuestionPosts(filteredQuestionCommand));
+      setTotalPages(filteredQuestionDto?.questionPostsPage?.totalPages || 1);
     } catch (error) {
       console.error("데이터 로드 중 오류 발생:", error);
     } finally {
-      setIsLoading(false);
-      setIsUnansweredLoading(false);
+      setIsFilteredQuestionLoading(false);
+      setIsUnansweredQuestionLoading(false);
     }
   };
 
@@ -117,17 +118,17 @@ export default function QuestionBoardPage() {
           {/* 미답변 질문 영역 */}
           <div className="font-pretendard-semibold px-5 pb-3 pt-4 text-lg text-custom-blue-500">
             {/* eslint-disable-next-line no-nested-ternary */}
-            {isUnansweredLoading || unansweredQNAs === null
+            {isUnansweredQuestionLoading || unansweredQuestionDto === null
               ? "로딩 중..."
-              : unansweredQNAs.length === 0
+              : unansweredQuestionDto?.questionPostsPage?.content.length === 0
                 ? "전부 답변했어요!"
                 : "아직 답변 안 했어요!"}
           </div>
           <div className="flex items-center justify-center bg-[#EEEEEE]">
-            {isUnansweredLoading || unansweredQNAs === null ? (
+            {isUnansweredQuestionLoading || unansweredQuestionDto === null ? (
               <LoadingSpinner />
             ) : (
-              <MovingCardQuestion data={unansweredQNAs} />
+              <MovingCardQuestion data={unansweredQuestionDto?.questionPostsPage?.content ?? []} />
             )}
           </div>
 
@@ -143,7 +144,11 @@ export default function QuestionBoardPage() {
 
           {/* 질문 카드 목록 */}
           <div className="px-5 py-4">
-            {isLoading ? <LoadingSpinner /> : <QuestionCardList categoryQNAs={categoryQNAs} />}
+            {isFilteredQuestionLoading ? (
+              <LoadingSpinner />
+            ) : (
+              <QuestionCardList data={filteredQuestionDto?.questionPostsPage?.content ?? []} />
+            )}
           </div>
 
           {/* 페이지네이션 */}

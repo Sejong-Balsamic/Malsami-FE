@@ -59,9 +59,9 @@ export default function LandingCardList() {
             <div className="flex items-center text-SUIT_14 font-medium text-[#929292]">
               <span className="flex">
                 {data.isLiked ? (
-                  <Image src="/icons/actions/like-clicked.svg" alt="좋아요 됨" width={16} height={16} />
+                  <Image src="/icons/actions/hand-thumbs-up-fill.svg" alt="좋아요 됨" width={16} height={16} />
                 ) : (
-                  <Image src="/icons/actions/like-unclicked.svg" alt="좋아요 안됨" width={16} height={16} />
+                  <Image src="/icons/actions/hand-thumbs-up.svg" alt="좋아요 안됨" width={16} height={16} />
                 )}
                 <span className="ml-1">{data.likeCount}</span>
               </span>

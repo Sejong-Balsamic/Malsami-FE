@@ -9,7 +9,7 @@ import { getDateDiff } from "@/global/time";
 import CommentSection from "./QCommentSection";
 import sameMember from "@/global/sameMember";
 import AttachedFiles from "@/components/common/AttachedFiles";
-import JiJeongTag from "@/components/common/tags/JiJeongTag";
+import PresetTag from "@/components/common/tags/PresetTag";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 
 // 한국어 태그 매핑
@@ -56,7 +56,7 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
 
   const [commentCount, setCommentCount] = useState(questionDto.questionPost?.commentCount);
   const incrementCommentCount = () => {
-    setCommentCount(prevCount => prevCount as number + 1);
+    setCommentCount(prevCount => (prevCount as number) + 1);
   };
 
   const files = questionDto.mediaFiles?.map(file => file.uploadedImageUrl) as string[];
@@ -80,7 +80,7 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
               <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
                 {questionDto.questionPost?.subject}
               </div>
-              {questionDto.questionPost?.rewardYeopjeon as number > 0 && (
+              {(questionDto.questionPost?.rewardYeopjeon as number) > 0 && (
                 <span className="font-pretendard-semibold mr-1 inline-flex h-[26px] items-center rounded-[33px] bg-custom-orange-500 px-2 py-[3px] text-xs text-white">
                   <img src="/icons/Yeopjeon.svg" alt="Yeopjeon" className="inline-block h-[14px] w-[14px]" />
                   <span className="ml-1">{questionDto.questionPost?.rewardYeopjeon}</span>
@@ -104,7 +104,7 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
           <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
             <div className="flex h-full w-full items-center gap-[4px]">
               {questionDto.customTags.map((tag, index) => (
-                <JiJeongTag key={index} title={tag} />
+                <PresetTag key={index} title={tag} />
               ))}
             </div>
           </div>

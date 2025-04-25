@@ -1,4 +1,4 @@
-interface JiJeongTagProps {
+interface PresetTagProps {
   label?: string;
   title?: string;
   style?: React.CSSProperties;
@@ -6,7 +6,7 @@ interface JiJeongTagProps {
 }
 
 // FIX: 지정태그 디자인 나오면 수정해야함.
-function JiJeongTag({ label, title, style, onClick }: JiJeongTagProps) {
+function PresetTag({ label, title, style, onClick }: PresetTagProps) {
   const displayLabel = label || title || "";
   return (
     <span
@@ -26,11 +26,11 @@ function JiJeongTag({ label, title, style, onClick }: JiJeongTagProps) {
   );
 }
 
-JiJeongTag.defaultProps = {
+PresetTag.defaultProps = {
   label: "",
   title: "",
   style: {},
   onClick: undefined,
 };
 
-export default JiJeongTag;
+export default PresetTag;
