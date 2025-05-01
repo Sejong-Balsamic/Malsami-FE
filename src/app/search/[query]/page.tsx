@@ -6,14 +6,13 @@ import { useSelector, useDispatch } from "react-redux";
 import { setActiveTab } from "@/global/store/activeTabSlice";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import getSearchResult from "@/apis/search/getSearchResult";
+import queryApi from "@/apis/queryApi";
 import SearchResultNav from "@/components/search/SearchResultNav";
 import SearchBoardTab from "@/components/search/SearchBoardTab";
 import SearchDocContainer from "@/components/search/SearchDocContainer";
 import SearchQnaContainer from "@/components/search/SearchQnaContainer";
-import { DocCardProps } from "@/types/docCard.type";
 import { RootState } from "@/global/store";
-import { QuestionDto } from "@/types/api/responses/questionDto";
+import { QueryDto } from "@/types/api/responses/queryDto";
 
 export default function SearchResultPage() {
   const router = useRouter();
@@ -28,8 +27,7 @@ export default function SearchResultPage() {
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태
   const [executedSearchValue, setExecutedSearchValue] = useState(initialQuery); // 실행된 검색어
   const [executedSubject, setExecutedSubject] = useState(initialSubject); // 실행된 subject
-  const [docResults, setDocResults] = useState<DocCardProps[]>([]); // 자료 결과 저장
-  const [questionDto, setQuestionDto] = useState<QuestionDto>(); // 질문 결과 저장
+  const [queryDto, setQueryDto] = useState<QueryDto>(); // 검색 결과 저장
 
   // 검색 API 호출 함수
   const fetchSearchResults = async (query: string, subjectParam: string) => {
@@ -37,12 +35,10 @@ export default function SearchResultPage() {
 
     setIsLoading(true);
     const formattedSubject = subjectParam.startsWith("@") ? subjectParam.slice(1).trim() : subjectParam.trim(); // "@" 제거 처리
+    // queryApiCommand 객체 생성 (api 요청에 필요한 형식으로 정의)
+    const queryApiCommand = { query: query.trim(), subject: formattedSubject };
     try {
-      const response = await getSearchResult({
-        params: { query: query.trim(), subject: formattedSubject },
-      });
-      setDocResults(response.documentPostsPage.content);
-      setQuestionDto(response.questionPostsPage.content);
+      setQueryDto(await queryApi.getPostsByQuery(queryApiCommand));
     } catch (error) {
       console.error("API 호출 에러:", error);
       alert("검색 결과를 가져오는 데 문제가 발생했습니다.");
@@ -76,9 +72,6 @@ export default function SearchResultPage() {
     const query = searchParams.get("query") || "";
     const subjectParam = searchParams.get("subject") || "";
 
-    console.log("query: ", query);
-    console.log("subject: ", subjectParam);
-
     setSearchValue(query); // 검색어 상태 업데이트
     setExecutedSearchValue(query); // 실행된 검색어 업데이트
 
@@ -109,11 +102,15 @@ export default function SearchResultPage() {
         {/* 검색 결과 컴포넌트 렌더링 */}
         {isLoading && <LoadingSpinner />}
         {!isLoading && activeTab === "자료게시판" && (
-          <SearchDocContainer docResults={docResults} searchValue={executedSearchValue} subject={executedSubject} />
+          <SearchDocContainer
+            data={queryDto?.documentPostsPage?.content ?? []}
+            searchValue={executedSearchValue}
+            subject={executedSubject}
+          />
         )}
         {!isLoading && activeTab === "질문게시판" && (
           <SearchQnaContainer
-            data={questionDto?.questionPostsPage?.content ?? []}
+            data={queryDto?.questionPostsPage?.content ?? []}
             searchValue={executedSearchValue}
             subject={executedSubject}
           />

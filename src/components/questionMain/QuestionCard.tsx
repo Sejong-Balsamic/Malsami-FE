@@ -45,7 +45,7 @@ function QuestionCard({
           <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
             <div className="flex flex-wrap items-center">
               <span className="flex items-center">
-                <Image src="/icons/LikeIcon.svg" width={14} height={14} alt="LikeIcon" />
+                <Image src="/icons/actions/hand-thumbs-up.svg" width={14} height={14} alt="LikeIcon" />
                 <span className="ml-1 text-xs">{likeCount > 999 ? "999+" : likeCount}</span>
               </span>
               <span className="mx-1.5">·</span>
