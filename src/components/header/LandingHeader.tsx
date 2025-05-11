@@ -2,40 +2,39 @@
 
 "use client";
 
-import React from "react";
-import { useRouter } from "next/navigation"; // next/router 대신 next/navigation 사용
+import React, { ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import Header from "@/components/header/Header";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 
-/**
- * LandingHeader
- *  - 왼쪽: 로고 (LOGO)
- *  - 오른쪽: 알림 (BELL)
- */
-function LandingHeader() {
-  const router = useRouter();
-
-  // 왼쪽 버튼: 로고 클릭 시 메인("/") 이동
-  const handleLeftClick = () => {
-    router.push("/");
-  };
-
-  // 오른쪽 버튼: 알림 아이콘 클릭 시 "/notifications" 이동
-  const handleRightClick = () => {
-    router.push("/notifications");
-  };
-
-  return (
-    <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
-      <Header
-        leftType={LEFT_ITEM.LOGO}
-        rightType={RIGHT_ITEM.BELL}
-        onLeftClick={handleLeftClick}
-        onRightClick={handleRightClick}
-        hasNotification={false} // 알림 여부 (Redux 연동 전, 일단 false)
-      />
-    </div>
-  );
+interface LandingHeaderProps {
+  // eslint-disable-next-line react/require-default-props
+  children?: ReactNode;
 }
 
-export default LandingHeader;
+export default function LandingHeader({ children }: LandingHeaderProps) {
+  const router = useRouter();
+  const handleLeftClick = () => router.push("/");
+  const handleRightClick = () => router.push("/notifications");
+
+  return (
+    <>
+      {/* fixed 헤더 */}
+      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+        <Header
+          leftType={LEFT_ITEM.LOGO}
+          rightType={RIGHT_ITEM.BELL}
+          onLeftClick={handleLeftClick}
+          onRightClick={handleRightClick}
+          hasNotification={false}
+        />
+      </div>
+
+      {/* 헤더 높이만큼 스페이서 (4rem) */}
+      <div className="h-16 w-full max-w-[640px]" />
+
+      {/* children 렌더 */}
+      <div className="w-full max-w-[640px] bg-white">{children}</div>
+    </>
+  );
+}

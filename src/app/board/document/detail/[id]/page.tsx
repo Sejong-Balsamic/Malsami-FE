@@ -93,8 +93,7 @@ export default function Page() {
     <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
       <ScrollToTopOnLoad />
       <CommonHeader title="자료 상세보기" rightType={RIGHT_ITEM.MENU} onRightClick={toggleDrawer} />
-      {/* 헤더 아래 여백 추가 */}
-      <div className="mt-[64px]">
+      <div>
         {documentDetails && <DocDetail documentDto={documentDetails} />}
         {/* Drawer 컴포넌트 */}
         <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>

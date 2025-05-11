@@ -8,8 +8,7 @@ function Page() {
   return (
     <div className="relative mx-auto w-full max-w-[640px]">
       <CommonHeader title="내가 올린 질문" rightType={RIGHT_ITEM.NONE} />
-      {/* 헤더 아래 여백 추가 */}
-      <div className="mt-[64px]">
+      <div>
         <Image
           src="/image/PaperBG.png"
           alt="BG"

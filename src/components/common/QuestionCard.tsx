@@ -23,7 +23,8 @@ interface CategoryCardProps {
   title: string;
   color: string;
   subject: string;
-  JiJeongTags: string[];
+  // eslint-disable-next-line react/require-default-props
+  JiJeongTags?: string[]; // 선택적 prop으로 변경
   rewardYeopjeon: number;
   likeCount: number;
   commentCount: number;
@@ -43,7 +44,7 @@ function QuestionCard({
   title,
   color,
   subject,
-  JiJeongTags,
+  JiJeongTags = [], // 기본값으로 빈 배열 설정
   rewardYeopjeon,
   likeCount,
   commentCount,
@@ -62,9 +63,9 @@ function QuestionCard({
           <div className="flex flex-1 flex-col justify-between">
             <div className="font-pretendard-bold line-clamp-2 pr-2 text-sm leading-[20px]">{title}</div>
             <div className="my-2 flex flex-wrap gap-1">
-              {JiJeongTags.map(tag => (
-                <JiJeongTag key={tag} title={tagTranslations[tag] ?? tag} />
-              ))}
+              {JiJeongTags && JiJeongTags.length > 0
+                ? JiJeongTags.map(tag => <JiJeongTag key={tag} title={tagTranslations[tag] ?? tag} />)
+                : null}
             </div>
           </div>
 

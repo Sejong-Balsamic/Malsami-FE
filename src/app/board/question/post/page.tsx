@@ -248,8 +248,7 @@ export default function QnaPostPage() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <CommonHeader title="질문 작성" rightType={RIGHT_ITEM.NONE} />
-      {/* 헤더 여백 추가 */}
-      <div className="mt-[64px]">
+      <div>
         <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white p-5">
           <div className="rounded-lg">
             {/* 로딩 중일 때 */}
