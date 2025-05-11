@@ -3,7 +3,7 @@ import Image from "next/image";
 import { DocFilterOptions } from "@/types/DocFilterOptions";
 import { DocTypes, DocTypesKey } from "@/types/docTypes";
 import { SortType, sortTypeLabels } from "@/types/api/constants/sortType"; // SortType 추가
-import JiJeongTag from "@/components/common/tags/JiJeongTag";
+import PresetTag from "@/components/common/tags/PresetTag";
 import DocFilterOptionsModal from "./DocFilterOptionsModal";
 
 interface FilterControlBarProps {
@@ -32,7 +32,7 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
       <div className="flex overflow-x-auto scrollbar-hide">
         {/* sortType 표시 */}
         {filterOptions.sortType && (
-          <JiJeongTag
+          <PresetTag
             key={filterOptions.sortType}
             label={`${sortTypeLabels[filterOptions.sortType as SortType]} ×`} // 한국어 라벨 사용
             onClick={handleRemoveSortOption}
@@ -45,7 +45,7 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
         {/* docType 표시 */}
         {filterOptions.docTypes.length > 0 &&
           filterOptions.docTypes.map(docTypesTag => (
-            <JiJeongTag
+            <PresetTag
               key={docTypesTag}
               label={`${DocTypes[docTypesTag]} ×`}
               onClick={() => handleRemoveTag(docTypesTag)}

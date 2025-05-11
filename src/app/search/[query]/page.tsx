@@ -12,8 +12,8 @@ import SearchBoardTab from "@/components/search/SearchBoardTab";
 import SearchDocContainer from "@/components/search/SearchDocContainer";
 import SearchQnaContainer from "@/components/search/SearchQnaContainer";
 import { DocCardProps } from "@/types/docCard.type";
-import { QnaCard } from "@/types/QnaCard";
 import { RootState } from "@/global/store";
+import { QuestionDto } from "@/types/api/responses/questionDto";
 
 export default function SearchResultPage() {
   const router = useRouter();
@@ -29,7 +29,7 @@ export default function SearchResultPage() {
   const [executedSearchValue, setExecutedSearchValue] = useState(initialQuery); // 실행된 검색어
   const [executedSubject, setExecutedSubject] = useState(initialSubject); // 실행된 subject
   const [docResults, setDocResults] = useState<DocCardProps[]>([]); // 자료 결과 저장
-  const [qnaResults, setQnaResults] = useState<QnaCard[]>([]); // 질문 결과 저장
+  const [questionDto, setQuestionDto] = useState<QuestionDto>(); // 질문 결과 저장
 
   // 검색 API 호출 함수
   const fetchSearchResults = async (query: string, subjectParam: string) => {
@@ -42,7 +42,7 @@ export default function SearchResultPage() {
         params: { query: query.trim(), subject: formattedSubject },
       });
       setDocResults(response.documentPostsPage.content);
-      setQnaResults(response.questionPostsPage.content);
+      setQuestionDto(response.questionPostsPage.content);
     } catch (error) {
       console.error("API 호출 에러:", error);
       alert("검색 결과를 가져오는 데 문제가 발생했습니다.");
@@ -112,7 +112,11 @@ export default function SearchResultPage() {
           <SearchDocContainer docResults={docResults} searchValue={executedSearchValue} subject={executedSubject} />
         )}
         {!isLoading && activeTab === "질문게시판" && (
-          <SearchQnaContainer qnaResults={qnaResults} searchValue={executedSearchValue} subject={executedSubject} />
+          <SearchQnaContainer
+            data={questionDto?.questionPostsPage?.content ?? []}
+            searchValue={executedSearchValue}
+            subject={executedSubject}
+          />
         )}
       </div>
     </div>

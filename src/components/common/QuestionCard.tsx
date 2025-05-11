@@ -17,38 +17,28 @@
 import React from "react";
 import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
 import Image from "next/image";
-import JiJeongTag from "@/components/common/tags/JiJeongTag";
+import PresetTag from "@/components/common/tags/PresetTag";
+import { QuestionPresetTagTranslation, QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
 
-interface CategoryCardProps {
+interface QuestionCardProps {
   title: string;
   color: string;
   subject: string;
-  // eslint-disable-next-line react/require-default-props
-  JiJeongTags?: string[]; // 선택적 prop으로 변경
+  questionPresetTags: QuestionPresetTag[];
   rewardYeopjeon: number;
   likeCount: number;
   commentCount: number;
 }
 
-const tagTranslations: { [key: string]: string } = {
-  EXAM_PREPARATION: "시험_대비",
-  OUT_OF_CLASS: "수업_외_내용",
-  UNKNOWN_CONCEPT: "개념_모름",
-  BETTER_SOLUTION: "더_나은_풀이",
-  DOCUMENT_REQUEST: "자료_요청",
-  STUDY_TIPS: "공부_팁",
-  ADVICE_REQUEST: "조언_구함",
-};
-
 function QuestionCard({
   title,
   color,
   subject,
-  JiJeongTags = [], // 기본값으로 빈 배열 설정
+  questionPresetTags,
   rewardYeopjeon,
   likeCount,
   commentCount,
-}: CategoryCardProps) {
+}: QuestionCardProps) {
   return (
     <div className="flex items-center justify-center">
       <div className="m-3 flex min-h-[166px] w-[163px] flex-col">
@@ -63,9 +53,9 @@ function QuestionCard({
           <div className="flex flex-1 flex-col justify-between">
             <div className="font-pretendard-bold line-clamp-2 pr-2 text-sm leading-[20px]">{title}</div>
             <div className="my-2 flex flex-wrap gap-1">
-              {JiJeongTags && JiJeongTags.length > 0
-                ? JiJeongTags.map(tag => <JiJeongTag key={tag} title={tagTranslations[tag] ?? tag} />)
-                : null}
+              {questionPresetTags.map(tag => (
+                <PresetTag key={tag} title={QuestionPresetTagTranslation[tag] ?? tag} />
+              ))}
             </div>
           </div>
 

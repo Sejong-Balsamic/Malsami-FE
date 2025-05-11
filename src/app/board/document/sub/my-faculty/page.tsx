@@ -11,8 +11,8 @@ import { RIGHT_ITEM } from "@/types/header";
 import getMyShortInfo from "@/apis/document/getMyShortInfo";
 import getFilteringDocs from "@/apis/document/getFilteringDocs";
 import { DocCardProps } from "@/types/docCard.type";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { RootState } from "@/global/store";
+import LoadingSpinner from "@/components/common/LoadingSpinner";
 import DocFilterControlBar from "@/components/documentMain/DocFilterControlBar";
 import DocCard from "@/components/documentMain/DocCard";
 
