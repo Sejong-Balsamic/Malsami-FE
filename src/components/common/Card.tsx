@@ -48,7 +48,7 @@ export default function Card({
 }: CardProps) {
   return (
     <article
-      className="flex h-[194px] w-[261px] flex-col justify-between rounded-[20px] p-[20px] shadow-md hover:shadow-lg"
+      className="flex h-[194px] w-[261px] flex-col justify-between rounded-[20px] bg-white p-[20px] shadow-md hover:shadow-lg"
       onClick={onClick}
     >
       <>
@@ -68,9 +68,10 @@ export default function Card({
       {/* 하단 */}
       <div className="mt-2 flex flex-row justify-between">
         <div className="flex gap-2">
-          {customTags && customTags.map((label, index) => (
-            <CustomTag key={`${label}-${index}`} tagName={label} />
-          ))}
+          {customTags &&
+            customTags
+              .slice(0, 2)
+              .map(label => <CustomTag key={label} tagName={label.length > 6 ? `${label.slice(0, 6)}..` : label} />)}
         </div>
         <span className="ml-auto flex items-center gap-1.5 text-SUIT_14 text-[#929292]">
           {isLiked ? (

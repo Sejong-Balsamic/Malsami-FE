@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/tabs";
 import { questionPostApi } from "@/apis/questionPostApi"; // questionPostApi 임포트
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
-import MovingCardQuestion from "./MovingCardQuestion";
+import MovingCardQuestion from "../common/MovingCardQuestion";
 
 function HotQuestion() {
   const router = useRouter();
