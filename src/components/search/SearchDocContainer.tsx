@@ -1,45 +1,45 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { DocCardProps } from "@/types/docCard.type";
 import SearchDocCard from "./SearchDocCard";
+import { DocumentPost } from "../../types/api/entities/postgres/documentPost";
 
 interface SearchDocContainerProps {
-  docResults: DocCardProps[];
+  data: DocumentPost[];
   searchValue: string;
   subject: string;
 }
 
-export default function SearchDocContainer({ docResults, searchValue, subject }: SearchDocContainerProps) {
+export default function SearchDocContainer({ data, searchValue, subject }: SearchDocContainerProps) {
   const router = useRouter();
   return (
     <div className="p-5">
-      {docResults.length > 0 ? (
-        docResults.map((card: DocCardProps) => (
+      {data.length > 0 ? (
+        data.map(documentPost => (
           <div
             role="button"
             tabIndex={0} // 키보드 포커스 가능하도록 추가
-            key={card.documentPostId}
-            onClick={() => router.push(`/board/document/detail/${card.documentPostId}`)}
+            key={documentPost.documentPostId}
+            onClick={() => router.push(`/board/document/detail/${documentPost.documentPostId}`)}
             onKeyDown={e => {
               if (e.key === "Enter" || e.key === " ") {
-                router.push(`/board/document/detail/${card.documentPostId}`);
+                router.push(`/board/document/detail/${documentPost.documentPostId}`);
               }
-            }} // 키보드 이벤트 추가
+            }}
             className="cursor-pointer"
           >
             <SearchDocCard
-              key={card.documentPostId}
-              documentPostId={card.documentPostId}
-              subject={card.subject || "과목명"}
-              title={card.title || "타이틀"}
-              content={card.content || "내용이 없습니다."}
-              documentTypes={card.documentTypes}
-              createdDate={card.createdDate || ""}
-              thumbnailUrl={card.thumbnailUrl || ""}
-              viewCount={card.viewCount || 0}
-              likeCount={card.likeCount || 0}
-              postTier={card.postTier}
+              key={documentPost.documentPostId}
+              documentPostId={documentPost.documentPostId as string}
+              subject={documentPost.subject || "과목명"}
+              title={documentPost.title || "타이틀"}
+              content={documentPost.content || "내용이 없습니다."}
+              documentTypes={documentPost.documentTypes}
+              createdDate={documentPost.createdDate || ""}
+              thumbnailUrl={documentPost.thumbnailUrl || ""}
+              viewCount={documentPost.viewCount || 0}
+              likeCount={documentPost.likeCount || 0}
+              postTier={documentPost.postTier}
             />
           </div>
         ))
