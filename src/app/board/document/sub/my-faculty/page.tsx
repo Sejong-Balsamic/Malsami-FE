@@ -89,8 +89,7 @@ export default function DocMyFacultyPage() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <CommonHeader title="내 전공 관련 자료" rightType={RIGHT_ITEM.NONE} />
-      {/* 헤더 아래 여백 추가 */}
-      <div className="mt-[64px]">
+      <div>
         <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
           <DocFilterControlBar filterOptions={docMyFacultyFilterOptions} onFilterChange={handleFilterChange} />
           <div className="h-0.5 bg-[#EEEEEE]" />

@@ -1,219 +1,240 @@
 "use client";
 
-import React, { useEffect, useState, useRef, useCallback } from "react";
-import Image from "next/image";
-import BottomSheet, { BottomSheetTrigger } from "@/components/common/BottomSheet";
+import React, { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import LandingHeader from "@/components/header/LandingHeader";
-import HotDocument from "@/components/landing/HotDocument";
-import HotQuestion from "@/components/landing/HotQuestion";
-import AllDocument from "@/components/landing/AllDocument";
-import AllQuestion from "@/components/landing/AllQuestion";
-import UploadFAB from "@/components/common/FABs/UploadLandingFAB";
-import ScrollFAB from "@/components/common/FABs/ScrollFAB";
-import SearchBar from "@/components/landing/SearchBar";
-import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import { useDispatch } from "react-redux";
-import { showToast } from "@/global/toastUtils";
-import LandingCardList from "@/components/common/LandingCardList";
-import CardList from "@/components/common/CardList";
+import Image from "next/image";
 import Card from "@/components/common/Card";
-import memberApi from "@/apis/memberApi";
-import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
-import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
-import documentPostApi from "@/apis/documentPostApi";
-import questionPostApi from "@/apis/questionPostApi";
-import { QuestionCommand } from "@/types/api/requests/questionCommand";
-import { DocumentCommand } from "@/types/api/requests/documentCommand";
 
-function Page() {
-  const [scrollY, setScrollY] = useState(0);
-  const [searchVisible, setSearchVisible] = useState(true);
-  const [showScrollFAB, setShowScrollFAB] = useState(true);
-  const [userName, setUserName] = useState<string>("");
-  const hotDocumentRef = useRef<HTMLDivElement>(null);
-  const [documents, setDocuments] = useState<DocumentPost[]>([]);
-  const [questions, setQuestions] = useState<QuestionPost[]>([]);
-  const dispatch = useDispatch();
+function HotDocumentsSection(props: {
+  onViewAll: () => void;
+  onTabChange: (value: ((prevState: string) => string) | string) => void;
+  activeTab: string;
+}) {
+  const { onViewAll, onTabChange, activeTab } = props;
 
-  const handleBottomSheetReset = () => {
-    console.log("필터 초기화");
-  };
-
-  const handleBottomSheetConfirm = () => {
-    console.log("필터 확인");
-  };
-
-  // 스크롤 이벤트
-  useEffect(() => {
-    const handleScroll = () => {
-      const currentScrollY = window.scrollY;
-      let threshold = 1800;
-
-      if (window.innerWidth >= 640) {
-        threshold = 3000;
-      } else if (window.innerWidth <= 375) {
-        threshold = 1400;
-      }
-
-      setScrollY(Math.min(currentScrollY, 3000));
-      console.log(scrollY); // TODO: 지워야함. eslint임시
-      setSearchVisible(currentScrollY < threshold);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  useEffect(() => {
-    const handleScrollForFAB = () => {
-      const currentScrollY = window.scrollY;
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-
-      setShowScrollFAB(currentScrollY + windowHeight < documentHeight - 100);
-    };
-
-    window.addEventListener("scroll", handleScrollForFAB);
-    return () => window.removeEventListener("scroll", handleScrollForFAB);
-  }, []);
-
-  const storeUserName = useCallback(async (): Promise<void> => {
-    try {
-      const memberInfo = await memberApi.getMyInfo();
-      const studentName = memberInfo?.member?.studentName || "종이";
-      setUserName(studentName);
-    } catch (error) {
-      const message = "사용자 정보를 불러오지 못했습니다.";
-      showToast(dispatch, message, "orange");
-      setUserName("종이");
-    }
-  }, [dispatch]);
-
-  useEffect(() => {
-    const initializeUserName = async () => {
-      const accessToken = sessionStorage.getItem("accessToken");
-
-      if (accessToken) {
-        await storeUserName();
-      } else {
-        setUserName("종이");
-      }
-    };
-
-    initializeUserName();
-  }, [storeUserName]);
-
-  useEffect(() => {
-    const fetchDocuments = async () => {
-      try {
-        const command: Partial<DocumentCommand> = {
-          pageNumber: 0, // 첫 페이지
-          pageSize: 5, // 5개 표시
-        };
-        const data = await documentPostApi.getDailyPopularDocumentPost(command);
-        const allDocuments = data.documentPostsPage?.content || []; // 전체 질문 리스트 추출
-        setDocuments(allDocuments); // 상태에 저장
-      } catch (error) {
-        const message = "자료를 불러오지 못했습니다.";
-        showToast(dispatch, message, "orange");
-      }
-    };
-
-    fetchDocuments();
-  }, [dispatch]);
-
-  useEffect(() => {
-    const fetchQuestions = async () => {
-      try {
-        const command: Partial<QuestionCommand> = {
-          pageNumber: 0, // 첫 페이지
-          pageSize: 5, // 5개 표시
-        };
-        const data = await questionPostApi.getDailyPopularQuestionPost(command);
-        const allQuestions = data.questionPostsPage?.content || []; // 전체 질문 리스트 추출
-        setQuestions(allQuestions); // 상태에 저장
-      } catch (error) {
-        const message = "질문을 불러오지 못했습니다.";
-        showToast(dispatch, message, "orange"); // Toast로 에러 메시지 표시
-      }
-    };
-
-    fetchQuestions();
-  }, [dispatch]);
+  // 임시 데이터 - 실제로는 API에서 받아올 데이터
+  const dummyData = [
+    {
+      id: 1,
+      subject: "기초 3D 그래픽스",
+      title: "3D 모델링 기초 튜토리얼",
+      content: "블렌더로 시작하는 3D 모델링 기초 과정입니다. 초보자도 쉽게 따라할 수 있어요.",
+      isCurrentlyPopular: true,
+      likeCount: 42,
+      customTags: ["3D", "블렌더"],
+      isLiked: true,
+    },
+    {
+      id: 2,
+      subject: "자바 프로그래밍",
+      title: "자바 스프링부트 실전 프로젝트",
+      content: "스프링부트를 활용한 웹 애플리케이션 개발 과정을 정리했습니다.",
+      isCurrentlyPopular: true,
+      likeCount: 38,
+      customTags: ["Java", "SpringBoot"],
+      isLiked: false,
+    },
+    {
+      id: 3,
+      subject: "AI 기초",
+      title: "머신러닝 입문 가이드",
+      content: "파이썬으로 시작하는 머신러닝 기초 과정. 수학적 개념부터 코드 구현까지.",
+      isCurrentlyPopular: true,
+      likeCount: 35,
+      customTags: ["Python", "ML"],
+      isLiked: true,
+    },
+    {
+      id: 4,
+      subject: "웹 개발",
+      title: "React와 Next.js 실전 활용법",
+      content: "프론트엔드 개발을 위한 React와 Next.js 활용 노하우를 공유합니다.",
+      isCurrentlyPopular: false,
+      likeCount: 31,
+      customTags: ["React", "Next.js"],
+      isLiked: false,
+    },
+  ];
 
   return (
-    <div className="flex min-h-screen justify-center bg-gray-100">
-      <ScrollToTopOnLoad />
-      <LandingHeader />
-      <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
-        <div className="relative z-0 w-full">
-          <Image
-            src="/landing/LandingBackgroundImage.png"
-            alt="배경"
-            width={640}
-            height={2310}
-            className="h-auto w-full object-cover"
-            priority
-          />
+    <div>
+      {/* 헤더 영역: 제목, 탭, 전체보기 */}
+      <div className="mb-4 flex items-center justify-between">
+        <div className="flex items-center">
+          <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />
+          <h2 className="ml-[10px] text-SUIT_16 font-medium">HOT 인기자료</h2>
+
+          {/* 주간/일간 버튼 */}
+          <div className="ml-[10px] flex items-center">
+            {/* 주간 버튼 */}
+            <button
+              type="button"
+              onClick={() => onTabChange("주간")}
+              className="relative flex items-center justify-center"
+            >
+              <div
+                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "주간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
+              />
+              <span
+                className={`absolute text-SUIT_12 font-medium ${activeTab === "주간" ? "text-white" : "text-black"}`}
+              >
+                주간
+              </span>
+            </button>
+
+            {/* 일간 버튼 */}
+            <button
+              type="button"
+              onClick={() => onTabChange("일간")}
+              className="relative ml-[4px] flex items-center justify-center"
+            >
+              <div
+                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "일간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
+              />
+              <span
+                className={`absolute text-SUIT_12 font-medium ${activeTab === "일간" ? "text-white" : "text-black"}`}
+              >
+                일간
+              </span>
+            </button>
+          </div>
         </div>
 
-        <div className="relative z-40 flex flex-col items-center justify-center px-[20px]">
-          <div ref={hotDocumentRef} className="w-full">
-            <HotDocument />
-          </div>
-          <AllDocument documents={documents} />
+        {/* 전체보기 링크 - 80px 거리 확보 */}
+        <button type="button" onClick={onViewAll} className="ml-[80px] text-SUIT_14 font-medium text-[#A7A7A7]">
+          전체보기
+        </button>
+      </div>
 
-          {/* FIX: CardList, BottomSheet 테스트. 삭제 필요 */}
-          <BottomSheet
-            onReset={handleBottomSheetReset}
-            onConfirm={handleBottomSheetConfirm}
-            trigger={BottomSheetTrigger}
-          >
-            <div>asdf</div>
-            <div>asdf</div>
-            <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div> <div>asdf</div>
-            <div>asdf</div>
-          </BottomSheet>
-
-          <LandingCardList />
+      {/* 카드 가로 스크롤 영역 */}
+      <div className="flex gap-4 overflow-x-auto pb-4 scrollbar-hide">
+        {dummyData.map(item => (
           <Card
-            number={1}
-            subject="기초 3D 그래픽스"
-            title="기초 3D 그래픽스제목인데 길게 함 해봐야겠다"
-            content="A+비법 전수해준다. CAD옥테인 블랜더고인, 이렇게 설치 해요. 본문인데"
-            isCurrentlyPopular
-            likeCount={35}
-            customTags={["커스텀태그", "커스텀태그2"]}
-            isLiked
-            onClick={() => console.log("카드 클릭됨")}
+            key={item.id}
+            subject={item.subject}
+            title={item.title}
+            content={item.content}
+            isCurrentlyPopular={item.isCurrentlyPopular}
+            likeCount={item.likeCount}
+            customTags={item.customTags}
+            isLiked={item.isLiked}
+            onClick={() => console.log(`카드 ${item.id} 클릭됨`)}
           />
-          <CardList />
-
-          <HotQuestion />
-          <AllQuestion questions={questions} />
-          {searchVisible && <SearchBar userName={userName} />}
-        </div>
-        <div className="fixed bottom-[30px] right-[20px] z-50">
-          <div className="flex flex-col items-center space-y-4">
-            <UploadFAB />
-            {showScrollFAB && <ScrollFAB targetRef={hotDocumentRef} />}
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   );
 }
 
-export default Page;
+export default function LandingPage() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const router = useRouter();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [userName, setUserName] = useState("종이");
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [activeTab, setActiveTab] = useState("주간");
+  const hotDocumentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // 사용자 정보 로드 등 초기화 로직
+    // ...
+  }, []);
+
+  return (
+    <div className="flex min-h-screen justify-center bg-gray-100">
+      <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
+        {/* Header */}
+        <LandingHeader />
+
+        {/* Main Content */}
+        <main className="px-5">
+          {/* 캐릭터와 인사말 섹션 */}
+          <section aria-labelledby="welcome-heading" className="mb-6 mt-8">
+            {/* WelcomeSection 컴포넌트로 분리 가능 */}
+            {/* <WelcomeSection userName={userName} /> */}
+            {/*
+              사용자 인사말과 캐릭터를 표시하는 섹션
+              - 프로필 이미지 (캐릭터)
+              - 인사말 텍스트
+            */}
+          </section>
+
+          {/* 검색창 섹션 */}
+          <section aria-label="search" className="mb-8">
+            {/* SearchBar 컴포넌트로 분리 가능 */}
+            {/* <SearchBar /> */}
+            {/*
+              검색 기능과 인기 검색어를 표시하는 섹션
+              - 검색창
+              - 인기 검색어 표시
+            */}
+          </section>
+
+          {/* 공지사항 섹션 */}
+          <section aria-labelledby="notice-heading" className="mb-8">
+            {/* NoticeSection 컴포넌트로 분리 가능 */}
+            {/* <NoticeSection /> */}
+            {/*
+              공지사항을 표시하는 섹션
+              - 공지 아이콘
+              - 공지 제목
+              - 공지 내용
+              - 더보기 버튼
+            */}
+          </section>
+
+          {/* HOT 인기자료 섹션 */}
+          <section ref={hotDocumentRef} aria-labelledby="hot-documents-heading" className="mb-8">
+            {/* HotDocumentsSection 컴포넌트로 분리 가능 */}
+            <HotDocumentsSection
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+              onViewAll={() => router.push("/hot")}
+            />
+            {/*
+              인기 자료를 표시하는 섹션
+              - 섹션 제목과 아이콘
+              - 탭 (주간/일간)
+              - 인기 자료 카드 리스트 (가로 스크롤)
+              - 전체보기 링크
+            */}
+          </section>
+
+          {/* 전체 자료 게시판 섹션 */}
+          <section aria-labelledby="all-documents-heading" className="mb-8">
+            {/* AllDocumentsSection 컴포넌트로 분리 가능 */}
+            {/* <AllDocumentsSection onViewAll={() => router.push("/documents")} /> */}
+            {/*
+              전체 자료를 표시하는 섹션
+              - 섹션 제목과 아이콘
+              - 자료 카드 리스트
+              - 전체보기 링크
+            */}
+          </section>
+
+          {/* 전체 질문 게시판 섹션 */}
+          <section aria-labelledby="all-questions-heading" className="mb-8">
+            {/* AllQuestionsSection 컴포넌트로 분리 가능 */}
+            {/* <AllQuestionsSection onViewAll={() => router.push("/questions")} /> */}
+            {/*
+              전체 질문을 표시하는 섹션
+              - 섹션 제목과 아이콘
+              - 질문 카드 리스트
+              - 전체보기 링크
+            */}
+          </section>
+        </main>
+
+        {/* 플로팅 버튼 (업로드, 스크롤 위로) */}
+        {/* FloatingButtons 컴포넌트로 분리 가능 */}
+        {/* <FloatingButtons onUpload={() => console.log("업로드")} /> */}
+        {/*
+          화면 하단에 떠 있는 버튼들
+          - 업로드 버튼 (FAB)
+          - 위로 스크롤 버튼
+        */}
+      </div>
+    </div>
+  );
+}

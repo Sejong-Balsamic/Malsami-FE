@@ -11,12 +11,13 @@ export default function DailyPopularContent() {
 
   useEffect(() => {
     const fetchPopularItems = async () => {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const command: Partial<DocumentCommand> = {
         pageNumber: 0,
         pageSize: 5,
       };
       try {
-        const response = await documentPostApi.getDailyPopularDocumentPost(command);
+        const response = await documentPostApi.getDailyPopularDocumentPost();
         const content = response.documentPostsPage?.content;
         if (content) {
           const data = content.slice(0, 5).map((item: any, index: number) => ({

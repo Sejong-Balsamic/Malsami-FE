@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import MovingCardQuestion from "@/components/landing/MovingCardQuestion";
-import questionPostApi from "@/apis/questionPostApi";
 import UploadQuestionFAB from "@/components/common/FABs/UploadQuestionFAB";
 import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
@@ -17,6 +16,7 @@ import { RIGHT_ITEM } from "@/types/header";
 import CommonHeader from "@/components/header/CommonHeader";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 import { QuestionCommand } from "@/types/api/requests/questionCommand";
+import { questionPostApi } from "@/apis/questionPostApi";
 
 export default function QuestionBoardPage() {
   const dispatch = useDispatch();

@@ -58,17 +58,25 @@ function Header({
   };
 
   return (
-    <header className="flex h-14 items-center justify-between bg-white px-5 shadow">
+    <header className="flex h-16 items-center justify-between bg-white px-5 shadow-md">
       {/* 왼쪽 버튼 */}
-      <button type="button" onClick={onLeftClick} className="flex items-center">
+      <button
+        type="button"
+        onClick={onLeftClick}
+        className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-100"
+      >
         {renderLeftItem()}
       </button>
 
       {/* 중앙 타이틀 */}
-      <div className="text-base font-semibold">{title}</div>
+      <div className="text-lg font-bold text-gray-800">{title}</div>
 
       {/* 오른쪽 버튼 */}
-      <button type="button" onClick={onRightClick} className="flex items-center">
+      <button
+        type="button"
+        onClick={onRightClick}
+        className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-100"
+      >
         {renderRightItem()}
       </button>
     </header>
