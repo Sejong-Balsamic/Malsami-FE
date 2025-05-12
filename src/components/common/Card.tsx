@@ -67,7 +67,12 @@ export default function Card({
 
       {/* 하단 */}
       <div className="mt-2 flex flex-row justify-between">
-        <div className="flex gap-2">{customTags && customTags.map(label => <CustomTag tagName={label} />)}</div>
+        <div className="flex gap-2">
+          {customTags &&
+            customTags
+              .slice(0, 2)
+              .map(label => <CustomTag key={label} tagName={label.length > 6 ? `${label.slice(0, 6)}..` : label} />)}
+        </div>
         <span className="ml-auto flex items-center gap-1.5 text-SUIT_14 text-[#929292]">
           {isLiked ? (
             <Image src="/icons/actions/hand-thumbs-up-fill.svg" alt="좋아요" width={16} height={16} />

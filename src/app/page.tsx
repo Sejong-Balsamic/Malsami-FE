@@ -195,7 +195,7 @@ function Page() {
             content="A+비법 전수해준다. CAD옥테인 블랜더고인, 이렇게 설치 해요. 본문인데"
             isCurrentlyPopular
             likeCount={35}
-            customTags={["커스텀태그", "커스텀태그2"]}
+            customTags={["커스텀태그123", "커스텀태그234", "커스텀태그333333333"]}
             isLiked
             onClick={() => console.log("카드 클릭됨")}
           />

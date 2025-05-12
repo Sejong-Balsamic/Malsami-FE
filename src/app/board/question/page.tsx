@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import MovingCardQuestion from "@/components/landing/MovingCardQuestion";
+import MovingCardQuestion from "@/components/common/MovingCardQuestion";
 import questionPostApi from "@/apis/questionPostApi";
 import UploadQuestionFAB from "@/components/common/FABs/UploadQuestionFAB";
 import Pagination from "@/components/common/Pagination";
