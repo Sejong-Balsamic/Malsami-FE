@@ -85,7 +85,7 @@ jobs:
             const fs = require('fs');
             
             let outcome = '${{ steps.build.outputs.status }}' === 'success' ? '✅ 빌드 성공' : '❌ 빌드 실패';
-            let comment = `### 프론트엔드 빌드 결과: ${outcome}\n\n빌드 검증이 완료되었습니다.`;
+            let comment = `### 세종말싸미 빌드 결과: ${outcome}\n\n빌드 검증이 완료되었습니다.`;
             
             if ('${{ steps.build.outputs.build_failed }}' === 'true') {
               try {
