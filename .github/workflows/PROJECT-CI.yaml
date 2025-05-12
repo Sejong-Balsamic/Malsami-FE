@@ -1,0 +1,106 @@
+name: PROJECT-CI
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - test
+  pull_request:
+    types: [opened, synchronize]
+    branches:
+      - test
+
+# 권한 설정
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # .env.local 파일 생성
+      - name: Create .env.local file
+        run: |
+          echo -e "${{ secrets.ENV }}" > .env.local
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20.15.0"
+          cache: "npm"
+
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-npm-
+      - name: Cache node_modules
+        id: node-modules-cache
+        uses: actions/cache@v4
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
+      - name: Install Dependencies
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
+        run: npm ci
+
+      - name: Cache Next.js build
+        uses: actions/cache@v4
+        with:
+          path: .next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-
+
+      # 빌드 결과 및 에러 로그 저장
+      - name: Build project
+        id: build
+        continue-on-error: true
+        run: |
+          npm run build 2>&1 | tee build_log.txt
+          if [ $? -ne 0 ]; then
+            echo "build_failed=true" >> $GITHUB_OUTPUT
+            echo "::set-output name=status::failed"
+          else
+            echo "build_failed=false" >> $GITHUB_OUTPUT
+            echo "::set-output name=status::success"
+          fi
+
+      # 빌드 결과 PR에 코멘트하기 (에러 로그 포함)
+      - name: Add build result comment to PR
+        if: github.event_name == 'pull_request' && always()
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            
+            let outcome = '${{ steps.build.outputs.status }}' === 'success' ? '✅ 빌드 성공' : '❌ 빌드 실패';
+            let comment = `### 프론트엔드 빌드 결과: ${outcome}\n\n빌드 검증이 완료되었습니다.`;
+            
+            if ('${{ steps.build.outputs.build_failed }}' === 'true') {
+              try {
+                const log = fs.readFileSync('build_log.txt', 'utf8');
+                // 로그에서 에러 메시지 부분만 추출 (마지막 50줄만 표시)
+                const errorLines = log.split('\n').slice(-50).join('\n');
+                comment += '\n\n<details><summary>📋 빌드 에러 로그</summary>\n\n```\n' + errorLines + '\n```\n</details>';
+              } catch (error) {
+                comment += '\n\n에러 로그를 읽는 중 문제가 발생했습니다.';
+              }
+            }
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
