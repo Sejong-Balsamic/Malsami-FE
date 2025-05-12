@@ -30,7 +30,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
         key={`swiper-container-${data.length}`}
         modules={[Autoplay]}
         slidesPerView={slidesPerView}
-        spaceBetween={0} // 슬라이드 간 간격 추가
+        spaceBetween={20}
         loop={loopEnabled}
         autoplay={{
           delay: 5000,
@@ -40,17 +40,14 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
           0: {
             slidesPerView: 1,
           },
-          375: {
-            slidesPerView: 1.2, // 약간의 다음 슬라이드가 보이도록 설정
-          },
-          600: {
-            slidesPerView: 2.2, // 약간의 다음 슬라이드가 보이도록 설정
+          580: {
+            slidesPerView: 2,
           },
           900: {
             slidesPerView: 3,
           },
         }}
-        className="w-full px-4" // 패딩 추가
+        className="w-full"
       >
         {data.map((questionPost, index) => (
           <SwiperSlide
@@ -59,8 +56,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              width: "100%", // 너비 설정
-              height: "auto",
+              width: "261px", // Card 컴포넌트의 고정 너비와 동일하게 설정
             }}
           >
             <div

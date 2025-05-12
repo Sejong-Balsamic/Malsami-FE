@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/tabs";
 import { fetchWeeklyHotDocuments, fetchDailyHotDocuments } from "@/deprecated/fetchHot";
 import { DocumentPost } from "@/types/documentPost.types";
-import MovingCardDocument from "./MovingCardDocument";
+import MovingCardDocument from "../common/MovingCardDocument";
 
 function HotDocument() {
   const router = useRouter();

@@ -8,6 +8,7 @@ export interface DocumentPost extends BasePost {
   documentPostId?: string;
   member?: Member;
   title?: string;
+  customTags?: string[];
   subject?: string;
   content?: string;
   faculties?: string[];
