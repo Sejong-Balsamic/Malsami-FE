@@ -46,7 +46,7 @@ export default function MyPage() {
     <div className="bg-gray-white">
       <ScrollToTopOnLoad />
       <CommonHeader title="로그아웃" rightType={RIGHT_ITEM.NONE} />
-      <div className="mt-[64px]">
+      <div>
         <div className="flex min-h-screen flex-col items-center justify-center">
           <button
             type="button"

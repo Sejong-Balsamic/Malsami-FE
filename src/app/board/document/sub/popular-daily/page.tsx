@@ -29,13 +29,14 @@ export default function PopularDaily() {
   };
 
   const fetchDocs = async () => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const command: Partial<DocumentCommand> = {
       pageNumber: pageNumber - 1, // 백엔드에서 0-based index를 사용하므로 -1
       pageSize,
     };
     setIsLoading(true);
     try {
-      const response = await documentPostApi.getDailyPopularDocumentPost(command);
+      const response = await documentPostApi.getDailyPopularDocumentPost();
       const content = response.documentPostsPage?.content;
       if (content) {
         setDocCards(content); // DocCardProps와 일치하는 데이터로 설정
@@ -61,8 +62,7 @@ export default function PopularDaily() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <CommonHeader title="일간 인기글" rightType={RIGHT_ITEM.NONE} />
-      {/* 헤더 아래 여백 추가 */}
-      <div className="mt-[64px]">
+      <div>
         <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
           <div className="h-0.5 bg-[#EEEEEE]" />
           <div className="p-5">

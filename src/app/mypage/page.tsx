@@ -39,7 +39,7 @@ function Page() {
         <div className="relative flex">
           <TierImage memberInfo={memberInfo} />
           <div className="z-10 w-full">
-            <InfoCard memberInfo={memberInfo} />
+            <InfoCard memberDto={memberInfo} />
           </div>
         </div>
         <div>

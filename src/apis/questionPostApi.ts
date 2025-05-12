@@ -1,47 +1,40 @@
+/* eslint-disable import/prefer-default-export */
 import { QuestionCommand } from "@/types/api/requests/questionCommand";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 import { postApiRequest } from "./apiUtils";
 
 export const questionPostApi = {
-  // 질문 게시글 저장
-  saveQuestionPost: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/post", command),
+  /* ────────────── 글 쓰기/조회 ────────────── */
+  saveQuestionPost: (c: Partial<QuestionCommand>) =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/post", c),
 
-  // 질문 게시글 조회
-  getQuestionPost: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/get", command),
+  getQuestionPost: (c: Partial<QuestionCommand>) =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/get", c),
 
-  // 답변 없는 질문 게시글 조회
-  getAllQuestionPostsNotAnswered: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/unanswered", command),
+  /* ────────────── 목록 / 필터 ────────────── */
+  getAllQuestionPostsNotAnswered: (c: Partial<QuestionCommand>) =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/unanswered", c),
 
-  // 필터링된 질문 게시글 조회
-  getFilteredQuestionPosts: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/filter", command),
+  /** _모든 “전공별·검색·정렬” 리스트 → filter 하나로 통합_ */
+  getFilteredQuestionPosts: (c: Partial<QuestionCommand>) =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/filter", c),
 
-  // 일간 인기 질문 게시글 조회
-  getDailyPopularQuestionPost: async (command: Partial<QuestionCommand> = {}): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/popular/daily", command),
+  /* ────────────── HOT 인기 질문 ────────────── */
+  getDailyPopularQuestionPost: () => postApiRequest<QuestionCommand, QuestionDto>("/api/question/popular/daily", {}),
 
-  // 주간 인기 질문 게시글 조회
-  getWeeklyPopularQuestionPost: async (): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/popular/weekly", {}),
+  getWeeklyPopularQuestionPost: () => postApiRequest<QuestionCommand, QuestionDto>("/api/question/popular/weekly", {}),
 
-  // 질문 게시판 좋아요
-  questionBoardLike: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/like", command),
+  /* ────────────── 좋아요 ────────────── */
+  questionBoardLike: (c: Partial<QuestionCommand>) =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/like", c),
 
-  // 답변글 저장
-  saveAnswerPost: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/post", command),
+  /* ────────────── 답변 CRUD(컨트롤러 통합) ────────────── */
+  saveAnswerPost: (c: Partial<QuestionCommand>) =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/post", c),
 
-  // 질문에 대한 답변글 조회
-  getAnswersByQuestion: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/get/all", command),
+  getAnswersByQuestion: (c: Partial<QuestionCommand>) =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/get/all", c),
 
-  // 채택된 답변글 처리
-  chaetaekAnswerPost: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/chaetaek", command),
+  chaetaekAnswerPost: (c: Partial<QuestionCommand>) =>
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/chaetaek", c),
 };
-
-export default questionPostApi;

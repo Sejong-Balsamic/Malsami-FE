@@ -70,9 +70,7 @@ export default function DocHotdownloadPage() {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <CommonHeader title="HOT 다운로드" rightType={RIGHT_ITEM.NONE} />
-      {/* 헤더 아래 여백 추가 */}
-      <div className="mt-[64px]">
+      <CommonHeader title="HOT 다운로드" rightType={RIGHT_ITEM.NONE}>
         <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
           <DocFilterControlBar filterOptions={docHotDownFilterOptions} onFilterChange={handleFilterChange} />
           <div className="h-0.5 bg-[#EEEEEE]" />
@@ -99,7 +97,7 @@ export default function DocHotdownloadPage() {
           {/* 페이지네이션 컴포넌트 */}
           <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
         </div>
-      </div>
+      </CommonHeader>
     </div>
   );
 }

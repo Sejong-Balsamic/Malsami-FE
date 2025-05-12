@@ -52,8 +52,7 @@ export default function PopularWeekly() {
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <CommonHeader title="주간 인기글" rightType={RIGHT_ITEM.NONE} />
-      {/* 헤더 아래 여백 추가 */}
-      <div className="mt-[64px]">
+      <div>
         <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
           <div className="h-0.5 bg-[#EEEEEE]" />
           <div className="p-5">

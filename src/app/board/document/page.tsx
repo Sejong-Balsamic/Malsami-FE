@@ -49,8 +49,7 @@ export default function DocumentBoardPage() {
       <ScrollToTopOnLoad />
       <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
         <CommonHeader title="자료 게시판" rightType={RIGHT_ITEM.NONE} />
-        {/* 헤더 여백 추가 */}
-        <div className="mt-[64px]">
+        <div>
           <DocBoardContent />
           <div className="h-[2px] w-full bg-[#EEEEEE]" />
           <div className="p-5">
