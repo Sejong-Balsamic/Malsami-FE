@@ -13,7 +13,11 @@ import { MemberDto } from "@/types/api/responses/memberDto";
 import { expTierRanges, ExpTier } from "@/types/api/constants/expTier";
 
 function InfoCard({ memberDto }: { memberDto: MemberDto | null }) {
-  const expTier = (memberDto?.exp?.expTier || "R") as ExpTier;
+  if (!memberDto) {
+    return <div>Loading...</div>;
+  }
+
+  const expTier = (memberDto.exp?.expTier || "R") as ExpTier;
   const currentRank = expTierRanges[expTier].label;
   const nextTier = expTier > "A" ? (String.fromCharCode(expTier.charCodeAt(0) - 1) as ExpTier) : null;
   const nextRank = nextTier ? expTierRanges[nextTier].label : "최고 등급";
