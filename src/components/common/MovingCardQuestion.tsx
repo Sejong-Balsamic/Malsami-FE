@@ -1,6 +1,4 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/autoplay";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
@@ -12,15 +10,15 @@ interface MovingCardQuestionProps {
 
 function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
   const router = useRouter();
-
+  const screenWidth = typeof window !== "undefined" ? window.innerWidth : 0;
   const slidesPerView = (data?.length || 0) > 1 ? 2 : 1; // 데이터가 10보다 작을 때
-  const loopEnabled = (data?.length || 0) > 1;
 
   const handleCardClick = (postId: string) => {
     if (!postId) {
       console.error("Invalid postId:", postId);
       return;
     }
+    console.log("Clicked card postId:", postId);
     router.push(`/board/question/detail/${postId}`);
   };
 
@@ -31,11 +29,15 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
         modules={[Autoplay]}
         slidesPerView={slidesPerView}
         spaceBetween={20}
-        loop={loopEnabled}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-        }}
+        loop={data.length >= 2}
+        autoplay={
+          screenWidth >= 580
+            ? {
+                delay: 5000,
+                disableOnInteraction: false,
+              }
+            : false
+        }
         breakpoints={{
           0: {
             slidesPerView: 1,
@@ -52,12 +54,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
         {data.map((questionPost, index) => (
           <SwiperSlide
             key={questionPost.questionPostId || questionPost.title || index}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "261px", // Card 컴포넌트의 고정 너비와 동일하게 설정
-            }}
+            className="flex items-center justify-center p-1"
           >
             <div
               onClick={() => {
