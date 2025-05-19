@@ -19,7 +19,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
       return;
     }
     console.log("Clicked card postId:", postId);
-    router.push(`/board/document/detail/${postId}`);
+    router.push(`/board/question/detail/${postId}`);
   };
 
   return (
