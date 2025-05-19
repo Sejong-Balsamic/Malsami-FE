@@ -1,7 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/autoplay";
-import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import Card from "./Card";
@@ -28,14 +26,9 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
     data.length > 0 && (
       <Swiper
         key={`swiper-container-${data.length}`}
-        modules={[Autoplay]}
         slidesPerView={slidesPerView}
         spaceBetween={20}
         loop={loopEnabled}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-        }}
         breakpoints={{
           0: {
             slidesPerView: 1,

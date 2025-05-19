@@ -1,7 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/autoplay";
-import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import Card from "@/components/common/Card";
@@ -29,14 +27,9 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
     data.length > 0 && (
       <Swiper
         key={`swiper-container-${data.length}`}
-        modules={[Autoplay]}
         slidesPerView={slidesPerView}
         spaceBetween={20}
         loop={loopEnabled}
-        autoplay={{
-          delay: 5000,
-          disableOnInteraction: false,
-        }}
         breakpoints={{
           0: {
             slidesPerView: 1,
