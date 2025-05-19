@@ -25,7 +25,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
   return (
     data.length > 0 && (
       <Swiper
-        key={`swiper-container-${data.length}-${screenWidth}`} // ✅ screenWidth 추가
+        key={`swiper-container-${data.length}`}
         modules={[Autoplay]}
         slidesPerView={slidesPerView}
         spaceBetween={20}
@@ -54,12 +54,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
         {data.map((questionPost, index) => (
           <SwiperSlide
             key={questionPost.questionPostId || questionPost.title || index}
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "261px", // Card 컴포넌트의 고정 너비와 동일하게 설정
-            }}
+            className="flex items-center justify-center p-1"
           >
             <div
               onClick={() => {

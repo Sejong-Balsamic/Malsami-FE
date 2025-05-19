@@ -26,7 +26,7 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
   return (
     data.length > 0 && (
       <Swiper
-        key={`swiper-container-${data.length}-${screenWidth}`} // ✅ screenWidth 추가
+        key={`swiper-container-${data.length}`}
         modules={[Autoplay]}
         slidesPerView={slidesPerView}
         spaceBetween={20}
@@ -54,7 +54,7 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
       >
         {data.map((documentPost, index) => {
           return (
-            <SwiperSlide key={documentPost.documentPostId || index} className="flex items-center justify-center">
+            <SwiperSlide key={documentPost.documentPostId || index} className="flex items-center justify-center p-1">
               <div
                 onClick={() => {
                   if (documentPost.documentPostId) {
