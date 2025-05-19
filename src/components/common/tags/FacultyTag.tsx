@@ -22,7 +22,7 @@ function FacultyTag({ title, onClick }: FacultyTagProps) {
 }
 
 FacultyTag.defaultProps = {
-  onClick: undefined, // 기본값으로 undefined 설정
+  onClick: undefined, // 기본값 undefined 설정
 };
 
 export default FacultyTag;
