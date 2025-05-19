@@ -1,8 +1,9 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
-import Card from "@/components/common/Card";
+import Card from "./Card";
 
 interface MovingCardDocumentProps {
   data: DocumentPost[];
@@ -10,9 +11,8 @@ interface MovingCardDocumentProps {
 
 function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
   const router = useRouter();
-
+  const screenWidth = typeof window !== "undefined" ? window.innerWidth : 0;
   const slidesPerView = (data?.length || 0) > 1 ? 2 : 1; // 데이터가 10보다 작을 때
-  const loopEnabled = (data?.length || 0) > 1;
 
   const handleCardClick = (postId: string) => {
     if (!postId) {
@@ -26,10 +26,19 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
   return (
     data.length > 0 && (
       <Swiper
-        key={`swiper-container-${data.length}`}
+        key={`swiper-container-${data.length}-${screenWidth}`} // ✅ screenWidth 추가
+        modules={[Autoplay]}
         slidesPerView={slidesPerView}
         spaceBetween={20}
-        loop={loopEnabled}
+        loop={data.length >= 2}
+        autoplay={
+          screenWidth >= 580
+            ? {
+                delay: 5000,
+                disableOnInteraction: false,
+              }
+            : false
+        }
         breakpoints={{
           0: {
             slidesPerView: 1,
