@@ -3,7 +3,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import LandingHeader from "@/components/header/LandingHeader";
-import HotDocumentsSection from "@/components/common/HotDocumentSection";
+import AllDocumentsSection from "@/components/landing/AllDocumentsSection";
+import HotDocumentsSection from "@/components/landing/HotDocumentSection";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -55,8 +56,7 @@ export default function LandingPage() {
 
           {/* 전체 자료 게시판 섹션 */}
           <section aria-labelledby="all-documents-heading" className="mb-8">
-            {/* AllDocumentsSection 컴포넌트로 분리 가능 */}
-            {/* <AllDocumentsSection onViewAll={() => router.push("/documents")} /> */}
+            <AllDocumentsSection onViewAll={() => router.push("/board/document")} />
           </section>
 
           {/* 전체 질문 게시판 섹션 */}
