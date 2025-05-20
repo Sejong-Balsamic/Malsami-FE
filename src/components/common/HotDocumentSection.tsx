@@ -48,12 +48,14 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
     <div>
       {/* 헤더 영역: 제목, 탭, 전체보기 */}
       <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center">
-          <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />
-          <h2 className="ml-[10px] text-SUIT_16 font-medium">HOT 인기자료</h2>
+        <div className="flex flex-1 flex-wrap items-center">
+          <div className="mr-2 flex items-center">
+            <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />
+            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">HOT 인기자료</h2>
+          </div>
 
           {/* 주간/일간 버튼 */}
-          <div className="ml-[10px] flex items-center">
+          <div className="mt-0 flex items-center">
             {/* 주간 버튼 */}
             <button
               type="button"
@@ -89,7 +91,11 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
         </div>
 
         {/* 전체보기 링크 */}
-        <button type="button" onClick={onViewAll} className="ml-[80px] text-SUIT_14 font-medium text-[#A7A7A7]">
+        <button
+          type="button"
+          onClick={onViewAll}
+          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
+        >
           전체보기
         </button>
       </div>
