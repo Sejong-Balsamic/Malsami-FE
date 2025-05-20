@@ -175,7 +175,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import LandingEasterEgg from "../util/LandingEasterEgg";
+import LandingEasterEgg from "@/components/util/LandingEasterEgg";
 
 interface FlyingBooksProps {
   scrollY: number;
