@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import LandingHeader from "@/components/header/LandingHeader";
 import AllDocumentsSection from "@/components/landing/AllDocumentsSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
+import AllQuestionsSection from "@/components/landing/AllQuestionsSection";
+import HotQuestionsSection from "@/components/landing/HotQuestionSection";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -13,6 +15,7 @@ export default function LandingPage() {
   const [userName, setUserName] = useState("종이");
   const [activeTab, setActiveTab] = useState("주간");
   const hotDocumentRef = useRef<HTMLDivElement>(null);
+  const hotQuestionRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // 사용자 정보 로드 등 초기화 로직
@@ -59,10 +62,19 @@ export default function LandingPage() {
             <AllDocumentsSection onViewAll={() => router.push("/board/document")} />
           </section>
 
+          {/* HOT 인기질문 섹션 */}
+          <section ref={hotQuestionRef} aria-labelledby="hot-documents-heading" className="mb-8">
+            <HotQuestionsSection
+              activeTab={activeTab}
+              onTabChange={setActiveTab}
+              onViewAll={() => router.push("/board/question/hot")}
+            />
+          </section>
+
           {/* 전체 질문 게시판 섹션 */}
           <section aria-labelledby="all-questions-heading" className="mb-8">
             {/* AllQuestionsSection 컴포넌트로 분리 가능 */}
-            {/* <AllQuestionsSection onViewAll={() => router.push("/questions")} /> */}
+            <AllQuestionsSection onViewAll={() => router.push("/board/questions")} />
           </section>
         </main>
 
