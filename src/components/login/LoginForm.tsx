@@ -90,8 +90,12 @@ export default function LoginForm() {
           )}
         </div>
 
-        {/* Todo: 나중에 삭제해야함. */}
-        <LoadingSpinner />
+        {/* 로딩 스피너 */}
+        {isLoading && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-60">
+            <LoadingSpinner />
+          </div>
+        )}
 
         {/* 로그인 제출 버튼 */}
         <div className="mb-[60px] mt-auto">
