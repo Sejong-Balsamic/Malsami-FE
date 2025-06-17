@@ -90,7 +90,6 @@ export default function LoginForm() {
           )}
         </div>
 
-        {/* 로딩 스피너 */}
         {isLoading && (
           <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-60">
             <LoadingSpinner />

@@ -40,13 +40,10 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
         }
         breakpoints={{
           0: {
-            slidesPerView: 1,
+            slidesPerView: 1.3,
           },
           580: {
             slidesPerView: 2,
-          },
-          900: {
-            slidesPerView: 3,
           },
         }}
         className="w-full"
