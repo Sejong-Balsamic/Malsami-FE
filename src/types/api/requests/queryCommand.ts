@@ -7,4 +7,5 @@ export interface QueryCommand {
   sortType?: SortType;
   pageNumber?: number;
   pageSize?: number;
+  topN?: number;
 }
