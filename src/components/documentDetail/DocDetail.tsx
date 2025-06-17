@@ -112,7 +112,6 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
             )) || <span>태그 없음</span>}
           </div>
         </div>
-
         {/* 작성자 정보 */}
         <div className="flex h-[72px] min-w-[336px] max-w-[640px] flex-col">
           <div className="mt-[20px] text-right">
@@ -131,7 +130,6 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
             </div>
           </div>
         </div>
-
         <div className="flex justify-start border-b-2 py-[30px]">
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center gap-[10px]">
@@ -139,7 +137,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
               <div
                 onClick={!isLiked ? handleLikeClick : undefined}
                 className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
-                  isLiked
+                  isLiked,
                 )}`}
               >
                 <Image
@@ -148,7 +146,9 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
                   width={16}
                   height={16}
                 />
-                <span className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}>
+                <span
+                  className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}
+                >
                   {currentLikeCount}
                 </span>
               </div>
@@ -156,7 +156,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
               <div
                 onClick={!isDisliked ? handleDisLikeClick : undefined}
                 className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
-                  isDisliked
+                  isDisliked,
                 )}`}
               >
                 <Image

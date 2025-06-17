@@ -85,10 +85,10 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
-            
+
             let outcome = '${{ steps.build.outputs.status }}' === 'success' ? '✅ 빌드 성공' : '❌ 빌드 실패';
             let comment = `### 세종말싸미 빌드 결과: ${outcome}\n\n빌드 검증이 완료되었습니다.`;
-            
+
             if ('${{ steps.build.outputs.build_failed }}' === 'true') {
               try {
                 const log = fs.readFileSync('build_log.txt', 'utf8');
@@ -99,7 +99,7 @@ jobs:
                 comment += '\n\n에러 로그를 읽는 중 문제가 발생했습니다.';
               }
             }
-            
+
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
