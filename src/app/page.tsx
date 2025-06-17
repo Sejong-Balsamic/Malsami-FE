@@ -7,6 +7,7 @@ import AllDocumentsSection from "@/components/landing/AllDocumentsSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
 import AllQuestionsSection from "@/components/landing/AllQuestionsSection";
 import HotQuestionsSection from "@/components/landing/HotQuestionSection";
+import WelcomeSection from "@/components/landing/WelcomeSection";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -32,8 +33,7 @@ export default function LandingPage() {
         <main className="px-5">
           {/* 캐릭터와 인사말 섹션 */}
           <section aria-labelledby="welcome-heading" className="mb-6 mt-8">
-            {/* WelcomeSection 컴포넌트로 분리 가능 */}
-            {/* <WelcomeSection userName={userName} /> */}
+            <WelcomeSection userName={userName} />
           </section>
 
           {/* 검색창 섹션 */}
