@@ -20,11 +20,11 @@ interface QnaFilterOptionsModalProps {
 const SORT_TYPE_KEYS = Object.keys(SortType) as (keyof typeof SortType)[];
 
 const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
-                                                                       isVisible,
-                                                                       onClose,
-                                                                       initialFilterOptions,
-                                                                       onApplyFilter,
-                                                                     }) => {
+  isVisible,
+  onClose,
+  initialFilterOptions,
+  onApplyFilter,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [modalHeight, setModalHeight] = useState("50vh");
   const contentRef = useRef<HTMLDivElement>(null);
@@ -118,9 +118,7 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
                             {sortTypeLabels[qnaSortType]}
                           </span>
                         ) : (
-                          <span className="font-pretendard-medium text-base">
-                            {sortTypeLabels[qnaSortType]}
-                          </span>
+                          <span className="font-pretendard-medium text-base">{sortTypeLabels[qnaSortType]}</span>
                         )}
                         {sortType === qnaSortType ? (
                           <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />

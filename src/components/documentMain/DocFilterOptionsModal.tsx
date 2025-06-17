@@ -19,11 +19,11 @@ interface DocFilterOptionsModalProps {
 const SORT_TYPE_KEYS = Object.keys(sortTypeLabels) as SortType[];
 
 const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
-                                                                       isVisible,
-                                                                       onClose,
-                                                                       initialFilterOptions,
-                                                                       onApplyFilter,
-                                                                     }) => {
+  isVisible,
+  onClose,
+  initialFilterOptions,
+  onApplyFilter,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [modalHeight, setModalHeight] = useState("50vh");
   const contentRef = useRef<HTMLDivElement>(null);
@@ -115,9 +115,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                             {sortTypeLabels[docSortType]}
                           </span>
                         ) : (
-                          <span className="font-pretendard-medium text-base">
-                            {sortTypeLabels[docSortType]}
-                          </span>
+                          <span className="font-pretendard-medium text-base">{sortTypeLabels[docSortType]}</span>
                         )}
                         {sortType === docSortType ? (
                           <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />

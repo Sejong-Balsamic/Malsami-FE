@@ -17,11 +17,11 @@ interface DocRequestFilterOptionsModalProps {
 }
 
 const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> = ({
-                                                                                     isVisible,
-                                                                                     onClose,
-                                                                                     initialFilterOptions,
-                                                                                     onApplyFilter,
-                                                                                   }) => {
+  isVisible,
+  onClose,
+  initialFilterOptions,
+  onApplyFilter,
+}) => {
   const [showModal, setShowModal] = useState(false);
   const [modalHeight, setModalHeight] = useState("50vh"); // 초기 modalHeight 50%로 설정
   const contentRef = useRef<HTMLDivElement>(null);
