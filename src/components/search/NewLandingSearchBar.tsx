@@ -11,6 +11,7 @@ import SearchBtn from "./SearchBtn";
 
 const savedSearchTerms: string[] = subjects;
 
+// 컴포넌트명 바꿔야 함.
 function NewLandingSearchBar() {
   const [searchValue, setSearchValue] = useState("");
   const [subject, setSubject] = useState("");
