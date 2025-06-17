@@ -7,6 +7,7 @@ import AllDocumentsSection from "@/components/landing/AllDocumentsSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
 import AllQuestionsSection from "@/components/landing/AllQuestionsSection";
 import HotQuestionsSection from "@/components/landing/HotQuestionSection";
+import NoticeSection from "@/components/landing/NoticeSection";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -44,8 +45,7 @@ export default function LandingPage() {
 
           {/* 공지사항 섹션 */}
           <section aria-labelledby="notice-heading" className="mb-8">
-            {/* NoticeSection 컴포넌트로 분리 가능 */}
-            {/* <NoticeSection /> */}
+            <NoticeSection onViewAll={() => router.push("/notice")} />
           </section>
 
           {/* HOT 인기자료 섹션 */}
