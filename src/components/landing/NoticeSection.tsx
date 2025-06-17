@@ -58,13 +58,13 @@ export default function NoticeSection({ onViewAll }: NoticeSectionProps) {
       <div className="mb-8 animate-pulse rounded-[12px] bg-[#D9FFD4] p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 rounded-full bg-green-200" />
+            <div className="h-10 w-10 rounded-full bg-white shadow-sm" />
             <div>
-              <div className="mb-1 h-4 w-16 rounded bg-green-200" />
-              <div className="h-4 w-48 rounded bg-green-200" />
+              <div className="mb-1 h-[20px] w-16 rounded bg-white/50" />
+              <div className="h-[20px] w-48 rounded bg-white/50" />
             </div>
           </div>
-          <div className="h-8 w-8 rounded-full bg-green-200" />
+          <div className="h-8 w-8 rounded-full bg-[#37E36D]" />
         </div>
       </div>
     );
@@ -86,8 +86,8 @@ export default function NoticeSection({ onViewAll }: NoticeSectionProps) {
           </div>
 
           <div className="flex-1">
-            <h3 className="mb-1 text-sm font-bold text-gray-800">공지사항</h3>
-            <p className="line-clamp-1 text-sm text-gray-600">
+            <h3 className="font-suit-bold mb-1 text-sm leading-5 text-black">공지사항</h3>
+            <p className="font-suit-medium line-clamp-1 text-sm leading-5 text-[#252525]">
               {latestNotice?.title || "자료 업로드 방식이 변경되었어요!"}
             </p>
           </div>
