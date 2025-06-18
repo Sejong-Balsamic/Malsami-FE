@@ -59,14 +59,23 @@ function Header({
 
   return (
     <header className="flex h-16 items-center justify-between bg-white px-5 shadow-md">
-      {/* 왼쪽 버튼 */}
-      <button
-        type="button"
-        onClick={onLeftClick}
-        className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-100"
-      >
-        {renderLeftItem()}
-      </button>
+      {/* 왼쪽 영역 */}
+      <div className="flex items-center">
+        {leftType === LEFT_ITEM.LOGO ? (
+          <button type="button" onClick={onLeftClick} className="flex items-center rounded-lg p-1 hover:bg-gray-100">
+            <LogoIcon />
+            <span className="font-tuesday-younah ml-1 text-3xl text-gray-800">세종말싸미</span>
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={onLeftClick}
+            className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-100"
+          >
+            {renderLeftItem()}
+          </button>
+        )}
+      </div>
 
       {/* 중앙 타이틀 */}
       <div className="text-lg font-bold text-gray-800">{title}</div>
