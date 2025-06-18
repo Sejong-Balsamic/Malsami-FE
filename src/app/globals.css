@@ -44,6 +44,35 @@
   src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff") format("woff");
 }
 
+/* SUIT 폰트  */
+@font-face {
+  font-family: "SUIT";
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "SUIT";
+  font-weight: 500;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "SUIT";
+  font-weight: 600;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "SUIT";
+  font-weight: 700;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT-Bold.woff2") format("woff2");
+}
+
 @layer utilities {
   .font-pretendard-light {
     @apply font-pretendard font-light;
@@ -56,6 +85,25 @@
   }
   .font-pretendard-bold {
     @apply font-pretendard font-bold;
+  }
+
+  /* SUIT 폰트 유틸리티 클래스 */
+  .font-suit-medium {
+    @apply font-suit font-medium;
+  }
+  .font-suit-semibold {
+    @apply font-suit font-semibold;
+  }
+  .font-suit-bold {
+    @apply font-suit font-bold;
+  }
+
+  /* 공지사항 전용 스타일 */
+  .notice-title {
+    @apply font-suit text-sm font-bold leading-5 text-black;
+  }
+  .notice-content {
+    @apply font-suit text-sm font-medium leading-5 text-[#252525];
   }
 }
 

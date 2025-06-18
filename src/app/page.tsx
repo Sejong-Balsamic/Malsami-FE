@@ -9,6 +9,7 @@ import AllQuestionsSection from "@/components/landing/AllQuestionsSection";
 import HotQuestionsSection from "@/components/landing/HotQuestionSection";
 import WelcomeSection from "@/components/landing/WelcomeSection";
 import { memberApi } from "@/apis/memberApi";
+import NoticeSection from "@/components/landing/NoticeSection";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -54,15 +55,14 @@ export default function LandingPage() {
           </section>
 
           {/* 검색창 섹션 */}
-          <section aria-label="search" className="mb-8">
+          <section aria-label="search" className="mb-6">
             {/* SearchBar 컴포넌트로 분리 가능 */}
             {/* <SearchBar /> */}
           </section>
 
           {/* 공지사항 섹션 */}
-          <section aria-labelledby="notice-heading" className="mb-8">
-            {/* NoticeSection 컴포넌트로 분리 가능 */}
-            {/* <NoticeSection /> */}
+          <section aria-labelledby="notice-heading" className="mb-6">
+            <NoticeSection onViewAll={() => router.push("/notice")} />
           </section>
 
           {/* HOT 인기자료 섹션 */}
