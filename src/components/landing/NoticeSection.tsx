@@ -55,7 +55,7 @@ export default function NoticeSection({ onViewAll }: NoticeSectionProps) {
 
   if (isLoading) {
     return (
-      <div className="mb-8 animate-pulse rounded-[12px] bg-[#D9FFD4] p-4">
+      <div className="animate-pulse rounded-[12px] bg-[#D9FFD4] p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="h-10 w-10 rounded-full bg-white shadow-sm" />
@@ -74,7 +74,7 @@ export default function NoticeSection({ onViewAll }: NoticeSectionProps) {
     <div
       role="button"
       tabIndex={0}
-      className="mb-8 cursor-pointer rounded-[12px] bg-[#D9FFD4] p-4 transition-all duration-200 hover:shadow-md"
+      className="cursor-pointer rounded-[12px] bg-[#D9FFD4] p-4 transition-all duration-200 hover:shadow-md"
       onClick={handleNoticeClick}
       onKeyDown={handleKeyDown}
     >
