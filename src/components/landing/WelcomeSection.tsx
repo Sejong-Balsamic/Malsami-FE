@@ -2,7 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
-import NewLandingSearchBar from "@/components/search/NewLandingSearchBar";
+import LandingSearchBar from "@/components/search/LandingSearchBar";
 
 interface WelcomeSectionProps {
   userName: string;
@@ -11,7 +11,7 @@ interface WelcomeSectionProps {
 export default function WelcomeSection({ userName }: WelcomeSectionProps) {
   return (
     <div className="flex flex-col">
-      <div className="flex w-full flex-row items-center">
+      <div className="z-10 flex w-full flex-row items-center">
         <Image src="/image/Mascot.png" alt="웰컴 캐릭터" width={100} height={100} className="mr-3 object-contain" />
         <div className="flex w-full">
           <div className="text-SUIT_18 font-medium">
@@ -21,8 +21,10 @@ export default function WelcomeSection({ userName }: WelcomeSectionProps) {
         </div>
       </div>
 
-      {/* 검색바 */}
-      <NewLandingSearchBar />
+      {/* 검색바 - 위로 10px 겹치게 */}
+      <div className="z-0 -mt-[10px]">
+        <LandingSearchBar />
+      </div>
     </div>
   );
 }

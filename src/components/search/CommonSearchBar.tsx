@@ -3,54 +3,32 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import subjects from "@/types/subjects";
-import queryApi from "@/apis/queryApi";
 import SearchInputField from "./SearchInputField";
 import AutoCompleteSuggestionList from "./AutoCompleteSuggestionList";
 import SearchClearBtn from "./SearchClearBtn";
 import SearchBtn from "./SearchBtn";
 
 const savedSearchTerms: string[] = subjects;
+const placeholders = ["@과목으로 시작하여 검색하기", "@공간과인간 기말과제"];
 
 // 컴포넌트명 바꿔야 함.
-function NewLandingSearchBar() {
+function CommonSearchBar() {
   const [searchValue, setSearchValue] = useState("");
   const [subject, setSubject] = useState("");
   const [filteredTerms, setFilteredTerms] = useState<string[]>([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
-  const [placeholders, setPlaceholders] = useState<string[]>([]);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
   const router = useRouter();
 
-  // 인기검색어(실시간 변동) api 호출
+  // placeholder 3초마다 변경
   useEffect(() => {
-    async function fetchPlaceholders() {
-      try {
-        const topKeywords = await queryApi.getTopKeywords({
-          topN: 10,
-        });
-        const searchHistoryList = topKeywords.searchHistoryList ?? [];
-
-        console.log(searchHistoryList);
-        console.log(topKeywords);
-
-        setPlaceholders(searchHistoryList.keyword);
-      } catch (error) {
-        console.error("실시간 인기 검색어 가져오기 실패:", error);
-      }
-    }
-
-    fetchPlaceholders();
-  }, []);
-
-  // placeholders 2초마다 전환
-  useEffect(() => {
-    if (placeholders.length === 0) return undefined;
     const interval = setInterval(() => {
-      setPlaceholderIndex(prev => (prev + 1) % placeholders.length);
-    }, 2000);
+      setPlaceholderIndex(prevIndex => (prevIndex + 1) % placeholders.length);
+    }, 3000);
 
     return () => clearInterval(interval);
-  }, [placeholders]);
+  }, []);
 
   // 검색 실행
   const routeSearchValue = () => {
@@ -66,6 +44,7 @@ function NewLandingSearchBar() {
     const { value } = e.target;
     setSearchValue(value);
 
+    // @ 기호로 과목 검색 기능
     if (value.includes("@")) {
       const atIndex = value.indexOf("@");
       const searchQuery = value.slice(atIndex + 1).toLowerCase();
@@ -79,21 +58,31 @@ function NewLandingSearchBar() {
 
   // 키보드 입력 처리
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (filteredTerms.length > 0) {
-      if (e.key === "ArrowDown") {
-        setActiveSuggestionIndex(prev => (prev < filteredTerms.length - 1 ? prev + 1 : prev));
-      } else if (e.key === "ArrowUp") {
-        setActiveSuggestionIndex(prev => (prev > 0 ? prev - 1 : prev));
-      } else if (e.key === "Enter" && activeSuggestionIndex >= 0) {
-        const selectedTerm = filteredTerms[activeSuggestionIndex];
-        setSubject(`@${selectedTerm}`);
-        setSearchValue(searchValue.replace(/@[^ ]*/, "").trim());
-        setFilteredTerms([]);
-      } else if (e.key === "Enter") {
-        routeSearchValue();
-      }
-    } else if (e.key === "Enter") {
-      routeSearchValue();
+    const { key } = e;
+
+    switch (key) {
+      case "ArrowDown":
+        e.preventDefault(); // 커서 이동 방지
+        if (filteredTerms.length > 0)
+          setActiveSuggestionIndex(prev => (prev < filteredTerms.length - 1 ? prev + 1 : prev));
+        break;
+      case "ArrowUp":
+        e.preventDefault();
+        if (filteredTerms.length > 0) setActiveSuggestionIndex(prev => (prev > 0 ? prev - 1 : prev));
+        break;
+      case "Enter":
+        e.preventDefault(); // 폼 제출 방지
+        if (filteredTerms.length > 0 && activeSuggestionIndex >= 0) {
+          const selectedTerm = filteredTerms[activeSuggestionIndex];
+          setSubject(`@${selectedTerm}`);
+          setSearchValue(searchValue.replace(/@[^ ]*/, "").trim());
+          setFilteredTerms([]);
+        } else {
+          routeSearchValue();
+        }
+        break;
+      default:
+        break;
     }
   };
 
@@ -139,4 +128,4 @@ function NewLandingSearchBar() {
   );
 }
 
-export default NewLandingSearchBar;
+export default CommonSearchBar;

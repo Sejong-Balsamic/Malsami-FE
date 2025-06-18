@@ -8,11 +8,10 @@ import HotDocumentsSection from "@/components/landing/HotDocumentSection";
 import AllQuestionsSection from "@/components/landing/AllQuestionsSection";
 import HotQuestionsSection from "@/components/landing/HotQuestionSection";
 import WelcomeSection from "@/components/landing/WelcomeSection";
-import memberApi from "@/apis/memberApi";
+import { memberApi } from "@/apis/memberApi";
 
 export default function LandingPage() {
   const router = useRouter();
-  // FIXME: userName은 실제 사용자 이름으로 대체해야 함.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userName, setUserName] = useState<string>("");
   const [activeTab, setActiveTab] = useState("주간");
