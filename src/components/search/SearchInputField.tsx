@@ -1,38 +1,3 @@
-// export default function SearchInputField({
-//   subject,
-//   searchValue,
-//   placeholder,
-//   onValueChange,
-//   onKeyDown,
-// }: {
-//   subject: string;
-//   searchValue: string;
-//   placeholder: string;
-//   onValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-//   onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-// }) {
-//   return (
-//     <div className="flex flex-1 items-center overflow-hidden">
-//       {subject && (
-//         <span
-//           className="mr-2 flex-shrink-0 overflow-hidden text-ellipsis whitespace-nowrap rounded bg-blue-100 px-2 py-1 text-sm text-blue-500"
-//           style={{ maxWidth: "50%", minWidth: "150px" }}
-//         >
-//           {subject}
-//         </span>
-//       )}
-//       <input
-//         type="text"
-//         placeholder={placeholder}
-//         value={searchValue}
-//         onChange={onValueChange}
-//         onKeyDown={onKeyDown}
-//         className="font-pretendard-medium flex-grow bg-transparent text-sm text-black placeholder-gray-400 outline-none"
-//       />
-//     </div>
-//   );
-// }
-
 export default function SearchInputField({
   subject,
   searchValue,
@@ -50,7 +15,7 @@ export default function SearchInputField({
     <div className="flex flex-1 items-center overflow-hidden">
       {/* subject 부분 */}
       {subject && (
-        <div className="mr-2 max-w-[50%] flex-shrink-0 overflow-hidden text-ellipsis whitespace-nowrap rounded bg-blue-100 px-2 py-1 text-sm text-blue-500">
+        <div className="mr-2 max-w-[50%] flex-shrink-0 overflow-hidden text-ellipsis whitespace-nowrap rounded bg-[#D5ECFB] px-2 py-[2px] text-sm text-[#0070F3]">
           {subject}
         </div>
       )}
