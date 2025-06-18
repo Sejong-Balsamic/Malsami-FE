@@ -5,7 +5,7 @@ import Image from "next/image";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import MovingCardDocument from "@/components/common/MovingCardDocument";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import MovingCardSkeleton from "@/components/common/MovingCardSkeleton";
 
 interface HotDocumentsSectionProps {
   onViewAll: () => void;
@@ -101,12 +101,8 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
       </div>
 
       {/* 카드 스와이핑 영역 */}
-      {/* 로딩 중일 때 로딩 스피너 표시 */}
-      {loading && (
-        <div className="flex h-[194px] w-full items-center justify-center">
-          <LoadingSpinner />
-        </div>
-      )}
+      {/* 로딩 중일 때 스켈레톤 표시 */}
+      {loading && <MovingCardSkeleton />}
       {/* 데이터가 있을 때 MovingCardDocument 컴포넌트 렌더링 */}
       {!loading && documents.length > 0 && <MovingCardDocument data={documents} />}
       {/* 데이터가 없을 때 표시되는 메시지 */}

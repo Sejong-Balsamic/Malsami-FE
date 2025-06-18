@@ -73,6 +73,14 @@
   src: url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT-Bold.woff2") format("woff2");
 }
 
+/* TheTuesdayofYounah 폰트 : 랜딩페이지 "세종말싸미" 폰트 */
+@font-face {
+  font-family: 'TheTuesdayofYounah';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/TheTuesdayofYounah.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @layer utilities {
   .font-pretendard-light {
     @apply font-pretendard font-light;
@@ -98,13 +106,11 @@
     @apply font-suit font-bold;
   }
 
-  /* 공지사항 전용 스타일 */
-  .notice-title {
-    @apply font-suit text-sm font-bold leading-5 text-black;
+  /* TheTuesdayofYounah 폰트 유틸리티 클래스 */
+  .font-tuesday-younah {
+    font-family: 'TheTuesdayofYounah', sans-serif;
   }
-  .notice-content {
-    @apply font-suit text-sm font-medium leading-5 text-[#252525];
-  }
+
 }
 
 @layer base {

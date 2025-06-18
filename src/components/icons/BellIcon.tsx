@@ -14,7 +14,8 @@ const BellIcon: React.FC<BellIconProps> = ({ isNotificationExist = false }) => {
         /* 알림 존재시 빨간점포함된 알림아이콘 표시 */
         src={isNotificationExist ? "/icons/bell-red-dot.svg" : "/icons/bell.svg"}
         alt="Bell Icon"
-        className="h-8 w-auto"
+        width={24}
+        height={24}
       />
     </div>
   );
