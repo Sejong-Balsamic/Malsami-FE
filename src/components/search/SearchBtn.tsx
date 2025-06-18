@@ -4,7 +4,7 @@ export default function SearchBtn({ onClick }: { onClick: () => void }) {
   return (
     <div className="flex items-center">
       <Image
-        src="/icons/SearchIcon.svg"
+        src="/icons/Search.svg"
         alt="검색"
         width={20}
         height={20}

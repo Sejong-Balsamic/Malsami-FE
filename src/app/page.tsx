@@ -7,19 +7,37 @@ import AllDocumentsSection from "@/components/landing/AllDocumentsSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
 import AllQuestionsSection from "@/components/landing/AllQuestionsSection";
 import HotQuestionsSection from "@/components/landing/HotQuestionSection";
+import WelcomeSection from "@/components/landing/WelcomeSection";
+import { memberApi } from "@/apis/memberApi";
 
 export default function LandingPage() {
   const router = useRouter();
-  // FIXME: userName은 실제 사용자 이름으로 대체해야 함.
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [userName, setUserName] = useState("종이");
+  const [userName, setUserName] = useState<string>("");
   const [activeTab, setActiveTab] = useState("주간");
   const hotDocumentRef = useRef<HTMLDivElement>(null);
   const hotQuestionRef = useRef<HTMLDivElement>(null);
 
+  // userName 갱신
+  const storeUserName = async (): Promise<void> => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    if (!accessToken) {
+      setUserName("종이");
+      return;
+    }
+
+    try {
+      const memberInfo = await memberApi.getMyInfo();
+      const studentName = memberInfo?.member?.studentName || "종이";
+      setUserName(studentName);
+    } catch (error) {
+      console.error("사용자 정보 불러오기 실패:", error);
+      setUserName("종이");
+    }
+  };
   useEffect(() => {
-    // 사용자 정보 로드 등 초기화 로직
-    // ...
+    storeUserName();
   }, []);
 
   return (
@@ -32,8 +50,7 @@ export default function LandingPage() {
         <main className="px-5">
           {/* 캐릭터와 인사말 섹션 */}
           <section aria-labelledby="welcome-heading" className="mb-6 mt-8">
-            {/* WelcomeSection 컴포넌트로 분리 가능 */}
-            {/* <WelcomeSection userName={userName} /> */}
+            <WelcomeSection userName={userName} />
           </section>
 
           {/* 검색창 섹션 */}
