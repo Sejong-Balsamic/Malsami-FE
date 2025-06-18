@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import MovingCardSkeleton from "@/components/common/MovingCardSkeleton";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import MovingCardQuestion from "@/components/common/MovingCardQuestion";
@@ -101,12 +101,8 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
       </div>
 
       {/* 카드 스와이핑 영역 */}
-      {/* 로딩 중일 때 로딩 스피너 표시 */}
-      {loading && (
-        <div className="flex h-[194px] w-full items-center justify-center">
-          <LoadingSpinner />
-        </div>
-      )}
+      {/* 로딩 중일 때 스켈레톤 표시 */}
+      {loading && <MovingCardSkeleton />}
       {/* 데이터가 있을 때 MovingCardQuestion 컴포넌트 렌더링 */}
       {!loading && questions.length > 0 && <MovingCardQuestion data={questions} />}
       {/* 데이터가 없을 때 표시되는 메시지 */}
