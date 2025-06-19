@@ -4,7 +4,7 @@ import useUserPermissions from "@/global/useUserPermissions"; // 경로 확인 �
 import { PostTiersKeys } from "@/types/postTiers";
 import DocBoardCard from "./DocBoardCard";
 
-export default function DocBoardContent() {
+export default function DocBoardNavigateSection() {
   const memberDto = useUserPermissions(); // MemberDto | null 반환
 
   // 권한 필드 추출 (기본값 false 설정)

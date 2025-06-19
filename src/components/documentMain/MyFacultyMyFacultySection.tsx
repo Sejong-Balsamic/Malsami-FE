@@ -5,7 +5,7 @@ import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { useRouter } from "next/navigation";
 import MovingCardDocument from "./MovingCardDocument";
 
-export default function MyFacultyContent({ facultys }: { facultys: string[] }) {
+export default function MyFacultySection({ facultys }: { facultys: string[] }) {
   const router = useRouter();
   const [myFacultyItems, setMyFacultyItems] = useState<CardProps[]>([]); // 내 전공관련 자료
 

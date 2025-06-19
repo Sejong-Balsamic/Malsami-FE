@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import getHotDownloadDocs from "@/apis/document/getHotDownloadDocs";
 import MovingCardDocument from "./MovingCardDocument";
 
-export default function HotDownloadContent() {
+export default function HotDownloadSection() {
   const router = useRouter();
   const [hotDownloadItems, setHotDownloadItems] = useState<CardProps[]>([]); // 핫 다운로드
 

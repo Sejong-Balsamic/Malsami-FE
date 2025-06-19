@@ -5,7 +5,7 @@ import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { useRouter } from "next/navigation";
 import MovingCardDocument from "./MovingCardDocument";
 
-export default function DocRequestContent() {
+export default function DocRequestSection() {
   const router = useRouter();
   const [docRequestItems, setDocRequestItems] = useState<CardProps[]>([]); // 자료요청 카드들
 
