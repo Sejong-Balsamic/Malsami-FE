@@ -10,6 +10,7 @@ import HotQuestionsSection from "@/components/landing/HotQuestionSection";
 import WelcomeSection from "@/components/landing/WelcomeSection";
 import { memberApi } from "@/apis/memberApi";
 import NoticeSection from "@/components/landing/NoticeSection";
+import LandingWriteFAB from "@/components/common/FABs/LandingWriteFAB";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -91,13 +92,12 @@ export default function LandingPage() {
           {/* 전체 질문 게시판 섹션 */}
           <section aria-labelledby="all-questions-heading" className="mb-8">
             {/* AllQuestionsSection 컴포넌트로 분리 가능 */}
-            <AllQuestionsSection onViewAll={() => router.push("/board/questions")} />
+            <AllQuestionsSection onViewAll={() => router.push("/board/question")} />
           </section>
         </main>
 
-        {/* 플로팅 버튼 (업로드, 스크롤 위로) */}
-        {/* FloatingButtons 컴포넌트로 분리 가능 */}
-        {/* <FloatingButtons onUpload={() => console.log("업로드")} /> */}
+        {/* 플로팅 버튼 (글쓰기) */}
+        <LandingWriteFAB />
       </div>
     </div>
   );
