@@ -4,20 +4,9 @@ import { useRouter, notFound } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { showToast } from "@/global/toastUtils";
-import CheonminBoard from "@/components/documentMain/CheonminBoard";
-import JunginBoard from "@/components/documentMain/JunginBoard";
-import YangbanBoard from "@/components/documentMain/YangbanBoard";
-import KingBoard from "@/components/documentMain/KingBoard";
+import TierBoard from "@/components/documentMain/TierBoard";
 import { PostTier } from "@/types/api/constants/postTier";
 import useUserPermissions from "@/global/useUserPermissions";
-
-// 게시판 컴포넌트 매핑
-const MainDocTierComponents: Record<PostTier, JSX.Element> = {
-  [PostTier.CHEONMIN]: <CheonminBoard />,
-  [PostTier.JUNGIN]: <JunginBoard />,
-  [PostTier.YANGBAN]: <YangbanBoard />,
-  [PostTier.KING]: <KingBoard />,
-};
 
 // PostTier 값 배열 (유효성 검사용)
 const validPostTiers = Object.values(PostTier) as PostTier[];
@@ -59,7 +48,7 @@ function BoardPage({ params }: { params: { postTier?: string } }) {
   // memberInfo가 없거나 권한 체크 전이면 로딩 상태
   if (!memberInfo || !isAccessChecked) return null;
 
-  return <div>{MainDocTierComponents[upperCasePostTier]}</div>;
+  return <TierBoard postTier={upperCasePostTier} />;
 }
 
 export default BoardPage;

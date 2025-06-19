@@ -1,20 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import UploadDocumentFAB from "@/components/common/FABs/UploadDocumentFAB";
 import { memberApi } from "@/apis/memberApi";
-import HotDownloadSection from "@/components/documentMain/HotDownloadSection";
-import MyFacultySection from "@/components/documentMain/MyFacultyMyFacultySection";
-import DocRequestSection from "@/components/documentMain/DocRequestSection";
-import DocBoardNavigateSection from "@/components/documentMain/DocBoardNavigateSection";
+import MyFacultySection from "@/components/documentMain/MyFacultySection";
+import DocumentRequestSection from "@/components/documentMain/DocumentRequestSection";
+import DocumentBoardNavigateSection from "@/components/documentMain/DocumentBoardNavigateSection";
+import HotDocumentsSection from "@/components/landing/HotDocumentSection";
+import AllDocumentsSection from "@/components/landing/AllDocumentsSection";
 import CommonHeader from "@/components/header/CommonHeader";
 import CommonSearchBar from "@/components/search/CommonSearchBar";
 import { RIGHT_ITEM } from "@/types/header";
 
 export default function DocumentBoardPage() {
+  const router = useRouter();
   const [myFacultys, setMyFacultys] = useState<string[]>([]);
   const [isFABVisible, setIsFABVisible] = useState(true); // FAB 버튼 상태 관리
+  const [HotDocumentActiveTab, setHotDocumentActiveTab] = useState("주간");
 
   // 내 정보 불러오기 (학과 조회)
   useEffect(() => {
@@ -50,10 +54,11 @@ export default function DocumentBoardPage() {
       <ScrollToTopOnLoad />
       <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
         <CommonHeader title="자료 게시판" rightType={RIGHT_ITEM.NONE} />
+
         {/* Main Content */}
         <main className="px-5">
-          {/* 검색바 */}
-          <section aria-labelledby="searchBar" className="mb-6 mt-4">
+          {/* 검색바 섹션 */}
+          <section aria-label="search" className="mb-6 mt-4">
             <CommonSearchBar />
           </section>
 
@@ -61,26 +66,31 @@ export default function DocumentBoardPage() {
           <section aria-labelledby="DocBoardNavigationSection" className="mb-4">
             <h1 className="font-suit-bold text-[16px] text-[#0CD4AE]">엽전을 모아</h1>
             <h1 className="font-suit-bold text-[16px] text-black">다양한 게시판들을 이용할 수 있어요.</h1>
-            <DocBoardNavigateSection />
+            <DocumentBoardNavigateSection />
           </section>
+
+          {/* 📚 전체 자료 게시판 섹션 */}
+          <section aria-labelledby="all-documents" className="mb-8">
+            <AllDocumentsSection onViewAll={() => router.push("/board/document")} />
+          </section>
+
           {/* 🔥 HOT 인기 자료 섹션 */}
-          <section aria-labelledby="HotDownloadSection" className="mb-4">
-            <HotDownloadSection />
+          <section aria-labelledby="hot-documents" className="mb-8">
+            <HotDocumentsSection
+              activeTab={HotDocumentActiveTab}
+              onTabChange={setHotDocumentActiveTab}
+              onViewAll={() => router.push("/board/document/hot")}
+            />
           </section>
 
           {/* 🎓 내 전공 관련 자료 섹션 */}
-          <section aria-labelledby="MyFacultySection" className="mb-4">
+          <section aria-labelledby="my-faculty" className="mb-8">
             <MyFacultySection facultys={myFacultys} />
           </section>
 
           {/* 🙋‍♂️ 자료요청 섹션 */}
-          <section aria-labelledby="DocRequestSection" className="mb-4">
-            <DocRequestSection />
-          </section>
-
-          {/* 📚 전체 자료 섹션 */}
-          <section aria-labelledby="AllDocSection" className="mb-1">
-            <CommonSearchBar />
+          <section aria-labelledby="document-requests" className="mb-8">
+            <DocumentRequestSection />
           </section>
         </main>
       </div>

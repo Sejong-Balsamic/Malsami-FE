@@ -3,14 +3,15 @@ import Image from "next/image";
 import { useState } from "react";
 import { PostTiers, PostTiersKey } from "@/types/postTiers";
 
-interface DocCategoryCardProps {
+interface DocumentBoardNavigateCardProps {
   tier: PostTiersKey; // 게시판 카테고리 제목
   link: string; // 접근 가능한 경우 이동할 링크
   accessible: boolean; // 접근 가능 여부
 }
 
-export default function DocBoardCard({ tier, link, accessible }: DocCategoryCardProps) {
+export default function DocumentBoardNavigateCard({ tier, link, accessible }: DocumentBoardNavigateCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
+  const [imageLoaded, setImageLoaded] = useState(false); // 이미지 로딩 상태
 
   // 이미지 경로를 tier에 맞춰 동적으로 설정
   const getImageSrc = () => {
@@ -43,7 +44,23 @@ export default function DocBoardCard({ tier, link, accessible }: DocCategoryCard
           onClick={handleCardClick}
           className="rounded-full transition-transform hover:scale-105"
         >
-          <Image src={imageNoDurumariSrc} alt={tier} width={66} height={66} className="rounded-full" />
+          <div className="relative">
+            {/* 이미지 로딩 중 스켈레톤 */}
+            {!imageLoaded && (
+              <div className="absolute inset-0 h-[66px] w-[66px] animate-pulse rounded-full bg-gray-200" />
+            )}
+            <Image
+              src={imageNoDurumariSrc}
+              alt={tier}
+              width={66}
+              height={66}
+              className={`rounded-full transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+              priority // 중요한 이미지이므로 우선 로딩
+              onLoad={() => setImageLoaded(true)}
+              placeholder="blur"
+              blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjYiIGhlaWdodD0iNjYiIHZpZXdCb3g9IjAgMCA2NiA2NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzMiIGN5PSIzMyIgcj0iMzMiIGZpbGw9IiNFNUU3RUIiLz4KPC9zdmc+Cg=="
+            />
+          </div>
         </Link>
         {/* 게시판 카테고리 제목 */}
         <span className={`font-pretendard-medium text-xs ${accessible ? "text-black" : "text-gray-400"}`}>
@@ -66,7 +83,14 @@ export default function DocBoardCard({ tier, link, accessible }: DocCategoryCard
 
             {/* 알림 이미지와 내용 */}
             <div className="flex flex-col items-center text-center">
-              <Image src={imageSrc} alt={tier} width={170} height={170} className="mb-4 rounded-full" />
+              <Image
+                src={imageSrc}
+                alt={tier}
+                width={170}
+                height={170}
+                className="mb-4 rounded-full"
+                priority={false} // 모달 이미지는 우선순위 낮게
+              />
               <h1 className="font-pretendard-bold text-lg">게시판 입장 제한</h1>
               <p className="mt-2 text-sm text-gray-600">
                 해당 게시판은 게시판 등급이 <span className="font-bold">{PostTiers[tier].KR} 이상</span>일 경우에만

@@ -11,7 +11,7 @@ const tagTranslations: { [key: string]: string } = {
   SOLUTION: "해설",
 };
 
-export default function DocCard({
+export default function DocumentCard({
   subject,
   documentPostId,
   title,

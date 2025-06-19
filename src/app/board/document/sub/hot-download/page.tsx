@@ -13,7 +13,7 @@ import getHotDownloadDocs from "@/apis/document/getHotDownloadDocs";
 import { DocCardProps } from "@/types/docCard.type";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import DocFilterControlBar from "@/components/documentMain/DocFilterControlBar";
-import DocCard from "@/components/documentMain/DocCard";
+import DocumentCard from "@/components/documentMain/DocumentCard";
 
 export default function DocHotdownloadPage() {
   const dispatch = useDispatch();
@@ -79,7 +79,7 @@ export default function DocHotdownloadPage() {
               <LoadingSpinner />
             ) : (
               docCards.map((card: DocCardProps) => (
-                <DocCard
+                <DocumentCard
                   key={card.documentPostId}
                   documentPostId={card.documentPostId}
                   subject={card.subject || "과목명"}
