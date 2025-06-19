@@ -13,7 +13,12 @@ function LandingWriteFAB() {
   };
 
   const checkAccessTokenAndNavigate = (path: string) => {
-    const accessToken = sessionStorage.getItem("accessToken");
+    let accessToken: string | null = null;
+    try {
+      accessToken = sessionStorage.getItem("accessToken");
+    } catch (error) {
+      console.error("SessionStorage access failed:", error);
+    }
     if (!accessToken) {
       router.push("/login");
     } else {
