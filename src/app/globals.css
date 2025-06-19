@@ -106,7 +106,7 @@
     @apply font-suit font-bold;
   }
 
-  /* TheTuesdayofYounah 폰트 유틸리티 클래스 */
+/* TheTuesdayofYounah 폰트 유틸리티 클래스 : 랜딩페이지 "세종말싸미" 폰트 */
   .font-tuesday-younah {
     font-family: 'TheTuesdayofYounah', sans-serif;
   }
