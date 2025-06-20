@@ -22,7 +22,7 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
       try {
         const response = await questionPostApi.getFilteredQuestionPosts({
           sortType: "LATEST",
-          pageSize: 5, // 최근 5개만 표시
+          pageSize: 3, // 최근 3개만 표시
         });
 
         if (response && response.questionPostsPage && response.questionPostsPage.content) {
@@ -44,7 +44,7 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
       <div>
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center">
-            <Image src="/icons/yellowBook.svg" alt="질문" width={24} height={24} />
+            <Image src="/icons/yellowBook.svg" alt="질문 " width={24} height={24} />
             <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">전체 질문</h2>
           </div>
           <button
