@@ -63,13 +63,25 @@ export default function CreditModal({ isOpen, onClose }: CreditModalProps) {
               onClick={onClose}
               aria-label="닫기"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
-            
+
             <div className="text-center">
-              <Image src="/image/mascotCredit.png" alt="세종말싸미 마스코트" width={120} height={120} className="mx-auto mb-4" />
+              <Image
+                src="/image/mascotCredit.png"
+                alt="세종말싸미 마스코트"
+                width={120}
+                height={120}
+                className="mx-auto mb-4"
+              />
               <h2 className="font-tuesday-younah text-4xl font-bold text-gray-800">세종말싸미</h2>
               <p className="mt-2 text-sm text-gray-500">세종대학교 학생들을 위한 커뮤니티</p>
             </div>
@@ -91,4 +103,4 @@ export default function CreditModal({ isOpen, onClose }: CreditModalProps) {
       )}
     </AnimatePresence>
   );
-} 
+}
