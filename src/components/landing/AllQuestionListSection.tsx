@@ -69,7 +69,7 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
       {/* 헤더 영역: 제목, 전체보기 */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center">
-          <Image src="/icons/Question.svg" alt="질문" width={18} height={18} />
+          <Image src="/icons/yellowBook.svg" alt="질문" width={24} height={24} />
           <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">전체 질문</h2>
         </div>
 
