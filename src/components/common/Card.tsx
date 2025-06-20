@@ -70,10 +70,31 @@ export default function Card({
       {/* 하단 */}
       <div className="mt-2 flex flex-row justify-between">
         <div className="flex gap-2">
-          {customTags &&
-            customTags
-              .slice(0, 2)
-              .map(label => <CustomTag key={label} tagName={label.length > 6 ? `${label.slice(0, 6)}..` : label} />)}
+          {customTags && customTags.length > 0 && (
+            <>
+              {/* 태그들의 총 길이를 계산해서 표시 방식 결정 */}
+              {(() => {
+                const totalLength = customTags.slice(0, 2).reduce((sum, tag) => sum + tag.length, 0);
+
+                // 총 길이가 12글자를 넘거나 개별 태그가 8글자를 넘으면 하나만 표시
+                if (totalLength > 12 || customTags.some(tag => tag.length > 8)) {
+                  return (
+                    <>
+                      <CustomTag tagName={customTags[0]} />
+                      {customTags.length > 1 && (
+                        <span className="inline-flex items-center rounded-[14px] bg-[#F5F5F5] px-2.5 py-[2px] text-SUIT_12 font-semibold leading-[20px] text-[#666666]">
+                          +{customTags.length - 1}
+                        </span>
+                      )}
+                    </>
+                  );
+                } else {
+                  // 짧으면 최대 2개까지 표시
+                  return customTags.slice(0, 2).map(label => <CustomTag key={label} tagName={label} />);
+                }
+              })()}
+            </>
+          )}
         </div>
 
         {/* 좋아요 수와 답변 수 표시 */}
