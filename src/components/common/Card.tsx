@@ -30,6 +30,7 @@ interface CardProps {
   content: string;
   isCurrentlyPopular?: boolean; // HOT 태그 표시 여부 (선택적)
   likeCount?: number; // 좋아요 수 (선택적)
+  answerCount?: number; // 답변 수 (질문 카드용, 선택적)
   customTags?: string[]; // 버튼 텍스트 배열 (선택적)
   isLiked: boolean;
   onClick?: () => void; // 카드 클릭 시. 상세페이지로 이동
@@ -42,6 +43,7 @@ export default function Card({
   content,
   isCurrentlyPopular = false,
   likeCount,
+  answerCount,
   customTags,
   isLiked,
   onClick,
@@ -73,14 +75,27 @@ export default function Card({
               .slice(0, 2)
               .map(label => <CustomTag key={label} tagName={label.length > 6 ? `${label.slice(0, 6)}..` : label} />)}
         </div>
-        <span className="ml-auto flex items-center gap-1.5 text-SUIT_14 text-[#929292]">
-          {isLiked ? (
-            <Image src="/icons/actions/hand-thumbs-up-fill.svg" alt="좋아요" width={16} height={16} />
-          ) : (
-            <Image src="/icons/actions/hand-thumbs-up.svg" alt="좋아요" width={16} height={16} />
+        
+        {/* 좋아요 수와 답변 수 표시 */}
+        <div className="ml-auto flex items-center gap-1.5 text-SUIT_14 text-[#929292]">
+          {/* 좋아요 */}
+          <span className="flex items-center gap-1">
+            {isLiked ? (
+              <Image src="/icons/actions/hand-thumbs-up-fill.svg" alt="좋아요" width={16} height={16} />
+            ) : (
+              <Image src="/icons/actions/hand-thumbs-up.svg" alt="좋아요" width={16} height={16} />
+            )}
+            {likeCount}
+          </span>
+          
+          {/* 답변 수 (질문 카드인 경우에만 표시) */}
+          {answerCount !== undefined && (
+            <span className="flex items-center gap-1">
+              <Image src="/icons/actions/comment.svg" alt="답변" width={16} height={16} />
+              {answerCount}
+            </span>
           )}
-          {likeCount}
-        </span>
+        </div>
       </div>
     </article>
   );
