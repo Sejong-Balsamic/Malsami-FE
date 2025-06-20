@@ -35,6 +35,7 @@ function LandingWriteFAB() {
           onClick={handleBackdropClick}
           onKeyDown={e => {
             if (e.key === "Enter" || e.key === " " || e.key === "Escape") {
+              e.preventDefault();
               handleBackdropClick();
             }
           }}
@@ -51,13 +52,14 @@ function LandingWriteFAB() {
           <div className="absolute bottom-[84px] right-0 flex flex-col items-end space-y-1 duration-500 ease-out animate-in slide-in-from-bottom">
             {/* 질문 게시판 글작성 */}
             <div className="flex items-center gap-2">
-              <span className="font-pretendard-medium whitespace-nowrap rounded-md bg-black/80 px-3 py-1 text-sm text-white">
+              <span className="whitespace-nowrap rounded-md bg-black/80 px-3 py-1 text-SUIT_14 font-medium text-white">
                 질문게시판 글작성
               </span>
               <button
                 type="button"
                 onClick={handleQuestionClick}
                 className="flex h-[80px] w-[80px] items-center justify-center"
+                aria-label="질문게시판 글작성"
               >
                 <Image src="/icons/writeDetail.svg" alt="질문 작성" width={62} height={62} />
               </button>
@@ -65,13 +67,14 @@ function LandingWriteFAB() {
 
             {/* 자료 게시판 글작성 */}
             <div className="flex items-center gap-2">
-              <span className="font-pretendard-medium whitespace-nowrap rounded-md bg-black/80 px-3 py-1 text-sm text-white">
+              <span className="whitespace-nowrap rounded-md bg-black/80 px-3 py-1 text-SUIT_14 font-medium text-white">
                 자료게시판 글작성
               </span>
               <button
                 type="button"
                 onClick={handleDocumentClick}
                 className="flex h-[80px] w-[80px] items-center justify-center"
+                aria-label="자료게시판 글작성"
               >
                 <Image src="/icons/writeDetail.svg" alt="자료 작성" width={62} height={62} />
               </button>
