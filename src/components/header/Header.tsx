@@ -78,7 +78,7 @@ function Header({
       </div>
 
       {/* 중앙 타이틀 */}
-      <div className="text-lg font-bold text-gray-800">{title}</div>
+      <div className="text-SUIT_18 font-semibold text-gray-800">{title}</div>
 
       {/* 오른쪽 버튼 */}
       <button
