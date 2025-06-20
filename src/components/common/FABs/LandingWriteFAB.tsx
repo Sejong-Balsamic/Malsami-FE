@@ -12,28 +12,14 @@ function LandingWriteFAB() {
     setIsMenuOpen(prev => !prev);
   };
 
-  const checkAccessTokenAndNavigate = (path: string) => {
-    let accessToken: string | null = null;
-    try {
-      accessToken = sessionStorage.getItem("accessToken");
-    } catch (error) {
-      console.error("SessionStorage access failed:", error);
-    }
-    if (!accessToken) {
-      router.push("/login");
-    } else {
-      router.push(path);
-    }
-  };
-
   const handleDocumentClick = () => {
     setIsMenuOpen(false);
-    checkAccessTokenAndNavigate("/board/document/post");
+    router.push("/board/document/post");
   };
 
   const handleQuestionClick = () => {
     setIsMenuOpen(false);
-    checkAccessTokenAndNavigate("/board/question/post");
+    router.push("/board/question/post");
   };
 
   const handleBackdropClick = () => {
