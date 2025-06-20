@@ -19,13 +19,13 @@ function UploadDocumentFAB({ isFABVisible }: UploadDocFABProps) {
 
   return (
     <div
-      className={`fixed bottom-5 right-5 z-10 transform transition-all duration-500 ${
+      className={`fixed bottom-5 right-5 z-[70] transform transition-all duration-500 ${
         isFABVisible ? "pointer-events-auto scale-100 opacity-100" : "pointer-events-none scale-0 opacity-0"
       }`}
     >
       <button
         type="button"
-        className="relative z-50 h-[50px] w-[50px] rounded-full bg-[#03b89e]"
+        className="relative h-[50px] w-[50px] rounded-full bg-[#03b89e]"
         onClick={handleQuestionClick}
         disabled={!isFABVisible} // 클릭 비활성화 추가
       >
