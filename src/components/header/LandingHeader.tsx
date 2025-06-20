@@ -2,10 +2,11 @@
 
 "use client";
 
-import React, { ReactNode } from "react";
+import React, { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/header/Header";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
+import CreditModal from "@/components/common/CreditModal";
 
 interface LandingHeaderProps {
   // eslint-disable-next-line react/require-default-props
@@ -14,11 +15,15 @@ interface LandingHeaderProps {
 
 export default function LandingHeader({ children }: LandingHeaderProps) {
   const router = useRouter();
-  const handleLeftClick = () => router.push("/");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleLeftClick = () => setIsModalOpen(true);
   const handleRightClick = () => router.push("/notifications");
+  const handleCloseModal = () => setIsModalOpen(false);
 
   return (
     <>
+      <CreditModal isOpen={isModalOpen} onClose={handleCloseModal} />
       {/* fixed 헤더 */}
       <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
         <Header
