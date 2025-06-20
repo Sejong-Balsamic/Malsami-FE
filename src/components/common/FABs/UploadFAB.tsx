@@ -35,7 +35,7 @@ function UploadFAB() {
     <div className="relative z-0">
       {isDivVisible && (
         <div
-          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
+          className="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm"
           role="button"
           tabIndex={0}
           onClick={() => setIsDivVisible(false)}
@@ -50,13 +50,13 @@ function UploadFAB() {
       <div className="relative">
         <button
           type="button"
-          className="relative z-50 h-[50px] w-[50px] rounded-full bg-[#03b89e] shadow-lg"
+          className="relative z-[70] h-[50px] w-[50px] rounded-full bg-[#03b89e] shadow-lg"
           onClick={toggleDivVisibility}
         >
           <Upload />
         </button>
         {isDivVisible && (
-          <div className="absolute bottom-[70px] right-0 z-40 flex flex-col items-center space-y-[10px]">
+          <div className="absolute bottom-[70px] right-0 z-[65] flex flex-col items-center space-y-[10px]">
             <div className="flex items-center gap-[10px]">
               <span className="font-pretendard-medium w-[70px] text-right text-[14px] text-white">질문 올리기</span>
               <button

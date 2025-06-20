@@ -36,10 +36,10 @@ function UploadFAB() {
 
   return (
     <>
-      {isOpen && <div className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm" />}
+      {isOpen && <div className="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm" />}
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
-          <button type="button" className="relative z-50 h-[50px] w-[50px] rounded-full bg-[#03b89e] shadow-lg">
+          <button type="button" className="relative z-[70] h-[50px] w-[50px] rounded-full bg-[#03b89e] shadow-lg">
             {isOpen ? <Close /> : <Upload />}
           </button>
         </DropdownMenuTrigger>

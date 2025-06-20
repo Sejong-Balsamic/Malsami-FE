@@ -28,10 +28,10 @@ function LandingWriteFAB() {
 
   return (
     <>
-      {/* 배경 오버레이 : blur 처리 */}
+      {/* 배경 오버레이 : 헤더, 네비게이션바 블러 처리 */}
       {isMenuOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm transition-all duration-500 ease-in-out animate-in fade-in"
+          className="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm transition-all duration-500 ease-in-out animate-in fade-in"
           onClick={handleBackdropClick}
           onKeyDown={e => {
             if (e.key === "Enter" || e.key === " " || e.key === "Escape") {
@@ -46,7 +46,7 @@ function LandingWriteFAB() {
       )}
 
       {/* 플로팅 버튼 컨테이너 */}
-      <div className="fixed bottom-[70px] right-[10px] z-50">
+      <div className="fixed bottom-[70px] right-[10px] z-[70]">
         {/* 메뉴 옵션들 */}
         {isMenuOpen && (
           <div className="absolute bottom-[84px] right-0 flex flex-col items-end space-y-1 duration-500 ease-out animate-in slide-in-from-bottom">
