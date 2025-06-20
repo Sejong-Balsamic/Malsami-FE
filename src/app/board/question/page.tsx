@@ -9,6 +9,7 @@ import BountyQuestionSection from "@/components/landing/BountyQuestionSection";
 import AllQuestionListSection from "@/components/landing/AllQuestionListSection";
 import UploadQuestionFAB from "@/components/common/FABs/UploadQuestionFAB";
 import { useState } from "react";
+import { LEFT_ITEM } from "@/types/header";
 
 export default function QuestionPage() {
   const router = useRouter();
@@ -16,11 +17,15 @@ export default function QuestionPage() {
   const [questionActiveTab, setQuestionActiveTab] = useState<string>("주간");
   const [bountyActiveTab, setBountyActiveTab] = useState<"최근순" | "높은순">("최근순");
 
+  const handleBackClick = () => {
+    router.back();
+  };
+
   return (
     <div className="flex min-h-screen justify-center bg-gray-100">
       <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
         {/* Header */}
-        <Header title="질문게시판" />
+        <Header title="질문게시판" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
 
         {/* 헤더 아래 여백 추가 */}
         <div className="mt-[40px]">

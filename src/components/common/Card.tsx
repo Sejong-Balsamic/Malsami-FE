@@ -75,7 +75,7 @@ export default function Card({
               .slice(0, 2)
               .map(label => <CustomTag key={label} tagName={label.length > 6 ? `${label.slice(0, 6)}..` : label} />)}
         </div>
-        
+
         {/* 좋아요 수와 답변 수 표시 */}
         <div className="ml-auto flex items-center gap-1.5 text-SUIT_14 text-[#929292]">
           {/* 좋아요 */}
@@ -87,7 +87,7 @@ export default function Card({
             )}
             {likeCount}
           </span>
-          
+
           {/* 답변 수 (질문 카드인 경우에만 표시) */}
           {answerCount !== undefined && (
             <span className="flex items-center gap-1">
