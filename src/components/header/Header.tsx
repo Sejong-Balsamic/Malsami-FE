@@ -21,6 +21,8 @@ interface HeaderProps {
   onRightClick?: () => void;
   // eslint-disable-next-line react/require-default-props
   hasNotification?: boolean;
+  // eslint-disable-next-line react/require-default-props
+  isFixed?: boolean; // 고정 헤더 여부
 }
 
 function Header({
@@ -30,6 +32,7 @@ function Header({
   onLeftClick = () => {},
   onRightClick = () => {},
   hasNotification = false,
+  isFixed = false,
 }: HeaderProps) {
   // 왼쪽 아이콘 결정
   const renderLeftItem = () => {
@@ -57,8 +60,12 @@ function Header({
     }
   };
 
+  const headerClasses = isFixed
+    ? "fixed top-0 left-1/2 transform -translate-x-1/2 w-full max-w-[640px] z-50 flex h-16 items-center justify-between bg-white px-5 shadow-md"
+    : "flex h-16 items-center justify-between bg-white px-5 shadow-md";
+
   return (
-    <header className="flex h-16 items-center justify-between bg-white px-5 shadow-md">
+    <header className={headerClasses}>
       {/* 왼쪽 영역 */}
       <div className="flex items-center">
         {leftType === LEFT_ITEM.LOGO ? (

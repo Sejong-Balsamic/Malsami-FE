@@ -46,62 +46,60 @@ export default function LandingPage() {
   }, []);
 
   return (
-    <div className="flex min-h-screen justify-center bg-gray-100">
-      <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
-        {/* Header */}
-        <LandingHeader />
+    <>
+      {/* Header */}
+      <LandingHeader />
 
-        {/* Main Content */}
-        <main className="px-5">
-          {/* 캐릭터와 인사말 섹션 */}
-          <section aria-labelledby="welcome-heading" className="mb-6 mt-8">
-            <WelcomeSection userName={userName} />
-          </section>
+      {/* Main Content */}
+      <main className="px-5">
+        {/* 캐릭터와 인사말 섹션 */}
+        <section aria-labelledby="welcome-heading" className="mb-6 mt-8">
+          <WelcomeSection userName={userName} />
+        </section>
 
-          {/* 검색창 섹션 */}
-          <section aria-label="search" className="mb-6">
-            {/* SearchBar 컴포넌트로 분리 가능 */}
-            {/* <SearchBar /> */}
-          </section>
+        {/* 검색창 섹션 */}
+        <section aria-label="search" className="mb-6">
+          {/* SearchBar 컴포넌트로 분리 가능 */}
+          {/* <SearchBar /> */}
+        </section>
 
-          {/* 공지사항 섹션 */}
-          <section aria-labelledby="notice-heading" className="mb-6">
-            <NoticeSection onViewAll={() => router.push("/notice")} />
-          </section>
+        {/* 공지사항 섹션 */}
+        <section aria-labelledby="notice-heading" className="mb-6">
+          <NoticeSection onViewAll={() => router.push("/notice")} />
+        </section>
 
-          {/* HOT 인기자료 섹션 */}
-          <section ref={hotDocumentRef} aria-labelledby="hot-documents-heading" className="mb-8">
-            <HotDocumentsSection
-              activeTab={documentActiveTab}
-              onTabChange={setDocumentActiveTab}
-              onViewAll={() => router.push("/board/document/hot")}
-            />
-          </section>
+        {/* HOT 인기자료 섹션 */}
+        <section ref={hotDocumentRef} aria-labelledby="hot-documents-heading" className="mb-8">
+          <HotDocumentsSection
+            activeTab={documentActiveTab}
+            onTabChange={setDocumentActiveTab}
+            onViewAll={() => router.push("/board/document/hot")}
+          />
+        </section>
 
-          {/* 전체 자료 게시판 섹션 */}
-          <section aria-labelledby="all-documents-heading" className="mb-8">
-            <AllDocumentsSection onViewAll={() => router.push("/board/document")} />
-          </section>
+        {/* 전체 자료 게시판 섹션 */}
+        <section aria-labelledby="all-documents-heading" className="mb-8">
+          <AllDocumentsSection onViewAll={() => router.push("/board/document")} />
+        </section>
 
-          {/* HOT 인기질문 섹션 */}
-          <section ref={hotQuestionRef} aria-labelledby="hot-questions-heading" className="mb-8">
-            <HotQuestionsSection
-              activeTab={questionActiveTab}
-              onTabChange={setQuestionActiveTab}
-              onViewAll={() => router.push("/board/question")}
-            />
-          </section>
+        {/* HOT 인기질문 섹션 */}
+        <section ref={hotQuestionRef} aria-labelledby="hot-questions-heading" className="mb-8">
+          <HotQuestionsSection
+            activeTab={questionActiveTab}
+            onTabChange={setQuestionActiveTab}
+            onViewAll={() => router.push("/board/question")}
+          />
+        </section>
 
-          {/* 전체 질문 게시판 섹션 */}
-          <section aria-labelledby="all-questions-heading" className="mb-8">
-            {/* AllQuestionsSection 컴포넌트로 분리 가능 */}
-            <AllQuestionsSection onViewAll={() => router.push("/board/question")} />
-          </section>
-        </main>
+        {/* 전체 질문 게시판 섹션 */}
+        <section aria-labelledby="all-questions-heading" className="mb-8">
+          {/* AllQuestionsSection 컴포넌트로 분리 가능 */}
+          <AllQuestionsSection onViewAll={() => router.push("/board/question")} />
+        </section>
+      </main>
 
-        {/* 플로팅 버튼 (글쓰기) */}
-        <LandingWriteFAB />
-      </div>
-    </div>
+      {/* 플로팅 버튼 (글쓰기) */}
+      <LandingWriteFAB />
+    </>
   );
 }
