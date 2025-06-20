@@ -75,8 +75,8 @@
 
 /* TheTuesdayofYounah 폰트 : 랜딩페이지 "세종말싸미" 폰트 */
 @font-face {
-  font-family: 'TheTuesdayofYounah';
-  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/TheTuesdayofYounah.woff2') format('woff2');
+  font-family: "TheTuesdayofYounah";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/TheTuesdayofYounah.woff2") format("woff2");
   font-weight: normal;
   font-style: normal;
 }
@@ -106,11 +106,21 @@
     @apply font-suit font-bold;
   }
 
-/* TheTuesdayofYounah 폰트 유틸리티 클래스 : 랜딩페이지 "세종말싸미" 폰트 */
+  /* TheTuesdayofYounah 폰트 유틸리티 클래스 : 랜딩페이지 "세종말싸미" 폰트 */
   .font-tuesday-younah {
-    font-family: 'TheTuesdayofYounah', sans-serif;
+    font-family: "TheTuesdayofYounah", sans-serif;
   }
 
+  html {
+    @apply bg-background text-foreground;
+  }
+
+  body {
+    font-synthesis: none; /* 폰트 합성 제거 */
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Roboto", "Arial", sans-serif;
+    -webkit-font-smoothing: antialiased; /* iOS 텍스트 렌더링 개선 */
+    -moz-osx-font-smoothing: grayscale; /* macOS 텍스트 렌더링 개선 */
+  }
 }
 
 @layer base {
