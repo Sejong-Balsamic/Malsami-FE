@@ -11,6 +11,7 @@ const tagTranslations: { [key: string]: string } = {
   SOLUTION: "해설",
 };
 
+// FIXME: 새로운 카드 디자인으로 구현, 지정태그 하드 코딩 된 것 수정
 export default function DocumentCard({
   subject,
   documentPostId,

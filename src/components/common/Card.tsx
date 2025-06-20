@@ -48,7 +48,7 @@ export default function Card({
 }: CardProps) {
   return (
     <article
-      className="flex h-[194px] w-[261px] flex-col justify-between rounded-[20px] bg-white p-[20px] shadow-md hover:shadow-xl"
+      className="flex h-[194px] w-[261px] flex-col justify-between rounded-[20px] bg-white p-[20px] shadow-md hover:shadow-xl z-0"
       onClick={onClick}
     >
       <>

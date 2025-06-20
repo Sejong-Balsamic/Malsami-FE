@@ -7,7 +7,7 @@ import UploadDocumentFAB from "@/components/common/FABs/UploadDocumentFAB";
 import { memberApi } from "@/apis/memberApi";
 import MyFacultySection from "@/components/documentMain/MyFacultySection";
 import DocumentRequestSection from "@/components/documentMain/DocumentRequestSection";
-import DocumentBoardNavigateSection from "@/components/documentMain/DocumentBoardNavigateSection";
+import TierBoardNavigateSection from "@/components/documentMain/TierBoardNavigateSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
 import AllDocumentsSection from "@/components/landing/AllDocumentsSection";
 import CommonHeader from "@/components/header/CommonHeader";
@@ -50,7 +50,7 @@ export default function DocumentBoardPage() {
   }, []);
 
   return (
-    <div className="flex min-h-screen justify-center bg-gray-100">
+    <div className="flex min-h-screen justify-center bg-gray-100 font-suit">
       <ScrollToTopOnLoad />
       <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
         <CommonHeader title="자료 게시판" rightType={RIGHT_ITEM.NONE} />
@@ -62,11 +62,11 @@ export default function DocumentBoardPage() {
             <CommonSearchBar />
           </section>
 
-          {/* 등급 네비게이션 섹션 */}
+          {/* 티어 네비게이션 섹션 */}
           <section aria-labelledby="DocBoardNavigationSection" className="mb-4">
             <h1 className="font-suit-bold text-[16px] text-[#0CD4AE]">엽전을 모아</h1>
             <h1 className="font-suit-bold text-[16px] text-black">다양한 게시판들을 이용할 수 있어요.</h1>
-            <DocumentBoardNavigateSection />
+            <TierBoardNavigateSection />
           </section>
 
           {/* 📚 전체 자료 게시판 섹션 */}
@@ -94,6 +94,7 @@ export default function DocumentBoardPage() {
           </section>
         </main>
       </div>
+      {/* FIXME:FAB버튼 이미지, 위치 수정 필요 */}
       <UploadDocumentFAB isFABVisible={isFABVisible} />
     </div>
   );

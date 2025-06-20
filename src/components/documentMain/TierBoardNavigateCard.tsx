@@ -3,13 +3,13 @@ import Image from "next/image";
 import { useState } from "react";
 import { PostTiers, PostTiersKey } from "@/types/postTiers";
 
-interface DocumentBoardNavigateCardProps {
+interface TierBoardNavigateCardProps {
   tier: PostTiersKey; // 게시판 카테고리 제목
   link: string; // 접근 가능한 경우 이동할 링크
   accessible: boolean; // 접근 가능 여부
 }
 
-export default function DocumentBoardNavigateCard({ tier, link, accessible }: DocumentBoardNavigateCardProps) {
+export default function TierBoardNavigateCard({ tier, link, accessible }: TierBoardNavigateCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
   const [imageLoaded, setImageLoaded] = useState(false); // 이미지 로딩 상태
 

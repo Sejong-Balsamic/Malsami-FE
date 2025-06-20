@@ -51,7 +51,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />
-            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">HOT 인기자료</h2>
+            <h2 className="font-suit-medium ml-[10px] whitespace-nowrap text-[16px]">HOT 인기자료</h2>
           </div>
 
           {/* 주간/일간 버튼 */}
@@ -66,7 +66,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
                 className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "주간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
               />
               <span
-                className={`absolute text-SUIT_12 font-medium ${activeTab === "주간" ? "text-white" : "text-black"}`}
+                className={`font-suit-medium absolute text-[12px] ${activeTab === "주간" ? "text-white" : "text-black"}`}
               >
                 주간
               </span>
@@ -82,7 +82,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
                 className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "일간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
               />
               <span
-                className={`absolute text-SUIT_12 font-medium ${activeTab === "일간" ? "text-white" : "text-black"}`}
+                className={`font-suit-medium absolute text-[12px] ${activeTab === "일간" ? "text-white" : "text-black"}`}
               >
                 일간
               </span>
@@ -94,7 +94,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
         <button
           type="button"
           onClick={onViewAll}
-          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
+          className="font-suit-medium ml-2 flex-shrink-0 whitespace-nowrap text-[14px] text-[#A7A7A7]"
         >
           전체보기
         </button>

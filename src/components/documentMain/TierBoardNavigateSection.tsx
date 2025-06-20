@@ -2,10 +2,10 @@
 
 import useUserPermissions from "@/global/useUserPermissions";
 import { PostTiersKeys } from "@/types/postTiers";
-import DocumentBoardNavigateCard from "./DocumentBoardNavigateCard";
-import DocumentBoardNavigateCardSkeleton from "./DocumentBoardNavigateCardSkeleton";
+import TierBoardNavigateCard from "./TierBoardNavigateCard";
+import TierBoardNavigateCardSkeleton from "./TierBoardNavigateCardSkeleton";
 
-export default function DocumentBoardNavigateSection() {
+export default function TierBoardNavigateSection() {
   const memberDto = useUserPermissions(); // MemberDto | null 반환
 
   // 로딩 중일 때 스켈레톤 UI 표시
@@ -14,7 +14,7 @@ export default function DocumentBoardNavigateSection() {
       <div className="p-5">
         <div className="flex justify-between">
           {PostTiersKeys.map(tier => (
-            <DocumentBoardNavigateCardSkeleton key={tier} />
+            <TierBoardNavigateCardSkeleton key={tier} />
           ))}
         </div>
       </div>
@@ -40,7 +40,7 @@ export default function DocumentBoardNavigateSection() {
       <div className="flex justify-between">
         {/* PostTiersKeys 배열로 반복문을 사용해 카드들을 렌더링 */}
         {PostTiersKeys.map(tier => (
-          <DocumentBoardNavigateCard
+          <TierBoardNavigateCard
             key={tier}
             tier={tier}
             link={`/board/document/tier/${tier.toLowerCase()}`}

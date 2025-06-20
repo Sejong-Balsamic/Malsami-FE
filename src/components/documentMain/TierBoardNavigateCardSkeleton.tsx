@@ -1,4 +1,4 @@
-export default function DocumentBoardNavigateCardSkeleton() {
+export default function TierBoardNavigateCardSkeleton() {
   return (
     <div className="flex flex-col items-center space-y-2">
       {/* 원형 이미지 스켈레톤 */}
