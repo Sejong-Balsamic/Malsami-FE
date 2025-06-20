@@ -22,19 +22,14 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
     const fetchQuestions = async () => {
       setLoading(true);
       try {
-        // TODO: 현상금 전용 API가 필요하면 추가 구현
-        // 현재는 일반 질문 API를 사용하되 rewardYeopjeon > 0인 것만 필터링
+        // 새로운 정렬 타입 사용
         const response = await questionPostApi.getFilteredQuestionPosts({
-          sortType: activeTab === "최근순" ? "LATEST" : "REWARD_YEOPJEON",
+          sortType: activeTab === "최근순" ? "REWARD_YEOPJEON_LATEST" : "REWARD_YEOPJEON_DESCENDING",
           pageSize: 10,
         });
-        
+
         if (response && response.questionPostsPage && response.questionPostsPage.content) {
-          // 현상금이 있는 질문만 필터링
-          const bountyQuestions = response.questionPostsPage.content.filter(
-            (q: QuestionPost) => (q.rewardYeopjeon ?? 0) > 0
-          );
-          setQuestions(bountyQuestions);
+          setQuestions(response.questionPostsPage.content);
         }
       } catch (error) {
         console.error("현상금 질문을 불러오는데 실패했습니다:", error);
@@ -53,7 +48,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
       <div className="mb-4 flex items-center justify-between">
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
-            <Image src="/icons/custom/Yeopjeon.svg" alt="엽전" width={18} height={18} />
+            <Image src="/icons/moneyBag.svg" alt="엽전" width={24} height={24} />
             <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">연전현상금</h2>
           </div>
 
@@ -71,9 +66,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
                 }`}
               />
               <span
-                className={`absolute text-SUIT_12 font-medium ${
-                  activeTab === "최근순" ? "text-white" : "text-black"
-                }`}
+                className={`absolute text-SUIT_12 font-medium ${activeTab === "최근순" ? "text-white" : "text-black"}`}
               >
                 최근순
               </span>
@@ -91,9 +84,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
                 }`}
               />
               <span
-                className={`absolute text-SUIT_12 font-medium ${
-                  activeTab === "높은순" ? "text-white" : "text-black"
-                }`}
+                className={`absolute text-SUIT_12 font-medium ${activeTab === "높은순" ? "text-white" : "text-black"}`}
               >
                 높은순
               </span>
@@ -124,4 +115,4 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
       )}
     </div>
   );
-} 
+}

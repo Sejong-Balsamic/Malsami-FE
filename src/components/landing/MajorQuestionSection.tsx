@@ -6,7 +6,6 @@ import MovingCardSkeleton from "@/components/common/MovingCardSkeleton";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import MovingCardQuestion from "@/components/common/MovingCardQuestion";
-import { memberApi } from "@/apis/memberApi";
 
 interface MajorQuestionSectionProps {
   onViewAll: () => void;
@@ -15,43 +14,24 @@ interface MajorQuestionSectionProps {
 export default function MajorQuestionSection({ onViewAll }: MajorQuestionSectionProps) {
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [userFaculties, setUserFaculties] = useState<string[]>([]);
 
-  // 사용자 전공 정보 가져오기
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        const memberInfo = await memberApi.getMyInfo();
-        const faculties = memberInfo?.member?.faculties || [];
-        setUserFaculties(faculties);
-      } catch (error) {
-        console.error("사용자 정보를 불러오는데 실패했습니다:", error);
-        setUserFaculties([]);
-      }
-    };
-
-    fetchUserInfo();
-  }, []);
-
-  // 전공 정보를 바탕으로 질문 데이터 로드
+  // 내 전공 질문 데이터 로드
   useEffect(() => {
     const fetchQuestions = async () => {
-      if (userFaculties.length === 0) return;
-
       setLoading(true);
       try {
-        // 사용자의 첫 번째 전공을 기준으로 질문 조회
+        // 사용자의 전공에 맞는 질문들을 가져오는 API 호출
+        // 실제로는 사용자의 전공 정보를 가져와서 필터링해야 함
         const response = await questionPostApi.getFilteredQuestionPosts({
-          faculty: userFaculties[0],
           sortType: "LATEST",
-          pageSize: 10,
+          pageSize: 10, // 10개 정도 가져와서 가로 스크롤
         });
-        
+
         if (response && response.questionPostsPage && response.questionPostsPage.content) {
           setQuestions(response.questionPostsPage.content);
         }
       } catch (error) {
-        console.error("전공 관련 질문을 불러오는데 실패했습니다:", error);
+        console.error("내 전공 질문을 불러오는데 실패했습니다:", error);
         setQuestions([]);
       } finally {
         setLoading(false);
@@ -59,7 +39,7 @@ export default function MajorQuestionSection({ onViewAll }: MajorQuestionSection
     };
 
     fetchQuestions();
-  }, [userFaculties]);
+  }, []);
 
   return (
     <div>
@@ -93,4 +73,4 @@ export default function MajorQuestionSection({ onViewAll }: MajorQuestionSection
       )}
     </div>
   );
-} 
+}

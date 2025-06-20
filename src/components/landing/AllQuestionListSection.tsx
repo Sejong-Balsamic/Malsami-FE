@@ -24,7 +24,7 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
           sortType: "LATEST",
           pageSize: 5, // 최근 5개만 표시
         });
-        
+
         if (response && response.questionPostsPage && response.questionPostsPage.content) {
           setQuestions(response.questionPostsPage.content);
         }
@@ -44,7 +44,7 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
       <div>
         <div className="mb-4 flex items-center justify-between">
           <div className="flex items-center">
-            <Image src="/icons/Question.svg" alt="질문" width={18} height={18} />
+            <Image src="/icons/yellowBook.svg" alt="질문" width={24} height={24} />
             <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">전체 질문</h2>
           </div>
           <button
@@ -98,9 +98,7 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
               <div className="flex justify-between">
                 {/* 커스텀 태그 */}
                 <div className="flex gap-1">
-                  {question.customTags?.slice(0, 2).map(customTag => (
-                    <CustomTag key={customTag} tagName={customTag} />
-                  ))}
+                  {question.customTags?.slice(0, 2).map(customTag => <CustomTag key={customTag} tagName={customTag} />)}
                 </div>
                 {/* 좋아요, 답변 수 */}
                 <div className="flex items-center text-SUIT_14 font-medium text-[#929292]">
@@ -129,4 +127,4 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
       </div>
     </div>
   );
-} 
+}
