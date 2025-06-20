@@ -30,6 +30,7 @@ interface CardProps {
   content: string;
   isCurrentlyPopular?: boolean; // HOT 태그 표시 여부 (선택적)
   likeCount?: number; // 좋아요 수 (선택적)
+  answerCount?: number; // 답변 수 (질문 카드용, 선택적)
   customTags?: string[]; // 버튼 텍스트 배열 (선택적)
   isLiked: boolean;
   onClick?: () => void; // 카드 클릭 시. 상세페이지로 이동
@@ -42,6 +43,7 @@ export default function Card({
   content,
   isCurrentlyPopular = false,
   likeCount,
+  answerCount,
   customTags,
   isLiked,
   onClick,
@@ -68,19 +70,53 @@ export default function Card({
       {/* 하단 */}
       <div className="mt-2 flex flex-row justify-between">
         <div className="flex gap-2">
-          {customTags &&
-            customTags
-              .slice(0, 2)
-              .map(label => <CustomTag key={label} tagName={label.length > 6 ? `${label.slice(0, 6)}..` : label} />)}
-        </div>
-        <span className="ml-auto flex items-center gap-1.5 text-SUIT_14 text-[#929292]">
-          {isLiked ? (
-            <Image src="/icons/actions/hand-thumbs-up-fill.svg" alt="좋아요" width={16} height={16} />
-          ) : (
-            <Image src="/icons/actions/hand-thumbs-up.svg" alt="좋아요" width={16} height={16} />
+          {customTags && customTags.length > 0 && (
+            <>
+              {/* 태그들의 총 길이를 계산해서 표시 방식 결정 */}
+              {(() => {
+                const totalLength = customTags.slice(0, 2).reduce((sum, tag) => sum + tag.length, 0);
+
+                // 총 길이가 12글자를 넘거나 개별 태그가 8글자를 넘으면 하나만 표시
+                if (totalLength > 12 || customTags.some(tag => tag.length > 8)) {
+                  return (
+                    <>
+                      <CustomTag tagName={customTags[0]} />
+                      {customTags.length > 1 && (
+                        <span className="inline-flex items-center rounded-[14px] bg-[#F5F5F5] px-2.5 py-[2px] text-SUIT_12 font-semibold leading-[20px] text-[#666666]">
+                          +{customTags.length - 1}
+                        </span>
+                      )}
+                    </>
+                  );
+                } else {
+                  // 짧으면 최대 2개까지 표시
+                  return customTags.slice(0, 2).map(label => <CustomTag key={label} tagName={label} />);
+                }
+              })()}
+            </>
           )}
-          {likeCount}
-        </span>
+        </div>
+
+        {/* 좋아요 수와 답변 수 표시 */}
+        <div className="ml-auto flex items-center gap-1.5 text-SUIT_14 text-[#929292]">
+          {/* 좋아요 */}
+          <span className="flex items-center gap-1">
+            {isLiked ? (
+              <Image src="/icons/actions/hand-thumbs-up-fill.svg" alt="좋아요" width={16} height={16} />
+            ) : (
+              <Image src="/icons/actions/hand-thumbs-up.svg" alt="좋아요" width={16} height={16} />
+            )}
+            {likeCount}
+          </span>
+
+          {/* 답변 수 (질문 카드인 경우에만 표시) */}
+          {answerCount !== undefined && (
+            <span className="flex items-center gap-1">
+              <Image src="/icons/actions/comment.svg" alt="답변" width={16} height={16} />
+              {answerCount}
+            </span>
+          )}
+        </div>
       </div>
     </article>
   );

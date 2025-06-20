@@ -16,7 +16,10 @@ export default function LandingPage() {
   const router = useRouter();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userName, setUserName] = useState<string>("");
-  const [activeTab, setActiveTab] = useState("주간");
+
+  const [documentActiveTab, setDocumentActiveTab] = useState("주간");
+  const [questionActiveTab, setQuestionActiveTab] = useState("주간");
+
   const hotDocumentRef = useRef<HTMLDivElement>(null);
   const hotQuestionRef = useRef<HTMLDivElement>(null);
 
@@ -69,8 +72,8 @@ export default function LandingPage() {
           {/* HOT 인기자료 섹션 */}
           <section ref={hotDocumentRef} aria-labelledby="hot-documents-heading" className="mb-8">
             <HotDocumentsSection
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
+              activeTab={documentActiveTab}
+              onTabChange={setDocumentActiveTab}
               onViewAll={() => router.push("/board/document/hot")}
             />
           </section>
@@ -81,11 +84,11 @@ export default function LandingPage() {
           </section>
 
           {/* HOT 인기질문 섹션 */}
-          <section ref={hotQuestionRef} aria-labelledby="hot-documents-heading" className="mb-8">
+          <section ref={hotQuestionRef} aria-labelledby="hot-questions-heading" className="mb-8">
             <HotQuestionsSection
-              activeTab={activeTab}
-              onTabChange={setActiveTab}
-              onViewAll={() => router.push("/board/question/hot")}
+              activeTab={questionActiveTab}
+              onTabChange={setQuestionActiveTab}
+              onViewAll={() => router.push("/board/question")}
             />
           </section>
 
