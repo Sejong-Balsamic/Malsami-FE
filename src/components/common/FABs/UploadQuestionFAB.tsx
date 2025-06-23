@@ -2,7 +2,7 @@
 
 import React from "react";
 import { useRouter } from "next/navigation";
-import Upload from "@/../public/icons/Upload.svg";
+import Write from "@/../public/icons/write.svg";
 
 interface UploadQFABProps {
   isFABVisible: boolean;
@@ -19,17 +19,12 @@ function UploadQuestionFAB({ isFABVisible }: UploadQFABProps) {
 
   return (
     <div
-      className={`fixed bottom-5 right-5 z-[70] transform transition-all duration-500 ${
+      className={`fixed bottom-[70px] right-[10px] z-[70] transform transition-all duration-500 ${
         isFABVisible ? "pointer-events-auto scale-100 opacity-100" : "pointer-events-none scale-0 opacity-0"
       }`}
     >
-      <button
-        type="button"
-        className="relative h-[50px] w-[50px] rounded-full bg-[#03b89e]"
-        onClick={handleQuestionClick}
-        disabled={!isFABVisible} // 클릭 비활성화 추가
-      >
-        <Upload />
+      <button type="button" onClick={handleQuestionClick} disabled={!isFABVisible} className="relative">
+        <Write />
       </button>
     </div>
   );
