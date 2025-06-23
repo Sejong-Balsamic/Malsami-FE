@@ -1,11 +1,25 @@
 "use client";
 
-import useUserPermissions from "@/global/useUserPermissions"; // 경로 확인 필요
+import useUserPermissions from "@/global/useUserPermissions";
 import { PostTiersKeys } from "@/types/postTiers";
-import DocBoardCard from "./DocBoardCard";
+import TierBoardNavigateCard from "./TierBoardNavigateCard";
+import TierBoardNavigateCardSkeleton from "./TierBoardNavigateCardSkeleton";
 
-export default function DocBoardContent() {
+export default function TierBoardNavigateSection() {
   const memberDto = useUserPermissions(); // MemberDto | null 반환
+
+  // 로딩 중일 때 스켈레톤 UI 표시
+  if (!memberDto) {
+    return (
+      <div className="p-5">
+        <div className="flex justify-between">
+          {PostTiersKeys.map(tier => (
+            <TierBoardNavigateCardSkeleton key={tier} />
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   // 권한 필드 추출 (기본값 false 설정)
   const canAccessCheonmin = memberDto?.canAccessCheonmin ?? false;
@@ -21,15 +35,12 @@ export default function DocBoardContent() {
     KING: canAccessKing,
   };
 
-  // 로딩 중일 때는 아무것도 렌더링하지 않음 (필요하면 로딩 UI 추가 가능)
-  if (!memberDto) return null;
-
   return (
     <div className="p-5">
       <div className="flex justify-between">
         {/* PostTiersKeys 배열로 반복문을 사용해 카드들을 렌더링 */}
         {PostTiersKeys.map(tier => (
-          <DocBoardCard
+          <TierBoardNavigateCard
             key={tier}
             tier={tier}
             link={`/board/document/tier/${tier.toLowerCase()}`}

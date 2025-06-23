@@ -10,7 +10,7 @@ import getRequestDocs from "@/apis/document/getRequestDocs";
 import { DocRequestCardProps } from "@/types/DocRequestCardProps";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import DocRequestFilterControlBar from "@/components/documentMain/DocRequestFilterControlBar";
-import DocCard from "@/components/documentMain/DocCard";
+import DocumentCard from "@/components/documentMain/DocumentCard";
 
 export default function DocRequestPage() {
   const [docCards, setDocCards] = useState<DocRequestCardProps[]>([]); // API 결과값 저장
@@ -81,7 +81,7 @@ export default function DocRequestPage() {
               <LoadingSpinner />
             ) : (
               docCards.map((card: DocRequestCardProps) => (
-                <DocCard
+                <DocumentCard
                   key={card.documentRequestPostId}
                   documentPostId={card.documentRequestPostId}
                   subject={card.subject || "과목명"}

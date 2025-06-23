@@ -14,7 +14,7 @@ import { DocCardProps } from "@/types/docCard.type";
 import { RootState } from "@/global/store";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import DocFilterControlBar from "@/components/documentMain/DocFilterControlBar";
-import DocCard from "@/components/documentMain/DocCard";
+import DocumentCard from "@/components/documentMain/DocumentCard";
 
 export default function DocMyFacultyPage() {
   const [facultys, setFacultys] = useState<string[]>([]);
@@ -98,7 +98,7 @@ export default function DocMyFacultyPage() {
               <LoadingSpinner />
             ) : (
               docCards.map((card: DocCardProps) => (
-                <DocCard
+                <DocumentCard
                   key={card.documentPostId}
                   documentPostId={card.documentPostId}
                   subject={card.subject || "과목명"}

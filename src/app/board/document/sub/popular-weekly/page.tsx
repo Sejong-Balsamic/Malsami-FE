@@ -8,7 +8,7 @@ import { DocCardProps } from "@/types/docCard.type";
 import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import getDocWeeklyPopulars from "@/deprecated/getDocWeeklyPopulars";
-import DocCard from "@/components/documentMain/DocCard";
+import DocumentCard from "@/components/documentMain/DocumentCard";
 
 export default function PopularWeekly() {
   const [docCards, setDocCards] = useState<DocCardProps[]>([]); // API 결과값 저장
@@ -60,7 +60,7 @@ export default function PopularWeekly() {
               <LoadingSpinner />
             ) : (
               docCards.map((card: DocCardProps) => (
-                <DocCard
+                <DocumentCard
                   key={card.documentPostId}
                   documentPostId={card.documentPostId}
                   subject={card.subject || "과목명"}
