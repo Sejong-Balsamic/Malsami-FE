@@ -50,52 +50,53 @@ export default function DocumentBoardPage() {
   }, []);
 
   return (
-    <div className="flex min-h-screen justify-center bg-gray-100 font-suit">
+    <>
       <ScrollToTopOnLoad />
-      <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
-        <CommonHeader title="자료 게시판" rightType={RIGHT_ITEM.NONE} />
 
-        {/* Main Content */}
-        <main className="px-5">
-          {/* 검색바 섹션 */}
-          <section aria-label="search" className="mb-6 mt-4">
-            <CommonSearchBar />
-          </section>
+      {/* Header */}
+      <CommonHeader title="자료 게시판" rightType={RIGHT_ITEM.NONE} />
 
-          {/* 티어 네비게이션 섹션 */}
-          <section aria-labelledby="DocBoardNavigationSection" className="mb-4">
-            <h1 className="font-suit-bold text-[16px] text-[#0CD4AE]">엽전을 모아</h1>
-            <h1 className="font-suit-bold text-[16px] text-black">다양한 게시판들을 이용할 수 있어요.</h1>
-            <TierBoardNavigateSection />
-          </section>
+      {/* Main Content */}
+      <main className="px-5">
+        {/* 검색바 섹션 */}
+        <section aria-label="search" className="mb-6 mt-4">
+          <CommonSearchBar />
+        </section>
 
-          {/* 📚 전체 자료 게시판 섹션 */}
-          <section aria-labelledby="all-documents" className="mb-8">
-            <AllDocumentsSection onViewAll={() => router.push("/board/document")} />
-          </section>
+        {/* 티어 네비게이션 섹션 */}
+        <section aria-labelledby="DocBoardNavigationSection" className="mb-4">
+          <h1 className="font-suit-bold text-[16px] text-[#0CD4AE]">엽전을 모아</h1>
+          <h1 className="font-suit-bold text-[16px] text-black">다양한 게시판들을 이용할 수 있어요.</h1>
+          <TierBoardNavigateSection />
+        </section>
 
-          {/* 🔥 HOT 인기 자료 섹션 */}
-          <section aria-labelledby="hot-documents" className="mb-8">
-            <HotDocumentsSection
-              activeTab={HotDocumentActiveTab}
-              onTabChange={setHotDocumentActiveTab}
-              onViewAll={() => router.push("/board/document/hot")}
-            />
-          </section>
+        {/* 📚 전체 자료 게시판 섹션 */}
+        <section aria-labelledby="all-documents" className="mb-8">
+          <AllDocumentsSection onViewAll={() => router.push("/board/document")} />
+        </section>
 
-          {/* 🎓 내 전공 관련 자료 섹션 */}
-          <section aria-labelledby="my-faculty" className="mb-8">
-            <MyFacultySection facultys={myFacultys} />
-          </section>
+        {/* 🔥 HOT 인기 자료 섹션 */}
+        <section aria-labelledby="hot-documents" className="mb-8">
+          <HotDocumentsSection
+            activeTab={HotDocumentActiveTab}
+            onTabChange={setHotDocumentActiveTab}
+            onViewAll={() => router.push("/board/document/hot")}
+          />
+        </section>
 
-          {/* 🙋‍♂️ 자료요청 섹션 */}
-          <section aria-labelledby="document-requests" className="mb-8">
-            <DocumentRequestSection />
-          </section>
-        </main>
-      </div>
-      {/* FIXME:FAB버튼 이미지, 위치 수정 필요 */}
+        {/* 🎓 내 전공 관련 자료 섹션 */}
+        <section aria-labelledby="my-faculty" className="mb-8">
+          <MyFacultySection facultys={myFacultys} />
+        </section>
+
+        {/* 🙋‍♂️ 자료요청 섹션 */}
+        <section aria-labelledby="document-requests" className="mb-8">
+          <DocumentRequestSection />
+        </section>
+      </main>
+
+      {/* 플로팅 버튼 (자료 업로드) */}
       <UploadDocumentFAB isFABVisible={isFABVisible} />
-    </div>
+    </>
   );
 }
