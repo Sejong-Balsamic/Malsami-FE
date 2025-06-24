@@ -36,7 +36,7 @@ export function useOptimalPageSizeForBoard(boardType: BoardType): number {
     calculateAndStoreOptimalPageSizes();
 
     // 화면 크기 변경 시 재계산 (디바운스 적용)
-    let resizeTimeoutId: NodeJS.Timeout;
+    let resizeTimeoutId: ReturnType<typeof setTimeout>;
 
     const handleWindowResizeWithDebounce = () => {
       clearTimeout(resizeTimeoutId);

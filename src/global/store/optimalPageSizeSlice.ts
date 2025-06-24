@@ -11,6 +11,51 @@ export type BoardType =
   | "MY_COMMENT" // 내 댓글
   | "SEARCH_RESULT"; // 검색 결과
 
+// UI 상수 정의
+const UI_CONSTANTS = {
+  HEADER_HEIGHT_PIXELS: 64,
+  BOTTOM_MARGIN_HEIGHT_PIXELS: 24,
+  PAGINATION_SECTION_HEIGHT_PIXELS: 80,
+  NOTICE_PINNED_SECTION_HEIGHT: 104,
+} as const;
+
+// 카드 높이 상수 정의
+const CARD_HEIGHTS = {
+  NOTICE: 102,
+  DOCUMENT: 120,
+  QUESTION: 110,
+  COMMENT: 80,
+} as const;
+
+// 페이지 크기 제한 상수 정의
+const PAGE_SIZE_LIMITS = {
+  NOTICE: { min: 4, max: 8 },
+  DOCUMENT: { min: 6, max: 10 },
+  QUESTION: { min: 5, max: 9 },
+  COMMENT: { min: 8, max: 15 },
+} as const;
+
+// 헬퍼 함수: 최적 페이지 크기 계산
+const calculateOptimalPageSize = (
+  availableHeight: number,
+  cardHeight: number,
+  minSize: number,
+  maxSize: number,
+): number => {
+  return Math.max(minSize, Math.min(maxSize, Math.floor(availableHeight / cardHeight)));
+};
+
+// 헬퍼 함수: 사용 가능한 높이 계산
+const calculateAvailableHeight = (screenHeightPixels: number, additionalHeightReduction: number = 0): number => {
+  return (
+    screenHeightPixels -
+    UI_CONSTANTS.HEADER_HEIGHT_PIXELS -
+    UI_CONSTANTS.PAGINATION_SECTION_HEIGHT_PIXELS -
+    UI_CONSTANTS.BOTTOM_MARGIN_HEIGHT_PIXELS -
+    additionalHeightReduction
+  );
+};
+
 // 각 게시판별 페이지 크기 상태
 interface OptimalPageSizeState {
   pageSizeByBoardType: Record<BoardType, number>;
@@ -44,47 +89,43 @@ const optimalPageSizeSlice = createSlice({
       // eslint-disable-next-line no-param-reassign
       state.screenHeightPixels = screenHeightPixels;
 
-      // 각 게시판별 고정 높이 상수들
-      const HEADER_HEIGHT_PIXELS = 64;
-      const BOTTOM_MARGIN_HEIGHT_PIXELS = 24;
-      const PAGINATION_SECTION_HEIGHT_PIXELS = 80;
-
-      // 공지사항 계산
-      const NOTICE_PINNED_SECTION_HEIGHT = 104;
-      const NOTICE_CARD_HEIGHT = 102;
-      const availableNoticeHeight =
-        screenHeightPixels -
-        HEADER_HEIGHT_PIXELS -
-        NOTICE_PINNED_SECTION_HEIGHT -
-        PAGINATION_SECTION_HEIGHT_PIXELS -
-        BOTTOM_MARGIN_HEIGHT_PIXELS;
-      const optimalNoticePageSize = Math.max(4, Math.min(8, Math.floor(availableNoticeHeight / NOTICE_CARD_HEIGHT)));
+      // 공지사항 계산 (고정된 상단 섹션 고려)
+      const availableNoticeHeight = calculateAvailableHeight(
+        screenHeightPixels,
+        UI_CONSTANTS.NOTICE_PINNED_SECTION_HEIGHT,
+      );
+      const optimalNoticePageSize = calculateOptimalPageSize(
+        availableNoticeHeight,
+        CARD_HEIGHTS.NOTICE,
+        PAGE_SIZE_LIMITS.NOTICE.min,
+        PAGE_SIZE_LIMITS.NOTICE.max,
+      );
 
       // 자료게시판 계산
-      const DOCUMENT_CARD_HEIGHT = 120;
-      const availableDocumentHeight =
-        screenHeightPixels - HEADER_HEIGHT_PIXELS - PAGINATION_SECTION_HEIGHT_PIXELS - BOTTOM_MARGIN_HEIGHT_PIXELS;
-      const optimalDocumentPageSize = Math.max(
-        6,
-        Math.min(10, Math.floor(availableDocumentHeight / DOCUMENT_CARD_HEIGHT)),
+      const availableDocumentHeight = calculateAvailableHeight(screenHeightPixels);
+      const optimalDocumentPageSize = calculateOptimalPageSize(
+        availableDocumentHeight,
+        CARD_HEIGHTS.DOCUMENT,
+        PAGE_SIZE_LIMITS.DOCUMENT.min,
+        PAGE_SIZE_LIMITS.DOCUMENT.max,
       );
 
       // 질문게시판 계산
-      const QUESTION_CARD_HEIGHT = 110;
-      const availableQuestionHeight =
-        screenHeightPixels - HEADER_HEIGHT_PIXELS - PAGINATION_SECTION_HEIGHT_PIXELS - BOTTOM_MARGIN_HEIGHT_PIXELS;
-      const optimalQuestionPageSize = Math.max(
-        5,
-        Math.min(9, Math.floor(availableQuestionHeight / QUESTION_CARD_HEIGHT)),
+      const availableQuestionHeight = calculateAvailableHeight(screenHeightPixels);
+      const optimalQuestionPageSize = calculateOptimalPageSize(
+        availableQuestionHeight,
+        CARD_HEIGHTS.QUESTION,
+        PAGE_SIZE_LIMITS.QUESTION.min,
+        PAGE_SIZE_LIMITS.QUESTION.max,
       );
 
       // 댓글 계산 (더 작은 높이)
-      const COMMENT_ITEM_HEIGHT = 80;
-      const availableCommentHeight =
-        screenHeightPixels - HEADER_HEIGHT_PIXELS - PAGINATION_SECTION_HEIGHT_PIXELS - BOTTOM_MARGIN_HEIGHT_PIXELS;
-      const optimalCommentPageSize = Math.max(
-        8,
-        Math.min(15, Math.floor(availableCommentHeight / COMMENT_ITEM_HEIGHT)),
+      const availableCommentHeight = calculateAvailableHeight(screenHeightPixels);
+      const optimalCommentPageSize = calculateOptimalPageSize(
+        availableCommentHeight,
+        CARD_HEIGHTS.COMMENT,
+        PAGE_SIZE_LIMITS.COMMENT.min,
+        PAGE_SIZE_LIMITS.COMMENT.max,
       );
 
       // 계산된 값들을 상태에 저장

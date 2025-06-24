@@ -66,13 +66,15 @@ export default function NoticePagination({ currentPage, totalPages, onPageChange
   // 4. 렌더링
   return (
     <div className="flex items-center justify-center gap-[18px]">
-      {visiblePageNumbers.map(currentPageElement => {
+      {visiblePageNumbers.map((currentPageElement, index) => {
         const isEllipsisElement = currentPageElement === "...";
 
         if (isEllipsisElement) {
+          // 앞쪽 생략 부호와 뒤쪽 생략 부호 구분을 위한 고유 키 생성
+          const ellipsisKey = index < 3 ? "start" : "end";
           return (
             <span
-              key={`ellipsis-${Math.random()}`}
+              key={`ellipsis-${ellipsisKey}-${currentPage}`}
               className="font-suit text-sm font-medium leading-normal text-[#737373]"
             >
               ...
