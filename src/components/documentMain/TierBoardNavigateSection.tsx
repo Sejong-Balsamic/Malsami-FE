@@ -11,12 +11,10 @@ export default function TierBoardNavigateSection() {
   // 로딩 중일 때 스켈레톤 UI 표시
   if (!memberDto) {
     return (
-      <div className="p-5">
-        <div className="flex justify-between">
-          {PostTiersKeys.map(tier => (
-            <TierBoardNavigateCardSkeleton key={tier} />
-          ))}
-        </div>
+      <div className="flex justify-between">
+        {PostTiersKeys.map(tier => (
+          <TierBoardNavigateCardSkeleton key={tier} />
+        ))}
       </div>
     );
   }
@@ -36,18 +34,16 @@ export default function TierBoardNavigateSection() {
   };
 
   return (
-    <div className="p-5">
-      <div className="flex justify-between">
-        {/* PostTiersKeys 배열로 반복문을 사용해 카드들을 렌더링 */}
-        {PostTiersKeys.map(tier => (
-          <TierBoardNavigateCard
-            key={tier}
-            tier={tier}
-            link={`/board/document/tier/${tier.toLowerCase()}`}
-            accessible={tierPermissions[tier]}
-          />
-        ))}
-      </div>
+    <div className="flex justify-between">
+      {/* PostTiersKeys 배열로 반복문을 사용해 카드들을 렌더링 */}
+      {PostTiersKeys.map(tier => (
+        <TierBoardNavigateCard
+          key={tier}
+          tier={tier}
+          link={`/board/document/tier/${tier.toLowerCase()}`}
+          accessible={tierPermissions[tier]}
+        />
+      ))}
     </div>
   );
 }

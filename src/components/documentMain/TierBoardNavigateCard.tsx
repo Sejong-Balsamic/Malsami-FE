@@ -11,7 +11,7 @@ interface TierBoardNavigateCardProps {
 
 export default function TierBoardNavigateCard({ tier, link, accessible }: TierBoardNavigateCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
-  const [imageLoaded, setImageLoaded] = useState(false); // 이미지 로딩 상태
+  const [isImageLoaded, setIsImageLoaded] = useState(false); // 이미지 로딩 상태
 
   // 이미지 경로를 tier에 맞춰 동적으로 설정
   const getImageSrc = () => {
@@ -46,7 +46,7 @@ export default function TierBoardNavigateCard({ tier, link, accessible }: TierBo
         >
           <div className="relative">
             {/* 이미지 로딩 중 스켈레톤 */}
-            {!imageLoaded && (
+            {!isImageLoaded && (
               <div className="absolute inset-0 h-[66px] w-[66px] animate-pulse rounded-full bg-gray-200" />
             )}
             <Image
@@ -54,9 +54,9 @@ export default function TierBoardNavigateCard({ tier, link, accessible }: TierBo
               alt={tier}
               width={66}
               height={66}
-              className={`rounded-full transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+              className={`rounded-full transition-opacity duration-300 ${isImageLoaded ? "opacity-100" : "opacity-0"}`}
               priority // 중요한 이미지이므로 우선 로딩
-              onLoad={() => setImageLoaded(true)}
+              onLoad={() => setIsImageLoaded(true)}
               placeholder="blur"
               blurDataURL="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjYiIGhlaWdodD0iNjYiIHZpZXdCb3g9IjAgMCA2NiA2NiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGNpcmNsZSBjeD0iMzMiIGN5PSIzMyIgcj0iMzMiIGZpbGw9IiNFNUU3RUIiLz4KPC9zdmc+Cg=="
             />
