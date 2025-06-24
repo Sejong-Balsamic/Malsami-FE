@@ -8,7 +8,7 @@ import { NoticePost } from "@/types/api/entities/postgres/noticePost";
 import { Page } from "@/types/api/entities/interface/page";
 import NoticeCard from "@/components/notice/NoticeCard";
 import PinnedNoticeCard from "@/components/notice/PinnedNoticeCard";
-import NoticePagination from "@/components/notice/NoticePagination";
+import CommonPagination from "@/components/common/CommonPagination";
 import NoticeListSkeleton from "@/components/common/skeletons/NoticeListSkeleton";
 import { useOptimalPageSizeForBoard } from "@/global/hook/useOptimalPageSizeForBoard";
 
@@ -143,7 +143,7 @@ export default function NoticePage() {
         <div className="h-10" />
 
         {/* 페이지네이션 - 페이지가 1개라도 항상 표시 */}
-        <NoticePagination
+        <CommonPagination
           currentPage={activePageNumber}
           totalPages={Math.max(currentNoticePostsPageData.totalPages, 1)}
           onPageChange={handlePageChangeRequest}
