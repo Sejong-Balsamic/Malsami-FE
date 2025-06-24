@@ -38,26 +38,26 @@ export default function QuestionPage() {
           <HotQuestionSection
             activeTab={questionActiveTab}
             onTabChange={setQuestionActiveTab}
-            onViewAll={() => router.push("/board/question")}
+            onViewAll={() => router.push("/board/question/hot")}
           />
-        </section>
-
-        {/* 내 전공관련 질문 섹션 */}
-        <section aria-labelledby="major-questions-heading" className="mb-8">
-          <MajorQuestionSection onViewAll={() => router.push("/board/question")} />
         </section>
 
         {/* 전체 질문 섹션 */}
         <section aria-labelledby="all-questions-heading" className="mb-8">
-          <AllQuestionListSection onViewAll={() => router.push("/board/question")} />
+          <AllQuestionListSection onViewAll={() => router.push("/board/question/all")} />
         </section>
 
-        {/* 연전현상금 섹션 */}
+        {/* 내 전공관련 질문 섹션 */}
+        <section aria-labelledby="major-questions-heading" className="mb-8">
+          <MajorQuestionSection onViewAll={() => router.push("/board/question/major")} />
+        </section>
+
+        {/* 엽전현상금 섹션 */}
         <section aria-labelledby="bounty-questions-heading" className="mb-8">
           <BountyQuestionSection
             activeTab={bountyActiveTab}
             onTabChange={setBountyActiveTab}
-            onViewAll={() => router.push("/board/question")}
+            onViewAll={() => router.push("/board/question/bounty")}
           />
         </section>
       </main>
