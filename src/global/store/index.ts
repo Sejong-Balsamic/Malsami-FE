@@ -10,6 +10,7 @@ import toast from "@/global/store/toastSlice";
 import modal from "@/global/store/modalSlice";
 import fcmReducer from "@/global/store/fcmSlice";
 import bottomSheet from "@/global/store/bottomSheetSlice";
+import optimalPageSize from "@/global/store/optimalPageSizeSlice";
 
 export const store = configureStore({
   reducer: {
@@ -23,6 +24,7 @@ export const store = configureStore({
     docRequestFilterOptions,
     fcm: fcmReducer,
     bottomSheet,
+    optimalPageSize,
   },
 });
 

@@ -6,9 +6,10 @@ export interface NoticePostCommand {
   member?: Member;
   title?: string;
   content?: string;
-  isHidden?: boolean;
   query?: string;
   sortType?: SortType;
+  sortField?: string;
+  sortDirection?: string;
   pageNumber?: number;
   pageSize?: number;
 }
