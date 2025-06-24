@@ -1,0 +1,138 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import Header from "@/components/header/Header";
+import QuestionCardList from "@/components/questionMain/QuestionCardList";
+import CommonPagination from "@/components/common/CommonPagination";
+import QnaFilterControlBar from "@/components/questionMain/QnaFilterControlBar";
+import { LEFT_ITEM } from "@/types/header";
+import { questionPostApi } from "@/apis/questionPostApi";
+import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
+import { QnaFilterOptions } from "@/types/QnaFilterOptions";
+import { memberApi } from "@/apis/memberApi";
+
+export default function MajorQuestionPage() {
+  const router = useRouter();
+
+  // 상태 관리
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [questionData, setQuestionData] = useState<QuestionPost[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
+  const [memberFaculty, setMemberFaculty] = useState<string>("");
+
+  // 필터 옵션 초기값
+  const [filterOptions, setFilterOptions] = useState<QnaFilterOptions>({
+    qnaPresetTags: [],
+    chaetaekStatus: undefined,
+    sortType: "LATEST",
+  });
+
+  // 사용자 전공 정보 가져오기
+  useEffect(() => {
+    const fetchMemberInfo = async () => {
+      try {
+        const response = await memberApi.getMyInfo({});
+        if (response && response.member && response.member.faculties && response.member.faculties.length > 0) {
+          setMemberFaculty(response.member.faculties[0]); // 첫 번째 학과 사용
+        }
+      } catch (error) {
+        console.error("사용자 정보를 불러오는데 실패했습니다:", error);
+      }
+    };
+
+    fetchMemberInfo();
+  }, []);
+
+  // 데이터 로드 함수
+  const fetchMajorQuestions = async (options: QnaFilterOptions, page: number = 0) => {
+    setIsLoading(true);
+    try {
+      const response = await questionPostApi.getFilteredQuestionPosts({
+        pageNumber: page,
+        pageSize: 10,
+        sortType: options.sortType,
+        questionPresetTags: options.qnaPresetTags,
+        chaetaekStatus: options.chaetaekStatus,
+        faculty: memberFaculty, // 사용자 전공으로 필터링
+      });
+
+      if (response && response.questionPostsPage) {
+        setQuestionData(response.questionPostsPage.content || []);
+        setTotalPages(response.questionPostsPage.totalPages || 0);
+      }
+    } catch (error) {
+      console.error("내 전공관련질문을 불러오는데 실패했습니다:", error);
+      setQuestionData([]);
+      setTotalPages(0);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // 데이터 로드 (memberFaculty가 설정된 후에만)
+  useEffect(() => {
+    if (memberFaculty) {
+      fetchMajorQuestions(filterOptions, currentPage);
+    }
+  }, [currentPage, filterOptions, memberFaculty]);
+
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  // 필터 변경 핸들러
+  const handleFilterChange = (newFilterOptions: QnaFilterOptions) => {
+    setFilterOptions(newFilterOptions);
+    setCurrentPage(0);
+  };
+
+  const handleBackClick = () => {
+    router.back();
+  };
+
+  if (isLoading) {
+    return (
+      <>
+        <Header title="내 전공관련 질문" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
+        <div className="flex h-40 items-center justify-center">
+          <span className="text-gray-500">로딩 중...</span>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      {/* Header */}
+      <Header title="내 전공관련 질문" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
+
+      {/* 필터 영역 */}
+      <QnaFilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
+
+      {/* 메인 콘텐츠 */}
+      <main className="min-h-screen bg-gray-50 px-5 py-4">
+        {questionData.length > 0 ? (
+          <>
+            <QuestionCardList data={questionData} />
+
+            {/* 페이지네이션 */}
+            {totalPages > 1 && (
+              <div className="mb-6 mt-8">
+                <CommonPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+              </div>
+            )}
+          </>
+        ) : (
+          <div className="flex h-40 items-center justify-center">
+            <span className="text-gray-500">
+              {memberFaculty ? `${memberFaculty} 관련 질문이 없습니다.` : "전공 정보를 불러올 수 없습니다."}
+            </span>
+          </div>
+        )}
+      </main>
+    </>
+  );
+}

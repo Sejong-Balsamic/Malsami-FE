@@ -98,9 +98,7 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
               <div className="flex justify-between">
                 {/* 커스텀 태그 */}
                 <div className="flex gap-1">
-                  {question.customTags?.slice(0, 2).map(customTag => (
-                    <CustomTag key={customTag} tagName={customTag} />
-                  ))}
+                  {question.customTags?.slice(0, 2).map(customTag => <CustomTag key={customTag} tagName={customTag} />)}
                 </div>
                 {/* 좋아요, 답변 수 */}
                 <div className="flex items-center text-SUIT_14 font-medium text-[#929292]">
