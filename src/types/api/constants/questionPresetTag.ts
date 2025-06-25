@@ -14,12 +14,12 @@ export const QuestionPresetTag = {
 export type QuestionPresetTag = keyof typeof QuestionPresetTag;
 
 // 질문 지정태그 번역
-export const QuestionPresetTagTranslation: Record<QuestionPresetTag, string> = {
-  EXAM_PREPARATION: "시험_대비",
-  OUT_OF_CLASS: "수업_외_내용",
-  UNKNOWN_CONCEPT: "개념_모름",
-  BETTER_SOLUTION: "더_나은_풀이",
-  DOCUMENT_REQUEST: "자료_요청",
-  STUDY_TIPS: "공부_팁",
-  ADVICE_REQUEST: "조언_구함",
+export const QuestionPresetTagLabels: Record<QuestionPresetTag, string> = {
+  EXAM_PREPARATION: "시험 대비",
+  OUT_OF_CLASS: "수업 외 내용",
+  UNKNOWN_CONCEPT: "개념 모름",
+  BETTER_SOLUTION: "더 나은 풀이",
+  DOCUMENT_REQUEST: "자료 요청",
+  STUDY_TIPS: "공부 팁",
+  ADVICE_REQUEST: "조언 구함",
 };
