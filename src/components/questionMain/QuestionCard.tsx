@@ -1,72 +1,65 @@
 import Image from "next/image";
 import { getDateDiff } from "@/global/time";
-import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
-import ChaeTaekTag from "@/deprecated/ChaeTaekTag";
-import SubjectTag from "../common/tags/SubjectTag";
+import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 
 interface QuestionCardProps {
-  title: string;
-  content: string;
-  thumbnail: string;
-  createdDate: string;
-  viewCount: number;
-  likeCount: number;
-  rewardYeopjeon: number;
-  chaetaekStatus: boolean;
-  subject: string;
+  question: QuestionPost;
 }
 
-function QuestionCard({
-  title,
-  content,
-  thumbnail,
-  createdDate,
-  viewCount,
-  likeCount,
-  subject,
-  rewardYeopjeon = 0,
-  chaetaekStatus,
-}: QuestionCardProps) {
+function QuestionCard({ question }: QuestionCardProps) {
   return (
-    <div className="mb-3 flex flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)] ...">
-      <div className="mb-2.5 flex">
-        <SubjectTag subjectName={subject} />
-        {!chaetaekStatus && rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
-        {chaetaekStatus && <ChaeTaekTag />}
-      </div>
-      <div className="flex flex-row justify-between">
-        {/* 왼쪽 텍스트 콘텐츠 */}
-        <div className="flex flex-col">
-          {/* 제목 */}
-          <p className="font-pretendard-bold mb-1 line-clamp-1 text-sm text-black">{title}</p>
-          {/* 내용 */}
-          <p className="font-pretendard-medium mb-2 line-clamp-1 text-xs text-[#737373]">{content}</p>
-          {/* 태그 및 기타 정보 */}
-          <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
-            <div className="flex flex-wrap items-center">
-              <span className="flex items-center">
-                <Image src="/icons/actions/hand-thumbs-up.svg" width={14} height={14} alt="LikeIcon" />
-                <span className="ml-1 text-xs">{likeCount > 999 ? "999+" : likeCount}</span>
-              </span>
-              <span className="mx-1.5">·</span>
-              <Image src="/icons/ViewCountIcon.svg" width={14} height={14} alt="ViewCountIcon" />
-              <span className="ml-1">{viewCount > 999 ? "999+" : viewCount}</span>
-              <span className="mx-1.5">·</span>
-              <span>{getDateDiff(createdDate)}</span>
-            </div>
-          </div>
+    <div className="h-[120px] w-full bg-white">
+      {/* 상단: 과목명 태그와 시간 */}
+      <div className="flex items-start justify-between">
+        {/* 과목명 태그 */}
+        <div className="inline-flex items-center justify-center gap-2.5 rounded bg-[#00E8BB] px-1.5 py-1">
+          <span className="truncate text-SUIT_12 font-medium text-white" style={{ maxWidth: "120px" }}>
+            {question.subject || "과목 없음"}
+          </span>
         </div>
 
-        {thumbnail && (
-          <Image
-            src={thumbnail}
-            alt="썸네일"
-            width={74}
-            height={74}
-            className="ml-4 rounded-sm border"
-            style={{ maxWidth: "74px", maxHeight: "74px", width: "auto", height: "auto" }}
-          />
-        )}
+        {/* 시간 */}
+        <div className="text-SUIT_12 font-medium text-[#C5C5C5]">
+          {getDateDiff(question.createdDate || "")}
+        </div>
+      </div>
+
+      {/* 12px 여백 */}
+      <div className="h-3" />
+
+      {/* 제목 */}
+      <h3 className="truncate text-SUIT_14 font-medium text-black">
+        {question.title}
+      </h3>
+
+      {/* 8px 여백 */}
+      <div className="h-2" />
+
+      {/* 본문 */}
+      <p className="truncate text-SUIT_14 font-medium text-[#616161]">
+        {question.content}
+      </p>
+
+      {/* 12px 여백 */}
+      <div className="h-3" />
+
+      {/* 하단: 좋아요와 답변 개수 */}
+      <div className="flex items-center">
+        {/* 좋아요 */}
+        <div className="flex items-center">
+          <Image src="/icons/newLikeThumb.svg" alt="좋아요" width={14} height={14} />
+          <span className="ml-1 text-SUIT_12 font-medium text-[#C5C5C5]">
+            {question.likeCount || 0}
+          </span>
+        </div>
+
+        {/* 답변 개수 */}
+        <div className="ml-4 flex items-center">
+          <Image src="/icons/newChatBubble.svg" alt="답변" width={14} height={14} />
+          <span className="ml-1 text-SUIT_12 font-medium text-[#C5C5C5]">
+            {question.answerCount || 0}
+          </span>
+        </div>
       </div>
     </div>
   );

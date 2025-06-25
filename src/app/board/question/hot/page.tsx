@@ -90,29 +90,29 @@ export default function HotQuestionPage() {
         <div className="h-6" />
 
         {/* 메인 콘텐츠 */}
-        {isLoading && (
-          <div className="flex h-40 items-center justify-center">
-            <span className="text-SUIT_14 font-medium text-[#C5C5C5]">로딩 중...</span>
-          </div>
-        )}
-        {!isLoading && currentPageQuestions.length > 0 && (
-          <>
+        <div className="w-full bg-white">
+          {isLoading && (
+            <div className="flex h-40 items-center justify-center">
+              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">로딩 중...</span>
+            </div>
+          )}
+          {!isLoading && currentPageQuestions.length > 0 && (
             <QuestionCardList data={currentPageQuestions} />
+          )}
+          {!isLoading && currentPageQuestions.length === 0 && (
+            <div className="flex h-40 items-center justify-center">
+              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 인기 질문이 없습니다.</span>
+            </div>
+          )}
+        </div>
 
-            {/* 24px 공백 */}
-            <div className="h-6" />
+        {/* 24px 공백 */}
+        <div className="h-6" />
 
-            {/* 페이지네이션 */}
-            {totalPages > 1 && (
-              <div className="flex justify-center">
-                <CommonPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-              </div>
-            )}
-          </>
-        )}
-        {!isLoading && currentPageQuestions.length === 0 && (
-          <div className="flex h-40 items-center justify-center">
-            <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 인기 질문이 없습니다.</span>
+        {/* 페이지네이션 */}
+        {!isLoading && totalPages > 1 && (
+          <div className="flex justify-center">
+            <CommonPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
           </div>
         )}
 
