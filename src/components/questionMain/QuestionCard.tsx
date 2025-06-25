@@ -19,26 +19,20 @@ function QuestionCard({ question }: QuestionCardProps) {
         </div>
 
         {/* 시간 */}
-        <div className="text-SUIT_12 font-medium text-[#C5C5C5]">
-          {getDateDiff(question.createdDate || "")}
-        </div>
+        <div className="text-SUIT_12 font-medium text-[#C5C5C5]">{getDateDiff(question.createdDate || "")}</div>
       </div>
 
       {/* 12px 여백 */}
       <div className="h-3" />
 
       {/* 제목 */}
-      <h3 className="truncate text-SUIT_14 font-medium text-black">
-        {question.title}
-      </h3>
+      <h3 className="truncate text-SUIT_14 font-medium text-black">{question.title}</h3>
 
       {/* 8px 여백 */}
       <div className="h-2" />
 
       {/* 본문 */}
-      <p className="truncate text-SUIT_14 font-medium text-[#616161]">
-        {question.content}
-      </p>
+      <p className="truncate text-SUIT_14 font-medium text-[#616161]">{question.content}</p>
 
       {/* 12px 여백 */}
       <div className="h-3" />
@@ -48,17 +42,13 @@ function QuestionCard({ question }: QuestionCardProps) {
         {/* 좋아요 */}
         <div className="flex items-center">
           <Image src="/icons/newLikeThumb.svg" alt="좋아요" width={14} height={14} />
-          <span className="ml-1 text-SUIT_12 font-medium text-[#C5C5C5]">
-            {question.likeCount || 0}
-          </span>
+          <span className="ml-1 text-SUIT_12 font-medium text-[#C5C5C5]">{question.likeCount || 0}</span>
         </div>
 
         {/* 답변 개수 */}
         <div className="ml-4 flex items-center">
           <Image src="/icons/newChatBubble.svg" alt="답변" width={14} height={14} />
-          <span className="ml-1 text-SUIT_12 font-medium text-[#C5C5C5]">
-            {question.answerCount || 0}
-          </span>
+          <span className="ml-1 text-SUIT_12 font-medium text-[#C5C5C5]">{question.answerCount || 0}</span>
         </div>
       </div>
     </div>

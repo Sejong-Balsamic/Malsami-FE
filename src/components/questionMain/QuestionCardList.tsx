@@ -18,7 +18,7 @@ export default function QuestionCardList({ data }: QuestionCardListProps) {
     );
   }
 
-      return (
+  return (
     <div className="w-full">
       {data.map((question, index) => (
         <div key={question.questionPostId}>
@@ -35,7 +35,7 @@ export default function QuestionCardList({ data }: QuestionCardListProps) {
           >
             <QuestionCard question={question} />
           </div>
-          
+
           {/* 마지막 카드가 아니면 16px 간격 + 보더 + 16px 간격 */}
           {index < data.length - 1 && (
             <>

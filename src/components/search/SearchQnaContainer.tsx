@@ -28,17 +28,7 @@ function SearchQnaContainer({ data, searchValue, subject }: SearchQnaContainerPr
               }}
               className="cursor-pointer"
             >
-              <QuestionCard
-                title={questionPost.title as string}
-                content={questionPost.content as string}
-                thumbnail={questionPost.thumbnailUrl as string}
-                createdDate={questionPost.createdDate as string}
-                viewCount={questionPost.viewCount as number}
-                likeCount={questionPost.likeCount as number}
-                rewardYeopjeon={questionPost.rewardYeopjeon as number}
-                chaetaekStatus={questionPost.chaetaekStatus as boolean}
-                subject={questionPost.subject as string}
-              />
+              <QuestionCard question={questionPost} />
             </div>
           ))}
         </div>
