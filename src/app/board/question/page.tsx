@@ -22,9 +22,14 @@ export default function QuestionPage() {
   };
 
   return (
-    <>
-      {/* Header */}
-      <Header title="질문게시판" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
+    <div className="min-h-screen bg-white">
+      {/* Fixed Header */}
+      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+        <Header title="질문게시판" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
+      </div>
+
+      {/* 헤더 높이만큼 스페이서 (4rem) */}
+      <div className="h-16 w-full" />
 
       {/* Main Content */}
       <main className="px-5 pt-4">
@@ -64,6 +69,6 @@ export default function QuestionPage() {
 
       {/* 플로팅 버튼 (글쓰기) */}
       <UploadQuestionFAB isFABVisible />
-    </>
+    </div>
   );
 }

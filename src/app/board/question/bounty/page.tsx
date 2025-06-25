@@ -89,21 +89,15 @@ export default function BountyQuestionPage() {
     router.back();
   };
 
-  if (isLoading) {
-    return (
-      <>
-        <Header title="엽전현상금" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
-        <div className="flex h-40 items-center justify-center">
-          <span className="text-gray-500">로딩 중...</span>
-        </div>
-      </>
-    );
-  }
-
   return (
-    <>
-      {/* Header */}
-      <Header title="엽전현상금" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
+    <div className="min-h-screen bg-white">
+      {/* Fixed Header */}
+      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+        <Header title="엽전현상금" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
+      </div>
+
+      {/* 헤더 높이만큼 스페이서 (4rem) */}
+      <div className="h-16 w-full" />
 
       {/* 탭 선택 */}
       <div className="flex border-b border-gray-200 bg-white px-5">
@@ -126,7 +120,12 @@ export default function BountyQuestionPage() {
 
       {/* 메인 콘텐츠 */}
       <main className="min-h-screen bg-gray-50 px-5 py-4">
-        {questionData.length > 0 ? (
+        {isLoading && (
+          <div className="flex h-40 items-center justify-center">
+            <span className="text-gray-500">로딩 중...</span>
+          </div>
+        )}
+        {!isLoading && questionData.length > 0 && (
           <>
             <QuestionCardList data={questionData} />
 
@@ -137,12 +136,13 @@ export default function BountyQuestionPage() {
               </div>
             )}
           </>
-        ) : (
+        )}
+        {!isLoading && questionData.length === 0 && (
           <div className="flex h-40 items-center justify-center">
             <span className="text-gray-500">엽전 현상금이 걸린 질문이 없습니다.</span>
           </div>
         )}
       </main>
-    </>
+    </div>
   );
 }
