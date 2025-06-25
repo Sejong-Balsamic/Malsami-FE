@@ -15,7 +15,7 @@ export const questionPostApi = {
   getAllQuestionPostsNotAnswered: (c: Partial<QuestionCommand>) =>
     postApiRequest<QuestionCommand, QuestionDto>("/api/question/unanswered", c),
 
-  /** _모든 “전공별·검색·정렬” 리스트 → filter 하나로 통합_ */
+  /** _모든 "전공별·검색·정렬" 리스트 → filter 하나로 통합_ */
   getFilteredQuestionPosts: (c: Partial<QuestionCommand>) =>
     postApiRequest<QuestionCommand, QuestionDto>("/api/question/filter", c),
 
