@@ -93,28 +93,27 @@ export default function MajorQuestionPage() {
     router.back();
   };
 
-  if (isLoading) {
-    return (
-      <>
-        <Header title="내 전공관련 질문" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
-        <div className="flex h-40 items-center justify-center">
-          <span className="text-gray-500">로딩 중...</span>
-        </div>
-      </>
-    );
-  }
-
   return (
-    <>
-      {/* Header */}
-      <Header title="내 전공관련 질문" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
+    <div className="min-h-screen bg-white">
+      {/* Fixed Header */}
+      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+        <Header title="내 전공관련 질문" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
+      </div>
+
+      {/* 헤더 높이만큼 스페이서 (4rem) */}
+      <div className="h-16 w-full" />
 
       {/* 필터 영역 */}
       <QnaFilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
 
       {/* 메인 콘텐츠 */}
       <main className="min-h-screen bg-gray-50 px-5 py-4">
-        {questionData.length > 0 ? (
+        {isLoading && (
+          <div className="flex h-40 items-center justify-center">
+            <span className="text-gray-500">로딩 중...</span>
+          </div>
+        )}
+        {!isLoading && questionData.length > 0 && (
           <>
             <QuestionCardList data={questionData} />
 
@@ -125,7 +124,8 @@ export default function MajorQuestionPage() {
               </div>
             )}
           </>
-        ) : (
+        )}
+        {!isLoading && questionData.length === 0 && (
           <div className="flex h-40 items-center justify-center">
             <span className="text-gray-500">
               {memberFaculty ? `${memberFaculty} 관련 질문이 없습니다.` : "전공 정보를 불러올 수 없습니다."}
@@ -133,6 +133,6 @@ export default function MajorQuestionPage() {
           </div>
         )}
       </main>
-    </>
+    </div>
   );
 }

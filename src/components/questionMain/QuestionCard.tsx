@@ -28,7 +28,7 @@ function QuestionCard({
   chaetaekStatus,
 }: QuestionCardProps) {
   return (
-    <div className="mb-3 flex flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)] ...">
+    <div className="... mb-3 flex flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]">
       <div className="mb-2.5 flex">
         <SubjectTag subjectName={subject} />
         {!chaetaekStatus && rewardYeopjeon !== 0 && <YeopjeonTag key={rewardYeopjeon} point={rewardYeopjeon} />}
