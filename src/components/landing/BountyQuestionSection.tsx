@@ -49,7 +49,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/moneyBag.svg" alt="엽전" width={24} height={24} />
-            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">연전현상금</h2>
+            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">엽전 현상금</h2>
           </div>
 
           {/* 최근순/높은순 버튼 */}
