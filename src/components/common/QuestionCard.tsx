@@ -18,7 +18,7 @@ import React from "react";
 import YeopjeonTag from "@/components/common/tags/YeopjeonTag";
 import Image from "next/image";
 import PresetTag from "@/components/common/tags/PresetTag";
-import { QuestionPresetTagTranslation, QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
+import { QuestionPresetTagLabels, QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
 
 interface QuestionCardProps {
   title: string;
@@ -54,7 +54,7 @@ function QuestionCard({
             <div className="font-pretendard-bold line-clamp-2 pr-2 text-sm leading-[20px]">{title}</div>
             <div className="my-2 flex flex-wrap gap-1">
               {questionPresetTags.map(tag => (
-                <PresetTag key={tag} title={QuestionPresetTagTranslation[tag] ?? tag} />
+                <PresetTag key={tag} title={QuestionPresetTagLabels[tag] ?? tag} />
               ))}
             </div>
           </div>
