@@ -104,7 +104,7 @@ export default function BountyQuestionPage() {
 
         {/* 메인 콘텐츠 */}
         <div className="w-full bg-white">
-          {isLoading && <QuestionCardListSkeleton count={3} />}
+          {isLoading && <QuestionCardListSkeleton />}
           {!isLoading && currentPageQuestions.length > 0 && <QuestionCardList data={currentPageQuestions} />}
           {!isLoading && currentPageQuestions.length === 0 && (
             <div className="flex h-40 items-center justify-center">
