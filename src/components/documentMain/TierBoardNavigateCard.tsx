@@ -19,7 +19,7 @@ export default function TierBoardNavigateCard({ tier, link, accessible }: TierBo
     // 추후 디자인 부탁해서 수정해야함
   };
   const getImageNoDurumariSrc = () => {
-    return `/icons/tier/${tier}NoDurumari.svg`;
+    return `/icons/tier/${tier}.svg`;
   };
 
   const imageSrc = getImageSrc();
