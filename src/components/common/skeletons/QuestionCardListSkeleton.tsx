@@ -4,6 +4,7 @@ interface QuestionCardListSkeletonProps {
   count?: number;
 }
 
+// eslint-disable-next-line react/require-default-props
 export default function QuestionCardListSkeleton({ count = 5 }: QuestionCardListSkeletonProps) {
   return (
     <div className="w-full">

@@ -2,6 +2,7 @@ interface QuestionCardSkeletonProps {
   hasImage?: boolean;
 }
 
+// eslint-disable-next-line react/require-default-props
 export default function QuestionCardSkeleton({ hasImage = false }: QuestionCardSkeletonProps) {
   // 이미지가 없는 경우의 스켈레톤
   if (!hasImage) {
