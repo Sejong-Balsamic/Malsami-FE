@@ -7,10 +7,18 @@ export default function QuestionCardSkeleton({ hasImage = false }: QuestionCardS
   if (!hasImage) {
     return (
       <div className="w-full animate-pulse bg-white">
-        {/* 상단: 과목명 태그와 시간 */}
+        {/* 상단: 태그들과 시간 */}
         <div className="flex items-start justify-between">
-          {/* 과목명 태그 스켈레톤 */}
-          <div className="h-[26px] w-16 rounded bg-gray-200" />
+          {/* 왼쪽: 태그들 스켈레톤 */}
+          <div className="flex items-center gap-1">
+            {/* 과목명 태그 (항상 있음) */}
+            <div className="h-[26px] w-16 rounded bg-gray-200" />
+            
+            {/* 추가 태그 (랜덤하게 표시) */}
+            {Math.random() > 0.5 && (
+              <div className="h-[26px] w-12 rounded bg-gray-200" />
+            )}
+          </div>
 
           {/* 시간 스켈레톤 */}
           <div className="h-4 w-12 rounded bg-gray-200" />
@@ -53,10 +61,18 @@ export default function QuestionCardSkeleton({ hasImage = false }: QuestionCardS
   // 이미지가 있는 경우의 스켈레톤
   return (
     <div className="w-full animate-pulse bg-white">
-      {/* 상단: 과목명 태그와 시간 */}
+      {/* 상단: 태그들과 시간 */}
       <div className="flex items-start justify-between">
-        {/* 과목명 태그 스켈레톤 */}
-        <div className="h-[26px] w-16 rounded bg-gray-200" />
+        {/* 왼쪽: 태그들 스켈레톤 */}
+        <div className="flex items-center gap-1">
+          {/* 과목명 태그 (항상 있음) */}
+          <div className="h-[26px] w-16 rounded bg-gray-200" />
+          
+          {/* 추가 태그 (랜덤하게 표시) */}
+          {Math.random() > 0.5 && (
+            <div className="h-[26px] w-12 rounded bg-gray-200" />
+          )}
+        </div>
 
         {/* 시간 스켈레톤 */}
         <div className="h-4 w-12 rounded bg-gray-200" />

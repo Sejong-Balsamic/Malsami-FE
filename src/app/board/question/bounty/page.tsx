@@ -26,79 +26,7 @@ export default function BountyQuestionPage() {
     const fetchAllBountyData = async () => {
       setIsLoading(true);
       try {
-        // TODO: 임시 목 데이터 (실제 API에서 이미지 데이터가 없어서)
-        const mockBountyQuestions: QuestionPost[] = [
-          {
-            questionPostId: "1",
-            title: "컴퓨터공학 알고리즘 문제 해결 방법을 알려주세요",
-            content: "이번 과제에서 다이나믹 프로그래밍을 활용한 최단 경로 찾기 알고리즘을 구현해야 하는데, 어려움을 겪고 있습니다. 도움을 부탁드립니다.",
-            subject: "컴퓨터공학",
-            rewardYeopjeon: 150,
-            likeCount: 5,
-            answerCount: 3,
-            createdDate: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2시간 전
-            thumbnailUrl: "https://picsum.photos/200/200?random=1",
-          },
-          {
-            questionPostId: "2", 
-            title: "미적분학 극한 계산 질문입니다",
-            content: "sin(x)/x의 x→0일 때의 극한값을 구하는 과정에서 로피탈의 정리를 사용해도 되는지 궁금합니다.",
-            subject: "수학",
-            rewardYeopjeon: 80,
-            likeCount: 12,
-            answerCount: 7,
-            createdDate: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(), // 5시간 전
-            // thumbnailUrl 없음 - 이미지 없는 케이스
-          },
-          {
-            questionPostId: "3",
-            title: "물리학 역학 문제 풀이 요청",
-            content: "질량 m인 물체가 높이 h에서 떨어질 때의 속도를 구하는 문제인데, 공기저항을 고려해야 하는지 모르겠습니다.",
-            subject: "물리학",
-            rewardYeopjeon: 200,
-            likeCount: 8,
-            answerCount: 4,
-            createdDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(), // 1일 전
-            thumbnailUrl: "https://picsum.photos/200/200?random=3",
-          },
-          {
-            questionPostId: "4",
-            title: "화학 분자 구조식 그리기",
-            content: "벤젠 고리의 공명 구조를 그릴 때 주의해야 할 점들을 알려주세요. 특히 전자 배치에 대해서 설명해주시면 감사하겠습니다.",
-            subject: "화학",
-            rewardYeopjeon: 120,
-            likeCount: 6,
-            answerCount: 2,
-            createdDate: new Date(Date.now() - 3 * 60 * 60 * 1000).toISOString(), // 3시간 전
-            // thumbnailUrl 없음 - 이미지 없는 케이스
-          },
-          {
-            questionPostId: "5",
-            title: "경제학 수요공급 곡선 분석",
-            content: "완전경쟁시장에서의 균형가격과 균형수량을 구할 때 수요함수와 공급함수를 어떻게 설정해야 하는지 궁금합니다.",
-            subject: "경제학",
-            rewardYeopjeon: 90,
-            likeCount: 15,
-            answerCount: 9,
-            createdDate: new Date(Date.now() - 6 * 60 * 60 * 1000).toISOString(), // 6시간 전
-            thumbnailUrl: "https://picsum.photos/200/200?random=5",
-          }
-        ];
-
-        // 최근순과 높은순으로 정렬
-        const latestSorted = [...mockBountyQuestions].sort((a, b) => 
-          new Date(b.createdDate || "").getTime() - new Date(a.createdDate || "").getTime()
-        );
-        
-        const highestSorted = [...mockBountyQuestions].sort((a, b) => 
-          (b.rewardYeopjeon || 0) - (a.rewardYeopjeon || 0)
-        );
-
-        setLatestBountyQuestions(latestSorted);
-        setHighestBountyQuestions(highestSorted);
-
-        // 실제 API 호출 (주석 처리)
-        /*
+        // 협전 현상금 API
         const [latestResponse, highestResponse] = await Promise.all([
           questionPostApi.getFilteredQuestionPosts({
             sortType: "REWARD_YEOPJEON_LATEST",
@@ -121,7 +49,6 @@ export default function BountyQuestionPage() {
 
         setLatestBountyQuestions(latestBountyFiltered);
         setHighestBountyQuestions(highestBountyFiltered);
-        */
       } catch (error) {
         console.error("엽전현상금 질문을 불러오는데 실패했습니다:", error);
         setLatestBountyQuestions([]);
