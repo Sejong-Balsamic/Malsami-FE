@@ -13,11 +13,9 @@ export default function QuestionCardSkeleton({ hasImage = false }: QuestionCardS
           <div className="flex items-center gap-1">
             {/* 과목명 태그 (항상 있음) */}
             <div className="h-[26px] w-16 rounded bg-gray-200" />
-            
+
             {/* 추가 태그 (랜덤하게 표시) */}
-            {Math.random() > 0.5 && (
-              <div className="h-[26px] w-12 rounded bg-gray-200" />
-            )}
+            {Math.random() > 0.5 && <div className="h-[26px] w-12 rounded bg-gray-200" />}
           </div>
 
           {/* 시간 스켈레톤 */}
@@ -67,11 +65,9 @@ export default function QuestionCardSkeleton({ hasImage = false }: QuestionCardS
         <div className="flex items-center gap-1">
           {/* 과목명 태그 (항상 있음) */}
           <div className="h-[26px] w-16 rounded bg-gray-200" />
-          
+
           {/* 추가 태그 (랜덤하게 표시) */}
-          {Math.random() > 0.5 && (
-            <div className="h-[26px] w-12 rounded bg-gray-200" />
-          )}
+          {Math.random() > 0.5 && <div className="h-[26px] w-12 rounded bg-gray-200" />}
         </div>
 
         {/* 시간 스켈레톤 */}
@@ -84,7 +80,7 @@ export default function QuestionCardSkeleton({ hasImage = false }: QuestionCardS
       {/* 메인 컨텐츠 영역 - 이미지와 텍스트 */}
       <div className="flex items-start gap-3">
         {/* 왼쪽: 텍스트 영역 스켈레톤 - 나머지 모든 공간 차지 */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           {/* 제목 스켈레톤 */}
           <div className="h-4 w-3/4 rounded bg-gray-200" />
 
@@ -121,4 +117,4 @@ export default function QuestionCardSkeleton({ hasImage = false }: QuestionCardS
       </div>
     </div>
   );
-} 
+}

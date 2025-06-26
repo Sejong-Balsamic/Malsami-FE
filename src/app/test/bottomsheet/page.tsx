@@ -26,7 +26,7 @@ export default function BottomSheetTestPage() {
   });
 
   const [questionPageParams] = useState({
-    subject: "알고리즘", // 교과목명  
+    subject: "알고리즘", // 교과목명
     faculty: "컴퓨터공학과", // 단과대
     pageNumber: 0,
     pageSize: 20,
@@ -42,24 +42,23 @@ export default function BottomSheetTestPage() {
       postTier: documentPageParams.postTier as any,
       pageNumber: documentPageParams.pageNumber,
       pageSize: documentPageParams.pageSize,
-      
+
       // BottomSheet에서 선택한 필터링 조건들
       ...filtering,
     };
 
     console.log("🔵 자료게시판 API 호출 시작");
     console.log("📋 요청 파라미터:", fullApiParams);
-    
+
     try {
       // 실제 API 호출: 필터링된 자료게시판 목록 조회
       const response = await documentPostApi.filteredDocumentPost(fullApiParams);
-      
+
       console.log("✅ 자료게시판 API 응답 성공:");
       console.log("📄 응답 데이터:", response);
-      
+
       // 성공 알림
       alert(`✅ 자료게시판 API 호출 성공!\n응답 데이터를 콘솔에서 확인하세요.`);
-      
     } catch (error) {
       console.error("❌ 자료게시판 API 호출 실패:", error);
       alert(`❌ 자료게시판 API 호출 실패!\n에러: ${error}`);
@@ -75,24 +74,23 @@ export default function BottomSheetTestPage() {
       faculty: questionPageParams.faculty,
       pageNumber: questionPageParams.pageNumber,
       pageSize: questionPageParams.pageSize,
-      
+
       // BottomSheet에서 선택한 필터링 조건들
       ...filtering,
     };
 
     console.log("🟢 질문게시판 API 호출 시작");
     console.log("📋 요청 파라미터:", fullApiParams);
-    
+
     try {
       // 실제 API 호출: 필터링된 질문게시판 목록 조회
       const response = await questionPostApi.getFilteredQuestionPosts(fullApiParams);
-      
+
       console.log("✅ 질문게시판 API 응답 성공:");
       console.log("📄 응답 데이터:", response);
-      
+
       // 성공 알림
       alert(`✅ 질문게시판 API 호출 성공!\n응답 데이터를 콘솔에서 확인하세요.`);
-      
     } catch (error) {
       console.error("❌ 질문게시판 API 호출 실패:", error);
       alert(`❌ 질문게시판 API 호출 실패!\n에러: ${error}`);
@@ -113,7 +111,7 @@ export default function BottomSheetTestPage() {
           <h3 className="mb-2 font-semibold text-blue-800">자료게시판 페이지 파라미터</h3>
           <pre className="text-sm text-blue-600">{JSON.stringify(documentPageParams, null, 2)}</pre>
         </div>
-        
+
         <div className="rounded-lg bg-green-50 p-4">
           <h3 className="mb-2 font-semibold text-green-800">질문게시판 페이지 파라미터</h3>
           <pre className="text-sm text-green-600">{JSON.stringify(questionPageParams, null, 2)}</pre>
@@ -124,9 +122,15 @@ export default function BottomSheetTestPage() {
       <div className="mb-6 rounded-lg bg-yellow-50 p-4">
         <h3 className="mb-2 font-semibold text-yellow-800">🚀 실제 API 호출</h3>
         <div className="text-sm text-yellow-700">
-          <p>• <strong>자료게시판</strong>: <code>documentPostApi.filteredDocumentPost()</code></p>
-          <p>• <strong>질문게시판</strong>: <code>questionPostApi.getFilteredQuestionPosts()</code></p>
-          <p>• <strong>결과</strong>: 브라우저 콘솔(F12)에서 API 응답을 확인하세요!</p>
+          <p>
+            • <strong>자료게시판</strong>: <code>documentPostApi.filteredDocumentPost()</code>
+          </p>
+          <p>
+            • <strong>질문게시판</strong>: <code>questionPostApi.getFilteredQuestionPosts()</code>
+          </p>
+          <p>
+            • <strong>결과</strong>: 브라우저 콘솔(F12)에서 API 응답을 확인하세요!
+          </p>
         </div>
       </div>
 
@@ -172,44 +176,69 @@ export default function BottomSheetTestPage() {
       {/* 설명 */}
       <div className="rounded-lg bg-white p-6 shadow">
         <h3 className="mb-4 text-lg font-semibold">BottomSheet 구현 및 사용법</h3>
-        
+
         <div className="space-y-4 text-sm text-gray-600">
           <div>
             <h4 className="mb-2 font-semibold text-gray-800">1. Redux 상태 관리</h4>
-            <ul className="space-y-1 ml-4">
-              <li>• <code>bottomSheetSlice.ts</code>에서 각 BottomSheet별 독립적인 상태 관리</li>
-              <li>• <code>documentFilteringOpen</code>, <code>questionFilteringOpen</code>으로 분리</li>
-              <li>• <code>useSelector</code>로 각각의 상태를 구독하여 충돌 방지</li>
+            <ul className="ml-4 space-y-1">
+              <li>
+                • <code>bottomSheetSlice.ts</code>에서 각 BottomSheet별 독립적인 상태 관리
+              </li>
+              <li>
+                • <code>documentFilteringOpen</code>, <code>questionFilteringOpen</code>으로 분리
+              </li>
+              <li>
+                • <code>useSelector</code>로 각각의 상태를 구독하여 충돌 방지
+              </li>
             </ul>
           </div>
 
           <div>
             <h4 className="mb-2 font-semibold text-gray-800">2. Props 정의 및 전달</h4>
-            <ul className="space-y-1 ml-4">
-              <li>• <code>onReset</code>: 필터 초기화 함수 (부모 컴포넌트에서 정의)</li>
-              <li>• <code>onConfirm</code>: 필터 적용 시 API 호출 함수 (부모 컴포넌트에서 정의)</li>
-              <li>• <code>currentFiltering</code>: 현재 적용된 필터 상태</li>
-              <li>• <code>trigger</code>: BottomSheet를 여는 트리거 버튼</li>
+            <ul className="ml-4 space-y-1">
+              <li>
+                • <code>onReset</code>: 필터 초기화 함수 (부모 컴포넌트에서 정의)
+              </li>
+              <li>
+                • <code>onConfirm</code>: 필터 적용 시 API 호출 함수 (부모 컴포넌트에서 정의)
+              </li>
+              <li>
+                • <code>currentFiltering</code>: 현재 적용된 필터 상태
+              </li>
+              <li>
+                • <code>trigger</code>: BottomSheet를 여는 트리거 버튼
+              </li>
             </ul>
           </div>
 
           <div>
             <h4 className="mb-2 font-semibold text-gray-800">3. API 호출 흐름</h4>
-            <ul className="space-y-1 ml-4">
+            <ul className="ml-4 space-y-1">
               <li>• 사용자가 필터 선택 후 "확인" 버튼 클릭</li>
-              <li>• <code>handleConfirm</code>에서 필터링 조건을 <code>onConfirm</code>으로 전달</li>
-              <li>• 부모 컴포넌트의 <code>handleDocumentConfirm</code>/<code>handleQuestionConfirm</code>에서 실제 API 호출</li>
+              <li>
+                • <code>handleConfirm</code>에서 필터링 조건을 <code>onConfirm</code>으로 전달
+              </li>
+              <li>
+                • 부모 컴포넌트의 <code>handleDocumentConfirm</code>/<code>handleQuestionConfirm</code>에서 실제 API
+                호출
+              </li>
               <li>• API 응답을 콘솔에 출력하고 성공/실패 알림 표시</li>
             </ul>
           </div>
 
           <div>
             <h4 className="mb-2 font-semibold text-gray-800">4. 컴포넌트 구조</h4>
-            <ul className="space-y-1 ml-4">
-              <li>• <code>DocumentFilteringBottomSheet</code>: 자료게시판 전용 필터 (정렬, 자료유형)</li>
-              <li>• <code>QuestionFilteringBottomSheet</code>: 질문게시판 전용 필터 (정렬, 채택상태, 태그)</li>
+            <ul className="ml-4 space-y-1">
+              <li>
+                • <code>DocumentFilteringBottomSheet</code>: 자료게시판 전용 필터 (정렬, 자료유형)
+              </li>
+              <li>
+                • <code>QuestionFilteringBottomSheet</code>: 질문게시판 전용 필터 (정렬, 채택상태, 태그)
+              </li>
               <li>• 각각 독립적인 로컬 상태로 필터 선택 관리</li>
-              <li>• <code>FilteringTag</code>, <code>FilteringButton</code> 공통 컴포넌트 재사용</li>
+              <li>
+                • <code>FilteringTag</code>, <code>FilteringButton</code> 공통 컴포넌트 재사용
+              </li>
             </ul>
           </div>
         </div>

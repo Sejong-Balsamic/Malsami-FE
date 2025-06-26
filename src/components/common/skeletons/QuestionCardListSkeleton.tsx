@@ -23,4 +23,4 @@ export default function QuestionCardListSkeleton({ count = 5 }: QuestionCardList
       ))}
     </div>
   );
-} 
+}

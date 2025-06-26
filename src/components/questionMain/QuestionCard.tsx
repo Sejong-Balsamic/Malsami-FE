@@ -47,9 +47,7 @@ function QuestionCard({ question }: QuestionCardProps) {
                 {question.rewardYeopjeon && question.rewardYeopjeon > 0 && (
                   <div className="inline-flex items-center justify-center gap-1 rounded bg-[#FFB000] px-1.5 py-1">
                     <Image src="/icons/yeopjeon.svg" alt="엽전" width={12} height={12} />
-                    <span className="text-SUIT_12 font-bold text-white line-clamp-1">
-                      {question.rewardYeopjeon}
-                    </span>
+                    <span className="line-clamp-1 text-SUIT_12 font-bold text-white">{question.rewardYeopjeon}</span>
                   </div>
                 )}
               </>
@@ -128,9 +126,7 @@ function QuestionCard({ question }: QuestionCardProps) {
               {question.rewardYeopjeon && question.rewardYeopjeon > 0 && (
                 <div className="inline-flex items-center justify-center gap-1 rounded bg-[#FFB000] px-1.5 py-1">
                   <Image src="/icons/yeopjeon.svg" alt="엽전" width={12} height={12} />
-                  <span className="text-SUIT_12 font-bold text-white line-clamp-1">
-                    {question.rewardYeopjeon}
-                  </span>
+                  <span className="line-clamp-1 text-SUIT_12 font-bold text-white">{question.rewardYeopjeon}</span>
                 </div>
               )}
             </>
@@ -147,7 +143,7 @@ function QuestionCard({ question }: QuestionCardProps) {
       {/* 메인 컨텐츠 영역 - 이미지와 텍스트 */}
       <div className="flex items-start gap-3">
         {/* 왼쪽: 텍스트 영역 - 나머지 모든 공간 차지 */}
-        <div className="flex-1 min-w-0">
+        <div className="min-w-0 flex-1">
           {/* 제목 */}
           <h3 className="truncate text-SUIT_14 font-medium text-black">{question.title}</h3>
 
@@ -167,7 +163,7 @@ function QuestionCard({ question }: QuestionCardProps) {
               width={70}
               height={70}
               className="h-full w-full object-cover"
-              onError={(e) => {
+              onError={e => {
                 // 이미지 로드 실패 시 기본 배경색 유지
                 (e.target as HTMLImageElement).style.display = "none";
               }}
