@@ -133,6 +133,16 @@ export default function MajorQuestionPage() {
         {/* 24px 공백 */}
         <div className="h-6" />
 
+        {/* 검색 컴포넌트 */}
+        {/* <section aria-label="qustion-detail-page-search" className="mb-5">
+          <QuestionDetailPageSearchComponent />
+        </section> */}
+
+        {/* 최근검색 컴포넌트 */}
+        {/* <section aria-label="recent-search" className="mb-5">
+          <RecentSearchComponent />
+        </section> */}
+
         {/* 질문 리스트 */}
         <div className="w-full bg-white">
           {isLoading && <QuestionCardListSkeleton />}
