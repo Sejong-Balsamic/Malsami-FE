@@ -29,6 +29,11 @@ const nextConfig = {
         hostname: "suh-project.synology.me", // 새 호스트 추가
         pathname: "/sejong-malsami/thumbnail/**", // 이 경로의 이미지만 허용
       },
+      {
+        protocol: "https",
+        hostname: "picsum.photos", // 목 데이터용 이미지 도메인
+        pathname: "/**",
+      },
     ],
   },
 };

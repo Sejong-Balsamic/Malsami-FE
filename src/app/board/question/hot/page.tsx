@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Header from "@/components/header/Header";
 import QuestionCardList from "@/components/questionMain/QuestionCardList";
 import CommonPagination from "@/components/common/CommonPagination";
-import WeeklyDailyTabFilter from "@/components/common/WeeklyDailyTabFilter";
+import TwoTabFilter from "@/components/common/TwoTabFilter";
 import { LEFT_ITEM } from "@/types/header";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
@@ -84,7 +84,7 @@ export default function HotQuestionPage() {
 
       <div className="px-5">
         {/* 주간/일간 필터링 컴포넌트 */}
-        <WeeklyDailyTabFilter activeTab={activeTab} onTabChange={handleTabChange} />
+        <TwoTabFilter firstTab="주간" secondTab="일간" activeTab={activeTab} onTabChange={handleTabChange} />
 
         {/* 24px 공백 */}
         <div className="h-6" />
