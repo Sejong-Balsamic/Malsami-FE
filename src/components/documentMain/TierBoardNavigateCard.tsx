@@ -30,6 +30,7 @@ export default function TierBoardNavigateCard({ tier, link, accessible }: TierBo
       e.preventDefault();
       setIsModalOpen(true);
     }
+    // accessible이 true인 경우 기본 동작(링크로 이동)을 수행
   };
 
   const closeModal = () => {

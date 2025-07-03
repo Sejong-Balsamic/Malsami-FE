@@ -23,6 +23,7 @@ interface DocumentFilteringBottomSheetProps {
   onConfirm: (filters: Partial<DocumentCommand>) => void;
   trigger: React.ReactNode;
   currentFiltering: Partial<DocumentCommand>;
+  activeColor?: string; // 활성 색상 (선택적)
 }
 
 const SORT_OPTIONS = [
@@ -42,6 +43,7 @@ export default function DocumentFilteringBottomSheet({
   onConfirm,
   trigger,
   currentFiltering,
+  activeColor = "#5EF48D", // 기본값은 초록색
 }: DocumentFilteringBottomSheetProps) {
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.bottomSheet.documentFilteringOpen);
@@ -117,6 +119,7 @@ export default function DocumentFilteringBottomSheet({
                     label={option.label}
                     isSelected={selectedSort === option.value}
                     onClick={() => handleSortChange(option.value)}
+                    activeColor={activeColor}
                   />
                 ))}
               </div>
@@ -134,6 +137,7 @@ export default function DocumentFilteringBottomSheet({
                     label={option.label}
                     isSelected={selectedDocumentTypes.includes(option.value)}
                     onClick={() => handleDocumentTypeToggle(option.value)}
+                    activeColor={activeColor}
                   />
                 ))}
               </div>
@@ -144,7 +148,7 @@ export default function DocumentFilteringBottomSheet({
         {/* 하단: 초기화 버튼, 확인 버튼 */}
         <div className="sticky bottom-0 flex gap-4 p-6">
           <FilteringButton type="refresh" onClick={handleReset} />
-          <FilteringButton type="submit" onClick={handleConfirm} />
+          <FilteringButton type="submit" onClick={handleConfirm} activeColor={activeColor} />
         </div>
       </DrawerContent>
     </Drawer>

@@ -6,10 +6,9 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import UploadDocumentFAB from "@/components/common/FABs/UploadDocumentFAB";
 import { memberApi } from "@/apis/memberApi";
 import MyFacultySection from "@/components/documentMain/MyFacultySection";
-import DocumentRequestSection from "@/components/documentMain/DocumentRequestSection";
+import DocumentRequestBoardSection from "@/components/documentMain/DocumentRequestBoardSection";
 import TierBoardNavigateSection from "@/components/documentMain/TierBoardNavigateSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
-import AllDocumentsSection from "@/components/landing/AllDocumentsSection";
 import CommonHeader from "@/components/header/CommonHeader";
 import CommonSearchBar from "@/components/search/CommonSearchBar";
 import { RIGHT_ITEM } from "@/types/header";
@@ -70,11 +69,6 @@ export default function DocumentBoardPage() {
           <TierBoardNavigateSection />
         </section>
 
-        {/* 📚 전체 자료 게시판 섹션 */}
-        <section aria-labelledby="all-documents" className="mb-8">
-          <AllDocumentsSection onViewAll={() => router.push("/board/document")} />
-        </section>
-
         {/* 🔥 HOT 인기 자료 섹션 */}
         <section aria-labelledby="hot-documents" className="mb-8">
           <HotDocumentsSection
@@ -89,9 +83,9 @@ export default function DocumentBoardPage() {
           <MyFacultySection facultys={myFacultys} />
         </section>
 
-        {/* 🙋‍♂️ 자료요청 섹션 */}
-        <section aria-labelledby="document-requests" className="mb-8">
-          <DocumentRequestSection />
+        {/* 📄 자료 요청 게시판 섹션 (카드 리스트 형태) */}
+        <section aria-labelledby="document-request-board" className="mb-8">
+          <DocumentRequestBoardSection />
         </section>
       </main>
 

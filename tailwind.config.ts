@@ -20,27 +20,31 @@ const config: Config = {
         none: "none",
       },
       colors: {
-        "custom-blue": {
-          "100": "#95E4DA",
-          "200": "#74D7CB",
-          "300": "#55CDBB",
-          "400": "#09BBA2",
-          "500": "#03B89E",
+        // 게시판 테마 색상
+        "document": {
+          "main": "#00D1F2", // 자료게시판 메인 색상
         },
-        "custom-green": {
-          "100": "#AAE483",
-          "200": "#95DF64",
-          "300": "#75D837",
-          "400": "#68D723",
-          "500": "#5ED513",
+        "question": {
+          "main": "#00E8BB", // 질문게시판 메인 색상
         },
-        "custom-orange": {
-          "100": "#F2AB75",
-          "200": "#F59B55",
-          "300": "#F47F24",
-          "400": "#F4710D",
-          "500": "#F46B02",
+        
+        // 태그 색상
+        "tag": {
+          "yeopjeon": "#FFB000", // 엽전 태그 색상
+          "accept": "#0062D2", // 채택 태그 색상
         },
+        
+        // UI 요소 색상
+        "ui": {
+          "tag-bg": "#F5F5F5",     // 태그 배경색
+          "tag-text": "#616161",    // 태그 텍스트 색상
+          "muted": "#C5C5C5",       // 흐린 텍스트 색상
+          "body": "#616161",        // 본문 텍스트 색상
+          "divider": "#F0F0F0",     // 구분선 색상
+          "image-bg": "#B5B5B5",    // 이미지 배경색
+        },
+        
+        // Shadcn UI 색상 (유지)
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

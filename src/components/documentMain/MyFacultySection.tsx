@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
@@ -65,7 +66,8 @@ export default function MyFacultySection({ facultys }: { facultys: string[] }) {
       {/* 콘텐츠 제목 */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center">
-          <h2 className="font-suit-medium text-[16px]">🎓 내 전공 관련 자료</h2>
+          <Image src="/icons/academicCap.svg" alt="내 전공" width={18} height={18} />
+          <h2 className="font-suit-medium ml-[10px] text-[16px]">내 전공 관련 자료</h2>
         </div>
         <button
           type="button"

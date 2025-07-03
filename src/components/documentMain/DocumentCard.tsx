@@ -1,17 +1,28 @@
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 import { getDateDiff } from "@/global/time";
+import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import { DocCardProps } from "@/types/docCard.type";
-import SubjectTag from "@/components/common/tags/SubjectTag";
-import DocJiJeongTag from "@/components/common/tags/PresetTag";
 
+// 태그 번역 정의
 const tagTranslations: { [key: string]: string } = {
-  DOCUMENT: "강의_자료",
-  PAST_EXAM: "과제_기출",
+  DOCUMENT: "강의 자료",
+  PAST_EXAM: "과제 기출",
   SOLUTION: "해설",
 };
 
-// FIXME: 새로운 카드 디자인으로 구현, 지정태그 하드 코딩 된 것 수정
+/**
+ * 자료게시판 카드 컴포넌트
+ * 
+ * @param subject - 과목명
+ * @param documentPostId - 자료 게시글 ID
+ * @param title - 제목
+ * @param content - 내용
+ * @param documentTypes - 자료 유형 태그
+ * @param createdDate - 생성일
+ * @param thumbnailUrl - 섬네일 URL
+ * @param viewCount - 조회수
+ * @param likeCount - 좋아요 수
+ */
 export default function DocumentCard({
   subject,
   documentPostId,
@@ -23,64 +34,170 @@ export default function DocumentCard({
   viewCount,
   likeCount,
 }: DocCardProps) {
-  const router = useRouter();
-  const handleCardClick = (postId: string) => {
-    if (!postId) {
-      console.error("Invalid postId:", postId);
-      return;
-    }
-    console.log("Clicked card postId:", postId);
-    router.push(`/board/document/detail/${postId}`);
+  // 이미지가 있는지 확인
+  const isImageExist = thumbnailUrl && thumbnailUrl.trim() !== "";
+  const imageUrl = thumbnailUrl || "";
+
+  // 태그 텍스트 구하기
+  const getTagText = (type: string) => {
+    return tagTranslations[type] || type;
   };
-  return (
-    <div
-      tabIndex={0}
-      role="button"
-      className="mb-3 flex cursor-pointer flex-col rounded-[26px] bg-white p-[14px] shadow-[0_4px_8px_0_rgba(0,0,0,0.2)]"
-      onClick={() => handleCardClick(documentPostId || "")}
-      onKeyDown={e => {
-        if (e.key === "Enter" || e.key === " ") {
-          handleCardClick(documentPostId || "");
-        }
-      }}
-    >
-      <SubjectTag subjectName={subject} />
-      <div className="flex flex-row items-center justify-between">
-        {/* 왼쪽 텍스트 콘텐츠 */}
-        <div className="flex flex-col">
-          {/* 제목 */}
-          <p className="font-pretendard-bold mb-1 line-clamp-1 text-sm text-black">{title}</p>
-          {/* 내용 */}
-          <p className="font-pretendard-medium mb-2 line-clamp-1 text-xs text-[#737373]">{content}</p>
-          {/* 태그 및 기타 정보 */}
-          <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
-            <div className="flex flex-wrap items-center">
-              {documentTypes?.[0] && <DocJiJeongTag label={tagTranslations[documentTypes[0]] || "알 수 없는 태그"} />}
-            </div>
-            <div className="flex flex-wrap items-center">
-              <span className="flex items-center">
-                <Image src="/icons/LikeIcon.svg" width={14} height={14} alt="LikeIcon" />
-                <span className="ml-1 text-xs">{likeCount > 999 ? "999+" : likeCount}</span>
+
+  // 이미지가 없는 경우의 레이아웃
+  if (!isImageExist) {
+    return (
+      <div className="min-h-[120px] w-full bg-white">
+        {/* 상단: 태그들과 시간 */}
+        <div className="flex items-start justify-between">
+          {/* 태그 영역 */}
+          <div className="flex items-center gap-1">
+            {/* 과목명 태그 */}
+            <div className="inline-flex items-center justify-center rounded px-1.5 py-1 bg-document-main">
+              <span className="truncate text-SUIT_12 font-medium text-white max-w-[120px]">
+                {subject || "과목 없음"}
               </span>
-              <span className="mx-1.5">·</span>
-              <Image src="/icons/ViewCountIcon.svg" width={14} height={14} alt="LikeIcon" />
-              <span className="ml-1">{viewCount > 999 ? "999+" : viewCount}</span>
-              <span className="mx-1.5">·</span>
-              <span>{getDateDiff(createdDate)}</span>
             </div>
+            
+            {/* 자료 타입 태그 */}
+            {documentTypes && documentTypes.length > 0 && (
+              <div className="inline-flex items-center justify-center rounded px-1.5 py-1 bg-ui-tag-bg">
+                <span className="truncate text-SUIT_12 font-medium text-ui-tag-text max-w-[120px]">
+                  {getTagText(documentTypes[0])}
+                </span>
+              </div>
+            )}
+          </div>
+
+          {/* 시간 */}
+          <div className="text-SUIT_12 font-medium text-ui-muted">
+            {getDateDiff(createdDate || "")}
           </div>
         </div>
-        {/* 썸네일 */}
-        {thumbnailUrl && (
-          <Image
-            src={thumbnailUrl}
-            alt="썸네일"
-            width={74}
-            height={74}
-            className="ml-3 rounded-sm border"
-            style={{ maxWidth: "74px", maxHeight: "74px", width: "auto", height: "auto" }}
-          />
-        )}
+
+        {/* 8px 여백 */}
+        <div className="h-2" />
+
+        {/* 제목 */}
+        <h3 className="truncate text-SUIT_14 font-medium text-black">{title}</h3>
+
+        {/* 4px 여백 */}
+        <div className="h-1" />
+
+        {/* 본문 - 2줄까지 표시 */}
+        <p className="line-clamp-2 text-SUIT_14 font-medium text-ui-body">{content}</p>
+
+        {/* 12px 여백 */}
+        <div className="h-3" />
+
+        {/* 하단: 좋아요와 조회수 */}
+        <div className="flex items-center">
+          {/* 좋아요 */}
+          <div className="flex items-center">
+            <Image src="/icons/newLikeThumb.svg" alt="좋아요" width={14} height={14} />
+            <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">
+              {likeCount || 0}
+            </span>
+          </div>
+
+          {/* 조회수 */}
+          <div className="ml-4 flex items-center">
+            <Image src="/icons/ViewCountIcon.svg" alt="조회수" width={14} height={14} />
+            <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">
+              {viewCount || 0}
+            </span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 이미지가 있는 경우의 레이아웃
+  return (
+    <div className="min-h-[120px] w-full bg-white">
+      {/* 상단: 태그들과 시간 */}
+      <div className="flex items-start justify-between">
+        {/* 태그 영역 */}
+        <div className="flex items-center gap-1">
+          {/* 과목명 태그 */}
+          <div className="inline-flex items-center justify-center rounded px-1.5 py-1 bg-document-main">
+            <span className="truncate text-SUIT_12 font-medium text-white max-w-[120px]">
+              {subject || "과목 없음"}
+            </span>
+          </div>
+          
+          {/* 자료 타입 태그 */}
+          {documentTypes && documentTypes.length > 0 && (
+            <div className="inline-flex items-center justify-center rounded px-1.5 py-1 bg-ui-tag-bg">
+              <span className="truncate text-SUIT_12 font-medium text-ui-tag-text max-w-[120px]">
+                {getTagText(documentTypes[0])}
+              </span>
+            </div>
+          )}
+        </div>
+
+        {/* 시간 */}
+        <div className="text-SUIT_12 font-medium text-ui-muted">
+          {getDateDiff(createdDate || "")}
+        </div>
+      </div>
+
+      {/* 8px 여백 (이미지 있을 때) */}
+      <div className="h-2" />
+
+      {/* 메인 컨텐츠 영역 - 이미지와 텍스트 */}
+      <div className="flex items-start gap-3">
+        {/* 왼쪽: 텍스트 영역 - 나머지 모든 공간 차지 */}
+        <div className="min-w-0 flex-1">
+          {/* 제목 */}
+          <h3 className="truncate text-SUIT_14 font-medium text-black">{title}</h3>
+
+          {/* 8px 여백 */}
+          <div className="h-2" />
+
+          {/* 본문 - 2줄까지 표시, 동적 너비 */}
+          <p className="line-clamp-2 text-SUIT_14 font-medium text-ui-body">
+            {content}
+          </p>
+        </div>
+
+        {/* 오른쪽: 이미지 - 고정 크기 (반응형) */}
+        <div className="flex-shrink-0">
+          <div className="h-[4.375rem] w-[4.375rem] overflow-hidden rounded-lg bg-ui-image-bg">
+            <Image
+              src={imageUrl}
+              alt="자료 이미지"
+              width={70}
+              height={70}
+              className="h-full w-full object-cover"
+              onError={e => {
+                // 이미지 로드 실패 시 기본 배경색 유지
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* 8px 여백 (카드 아래에서) */}
+      <div className="h-2" />
+
+      {/* 하단: 좋아요와 조회수 */}
+      <div className="flex items-center">
+        {/* 좋아요 */}
+        <div className="flex items-center">
+          <Image src="/icons/newLikeThumb.svg" alt="좋아요" width={14} height={14} />
+          <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">
+            {likeCount || 0}
+          </span>
+        </div>
+
+        {/* 조회수 */}
+        <div className="ml-4 flex items-center">
+          <Image src="/icons/ViewCountIcon.svg" alt="조회수" width={14} height={14} />
+          <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">
+            {viewCount || 0}
+          </span>
+        </div>
       </div>
     </div>
   );

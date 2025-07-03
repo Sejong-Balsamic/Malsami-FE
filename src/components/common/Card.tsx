@@ -34,6 +34,7 @@ interface CardProps {
   customTags?: string[]; // 버튼 텍스트 배열 (선택적)
   isLiked: boolean;
   onClick?: () => void; // 카드 클릭 시. 상세페이지로 이동
+  isDocumentType?: boolean; // 자료게시판용 카드인지 여부
 }
 
 export default function Card({
@@ -47,6 +48,7 @@ export default function Card({
   customTags,
   isLiked,
   onClick,
+  isDocumentType = false, // 기본값은 질문게시판용 카드
 }: CardProps) {
   return (
     <article
@@ -58,7 +60,7 @@ export default function Card({
         <div className="mb-4 flex">
           {number && <span className="mr-3 text-SUIT_20 font-bold">{number}</span>}
           <div className="flex gap-2.5">
-            <SubjectTag subjectName={subject} />
+            <SubjectTag subjectName={subject} type={isDocumentType ? 'document' : 'question'} />
             {isCurrentlyPopular && <HotTag />}
           </div>
         </div>
