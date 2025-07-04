@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Header from "@/components/header/Header";
@@ -30,33 +30,35 @@ export default function DocumentRequestPage() {
   });
 
   // 데이터 로드 함수
-  const fetchDocumentRequests = async (page: number = 0, filtering: Partial<DocumentCommand> = currentFiltering) => {
-    setIsLoading(true);
-    try {
-      const response = await documentRequestPostApi.getFilteredDocumentRequestPosts({
-        pageNumber: page,
-        pageSize: 10,
-        sortType: filtering.sortType || "LATEST",
-        documentTypes: filtering.documentTypes,
-      });
+  const fetchDocumentRequests = useCallback(
+    async (page: number = 0, filtering: Partial<DocumentCommand> = currentFiltering) => {
+      setIsLoading(true);
+      try {
+        const response = await documentRequestPostApi.getFilteredDocumentRequestPosts({
+          pageNumber: page,
+          pageSize: 10,
+          sortType: filtering.sortType || "LATEST",
+          documentTypes: filtering.documentTypes,
+        });
 
-      if (response && response.documentRequestPostsPage) {
-        setDocumentData(response.documentRequestPostsPage.content || []);
-        setTotalPages(response.documentRequestPostsPage.totalPages || 0);
+        if (response && response.documentRequestPostsPage) {
+          setDocumentData(response.documentRequestPostsPage.content || []);
+          setTotalPages(response.documentRequestPostsPage.totalPages || 0);
+        }
+      } catch (error) {
+        setDocumentData([]);
+        setTotalPages(0);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error("자료요청을 불러오는데 실패했습니다:", error);
-      setDocumentData([]);
-      setTotalPages(0);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [currentFiltering],
+  );
 
   // 데이터 로드
   useEffect(() => {
     fetchDocumentRequests(currentPage);
-  }, [currentPage]);
+  }, [currentPage, fetchDocumentRequests]);
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber: number) => {
@@ -69,7 +71,6 @@ export default function DocumentRequestPage() {
 
   // 필터링 핸들러들
   const handleDocumentConfirm = async (filtering: Partial<DocumentCommand>) => {
-    console.log("자료요청 필터링 적용:", filtering);
     // 필터링 상태 업데이트하고 API 호출
     setCurrentFiltering(filtering);
     setCurrentPage(0);
@@ -77,7 +78,6 @@ export default function DocumentRequestPage() {
   };
 
   const handleFilterReset = () => {
-    console.log("BottomSheet 내부 필터 초기화");
     // API 호출하지 않고 BottomSheet 내부만 초기화
     // BottomSheet 컴포넌트에서 로컬 상태만 초기화됨
   };

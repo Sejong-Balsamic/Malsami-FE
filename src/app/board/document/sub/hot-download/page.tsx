@@ -31,29 +31,29 @@ export default function HotDownloadPage() {
   });
 
   // 데이터 로드 함수
-  const fetchHotDownloadDocuments = useCallback(async (
-    page: number = 0,
-    filtering: Partial<DocumentCommand> = currentFiltering,
-  ) => {
-    setIsLoading(true);
-    try {
-      const response = await documentPostApi.getHotDownload({
-        pageNumber: page,
-        pageSize: 10,
-        ...filtering,
-      });
+  const fetchHotDownloadDocuments = useCallback(
+    async (page: number = 0, filtering: Partial<DocumentCommand> = currentFiltering) => {
+      setIsLoading(true);
+      try {
+        const response = await documentPostApi.getHotDownload({
+          pageNumber: page,
+          pageSize: 10,
+          ...filtering,
+        });
 
-      if (response && response.documentPostsPage) {
-        setDocumentData(response.documentPostsPage.content || []);
-        setTotalPages(response.documentPostsPage.totalPages || 0);
+        if (response && response.documentPostsPage) {
+          setDocumentData(response.documentPostsPage.content || []);
+          setTotalPages(response.documentPostsPage.totalPages || 0);
+        }
+      } catch (error) {
+        setDocumentData([]);
+        setTotalPages(0);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      setDocumentData([]);
-      setTotalPages(0);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [currentFiltering]);
+    },
+    [currentFiltering],
+  );
 
   // 데이터 로드
   useEffect(() => {

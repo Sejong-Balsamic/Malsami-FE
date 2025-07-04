@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Header from "@/components/header/Header";
@@ -48,36 +48,38 @@ export default function MyFacultyDocumentPage() {
   }, []);
 
   // 데이터 로드 함수
-  const fetchFacultyDocuments = async (page: number = 0, filtering: Partial<DocumentCommand> = currentFiltering) => {
-    setIsLoading(true);
-    try {
-      const response = await documentPostApi.filteredDocumentPost({
-        pageNumber: page,
-        pageSize: 10,
-        sortType: filtering.sortType || "LATEST",
-        documentTypes: filtering.documentTypes,
-        faculty: memberFaculty, // 사용자 전공으로 필터링
-      });
+  const fetchFacultyDocuments = useCallback(
+    async (page: number = 0, filtering: Partial<DocumentCommand> = currentFiltering) => {
+      setIsLoading(true);
+      try {
+        const response = await documentPostApi.filteredDocumentPost({
+          pageNumber: page,
+          pageSize: 10,
+          sortType: filtering.sortType || "LATEST",
+          documentTypes: filtering.documentTypes,
+          faculty: memberFaculty, // 사용자 전공으로 필터링
+        });
 
-      if (response && response.documentPostsPage) {
-        setDocumentData(response.documentPostsPage.content || []);
-        setTotalPages(response.documentPostsPage.totalPages || 0);
+        if (response && response.documentPostsPage) {
+          setDocumentData(response.documentPostsPage.content || []);
+          setTotalPages(response.documentPostsPage.totalPages || 0);
+        }
+      } catch (error) {
+        setDocumentData([]);
+        setTotalPages(0);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error("내 전공 관련 자료를 불러오는데 실패했습니다:", error);
-      setDocumentData([]);
-      setTotalPages(0);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [currentFiltering, memberFaculty],
+  );
 
   // 데이터 로드 (memberFaculty가 설정된 후에만)
   useEffect(() => {
     if (memberFaculty) {
       fetchFacultyDocuments(currentPage);
     }
-  }, [currentPage, memberFaculty]);
+  }, [currentPage, memberFaculty, fetchFacultyDocuments]);
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber: number) => {
@@ -90,7 +92,6 @@ export default function MyFacultyDocumentPage() {
 
   // 필터링 핸들러들
   const handleDocumentConfirm = async (filtering: Partial<DocumentCommand>) => {
-    console.log("자료 필터링 적용:", filtering);
     // 필터링 상태 업데이트하고 API 호출
     setCurrentFiltering(filtering);
     setCurrentPage(0);
@@ -98,7 +99,6 @@ export default function MyFacultyDocumentPage() {
   };
 
   const handleFilterReset = () => {
-    console.log("BottomSheet 내부 필터 초기화");
     // API 호출하지 않고 BottomSheet 내부만 초기화
     // BottomSheet 컴포넌트에서 로컬 상태만 초기화됨
   };

@@ -21,10 +21,7 @@ const generateMockData = (count: number = 20, prefix: string = ""): DocumentPost
     content: `${prefix} 자료 ${i + 1}의 내용입니다. 이 자료는 학생들에게 매우 유용한 정보를 담고 있으며, 시험 준비에 도움이 될 것입니다.`,
     subject: ["인공지능", "데이터베이스", "컴퓨터구조", "알고리즘", "소프트웨어공학", "운영체제"][i % 6],
     documentTypes: [["DOCUMENT", "PAST_EXAM", "SOLUTION"][i % 3]] as any,
-    customTags: [
-      `${i % 3 === 0 ? "중간고사" : i % 3 === 1 ? "기말고사" : "과제"}`,
-      `${i % 2 === 0 ? "꿀팁" : "요약본"}`,
-    ],
+    customTags: [["중간고사", "기말고사", "과제"][i % 3], `${i % 2 === 0 ? "꿀팁" : "요약본"}`],
     likeCount: 10 + Math.floor(Math.random() * 90),
     viewCount: 50 + Math.floor(Math.random() * 200),
     createdDate: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),

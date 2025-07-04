@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
@@ -28,7 +28,7 @@ export default function PopularDaily() {
     }
   };
 
-  const fetchDocs = async () => {
+  const fetchDocs = useCallback(async () => {
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const command: Partial<DocumentCommand> = {
       pageNumber: pageNumber - 1, // 백엔드에서 0-based index를 사용하므로 -1
@@ -42,7 +42,6 @@ export default function PopularDaily() {
         setDocCards(content); // DocCardProps와 일치하는 데이터로 설정
         setTotalPages(response.documentPostsPage?.totalPages || 1); // 총 페이지 수 업데이트
       } else {
-        console.warn("documentPostsPage.content가 비어 있습니다.");
         setDocCards([]); // 데이터 없으면 빈 배열
       }
     } catch (error) {
@@ -51,12 +50,12 @@ export default function PopularDaily() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [pageNumber, pageSize]);
 
   useEffect(() => {
     fetchDocs();
     window.scrollTo(0, 0);
-  }, [pageNumber]);
+  }, [fetchDocs]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">

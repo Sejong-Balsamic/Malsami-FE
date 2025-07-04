@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
@@ -26,7 +26,7 @@ export default function PopularWeekly() {
     }
   };
 
-  const fetchDocs = async () => {
+  const fetchDocs = useCallback(async () => {
     const params = {
       pageNumber: pageNumber - 1,
       pageSize,
@@ -35,18 +35,18 @@ export default function PopularWeekly() {
     try {
       const response = await getDocWeeklyPopulars(params);
       setDocCards(response.content);
-      setTotalPages(response.totalPages); // 총 페이지 수 업데이트
+      setTotalPages(response.totalPages);
     } catch (error) {
       console.error("문서 필터링 목록을 가져오는 중 오류 발생:", error);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [pageNumber, pageSize]);
 
   useEffect(() => {
     fetchDocs();
     window.scrollTo(0, 0);
-  }, [pageNumber]);
+  }, [fetchDocs]);
 
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
