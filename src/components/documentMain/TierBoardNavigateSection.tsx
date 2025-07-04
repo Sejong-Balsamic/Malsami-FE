@@ -12,7 +12,7 @@ export default function TierBoardNavigateSection() {
   if (!memberDto) {
     return (
       <div className="flex justify-between">
-      {PostTiersKeys.map(tier => (
+        {PostTiersKeys.map(tier => (
           <TierBoardNavigateCardSkeleton key={tier} />
         ))}
       </div>

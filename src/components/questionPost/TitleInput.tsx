@@ -15,7 +15,7 @@ export default function TitleInput({ value, onChange }: TitleInputProps) {
     <div className="mb-[26px] block">
       <div className="relative">
         <span className="font-pretendard-semibold mr-1.5 text-lg">제목</span>
-        <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
+        <span className="font-pretendard-medium text-custom-blue-500 text-lg">(필수)</span>
         <input
           type="text"
           name="title"

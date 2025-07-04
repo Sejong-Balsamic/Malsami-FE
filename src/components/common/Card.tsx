@@ -60,7 +60,7 @@ export default function Card({
         <div className="mb-4 flex">
           {number && <span className="mr-3 text-SUIT_20 font-bold">{number}</span>}
           <div className="flex gap-2.5">
-            <SubjectTag subjectName={subject} type={isDocumentType ? 'document' : 'question'} />
+            <SubjectTag subjectName={subject} type={isDocumentType ? "document" : "question"} />
             {isCurrentlyPopular && <HotTag />}
           </div>
         </div>

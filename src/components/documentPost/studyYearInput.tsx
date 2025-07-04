@@ -9,7 +9,7 @@ export default function StudyYearInput({ year, onOpenModal }: StudyYearInputProp
       <div className="mb-3">
         <span className="font-pretendard-semibold mr-1.5 text-lg">수강년도 {">"}</span>
       </div>
-      <span className="font-pretendard-bold rounded-full bg-custom-blue-500 px-3 py-1 text-xs text-white">{year}</span>
+      <span className="font-pretendard-bold bg-custom-blue-500 rounded-full px-3 py-1 text-xs text-white">{year}</span>
     </button>
   );
 }

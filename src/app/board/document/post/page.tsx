@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import CommonHeader from "@/components/header/CommonHeader";
@@ -74,24 +74,6 @@ export default function QnaPostPage() {
     );
   };
 
-  // FIXME: 로컬스토리지 저장 로직 삭제 (임시저장 로직 삭제)
-  // // 로컬 스토리지에 저장하는 함수
-  // const saveToLocalStorage = () => {
-  //   localStorage.setItem("docPostFormData", JSON.stringify(formData));
-  //   showToast("임시저장 되었습니다!");
-  // };
-  // // 로컬 스토리지에서 데이터를 불러오는 함수
-  // const loadFromLocalStorage = () => {
-  //   const savedData = localStorage.getItem("docPostFormData");
-  //   if (savedData) {
-  //     setFormData(JSON.parse(savedData));
-  //   }
-  // };
-  // // 컴포넌트가 로드될 때 로컬 스토리지 데이터를 불러오기
-  // useEffect(() => {
-  //   loadFromLocalStorage();
-  // }, []);
-
   // 태그 삭제 함수
   const removeTag = (tag: string): void => {
     setFormData(prev => ({
@@ -106,10 +88,10 @@ export default function QnaPostPage() {
   const toggleStudyYearModal = () => setIsStudyYearModalOpen(!isStudyYearModalOpen);
 
   // 모든 필수 입력 필드가 채워져 있는지 확인
-  const checkFormValidity = () => {
+  const checkFormValidity = useCallback(() => {
     const { title, content, subject, categoryTags } = formData;
     return !!title && !!content && !!subject && categoryTags.length > 0;
-  };
+  }, [formData]);
 
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -124,7 +106,7 @@ export default function QnaPostPage() {
   // formData가 변경될 때마다 유효성 검사 실행
   useEffect(() => {
     setIsFormValid(checkFormValidity());
-  }, [formData]);
+  }, [formData, checkFormValidity]);
 
   // subject(교과목명) 업데이트하는 함수
   const handleSubjectChange = (subject: string) => {
@@ -252,7 +234,6 @@ export default function QnaPostPage() {
         showToast("자료 게시글이 성공적으로 등록되었습니다.");
         router.push("/board/document");
       } catch (error) {
-        console.log("error", error);
         showToast("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
       } finally {
         setIsUploading(false); // 업로딩 종료

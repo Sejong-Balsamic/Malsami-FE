@@ -74,7 +74,7 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
                   customTags={documentPost.customTags}
                   isLiked={documentPost.isLiked || false}
                   likeCount={documentPost.likeCount as number}
-                  isDocumentType={true}
+                  isDocumentType
                 />
               </div>
             </SwiperSlide>

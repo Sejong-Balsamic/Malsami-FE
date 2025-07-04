@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Header from "@/components/header/Header";
@@ -31,7 +31,10 @@ export default function HotDownloadPage() {
   });
 
   // 데이터 로드 함수
-  const fetchHotDownloadDocuments = async (page: number = 0, filtering: Partial<DocumentCommand> = currentFiltering) => {
+  const fetchHotDownloadDocuments = useCallback(async (
+    page: number = 0,
+    filtering: Partial<DocumentCommand> = currentFiltering,
+  ) => {
     setIsLoading(true);
     try {
       const response = await documentPostApi.getHotDownload({
@@ -45,18 +48,17 @@ export default function HotDownloadPage() {
         setTotalPages(response.documentPostsPage.totalPages || 0);
       }
     } catch (error) {
-      console.error("인기 다운로드 자료를 불러오는데 실패했습니다:", error);
       setDocumentData([]);
       setTotalPages(0);
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [currentFiltering]);
 
   // 데이터 로드
   useEffect(() => {
     fetchHotDownloadDocuments(currentPage);
-  }, [currentPage]);
+  }, [currentPage, fetchHotDownloadDocuments]);
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber: number) => {
@@ -69,7 +71,6 @@ export default function HotDownloadPage() {
 
   // 필터링 핸들러들
   const handleDocumentConfirm = async (filtering: Partial<DocumentCommand>) => {
-    console.log("자료 필터링 적용:", filtering);
     // 필터링 상태 업데이트하고 API 호출
     // 항상 다운로드 수 기준 정렬 유지
     const updatedFiltering = { ...filtering, sortType: SortType.DOWNLOAD_COUNT };
@@ -79,7 +80,6 @@ export default function HotDownloadPage() {
   };
 
   const handleFilterReset = () => {
-    console.log("BottomSheet 내부 필터 초기화");
     // API 호출하지 않고 BottomSheet 내부만 초기화
     // BottomSheet 컴포넌트에서 로컬 상태만 초기화됨
   };

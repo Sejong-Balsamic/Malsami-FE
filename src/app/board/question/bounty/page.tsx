@@ -97,7 +97,13 @@ export default function BountyQuestionPage() {
 
       <div className="px-5">
         {/* 최근순/높은순 필터링 컴포넌트 */}
-        <TwoTabFilter firstTab="최근순" secondTab="높은순" activeTab={activeTab} onTabChange={handleTabChange} />
+        <TwoTabFilter
+          firstTab="최근순"
+          secondTab="높은순"
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          activeColor="#00D1F2"
+        />
 
         {/* 24px 공백 */}
         <div className="h-6" />

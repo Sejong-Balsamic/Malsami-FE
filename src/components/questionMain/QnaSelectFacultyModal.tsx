@@ -81,7 +81,7 @@ function QnaSelectFacultyModal({ isVisible, onClose, onSelect }: QnaBottomSheetM
                 onClick={() => handleSelect(faculty)}
               >
                 {selectedFaculty === faculty ? (
-                  <span className="font-pretendard-bold text-base text-custom-blue-500">{faculty}</span>
+                  <span className="font-pretendard-bold text-custom-blue-500 text-base">{faculty}</span>
                 ) : (
                   <span className="font-pretendard-medium text-base">{faculty}</span>
                 )}

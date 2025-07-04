@@ -100,7 +100,7 @@ export default function TierBoardNavigateCard({ tier, link, accessible }: TierBo
               <button
                 type="button"
                 onClick={closeModal}
-                className="hover:bg-custom-blue-600 mt-4 w-full rounded-[10px] bg-custom-blue-500 px-4 py-2 text-white"
+                className="hover:bg-custom-blue-600 bg-custom-blue-500 mt-4 w-full rounded-[10px] px-4 py-2 text-white"
               >
                 확인
               </button>

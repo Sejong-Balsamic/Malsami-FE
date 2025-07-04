@@ -9,7 +9,6 @@ import { LEFT_ITEM } from "@/types/header";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import DocumentCardList from "@/components/documentMain/DocumentCardList";
-import { SortType } from "@/types/api/constants/sortType";
 
 // 목데이터 생성 함수
 const generateMockData = (count: number = 20, prefix: string = ""): DocumentPost[] => {
@@ -20,13 +19,14 @@ const generateMockData = (count: number = 20, prefix: string = ""): DocumentPost
     subject: ["인공지능", "데이터베이스", "컴퓨터구조", "알고리즘", "소프트웨어공학", "운영체제"][i % 6],
     documentTypes: [["DOCUMENT", "PAST_EXAM", "SOLUTION"][i % 3]] as any,
     customTags: [
-      `${i % 3 === 0 ? "중간고사" : i % 3 === 1 ? "기말고사" : "과제"}`, 
-      `${i % 2 === 0 ? "꿀팁" : "요약본"}`
+      // eslint-disable-next-line no-nested-ternary
+      `${i % 3 === 0 ? "중간고사" : i % 3 === 1 ? "기말고사" : "과제"}`,
+      `${i % 2 === 0 ? "꿀팁" : "요약본"}`,
     ],
     likeCount: 10 + Math.floor(Math.random() * 90),
     viewCount: 50 + Math.floor(Math.random() * 200),
     createdDate: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
-    isLiked: false
+    isLiked: false,
   }));
 };
 
@@ -61,7 +61,7 @@ export default function HotDocumentPage() {
         // API 응답이 비어있으면 목데이터 사용
         const weeklyContent = weeklyResponse.documentPostsPage?.content || [];
         const dailyContent = dailyResponse.documentPostsPage?.content || [];
-        
+
         setWeeklyDocuments(weeklyContent.length > 0 ? weeklyContent : MOCK_WEEKLY_DATA);
         setDailyDocuments(dailyContent.length > 0 ? dailyContent : MOCK_DAILY_DATA);
       } catch (error) {
@@ -113,12 +113,12 @@ export default function HotDocumentPage() {
 
       <div className="px-5">
         {/* 주간/일간 필터링 컴포넌트 */}
-        <TwoTabFilter 
-          firstTab="주간" 
-          secondTab="일간" 
-          activeTab={activeTab} 
-          onTabChange={handleTabChange} 
-          activeColor="#00D1F2" 
+        <TwoTabFilter
+          firstTab="주간"
+          secondTab="일간"
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          activeColor="#00D1F2"
         />
 
         {/* 24px 공백 */}

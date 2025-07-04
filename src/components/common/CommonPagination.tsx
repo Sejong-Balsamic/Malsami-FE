@@ -109,7 +109,7 @@ export default function CommonPagination({ currentPage, totalPages, onPageChange
               <button
                 type="button"
                 onClick={() => handlePageClick(pageNumber)}
-                className="font-suit text-sm font-medium leading-normal text-[#737373] transition-colors hover:text-custom-blue-500"
+                className="hover:text-custom-blue-500 font-suit text-sm font-medium leading-normal text-[#737373] transition-colors"
               >
                 {displayPageNumber}
               </button>

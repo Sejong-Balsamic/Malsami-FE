@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { getDateDiff } from "@/global/time";
-import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import { DocCardProps } from "@/types/docCard.type";
 
 // 태그 번역 정의
@@ -12,7 +11,7 @@ const tagTranslations: { [key: string]: string } = {
 
 /**
  * 자료게시판 카드 컴포넌트
- * 
+ *
  * @param subject - 과목명
  * @param documentPostId - 자료 게시글 ID
  * @param title - 제목
@@ -25,7 +24,6 @@ const tagTranslations: { [key: string]: string } = {
  */
 export default function DocumentCard({
   subject,
-  documentPostId,
   title,
   content,
   documentTypes,
@@ -52,16 +50,16 @@ export default function DocumentCard({
           {/* 태그 영역 */}
           <div className="flex items-center gap-1">
             {/* 과목명 태그 */}
-            <div className="inline-flex items-center justify-center rounded px-1.5 py-1 bg-document-main">
-              <span className="truncate text-SUIT_12 font-medium text-white max-w-[120px]">
+            <div className="inline-flex items-center justify-center rounded bg-document-main px-1.5 py-1">
+              <span className="max-w-[120px] truncate text-SUIT_12 font-medium text-white">
                 {subject || "과목 없음"}
               </span>
             </div>
-            
+
             {/* 자료 타입 태그 */}
             {documentTypes && documentTypes.length > 0 && (
-              <div className="inline-flex items-center justify-center rounded px-1.5 py-1 bg-ui-tag-bg">
-                <span className="truncate text-SUIT_12 font-medium text-ui-tag-text max-w-[120px]">
+              <div className="inline-flex items-center justify-center rounded bg-ui-tag-bg px-1.5 py-1">
+                <span className="max-w-[120px] truncate text-SUIT_12 font-medium text-ui-tag-text">
                   {getTagText(documentTypes[0])}
                 </span>
               </div>
@@ -69,9 +67,7 @@ export default function DocumentCard({
           </div>
 
           {/* 시간 */}
-          <div className="text-SUIT_12 font-medium text-ui-muted">
-            {getDateDiff(createdDate || "")}
-          </div>
+          <div className="text-SUIT_12 font-medium text-ui-muted">{getDateDiff(createdDate || "")}</div>
         </div>
 
         {/* 8px 여백 */}
@@ -94,17 +90,13 @@ export default function DocumentCard({
           {/* 좋아요 */}
           <div className="flex items-center">
             <Image src="/icons/newLikeThumb.svg" alt="좋아요" width={14} height={14} />
-            <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">
-              {likeCount || 0}
-            </span>
+            <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">{likeCount || 0}</span>
           </div>
 
           {/* 조회수 */}
           <div className="ml-4 flex items-center">
             <Image src="/icons/ViewCountIcon.svg" alt="조회수" width={14} height={14} />
-            <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">
-              {viewCount || 0}
-            </span>
+            <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">{viewCount || 0}</span>
           </div>
         </div>
       </div>
@@ -119,16 +111,14 @@ export default function DocumentCard({
         {/* 태그 영역 */}
         <div className="flex items-center gap-1">
           {/* 과목명 태그 */}
-          <div className="inline-flex items-center justify-center rounded px-1.5 py-1 bg-document-main">
-            <span className="truncate text-SUIT_12 font-medium text-white max-w-[120px]">
-              {subject || "과목 없음"}
-            </span>
+          <div className="inline-flex items-center justify-center rounded bg-document-main px-1.5 py-1">
+            <span className="max-w-[120px] truncate text-SUIT_12 font-medium text-white">{subject || "과목 없음"}</span>
           </div>
-          
+
           {/* 자료 타입 태그 */}
           {documentTypes && documentTypes.length > 0 && (
-            <div className="inline-flex items-center justify-center rounded px-1.5 py-1 bg-ui-tag-bg">
-              <span className="truncate text-SUIT_12 font-medium text-ui-tag-text max-w-[120px]">
+            <div className="inline-flex items-center justify-center rounded bg-ui-tag-bg px-1.5 py-1">
+              <span className="max-w-[120px] truncate text-SUIT_12 font-medium text-ui-tag-text">
                 {getTagText(documentTypes[0])}
               </span>
             </div>
@@ -136,9 +126,7 @@ export default function DocumentCard({
         </div>
 
         {/* 시간 */}
-        <div className="text-SUIT_12 font-medium text-ui-muted">
-          {getDateDiff(createdDate || "")}
-        </div>
+        <div className="text-SUIT_12 font-medium text-ui-muted">{getDateDiff(createdDate || "")}</div>
       </div>
 
       {/* 8px 여백 (이미지 있을 때) */}
@@ -155,9 +143,7 @@ export default function DocumentCard({
           <div className="h-2" />
 
           {/* 본문 - 2줄까지 표시, 동적 너비 */}
-          <p className="line-clamp-2 text-SUIT_14 font-medium text-ui-body">
-            {content}
-          </p>
+          <p className="line-clamp-2 text-SUIT_14 font-medium text-ui-body">{content}</p>
         </div>
 
         {/* 오른쪽: 이미지 - 고정 크기 (반응형) */}
@@ -186,17 +172,13 @@ export default function DocumentCard({
         {/* 좋아요 */}
         <div className="flex items-center">
           <Image src="/icons/newLikeThumb.svg" alt="좋아요" width={14} height={14} />
-          <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">
-            {likeCount || 0}
-          </span>
+          <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">{likeCount || 0}</span>
         </div>
 
         {/* 조회수 */}
         <div className="ml-4 flex items-center">
           <Image src="/icons/ViewCountIcon.svg" alt="조회수" width={14} height={14} />
-          <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">
-            {viewCount || 0}
-          </span>
+          <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">{viewCount || 0}</span>
         </div>
       </div>
     </div>

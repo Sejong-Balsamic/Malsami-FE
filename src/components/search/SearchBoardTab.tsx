@@ -14,7 +14,7 @@ function SearchBoardTab({
           type="button"
           className={`w-full py-2 text-lg ${
             activeTab === "자료게시판"
-              ? "font-pretendard-semibold border-b-2 border-custom-blue-500 text-black"
+              ? "font-pretendard-semibold border-custom-blue-500 border-b-2 text-black"
               : "font-pretendard-medium border-b-2 border-[#EAEAEA] text-[#ABABAB]"
           }`}
           onClick={() => onTabChange("자료게시판")}
@@ -26,7 +26,7 @@ function SearchBoardTab({
           type="button"
           className={`w-full py-2 text-lg ${
             activeTab === "질문게시판"
-              ? "font-pretendard-semibold border-b-2 border-custom-blue-500 text-black"
+              ? "font-pretendard-semibold border-custom-blue-500 border-b-2 text-black"
               : "font-pretendard-medium border-b-2 border-[#EAEAEA] text-[#ABABAB]"
           }`}
           onClick={() => onTabChange("질문게시판")}

@@ -23,7 +23,8 @@ interface DocumentFilteringBottomSheetProps {
   onConfirm: (filters: Partial<DocumentCommand>) => void;
   trigger: React.ReactNode;
   currentFiltering: Partial<DocumentCommand>;
-  activeColor?: string; // 활성 색상 (선택적)
+  // eslint-disable-next-line react/require-default-props
+  activeColor?: string;
 }
 
 const SORT_OPTIONS = [
@@ -43,7 +44,7 @@ export default function DocumentFilteringBottomSheet({
   onConfirm,
   trigger,
   currentFiltering,
-  activeColor = "#5EF48D", // 기본값은 초록색
+  activeColor = "#5EF48D", // 기본값 제공 (함수 매개변수에서)
 }: DocumentFilteringBottomSheetProps) {
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.bottomSheet.documentFilteringOpen);

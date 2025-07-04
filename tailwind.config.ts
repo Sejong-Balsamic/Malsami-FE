@@ -21,29 +21,29 @@ const config: Config = {
       },
       colors: {
         // 게시판 테마 색상
-        "document": {
-          "main": "#00D1F2", // 자료게시판 메인 색상
+        document: {
+          main: "#00D1F2", // 자료게시판 메인 색상
         },
-        "question": {
-          "main": "#00E8BB", // 질문게시판 메인 색상
+        question: {
+          main: "#00E8BB", // 질문게시판 메인 색상
         },
-        
+
         // 태그 색상
-        "tag": {
-          "yeopjeon": "#FFB000", // 엽전 태그 색상
-          "accept": "#0062D2", // 채택 태그 색상
+        tag: {
+          yeopjeon: "#FFB000", // 엽전 태그 색상
+          accept: "#0062D2", // 채택 태그 색상
         },
-        
+
         // UI 요소 색상
-        "ui": {
-          "tag-bg": "#F5F5F5",     // 태그 배경색
-          "tag-text": "#616161",    // 태그 텍스트 색상
-          "muted": "#C5C5C5",       // 흐린 텍스트 색상
-          "body": "#616161",        // 본문 텍스트 색상
-          "divider": "#F0F0F0",     // 구분선 색상
-          "image-bg": "#B5B5B5",    // 이미지 배경색
+        ui: {
+          "tag-bg": "#F5F5F5", // 태그 배경색
+          "tag-text": "#616161", // 태그 텍스트 색상
+          muted: "#C5C5C5", // 흐린 텍스트 색상
+          body: "#616161", // 본문 텍스트 색상
+          divider: "#F0F0F0", // 구분선 색상
+          "image-bg": "#B5B5B5", // 이미지 배경색
         },
-        
+
         // Shadcn UI 색상 (유지)
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",

@@ -81,7 +81,7 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
                 {questionDto.questionPost?.subject}
               </div>
               {(questionDto.questionPost?.rewardYeopjeon as number) > 0 && (
-                <span className="font-pretendard-semibold mr-1 inline-flex h-[26px] items-center rounded-[33px] bg-custom-orange-500 px-2 py-[3px] text-xs text-white">
+                <span className="font-pretendard-semibold bg-custom-orange-500 mr-1 inline-flex h-[26px] items-center rounded-[33px] px-2 py-[3px] text-xs text-white">
                   <img src="/icons/Yeopjeon.svg" alt="Yeopjeon" className="inline-block h-[14px] w-[14px]" />
                   <span className="ml-1">{questionDto.questionPost?.rewardYeopjeon}</span>
                 </span>

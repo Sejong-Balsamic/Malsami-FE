@@ -22,13 +22,13 @@ const generateMockData = (count: number = 20, prefix: string = ""): DocumentPost
     subject: ["인공지능", "데이터베이스", "컴퓨터구조", "알고리즘", "소프트웨어공학", "운영체제"][i % 6],
     documentTypes: [["DOCUMENT", "PAST_EXAM", "SOLUTION"][i % 3]] as any,
     customTags: [
-      `${i % 3 === 0 ? "중간고사" : i % 3 === 1 ? "기말고사" : "과제"}`, 
-      `${i % 2 === 0 ? "꿀팁" : "요약본"}`
+      `${i % 3 === 0 ? "중간고사" : i % 3 === 1 ? "기말고사" : "과제"}`,
+      `${i % 2 === 0 ? "꿀팁" : "요약본"}`,
     ],
     likeCount: 10 + Math.floor(Math.random() * 90),
     viewCount: 50 + Math.floor(Math.random() * 200),
     createdDate: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
-    isLiked: false
+    isLiked: false,
   }));
 };
 
@@ -47,7 +47,12 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
       try {
         if (activeTab === "주간") {
           const response = await documentPostApi.getWeeklyPopularDocumentPost();
-          if (response && response.documentPostsPage && response.documentPostsPage.content && response.documentPostsPage.content.length > 0) {
+          if (
+            response &&
+            response.documentPostsPage &&
+            response.documentPostsPage.content &&
+            response.documentPostsPage.content.length > 0
+          ) {
             setDocuments(response.documentPostsPage.content);
           } else {
             // API 응답이 비어있으면 목데이터 사용
@@ -56,7 +61,12 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
           }
         } else {
           const response = await documentPostApi.getDailyPopularDocumentPost();
-          if (response && response.documentPostsPage && response.documentPostsPage.content && response.documentPostsPage.content.length > 0) {
+          if (
+            response &&
+            response.documentPostsPage &&
+            response.documentPostsPage.content &&
+            response.documentPostsPage.content.length > 0
+          ) {
             setDocuments(response.documentPostsPage.content);
           } else {
             // API 응답이 비어있으면 목데이터 사용

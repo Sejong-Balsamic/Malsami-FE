@@ -111,7 +111,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                         onKeyDown={e => e.key === "Enter" && setSortType(docSortType)}
                       >
                         {sortType === docSortType ? (
-                          <span className="font-pretendard-bold text-base text-custom-blue-500">
+                          <span className="font-pretendard-bold text-custom-blue-500 text-base">
                             {sortTypeLabels[docSortType]}
                           </span>
                         ) : (
@@ -141,7 +141,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                             : [...prevTags, docTypeKey].slice(0, 2),
                         )
                       }
-                      className={`font-pretendard-bold rounded-[40px] border-2 border-custom-blue-500 px-3 py-1 text-xs ${
+                      className={`font-pretendard-bold border-custom-blue-500 rounded-[40px] border-2 px-3 py-1 text-xs ${
                         docTypes.includes(docTypeKey) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
                       }`}
                     >

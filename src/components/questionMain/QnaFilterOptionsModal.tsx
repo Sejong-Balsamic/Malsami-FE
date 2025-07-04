@@ -114,7 +114,7 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
                         onKeyDown={e => e.key === "Enter" && setSortType(qnaSortType)}
                       >
                         {sortType === qnaSortType ? (
-                          <span className="font-pretendard-bold text-base text-custom-blue-500">
+                          <span className="font-pretendard-bold text-custom-blue-500 text-base">
                             {sortTypeLabels[qnaSortType]}
                           </span>
                         ) : (
@@ -140,7 +140,7 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
                         onKeyDown={e => e.key === "Enter" && setChaetaekStatus(chaetaekStatusKey)}
                       >
                         {chaetaekStatus === chaetaekStatusKey ? (
-                          <span className="font-pretendard-bold text-base text-custom-blue-500">
+                          <span className="font-pretendard-bold text-custom-blue-500 text-base">
                             {ChaetaekStatus[chaetaekStatusKey as keyof typeof ChaetaekStatus]}
                           </span>
                         ) : (
@@ -172,7 +172,7 @@ const QnaFilterOptionsModal: React.FC<QnaFilterOptionsModalProps> = ({
                             : [...prevTags, qnaPresetTagKey].slice(0, 2),
                         )
                       }
-                      className={`font-pretendard-bold rounded-[40px] border-2 border-custom-blue-500 px-3 py-1 text-xs ${
+                      className={`font-pretendard-bold border-custom-blue-500 rounded-[40px] border-2 px-3 py-1 text-xs ${
                         qnaPresetTags.includes(qnaPresetTagKey)
                           ? "bg-custom-blue-500 text-white"
                           : "text-custom-blue-500"

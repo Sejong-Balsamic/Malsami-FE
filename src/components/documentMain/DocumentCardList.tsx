@@ -10,7 +10,7 @@ interface DocumentCardListProps {
 
 /**
  * 자료게시판의 카드 목록 컴포넌트
- * 
+ *
  * @param data - 표시할 자료 게시글 배열
  */
 export default function DocumentCardList({ data }: DocumentCardListProps) {
@@ -19,9 +19,7 @@ export default function DocumentCardList({ data }: DocumentCardListProps) {
   if (!data || data.length === 0) {
     return (
       <div className="flex h-40 items-center justify-center">
-        <span className="text-SUIT_14 font-medium text-ui-muted">
-          표시할 자료가 없습니다.
-        </span>
+        <span className="text-SUIT_14 font-medium text-ui-muted">표시할 자료가 없습니다.</span>
       </div>
     );
   }
@@ -73,4 +71,4 @@ export default function DocumentCardList({ data }: DocumentCardListProps) {
       ))}
     </div>
   );
-} 
+}
