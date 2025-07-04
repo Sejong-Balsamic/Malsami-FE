@@ -6,15 +6,12 @@ interface SubjectTagProps {
 
 function SubjectTag({ subjectName, type = "question" }: SubjectTagProps) {
   // 텍스트가 너무 길면 줄임표 처리
-  const displayName = subjectName.length > 8 ? `${subjectName.slice(0, 8)}..` : subjectName;
+  const displayName = subjectName.length > 10 ? `${subjectName.slice(0, 10)}..` : subjectName;
 
-  // 태그 타입에 따라 색상 설정
-  const tagColor = type === "document" ? "#00D1F2" : "#08E4BA";
-
+  // 이미지와 동일하게 밝은 파란색으로 수정
   return (
     <span
-      className="inline-block w-fit max-w-[120px] overflow-hidden text-ellipsis whitespace-nowrap rounded-sm border px-2.5 py-1 text-SUIT_12 font-semibold"
-      style={{ borderColor: tagColor, color: tagColor }}
+      className="inline-block w-fit overflow-hidden text-ellipsis whitespace-nowrap rounded-md bg-[#E8FBFF] px-3 py-1 text-SUIT_12 font-bold text-[#00C4DF]"
     >
       {displayName}
     </span>
