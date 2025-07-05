@@ -20,7 +20,7 @@ export default function TwoTabFilter<T extends string>({
         {/* 첫 번째 탭 */}
         <button type="button" onClick={() => onTabChange(firstTab)} className="flex-1 pb-3 text-center">
           <span
-            className={`text-SUIT_18 whitespace-nowrap ${activeTab === firstTab ? `font-semibold` : "font-medium text-ui-muted"}`}
+            className={`whitespace-nowrap text-SUIT_18 ${activeTab === firstTab ? `font-semibold` : "font-medium text-ui-muted"}`}
             style={{ color: activeTab === firstTab ? activeColor : undefined }}
           >
             {firstTab}
@@ -30,7 +30,7 @@ export default function TwoTabFilter<T extends string>({
         {/* 두 번째 탭 */}
         <button type="button" onClick={() => onTabChange(secondTab)} className="flex-1 pb-3 text-center">
           <span
-            className={`text-SUIT_18 whitespace-nowrap ${activeTab === secondTab ? `font-semibold` : "font-medium text-ui-muted"}`}
+            className={`whitespace-nowrap text-SUIT_18 ${activeTab === secondTab ? `font-semibold` : "font-medium text-ui-muted"}`}
             style={{ color: activeTab === secondTab ? activeColor : undefined }}
           >
             {secondTab}

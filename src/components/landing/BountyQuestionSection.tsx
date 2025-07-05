@@ -66,7 +66,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
                 }`}
               >
                 <span
-                  className={`text-[12px] whitespace-nowrap ${
+                  className={`whitespace-nowrap text-[12px] ${
                     activeTab === "최근순" ? "text-[#00E271]" : "text-[#898989]"
                   }`}
                 >
@@ -86,11 +86,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
                   activeTab === "높은순" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
                 }`}
               >
-                <span
-                  className={`text-[12px] ${
-                    activeTab === "높은순" ? "text-[#00E271]" : "text-[#898989]"
-                  }`}
-                >
+                <span className={`text-[12px] ${activeTab === "높은순" ? "text-[#00E271]" : "text-[#898989]"}`}>
                   높은순
                 </span>
               </div>

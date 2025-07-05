@@ -52,7 +52,7 @@ export default function Card({
 }: CardProps) {
   // 타입에 따라 색상 및 아이콘 결정
   const mainColor = type === "document" ? "#19C8FF" : "#19C859";
-  
+
   // 댓글 아이콘 경로 결정
   const getCommentIconPath = () => {
     return "/icons/newChatBubbleGray.svg";
@@ -64,54 +64,43 @@ export default function Card({
       onClick={onClick}
     >
       {/* 상단 Row: 순번 + 과목 태그 */}
-      <div className="mt-[16px] ml-[16px] flex items-start gap-[8px]">
+      <div className="ml-[16px] mt-[16px] flex items-start gap-[8px]">
         {/* 순번 */}
-        {number && (
-          <span className="text-[18px] font-bold leading-[18px] text-[#1D1E27]">
-            {number}
-          </span>
-        )}
+        {number && <span className="text-[18px] font-bold leading-[18px] text-[#1D1E27]">{number}</span>}
         {/* 과목 태그 */}
         <SubjectTag subjectName={subject} type={type} />
         {isCurrentlyPopular && <HotTag />}
       </div>
 
       {/* 제목 */}
-      <h2 className="mt-[16px] mx-[16px] text-[16px] font-bold leading-[16px] text-[#1D1E27] line-clamp-1">
-        {title}
-      </h2>
+      <h2 className="mx-[16px] mt-[16px] line-clamp-1 text-[16px] font-bold leading-[16px] text-[#1D1E27]">{title}</h2>
 
       {/* 본문 내용 */}
-      <p className="mt-[8px] mx-[16px] text-[14px] font-normal leading-[19.6px] text-[#616161] line-clamp-2">
+      <p className="mx-[16px] mt-[8px] line-clamp-2 text-[14px] font-normal leading-[19.6px] text-[#616161]">
         {content}
       </p>
 
       {/* 하단 Row: 커스텀 태그 + 좋아요/답변 */}
       <div className="absolute bottom-[16px] left-[16px] right-[16px] flex items-center justify-between">
         {/* 커스텀 태그 */}
-        <div className="flex overflow-hidden whitespace-nowrap gap-2">
-          {customTags && customTags.map((tag, index) => (
-            <CustomTag key={`${tag}-${index}`} tagName={tag} type={type} />
-          ))}
+        <div className="flex gap-2 overflow-hidden whitespace-nowrap">
+          {customTags &&
+            customTags.map((tag, index) => <CustomTag key={`${tag}-${index}`} tagName={tag} type={type} />)}
         </div>
 
         {/* 좋아요 수와 답변 수 표시 */}
-        <div className="flex items-center gap-[4px] ml-2 flex-shrink-0">
+        <div className="ml-2 flex flex-shrink-0 items-center gap-[4px]">
           {/* 좋아요 */}
           <span className="flex items-center gap-[4px]">
             <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
-            <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">
-              {likeCount}
-            </span>
+            <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">{likeCount}</span>
           </span>
 
           {/* 답변 수 (질문 카드인 경우에만 표시) */}
           {answerCount !== undefined && (
-            <span className="flex items-center gap-[4px] ml-[8px]">
+            <span className="ml-[8px] flex items-center gap-[4px]">
               <Image src={getCommentIconPath()} alt="답변" width={14} height={14} />
-              <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">
-                {answerCount}
-              </span>
+              <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">{answerCount}</span>
             </span>
           )}
         </div>

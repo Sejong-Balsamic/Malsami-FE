@@ -67,11 +67,7 @@ export default function PopularWeekly() {
               <LoadingSpinner />
             ) : (
               docCards.map((card: DocumentPost) => (
-                <DocumentCardItem
-                  key={card.documentPostId}
-                  documentPost={card}
-                  contentType={ContentType.DOCUMENT}
-                />
+                <DocumentCardItem key={card.documentPostId} documentPost={card} contentType={ContentType.DOCUMENT} />
               ))
             )}
           </div>

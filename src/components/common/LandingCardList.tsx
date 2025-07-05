@@ -84,30 +84,25 @@ export default function LandingCardList() {
               {/* 좋아요 - 자료게시판용 파란색 아이콘 사용 */}
               <span className="flex items-center">
                 {data.isLiked ? (
-                  <Image 
-                    src={data.type === "document" ? "/icons/newLikeThumbBlue.svg" : "/icons/newLikeThumbGreen.svg"} 
-                    alt="좋아요 됨" 
-                    width={14} 
-                    height={14} 
+                  <Image
+                    src={data.type === "document" ? "/icons/newLikeThumbBlue.svg" : "/icons/newLikeThumbGreen.svg"}
+                    alt="좋아요 됨"
+                    width={14}
+                    height={14}
                   />
                 ) : (
-                  <Image 
-                    src="/icons/newLikeThumbGray.svg" 
-                    alt="좋아요 안됨" 
-                    width={14} 
-                    height={14} 
-                  />
+                  <Image src="/icons/newLikeThumbGray.svg" alt="좋아요 안됨" width={14} height={14} />
                 )}
                 <span className="ml-1">{data.likeCount}</span>
               </span>
 
               {/* 댓글 */}
               <span className="flex items-center">
-                <Image 
-                  src={data.type === "document" ? "/icons/newChatBubbleBlue.svg" : "/icons/newChatBubbleGreen.svg"} 
-                  alt="댓글" 
-                  width={14} 
-                  height={14} 
+                <Image
+                  src={data.type === "document" ? "/icons/newChatBubbleBlue.svg" : "/icons/newChatBubbleGreen.svg"}
+                  alt="댓글"
+                  width={14}
+                  height={14}
                 />
                 <span className="ml-1">{data.commentCount}</span>
               </span>

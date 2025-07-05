@@ -10,25 +10,7 @@ function CustomTag({ tagName, type = "question" }: CustomTagProps) {
   const displayName = tagName.length > 6 ? `${tagName.slice(0, 6)}..` : tagName;
 
   return (
-    <span
-      className="
-        inline-flex
-        items-center
-        justify-center
-        rounded-[34px]
-        bg-[#EDEDED]
-        text-[#898989]
-        text-[12px]
-        font-medium
-        leading-[12px]
-        h-[28px]
-        px-[12px]
-        py-[8px]
-        gap-[4px]
-        flex-shrink-0
-        whitespace-nowrap
-      "
-    >
+    <span className="inline-flex h-[28px] flex-shrink-0 items-center justify-center gap-[4px] whitespace-nowrap rounded-[34px] bg-[#EDEDED] px-[12px] py-[8px] text-[12px] font-medium leading-[12px] text-[#898989]">
       {displayName}
     </span>
   );

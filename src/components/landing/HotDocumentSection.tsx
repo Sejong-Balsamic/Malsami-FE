@@ -107,11 +107,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
                   activeTab === "주간" ? "bg-[#DDFBFF]" : "bg-[#EDEDED]"
                 }`}
               >
-                <span
-                  className={`text-[12px] ${
-                    activeTab === "주간" ? "text-[#00D1F2]" : "text-[#898989]"
-                  }`}
-                >
+                <span className={`text-[12px] ${activeTab === "주간" ? "text-[#00D1F2]" : "text-[#898989]"}`}>
                   주간
                 </span>
               </div>
@@ -128,11 +124,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
                   activeTab === "일간" ? "bg-[#DDFBFF]" : "bg-[#EDEDED]"
                 }`}
               >
-                <span
-                  className={`text-[12px] ${
-                    activeTab === "일간" ? "text-[#00D1F2]" : "text-[#898989]"
-                  }`}
-                >
+                <span className={`text-[12px] ${activeTab === "일간" ? "text-[#00D1F2]" : "text-[#898989]"}`}>
                   일간
                 </span>
               </div>

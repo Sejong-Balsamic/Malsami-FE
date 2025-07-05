@@ -67,11 +67,7 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
                   activeTab === "주간" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
                 }`}
               >
-                <span
-                  className={`text-[12px] ${
-                    activeTab === "주간" ? "text-[#00E271]" : "text-[#898989]"
-                  }`}
-                >
+                <span className={`text-[12px] ${activeTab === "주간" ? "text-[#00E271]" : "text-[#898989]"}`}>
                   주간
                 </span>
               </div>
@@ -88,11 +84,7 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
                   activeTab === "일간" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
                 }`}
               >
-                <span
-                  className={`text-[12px] ${
-                    activeTab === "일간" ? "text-[#00E271]" : "text-[#898989]"
-                  }`}
-                >
+                <span className={`text-[12px] ${activeTab === "일간" ? "text-[#00E271]" : "text-[#898989]"}`}>
                   일간
                 </span>
               </div>
