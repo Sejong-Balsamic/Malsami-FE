@@ -103,13 +103,18 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
               className="relative flex items-center justify-center"
             >
               <div
-                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "주간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
-              />
-              <span
-                className={`font-suit-medium absolute text-[12px] ${activeTab === "주간" ? "text-white" : "text-black"}`}
+                className={`flex h-[20px] w-[37px] items-center justify-center rounded-[34px] px-[8px] py-[4px] ${
+                  activeTab === "주간" ? "bg-[#DDFBFF]" : "bg-[#EDEDED]"
+                }`}
               >
-                주간
-              </span>
+                <span
+                  className={`text-[12px] ${
+                    activeTab === "주간" ? "text-[#00D1F2]" : "text-[#898989]"
+                  }`}
+                >
+                  주간
+                </span>
+              </div>
             </button>
 
             {/* 일간 버튼 */}
@@ -119,13 +124,18 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
               className="relative ml-[4px] flex items-center justify-center"
             >
               <div
-                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "일간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
-              />
-              <span
-                className={`font-suit-medium absolute text-[12px] ${activeTab === "일간" ? "text-white" : "text-black"}`}
+                className={`flex h-[20px] w-[37px] items-center justify-center rounded-[34px] px-[8px] py-[4px] ${
+                  activeTab === "일간" ? "bg-[#DDFBFF]" : "bg-[#EDEDED]"
+                }`}
               >
-                일간
-              </span>
+                <span
+                  className={`text-[12px] ${
+                    activeTab === "일간" ? "text-[#00D1F2]" : "text-[#898989]"
+                  }`}
+                >
+                  일간
+                </span>
+              </div>
             </button>
           </div>
         </div>
