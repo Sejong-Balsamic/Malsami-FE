@@ -129,16 +129,16 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
                   {/* 좋아요 */}
                   <span className="flex items-center">
                     {question.isLiked ? (
-                      <Image src="/icons/newLikeThumbGray.svg" alt="좋아요 됨" width={16} height={16} />
+                      <Image src="/icons/newLikeThumbGreen.svg" alt="좋아요 됨" width={16} height={16} />
                     ) : (
-                      <Image src="/icons/actions/hand-thumbs-up.svg" alt="좋아요 안됨" width={16} height={16} />
+                      <Image src="/icons/newLikeThumbGray.svg" alt="좋아요 안됨" width={16} height={16} />
                     )}
                     <span className="ml-1">{question.likeCount}</span>
                   </span>
 
                   {/* 답변 수 */}
                   <span className="flex items-center">
-                    <Image src="/icons/CommentIcon.svg" alt="답변" width={16} height={16} />
+                    <Image src="/icons/newChatBubbleGreen.svg" alt="답변" width={16} height={16} />
                     <span className="ml-1">{question.answerCount || 0}</span>
                   </span>
                 </div>
