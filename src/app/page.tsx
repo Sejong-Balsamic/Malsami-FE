@@ -3,9 +3,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import LandingHeader from "@/components/header/LandingHeader";
-import AllDocumentsSection from "@/components/landing/AllDocumentsSection";
+import LandingAllDocumentsSection from "@/components/landing/LandingAllDocumentsSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
-import AllQuestionsSection from "@/components/landing/AllQuestionsSection";
+import LandingAllQuestionsSection from "@/components/landing/LandingAllQuestionsSection";
 import HotQuestionsSection from "@/components/landing/HotQuestionSection";
 import WelcomeSection from "@/components/landing/WelcomeSection";
 import { memberApi } from "@/apis/memberApi";
@@ -79,7 +79,7 @@ export default function LandingPage() {
 
         {/* 자료 게시판 섹션 */}
         <section aria-labelledby="all-documents-heading" className="mb-8">
-          <AllDocumentsSection onViewAll={() => router.push("/board/document")} />
+          <LandingAllDocumentsSection onViewAll={() => router.push("/board/document")} />
         </section>
 
         {/* HOT 인기질문 섹션 */}
@@ -93,8 +93,7 @@ export default function LandingPage() {
 
         {/* 질문 게시판 섹션 */}
         <section aria-labelledby="all-questions-heading" className="mb-8">
-          {/* AllQuestionsSection 컴포넌트로 분리 가능 */}
-          <AllQuestionsSection onViewAll={() => router.push("/board/question")} />
+          <LandingAllQuestionsSection onViewAll={() => router.push("/board/question")} />
         </section>
       </main>
 

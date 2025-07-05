@@ -51,7 +51,7 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />
-            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">HOT 인기 질문</h2>
+            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">HOT 인기 질문</h2>
           </div>
 
           {/* 주간/일간 버튼 */}
