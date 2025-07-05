@@ -90,7 +90,7 @@ export default function CardList() {
                 <span className="ml-1">{data.likeCount}</span>
               </span>
               <span className="ml-2 flex items-center">
-                <Image src="/icons/actions/comment.svg" alt="댓글" width={16} height={16} />
+                <Image src="/icons/newChatBubbleGray.svg" alt="댓글" width={16} height={16} />
                 <span className="ml-1">{data.commentCount}</span>
               </span>
             </div>

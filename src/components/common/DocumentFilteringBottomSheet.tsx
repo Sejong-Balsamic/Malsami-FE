@@ -103,7 +103,7 @@ export default function DocumentFilteringBottomSheet({
         <DrawerHeader className="sticky top-0 flex flex-row items-center justify-between rounded-t-[30px] border-b-2 border-[#F3F3F3] px-[30px] pb-[26px] pt-[10px]">
           <DrawerTitle className="font-suit-semibold text-[18px]">자료게시판 필터링</DrawerTitle>
           <DrawerClose onClick={handleClose}>
-            <IconWrapper21x21 src="/icons/actions/x-lg.svg" />
+            <IconWrapper21x21 src="/icons/x-lg.svg" />
           </DrawerClose>
         </DrawerHeader>
 

@@ -24,7 +24,7 @@ interface BottomSheetProps {
 export const BottomSheetTrigger = (
   // eslint-disable-next-line
   <button type="button" className="bg-white p-[14px] shadow-left-custom hover:bg-gray-100">
-    <IconWrapper21x21 src="/icons/actions/filter-right.svg" />
+    <IconWrapper21x21 src="/icons/filter-right.svg" />
   </button>
 );
 
@@ -52,7 +52,7 @@ export default function BottomSheet({ onReset, onConfirm, children: mainContent,
         <DrawerHeader className="sticky top-0 flex flex-row items-center justify-between rounded-t-[30px] border-b-2 border-[#F3F3F3] px-[30px] pb-[26px] pt-[10px]">
           <DrawerTitle className="font-suit-semibold text-[18px]">필터링</DrawerTitle>
           <DrawerClose onClick={handleClose}>
-            <IconWrapper21x21 src="/icons/actions/x-lg.svg" />
+            <IconWrapper21x21 src="/icons/x-lg.svg" />
           </DrawerClose>
         </DrawerHeader>
 
