@@ -98,59 +98,68 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
       </div>
 
       {/* 질문 리스트 */}
-      {loading ? (
-        <QuestionListSkeleton />
-      ) : questions.length > 0 ? (
-        <div className="w-full space-y-4">
-          {questions.map(question => (
-            <div key={question.questionPostId} className="rounded-xl border border-[#F1F1F1] bg-white p-5 shadow-md">
-              {/* 상단 부분 */}
-              <div className="mb-2">
-                <SubjectTag subjectName={question.subject || "과목 없음"} type="question" />
-              </div>
+      {(() => {
+        if (loading) {
+          return <QuestionListSkeleton />;
+        }
+        if (questions.length > 0) {
+          return (
+            <div className="w-full space-y-4">
+              {questions.map(question => (
+                <div
+                  key={question.questionPostId}
+                  className="rounded-xl border border-[#F1F1F1] bg-white p-5 shadow-md"
+                >
+                  {/* 상단 부분 */}
+                  <div className="mb-2">
+                    <SubjectTag subjectName={question.subject || "과목 없음"} type="question" />
+                  </div>
 
-              {/* 게시물 제목 */}
-              <h3 className="mb-1 text-SUIT_16 font-bold leading-tight">{question.title}</h3>
+                  {/* 게시물 제목 */}
+                  <h3 className="mb-1 text-SUIT_16 font-bold leading-tight">{question.title}</h3>
 
-              {/* 게시물 내용 */}
-              <p className="mb-4 line-clamp-2 text-SUIT_16 font-medium text-[#676767]">{question.content}</p>
+                  {/* 게시물 내용 */}
+                  <p className="mb-4 line-clamp-2 text-SUIT_16 font-medium text-[#676767]">{question.content}</p>
 
-              {/* 하단 부분 */}
-              <div className="flex items-center justify-between">
-                {/* 커스텀 태그 */}
-                <div className="flex flex-wrap gap-2">
-                  {question.customTags?.slice(0, 2).map(customTag => (
-                    <CustomTag key={customTag} tagName={customTag} />
-                  ))}
+                  {/* 하단 부분 */}
+                  <div className="flex items-center justify-between">
+                    {/* 커스텀 태그 */}
+                    <div className="flex flex-wrap gap-2">
+                      {question.customTags?.slice(0, 2).map(customTag => (
+                        <CustomTag key={customTag} tagName={customTag} />
+                      ))}
+                    </div>
+
+                    {/* 좋아요 및 댓글 */}
+                    <div className="flex items-center gap-3 text-SUIT_14 font-medium text-[#929292]">
+                      {/* 좋아요 */}
+                      <span className="flex items-center">
+                        {question.isLiked ? (
+                          <Image src="/icons/newLikeThumbGreen.svg" alt="좋아요 됨" width={16} height={16} />
+                        ) : (
+                          <Image src="/icons/newLikeThumbGray.svg" alt="좋아요 안됨" width={16} height={16} />
+                        )}
+                        <span className="ml-1">{question.likeCount}</span>
+                      </span>
+
+                      {/* 답변 수 */}
+                      <span className="flex items-center">
+                        <Image src="/icons/newChatBubbleGreen.svg" alt="답변" width={16} height={16} />
+                        <span className="ml-1">{question.answerCount || 0}</span>
+                      </span>
+                    </div>
+                  </div>
                 </div>
-
-                {/* 좋아요 및 댓글 */}
-                <div className="flex items-center gap-3 text-SUIT_14 font-medium text-[#929292]">
-                  {/* 좋아요 */}
-                  <span className="flex items-center">
-                    {question.isLiked ? (
-                      <Image src="/icons/newLikeThumbGreen.svg" alt="좋아요 됨" width={16} height={16} />
-                    ) : (
-                      <Image src="/icons/newLikeThumbGray.svg" alt="좋아요 안됨" width={16} height={16} />
-                    )}
-                    <span className="ml-1">{question.likeCount}</span>
-                  </span>
-
-                  {/* 답변 수 */}
-                  <span className="flex items-center">
-                    <Image src="/icons/newChatBubbleGreen.svg" alt="답변" width={16} height={16} />
-                    <span className="ml-1">{question.answerCount || 0}</span>
-                  </span>
-                </div>
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
-      ) : (
-        <div className="flex h-40 w-full items-center justify-center rounded-xl border border-[#F1F1F1] bg-white p-5 text-[#929292]">
-          <span>표시할 질문이 없습니다.</span>
-        </div>
-      )}
+          );
+        }
+        return (
+          <div className="flex h-40 w-full items-center justify-center rounded-xl border border-[#F1F1F1] bg-white p-5 text-[#929292]">
+            <span>표시할 질문이 없습니다.</span>
+          </div>
+        );
+      })()}
     </div>
   );
 }

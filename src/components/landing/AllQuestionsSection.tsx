@@ -75,63 +75,71 @@ export default function AllQuestionsSection({ onViewAll }: AllQuestionsSectionPr
       </div>
 
       {/* 카드 리스트 영역 */}
-      {isLoading ? (
-        <AllQuestionsSectionSkeleton />
-      ) : questions.length > 0 ? (
-        <div className="w-full rounded-lg bg-white shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]">
-          {questions.map((question, index) => (
-            <div
-              key={question.questionPostId}
-              className={`cursor-pointer px-5 py-6 ${index < questions.length - 1 ? "border-b border-[#EDEDED]" : ""}`}
-              onClick={() => handleCardClick(Number(question.questionPostId))}
-            >
-              {/* 상단 부분 - 과목 태그 */}
-              <div className="mb-3">
-                <SubjectTag subjectName={question.subject || "과목 없음"} type="question" />
-              </div>
+      {(() => {
+        if (isLoading) {
+          return <AllQuestionsSectionSkeleton />;
+        }
+        if (questions.length > 0) {
+          return (
+            <div className="w-full rounded-lg bg-white shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]">
+              {questions.map((question, index) => (
+                <button
+                  type="button"
+                  key={question.questionPostId}
+                  className={`w-full cursor-pointer px-5 py-6 text-left ${index < questions.length - 1 ? "border-b border-[#EDEDED]" : ""}`}
+                  onClick={() => handleCardClick(Number(question.questionPostId))}
+                >
+                  {/* 상단 부분 - 과목 태그 */}
+                  <div className="mb-3">
+                    <SubjectTag subjectName={question.subject || "과목 없음"} type="question" />
+                  </div>
 
-              {/* 게시물 제목 */}
-              <h3 className="mb-2 line-clamp-1 text-SUIT_16 font-bold leading-[18px] text-black">{question.title}</h3>
+                  {/* 게시물 제목 */}
+                  <h3 className="mb-2 line-clamp-1 text-SUIT_16 font-bold leading-[18px] text-black">
+                    {question.title}
+                  </h3>
 
-              {/* 게시물 내용 */}
-              <p className="mb-4 line-clamp-2 text-SUIT_14 font-medium leading-[22.4px] text-[#616161]">
-                {question.content}
-              </p>
+                  {/* 게시물 내용 */}
+                  <p className="mb-4 line-clamp-2 text-SUIT_14 font-medium leading-[22.4px] text-[#616161]">
+                    {question.content}
+                  </p>
 
-              {/* 하단 부분 */}
-              <div className="flex items-center justify-between">
-                {/* 커스텀 태그 */}
-                <div className="flex gap-2 overflow-hidden whitespace-nowrap">
-                  {question.customTags?.map((customTag, tagIndex) => (
-                    <CustomTag key={`${customTag}-${tagIndex}`} tagName={customTag} />
-                  ))}
-                </div>
+                  {/* 하단 부분 */}
+                  <div className="flex items-center justify-between">
+                    {/* 커스텀 태그 */}
+                    {/* eslint-disable-next-line react/no-array-index-key */}
+                    <div className="flex gap-2 overflow-hidden whitespace-nowrap">
+                      {question.customTags?.map((customTag, tagIndex) => (
+                        <CustomTag key={`${question.questionPostId}-tag-${tagIndex}`} tagName={customTag} />
+                      ))}
+                    </div>
 
-                {/* 좋아요 및 댓글 */}
-                <div className="flex items-center gap-[4px]">
-                  {/* 좋아요 */}
-                  <span className="flex items-center gap-[4px]">
-                    <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
-                    <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">
-                      {question.likeCount || 0}
-                    </span>
-                  </span>
+                    {/* 좋아요 및 댓글 */}
+                    <div className="flex items-center gap-[4px]">
+                      {/* 좋아요 */}
+                      <span className="flex items-center gap-[4px]">
+                        <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
+                        <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">
+                          {question.likeCount || 0}
+                        </span>
+                      </span>
 
-                  {/* 댓글 */}
-                  <span className="ml-[8px] flex items-center gap-[4px]">
-                    <Image src="/icons/newChatBubbleGray.svg" alt="답변" width={14} height={14} />
-                    <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">
-                      {question.answerCount || 0}
-                    </span>
-                  </span>
-                </div>
-              </div>
+                      {/* 댓글 */}
+                      <span className="ml-[8px] flex items-center gap-[4px]">
+                        <Image src="/icons/newChatBubbleGray.svg" alt="답변" width={14} height={14} />
+                        <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">
+                          {question.answerCount || 0}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
-      ) : (
-        renderEmptyState()
-      )}
+          );
+        }
+        return renderEmptyState();
+      })()}
     </div>
   );
 }

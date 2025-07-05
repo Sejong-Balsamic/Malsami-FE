@@ -85,7 +85,7 @@ export default function Card({
         {/* 커스텀 태그 */}
         <div className="flex gap-2 overflow-hidden whitespace-nowrap">
           {customTags &&
-            customTags.map((tag, index) => <CustomTag key={`${tag}-${index}`} tagName={tag} type={type} />)}
+            customTags.map((tag, index) => <CustomTag key={`${tag}-${index}`} tagName={tag} />)}
         </div>
 
         {/* 좋아요 수와 답변 수 표시 */}
