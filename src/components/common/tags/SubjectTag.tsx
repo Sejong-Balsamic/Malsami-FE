@@ -12,16 +12,16 @@ function SubjectTag({ subjectName, type = "question" }: SubjectTagProps) {
   const getTagStyle = () => {
     if (type === "document") {
       // 자료게시판 - 파란색 테마
-      return "bg-[#E8FBFF] text-[#00C4DF]";
+      return "bg-[#00D1F2] text-white";
     } else {
       // 질문게시판 - 연두색 테마
-      return "bg-[#E8FFF8] text-[#00E8BB]";
+      return "bg-[#00E8BB] text-white";
     }
   };
 
   return (
     <span
-      className={`inline-block w-fit overflow-hidden text-ellipsis whitespace-nowrap rounded-md px-3 py-1 text-SUIT_12 font-bold ${getTagStyle()}`}
+      className={`inline-flex justify-center items-center gap-[10px] overflow-hidden text-ellipsis whitespace-nowrap rounded-[4px] px-[6px] py-[4px] text-SUIT_12 font-bold ${getTagStyle()}`}
     >
       {displayName}
     </span>

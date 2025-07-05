@@ -139,12 +139,12 @@ const config: Config = {
         "toast-bg": "url('/image/ToastBG.png')",
       },
       fontSize: {
-        SUIT_24: ["24px", { fontWeight: "700" }], // 대제목 : Headline - 24px Bold
-        SUIT_20: ["20px", { fontWeight: "700" }], // 중제목 : Headline - 20px Bold
-        SUIT_18: ["18px", { fontWeight: "600" }], // 소제목 : Sub Heading - 18px Semibold
-        SUIT_16: ["16px", { fontWeight: "500" }], // 메인라벨 : MainLabel - 16px Medium
-        SUIT_14: ["14px", { fontWeight: "500" }], // 본문 : Paragraph - 14px Medium
-        SUIT_12: ["12px", { fontWeight: "500" }], // 바디 : Body - 12px Medium
+        SUIT_24: ["24px", { fontWeight: "700", lineHeight: "100%" }], // 대제목 : Headline - 24px Bold
+        SUIT_20: ["20px", { fontWeight: "700", lineHeight: "100%" }], // 중제목 : Headline - 20px Bold
+        SUIT_18: ["18px", { fontWeight: "600", lineHeight: "100%" }], // 소제목 : Sub Heading - 18px Semibold
+        SUIT_16: ["16px", { fontWeight: "500", lineHeight: "100%" }], // 메인라벨 : MainLabel - 16px Medium
+        SUIT_14: ["14px", { fontWeight: "500", lineHeight: "100%" }], // 본문 : Paragraph - 14px Medium
+        SUIT_12: ["12px", { fontWeight: "500", lineHeight: "100%" }], // 바디 : Body - 12px Medium
       },
     },
   },
