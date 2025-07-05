@@ -91,7 +91,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />
-            <h2 className="font-suit-medium ml-[10px] whitespace-nowrap text-[16px]">HOT 인기자료</h2>
+            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">HOT 인기자료</h2>
           </div>
 
           {/* 주간/일간 버튼 */}
@@ -136,7 +136,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
         <button
           type="button"
           onClick={onViewAll}
-          className="font-suit-medium ml-2 flex-shrink-0 whitespace-nowrap text-[14px] text-[#A7A7A7]"
+          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
         >
           전체보기
         </button>

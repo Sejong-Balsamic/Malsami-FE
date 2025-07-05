@@ -64,8 +64,8 @@ export default function DocumentBoardPage() {
 
         {/* 티어 네비게이션 섹션 */}
         <section aria-labelledby="DocBoardNavigationSection" className="mb-6">
-          <h1 className="font-suit-bold text-[16px] text-[#0CD4AE]">엽전을 모아</h1>
-          <h1 className="font-suit-bold mb-3 text-[16px] text-black">다양한 게시판들을 이용할 수 있어요.</h1>
+          <h1 className="text-SUIT_18 font-bold text-[#0CD4AE]">엽전을 모아</h1>
+          <h1 className="mb-3 text-SUIT_18 font-bold text-black">다양한 게시판들을 이용할 수 있어요.</h1>
           <TierBoardNavigateSection />
         </section>
 
