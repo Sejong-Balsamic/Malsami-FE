@@ -29,10 +29,10 @@ function QuestionCardsSkeleton() {
           </div>
 
           {/* 제목 */}
-          <div className="mb-2 h-[18px] w-full max-w-80 rounded bg-gray-200" />
+          <div className="mb-2 h-[16px] w-full max-w-80 rounded bg-gray-200" />
 
           {/* 내용 */}
-          <div className="mb-4 h-[44px] w-full rounded bg-gray-200" />
+          <div className="mb-4 h-[40px] w-full rounded bg-gray-200" />
 
           {/* 하단 부분 */}
           <div className="flex items-center justify-between">
