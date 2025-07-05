@@ -2,8 +2,21 @@ import Image from "next/image";
 import SubjectTag from "@/components/common/tags/SubjectTag";
 import CustomTag from "./tags/CustomTag";
 
+// 카드 항목의 타입 정의
+interface CardItem {
+  id: number;
+  subject: string;
+  title: string;
+  content: string;
+  customTags: string[];
+  likeCount: number;
+  commentCount: number;
+  isLiked: boolean;
+  type: "document" | "question"; // 타입을 유니언 타입으로 명시적 선언
+}
+
 // TODO: 목데이터로 삭제해야 함 + api연동 (type정의필요)
-const dats = [
+const dats: CardItem[] = [
   {
     id: 1,
     subject: "과학사",
@@ -14,6 +27,7 @@ const dats = [
     likeCount: 11,
     commentCount: 5,
     isLiked: true,
+    type: "document", // 자료게시판 타입
   },
   {
     id: 2,
@@ -24,6 +38,7 @@ const dats = [
     likeCount: 11,
     commentCount: 5,
     isLiked: false,
+    type: "document", // 자료게시판 타입
   },
   {
     id: 3,
@@ -35,6 +50,7 @@ const dats = [
     likeCount: 11,
     commentCount: 5,
     isLiked: true,
+    type: "document", // 자료게시판 타입
   },
 ];
 
@@ -45,7 +61,7 @@ export default function LandingCardList() {
         <div key={data.id} className="rounded-xl border border-[#F1F1F1] bg-white p-5 shadow-md">
           {/* 상단 부분 */}
           <div className="mb-2">
-            <SubjectTag subjectName={data.subject} />
+            <SubjectTag subjectName={data.subject} type={data.type} />
           </div>
 
           {/* 게시물 제목 */}
@@ -65,19 +81,34 @@ export default function LandingCardList() {
 
             {/* 좋아요 및 댓글 */}
             <div className="flex items-center gap-3 text-SUIT_14 font-medium text-[#929292]">
-              {/* 좋아요 */}
+              {/* 좋아요 - 자료게시판용 파란색 아이콘 사용 */}
               <span className="flex items-center">
                 {data.isLiked ? (
-                  <Image src="/icons/newLikeThumb.svg" alt="좋아요 됨" width={16} height={16} />
+                  <Image 
+                    src={data.type === "document" ? "/icons/newLikeThumbBlue.svg" : "/icons/newLikeThumbGreen.svg"} 
+                    alt="좋아요 됨" 
+                    width={14} 
+                    height={14} 
+                  />
                 ) : (
-                  <Image src="/icons/actions/hand-thumbs-up.svg" alt="좋아요 안됨" width={16} height={16} />
+                  <Image 
+                    src="/icons/newLikeThumbGray.svg" 
+                    alt="좋아요 안됨" 
+                    width={14} 
+                    height={14} 
+                  />
                 )}
                 <span className="ml-1">{data.likeCount}</span>
               </span>
 
               {/* 댓글 */}
               <span className="flex items-center">
-                <Image src="/icons/CommentIcon.svg" alt="댓글" width={16} height={16} />
+                <Image 
+                  src={data.type === "document" ? "/icons/newChatBubbleBlue.svg" : "/icons/newChatBubbleGreen.svg"} 
+                  alt="댓글" 
+                  width={14} 
+                  height={14} 
+                />
                 <span className="ml-1">{data.commentCount}</span>
               </span>
             </div>

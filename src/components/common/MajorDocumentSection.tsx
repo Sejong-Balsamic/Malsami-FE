@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import documentPostApi from "@/apis/documentPostApi";
-import Card from "@/components/common/Card";
+import DocumentCardItem from "@/components/common/DocumentCardItem";
+import { ContentType } from "@/types/api/constants/contentType";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import SectionHeader from "./SectionHeader";
 
@@ -30,15 +31,10 @@ export default function MajorDocumentSection({ majorName }: Props) {
       <SectionHeader title="내 전공 관련 자료" />
       <div className="flex gap-4 overflow-x-auto px-[20px]">
         {docs.map((d, idx) => (
-          <Card
+          <DocumentCardItem
             key={d.documentPostId}
-            number={idx + 1}
-            subject={d.subject ? d.subject : "과목 없음"}
-            title={d.title ? d.title : "제목 없음"}
-            content={d.content ? d.content : "내용 없음"}
-            likeCount={d.likeCount}
-            // customTags={d.customTags}
-            isLiked={!!d.isLiked}
+            documentPost={d}
+            contentType={ContentType.DOCUMENT}
             onClick={() => console.log("전공 자료", d.documentPostId)}
           />
         ))}

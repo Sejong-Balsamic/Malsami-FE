@@ -74,7 +74,7 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
                   customTags={documentPost.customTags}
                   isLiked={documentPost.isLiked || false}
                   likeCount={documentPost.likeCount as number}
-                  isDocumentType
+                  type="document" // 자료게시판 타입 지정
                 />
               </div>
             </SwiperSlide>

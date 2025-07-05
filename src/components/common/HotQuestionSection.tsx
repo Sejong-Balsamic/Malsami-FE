@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Card from "@/components/common/Card";
+import QuestionCardItem from "@/components/common/QuestionCardItem";
+import { ContentType } from "@/types/api/constants/contentType";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import { questionPostApi } from "@/apis/questionPostApi";
 import SectionHeader from "./SectionHeader";
@@ -35,16 +36,10 @@ export default function HotQuestionSection() {
 
       <div className="flex gap-4 overflow-x-auto px-[20px]">
         {posts.map((p, idx) => (
-          <Card
+          <QuestionCardItem
             key={p.questionPostId}
-            number={idx + 1}
-            subject={p.subject ? p.subject : "과목 없음"}
-            title={p.title ? p.title : "제목 없음"}
-            content={p.content ? p.content : "내용 없음"}
-            isCurrentlyPopular
-            likeCount={p.likeCount}
-            customTags={p.customTags} // FIXME: 현재 아무런 값도 오지 않습니다
-            isLiked={!!p.isLiked}
+            questionPost={p}
+            contentType={ContentType.QUESTION}
             onClick={() => console.log("질문 상세", p.questionPostId)}
           />
         ))}

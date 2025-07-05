@@ -56,14 +56,14 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
 
           {/* 주간/일간 버튼 */}
           <div className="mt-0 flex items-center">
-            {/* 주간 버튼 */}
+            {/* 주간 버튼  */}
             <button
               type="button"
               onClick={() => onTabChange("주간")}
               className="relative flex items-center justify-center"
             >
               <div
-                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "주간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
+                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "주간" ? "bg-[#00E8BB]" : "bg-[#e9eaed]"}`}
               />
               <span
                 className={`absolute text-SUIT_12 font-medium ${activeTab === "주간" ? "text-white" : "text-black"}`}
@@ -79,7 +79,7 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
               className="relative ml-[4px] flex items-center justify-center"
             >
               <div
-                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "일간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
+                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "일간" ? "bg-[#00E8BB]" : "bg-[#e9eaed]"}`}
               />
               <span
                 className={`absolute text-SUIT_12 font-medium ${activeTab === "일간" ? "text-white" : "text-black"}`}

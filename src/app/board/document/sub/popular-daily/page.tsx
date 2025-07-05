@@ -8,7 +8,8 @@ import Pagination from "@/components/common/Pagination";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { documentPostApi } from "@/apis/documentPostApi"; // 새로운 API 임포트
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
-import DocumentCard from "@/components/documentMain/DocumentCard";
+import DocumentCardItem from "@/components/common/DocumentCardItem";
+import { ContentType } from "@/types/api/constants/contentType";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 
 export default function PopularDaily() {
@@ -69,17 +70,10 @@ export default function PopularDaily() {
               <LoadingSpinner />
             ) : (
               docCards.map((card: DocumentPost) => (
-                <DocumentCard
+                <DocumentCardItem
                   key={card.documentPostId}
-                  documentPostId={card.documentPostId as string}
-                  subject={card.subject || "과목명"}
-                  title={card.title || "타이틀"}
-                  content={card.content || "내용이 없습니다."}
-                  documentTypes={card.documentTypes}
-                  createdDate={card.createdDate || ""}
-                  thumbnailUrl={card.thumbnailUrl || ""}
-                  viewCount={card.viewCount || 0}
-                  likeCount={card.likeCount || 0}
+                  documentPost={card}
+                  contentType={ContentType.DOCUMENT}
                 />
               ))
             )}

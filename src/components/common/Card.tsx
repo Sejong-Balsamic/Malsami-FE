@@ -34,7 +34,7 @@ interface CardProps {
   customTags?: string[]; // 버튼 텍스트 배열 (선택적)
   isLiked: boolean;
   onClick?: () => void; // 카드 클릭 시. 상세페이지로 이동
-  isDocumentType?: boolean; // 자료게시판용 카드인지 여부
+  type?: "document" | "question"; // 자료게시판 또는 질문게시판 타입
 }
 
 export default function Card({
@@ -48,8 +48,24 @@ export default function Card({
   customTags,
   isLiked,
   onClick,
-  isDocumentType = false, // 기본값은 질문게시판용 카드
+  type = "question", // 기본값은 질문게시판용 카드
 }: CardProps) {
+  // 타입에 따라 아이콘 경로 결정
+  const getLikeIconPath = () => {
+    if (isLiked) {
+      return type === "document" 
+        ? "/icons/newLikeThumbBlue.svg" 
+        : "/icons/newLikeThumbGreen.svg";
+    }
+    return "/icons/newLikeThumbGray.svg";
+  };
+
+  const getCommentIconPath = () => {
+    return type === "document"
+      ? "/icons/newChatBubbleBlue.svg"
+      : "/icons/newChatBubbleGreen.svg";
+  };
+
   return (
     <article
       className="z-0 flex h-[194px] w-[261px] flex-col justify-between rounded-[20px] bg-white p-[20px] shadow-md hover:shadow-xl"
@@ -60,7 +76,7 @@ export default function Card({
         <div className="mb-4 flex">
           {number && <span className="mr-3 text-SUIT_20 font-bold">{number}</span>}
           <div className="flex gap-2.5">
-            <SubjectTag subjectName={subject} type={isDocumentType ? "document" : "question"} />
+            <SubjectTag subjectName={subject} type={type} />
             {isCurrentlyPopular && <HotTag />}
           </div>
         </div>
@@ -103,18 +119,14 @@ export default function Card({
         <div className="ml-auto flex items-center gap-1.5 text-SUIT_14 text-[#929292]">
           {/* 좋아요 */}
           <span className="flex items-center gap-1">
-            {isLiked ? (
-              <Image src="/icons/actions/hand-thumbs-up-fill.svg" alt="좋아요" width={16} height={16} />
-            ) : (
-              <Image src="/icons/actions/hand-thumbs-up.svg" alt="좋아요" width={16} height={16} />
-            )}
+            <Image src={getLikeIconPath()} alt="좋아요" width={16} height={16} />
             {likeCount}
           </span>
 
           {/* 답변 수 (질문 카드인 경우에만 표시) */}
           {answerCount !== undefined && (
             <span className="flex items-center gap-1">
-              <Image src="/icons/actions/comment.svg" alt="답변" width={16} height={16} />
+              <Image src={getCommentIconPath()} alt="답변" width={16} height={16} />
               {answerCount}
             </span>
           )}

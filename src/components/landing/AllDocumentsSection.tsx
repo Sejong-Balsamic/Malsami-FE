@@ -33,7 +33,7 @@ export default function AllDocumentsSection({ onViewAll }: AllDocumentsSectionPr
   return (
     <LandingSectionBase
       title="전체 자료 게시판"
-      iconSrc="/icons/academicCap.svg"
+      iconSrc="/icons/openFileFolder.svg"
       iconAlt="자료"
       onViewAll={onViewAll}
       isLoading={isLoading}

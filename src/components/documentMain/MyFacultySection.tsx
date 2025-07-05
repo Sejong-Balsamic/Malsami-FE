@@ -66,7 +66,7 @@ export default function MyFacultySection({ facultys }: { facultys: string[] }) {
       {/* 콘텐츠 제목 */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center">
-          <Image src="/icons/academicCap.svg" alt="내 전공" width={18} height={18} />
+          <Image src="/icons/openFileFolder.svg" alt="내 전공" width={24} height={24} />
           <h2 className="font-suit-medium ml-[10px] text-[16px]">내 전공 관련 자료</h2>
         </div>
         <button

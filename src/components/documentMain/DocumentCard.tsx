@@ -89,13 +89,13 @@ export default function DocumentCard({
         <div className="flex items-center">
           {/* 좋아요 */}
           <div className="flex items-center">
-            <Image src="/icons/newLikeThumb.svg" alt="좋아요" width={14} height={14} />
+            <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
             <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">{likeCount || 0}</span>
           </div>
 
           {/* 조회수 */}
           <div className="ml-4 flex items-center">
-            <Image src="/icons/ViewCountIcon.svg" alt="조회수" width={14} height={14} />
+            <Image src="/icons/eyeball.svg" alt="조회수" width={14} height={14} />
             <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">{viewCount || 0}</span>
           </div>
         </div>
@@ -171,13 +171,13 @@ export default function DocumentCard({
       <div className="flex items-center">
         {/* 좋아요 */}
         <div className="flex items-center">
-          <Image src="/icons/newLikeThumb.svg" alt="좋아요" width={14} height={14} />
+          <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
           <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">{likeCount || 0}</span>
         </div>
 
         {/* 조회수 */}
         <div className="ml-4 flex items-center">
-          <Image src="/icons/ViewCountIcon.svg" alt="조회수" width={14} height={14} />
+          <Image src="/icons/eyeball.svg" alt="조회수" width={14} height={14} />
           <span className="ml-1 text-SUIT_12 font-medium text-ui-muted">{viewCount || 0}</span>
         </div>
       </div>

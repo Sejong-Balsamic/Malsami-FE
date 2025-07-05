@@ -77,13 +77,13 @@ function QuestionCard({ question }: QuestionCardProps) {
         <div className="flex items-center">
           {/* 좋아요 */}
           <div className="flex items-center">
-            <Image src="/icons/newLikeThumb.svg" alt="좋아요" width={14} height={14} />
+            <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
             <span className="ml-1 text-SUIT_12 font-medium text-[#C5C5C5]">{question.likeCount || 0}</span>
           </div>
 
           {/* 답변 개수 */}
           <div className="ml-4 flex items-center">
-            <Image src="/icons/newChatBubble.svg" alt="답변" width={14} height={14} />
+            <Image src="/icons/newChatBubbleGray.svg" alt="답변" width={14} height={14} />
             <span className="ml-1 text-SUIT_12 font-medium text-[#C5C5C5]">{question.answerCount || 0}</span>
           </div>
         </div>
@@ -179,13 +179,13 @@ function QuestionCard({ question }: QuestionCardProps) {
       <div className="flex items-center">
         {/* 좋아요 */}
         <div className="flex items-center">
-          <Image src="/icons/newLikeThumb.svg" alt="좋아요" width={14} height={14} />
+          <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
           <span className="ml-1 text-SUIT_12 font-medium text-[#C5C5C5]">{question.likeCount || 0}</span>
         </div>
 
         {/* 답변 개수 */}
         <div className="ml-4 flex items-center">
-          <Image src="/icons/newChatBubble.svg" alt="답변" width={14} height={14} />
+          <Image src="/icons/newChatBubbleGray.svg" alt="답변" width={14} height={14} />
           <span className="ml-1 text-SUIT_12 font-medium text-[#C5C5C5]">{question.answerCount || 0}</span>
         </div>
       </div>
