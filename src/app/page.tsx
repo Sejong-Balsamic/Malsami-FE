@@ -77,7 +77,7 @@ export default function LandingPage() {
           />
         </section>
 
-        {/* 전체 자료 게시판 섹션 */}
+        {/* 자료 게시판 섹션 */}
         <section aria-labelledby="all-documents-heading" className="mb-8">
           <AllDocumentsSection onViewAll={() => router.push("/board/document")} />
         </section>
@@ -91,7 +91,7 @@ export default function LandingPage() {
           />
         </section>
 
-        {/* 전체 질문 게시판 섹션 */}
+        {/* 질문 게시판 섹션 */}
         <section aria-labelledby="all-questions-heading" className="mb-8">
           {/* AllQuestionsSection 컴포넌트로 분리 가능 */}
           <AllQuestionsSection onViewAll={() => router.push("/board/question")} />

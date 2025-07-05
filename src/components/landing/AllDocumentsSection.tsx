@@ -103,7 +103,7 @@ export default function AllDocumentsSection({ onViewAll }: AllDocumentsSectionPr
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center">
           <Image src="/icons/openFileFolder.svg" alt="자료" width={18} height={18} />
-          <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">전체 자료 게시판</h2>
+          <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">자료 게시판</h2>
         </div>
 
         {/* 전체보기 링크 */}
