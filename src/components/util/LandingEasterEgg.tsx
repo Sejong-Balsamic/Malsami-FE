@@ -19,7 +19,7 @@ function LandingEasterEgg({ isActive, onClose }: LandingEasterEggProps) {
         <Image src="/image/EasterEgg.svg" alt="easteregg" width={300} height={220} />
         <button
           type="button"
-          className="font-pretendard-semibold mt-4 w-full rounded-lg bg-custom-blue-400 px-4 py-2 text-white hover:bg-custom-blue-500"
+          className="font-pretendard-semibold bg-custom-blue-400 hover:bg-custom-blue-500 mt-4 w-full rounded-lg px-4 py-2 text-white"
           onClick={onClose} // 닫기 버튼
         >
           🎉 엽전 획득! 🎉

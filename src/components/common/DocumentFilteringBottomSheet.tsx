@@ -23,6 +23,8 @@ interface DocumentFilteringBottomSheetProps {
   onConfirm: (filters: Partial<DocumentCommand>) => void;
   trigger: React.ReactNode;
   currentFiltering: Partial<DocumentCommand>;
+  // eslint-disable-next-line react/require-default-props
+  activeColor?: string;
 }
 
 const SORT_OPTIONS = [
@@ -42,6 +44,7 @@ export default function DocumentFilteringBottomSheet({
   onConfirm,
   trigger,
   currentFiltering,
+  activeColor = "#5EF48D", // 기본값 제공 (함수 매개변수에서)
 }: DocumentFilteringBottomSheetProps) {
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.bottomSheet.documentFilteringOpen);
@@ -100,7 +103,7 @@ export default function DocumentFilteringBottomSheet({
         <DrawerHeader className="sticky top-0 flex flex-row items-center justify-between rounded-t-[30px] border-b-2 border-[#F3F3F3] px-[30px] pb-[26px] pt-[10px]">
           <DrawerTitle className="font-suit-semibold text-[18px]">자료게시판 필터링</DrawerTitle>
           <DrawerClose onClick={handleClose}>
-            <IconWrapper21x21 src="/icons/actions/x-lg.svg" />
+            <IconWrapper21x21 src="/icons/x-lg.svg" />
           </DrawerClose>
         </DrawerHeader>
 
@@ -117,6 +120,7 @@ export default function DocumentFilteringBottomSheet({
                     label={option.label}
                     isSelected={selectedSort === option.value}
                     onClick={() => handleSortChange(option.value)}
+                    activeColor={activeColor}
                   />
                 ))}
               </div>
@@ -134,6 +138,7 @@ export default function DocumentFilteringBottomSheet({
                     label={option.label}
                     isSelected={selectedDocumentTypes.includes(option.value)}
                     onClick={() => handleDocumentTypeToggle(option.value)}
+                    activeColor={activeColor}
                   />
                 ))}
               </div>
@@ -144,7 +149,7 @@ export default function DocumentFilteringBottomSheet({
         {/* 하단: 초기화 버튼, 확인 버튼 */}
         <div className="sticky bottom-0 flex gap-4 p-6">
           <FilteringButton type="refresh" onClick={handleReset} />
-          <FilteringButton type="submit" onClick={handleConfirm} />
+          <FilteringButton type="submit" onClick={handleConfirm} activeColor={activeColor} />
         </div>
       </DrawerContent>
     </Drawer>

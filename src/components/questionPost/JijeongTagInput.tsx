@@ -18,7 +18,7 @@ export default function JiJeongTagInput({ tags, onOpenModal }: JiJeongTagInputPr
       {/* 태그 리스트 */}
       <div className="flex flex-wrap gap-1.5">
         {tags.map(tag => (
-          <span key={tag} className="font-pretendard-bold rounded-full bg-custom-blue-500 px-3 py-1 text-xs text-white">
+          <span key={tag} className="font-pretendard-bold bg-custom-blue-500 rounded-full px-3 py-1 text-xs text-white">
             {tag}
           </span>
         ))}

@@ -6,7 +6,7 @@ import CommonSearchBar from "@/components/search/CommonSearchBar";
 import HotQuestionSection from "@/components/landing/HotQuestionSection";
 import MajorQuestionSection from "@/components/landing/MajorQuestionSection";
 import BountyQuestionSection from "@/components/landing/BountyQuestionSection";
-import AllQuestionListSection from "@/components/landing/AllQuestionListSection";
+import QuestionListSection from "@/components/questionMain/QuestionListSection";
 import UploadQuestionFAB from "@/components/common/FABs/UploadQuestionFAB";
 import { useState } from "react";
 import { LEFT_ITEM } from "@/types/header";
@@ -49,7 +49,7 @@ export default function QuestionPage() {
 
         {/* 전체 질문 섹션 */}
         <section aria-labelledby="all-questions-heading" className="mb-8">
-          <AllQuestionListSection onViewAll={() => router.push("/board/question/all")} />
+          <QuestionListSection onViewAll={() => router.push("/board/question/all")} />
         </section>
 
         {/* 내 전공관련 질문 섹션 */}

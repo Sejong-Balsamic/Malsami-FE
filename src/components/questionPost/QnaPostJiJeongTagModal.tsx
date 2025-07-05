@@ -35,7 +35,7 @@ function QnaPostJiJeongTagModal({ isVisible, onClose, selectedTags, onSubmitTags
             type="button"
             key={tag}
             onClick={() => toggleTag(tag)}
-            className={`font-pretendard-bold rounded-[40px] border-2 border-custom-blue-500 px-3 py-1 text-xs ${
+            className={`font-pretendard-bold border-custom-blue-500 rounded-[40px] border-2 px-3 py-1 text-xs ${
               tags.includes(tag) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
             }`}
           >

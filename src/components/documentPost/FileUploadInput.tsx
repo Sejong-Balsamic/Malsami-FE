@@ -12,7 +12,7 @@ export default function FileUploadInput({ mediaFiles, onFileChange, onFileDelete
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <span className="font-pretendard-semibold mr-1.5 text-lg">파일</span>
-          <span className="font-pretendard-medium text-xs text-custom-blue-500">
+          <span className="font-pretendard-medium text-custom-blue-500 text-xs">
             여러장의 이미지는 zip파일로 업로드됩니다.
           </span>
         </div>

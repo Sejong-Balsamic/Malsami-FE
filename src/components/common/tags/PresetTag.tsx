@@ -10,7 +10,7 @@ function PresetTag({ label, title, style, onClick }: PresetTagProps) {
   const displayLabel = label || title || "";
   return (
     <span
-      className="font-pretendard-medium mr-1 inline-block cursor-pointer rounded-[33px] bg-custom-blue-500 px-3 py-1 text-xs text-white"
+      className="font-pretendard-medium bg-custom-blue-500 mr-1 inline-block cursor-pointer rounded-[33px] px-3 py-1 text-xs text-white"
       style={style}
       onClick={onClick}
       onKeyDown={e => {

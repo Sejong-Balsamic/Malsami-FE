@@ -98,7 +98,7 @@ export default function DocPopularContainer({ allPopularItems }: DocPopularConta
           }}
         >
           {/* 순위 */}
-          <span className="font-pretendard-bold mr-2 flex items-center text-custom-blue-500">
+          <span className="font-pretendard-bold text-custom-blue-500 mr-2 flex items-center">
             <span className="block w-2">{item.rank}</span>
             <span className="text-xs">위</span>
           </span>

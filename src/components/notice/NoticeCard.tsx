@@ -51,7 +51,7 @@ export default function NoticeCard({ noticePost }: NoticeCardProps) {
       <div className="flex items-center">
         <div className="flex items-center gap-[6px]">
           {/* 좋아요 SVG 아이콘 */}
-          <Image src="/icons/handThumbsUpBlue.svg" alt="좋아요" width={14} height={14} className="flex-shrink-0" />
+          <Image src="/icons/newLikeThumbGreen.svg" alt="좋아요" width={14} height={14} className="flex-shrink-0" />
 
           {/* 좋아요 개수 - 무조건 파랑색 */}
           <span className="font-suit-medium truncate text-sm leading-5 text-[#08E4BA]">

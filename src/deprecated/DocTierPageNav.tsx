@@ -14,7 +14,7 @@ function DocTierPageNav({ subTitle }: { subTitle: string }) {
         {/* 제목 */}
         <div className="text-center">
           <h1 className="font-pretendard-bold text-xl">자료 게시판</h1>
-          <span className="font-pretendard-regular text-xs text-custom-blue-500">{subTitle}</span>
+          <span className="font-pretendard-regular text-custom-blue-500 text-xs">{subTitle}</span>
         </div>
 
         {/* 검색 아이콘 */}

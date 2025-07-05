@@ -45,11 +45,11 @@ function CategoryCard({ title, color, subject, likeCount, commentCount }: Catego
           <div className="font-pretendard-semibold flex flex-row justify-end text-xs text-[#D0D0D0]">
             <div>
               <span className="mr-1.5">
-                <Image src="/icons/LikeIcon.svg" width={14} height={14} alt="LikeIcon" />
+                <Image src="/icons/newLikeThumbBlue.svg" width={14} height={14} alt="LikeIcon" />
                 <span className="font-pretendard-medium ml-1 text-xs">{likeCount}</span>
               </span>
               <span>
-                <Image src="/icons/CommentIcon.svg" width={14} height={14} alt="CommentIcon" />
+                <Image src="/icons/newChatBubbleBlue.svg" width={14} height={14} alt="CommentIcon" />
 
                 <span className="font-pretendard-medium ml-1 text-xs">{commentCount}</span>
               </span>

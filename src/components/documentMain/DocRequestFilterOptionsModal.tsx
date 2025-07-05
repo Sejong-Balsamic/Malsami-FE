@@ -120,7 +120,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                         onKeyDown={e => e.key === "Enter" && setSortType(docSortType as SortType)}
                       >
                         {sortType === docSortType ? (
-                          <span className="font-pretendard-bold text-base text-custom-blue-500">
+                          <span className="font-pretendard-bold text-custom-blue-500 text-base">
                             {sortTypeLabels[docSortType as SortType]}
                           </span>
                         ) : (
@@ -153,7 +153,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                               : [...prevTags, docTypeKey].slice(0, 2), // 태그 선택 2개만 가능하게
                         )
                       }
-                      className={`font-pretendard-bold rounded-[40px] border-2 border-custom-blue-500 px-3 py-1 text-xs ${
+                      className={`font-pretendard-bold border-custom-blue-500 rounded-[40px] border-2 px-3 py-1 text-xs ${
                         docTypes.includes(docTypeKey) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
                       }`}
                     >
@@ -173,7 +173,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                         onKeyDown={e => e.key === "Enter" && setFaculty(option)}
                       >
                         {faculty === option ? (
-                          <span className="font-pretendard-bold text-base text-custom-blue-500">{option}</span>
+                          <span className="font-pretendard-bold text-custom-blue-500 text-base">{option}</span>
                         ) : (
                           <span className="font-pretendard-medium text-base">{option}</span>
                         )}

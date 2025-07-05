@@ -48,7 +48,7 @@ export default function SearchDocCard({
           {/* 태그 및 기타 정보 */}
           <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
             <div className="flex flex-wrap items-center">
-              <span className="font-pretendard-medium mr-3.5 text-xs text-custom-blue-500">
+              <span className="font-pretendard-medium text-custom-blue-500 mr-3.5 text-xs">
                 {PostTiersKeys.includes(postTier as PostTiersKey)
                   ? `${PostTiers[postTier as PostTiersKey]} 게시판`
                   : "알 수 없는 게시판"}

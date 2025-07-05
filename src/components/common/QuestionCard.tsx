@@ -64,11 +64,11 @@ function QuestionCard({
             <YeopjeonTag point={rewardYeopjeon} />
             <div>
               <span className="mr-1.5">
-                <Image src="/icons/LikeIcon.svg" width={14} height={14} alt="LikeIcon" />
+                <Image src="/icons/newLikeThumbGreen.svg" width={14} height={14} alt="LikeIcon" />
                 <span className="font-pretendard-medium ml-1 text-xs">{likeCount}</span>
               </span>
               <span>
-                <Image src="/icons/CommentIcon.svg" width={14} height={14} alt="CommentIcon" />
+                <Image src="/icons/newChatBubbleGreen.svg" width={14} height={14} alt="CommentIcon" />
                 <span className="font-pretendard-medium ml-1 text-xs">{commentCount}</span>
               </span>
             </div>

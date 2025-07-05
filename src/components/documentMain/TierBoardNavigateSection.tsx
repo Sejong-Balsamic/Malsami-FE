@@ -35,7 +35,6 @@ export default function TierBoardNavigateSection() {
 
   return (
     <div className="flex justify-between">
-      {/* PostTiersKeys 배열로 반복문을 사용해 카드들을 렌더링 */}
       {PostTiersKeys.map(tier => (
         <TierBoardNavigateCard
           key={tier}
