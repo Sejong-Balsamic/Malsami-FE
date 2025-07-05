@@ -103,7 +103,7 @@ export default function AllQuestionsSection({ onViewAll }: AllQuestionsSectionPr
                 {/* 커스텀 태그 */}
                 <div className="flex gap-2 overflow-hidden whitespace-nowrap">
                   {question.customTags?.map((customTag, tagIndex) => (
-                    <CustomTag key={`${customTag}-${tagIndex}`} tagName={customTag} type="question" />
+                    <CustomTag key={`${customTag}-${tagIndex}`} tagName={customTag} />
                   ))}
                 </div>
 

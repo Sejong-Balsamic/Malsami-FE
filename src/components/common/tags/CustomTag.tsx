@@ -2,10 +2,9 @@ import React from "react";
 
 type CustomTagProps = {
   tagName: string;
-  type?: "document" | "question";
 };
 
-function CustomTag({ tagName, type = "question" }: CustomTagProps) {
+function CustomTag({ tagName }: CustomTagProps) {
   // 태그명이 너무 길면 줄임표 처리 (6글자 제한)
   const displayName = tagName.length > 6 ? `${tagName.slice(0, 6)}..` : tagName;
 

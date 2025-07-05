@@ -145,7 +145,7 @@ export default function AllDocumentsSection({ onViewAll }: AllDocumentsSectionPr
                 {/* 커스텀 태그 */}
                 <div className="flex gap-2 overflow-hidden whitespace-nowrap">
                   {document.customTags.map((customTag, tagIndex) => (
-                    <CustomTag key={`${customTag}-${tagIndex}`} tagName={customTag} type="document" />
+                    <CustomTag key={`${customTag}-${tagIndex}`} tagName={customTag} />
                   ))}
                 </div>
 
