@@ -82,42 +82,21 @@ export default function Card({
       </h2>
 
       {/* 본문 내용 */}
-      <p className="mt-[8px] mx-[16px] text-[14px] font-normal leading-[19.6px] text-[###616161] line-clamp-2">
+      <p className="mt-[8px] mx-[16px] text-[14px] font-normal leading-[19.6px] text-[#616161] line-clamp-2">
         {content}
       </p>
 
       {/* 하단 Row: 커스텀 태그 + 좋아요/답변 */}
       <div className="absolute bottom-[16px] left-[16px] right-[16px] flex items-center justify-between">
         {/* 커스텀 태그 */}
-        <div className="flex gap-2">
-          {customTags && customTags.length > 0 && (
-            <>
-              {/* 태그들의 총 길이를 계산해서 표시 방식 결정 */}
-              {(() => {
-                // 태그가 1개만 있다면 그대로 표시
-                if (customTags.length === 1) {
-                  return <CustomTag tagName={customTags[0]} type={type} />;
-                }
-                
-                // 태그가 2개 이상이면 첫 번째만 표시하고 +N으로 나머지 표시
-                return (
-                  <>
-                    <CustomTag tagName={customTags[0]} type={type} />
-                    <span 
-                      className="inline-flex items-center rounded-full border px-[8px] py-[4px] text-[14px] font-bold leading-[14px]"
-                      style={{ borderColor: mainColor, color: mainColor }}
-                    >
-                      +{customTags.length - 1}
-                    </span>
-                  </>
-                );
-              })()}
-            </>
-          )}
+        <div className="flex overflow-hidden whitespace-nowrap gap-2">
+          {customTags && customTags.map((tag, index) => (
+            <CustomTag key={`${tag}-${index}`} tagName={tag} type={type} />
+          ))}
         </div>
 
         {/* 좋아요 수와 답변 수 표시 */}
-        <div className="flex items-center gap-[4px]">
+        <div className="flex items-center gap-[4px] ml-2 flex-shrink-0">
           {/* 좋아요 */}
           <span className="flex items-center gap-[4px]">
             <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
