@@ -6,6 +6,7 @@ import SubjectTag from "@/components/common/tags/SubjectTag";
 import CustomTag from "@/components/common/tags/CustomTag";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
+import { useRouter } from "next/navigation";
 
 interface AllQuestionsSectionProps {
   onViewAll: () => void;
@@ -14,35 +15,43 @@ interface AllQuestionsSectionProps {
 // 스켈레톤 컴포넌트
 function QuestionCardsSkeleton() {
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full rounded-lg bg-white shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]">
       {Array.from({ length: 3 }, (_, index) => (
         <div
           key={`skeleton-${index}`}
-          className="animate-pulse rounded-xl border border-[#F1F1F1] bg-white p-5 shadow-md"
+          className={`animate-pulse px-5 py-6 ${
+            index < 2 ? "border-b border-[#EDEDED]" : ""
+          }`}
         >
           {/* 상단 부분 - 과목 태그 */}
-          <div className="mb-2">
-            <div className="h-6 w-24 rounded-md bg-gray-200" />
+          <div className="mb-3">
+            <div className="h-7 w-24 rounded-md bg-gray-200" />
           </div>
 
           {/* 제목 */}
-          <div className="mb-1 h-6 w-full max-w-80 rounded bg-gray-200" />
+          <div className="mb-2 h-[18px] w-full max-w-80 rounded bg-gray-200" />
 
           {/* 내용 */}
-          <div className="mb-4 h-16 w-full rounded bg-gray-200" />
+          <div className="mb-4 h-[44px] w-full rounded bg-gray-200" />
 
           {/* 하단 부분 */}
           <div className="flex items-center justify-between">
             {/* 커스텀 태그들 */}
             <div className="flex gap-2">
-              <div className="h-6 w-20 rounded-full bg-gray-200" />
-              <div className="h-6 w-20 rounded-full bg-gray-200" />
+              <div className="h-7 w-20 rounded-full bg-gray-200" />
+              <div className="h-7 w-20 rounded-full bg-gray-200" />
             </div>
 
             {/* 좋아요, 댓글 */}
-            <div className="flex items-center gap-3">
-              <div className="h-4 w-10 rounded bg-gray-200" />
-              <div className="h-4 w-10 rounded bg-gray-200" />
+            <div className="flex items-center gap-4">
+              <div className="flex items-center gap-1">
+                <div className="h-4 w-4 rounded bg-gray-200" />
+                <div className="h-3 w-6 rounded bg-gray-200" />
+              </div>
+              <div className="flex items-center gap-1">
+                <div className="h-4 w-4 rounded bg-gray-200" />
+                <div className="h-3 w-6 rounded bg-gray-200" />
+              </div>
             </div>
           </div>
         </div>
@@ -54,6 +63,7 @@ function QuestionCardsSkeleton() {
 export default function AllQuestionsSection({ onViewAll }: AllQuestionsSectionProps) {
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,9 +90,14 @@ export default function AllQuestionsSection({ onViewAll }: AllQuestionsSectionPr
     fetchData();
   }, []);
 
+  // 질문 상세 페이지로 이동
+  const handleCardClick = (questionId: number) => {
+    router.push(`/board/question/detail/${questionId}`);
+  };
+
   // 데이터가 없는 경우 빈 상태 처리
   const renderEmptyState = () => (
-    <div className="flex h-40 w-full items-center justify-center rounded-xl border border-[#F1F1F1] bg-white p-5 text-[#929292]">
+    <div className="flex h-40 w-full items-center justify-center rounded-lg border border-[#F1F1F1] bg-white p-5 text-[#929292] shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]">
       표시할 질문이 없습니다.
     </div>
   );
@@ -110,45 +125,51 @@ export default function AllQuestionsSection({ onViewAll }: AllQuestionsSectionPr
       {isLoading ? (
         <QuestionCardsSkeleton />
       ) : questions.length > 0 ? (
-        <div className="w-full space-y-4">
-          {questions.map(question => (
-            <div key={question.questionPostId} className="rounded-xl border border-[#F1F1F1] bg-white p-5 shadow-md">
-              {/* 상단 부분 */}
-              <div className="mb-2">
+        <div className="w-full rounded-lg bg-white shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]">
+          {questions.map((question, index) => (
+            <div
+              key={question.questionPostId}
+              className={`cursor-pointer px-5 py-6 ${
+                index < questions.length - 1 ? "border-b border-[#EDEDED]" : ""
+              }`}
+              onClick={() => handleCardClick(Number(question.questionPostId))}
+            >
+              {/* 상단 부분 - 과목 태그 */}
+              <div className="mb-3">
                 <SubjectTag subjectName={question.subject || "과목 없음"} type="question" />
               </div>
 
               {/* 게시물 제목 */}
-              <h3 className="mb-1 text-SUIT_16 font-bold leading-tight">{question.title}</h3>
+              <h3 className="mb-2 line-clamp-1 text-SUIT_16 font-bold leading-[18px] text-black">
+                {question.title}
+              </h3>
 
               {/* 게시물 내용 */}
-              <p className="mb-4 line-clamp-2 text-SUIT_16 font-medium text-[#676767]">{question.content}</p>
+              <p className="mb-4 line-clamp-2 text-SUIT_14 font-medium leading-[22.4px] text-[#616161]">
+                {question.content}
+              </p>
 
               {/* 하단 부분 */}
               <div className="flex items-center justify-between">
                 {/* 커스텀 태그 */}
-                <div className="flex flex-wrap gap-2">
-                  {question.customTags?.slice(0, 2).map(customTag => (
-                    <CustomTag key={customTag} tagName={customTag} />
+                <div className="flex overflow-hidden whitespace-nowrap gap-2">
+                  {question.customTags?.map((customTag, tagIndex) => (
+                    <CustomTag key={`${customTag}-${tagIndex}`} tagName={customTag} type="question" />
                   ))}
                 </div>
 
                 {/* 좋아요 및 댓글 */}
-                <div className="flex items-center gap-3 text-SUIT_14 font-medium text-[#929292]">
+                <div className="flex items-center gap-[4px]">
                   {/* 좋아요 */}
-                  <span className="flex items-center">
-                    {question.isLiked ? (
-                      <Image src="/icons/newLikeThumbGreen.svg" alt="좋아요 됨" width={16} height={16} />
-                    ) : (
-                      <Image src="/icons/newLikeThumbGray.svg" alt="좋아요 안됨" width={16} height={16} />
-                    )}
-                    <span className="ml-1">{question.likeCount}</span>
+                  <span className="flex items-center gap-[4px]">
+                    <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
+                    <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">{question.likeCount || 0}</span>
                   </span>
 
                   {/* 댓글 */}
-                  <span className="flex items-center">
-                    <Image src="/icons/newChatBubbleGreen.svg" alt="답변" width={16} height={16} />
-                    <span className="ml-1">{question.answerCount || 0}</span>
+                  <span className="flex items-center gap-[4px] ml-[8px]">
+                    <Image src="/icons/newChatBubbleGray.svg" alt="답변" width={14} height={14} />
+                    <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">{question.answerCount || 0}</span>
                   </span>
                 </div>
               </div>
