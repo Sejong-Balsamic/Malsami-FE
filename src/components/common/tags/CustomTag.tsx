@@ -2,14 +2,33 @@ import React from "react";
 
 type CustomTagProps = {
   tagName: string;
+  type?: "document" | "question";
 };
 
-function CustomTag({ tagName }: CustomTagProps) {
-  // 태그명이 너무 길면 줄임표 처리 (8글자 제한)
-  const displayName = tagName.length > 8 ? `${tagName.slice(0, 8)}..` : tagName;
+function CustomTag({ tagName, type = "question" }: CustomTagProps) {
+  // 태그명이 너무 길면 줄임표 처리 (6글자 제한)
+  const displayName = tagName.length > 6 ? `${tagName.slice(0, 6)}..` : tagName;
 
   return (
-    <span className="inline-block overflow-hidden text-ellipsis whitespace-nowrap rounded-full bg-[#F0F0F0] px-3 py-1 text-SUIT_12 font-medium leading-[18px] text-[#777777]">
+    <span
+      className="
+        inline-flex
+        items-center
+        justify-center
+        rounded-[34px]
+        bg-[#EDEDED]
+        text-[#898989]
+        text-[12px]
+        font-medium
+        leading-[12px]
+        h-[28px]
+        px-[12px]
+        py-[8px]
+        gap-[4px]
+        flex-shrink-0
+        whitespace-nowrap
+      "
+    >
       {displayName}
     </span>
   );
