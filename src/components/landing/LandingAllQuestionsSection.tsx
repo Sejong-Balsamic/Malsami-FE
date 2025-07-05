@@ -142,4 +142,4 @@ export default function LandingAllQuestionsSection({ onViewAll }: LandingAllQues
       })()}
     </div>
   );
-} 
+}

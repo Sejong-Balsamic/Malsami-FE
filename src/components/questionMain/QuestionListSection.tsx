@@ -142,4 +142,4 @@ export default function QuestionListSection({ onViewAll }: QuestionListSectionPr
       })()}
     </div>
   );
-} 
+}
