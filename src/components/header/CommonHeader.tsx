@@ -14,6 +14,8 @@ interface CommonHeaderProps {
   // eslint-disable-next-line react/require-default-props
   onRightClick?: () => void;
   // eslint-disable-next-line react/require-default-props
+  onLeftClick?: () => void;
+  // eslint-disable-next-line react/require-default-props
   children?: ReactNode;
 }
 
@@ -21,10 +23,17 @@ export default function CommonHeader({
   title,
   rightType = RIGHT_ITEM.NONE,
   onRightClick,
+  onLeftClick,
   children,
 }: CommonHeaderProps) {
   const router = useRouter();
-  const handleLeftClick = () => router.back();
+  const handleLeftClick = () => {
+    if (onLeftClick) {
+      onLeftClick();
+    } else {
+      router.back();
+    }
+  };
   const handleRightClick = () => onRightClick?.();
 
   return (

@@ -101,13 +101,13 @@
 
   /* SUIT 폰트 클래스 */
   .font-suit-medium {
-    @apply font-suit font-medium;
+    @apply font-suit font-medium leading-[100%];
   }
   .font-suit-semibold {
-    @apply font-suit font-semibold;
+    @apply font-suit font-semibold leading-[100%];
   }
   .font-suit-bold {
-    @apply font-suit font-bold;
+    @apply font-suit font-bold leading-[100%];
   }
 
   /* 랜딩페이지 로고 폰트 클래스 */
