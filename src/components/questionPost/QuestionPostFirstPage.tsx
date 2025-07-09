@@ -12,8 +12,10 @@ function QuestionPostFirstPage({
   onCustomTagsSubmit,
   onNextPage,
 }: FirstPageProps) {
-  // 실제 선택된 과목인지 확인하는 상태
-  const [isSubjectSelected, setIsSubjectSelected] = useState(false);
+  // 이미 과목이 선택되어 있으면 두번째 페이지엣 뒤로가기로 돌아왔을 때도 유지.
+  const [isSubjectSelected, setIsSubjectSelected] = useState(() => subjects.includes(formData.subject));
+  const isSubjectCompleted = !!formData.subject && isSubjectSelected;
+  const isJijeongTagsCompleted = isSubjectCompleted && formData.questionPresetTags.length > 0;
 
   // 태그 삭제 처리
   const handleRemoveTag = (tag: string) => {
@@ -28,15 +30,11 @@ function QuestionPostFirstPage({
     setIsSubjectSelected(subjects.includes(subject));
   };
 
-  // 과목 선택 핸들러 (드롭다운에서 선택했을 때)
+  // 과목 선택 핸들러
   const handleSubjectSelect = (subject: string) => {
     onSubjectChange(subject);
     setIsSubjectSelected(true);
   };
-
-  // 완료된 단계를 확인
-  const isSubjectCompleted = !!formData.subject && isSubjectSelected;
-  const isJijeongTagsCompleted = isSubjectCompleted && formData.questionPresetTags.length > 0;
 
   return (
     <div className="flex flex-1 flex-col">
@@ -51,13 +49,11 @@ function QuestionPostFirstPage({
 
         {/* 자유 태그 섹션 - 기본 태그까지 선택된 경우에만 표시 */}
         {isJijeongTagsCompleted && (
-          <section>
-            <CustomTagSelector
-              tags={formData.customTags}
-              onTagsSubmit={onCustomTagsSubmit}
-              onRemoveTag={handleRemoveTag}
-            />
-          </section>
+          <CustomTagSelector
+            tags={formData.customTags}
+            onTagsSubmit={onCustomTagsSubmit}
+            onRemoveTag={handleRemoveTag}
+          />
         )}
       </div>
 

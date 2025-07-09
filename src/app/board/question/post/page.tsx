@@ -14,7 +14,6 @@ import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPostFormData } from "@/components/questionPost/QuestionPostTypes";
 import QuestionPostFirstPage from "@/components/questionPost/QuestionPostFirstPage";
 import QuestionPostSecondPage from "@/components/questionPost/QuestionPostSecondPage";
-import QnaPostRewardModal from "@/components/questionPost/QnaPostRewardModal";
 import { QuestionCommand } from "@/types/api/requests/questionCommand";
 
 export default function QnaPostPage() {
@@ -35,7 +34,6 @@ export default function QnaPostPage() {
   // 현재 페이지를 관리하는 상태
   const [currentPage, setCurrentPage] = useState(1);
   const [isFormValid, setIsFormValid] = useState(false);
-  const [isRewardModalOpen, setIsRewardModalOpen] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const mediaAllowedTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
 
@@ -55,9 +53,6 @@ export default function QnaPostPage() {
     );
   };
 
-  // 엽전 현상금 모달 토글 함수
-  const toggleRewardModal = () => setIsRewardModalOpen(!isRewardModalOpen);
-
   // 첫 번째 페이지에서 다음 페이지로 이동하는 함수
   const goToNextPage = () => {
     if (formData.subject && formData.questionPresetTags.length > 0) {
@@ -70,10 +65,14 @@ export default function QnaPostPage() {
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value, type } = e.target;
+    let nextValue: string | number | boolean = value;
+
+    if (name === "reward") nextValue = Number(value);
+    else if (type === "checkbox" && e.target instanceof HTMLInputElement) nextValue = e.target.checked;
 
     setFormData(prev => ({
       ...prev,
-      [name]: type === "checkbox" && e.target instanceof HTMLInputElement ? e.target.checked : value,
+      [name]: nextValue,
     }));
   };
 
@@ -82,12 +81,6 @@ export default function QnaPostPage() {
 
   // isPrivate 업데이트하는 함수
   const handleIsPrivate = () => setFormData(prev => ({ ...prev, isPrivate: !prev.isPrivate }));
-
-  // reward 업데이트하는 함수
-  const handleReward = (reward: number) => {
-    setFormData(prev => ({ ...prev, reward }));
-    setIsRewardModalOpen(false);
-  };
 
   // 정적 태그 선택 함수
   const handleJiJeongTagSelect = (selectedTags: string[]) => {
@@ -114,7 +107,7 @@ export default function QnaPostPage() {
 
       if (filteredFiles.length !== filesArray.length) {
         showToast("JPEG,JPG,PNG,WEBP 형식의 파일만 업로드할 수 있습니다.");
-        e.target.value = ""; // 선택한 파일 무효화(올바르지 않은 파일 형식일 경우)
+        e.target.value = "";
       } else if (formData.mediaFiles.length + filteredFiles.length > 10) {
         // 최대 10개 파일 업로드 가능
         showToast("최대 10개의 파일만 업로드할 수 있습니다.");
@@ -163,25 +156,17 @@ export default function QnaPostPage() {
     if (isFormValid) {
       setIsUploading(true); // 업로딩 시작
       try {
-        // 한글 태그를 API에서 사용하는 코드로 변환
-        const tagMapping = Object.entries(QuestionPresetTag).reduce(
-          (acc, [code, label]) => {
-            acc[label] = code;
-            return acc;
-          },
-          {} as Record<string, string>,
-        );
-
         const command: Partial<QuestionCommand> = {
           title: formData.title,
           content: formData.content,
           subject: formData.subject,
-          questionPresetTags: formData.questionPresetTags.map(tag => tagMapping[tag] as QuestionPresetTag),
+          questionPresetTags: formData.questionPresetTags as QuestionPresetTag[],
           customTags: formData.customTags,
-          rewardYeopjeon: formData.reward,
+          rewardYeopjeon: Number(formData.reward),
           isPrivate: formData.isPrivate,
           attachmentFiles: formData.mediaFiles,
         };
+        console.log(command);
 
         // API 호출
         await questionPostApi.saveQuestionPost(command);
@@ -234,16 +219,6 @@ export default function QnaPostPage() {
                 />
               )}
             </div>
-          )}
-
-          {/* 엽전 보상 모달 */}
-          {isRewardModalOpen && (
-            <QnaPostRewardModal
-              isVisible={isRewardModalOpen}
-              reward={formData.reward}
-              onClose={toggleRewardModal}
-              onSelectReward={handleReward}
-            />
           )}
         </div>
       </main>

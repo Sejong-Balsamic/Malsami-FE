@@ -1,3 +1,6 @@
+/* eslint-disable react/require-default-props */
+import React from "react";
+
 export interface CommonTextareaProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -13,11 +16,11 @@ export default function CommonTextarea({
   value,
   onChange,
   onKeyDown,
-  placeholder,
-  className = "w-full rounded-[8px] border-2 border-[#E2E2E2] px-4 py-[18px] font-suit-medium text-[14px] placeholder-[#C5C5C5] focus:outline-none focus:border-[#00E271] transition-colors",
+  placeholder = "",
+  className = "",
   maxLength,
   name,
-  required,
+  required = false,
 }: CommonTextareaProps) {
   return (
     <textarea
@@ -28,17 +31,7 @@ export default function CommonTextarea({
       placeholder={placeholder}
       maxLength={maxLength}
       required={required}
-      className={className}
+      className={`font-suit-medium w-full rounded-[8px] border-2 border-[#E2E2E2] px-4 py-[18px] text-[14px] placeholder-[#C5C5C5] transition-colors focus:border-[#00E271] focus:outline-none ${className}`}
     />
   );
 }
-
-CommonTextarea.defaultProps = {
-  onKeyDown: undefined,
-  placeholder: "",
-  className:
-    "w-full rounded-[8px] border-2 border-[#E2E2E2] px-4 py-[18px] font-suit-medium text-[14px] placeholder-gray-400 focus:outline-none focus:border-[#00E271] transition-colors",
-  maxLength: undefined,
-  name: undefined,
-  required: false,
-};

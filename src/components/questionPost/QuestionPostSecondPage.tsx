@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+// no need to import React in Next.js with TSX
 import { SecondPageProps } from "./QuestionPostTypes";
 import TitleInput from "./TitleInput";
 import ContentInput from "./ContentInput";
@@ -16,24 +16,19 @@ function QuestionPostSecondPage({
 }: SecondPageProps) {
   // 제목과 본문이 모두 채워졌는지 확인
   const isTitleAndContentFilled = !!formData.title.trim() && !!formData.content.trim();
-  const [localReward, setLocalReward] = useState(formData.reward);
 
   const emitChange = (field: string, value: string | number) => {
     const input = document.createElement("input");
     input.name = field;
-    // @ts-ignore - value는 string | number 모두 허용
-    input.value = value;
+    input.value = value as string;
     onFormChange({ target: input } as React.ChangeEvent<HTMLInputElement>);
   };
 
-  // localReward가 변경될 때마다 부모 컴포넌트에 알림
-  useEffect(() => {
-    if (localReward !== formData.reward) emitChange("reward", localReward);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [localReward]);
-
-  // 제목·본문 입력 핸들러 (name 속성 자동 지정)
+  // 엽전 변경 핸들러
+  const handleRewardChange = (val: number) => emitChange("reward", val);
+  // 제목 입력 핸들러
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => emitChange("title", e.target.value);
+  // 본문 입력 핸들러
   const handleContentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => emitChange("content", e.target.value);
 
   return (
@@ -41,21 +36,14 @@ function QuestionPostSecondPage({
       <div className="flex flex-col gap-7">
         {/* 제목 */}
         <TitleInput value={formData.title} onChange={handleTitleChange} />
-        {/* 질문 내용 */}
+        {/* 본문 내용 */}
         <ContentInput value={formData.content} onChange={handleContentChange} />
-        {/* 파일 첨부 */}
+        {/* 이미지 첨부 */}
         <FileUploadInput mediaFiles={formData.mediaFiles} onFileChange={onFileChange} onFileDelete={onFileDelete} />
-
         {/* 엽전 현상금 */}
-        <div>
-          <h2 className="font-suit-medium mb-3 text-base">엽전 현상금</h2>
-          <YeopjeonSelector value={localReward} onChange={value => setLocalReward(value)} />
-        </div>
-
+        <YeopjeonSelector value={formData.reward} onChange={handleRewardChange} />
         {/* 비공개 설정 */}
-        <div>
-          <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={onPrivateToggle} />
-        </div>
+        <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={onPrivateToggle} />
       </div>
 
       {/* 작성완료 버튼 */}
@@ -68,7 +56,7 @@ function QuestionPostSecondPage({
             isTitleAndContentFilled ? "bg-[#00E271]" : "bg-[#D1D1D1]"
           }`}
         >
-          작성완료
+          완료
         </button>
       </div>
     </div>

@@ -1,51 +1,25 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import { CustomTagSelectorProps } from "./QuestionPostTypes";
 
 function CustomTagSelector({ tags, onTagsSubmit, onRemoveTag }: CustomTagSelectorProps) {
   const [inputValue, setInputValue] = useState("");
-  const lastKeyRef = useRef<string | null>(null);
-  const composingRef = useRef<boolean>(false);
 
-  const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value.slice(0, 10));
-  };
-
-  const handleCompositionStart = () => {
-    composingRef.current = true;
-  };
-
-  const handleCompositionEnd = () => {
-    composingRef.current = false;
-  };
+  const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
 
   const addTag = () => {
-    if (!inputValue.trim()) return;
-
-    const newTag = inputValue.trim();
-
-    // 유효한 태그 조건 확인
-    if (newTag.length <= 10 && tags.length < 4 && !tags.includes(newTag)) {
-      onTagsSubmit([...tags, newTag]);
-    }
-
+    const trimmed = inputValue.trim();
+    if (trimmed.length === 0 || trimmed.length > 10 || tags.includes(trimmed) || tags.length >= 4) return;
+    onTagsSubmit([...tags, trimmed]);
     setInputValue("");
   };
 
   const handleTagInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    // 한글 입력 중에는 키 이벤트를 처리하지 않음
-    if (composingRef.current) return;
-
-    // Enter나 Tab 키 입력 시 태그 추가
     if ((e.key === "Enter" || e.key === "Tab") && inputValue.trim()) {
+      // 한글 조합 중에는 이벤트 무시.
+      if ((e.nativeEvent as any).isComposing) return;
+
       e.preventDefault();
-
-      // 중복 이벤트 방지
-      if (lastKeyRef.current === e.key && Date.now() - (lastKeyRef.current as any) < 100) {
-        return;
-      }
-
-      lastKeyRef.current = e.key;
       addTag();
     }
   };
@@ -64,8 +38,7 @@ function CustomTagSelector({ tags, onTagsSubmit, onRemoveTag }: CustomTagSelecto
           value={inputValue}
           onChange={handleTagInputChange}
           onKeyDown={handleTagInputKeyDown}
-          onCompositionStart={handleCompositionStart}
-          onCompositionEnd={handleCompositionEnd}
+          maxLength={10}
           className="font-suit-medium w-full rounded-[8px] border-2 border-[#E2E2E2] px-4 py-[18px] text-[14px] placeholder-gray-400 transition-colors focus:border-[#00E271] focus:outline-none"
         />
         <span className="absolute right-3 top-1/2 -translate-y-1/2 transform text-sm text-gray-500">

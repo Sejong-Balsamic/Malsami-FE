@@ -20,7 +20,7 @@ function JiJeongTagSelector({ selectedTags, onTagsSelect }: JiJeongTagSelectorPr
       <h2 className="font-suit-medium mb-3 text-base">기본 태그</h2>
 
       <div className="flex flex-wrap gap-x-3 gap-y-2">
-        {Object.values(QuestionPresetTagLabels).map(tag => (
+        {Object.entries(QuestionPresetTagLabels).map(([tag, label]) => (
           <button
             key={tag}
             type="button"
@@ -31,7 +31,7 @@ function JiJeongTagSelector({ selectedTags, onTagsSelect }: JiJeongTagSelectorPr
                 : "border-[#C5C5C5] bg-white text-[#898989]"
             }`}
           >
-            {tag}
+            {label}
           </button>
         ))}
       </div>

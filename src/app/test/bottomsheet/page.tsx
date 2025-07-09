@@ -29,7 +29,7 @@ export default function BottomSheetTestPage() {
 
     const handleConfirm = async (filtering: Partial<DocumentCommand>) => {
       setLoading(true);
-      
+
       // 기본 파라미터 + 필터링 조건 합치기
       const apiParams: Partial<DocumentCommand> = {
         subject,
@@ -41,7 +41,7 @@ export default function BottomSheetTestPage() {
       };
 
       console.log("자료게시판 API 호출:", apiParams);
-      
+
       try {
         const response = await documentPostApi.filteredDocumentPost(apiParams);
         console.log("자료게시판 API 성공:", response);
@@ -55,15 +55,23 @@ export default function BottomSheetTestPage() {
     return (
       <div className="rounded-lg border-2 border-blue-200 bg-blue-50 p-6">
         <h2 className="mb-4 text-xl font-bold text-blue-800">📄 자료게시판 필터링</h2>
-        
+
         {/* 현재 설정 */}
         <div className="mb-4 rounded bg-white p-4">
           <h3 className="mb-2 font-semibold">📋 테스트 설정</h3>
           <div className="grid grid-cols-2 gap-2 text-sm">
-            <div>교과목: <span className="font-mono text-blue-600">{subject}</span></div>
-            <div>단과대: <span className="font-mono text-blue-600">{faculty}</span></div>
-            <div>등급: <span className="font-mono text-blue-600">{postTier}</span></div>
-            <div>페이지: <span className="font-mono text-blue-600">{pageNumber + 1}</span></div>
+            <div>
+              교과목: <span className="font-mono text-blue-600">{subject}</span>
+            </div>
+            <div>
+              단과대: <span className="font-mono text-blue-600">{faculty}</span>
+            </div>
+            <div>
+              등급: <span className="font-mono text-blue-600">{postTier}</span>
+            </div>
+            <div>
+              페이지: <span className="font-mono text-blue-600">{pageNumber + 1}</span>
+            </div>
           </div>
         </div>
 
@@ -99,7 +107,7 @@ export default function BottomSheetTestPage() {
 
     const handleConfirm = async (filtering: Partial<QuestionCommand>) => {
       setLoading(true);
-      
+
       // 기본 파라미터 + 필터링 조건 합치기
       const apiParams: Partial<QuestionCommand> = {
         subject,
@@ -110,7 +118,7 @@ export default function BottomSheetTestPage() {
       };
 
       console.log("질문게시판 API 호출:", apiParams);
-      
+
       try {
         const response = await questionPostApi.getFilteredQuestionPosts(apiParams);
         console.log("질문게시판 API 성공:", response);
@@ -124,15 +132,23 @@ export default function BottomSheetTestPage() {
     return (
       <div className="rounded-lg border-2 border-green-200 bg-green-50 p-6">
         <h2 className="mb-4 text-xl font-bold text-green-800">❓ 질문게시판 필터링</h2>
-        
+
         {/* 현재 설정 */}
         <div className="mb-4 rounded bg-white p-4">
           <h3 className="mb-2 font-semibold">📋 테스트 설정</h3>
           <div className="grid grid-cols-2 gap-2 text-sm">
-            <div>교과목: <span className="font-mono text-green-600">{subject}</span></div>
-            <div>단과대: <span className="font-mono text-green-600">{faculty}</span></div>
-            <div>페이지: <span className="font-mono text-green-600">{pageNumber + 1}</span></div>
-            <div>크기: <span className="font-mono text-green-600">{pageSize}개</span></div>
+            <div>
+              교과목: <span className="font-mono text-green-600">{subject}</span>
+            </div>
+            <div>
+              단과대: <span className="font-mono text-green-600">{faculty}</span>
+            </div>
+            <div>
+              페이지: <span className="font-mono text-green-600">{pageNumber + 1}</span>
+            </div>
+            <div>
+              크기: <span className="font-mono text-green-600">{pageSize}개</span>
+            </div>
           </div>
         </div>
 

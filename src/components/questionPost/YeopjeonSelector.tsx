@@ -1,59 +1,64 @@
-/* eslint-disable react/require-default-props */
-import React from "react";
+// TODO: 엽전 최대 개수로 최대 제한 추가
+import Image from "next/image";
 
 interface YeopjeonSelectorProps {
-  value: number;
-  onChange: (newValue: number) => void;
-  max?: number;
+  value: number; // 현상금 값
+  onChange: (val: number) => void; // 값 변경 콜백
 }
 
-export default function YeopjeonSelector({ value, onChange, max = 300 }: YeopjeonSelectorProps) {
-  const handleAdjust = (delta: number) => {
-    const next = Math.min(Math.max(value + delta, 0), max);
-    onChange(next);
+export default function YeopjeonSelector({ value, onChange }: YeopjeonSelectorProps) {
+  const clamp = (v: number) => (v < 0 ? 0 : v);
+
+  // 입력 변경
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value.replace(/[^0-9]/g, "");
+    onChange(raw === "" ? 0 : clamp(Number(raw)));
   };
 
-  const borderColor = value > 0 ? "border-[#00E271] text-black" : "border-gray-300 text-gray-400";
-  const btnColor = "border border-gray-400 w-8 h-8 flex items-center justify-center rounded-full text-xl";
+  const increase = () => onChange(clamp(Number(value) + 1));
+  const decrease = () => onChange(clamp(Number(value) - 1));
+
+  const isZero = Number(value) === 0;
 
   return (
-    <div className="flex items-center justify-center gap-4">
-      {/* minus */}
-      <button
-        type="button"
-        className={`${btnColor} ${value === 0 ? "opacity-30" : "hover:bg-gray-100"}`}
-        onClick={() => handleAdjust(-1)}
-        disabled={value === 0}
-      >
-        −
-      </button>
+    <div>
+      <h2 className="font-suit-medium mb-3 text-base">엽전 현상금</h2>
+      <div className="flex items-center justify-center gap-4">
+        {/* - 버튼 */}
+        <button type="button" onClick={decrease} disabled={isZero} aria-label="감소">
+          <div className="flex h-6 w-6 items-center justify-center">
+            <Image
+              src="/icons/interface-remove-circle--delete-add-circle-subtract-button-buttons-remove--Streamline-Core.svg"
+              alt="minus"
+              width={20}
+              height={20}
+            />
+          </div>
+        </button>
 
-      {/* value input */}
-      <input
-        type="number"
-        value={value}
-        onChange={e => {
-          const num = Number(e.target.value);
-          if (Number.isNaN(num)) return;
-          const limited = Math.min(Math.max(num, 0), max);
-          onChange(limited);
-        }}
-        className={`h-16 w-48 rounded-lg border-2 ${borderColor} text-center text-2xl font-semibold focus:border-[#00E271] focus:outline-none`}
-      />
+        {/* 입력칸 */}
+        <input
+          type="text"
+          inputMode="numeric"
+          pattern="[0-9]*"
+          placeholder="0"
+          value={Number(value) === 0 ? "" : Number(value)}
+          onChange={handleInputChange}
+          className={`h-[50px] w-[106px] rounded-[8px] border-2 border-[#E2E2E2] px-4 text-center text-sm font-semibold focus:border-[#00E271] focus:outline-none ${isZero ? "text-gray-400" : "text-black"}`}
+        />
 
-      {/* plus */}
-      <button
-        type="button"
-        className={`${btnColor} ${value === max ? "opacity-30" : "hover:bg-gray-100"}`}
-        onClick={() => handleAdjust(1)}
-        disabled={value === max}
-      >
-        +
-      </button>
+        {/* + 버튼 */}
+        <button type="button" onClick={increase} aria-label="증가">
+          <div className="flex h-6 w-6 items-center justify-center">
+            <Image
+              src="/icons/interface-add-circle--button-remove-cross-add-buttons-plus-circle--Streamline-Core.svg"
+              alt="plus"
+              width={20}
+              height={20}
+            />
+          </div>
+        </button>
+      </div>
     </div>
   );
 }
-
-YeopjeonSelector.defaultProps = {
-  max: 300,
-};
