@@ -31,7 +31,7 @@ export default function CommonTextarea({
       placeholder={placeholder}
       maxLength={maxLength}
       required={required}
-      className={`font-suit-medium border-ui-divider placeholder-ui-muted focus:border-question-main w-full rounded-[8px] border-2 px-4 py-[18px] text-[14px] transition-colors focus:outline-none ${className}`}
+      className={`font-suit-medium w-full rounded-[8px] border-2 border-ui-divider px-4 py-[18px] text-[14px] placeholder-ui-muted transition-colors focus:border-question-main focus:outline-none ${className}`}
     />
   );
 }

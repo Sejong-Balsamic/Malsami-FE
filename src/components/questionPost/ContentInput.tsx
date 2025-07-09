@@ -26,7 +26,7 @@ function ContentInput({ value, onChange }: ContentTextareaProps) {
         placeholder="본문을 작성해주세요.(2000자 이하)"
         maxLength={2000}
         required
-        className="font-suit-medium border-ui-divider focus:border-question-main h-[220px] w-full rounded-[8px] border-2 placeholder-gray-400 focus:outline-none"
+        className="font-suit-medium h-[220px] w-full rounded-[8px] border-2 border-ui-divider placeholder-gray-400 focus:border-question-main focus:outline-none"
       />
     </div>
   );
