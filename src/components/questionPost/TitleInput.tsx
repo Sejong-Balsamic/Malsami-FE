@@ -23,7 +23,7 @@ export default function TitleInput({ value, onChange }: TitleInputProps) {
           className="font-suit-medium w-full rounded-[8px] border-2 border-[#E2E2E2] px-4 py-[18px] text-base placeholder-gray-400 focus:border-[#00E271] focus:outline-none"
         />
         <span className="absolute right-4 top-1/2 -translate-y-1/2 transform text-sm text-gray-500">
-          <span className={value.length > 0 ? "text-[#00E271]" : "text-gray-500"}>{value.length}</span> / 20자
+          <span className={value.length > 0 ? "text-question-main" : "text-gray-500"}>{value.length}</span> / 20자
         </span>
       </div>
     </div>

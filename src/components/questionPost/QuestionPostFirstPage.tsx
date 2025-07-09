@@ -65,7 +65,7 @@ function QuestionPostFirstPage({
             onClick={onNextPage}
             disabled={!isJijeongTagsCompleted}
             className={`w-full rounded-[8px] py-4 text-SUIT_18 font-extrabold text-white ${
-              isJijeongTagsCompleted ? "bg-[#00E271]" : "bg-[#D1D1D1]"
+              isJijeongTagsCompleted ? "bg-question-main" : "bg-ui-muted"
             }`}
           >
             다음

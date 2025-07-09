@@ -11,7 +11,7 @@ export default function CommonInput({
   onChange,
   onKeyDown,
   placeholder,
-  className = "w-full rounded-[8px] border-2 border-[#E2E2E2] px-4 py-[18px] font-suit-medium text-[14px] placeholder-[#C5C5C5] focus:outline-none focus:border-[#00E271] transition-colors",
+  className = "w-full rounded-[8px] border-2 border-ui-divider px-4 py-[18px] text-SUIT_14 font-medium placeholder-ui-muted focus:outline-none focus:border-question-main transition-colors",
 }: CommonInputProps) {
   return (
     <input
@@ -29,5 +29,5 @@ CommonInput.defaultProps = {
   onKeyDown: undefined,
   placeholder: "",
   className:
-    "w-full rounded-[8px] border-2 border-[#E2E2E2] px-4 py-[18px] font-suit-medium text-[14px] placeholder-gray-400 focus:outline-none focus:border-[#00E271] transition-colors",
+    "w-full rounded-[8px] border-2 border-ui-divider px-4 py-[18px] text-SUIT_14 font-medium placeholder-ui-muted focus:outline-none focus:border-question-main transition-colors",
 };

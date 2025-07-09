@@ -27,8 +27,8 @@ function JiJeongTagSelector({ selectedTags, onTagsSelect }: JiJeongTagSelectorPr
             onClick={() => handleTagToggle(tag)}
             className={`font-suit-medium rounded-full border-[1px] px-3 py-2 text-[16px] transition-colors ${
               selectedTags.includes(tag)
-                ? "border-[#00E271] text-[#00E271]"
-                : "border-[#C5C5C5] bg-white text-[#898989]"
+                ? "border-question-main text-question-main"
+                : "border-ui-muted bg-white text-[#898989]"
             }`}
           >
             {label}

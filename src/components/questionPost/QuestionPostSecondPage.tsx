@@ -53,7 +53,7 @@ function QuestionPostSecondPage({
           onClick={onSubmit}
           disabled={!isTitleAndContentFilled}
           className={`w-full rounded-[8px] py-4 text-SUIT_18 font-extrabold text-white ${
-            isTitleAndContentFilled ? "bg-[#00E271]" : "bg-[#D1D1D1]"
+            isTitleAndContentFilled ? "bg-question-main" : "bg-ui-muted"
           }`}
         >
           완료

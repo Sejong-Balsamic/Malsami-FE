@@ -42,7 +42,7 @@ function CustomTagSelector({ tags, onTagsSubmit, onRemoveTag }: CustomTagSelecto
           onChange={handleTagInputChange}
           onKeyDown={handleTagInputKeyDown}
           maxLength={10}
-          className="font-suit-medium w-full rounded-[8px] border-2 border-[#E2E2E2] px-4 py-[18px] text-[14px] placeholder-gray-400 transition-colors focus:border-[#00E271] focus:outline-none"
+          className="font-suit-medium border-ui-divider focus:border-question-main w-full rounded-[8px] border-2 px-4 py-[18px] text-[14px] placeholder-gray-400 transition-colors focus:outline-none"
         />
         <span className="absolute right-3 top-1/2 -translate-y-1/2 transform text-sm text-gray-500">
           {inputValue.length} /10자
@@ -56,7 +56,7 @@ function CustomTagSelector({ tags, onTagsSubmit, onRemoveTag }: CustomTagSelecto
             <div
               key={tag}
               onClick={() => onRemoveTag(tag)}
-              className="font-suit-bold flex cursor-pointer items-center rounded-full border-[1px] border-[#00E271] bg-white px-3 py-2 text-[16px] text-[#00E271] hover:bg-gray-50"
+              className="font-suit-bold border-question-main text-question-main flex cursor-pointer items-center rounded-full border-[1px] bg-white px-3 py-2 text-[16px] hover:bg-gray-50"
               role="button"
               tabIndex={0}
               onKeyDown={e => {
