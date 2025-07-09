@@ -8,7 +8,6 @@ interface ContentTextareaProps {
 function ContentInput({ value, onChange }: ContentTextareaProps) {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 2000) {
-      // 글자 수 제한: 2000자
       e.target.value = e.target.value.slice(0, 2000);
     }
     onChange(e);

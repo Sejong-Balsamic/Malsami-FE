@@ -83,14 +83,14 @@ export default function CardList() {
             <div className="flex items-center text-SUIT_12 font-semibold text-[#C3C3C3]">
               <span className="flex">
                 {data.isLiked ? (
-                  <Image src="/icons/actions/hand-thumbs-up-fill.svg" alt="좋아요 누름" width={16} height={16} />
+                  <Image src="/icons/newLikeThumbBlue.svg" alt="좋아요 누름" width={16} height={16} />
                 ) : (
-                  <Image src="/icons/actions/hand-thumbs-up.svg" alt="좋아요 안누름" width={16} height={16} />
+                  <Image src="/icons/newLikeThumbGray.svg" alt="좋아요 안누름" width={16} height={16} />
                 )}
                 <span className="ml-1">{data.likeCount}</span>
               </span>
               <span className="ml-2 flex items-center">
-                <Image src="/icons/actions/comment.svg" alt="댓글" width={16} height={16} />
+                <Image src="/icons/newChatBubbleGray.svg" alt="댓글" width={16} height={16} />
                 <span className="ml-1">{data.commentCount}</span>
               </span>
             </div>

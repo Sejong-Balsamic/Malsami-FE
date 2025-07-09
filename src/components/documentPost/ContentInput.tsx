@@ -16,7 +16,7 @@ function ContentInput({ value, onChange }: ContentTextareaProps) {
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <span className="font-pretendard-semibold mr-1.5 text-lg">설명</span>
-          <span className="font-pretendard-medium text-lg text-custom-blue-500">(필수)</span>
+          <span className="font-pretendard-medium text-custom-blue-500 text-lg">(필수)</span>
         </div>
         <span className="text-sm text-gray-500">{value.length} / 500자</span>
       </div>

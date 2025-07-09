@@ -12,6 +12,8 @@ interface HeaderProps {
   // eslint-disable-next-line react/require-default-props
   title?: string;
   // eslint-disable-next-line react/require-default-props
+  subtitle?: string; // 부제목 추가
+  // eslint-disable-next-line react/require-default-props
   leftType?: LeftItemType;
   // eslint-disable-next-line react/require-default-props
   rightType?: RightItemType;
@@ -27,6 +29,7 @@ interface HeaderProps {
 
 function Header({
   title = "",
+  subtitle = "",
   leftType = LEFT_ITEM.NONE,
   rightType = RIGHT_ITEM.NONE,
   onLeftClick = () => {},
@@ -84,8 +87,21 @@ function Header({
         )}
       </div>
 
-      {/* 중앙 타이틀 */}
-      <div className="text-SUIT_18 font-semibold text-gray-800">{title}</div>
+      {/* 중앙 타이틀 + 부제목 */}
+      <div className="flex flex-col items-center">
+        {/* 제목 */}
+        <div className="text-SUIT_18 font-semibold text-gray-800">{title}</div>
+
+        {/* 부제목이 있을 때만 표시 */}
+        {subtitle && (
+          <>
+            {/* 6px 공백 */}
+            <div className="h-0.5" />
+            {/* 부제목 */}
+            <div className="text-SUIT_12 font-medium text-[#898989]">{subtitle}</div>
+          </>
+        )}
+      </div>
 
       {/* 오른쪽 버튼 */}
       <button

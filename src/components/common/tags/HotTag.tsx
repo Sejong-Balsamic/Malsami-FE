@@ -1,6 +1,6 @@
 function HotTag() {
   return (
-    <span className="w-fit rounded-sm border border-[#FF8D30] px-2.5 py-1 text-SUIT_12 font-extrabold text-[#FF8D30]">
+    <span className="inline-flex items-center justify-center gap-[10px] rounded-[4px] bg-[#FF8D30] px-[6px] py-[4px] text-[12px] font-bold leading-[12px] text-white">
       HOT
     </span>
   );

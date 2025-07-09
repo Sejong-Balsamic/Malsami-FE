@@ -46,8 +46,8 @@ export default function MajorQuestionSection({ onViewAll }: MajorQuestionSection
       {/* 헤더 영역: 제목, 전체보기 */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center">
-          <Image src="/icons/academicCap.svg" alt="학과" width={24} height={24} />
-          <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">내 전공관련 질문</h2>
+          <Image src="/icons/openFileFolder.svg" alt="학과" width={24} height={24} />
+          <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">내 전공관련 질문</h2>
         </div>
 
         {/* 전체보기 링크 */}

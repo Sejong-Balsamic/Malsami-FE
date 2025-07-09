@@ -1,18 +1,22 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
 import Header from "@/components/header/Header";
 import QuestionCardList from "@/components/questionMain/QuestionCardList";
+import QuestionCardListSkeleton from "@/components/common/skeletons/QuestionCardListSkeleton";
 import CommonPagination from "@/components/common/CommonPagination";
-import QnaFilterControlBar from "@/components/questionMain/QnaFilterControlBar";
-import { LEFT_ITEM } from "@/types/header";
+import QuestionFilteringBottomSheet from "@/components/common/QuestionFilteringBottomSheet";
+import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
-import { QnaFilterOptions } from "@/types/QnaFilterOptions";
+import { QuestionCommand } from "@/types/api/requests/questionCommand";
+import { setQuestionFilteringOpen } from "@/global/store/bottomSheetSlice";
 
 export default function AllQuestionPage() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   // 상태 관리
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -20,96 +24,135 @@ export default function AllQuestionPage() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
 
-  // 필터 옵션 초기값
-  const [filterOptions, setFilterOptions] = useState<QnaFilterOptions>({
-    qnaPresetTags: [],
-    chaetaekStatus: undefined,
+  // 현재 적용된 필터링 상태
+  const [currentFiltering, setCurrentFiltering] = useState<Partial<QuestionCommand>>({
     sortType: "LATEST",
+    chaetaekStatus: "ALL",
+    questionPresetTags: [],
   });
 
   // 데이터 로드 함수
-  const fetchAllQuestions = async (options: QnaFilterOptions, page: number = 0) => {
-    setIsLoading(true);
-    try {
-      const response = await questionPostApi.getFilteredQuestionPosts({
-        pageNumber: page,
-        pageSize: 10,
-        sortType: options.sortType,
-        questionPresetTags: options.qnaPresetTags,
-        chaetaekStatus: options.chaetaekStatus,
-      });
+  const fetchAllQuestions = useCallback(
+    async (page: number = 0, filtering: Partial<QuestionCommand> = currentFiltering) => {
+      setIsLoading(true);
+      try {
+        const response = await questionPostApi.getFilteredQuestionPosts({
+          pageNumber: page,
+          pageSize: 10,
+          sortType: filtering.sortType || "LATEST",
+          chaetaekStatus: filtering.chaetaekStatus,
+          questionPresetTags: filtering.questionPresetTags,
+        });
 
-      if (response && response.questionPostsPage) {
-        setQuestionData(response.questionPostsPage.content || []);
-        setTotalPages(response.questionPostsPage.totalPages || 0);
+        if (response && response.questionPostsPage) {
+          setQuestionData(response.questionPostsPage.content || []);
+          setTotalPages(response.questionPostsPage.totalPages || 0);
+        }
+      } catch (error) {
+        setQuestionData([]);
+        setTotalPages(0);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      console.error("전체 질문을 불러오는데 실패했습니다:", error);
-      setQuestionData([]);
-      setTotalPages(0);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    },
+    [currentFiltering],
+  );
 
   // 초기 데이터 로드
   useEffect(() => {
-    fetchAllQuestions(filterOptions, currentPage);
-  }, [currentPage, filterOptions]);
+    fetchAllQuestions(currentPage);
+  }, [currentPage, fetchAllQuestions]);
 
   // 페이지 변경 핸들러
   const handlePageChange = (pageNumber: number) => {
     setCurrentPage(pageNumber);
   };
 
-  // 필터 변경 핸들러
-  const handleFilterChange = (newFilterOptions: QnaFilterOptions) => {
-    setFilterOptions(newFilterOptions);
-    setCurrentPage(0);
-  };
-
   const handleBackClick = () => {
     router.back();
   };
 
+  // 필터링 핸들러들
+  const handleQuestionConfirm = async (filtering: Partial<QuestionCommand>) => {
+    // 필터링 상태 업데이트하고 API 호출
+    setCurrentFiltering(filtering);
+    setCurrentPage(0);
+    await fetchAllQuestions(0, filtering);
+  };
+
+  const handleFilterReset = () => {
+    // API 호출하지 않고 BottomSheet 내부만 초기화
+    // BottomSheet 컴포넌트에서 로컬 상태만 초기화됨
+  };
+
+  // 오른쪽 메뉴 아이콘 클릭 핸들러
+  const handleMenuClick = () => {
+    dispatch(setQuestionFilteringOpen(true));
+  };
+
   return (
     <div className="min-h-screen bg-white">
-      {/* Fixed Header */}
+      {/* Header */}
       <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
-        <Header title="전체 질문" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
+        <Header
+          title="질문 게시판"
+          leftType={LEFT_ITEM.BACK}
+          rightType={RIGHT_ITEM.MENU}
+          onLeftClick={handleBackClick}
+          onRightClick={handleMenuClick}
+        />
       </div>
 
       {/* 헤더 높이만큼 스페이서 (4rem) */}
       <div className="h-16 w-full" />
 
-      {/* 필터 영역 */}
-      <QnaFilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
-
       {/* 메인 콘텐츠 */}
-      <main className="min-h-screen bg-gray-50 px-5 py-4">
-        {isLoading && (
-          <div className="flex h-40 items-center justify-center">
-            <span className="text-gray-500">로딩 중...</span>
-          </div>
-        )}
-        {!isLoading && questionData.length > 0 && (
-          <>
-            <QuestionCardList data={questionData} />
+      <div className="px-5">
+        {/* 24px 공백 */}
+        <div className="h-6" />
 
-            {/* 페이지네이션 */}
-            {totalPages > 1 && (
-              <div className="mb-6 mt-8">
-                <CommonPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
-              </div>
-            )}
-          </>
-        )}
-        {!isLoading && questionData.length === 0 && (
-          <div className="flex h-40 items-center justify-center">
-            <span className="text-gray-500">표시할 질문이 없습니다.</span>
+        {/* 검색 컴포넌트 */}
+        {/* <section aria-label="qustion-detail-page-search" className="mb-5">
+          <QuestionDetailPageSearchComponent />
+        </section> */}
+
+        {/* 최근검색 컴포넌트 */}
+        {/* <section aria-label="recent-search" className="mb-5">
+          <RecentSearchComponent />
+        </section> */}
+
+        {/* 질문 리스트 */}
+        <div className="w-full bg-white">
+          {isLoading && <QuestionCardListSkeleton />}
+          {!isLoading && questionData.length > 0 && <QuestionCardList data={questionData} />}
+          {!isLoading && questionData.length === 0 && (
+            <div className="flex h-40 items-center justify-center">
+              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 질문이 없습니다.</span>
+            </div>
+          )}
+        </div>
+
+        {/* 24px 공백 */}
+        <div className="h-6" />
+
+        {/* 페이지네이션 */}
+        {!isLoading && totalPages > 1 && (
+          <div className="flex justify-center">
+            <CommonPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
           </div>
         )}
-      </main>
+
+        {/* 61px 하단 여백 (모바일 탭바 고려) */}
+        <div className="h-[61px]" />
+      </div>
+
+      {/* QuestionFilteringBottomSheet */}
+      <QuestionFilteringBottomSheet
+        onReset={handleFilterReset}
+        onConfirm={handleQuestionConfirm}
+        currentFiltering={currentFiltering} // 현재 적용된 필터링 상태 전달
+        trigger={<div />} // 빈 트리거 (Header의 메뉴 버튼으로 제어)
+      />
     </div>
   );
 }

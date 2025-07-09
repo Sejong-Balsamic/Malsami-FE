@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import Image from "next/image";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
@@ -65,11 +66,12 @@ export default function MyFacultySection({ facultys }: { facultys: string[] }) {
       {/* 콘텐츠 제목 */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center">
-          <h2 className="font-suit-medium text-[16px]">🎓 내 전공 관련 자료</h2>
+          <Image src="/icons/openFileFolder.svg" alt="내 전공" width={24} height={24} />
+          <h2 className="ml-[10px] text-SUIT_18 font-medium">내 전공 관련 자료</h2>
         </div>
         <button
           type="button"
-          className="font-suit-medium text-[14px] text-[#A7A7A7]"
+          className="text-SUIT_14 font-medium text-[#A7A7A7]"
           onClick={() => router.push("/board/document/sub/my-faculty")}
         >
           전체보기

@@ -6,10 +6,9 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import UploadDocumentFAB from "@/components/common/FABs/UploadDocumentFAB";
 import { memberApi } from "@/apis/memberApi";
 import MyFacultySection from "@/components/documentMain/MyFacultySection";
-import DocumentRequestSection from "@/components/documentMain/DocumentRequestSection";
+import DocumentRequestBoardSection from "@/components/documentMain/DocumentRequestBoardSection";
 import TierBoardNavigateSection from "@/components/documentMain/TierBoardNavigateSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
-import AllDocumentsSection from "@/components/landing/AllDocumentsSection";
 import CommonHeader from "@/components/header/CommonHeader";
 import CommonSearchBar from "@/components/search/CommonSearchBar";
 import { RIGHT_ITEM } from "@/types/header";
@@ -65,14 +64,9 @@ export default function DocumentBoardPage() {
 
         {/* 티어 네비게이션 섹션 */}
         <section aria-labelledby="DocBoardNavigationSection" className="mb-6">
-          <h1 className="font-suit-bold text-[16px] text-[#0CD4AE]">엽전을 모아</h1>
-          <h1 className="font-suit-bold mb-3 text-[16px] text-black">다양한 게시판들을 이용할 수 있어요.</h1>
+          <h1 className="text-SUIT_18 font-bold text-[#0CD4AE]">엽전을 모아</h1>
+          <h1 className="mb-3 text-SUIT_18 font-bold text-black">다양한 게시판들을 이용할 수 있어요.</h1>
           <TierBoardNavigateSection />
-        </section>
-
-        {/* 📚 전체 자료 게시판 섹션 */}
-        <section aria-labelledby="all-documents" className="mb-8">
-          <AllDocumentsSection onViewAll={() => router.push("/board/document")} />
         </section>
 
         {/* 🔥 HOT 인기 자료 섹션 */}
@@ -89,9 +83,9 @@ export default function DocumentBoardPage() {
           <MyFacultySection facultys={myFacultys} />
         </section>
 
-        {/* 🙋‍♂️ 자료요청 섹션 */}
-        <section aria-labelledby="document-requests" className="mb-8">
-          <DocumentRequestSection />
+        {/* 📄 자료 요청 게시판 섹션 (카드 리스트 형태) */}
+        <section aria-labelledby="document-request-board" className="mb-8">
+          <DocumentRequestBoardSection />
         </section>
       </main>
 

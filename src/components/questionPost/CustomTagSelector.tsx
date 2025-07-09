@@ -5,7 +5,10 @@ import { CustomTagSelectorProps } from "./QuestionPostTypes";
 function CustomTagSelector({ tags, onTagsSubmit, onRemoveTag }: CustomTagSelectorProps) {
   const [inputValue, setInputValue] = useState("");
 
-  const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => setInputValue(e.target.value);
+  const handleTagInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value.slice(0, 10); // 최대 10자 제한
+    setInputValue(val);
+  };
 
   const addTag = () => {
     const trimmed = inputValue.trim();

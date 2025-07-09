@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import Header from "@/components/header/Header";
 import QuestionCardList from "@/components/questionMain/QuestionCardList";
 import CommonPagination from "@/components/common/CommonPagination";
-import WeeklyDailyTabFilter from "@/components/common/WeeklyDailyTabFilter";
+import TwoTabFilter from "@/components/common/TwoTabFilter";
 import { LEFT_ITEM } from "@/types/header";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
@@ -84,7 +84,13 @@ export default function HotQuestionPage() {
 
       <div className="px-5">
         {/* 주간/일간 필터링 컴포넌트 */}
-        <WeeklyDailyTabFilter activeTab={activeTab} onTabChange={handleTabChange} />
+        <TwoTabFilter
+          firstTab="주간"
+          secondTab="일간"
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
+          activeColor="#00E8BB"
+        />
 
         {/* 24px 공백 */}
         <div className="h-6" />
@@ -93,13 +99,13 @@ export default function HotQuestionPage() {
         <div className="w-full bg-white">
           {isLoading && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">로딩 중...</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">로딩 중...</span>
             </div>
           )}
           {!isLoading && currentPageQuestions.length > 0 && <QuestionCardList data={currentPageQuestions} />}
           {!isLoading && currentPageQuestions.length === 0 && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 인기 질문이 없습니다.</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">표시할 인기 질문이 없습니다.</span>
             </div>
           )}
         </div>

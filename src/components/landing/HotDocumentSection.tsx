@@ -13,6 +13,26 @@ interface HotDocumentsSectionProps {
   activeTab: string;
 }
 
+// 목데이터 생성 함수
+const generateMockData = (count: number = 20, prefix: string = ""): DocumentPost[] => {
+  return Array.from({ length: count }, (_, i) => ({
+    documentPostId: `mock-${prefix}-${i}`,
+    title: `${prefix} 자료 ${i + 1}: 공유드립니다! 유용한 정보 가득합니다`,
+    content: `${prefix} 자료 ${i + 1}의 내용입니다. 이 자료는 학생들에게 매우 유용한 정보를 담고 있으며, 시험 준비에 도움이 될 것입니다.`,
+    subject: ["인공지능", "데이터베이스", "컴퓨터구조", "알고리즘", "소프트웨어공학", "운영체제"][i % 6],
+    documentTypes: [["DOCUMENT", "PAST_EXAM", "SOLUTION"][i % 3]] as any,
+    customTags: [["중간고사", "기말고사", "과제"][i % 3], `${i % 2 === 0 ? "꿀팁" : "요약본"}`],
+    likeCount: 10 + Math.floor(Math.random() * 90),
+    viewCount: 50 + Math.floor(Math.random() * 200),
+    createdDate: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
+    isLiked: false,
+  }));
+};
+
+// 주간, 일간 목데이터
+const MOCK_WEEKLY_DATA = generateMockData(20, "주간");
+const MOCK_DAILY_DATA = generateMockData(20, "일간");
+
 export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab }: HotDocumentsSectionProps) {
   const [documents, setDocuments] = useState<DocumentPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -24,18 +44,38 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
       try {
         if (activeTab === "주간") {
           const response = await documentPostApi.getWeeklyPopularDocumentPost();
-          if (response && response.documentPostsPage && response.documentPostsPage.content) {
+          if (
+            response &&
+            response.documentPostsPage &&
+            response.documentPostsPage.content &&
+            response.documentPostsPage.content.length > 0
+          ) {
             setDocuments(response.documentPostsPage.content);
+          } else {
+            // API 응답이 비어있으면 목데이터 사용
+            console.log("주간 인기자료 API 응답이 비어있어 목데이터를 사용합니다.");
+            setDocuments(MOCK_WEEKLY_DATA);
           }
         } else {
           const response = await documentPostApi.getDailyPopularDocumentPost();
-          if (response && response.documentPostsPage && response.documentPostsPage.content) {
+          if (
+            response &&
+            response.documentPostsPage &&
+            response.documentPostsPage.content &&
+            response.documentPostsPage.content.length > 0
+          ) {
             setDocuments(response.documentPostsPage.content);
+          } else {
+            // API 응답이 비어있으면 목데이터 사용
+            console.log("일간 인기자료 API 응답이 비어있어 목데이터를 사용합니다.");
+            setDocuments(MOCK_DAILY_DATA);
           }
         }
       } catch (error) {
         console.error("인기 자료를 불러오는데 실패했습니다:", error);
-        setDocuments([]);
+        // API 호출 실패 시 목데이터 사용
+        setDocuments(activeTab === "주간" ? MOCK_WEEKLY_DATA : MOCK_DAILY_DATA);
+        console.log("API 호출 실패로 목데이터를 사용합니다.");
       } finally {
         setLoading(false);
       }
@@ -51,7 +91,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />
-            <h2 className="font-suit-medium ml-[10px] whitespace-nowrap text-[16px]">HOT 인기자료</h2>
+            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">HOT 인기자료</h2>
           </div>
 
           {/* 주간/일간 버튼 */}
@@ -63,13 +103,14 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
               className="relative flex items-center justify-center"
             >
               <div
-                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "주간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
-              />
-              <span
-                className={`font-suit-medium absolute text-[12px] ${activeTab === "주간" ? "text-white" : "text-black"}`}
+                className={`flex h-[20px] w-[37px] items-center justify-center rounded-[34px] px-[8px] py-[4px] ${
+                  activeTab === "주간" ? "bg-[#DDFBFF]" : "bg-[#EDEDED]"
+                }`}
               >
-                주간
-              </span>
+                <span className={`text-[12px] ${activeTab === "주간" ? "text-[#00D1F2]" : "text-[#898989]"}`}>
+                  주간
+                </span>
+              </div>
             </button>
 
             {/* 일간 버튼 */}
@@ -79,13 +120,14 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
               className="relative ml-[4px] flex items-center justify-center"
             >
               <div
-                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "일간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
-              />
-              <span
-                className={`font-suit-medium absolute text-[12px] ${activeTab === "일간" ? "text-white" : "text-black"}`}
+                className={`flex h-[20px] w-[37px] items-center justify-center rounded-[34px] px-[8px] py-[4px] ${
+                  activeTab === "일간" ? "bg-[#DDFBFF]" : "bg-[#EDEDED]"
+                }`}
               >
-                일간
-              </span>
+                <span className={`text-[12px] ${activeTab === "일간" ? "text-[#00D1F2]" : "text-[#898989]"}`}>
+                  일간
+                </span>
+              </div>
             </button>
           </div>
         </div>
@@ -94,7 +136,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
         <button
           type="button"
           onClick={onViewAll}
-          className="font-suit-medium ml-2 flex-shrink-0 whitespace-nowrap text-[14px] text-[#A7A7A7]"
+          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
         >
           전체보기
         </button>

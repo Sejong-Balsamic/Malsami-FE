@@ -9,7 +9,7 @@ function CustomTag({ tagName }: CustomTagProps) {
   const displayName = tagName.length > 6 ? `${tagName.slice(0, 6)}..` : tagName;
 
   return (
-    <span className="inline-block max-w-[80px] overflow-hidden text-ellipsis whitespace-nowrap rounded-[14px] bg-[#DEFFD8] px-2.5 py-[2px] text-SUIT_12 font-semibold leading-[20px] text-[#00D342]">
+    <span className="inline-flex h-[28px] flex-shrink-0 items-center justify-center gap-[4px] whitespace-nowrap rounded-[34px] bg-[#EDEDED] px-[12px] py-[8px] text-[12px] font-medium leading-[12px] text-[#898989]">
       {displayName}
     </span>
   );

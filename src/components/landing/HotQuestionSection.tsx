@@ -51,25 +51,26 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />
-            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">HOT 인기 질문</h2>
+            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">HOT 인기 질문</h2>
           </div>
 
           {/* 주간/일간 버튼 */}
           <div className="mt-0 flex items-center">
-            {/* 주간 버튼 */}
+            {/* 주간 버튼  */}
             <button
               type="button"
               onClick={() => onTabChange("주간")}
               className="relative flex items-center justify-center"
             >
               <div
-                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "주간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
-              />
-              <span
-                className={`absolute text-SUIT_12 font-medium ${activeTab === "주간" ? "text-white" : "text-black"}`}
+                className={`flex h-[20px] w-[37px] items-center justify-center rounded-[34px] px-[8px] py-[4px] ${
+                  activeTab === "주간" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
+                }`}
               >
-                주간
-              </span>
+                <span className={`text-[12px] ${activeTab === "주간" ? "text-[#00E271]" : "text-[#898989]"}`}>
+                  주간
+                </span>
+              </div>
             </button>
 
             {/* 일간 버튼 */}
@@ -79,13 +80,14 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
               className="relative ml-[4px] flex items-center justify-center"
             >
               <div
-                className={`h-[27px] w-[42px] rounded-[13.5px] ${activeTab === "일간" ? "bg-[#00d241]" : "bg-[#e9eaed]"}`}
-              />
-              <span
-                className={`absolute text-SUIT_12 font-medium ${activeTab === "일간" ? "text-white" : "text-black"}`}
+                className={`flex h-[20px] w-[37px] items-center justify-center rounded-[34px] px-[8px] py-[4px] ${
+                  activeTab === "일간" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
+                }`}
               >
-                일간
-              </span>
+                <span className={`text-[12px] ${activeTab === "일간" ? "text-[#00E271]" : "text-[#898989]"}`}>
+                  일간
+                </span>
+              </div>
             </button>
           </div>
         </div>

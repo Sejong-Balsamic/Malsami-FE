@@ -49,7 +49,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/moneyBag.svg" alt="엽전" width={24} height={24} />
-            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">연전현상금</h2>
+            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">엽전 현상금</h2>
           </div>
 
           {/* 최근순/높은순 버튼 */}
@@ -61,33 +61,35 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
               className="relative flex items-center justify-center"
             >
               <div
-                className={`h-[27px] w-[50px] rounded-[13.5px] ${
-                  activeTab === "최근순" ? "bg-[#00d241]" : "bg-[#e9eaed]"
+                className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-[8px] py-[4px] ${
+                  activeTab === "최근순" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
                 }`}
-              />
-              <span
-                className={`absolute text-SUIT_12 font-medium ${activeTab === "최근순" ? "text-white" : "text-black"}`}
               >
-                최근순
-              </span>
+                <span
+                  className={`whitespace-nowrap text-[12px] ${
+                    activeTab === "최근순" ? "text-[#00E271]" : "text-[#898989]"
+                  }`}
+                >
+                  최근순
+                </span>
+              </div>
             </button>
 
             {/* 높은순 버튼 */}
             <button
               type="button"
               onClick={() => onTabChange("높은순")}
-              className="relative ml-[4px] flex items-center justify-center"
+              className="relative ml-[4px] flex items-center justify-center whitespace-nowrap"
             >
               <div
-                className={`h-[27px] w-[50px] rounded-[13.5px] ${
-                  activeTab === "높은순" ? "bg-[#00d241]" : "bg-[#e9eaed]"
+                className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-[8px] py-[4px] ${
+                  activeTab === "높은순" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
                 }`}
-              />
-              <span
-                className={`absolute text-SUIT_12 font-medium ${activeTab === "높은순" ? "text-white" : "text-black"}`}
               >
-                높은순
-              </span>
+                <span className={`text-[12px] ${activeTab === "높은순" ? "text-[#00E271]" : "text-[#898989]"}`}>
+                  높은순
+                </span>
+              </div>
             </button>
           </div>
         </div>

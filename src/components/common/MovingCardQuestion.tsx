@@ -76,6 +76,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
                 isLiked={questionPost.isLiked || false}
                 likeCount={questionPost.likeCount as number}
                 answerCount={questionPost.answerCount as number}
+                type="question"
               />
             </div>
           </SwiperSlide>

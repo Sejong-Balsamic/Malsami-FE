@@ -1,105 +1,150 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
-import { DocFilterOptions } from "@/types/DocFilterOptions";
-import Pagination from "@/components/common/Pagination";
-import CommonHeader from "@/components/header/CommonHeader";
-import { RIGHT_ITEM } from "@/types/header";
-import getRequestDocs from "@/apis/document/getRequestDocs";
-import { DocRequestCardProps } from "@/types/DocRequestCardProps";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
-import DocRequestFilterControlBar from "@/components/documentMain/DocRequestFilterControlBar";
-import DocumentCard from "@/components/documentMain/DocumentCard";
+import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import Header from "@/components/header/Header";
+import DocumentCardList from "@/components/documentMain/DocumentCardList";
+import CommonPagination from "@/components/common/CommonPagination";
+import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
+import { documentRequestPostApi } from "@/apis/documentRequestPostApi";
+import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
+import { DocumentCommand } from "@/types/api/requests/documentCommand";
+import { setDocumentFilteringOpen } from "@/global/store/bottomSheetSlice";
+import DocumentFilteringBottomSheet from "@/components/common/DocumentFilteringBottomSheet";
 
-export default function DocRequestPage() {
-  const [docCards, setDocCards] = useState<DocRequestCardProps[]>([]); // API 결과값 저장
-  const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리
-  const [filterOptions, setFilterOptions] = useState<DocFilterOptions>({
-    docTypes: [],
-    sortType: undefined,
-    faculty: "",
+export default function DocumentRequestPage() {
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  // 상태 관리
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [documentData, setDocumentData] = useState<DocumentPost[]>([]);
+  const [currentPage, setCurrentPage] = useState<number>(0);
+  const [totalPages, setTotalPages] = useState<number>(0);
+
+  // 현재 적용된 필터링 상태
+  const [currentFiltering, setCurrentFiltering] = useState<Partial<DocumentCommand>>({
+    sortType: "LATEST",
+    documentTypes: [],
   });
 
-  // 페이지네이션 관리
-  const [pageNumber, setPageNumber] = useState(1); // 현재 페이지 번호
-  const [pageSize] = useState(15); // 페이지 크기 (한 페이지에 표시할 항목 수)
-  const [totalPages, setTotalPages] = useState(1); // 총 페이지 수
+  // 데이터 로드 함수
+  const fetchDocumentRequests = useCallback(
+    async (page: number = 0, filtering: Partial<DocumentCommand> = currentFiltering) => {
+      setIsLoading(true);
+      try {
+        const response = await documentRequestPostApi.getFilteredDocumentRequestPosts({
+          pageNumber: page,
+          pageSize: 10,
+          sortType: filtering.sortType || "LATEST",
+          documentTypes: filtering.documentTypes,
+        });
 
-  // 페이지 변경
-  const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setPageNumber(newPage);
-    }
-  };
+        if (response && response.documentRequestPostsPage) {
+          setDocumentData(response.documentRequestPostsPage.content || []);
+          setTotalPages(response.documentRequestPostsPage.totalPages || 0);
+        }
+      } catch (error) {
+        setDocumentData([]);
+        setTotalPages(0);
+      } finally {
+        setIsLoading(false);
+      }
+    },
+    [currentFiltering],
+  );
 
-  const handleFilterChange = (newFilterOptions: DocFilterOptions) => {
-    setFilterOptions(newFilterOptions);
-  };
-
-  const fetchDocs = async () => {
-    const params = {
-      documentTypes: filterOptions.docTypes,
-      sortType: filterOptions.sortType,
-      faculty: filterOptions.faculty,
-      pageNumber: pageNumber - 1,
-      pageSize,
-    };
-
-    setIsLoading(true);
-    try {
-      const response = await getRequestDocs(params);
-      setDocCards(response.content);
-      setTotalPages(response.totalPages); // 총 페이지 수 업데이트
-    } catch (error) {
-      console.error("문서 필터링 목록을 가져오는 중 오류 발생:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
+  // 데이터 로드
   useEffect(() => {
-    setPageNumber(1); // 페이지 번호 초기화
-    fetchDocs();
-  }, [filterOptions]);
+    fetchDocumentRequests(currentPage);
+  }, [currentPage, fetchDocumentRequests]);
 
-  useEffect(() => {
-    fetchDocs();
-    window.scrollTo(0, 0);
-  }, [pageNumber]);
+  // 페이지 변경 핸들러
+  const handlePageChange = (pageNumber: number) => {
+    setCurrentPage(pageNumber);
+  };
+
+  const handleBackClick = () => {
+    router.back();
+  };
+
+  // 필터링 핸들러들
+  const handleDocumentConfirm = async (filtering: Partial<DocumentCommand>) => {
+    // 필터링 상태 업데이트하고 API 호출
+    setCurrentFiltering(filtering);
+    setCurrentPage(0);
+    await fetchDocumentRequests(0, filtering);
+  };
+
+  const handleFilterReset = () => {
+    // API 호출하지 않고 BottomSheet 내부만 초기화
+    // BottomSheet 컴포넌트에서 로컬 상태만 초기화됨
+  };
+
+  // 오른쪽 메뉴 아이콘 클릭 핸들러
+  const handleMenuClick = () => {
+    dispatch(setDocumentFilteringOpen(true));
+  };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
-      <ScrollToTopOnLoad />
-      <CommonHeader title="자료 요청" rightType={RIGHT_ITEM.NONE} />
-      <div>
-        <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white">
-          <DocRequestFilterControlBar filterOptions={filterOptions} onFilterChange={handleFilterChange} />
-          <div className="h-0.5 bg-[#EEEEEE]" />
-          <div className="p-5">
-            {isLoading ? (
-              <LoadingSpinner />
-            ) : (
-              docCards.map((card: DocRequestCardProps) => (
-                <DocumentCard
-                  key={card.documentRequestPostId}
-                  documentPostId={card.documentRequestPostId}
-                  subject={card.subject || "과목명"}
-                  title={card.title || "타이틀"}
-                  content={card.content || "내용이 없습니다."}
-                  documentTypes={card.documentTypes}
-                  createdDate={card.createdDate || ""}
-                  thumbnailUrl={card.thumbnailUrl || ""}
-                  viewCount={card.viewCount || 0}
-                  likeCount={card.likeCount || 0}
-                />
-              ))
-            )}
-          </div>
-          {/* 페이지네이션 컴포넌트 */}
-          <Pagination pageNumber={pageNumber} totalPages={totalPages} onPageChange={handlePageChange} />
-        </div>
+    <div className="min-h-screen bg-white">
+      {/* Header */}
+      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+        <Header
+          title="자료요청"
+          leftType={LEFT_ITEM.BACK}
+          rightType={RIGHT_ITEM.MENU}
+          onLeftClick={handleBackClick}
+          onRightClick={handleMenuClick}
+        />
       </div>
+
+      {/* 헤더 높이만큼 스페이서 (4rem) */}
+      <div className="h-16 w-full" />
+
+      {/* 메인 콘텐츠 */}
+      <div className="px-5">
+        {/* 24px 공백 */}
+        <div className="h-6" />
+
+        {/* 자료요청 리스트 */}
+        <div className="w-full bg-white">
+          {isLoading && (
+            <div className="flex h-40 items-center justify-center">
+              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">로딩 중...</span>
+            </div>
+          )}
+          {!isLoading && documentData.length > 0 && <DocumentCardList data={documentData} />}
+          {!isLoading && documentData.length === 0 && (
+            <div className="flex h-40 items-center justify-center">
+              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 자료요청이 없습니다.</span>
+            </div>
+          )}
+        </div>
+
+        {/* 24px 공백 */}
+        <div className="h-6" />
+
+        {/* 페이지네이션 */}
+        {!isLoading && totalPages > 1 && (
+          <div className="flex justify-center">
+            <CommonPagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange} />
+          </div>
+        )}
+
+        {/* 61px 하단 여백 (모바일 탭바 고려) */}
+        <div className="h-[61px]" />
+      </div>
+
+      {/* DocumentFilteringBottomSheet */}
+      <DocumentFilteringBottomSheet
+        onReset={handleFilterReset}
+        onConfirm={handleDocumentConfirm}
+        currentFiltering={currentFiltering} // 현재 적용된 필터링 상태 전달
+        trigger={<div />} // 빈 트리거 (Header의 메뉴 버튼으로 제어)
+        activeColor="#00D1F2" // 파란색 테마
+      />
     </div>
   );
 }
