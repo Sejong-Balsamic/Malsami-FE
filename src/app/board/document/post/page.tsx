@@ -20,8 +20,8 @@ import CategoryInput from "@/components/documentPost/CategoryInput";
 import StudyYearInput from "@/components/documentPost/studyYearInput";
 import CustomTagsInput from "@/components/documentPost/CustomTagsInput";
 import PrivateSettingInput from "@/components/questionPost/PrivateSettingInput";
-import QnaPostSubjectModal from "@/components/questionPost/QnaPostSubjectModal";
-import QnaPostCustomTagsModal from "@/components/questionPost/QnaPostCustomTagsModal";
+import QnaPostSubjectModal from "@/deprecated/questionPost/QnaPostSubjectModal";
+import QnaPostCustomTagsModal from "@/deprecated/questionPost/QnaPostCustomTagsModal";
 import DocPostStudyYearModal from "@/components/documentPost/DocPostStudyYearModal";
 import DocPostCategoryTagsModal from "@/components/documentPost/DocPostCategoryTagsModal";
 
