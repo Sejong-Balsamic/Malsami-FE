@@ -164,7 +164,7 @@ export default function QnaPostPage() {
           customTags: formData.customTags,
           rewardYeopjeon: Number(formData.reward),
           isPrivate: formData.isPrivate,
-          attachmentFiles: formData.mediaFiles,
+          attachmentFiles: formData.mediaFiles.length > 0 ? formData.mediaFiles : undefined,
         };
         console.log(command);
 

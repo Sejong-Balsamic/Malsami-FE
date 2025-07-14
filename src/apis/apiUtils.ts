@@ -17,9 +17,24 @@ export function getAuthHeaders(): Record<string, string> {
 export function createFormData<T extends ApiCommand>(command: Partial<T>): FormData {
   const formData = new FormData();
   Object.entries(command).forEach(([key, value]) => {
-    if (value !== undefined && value !== null) {
-      formData.append(key, value.toString());
+    if (value === undefined || value === null) return;
+
+    // 파일 배열 처리 (예: attachmentFiles)
+    if (Array.isArray(value) && value.length > 0 && value[0] instanceof File) {
+      (value as File[]).forEach(file => {
+        formData.append(key, file); // 같은 key로 여러 파일 추가
+      });
+      return;
     }
+
+    // 단일 파일
+    if (value instanceof File) {
+      formData.append(key, value);
+      return;
+    }
+
+    // 그 외 기본 타입은 문자열로 변환
+    formData.append(key, value.toString());
   });
   return formData;
 }
