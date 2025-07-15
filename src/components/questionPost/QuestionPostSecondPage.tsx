@@ -39,7 +39,11 @@ function QuestionPostSecondPage({
         {/* 본문 내용 */}
         <ContentInput value={formData.content} onChange={handleContentChange} />
         {/* 이미지 첨부 */}
-        <FileUploadInput mediaFiles={formData.mediaFiles} onFileChange={onFileChange} onFileDelete={onFileDelete} />
+        <FileUploadInput
+          mediaFiles={formData.attachmentFiles}
+          onFileChange={onFileChange}
+          onFileDelete={onFileDelete}
+        />
         {/* 엽전 현상금 */}
         <YeopjeonSelector value={formData.reward} onChange={handleRewardChange} />
         {/* 비공개 설정 */}
