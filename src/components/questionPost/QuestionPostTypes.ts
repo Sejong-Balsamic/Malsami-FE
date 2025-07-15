@@ -7,7 +7,7 @@ export interface QuestionPostFormData {
   questionPresetTags: string[];
   reward: number;
   isPrivate: boolean;
-  mediaFiles: File[];
+  attachmentFiles: File[];
 }
 
 export interface FirstPageProps {

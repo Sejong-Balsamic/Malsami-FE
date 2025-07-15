@@ -28,7 +28,7 @@ export default function QnaPostPage() {
     questionPresetTags: [],
     reward: 0,
     isPrivate: false,
-    mediaFiles: [],
+    attachmentFiles: [],
   });
 
   // 현재 페이지를 관리하는 상태
@@ -108,16 +108,16 @@ export default function QnaPostPage() {
       if (filteredFiles.length !== filesArray.length) {
         showToast("JPEG,JPG,PNG,WEBP 형식의 파일만 업로드할 수 있습니다.");
         e.target.value = "";
-      } else if (formData.mediaFiles.length + filteredFiles.length > 10) {
+      } else if (formData.attachmentFiles.length + filteredFiles.length > 10) {
         // 최대 10개 파일 업로드 가능
         showToast("최대 10개의 파일만 업로드할 수 있습니다.");
         e.target.value = ""; // 선택한 파일 무효화
       } else {
         setFormData(prevFormData => ({
           ...prevFormData,
-          mediaFiles: [
-            ...prevFormData.mediaFiles,
-            ...filteredFiles.filter(file => !prevFormData.mediaFiles.some(f => f.name === file.name)), // 기존 파일 중복 방지
+          attachmentFiles: [
+            ...prevFormData.attachmentFiles,
+            ...filteredFiles.filter(file => !prevFormData.attachmentFiles.some(f => f.name === file.name)), // 기존 파일 중복 방지
           ],
         }));
       }
@@ -128,7 +128,7 @@ export default function QnaPostPage() {
   const handleFileDelete = (fileName: string) => {
     setFormData(prevFormData => ({
       ...prevFormData,
-      mediaFiles: prevFormData.mediaFiles.filter(file => file.name !== fileName),
+      attachmentFiles: prevFormData.attachmentFiles.filter(file => file.name !== fileName),
     }));
   };
 
@@ -164,7 +164,7 @@ export default function QnaPostPage() {
           customTags: formData.customTags,
           rewardYeopjeon: Number(formData.reward),
           isPrivate: formData.isPrivate,
-          attachmentFiles: formData.mediaFiles.length > 0 ? formData.mediaFiles : undefined,
+          attachmentFiles: formData.attachmentFiles.length > 0 ? formData.attachmentFiles : undefined,
         };
         console.log(command);
 
