@@ -29,13 +29,7 @@ export default function ActiveQuestionFilters({
             if (e.key === "Enter" || e.key === " ") onReset();
           }}
         >
-          <Image
-            src="/icons/interface-arrows-round-left--diagram-round-arrow-left--Streamline-Core.svg"
-            className="mr-1"
-            alt="초기화"
-            width={16}
-            height={16}
-          />
+          <Image src="/icons/reset.svg" className="mr-1" alt="초기화" width={16} height={16} />
           초기화
         </div>
 

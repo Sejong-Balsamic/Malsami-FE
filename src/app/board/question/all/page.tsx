@@ -96,12 +96,12 @@ export default function AllQuestionPage() {
     const newFiltering: Partial<QuestionCommand> = { ...currentFiltering };
 
     if (filterType === "sortType") {
-      delete newFiltering.sortType;
+      newFiltering.sortType = undefined;
     } else if (filterType === "chaetaekStatus") {
-      delete newFiltering.chaetaekStatus;
+      newFiltering.chaetaekStatus = undefined;
     } else if (filterType === "tag" && value) {
       newFiltering.questionPresetTags = (newFiltering.questionPresetTags || []).filter(tag => tag !== value);
-      if (newFiltering.questionPresetTags.length === 0) delete newFiltering.questionPresetTags;
+      if (newFiltering.questionPresetTags.length === 0) newFiltering.questionPresetTags = undefined;
     }
 
     setCurrentFiltering(newFiltering);
