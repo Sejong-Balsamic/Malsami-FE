@@ -82,11 +82,11 @@ export default function Page() {
   return (
     <div className="relative mx-auto w-full max-w-[640px] px-5">
       <ScrollToTopOnLoad />
-      <CommonHeader 
-        title="내 전공 질문" 
-        rightType={RIGHT_ITEM.MENU} 
+      <CommonHeader
+        title="내 전공 질문"
+        rightType={RIGHT_ITEM.MENU}
         onRightClick={toggleDrawer}
-        subtitle={questionDetails?.questionPost?.member?.major || "내 전공"} 
+        subtitle={questionDetails?.questionPost?.member?.major || "내 전공"}
       />
       {/* 헤더 spacer는 CommonHeader 내부 h-16 으로 제공됨 */}
       <div>

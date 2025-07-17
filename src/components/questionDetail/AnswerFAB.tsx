@@ -15,7 +15,7 @@ function AnswerFAB({ postId }: AnswerFABProps) {
     <button
       onClick={handleClick}
       aria-label="답변 작성"
-      className="text-SUIT_18 font-bold fixed bottom-[36px] left-1/2 h-[56px] w-[353px] -translate-x-1/2 transform rounded-[12px] bg-[#00E271] text-white"
+      className="fixed bottom-[36px] left-1/2 h-[56px] w-[353px] -translate-x-1/2 transform rounded-[12px] bg-[#00E271] text-SUIT_18 font-bold text-white"
       type="button"
     >
       답변하기

@@ -81,18 +81,18 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
   }, [postId]);
 
   if (isLoading) {
-    return <p className="text-SUIT_14 font-medium text-center text-[#7b7b7c]">답변을 불러오는 중입니다...</p>;
+    return <p className="text-center text-SUIT_14 font-medium text-[#7b7b7c]">답변을 불러오는 중입니다...</p>;
   }
 
   if (loadError) {
-    return <p className="text-SUIT_14 font-medium text-center text-[#f56565]">{loadError}</p>;
+    return <p className="text-center text-SUIT_14 font-medium text-[#f56565]">{loadError}</p>;
   }
 
   return (
     <div className="my-[40px] flex h-auto min-w-[336px] max-w-[640px] flex-col">
-      <span className="text-SUIT_14 font-semibold mb-[10px] text-[#3D3D3D]">답변 {answers.length}</span>
+      <span className="mb-[10px] text-SUIT_14 font-semibold text-[#3D3D3D]">답변 {answers.length}</span>
       {answers.length === 0 ? (
-        <p className="text-SUIT_14 font-medium text-center text-[#7b7b7c]">아직 답변이 없습니다.</p>
+        <p className="text-center text-SUIT_14 font-medium text-[#7b7b7c]">아직 답변이 없습니다.</p>
       ) : (
         answers.map((ans, index) => (
           <div
@@ -115,15 +115,13 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                 <Button
                   variant="ghost"
                   onClick={() => openModalForAnswer(ans.answerPostId!)}
-                  className="text-SUIT_12 font-medium ml-[6px] h-[26px] rounded-[13px] border border-[#0062D2] px-[15px] py-[6px] text-[#0062D2]"
+                  className="ml-[6px] h-[26px] rounded-[13px] border border-[#0062D2] px-[15px] py-[6px] text-SUIT_12 font-medium text-[#0062D2]"
                 >
                   채택하기
                 </Button>
               )}
             </div>
-            <div className="text-SUIT_14 font-medium leading-relaxed text-[#444444]">
-              {ans.content || "내용 없음"}
-            </div>
+            <div className="text-SUIT_14 font-medium leading-relaxed text-[#444444]">{ans.content || "내용 없음"}</div>
             {ans.mediaFiles && ans.mediaFiles.length > 0 && (
               <div className="mt-4">
                 <AttachedFiles files={ans.mediaFiles.map(file => file.uploadedImageUrl || "")} />

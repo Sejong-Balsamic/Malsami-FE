@@ -20,4 +20,4 @@ export default function RewardTag({ amount }: RewardTagProps) {
       <span className="line-clamp-1 text-SUIT_12 font-bold text-white">{amount}</span>
     </div>
   );
-} 
+}

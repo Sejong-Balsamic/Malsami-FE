@@ -92,7 +92,7 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
                 >
                   {/* 상단 부분 - 과목 태그 */}
                   <div className="mb-3">
-                    <SubjectTag subject={question.subject} postType="question" />
+                    <SubjectTag subjectName={question.subject} type="question" />
                   </div>
 
                   {/* 게시물 제목 */}

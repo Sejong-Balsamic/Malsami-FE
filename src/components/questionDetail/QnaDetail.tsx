@@ -80,7 +80,7 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
         )}
 
         {/* 과목명 태그 */}
-        <SubjectTag subject={questionDto.questionPost?.subject} postType="question" />
+        <SubjectTag subjectName={questionDto.questionPost?.subject} type="question" />
 
         {/* 엽전 태그 */}
         <RewardTag amount={questionDto.questionPost?.rewardYeopjeon as number} />
@@ -89,47 +89,45 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
       {/* 글 정보 */}
       <div className="flex w-full flex-col">
         <div className="mt-[12px]">
-          <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">
-            {questionDto.questionPost?.title}
-          </h1>
-          
+          <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">{questionDto.questionPost?.title}</h1>
+
           {/* 소과목/작성일자/조회수 */}
           <div className="mt-[4px] flex items-center">
-            <span className="text-SUIT_12 font-medium text-[#ACACAC] mr-[3px]">
+            <span className="mr-[3px] text-SUIT_12 font-medium text-[#ACACAC]">
               {questionDto.questionPost?.subject}
             </span>
-            <span className="text-SUIT_12 font-medium text-[#ACACAC] mx-[3px]">•</span>
-            <span className="text-SUIT_12 font-medium text-[#ACACAC] mx-[3px]">
+            <span className="mx-[3px] text-SUIT_12 font-medium text-[#ACACAC]">•</span>
+            <span className="mx-[3px] text-SUIT_12 font-medium text-[#ACACAC]">
               {getDateDiff(questionDto.questionPost?.createdDate as string)}
             </span>
-            <span className="text-SUIT_12 font-medium text-[#ACACAC] mx-[3px]">•</span>
-            <span className="text-SUIT_12 font-medium text-[#ACACAC] ml-[3px]">
+            <span className="mx-[3px] text-SUIT_12 font-medium text-[#ACACAC]">•</span>
+            <span className="ml-[3px] text-SUIT_12 font-medium text-[#ACACAC]">
               조회수 {questionDto.questionPost?.viewCount}
             </span>
           </div>
-          
+
           {/* 본문 텍스트 */}
-          <div className="text-SUIT_16 font-medium mt-[16px] leading-[22.4px] text-black">
+          <div className="mt-[16px] text-SUIT_16 font-medium leading-[22.4px] text-black">
             {questionDto.questionPost?.content}
           </div>
         </div>
 
         {/* 첨부파일 */}
         {files && files.length > 0 && (
-          <div className="mt-[12px] -mx-5 overflow-x-auto">
+          <div className="-mx-5 mt-[12px] overflow-x-auto">
             <div className="flex gap-[12px] pb-[10px] pl-5">
               {files.map((file, index) => (
-                <div 
+                <div
                   key={index}
-                  className="flex-shrink-0 h-[96px] w-[96px] bg-[#EDEDED] rounded-[8px] flex items-center justify-center overflow-hidden"
+                  className="flex h-[96px] w-[96px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[8px] bg-[#EDEDED]"
                 >
-                  <Image 
-                    src={file} 
-                    alt={`첨부 이미지 ${index + 1}`} 
-                    width={96} 
-                    height={96} 
-                    className="object-cover h-full w-full"
-                    onError={(e) => {
+                  <Image
+                    src={file}
+                    alt={`첨부 이미지 ${index + 1}`}
+                    width={96}
+                    height={96}
+                    className="h-full w-full object-cover"
+                    onError={e => {
                       const target = e.target as HTMLImageElement;
                       target.onerror = null;
                       target.src = "/image/EasterEgg.svg"; // 이미지 로드 실패 시 기본 이미지
@@ -145,9 +143,9 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
         {questionDto.customTags && questionDto.customTags.length > 0 && (
           <div className="mt-[16px] flex flex-wrap gap-[8px]">
             {questionDto.customTags.map((tag, index) => (
-              <div 
-                key={index} 
-                className="h-[32px] px-[16px] py-[12px] rounded-[20px] bg-[#E2E2E2] flex items-center justify-center"
+              <div
+                key={index}
+                className="flex h-[32px] items-center justify-center rounded-[20px] bg-[#E2E2E2] px-[16px] py-[12px]"
               >
                 <span className="text-SUIT_14 font-medium leading-[19.6px] text-[#898989]">{tag}</span>
               </div>
@@ -160,11 +158,9 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
           {questionDto.questionPost?.questionPresetTags?.map((tag, index) => (
             <div
               key={index}
-              className="h-[32px] px-[16px] py-[12px] rounded-[20px] bg-[#E2E2E2] flex items-center justify-center"
+              className="flex h-[32px] items-center justify-center rounded-[20px] bg-[#E2E2E2] px-[16px] py-[12px]"
             >
-              <span className="text-SUIT_14 font-medium leading-[19.6px] text-[#898989]">
-                {getKoreanTag(tag)}
-              </span>
+              <span className="text-SUIT_14 font-medium leading-[19.6px] text-[#898989]">{getKoreanTag(tag)}</span>
             </div>
           ))}
         </div>
@@ -176,7 +172,7 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
         <div className="my-[10px] flex items-center gap-[12px]">
           <div
             onClick={!isLiked ? handleLikeClick : undefined} // 이미 눌렀다면 클릭 비활성화
-            className="flex items-center gap-[4px] cursor-pointer"
+            className="flex cursor-pointer items-center gap-[4px]"
           >
             <Image
               src={isLiked ? "/icons/newLikeThumbBlue.svg" : "/icons/newLikeThumbGray.svg"}
@@ -192,14 +188,14 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
           {/* 질문 댓글 */}
           <Drawer>
             <DrawerTrigger asChild>
-              <div className="flex items-center gap-[4px] cursor-pointer">
+              <div className="flex cursor-pointer items-center gap-[4px]">
                 <Image src="/icons/newChatBubbleGray.svg" alt="Comment_UnClicked" width={16} height={16} />
                 <span className="text-SUIT_12 font-medium text-[#ACACAC]">{commentCount}</span>
               </div>
             </DrawerTrigger>
             <DrawerContent className="px-[20px] pb-[20px]">
               <DrawerHeader className="px-0">
-                <DrawerTitle className="text-SUIT_14 font-semibold flex text-[#3c3c3c]">
+                <DrawerTitle className="flex text-SUIT_14 font-semibold text-[#3c3c3c]">
                   댓글 {commentCount}
                 </DrawerTitle>
               </DrawerHeader>
@@ -221,7 +217,7 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
       {/* 답변 섹션 */}
       <div className="mt-[20px] flex items-center">
         <Image src="/icons/answerBubbleGray.svg" alt="답변" width={16} height={16} className="text-[#C5C5C5]" />
-        <span className="text-SUIT_14 font-semibold ml-[4px] text-[14px] text-black">
+        <span className="ml-[4px] text-SUIT_14 text-[14px] font-semibold text-black">
           답변 {questionDto.questionPost?.answerCount || 0}
         </span>
       </div>
