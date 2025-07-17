@@ -146,7 +146,6 @@ export default function AllQuestionPage() {
         <div className="h-[61px]" />
       </div>
 
-      {/* QuestionFilteringBottomSheet */}
       <QuestionFilteringBottomSheet
         onReset={handleFilterReset}
         onConfirm={handleQuestionConfirm}

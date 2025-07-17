@@ -16,7 +16,7 @@ import { SortType, sortTypeLabels } from "@/types/api/constants/sortType";
 import { DocumentType, documentTypeLabels } from "@/types/api/constants/documentType";
 import IconWrapper21x21 from "./IconWrapper21x21";
 import FilteringButton from "./buttons/FilteringButton";
-import FilteringTag from "./tags/FilteringTag";
+import DocumentFilteringTag from "./tags/DocumentFilteringTag";
 
 interface DocumentFilteringBottomSheetProps {
   onReset: () => void;
@@ -115,12 +115,11 @@ export default function DocumentFilteringBottomSheet({
               <h3 className="mb-3 text-lg font-semibold">정렬</h3>
               <div className="flex flex-wrap gap-2">
                 {SORT_OPTIONS.map(option => (
-                  <FilteringTag
+                  <DocumentFilteringTag
                     key={option.value}
                     label={option.label}
                     isSelected={selectedSort === option.value}
                     onClick={() => handleSortChange(option.value)}
-                    activeColor={activeColor}
                   />
                 ))}
               </div>
@@ -133,12 +132,11 @@ export default function DocumentFilteringBottomSheet({
               </h3>
               <div className="flex flex-wrap gap-2">
                 {DOCUMENT_TYPE_OPTIONS.map(option => (
-                  <FilteringTag
+                  <DocumentFilteringTag
                     key={option.value}
                     label={option.label}
                     isSelected={selectedDocumentTypes.includes(option.value)}
                     onClick={() => handleDocumentTypeToggle(option.value)}
-                    activeColor={activeColor}
                   />
                 ))}
               </div>

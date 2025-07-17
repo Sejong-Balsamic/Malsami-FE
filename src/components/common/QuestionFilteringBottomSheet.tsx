@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useState } from "react";
 import {
   Drawer,
@@ -17,7 +16,7 @@ import { ChaetaekStatus, chaetaekStatusLabels } from "@/types/api/constants/chae
 import { QuestionPresetTag, QuestionPresetTagLabels } from "@/types/api/constants/questionPresetTag";
 import IconWrapper21x21 from "./IconWrapper21x21";
 import FilteringButton from "./buttons/FilteringButton";
-import FilteringTag from "./tags/FilteringTag";
+import QuestionFilteringTag from "./tags/QuestionFilteringTag";
 
 interface QuestionFilteringBottomSheetProps {
   onReset: () => void;
@@ -131,7 +130,7 @@ export default function QuestionFilteringBottomSheet({
               <h3 className="mb-3 text-lg font-semibold">정렬</h3>
               <div className="flex flex-wrap gap-2">
                 {SORT_OPTIONS.map(option => (
-                  <FilteringTag
+                  <QuestionFilteringTag
                     key={option.value}
                     label={option.label}
                     isSelected={selectedSort === option.value}
@@ -146,7 +145,7 @@ export default function QuestionFilteringBottomSheet({
               <h3 className="mb-3 text-lg font-semibold">채택 여부</h3>
               <div className="flex flex-wrap gap-2">
                 {CHAETAEK_OPTIONS.map(option => (
-                  <FilteringTag
+                  <QuestionFilteringTag
                     key={option.value}
                     label={option.label}
                     isSelected={selectedChaetaek === option.value}
@@ -163,7 +162,7 @@ export default function QuestionFilteringBottomSheet({
               </h3>
               <div className="flex flex-wrap gap-2">
                 {QUESTION_TAG_OPTIONS.map(option => (
-                  <FilteringTag
+                  <QuestionFilteringTag
                     key={option.value}
                     label={option.label}
                     isSelected={selectedTags.includes(option.value)}
