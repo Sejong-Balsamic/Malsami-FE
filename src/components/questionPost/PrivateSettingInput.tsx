@@ -18,7 +18,7 @@ function PrivateSettingInput({ isPrivate, onToggle }: PrivateSettingProps) {
         >
           {isPrivate && (
             <svg
-              className="h-4 w-4 text-white"
+              className="h-4 w-4 text-question-main"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"

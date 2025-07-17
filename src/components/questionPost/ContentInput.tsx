@@ -1,3 +1,5 @@
+import CommonTextarea from "@/components/common/CommonTextarea";
+
 interface ContentTextareaProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -6,28 +8,25 @@ interface ContentTextareaProps {
 function ContentInput({ value, onChange }: ContentTextareaProps) {
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (e.target.value.length > 2000) {
-      // 글자 수 제한: 2000자
       e.target.value = e.target.value.slice(0, 2000);
     }
     onChange(e);
   };
   return (
-    <div className="mb-[26px] block">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <span className="font-pretendard-semibold mr-1.5 text-lg">질문</span>
-          <span className="font-pretendard-medium text-custom-blue-500 text-lg">(필수)</span>
-        </div>
-        <span className="text-sm text-gray-500">{value.length} / 2000자</span>
+    <div>
+      <div className="mb-3 flex items-center justify-between">
+        <h2 className="font-suit-medium text-base">본문 내용</h2>
+        <span className="text-sm text-gray-500">
+          <span className={value.length > 0 ? "text-question-main" : "text-gray-500"}>{value.length} </span>/ 2000자
+        </span>
       </div>
-      <textarea
-        name="content"
-        placeholder="질문을 작성해주세요.(2000자 이하)"
+      <CommonTextarea
         value={value}
         onChange={handleChange}
+        placeholder="본문을 작성해주세요.(2000자 이하)"
         maxLength={2000}
         required
-        className="font-pretendard-medium mt-3 h-40 w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base"
+        className="font-suit-medium h-[220px] w-full rounded-[8px] border-2 border-ui-divider placeholder-gray-400 focus:border-question-main focus:outline-none"
       />
     </div>
   );

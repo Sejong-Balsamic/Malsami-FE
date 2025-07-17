@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BottomSheetModal from "@/components/common/BottomSheetModal";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
-import SubjectSearchInput from "../questionMain/SubjectSearchInput";
+import SubjectSearchInput from "@/components/questionMain/SubjectSearchInput";
 
 interface QnaPostSubjectTagModalProps {
   isVisible: boolean;

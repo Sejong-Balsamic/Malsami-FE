@@ -1,4 +1,4 @@
-import React from "react";
+import Image from "next/image";
 
 interface FileUploadProps {
   mediaFiles: File[];
@@ -8,42 +8,48 @@ interface FileUploadProps {
 
 function QnaPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploadProps) {
   return (
-    <div className="mb-[26px] block">
-      {/* 선택된 파일들 표시 */}
-      {mediaFiles.length > 0 && (
-        <ul className="mt-2 text-sm text-gray-500">
-          {mediaFiles.map(file => (
-            <li key={file.name} className="mb-2 flex justify-between">
-              <span className="flex-1 truncate">{file.name}</span> {/* 파일 이름이 길면 말줄임 처리 */}
-              <button
-                type="button"
-                onClick={() => onFileDelete(file.name)}
-                className="ml-2 text-red-500 hover:text-red-700"
-              >
-                삭제
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-      {/* 파일 선택 버튼 */}
-      <button
-        type="button"
-        onClick={() => document.getElementById("file-input")?.click()}
-        className="font-pretendard-medium mt-2 flex h-36 w-full cursor-pointer items-center justify-center rounded-[14px] bg-[#F6F7FB] text-base text-[#939393]"
+    <div className="mt-4 flex flex-wrap gap-3">
+      {/* 파일 추가 버튼 */}
+      <label
+        htmlFor="file-upload"
+        className="relative flex h-[100px] w-[100px] cursor-pointer items-center justify-center rounded-[8px] border-2 border-dashed border-ui-divider"
       >
-        <div className="flex flex-col items-center justify-center">
-          <div className="flex items-center text-[#939393]">
-            <span className="text-3xl text-[#939393]">+&nbsp;</span>
-            파일 불러오기
-          </div>
-          <div className="mt-2 text-sm text-gray-500">JPEG, JPG, PNG, WEBP 이미지 파일만 업로드할 수 있습니다.</div>
-          <div className="text-sm text-gray-500">최대 10개의 파일까지 업로드 가능합니다.</div>
-        </div>
-      </button>
+        <input
+          id="file-upload"
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={onFileChange}
+          className="absolute left-0 top-0 h-full w-full cursor-pointer opacity-0"
+        />
+        <Image
+          src="/icons/interface-add-circle--button-remove-cross-add-buttons-plus-circle--Streamline-Core.svg"
+          alt="plus"
+          width={20}
+          height={20}
+        />
+      </label>
 
-      {/* 숨겨진 파일 입력 */}
-      <input type="file" id="file-input" multiple onChange={onFileChange} className="hidden" />
+      {/* 이미지 미리보기 */}
+      {mediaFiles.map(file => {
+        const imageUrl = URL.createObjectURL(file);
+        return (
+          <div
+            key={file.name}
+            className="relative h-[100px] w-[100px] overflow-hidden rounded-[8px] border-2 border-question-main bg-gray-300"
+          >
+            <img src={imageUrl} alt={file.name} className="h-full w-full object-cover" />
+            <button
+              type="button"
+              onClick={() => onFileDelete(file.name)}
+              className="absolute right-1 top-1"
+              aria-label="이미지 삭제"
+            >
+              <Image src="/icons/basic-delete-circle.svg" alt="delete" width={20} height={20} />
+            </button>
+          </div>
+        );
+      })}
     </div>
   );
 }

@@ -24,9 +24,11 @@ const config: Config = {
         // 게시판 테마 색상
         document: {
           main: "#00D1F2", // 자료게시판 메인 색상
+          sub: "#74ECFF", // 자료게시판 서브 색상
         },
         question: {
-          main: "#00E271", // 질문게시판 메인 색상 (updated)
+          main: "#00E271", // 질문게시판 메인 색상
+          sub: "#47FFA3", // 질문게시판 서브 색상
         },
 
         // 태그 색상
