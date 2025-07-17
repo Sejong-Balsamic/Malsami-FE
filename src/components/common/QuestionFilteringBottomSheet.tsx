@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Drawer,
   DrawerContent,
@@ -62,6 +62,13 @@ export default function QuestionFilteringBottomSheet({
   const [selectedSort, setSelectedSort] = useState<SortType | undefined>(currentFiltering.sortType);
   const [selectedChaetaek, setSelectedChaetaek] = useState<ChaetaekStatus | undefined>(currentFiltering.chaetaekStatus);
   const [selectedTags, setSelectedTags] = useState<QuestionPresetTag[]>(currentFiltering.questionPresetTags || []);
+
+  // currentFiltering 변경 시 내부 상태 동기화
+  useEffect(() => {
+    setSelectedSort(currentFiltering.sortType);
+    setSelectedChaetaek(currentFiltering.chaetaekStatus);
+    setSelectedTags(currentFiltering.questionPresetTags || []);
+  }, [currentFiltering]);
 
   // 초기화 함수
   const handleReset = () => {

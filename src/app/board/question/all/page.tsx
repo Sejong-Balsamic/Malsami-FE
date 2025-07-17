@@ -8,6 +8,7 @@ import QuestionCardList from "@/components/questionMain/QuestionCardList";
 import QuestionCardListSkeleton from "@/components/common/skeletons/QuestionCardListSkeleton";
 import CommonPagination from "@/components/common/CommonPagination";
 import QuestionFilteringBottomSheet from "@/components/common/QuestionFilteringBottomSheet";
+import ActiveQuestionFilters from "@/components/common/ActiveQuestionFilters";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
@@ -80,9 +81,32 @@ export default function AllQuestionPage() {
     await fetchAllQuestions(0, filtering);
   };
 
-  const handleFilterReset = () => {
-    // API 호출하지 않고 BottomSheet 내부만 초기화
-    // BottomSheet 컴포넌트에서 로컬 상태만 초기화됨
+  const handleFilterReset = async () => {
+    const defaultFiltering: Partial<QuestionCommand> = {
+      sortType: "LATEST",
+      chaetaekStatus: "ALL",
+      questionPresetTags: [],
+    };
+    setCurrentFiltering(defaultFiltering);
+    setCurrentPage(0);
+    await fetchAllQuestions(0, defaultFiltering);
+  };
+
+  const handleRemoveFilter = async (filterType: "sortType" | "chaetaekStatus" | "tag", value?: string) => {
+    const newFiltering: Partial<QuestionCommand> = { ...currentFiltering };
+
+    if (filterType === "sortType") {
+      delete newFiltering.sortType;
+    } else if (filterType === "chaetaekStatus") {
+      delete newFiltering.chaetaekStatus;
+    } else if (filterType === "tag" && value) {
+      newFiltering.questionPresetTags = (newFiltering.questionPresetTags || []).filter(tag => tag !== value);
+      if (newFiltering.questionPresetTags.length === 0) delete newFiltering.questionPresetTags;
+    }
+
+    setCurrentFiltering(newFiltering);
+    setCurrentPage(0);
+    await fetchAllQuestions(0, newFiltering);
   };
 
   // 오른쪽 메뉴 아이콘 클릭 핸들러
@@ -102,7 +126,6 @@ export default function AllQuestionPage() {
           onRightClick={handleMenuClick}
         />
       </div>
-
       {/* 헤더 높이만큼 스페이서 (4rem) */}
       <div className="h-16 w-full" />
 
@@ -110,6 +133,13 @@ export default function AllQuestionPage() {
       <div className="px-5">
         {/* 24px 공백 */}
         <div className="h-6" />
+
+        {/* 현재 적용된 필터 */}
+        <ActiveQuestionFilters
+          currentFiltering={currentFiltering}
+          onReset={handleFilterReset}
+          onRemoveFilter={handleRemoveFilter}
+        />
 
         {/* 검색 컴포넌트 */}
         {/* <section aria-label="qustion-detail-page-search" className="mb-5">
