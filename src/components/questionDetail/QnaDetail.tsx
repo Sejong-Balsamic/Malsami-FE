@@ -10,6 +10,9 @@ import CommentSection from "./QCommentSection";
 import sameMember from "@/global/sameMember";
 import AttachedFiles from "@/components/common/AttachedFiles";
 import PresetTag from "@/components/common/tags/PresetTag";
+import SubjectTag from "@/components/common/tags/SubjectTag";
+import RewardTag from "@/components/common/tags/RewardTag";
+import HotTag from "@/components/common/tags/HotTag";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 
 // 한국어 태그 매핑
@@ -33,6 +36,8 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
   const [currentLikeCount, setCurrentLikeCount] = useState(questionDto.questionPost?.likeCount as number);
 
   const isAuthor: boolean = sameMember(questionDto.questionPost?.member?.memberId as string); // 작성자 여부 확인
+  // FIXME: 임시로 HOT 여부 체크 (향후 API에서 isHot으로 대체 예정)
+  const isHot = questionDto.questionPost?.weeklyScore && questionDto.questionPost?.weeklyScore > 5;
 
   const handleLikeClick = async () => {
     if (isLiked) return; // 이미 좋아요를 누른 상태라면 실행하지 않음
@@ -62,136 +67,166 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
   const files = questionDto.mediaFiles?.map(file => file.uploadedImageUrl) as string[];
 
   return (
-    <div className="flex flex-col justify-center px-[20px]">
-      {/* 교과목명 현상금  */}
-      <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
-        <div className="flex items-center gap-[6px]">
-          {questionDto.questionPost?.chaetaekStatus ? (
-            <>
-              <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#0062D2] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
-                채택됨
-              </div>
-              <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
-                {questionDto.questionPost.subject}
-              </div>
-            </>
-          ) : (
-            <>
-              <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
-                {questionDto.questionPost?.subject}
-              </div>
-              {(questionDto.questionPost?.rewardYeopjeon as number) > 0 && (
-                <span className="font-pretendard-semibold bg-custom-orange-500 mr-1 inline-flex h-[26px] items-center rounded-[33px] px-2 py-[3px] text-xs text-white">
-                  <img src="/icons/Yeopjeon.svg" alt="Yeopjeon" className="inline-block h-[14px] w-[14px]" />
-                  <span className="ml-1">{questionDto.questionPost?.rewardYeopjeon}</span>
-                </span>
-              )}
-            </>
-          )}
-        </div>
+    <div className="flex flex-col justify-center">
+      {/* 태그 영역 (HOT, 교과목명, 현상금) */}
+      <div className="mt-[12px] flex flex-wrap items-center gap-[4px]">
+        {isHot && <HotTag />}
+
+        {/* 과목/채택 */}
+        {questionDto.questionPost?.chaetaekStatus && (
+          <div className="inline-flex h-[32px] items-center justify-center rounded bg-[#3D8BFF] px-[6px] py-[4px]">
+            <span className="text-SUIT_12 font-bold text-white">채택됨</span>
+          </div>
+        )}
+
+        {/* 과목명 태그 */}
+        <SubjectTag subject={questionDto.questionPost?.subject} postType="question" />
+
+        {/* 엽전 태그 */}
+        <RewardTag amount={questionDto.questionPost?.rewardYeopjeon as number} />
       </div>
+
       {/* 글 정보 */}
-      <div className="flex h-auto min-w-[336px] max-w-[640px] flex-col">
-        <div className="mt-[20px]">
-          <span className="font-pretendard-bold text-[18px]">{questionDto.questionPost?.title}</span>
-          <div className="font-pretendard-medium mt-[10px] text-[14px] leading-normal text-[#727272]">
+      <div className="flex w-full flex-col">
+        <div className="mt-[12px]">
+          <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">
+            {questionDto.questionPost?.title}
+          </h1>
+          
+          {/* 소과목/작성일자/조회수 */}
+          <div className="mt-[4px] flex items-center">
+            <span className="text-SUIT_12 font-medium text-[#ACACAC] mr-[3px]">
+              {questionDto.questionPost?.subject}
+            </span>
+            <span className="text-SUIT_12 font-medium text-[#ACACAC] mx-[3px]">•</span>
+            <span className="text-SUIT_12 font-medium text-[#ACACAC] mx-[3px]">
+              {getDateDiff(questionDto.questionPost?.createdDate as string)}
+            </span>
+            <span className="text-SUIT_12 font-medium text-[#ACACAC] mx-[3px]">•</span>
+            <span className="text-SUIT_12 font-medium text-[#ACACAC] ml-[3px]">
+              조회수 {questionDto.questionPost?.viewCount}
+            </span>
+          </div>
+          
+          {/* 본문 텍스트 */}
+          <div className="text-SUIT_16 font-medium mt-[16px] leading-[22.4px] text-black">
             {questionDto.questionPost?.content}
           </div>
         </div>
 
-        {/* 커스텀태그 */}
-        {questionDto.customTags && questionDto.customTags.length > 0 && (
-          <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
-            <div className="flex h-full w-full items-center gap-[4px]">
-              {questionDto.customTags.map((tag, index) => (
-                <PresetTag key={index} title={tag} />
+        {/* 첨부파일 */}
+        {files && files.length > 0 && (
+          <div className="mt-[12px] -mx-5 overflow-x-auto">
+            <div className="flex gap-[12px] pb-[10px] pl-5">
+              {files.map((file, index) => (
+                <div 
+                  key={index}
+                  className="flex-shrink-0 h-[96px] w-[96px] bg-[#EDEDED] rounded-[8px] flex items-center justify-center overflow-hidden"
+                >
+                  <Image 
+                    src={file} 
+                    alt={`첨부 이미지 ${index + 1}`} 
+                    width={96} 
+                    height={96} 
+                    className="object-cover h-full w-full"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.onerror = null;
+                      target.src = "/image/EasterEgg.svg"; // 이미지 로드 실패 시 기본 이미지
+                    }}
+                  />
+                </div>
               ))}
             </div>
           </div>
         )}
-        {/* 첨부파일 */}
-        {files.length > 0 && ( // 파일이 있을 때만 렌더링
-          <div className="justfy-center my-4 flex">
-            <AttachedFiles files={files} />
+
+        {/* 토픽 태그 (커스텀태그) */}
+        {questionDto.customTags && questionDto.customTags.length > 0 && (
+          <div className="mt-[16px] flex flex-wrap gap-[8px]">
+            {questionDto.customTags.map((tag, index) => (
+              <div 
+                key={index} 
+                className="h-[32px] px-[16px] py-[12px] rounded-[20px] bg-[#E2E2E2] flex items-center justify-center"
+              >
+                <span className="text-SUIT_14 font-medium leading-[19.6px] text-[#898989]">{tag}</span>
+              </div>
+            ))}
           </div>
         )}
 
         {/* 지정태그 */}
-        <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
-          <div className="flex items-center gap-[10px]">
-            {questionDto.questionPost?.questionPresetTags?.map((tag, index) => (
-              <div
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-                className="flex h-[25px] w-auto items-center justify-center rounded-[28px] border border-[#e7e7e7] px-[10px]"
-              >
-                <span className="font-pretendard-medium text-[14px] text-[#aaaaaa]">{getKoreanTag(tag)}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-        {/* 작성자 정보 */}
-        <div className="flex h-[72px] min-w-[336px] max-w-[640px] flex-col">
-          <div className="mt-[20px] text-right">
-            <div>
-              <span className="font-pretendard-medium mb-[4px] text-[12px]">
-                {questionDto.questionPost?.isPrivate ? "익명" : `@${questionDto.questionPost?.member?.uuidNickname}`}
-              </span>
-            </div>
-            <div>
-              <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">
-                {getDateDiff(questionDto.questionPost?.createdDate as string)}
-              </span>
-              <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">
-                • 조회수 {questionDto.questionPost?.viewCount}
-              </span>
-            </div>
-          </div>
-        </div>
-        {/* 좋아요 */}
-        <div className="mx-[5px] mt-4 flex justify-start">
-          <div className="flex items-center gap-[10px]">
+        <div className="mt-[16px] flex flex-wrap gap-[8px]">
+          {questionDto.questionPost?.questionPresetTags?.map((tag, index) => (
             <div
-              onClick={!isLiked ? handleLikeClick : undefined} // 이미 눌렀다면 클릭 비활성화
-              className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass}`}
+              key={index}
+              className="h-[32px] px-[16px] py-[12px] rounded-[20px] bg-[#E2E2E2] flex items-center justify-center"
             >
-              <Image
-                src={isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_UnClicked.svg"}
-                alt={isLiked ? "Like_Clicked" : "Like_UnClicked"}
-                width={16}
-                height={16}
-              />
-              <span className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}>
-                {currentLikeCount}
+              <span className="text-SUIT_14 font-medium leading-[19.6px] text-[#898989]">
+                {getKoreanTag(tag)}
               </span>
             </div>
-            {/* 질문 댓글 */}
-            <Drawer>
-              <DrawerTrigger asChild>
-                <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
-                  <Image src="/icons/Comment_UnClicked.svg" alt="Comment_UnClicked" width={16} height={16} />
-                  <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">{commentCount}</span>
-                </div>
-              </DrawerTrigger>
-              <DrawerContent className="px-[20px] pb-[20px]">
-                <DrawerHeader className="px-0">
-                  <DrawerTitle className="font-pretendard-bold flex text-[14px] text-[#3c3c3c]">
-                    댓글 {commentCount}
-                  </DrawerTitle>
-                </DrawerHeader>
-                <div className="max-h-[400px] overflow-y-auto">
-                  <CommentSection
-                    postId={questionDto.questionPost?.questionPostId as string}
-                    contentType="QUESTION"
-                    onCommentAdded={incrementCommentCount}
-                  />
-                </div>
-              </DrawerContent>
-            </Drawer>
-          </div>
+          ))}
         </div>
+
+        {/* 구분선 */}
+        <div className="mt-[20px] h-[1px] w-full bg-[#D7D7D7]"></div>
+
+        {/* 좋아요 및 댓글 액션 */}
+        <div className="my-[10px] flex items-center gap-[12px]">
+          <div
+            onClick={!isLiked ? handleLikeClick : undefined} // 이미 눌렀다면 클릭 비활성화
+            className="flex items-center gap-[4px] cursor-pointer"
+          >
+            <Image
+              src={isLiked ? "/icons/newLikeThumbBlue.svg" : "/icons/newLikeThumbGray.svg"}
+              alt={isLiked ? "Like_Clicked" : "Like_UnClicked"}
+              width={16}
+              height={16}
+            />
+            <span className={`text-SUIT_12 font-medium ${isLiked ? "text-[#03b89e]" : "text-[#ACACAC]"}`}>
+              {currentLikeCount}
+            </span>
+          </div>
+
+          {/* 질문 댓글 */}
+          <Drawer>
+            <DrawerTrigger asChild>
+              <div className="flex items-center gap-[4px] cursor-pointer">
+                <Image src="/icons/newChatBubbleGray.svg" alt="Comment_UnClicked" width={16} height={16} />
+                <span className="text-SUIT_12 font-medium text-[#ACACAC]">{commentCount}</span>
+              </div>
+            </DrawerTrigger>
+            <DrawerContent className="px-[20px] pb-[20px]">
+              <DrawerHeader className="px-0">
+                <DrawerTitle className="text-SUIT_14 font-semibold flex text-[#3c3c3c]">
+                  댓글 {commentCount}
+                </DrawerTitle>
+              </DrawerHeader>
+              <div className="max-h-[400px] overflow-y-auto">
+                <CommentSection
+                  postId={questionDto.questionPost?.questionPostId as string}
+                  contentType="QUESTION"
+                  onCommentAdded={incrementCommentCount}
+                />
+              </div>
+            </DrawerContent>
+          </Drawer>
+        </div>
+
+        {/* 구분선 */}
+        <div className="h-[1px] w-full bg-[#D7D7D7]"></div>
       </div>
-      {/* 답변 */}
+
+      {/* 답변 섹션 */}
+      <div className="mt-[20px] flex items-center">
+        <Image src="/icons/answerBubbleGray.svg" alt="답변" width={16} height={16} className="text-[#C5C5C5]" />
+        <span className="text-SUIT_14 font-semibold ml-[4px] text-[14px] text-black">
+          답변 {questionDto.questionPost?.answerCount || 0}
+        </span>
+      </div>
+
+      {/* 답변 영역 */}
       <AnswerSection postId={questionDto.questionPost?.questionPostId as string} isAuthor={isAuthor} />
     </div>
   );

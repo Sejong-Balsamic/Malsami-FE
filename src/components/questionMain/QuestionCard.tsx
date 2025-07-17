@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { getDateDiff } from "@/global/time";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
+import SubjectTag from "@/components/common/tags/SubjectTag";
+import RewardTag from "@/components/common/tags/RewardTag";
 
 interface QuestionCardProps {
   question: QuestionPost;
@@ -29,27 +31,14 @@ function QuestionCard({ question }: QuestionCardProps) {
                   </span>
                 </div>
                 {/* 과목명 태그 */}
-                <div className="inline-flex items-center justify-center rounded bg-[#00E8BB] px-1.5 py-1">
-                  <span className="truncate text-SUIT_12 font-medium text-white" style={{ maxWidth: "120px" }}>
-                    {question.subject || "과목 없음"}
-                  </span>
-                </div>
+                <SubjectTag subject={question.subject} postType="question" />
               </>
             ) : (
               <>
                 {/* 과목명 태그 */}
-                <div className="inline-flex items-center justify-center rounded bg-[#00E8BB] px-1.5 py-1">
-                  <span className="truncate text-SUIT_12 font-medium text-white" style={{ maxWidth: "120px" }}>
-                    {question.subject || "과목 없음"}
-                  </span>
-                </div>
-                {/* 엽전 태그 - 조건부 렌더링 */}
-                {question.rewardYeopjeon && question.rewardYeopjeon > 0 && (
-                  <div className="inline-flex items-center justify-center gap-1 rounded bg-[#FFB000] px-1.5 py-1">
-                    <Image src="/icons/yeopjeon.svg" alt="엽전" width={12} height={12} />
-                    <span className="line-clamp-1 text-SUIT_12 font-bold text-white">{question.rewardYeopjeon}</span>
-                  </div>
-                )}
+                <SubjectTag subject={question.subject} postType="question" />
+                {/* 엽전 태그 */}
+                <RewardTag amount={question.rewardYeopjeon || 0} />
               </>
             )}
           </div>
@@ -108,27 +97,14 @@ function QuestionCard({ question }: QuestionCardProps) {
                 </span>
               </div>
               {/* 과목명 태그 */}
-              <div className="inline-flex items-center justify-center rounded bg-[#00E8BB] px-1.5 py-1">
-                <span className="truncate text-SUIT_12 font-medium text-white" style={{ maxWidth: "120px" }}>
-                  {question.subject || "과목 없음"}
-                </span>
-              </div>
+              <SubjectTag subject={question.subject} postType="question" />
             </>
           ) : (
             <>
               {/* 과목명 태그 */}
-              <div className="inline-flex items-center justify-center rounded bg-[#00E8BB] px-1.5 py-1">
-                <span className="truncate text-SUIT_12 font-medium text-white" style={{ maxWidth: "120px" }}>
-                  {question.subject || "과목 없음"}
-                </span>
-              </div>
-              {/* 엽전 태그 - 조건부 렌더링 */}
-              {question.rewardYeopjeon && question.rewardYeopjeon > 0 && (
-                <div className="inline-flex items-center justify-center gap-1 rounded bg-[#FFB000] px-1.5 py-1">
-                  <Image src="/icons/yeopjeon.svg" alt="엽전" width={12} height={12} />
-                  <span className="line-clamp-1 text-SUIT_12 font-bold text-white">{question.rewardYeopjeon}</span>
-                </div>
-              )}
+              <SubjectTag subject={question.subject} postType="question" />
+              {/* 엽전 태그 */}
+              <RewardTag amount={question.rewardYeopjeon || 0} />
             </>
           )}
         </div>

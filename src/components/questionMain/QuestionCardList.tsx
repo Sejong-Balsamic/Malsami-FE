@@ -1,7 +1,7 @@
 import React from "react";
 import { useRouter } from "next/navigation";
+import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import QuestionCard from "./QuestionCard";
-import { QuestionPost } from "../../types/api/entities/postgres/questionPost";
 
 interface QuestionCardListProps {
   data: QuestionPost[];

@@ -1,24 +1,28 @@
+"use client";
+
+import React from "react";
+
 interface SubjectTagProps {
-  subjectName: string;
-  // eslint-disable-next-line react/require-default-props
-  type?: "document" | "question"; // 자료게시판 또는 질문게시판 타입
+  subject?: string;
+  subjectName?: string; // legacy
+  postType?: "question" | "document"; // optional for backward compatibility
 }
 
-function SubjectTag({ subjectName, type = "question" }: SubjectTagProps) {
-  // 텍스트가 너무 길면 줄임표 처리
-  const displayName = subjectName.length > 10 ? `${subjectName.slice(0, 10)}..` : subjectName;
-
-  // 게시판 타입에 따라 색상 설정
-  const tagColor = type === "document" ? "#00D1F2" : "#00E271";
+/**
+ * 과목명 태그 컴포넌트
+ * @param subject - 과목명 (없으면 "과목 없음")
+ * @param subjectName - legacy parameter
+ * @param postType - 게시글 타입 (question | document) 에 따라 태그 색상이 달라집니다.
+ */
+export default function SubjectTag({ subject, subjectName, postType = "question" }: SubjectTagProps) {
+  const text = subject ?? subjectName ?? "과목 없음";
+  const bgColorClass = postType === "question" ? "bg-question-main" : "bg-document-main";
 
   return (
-    <span
-      className="inline-flex items-center justify-center gap-[10px] rounded-[4px] px-[6px] py-[4px] text-[12px] font-bold leading-[12px] text-white"
-      style={{ backgroundColor: tagColor }}
-    >
-      {displayName}
-    </span>
+    <div className={`inline-flex items-center justify-center rounded px-1.5 py-1 ${bgColorClass}`}>
+      <span className="truncate text-SUIT_12 font-medium text-white" style={{ maxWidth: "120px" }}>
+        {text}
+      </span>
+    </div>
   );
 }
-
-export default SubjectTag;

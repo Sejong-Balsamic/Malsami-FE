@@ -80,11 +80,16 @@ export default function Page() {
   const isAuthor = questionDetails && sameMember(questionDetails.questionPost?.member?.memberId as string);
 
   return (
-    <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
+    <div className="relative mx-auto w-full max-w-[640px] px-5">
       <ScrollToTopOnLoad />
-      <CommonHeader title="질문 상세보기" rightType={RIGHT_ITEM.MENU} onRightClick={toggleDrawer} />
-      {/* 헤더 아래 여백 추가 */}
-      <div className="mt-[64px]">
+      <CommonHeader 
+        title="내 전공 질문" 
+        rightType={RIGHT_ITEM.MENU} 
+        onRightClick={toggleDrawer}
+        subtitle={questionDetails?.questionPost?.member?.major || "내 전공"} 
+      />
+      {/* 헤더 spacer는 CommonHeader 내부 h-16 으로 제공됨 */}
+      <div>
         {questionDetails && (
           <>
             <QnaDetail questionDto={questionDetails} />
