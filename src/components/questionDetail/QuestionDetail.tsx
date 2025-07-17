@@ -239,7 +239,7 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
 
       {/* 답변 영역 */}
       <div className="mt-5">
-        <AnswerSection postId={questionDto.questionPost?.questionPostId as string} isAuthor={isAuthor} />
+        <AnswerSection postId={questionDto.questionPost?.questionPostId as string} />
       </div>
     </div>
   );

@@ -1,44 +1,26 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/shadcn/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/shadcn/accordion";
 import Image from "next/image";
 import { formatDateTime } from "@/global/time";
 import getAnswer from "@/apis/question/getAnswer";
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import sameMember from "@/global/sameMember";
-import AttachedFiles from "@/components/common/AttachedFiles";
 import { AnswerPost } from "@/types/api/entities/postgres/answerPost";
-import CommentSection from "./ACommentSection";
 import ChaetaekCheckModal from "./ChaetaekCheckModal";
 
 interface AnswerSectionProps {
   postId: string;
-  isAuthor: boolean;
 }
 
-function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
+function AnswerSection({ postId }: AnswerSectionProps) {
   const [answers, setAnswers] = useState<AnswerPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentAnswerId, setCurrentAnswerId] = useState<string | null>(null);
 
-  const openModalForAnswer = (answerId: string) => {
-    setCurrentAnswerId(answerId);
-    setIsModalOpen(true);
-  };
-
   const closeModal = () => {
     setIsModalOpen(false);
     setCurrentAnswerId(null);
-  };
-
-  const incrementCommentCount = (answerId: string) => {
-    setAnswers(prevAnswers =>
-      prevAnswers.map(ans =>
-        ans.answerPostId === answerId ? { ...ans, commentCount: (ans.commentCount || 0) + 1 } : ans,
-      ),
-    );
   };
 
   const handleLikeClick = async (answerId: string) => {
@@ -56,8 +38,10 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
     } catch (likeError) {
       console.error("좋아요 업데이트 실패:", likeError);
       setAnswers(prevAnswers =>
-        prevAnswers.map(ans =>
-          ans.answerPostId === answerId ? { ...ans, isLiked: false, likeCount: (ans.likeCount || 0) - 1 } : ans,
+        prevAnswers.map(answerPost =>
+          answerPost.answerPostId === answerId
+            ? { ...answerPost, isLiked: false, likeCount: (answerPost.likeCount || 0) - 1 }
+            : answerPost,
         ),
       );
     }
@@ -93,15 +77,15 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
       {answers.length === 0 ? (
         <p className="text-center text-SUIT_14 font-medium text-ui-muted">아직 답변이 없습니다.</p>
       ) : (
-        answers.map((ans, index) => (
-          <div key={ans.answerPostId || index} className="flex flex-col">
+        answers.map((answerPost, index) => (
+          <div key={answerPost.answerPostId || index} className="flex flex-col">
             {/* 상단 라인 */}
-            {index !== 0 && <div className="mx-auto h-[1px] w-[353px] rounded-[2px] bg-[#EDEDED]"></div>}
+            {index !== 0 && <div className="mx-auto h-[1px] w-[353px] rounded-[2px] bg-[#EDEDED]" />}
 
             {/* 상단 정보 */}
             <div className="flex items-center gap-[4px]">
               {/* 채택 태그 */}
-              {ans.isChaetaek && (
+              {answerPost.isChaetaek && (
                 <div className="inline-flex items-center justify-center rounded bg-tag-accept px-[14px] py-[6px]">
                   <span className="text-SUIT_12 font-bold text-white">채택됨</span>
                 </div>
@@ -109,35 +93,33 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
 
               {/* 닉네임 */}
               <span className="text-SUIT_14 font-medium text-ui-body">
-                @{ans.isPrivate ? "익명" : ans.member?.uuidNickname ?? "익명"}
+                @{answerPost.isPrivate ? "익명" : (answerPost.member?.uuidNickname ?? "익명")}
               </span>
 
               {/* 점 */}
               <span className="text-ui-muted">·</span>
 
               {/* 전공 */}
-              <span className="text-SUIT_12 font-medium text-ui-body">
-                {ans.member?.major ?? "전공 비공개"}
-              </span>
+              <span className="text-SUIT_12 font-medium text-ui-body">{answerPost.member?.major ?? "전공 비공개"}</span>
 
               {/* 점 */}
               <span className="text-ui-muted">·</span>
 
               {/* 날짜 */}
               <span className="text-SUIT_12 font-medium text-ui-muted">
-                {ans.createdDate ? formatDateTime(ans.createdDate) : "--/-- --:--"}
+                {answerPost.createdDate ? formatDateTime(answerPost.createdDate) : "--/-- --:--"}
               </span>
             </div>
 
             {/* 본문 */}
             <p className="mt-4 line-clamp-1 text-SUIT_14 font-medium leading-[19.6px] text-black">
-              {ans.content || "내용 없음"}
+              {answerPost.content || "내용 없음"}
             </p>
 
             {/* 이미지 리스트 */}
-            {ans.mediaFiles && ans.mediaFiles.length > 0 && (
+            {answerPost.mediaFiles && answerPost.mediaFiles.length > 0 && (
               <div className="mt-2 flex gap-[8px] overflow-x-auto">
-                {ans.mediaFiles.map((f, i) => (
+                {answerPost.mediaFiles.map((f, i) => (
                   <Image
                     key={i}
                     src={f.uploadedImageUrl || ""}
@@ -155,29 +137,31 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
               <div
                 role="button"
                 tabIndex={0}
-                onClick={() => ans.answerPostId && handleLikeClick(ans.answerPostId)}
+                onClick={() => answerPost.answerPostId && handleLikeClick(answerPost.answerPostId)}
                 onKeyDown={e =>
-                  (e.key === "Enter" || e.key === " ") && ans.answerPostId && handleLikeClick(ans.answerPostId)
+                  (e.key === "Enter" || e.key === " ") &&
+                  answerPost.answerPostId &&
+                  handleLikeClick(answerPost.answerPostId)
                 }
                 className="flex cursor-pointer items-center gap-[4px]"
               >
                 <Image
-                  src={ans.isLiked ? "/icons/newLikeThumbGreen.svg" : "/icons/newLikeThumbGray.svg"}
+                  src={answerPost.isLiked ? "/icons/newLikeThumbGreen.svg" : "/icons/newLikeThumbGray.svg"}
                   alt="like"
                   width={16}
                   height={16}
                 />
-                <span className="text-SUIT_12 font-medium text-ui-count">{ans.likeCount || 0}</span>
+                <span className="text-SUIT_12 font-medium text-ui-count">{answerPost.likeCount || 0}</span>
               </div>
             </div>
 
             {/* 채택 모달 */}
-            {ans.answerPostId && (
+            {answerPost.answerPostId && (
               <ChaetaekCheckModal
-                isOpen={isModalOpen && currentAnswerId === ans.answerPostId}
-                author={ans.member?.uuidNickname || "익명"}
+                isOpen={isModalOpen && currentAnswerId === answerPost.answerPostId}
+                author={answerPost.member?.uuidNickname || "익명"}
                 onClose={closeModal}
-                answerPostId={ans.answerPostId}
+                answerPostId={answerPost.answerPostId}
               />
             )}
           </div>
