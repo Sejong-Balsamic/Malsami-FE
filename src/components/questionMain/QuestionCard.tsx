@@ -97,12 +97,12 @@ function QuestionCard({ question }: QuestionCardProps) {
                 </span>
               </div>
               {/* 과목명 태그 */}
-              <SubjectTag subject={question.subject} postType="question" />
+              <SubjectTag subjectName={question.subject} type="question" />
             </>
           ) : (
             <>
               {/* 과목명 태그 */}
-              <SubjectTag subject={question.subject} postType="question" />
+              <SubjectTag subjectName={question.subject} type="question" />
               {/* 엽전 태그 */}
               <RewardTag amount={question.rewardYeopjeon || 0} />
             </>
