@@ -34,7 +34,7 @@ const config: Config = {
         // 태그 색상
         tag: {
           yeopjeon: "#FFB000", // 엽전 태그 색상
-          accept: "#0062D2", // 채택 태그 색상
+          accept: "#3D8BFF", // 채택(답변) 태그 색상
         },
 
         // UI 요소 색상
@@ -45,6 +45,7 @@ const config: Config = {
           body: "#616161", // 본문 텍스트 색상
           divider: "#F0F0F0", // 구분선 색상
           "image-bg": "#B5B5B5", // 이미지 배경색
+          count: "#ACACAC", // 카운터용 회색 (좋아요·댓글·조회수 등)
         },
 
         // Shadcn UI 색상 (유지)

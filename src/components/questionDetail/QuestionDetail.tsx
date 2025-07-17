@@ -99,19 +99,19 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
           <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">{questionDto.questionPost?.title}</h1>
 
           {/* 전공 · 조회수 · 작성일 */}
-          <div className="mt-2 flex items-center gap-2 text-SUIT_12 font-medium text-[#ACACAC]">
-            {/* 작성자 전공 (없으면 전공 비공개) */}
+          <div className="mt-2 flex items-center gap-[4px] text-SUIT_12 font-medium text-ui-body">
+            {/* 작성자 전공 */}
             <span>{questionDto.questionPost?.member?.major ?? "전공 비공개"}</span>
             {/* 구분 점 */}
-            <span>•</span>
+            <span className="text-ui-muted">•</span>
             {/* 조회수 아이콘 + 숫자 */}
             <span className="inline-flex items-center gap-1">
               <Image src="/viewCountGray.svg" alt="views" width={12} height={12} />
-              {questionDto.questionPost?.viewCount}
+              <span className="text-ui-count">{questionDto.questionPost?.viewCount}</span>
             </span>
-            <span>•</span>
+            <span className="text-ui-muted">•</span>
             {/* 날짜 */}
-            <span>{formattedDate}</span>
+            <span className="text-ui-muted">{formattedDate}</span>
           </div>
 
           {/* 본문 텍스트 */}
@@ -225,12 +225,12 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
           </div>
         </div>
 
-        {/* 두꺼운 구분선 */}
-        <div className="mx-auto h-[4px] w-full max-w-[433px] rounded-[2px] bg-[#EDEDED]"></div>
+        {/* 두꺼운 구분선 (전체 가로폭) */}
+        <div className="-mx-5 h-[4px] w-[calc(100%+40px)] rounded-[2px] bg-[#EDEDED]"></div>
       </div>
 
       {/* 답변 섹션 */}
-      <div className="mt-4 flex items-center gap-[8px] pl-5">
+      <div className="mt-4 flex items-center gap-[8px]">
         <Image src="/icons/answerBubbleGray.svg" alt="답변" width={16} height={16} />
         <span className="text-SUIT_14 font-semibold text-[#898989]">
           답변 {questionDto.questionPost?.answerCount || 0}
