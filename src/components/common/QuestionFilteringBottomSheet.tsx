@@ -1,5 +1,4 @@
-import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Drawer,
   DrawerContent,
@@ -17,7 +16,7 @@ import { ChaetaekStatus, chaetaekStatusLabels } from "@/types/api/constants/chae
 import { QuestionPresetTag, QuestionPresetTagLabels } from "@/types/api/constants/questionPresetTag";
 import IconWrapper21x21 from "./IconWrapper21x21";
 import FilteringButton from "./buttons/FilteringButton";
-import FilteringTag from "./tags/FilteringTag";
+import QuestionFilteringTag from "./tags/QuestionFilteringTag";
 
 interface QuestionFilteringBottomSheetProps {
   onReset: () => void;
@@ -63,6 +62,13 @@ export default function QuestionFilteringBottomSheet({
   const [selectedSort, setSelectedSort] = useState<SortType | undefined>(currentFiltering.sortType);
   const [selectedChaetaek, setSelectedChaetaek] = useState<ChaetaekStatus | undefined>(currentFiltering.chaetaekStatus);
   const [selectedTags, setSelectedTags] = useState<QuestionPresetTag[]>(currentFiltering.questionPresetTags || []);
+
+  // currentFiltering 변경 시 내부 상태 동기화
+  useEffect(() => {
+    setSelectedSort(currentFiltering.sortType);
+    setSelectedChaetaek(currentFiltering.chaetaekStatus);
+    setSelectedTags(currentFiltering.questionPresetTags || []);
+  }, [currentFiltering]);
 
   // 초기화 함수
   const handleReset = () => {
@@ -131,7 +137,7 @@ export default function QuestionFilteringBottomSheet({
               <h3 className="mb-3 text-lg font-semibold">정렬</h3>
               <div className="flex flex-wrap gap-2">
                 {SORT_OPTIONS.map(option => (
-                  <FilteringTag
+                  <QuestionFilteringTag
                     key={option.value}
                     label={option.label}
                     isSelected={selectedSort === option.value}
@@ -146,7 +152,7 @@ export default function QuestionFilteringBottomSheet({
               <h3 className="mb-3 text-lg font-semibold">채택 여부</h3>
               <div className="flex flex-wrap gap-2">
                 {CHAETAEK_OPTIONS.map(option => (
-                  <FilteringTag
+                  <QuestionFilteringTag
                     key={option.value}
                     label={option.label}
                     isSelected={selectedChaetaek === option.value}
@@ -163,7 +169,7 @@ export default function QuestionFilteringBottomSheet({
               </h3>
               <div className="flex flex-wrap gap-2">
                 {QUESTION_TAG_OPTIONS.map(option => (
-                  <FilteringTag
+                  <QuestionFilteringTag
                     key={option.value}
                     label={option.label}
                     isSelected={selectedTags.includes(option.value)}
