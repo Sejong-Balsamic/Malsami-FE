@@ -10,7 +10,7 @@ export default async function getAnswer(questionPostId: string): Promise<AnswerP
     formData.append("questionPostId", questionPostId);
 
     // POST 요청으로 답변 리스트 조회
-    const response = await apiClient.post<QuestionDto>("/api/answer/get/all", formData, {
+    const response = await apiClient.post<QuestionDto>("/api/question/answer/get/all", formData, {
       headers: {
         "Content-Type": "multipart/form-data", // Content-Type 설정
       },

@@ -5,7 +5,8 @@ import Image from "next/image";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/shadcn/drawer";
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import AnswerSection from "./AnswerSection";
-import { getDateDiff } from "@/global/time";
+import { formatDateTime } from "@/global/time";
+import { useMemo } from "react";
 import CommentSection from "./QCommentSection";
 import sameMember from "@/global/sameMember";
 import AttachedFiles from "@/components/common/AttachedFiles";
@@ -31,13 +32,19 @@ const getKoreanTag = (englishTag: string): string => {
   return tagMapping[englishTag] || englishTag; // 매핑되지 않은 경우 원래의 태그 반환
 };
 
-function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
+function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
   const [isLiked, setIsLiked] = useState(questionDto.questionPost?.isLiked); // API 응답 값으로 초기화
   const [currentLikeCount, setCurrentLikeCount] = useState(questionDto.questionPost?.likeCount as number);
 
   const isAuthor: boolean = sameMember(questionDto.questionPost?.member?.memberId as string); // 작성자 여부 확인
-  // FIXME: 임시로 HOT 여부 체크 (향후 API에서 isHot으로 대체 예정)
-  const isHot = questionDto.questionPost?.weeklyScore && questionDto.questionPost?.weeklyScore > 5;
+  // HOT 여부 : isPopular 사용
+  const isHot = questionDto.questionPost?.isPopular === true;
+
+  // 작성일 포맷 (MM/DD HH:mm) util 사용
+  const formattedDate = useMemo(
+    () => formatDateTime(questionDto.questionPost?.createdDate ?? ""),
+    [questionDto.questionPost?.createdDate],
+  );
 
   const handleLikeClick = async () => {
     if (isLiked) return; // 이미 좋아요를 누른 상태라면 실행하지 않음
@@ -69,7 +76,7 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
   return (
     <div className="flex flex-col justify-center">
       {/* 태그 영역 (HOT, 교과목명, 현상금) */}
-      <div className="mt-[12px] flex flex-wrap items-center gap-[4px]">
+      <div className="mt-4 flex flex-wrap items-center gap-[4px]">
         {isHot && <HotTag />}
 
         {/* 과목/채택 */}
@@ -88,22 +95,23 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
 
       {/* 글 정보 */}
       <div className="flex w-full flex-col">
-        <div className="mt-[12px]">
+        <div className="mt-3">
           <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">{questionDto.questionPost?.title}</h1>
 
-          {/* 소과목/작성일자/조회수 */}
-          <div className="mt-[4px] flex items-center">
-            <span className="mr-[3px] text-SUIT_12 font-medium text-[#ACACAC]">
-              {questionDto.questionPost?.subject}
+          {/* 전공 · 조회수 · 작성일 */}
+          <div className="mt-2 flex items-center gap-2 text-SUIT_12 font-medium text-[#ACACAC]">
+            {/* 작성자 전공 (없으면 전공 비공개) */}
+            <span>{questionDto.questionPost?.member?.major ?? "전공 비공개"}</span>
+            {/* 구분 점 */}
+            <span>•</span>
+            {/* 조회수 아이콘 + 숫자 */}
+            <span className="inline-flex items-center gap-1">
+              <Image src="/viewCountGray.svg" alt="views" width={12} height={12} />
+              {questionDto.questionPost?.viewCount}
             </span>
-            <span className="mx-[3px] text-SUIT_12 font-medium text-[#ACACAC]">•</span>
-            <span className="mx-[3px] text-SUIT_12 font-medium text-[#ACACAC]">
-              {getDateDiff(questionDto.questionPost?.createdDate as string)}
-            </span>
-            <span className="mx-[3px] text-SUIT_12 font-medium text-[#ACACAC]">•</span>
-            <span className="ml-[3px] text-SUIT_12 font-medium text-[#ACACAC]">
-              조회수 {questionDto.questionPost?.viewCount}
-            </span>
+            <span>•</span>
+            {/* 날짜 */}
+            <span>{formattedDate}</span>
           </div>
 
           {/* 본문 텍스트 */}
@@ -114,8 +122,8 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
 
         {/* 첨부파일 */}
         {files && files.length > 0 && (
-          <div className="-mx-5 mt-[12px] overflow-x-auto">
-            <div className="flex gap-[12px] pb-[10px] pl-5">
+          <div className="mt-2 overflow-x-auto">
+            <div className="flex gap-[12px] pb-[10px]">
               {files.map((file, index) => (
                 <div
                   key={index}
@@ -141,7 +149,7 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
 
         {/* 토픽 태그 (커스텀태그) */}
         {questionDto.customTags && questionDto.customTags.length > 0 && (
-          <div className="mt-[16px] flex flex-wrap gap-[8px]">
+          <div className="mt-3 flex flex-wrap gap-[8px]">
             {questionDto.customTags.map((tag, index) => (
               <div
                 key={index}
@@ -165,67 +173,76 @@ function QnaDetail({ questionDto }: { questionDto: QuestionDto }) {
           ))}
         </div>
 
-        {/* 구분선 */}
-        <div className="mt-[20px] h-[1px] w-full bg-[#D7D7D7]"></div>
+        {/* 얇은 구분선 */}
+        <div className="mt-5 h-[1px] w-full bg-[#D7D7D7]"></div>
 
         {/* 좋아요 및 댓글 액션 */}
-        <div className="my-[10px] flex items-center gap-[12px]">
-          <div
-            onClick={!isLiked ? handleLikeClick : undefined} // 이미 눌렀다면 클릭 비활성화
-            className="flex cursor-pointer items-center gap-[4px]"
-          >
-            <Image
-              src={isLiked ? "/icons/newLikeThumbBlue.svg" : "/icons/newLikeThumbGray.svg"}
-              alt={isLiked ? "Like_Clicked" : "Like_UnClicked"}
-              width={16}
-              height={16}
-            />
-            <span className={`text-SUIT_12 font-medium ${isLiked ? "text-[#03b89e]" : "text-[#ACACAC]"}`}>
-              {currentLikeCount}
-            </span>
-          </div>
-
-          {/* 질문 댓글 */}
-          <Drawer>
-            <DrawerTrigger asChild>
-              <div className="flex cursor-pointer items-center gap-[4px]">
-                <Image src="/icons/newChatBubbleGray.svg" alt="Comment_UnClicked" width={16} height={16} />
-                <span className="text-SUIT_12 font-medium text-[#ACACAC]">{commentCount}</span>
-              </div>
-            </DrawerTrigger>
-            <DrawerContent className="px-[20px] pb-[20px]">
-              <DrawerHeader className="px-0">
-                <DrawerTitle className="flex text-SUIT_14 font-semibold text-[#3c3c3c]">
-                  댓글 {commentCount}
-                </DrawerTitle>
-              </DrawerHeader>
-              <div className="max-h-[400px] overflow-y-auto">
-                <CommentSection
-                  postId={questionDto.questionPost?.questionPostId as string}
-                  contentType="QUESTION"
-                  onCommentAdded={incrementCommentCount}
+        <div className="mb-[15px] mt-[15px] flex justify-center">
+          <div className="flex w-full max-w-[433px] divide-x divide-transparent">
+            {/* 왼쪽(좋아요) */}
+            <div className="flex w-1/2 justify-center">
+              <div
+                onClick={!isLiked ? handleLikeClick : undefined}
+                className="flex cursor-pointer items-center gap-[4px]"
+              >
+                <Image
+                  src={isLiked ? "/icons/newLikeThumbGreen.svg" : "/icons/newLikeThumbGray.svg"}
+                  alt={isLiked ? "Like_Clicked" : "Like_UnClicked"}
+                  width={16}
+                  height={16}
                 />
+                <span className={`text-SUIT_12 font-medium ${isLiked ? "text-[#03b89e]" : "text-[#ACACAC]"}`}>
+                  {currentLikeCount}
+                </span>
               </div>
-            </DrawerContent>
-          </Drawer>
+            </div>
+
+            {/* 오른쪽(댓글) */}
+            <div className="flex w-1/2 justify-center">
+              <Drawer>
+                <DrawerTrigger asChild>
+                  <div className="flex cursor-pointer items-center gap-[4px]">
+                    <Image src="/icons/newChatBubbleGray.svg" alt="Comment_UnClicked" width={16} height={16} />
+                    <span className="text-SUIT_12 font-medium text-[#ACACAC]">{commentCount}</span>
+                  </div>
+                </DrawerTrigger>
+                <DrawerContent className="px-[20px] pb-[20px]">
+                  <DrawerHeader className="px-0">
+                    <DrawerTitle className="flex text-SUIT_14 font-semibold text-[#3c3c3c]">
+                      댓글 {commentCount}
+                    </DrawerTitle>
+                  </DrawerHeader>
+                  <div className="max-h-[400px] overflow-y-auto">
+                    <CommentSection
+                      postId={questionDto.questionPost?.questionPostId as string}
+                      contentType="QUESTION"
+                      onCommentAdded={incrementCommentCount}
+                    />
+                  </div>
+                </DrawerContent>
+              </Drawer>
+            </div>
+          </div>
         </div>
 
-        {/* 구분선 */}
-        <div className="h-[1px] w-full bg-[#D7D7D7]"></div>
+        {/* 두꺼운 구분선 */}
+        <div className="mx-auto h-[4px] w-full max-w-[433px] rounded-[2px] bg-[#EDEDED]"></div>
       </div>
 
       {/* 답변 섹션 */}
-      <div className="mt-[20px] flex items-center">
-        <Image src="/icons/answerBubbleGray.svg" alt="답변" width={16} height={16} className="text-[#C5C5C5]" />
-        <span className="ml-[4px] text-SUIT_14 text-[14px] font-semibold text-black">
+      <div className="mt-4 flex items-center gap-[8px] pl-5">
+        <Image src="/icons/answerBubbleGray.svg" alt="답변" width={16} height={16} />
+        <span className="text-SUIT_14 font-semibold text-[#898989]">
           답변 {questionDto.questionPost?.answerCount || 0}
         </span>
       </div>
 
       {/* 답변 영역 */}
-      <AnswerSection postId={questionDto.questionPost?.questionPostId as string} isAuthor={isAuthor} />
+      <div className="mt-5">
+        <AnswerSection postId={questionDto.questionPost?.questionPostId as string} isAuthor={isAuthor} />
+      </div>
     </div>
   );
 }
 
-export default QnaDetail;
+export default QuestionDetail;

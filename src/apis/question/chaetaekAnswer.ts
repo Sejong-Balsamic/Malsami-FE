@@ -8,7 +8,7 @@ export default async function chaetaekAnswer(postId: string): Promise<QuestionDt
     formData.append("postId", postId);
 
     // 채택 요청
-    const response = await apiClient.post<QuestionDto>("/api/answer/chaetaek", formData, {
+    const response = await apiClient.post<QuestionDto>("/api/question/answer/chaetaek", formData, {
       headers: {
         "Content-Type": "multipart/form-data", // Content-Type 설정
       },

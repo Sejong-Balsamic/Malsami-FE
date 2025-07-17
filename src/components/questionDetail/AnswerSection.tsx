@@ -90,7 +90,6 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
 
   return (
     <div className="my-[40px] flex h-auto min-w-[336px] max-w-[640px] flex-col">
-      <span className="mb-[10px] text-SUIT_14 font-semibold text-[#3D3D3D]">답변 {answers.length}</span>
       {answers.length === 0 ? (
         <p className="text-center text-SUIT_14 font-medium text-[#7b7b7c]">아직 답변이 없습니다.</p>
       ) : (

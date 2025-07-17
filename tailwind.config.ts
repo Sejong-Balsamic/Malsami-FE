@@ -26,7 +26,7 @@ const config: Config = {
           main: "#00D1F2", // 자료게시판 메인 색상
         },
         question: {
-          main: "#00E8BB", // 질문게시판 메인 색상
+          main: "#00E271", // 질문게시판 메인 색상 (updated)
         },
 
         // 태그 색상
