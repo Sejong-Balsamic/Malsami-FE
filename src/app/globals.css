@@ -17,35 +17,6 @@
   }
 }
 
-/* Pretendard 폰트 */
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 400;
-  font-display: swap;
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 500;
-  font-display: swap;
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Medium.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 600;
-  font-display: swap;
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-SemiBold.woff") format("woff");
-}
-
-@font-face {
-  font-family: "Pretendard";
-  font-weight: 700;
-  font-display: swap;
-  src: url("https://fastly.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Bold.woff") format("woff");
-}
-
 /* SUIT 폰트 */
 @font-face {
   font-family: "SUIT";
@@ -85,20 +56,6 @@
 
 /* 폰트 유틸리티 클래스 */
 @layer utilities {
-  /* Pretendard 폰트 클래스 */
-  .font-pretendard-light {
-    @apply font-pretendard font-light;
-  }
-  .font-pretendard-medium {
-    @apply font-pretendard font-medium;
-  }
-  .font-pretendard-semibold {
-    @apply font-pretendard font-semibold;
-  }
-  .font-pretendard-bold {
-    @apply font-pretendard font-bold;
-  }
-
   /* SUIT 폰트 클래스 */
   .font-suit-medium {
     @apply font-suit font-medium leading-[100%];
@@ -189,7 +146,7 @@
   body {
     @apply bg-background text-foreground;
     font-synthesis: none;
-    font-family: "Pretendard", "Apple SD Gothic Neo", "Roboto", "Arial", sans-serif;
+    font-family: "SUIT", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }

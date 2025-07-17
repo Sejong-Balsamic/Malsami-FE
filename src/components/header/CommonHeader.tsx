@@ -10,6 +10,8 @@ import { LEFT_ITEM, RIGHT_ITEM, RightItemType } from "@/types/header";
 interface CommonHeaderProps {
   title: string;
   // eslint-disable-next-line react/require-default-props
+  subtitle?: string;
+  // eslint-disable-next-line react/require-default-props
   rightType?: RightItemType;
   // eslint-disable-next-line react/require-default-props
   onRightClick?: () => void;
@@ -21,6 +23,7 @@ interface CommonHeaderProps {
 
 export default function CommonHeader({
   title,
+  subtitle,
   rightType = RIGHT_ITEM.NONE,
   onRightClick,
   onLeftClick,
@@ -46,6 +49,7 @@ export default function CommonHeader({
           onLeftClick={handleLeftClick}
           onRightClick={handleRightClick}
           title={title}
+          subtitle={subtitle}
         />
       </div>
 

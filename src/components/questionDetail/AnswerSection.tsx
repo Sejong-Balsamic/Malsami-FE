@@ -81,18 +81,18 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
   }, [postId]);
 
   if (isLoading) {
-    return <p className="font-pretendard-medium text-center text-[14px] text-[#7b7b7c]">답변을 불러오는 중입니다...</p>;
+    return <p className="text-center text-SUIT_14 font-medium text-[#7b7b7c]">답변을 불러오는 중입니다...</p>;
   }
 
   if (loadError) {
-    return <p className="font-pretendard-medium text-center text-[14px] text-[#f56565]">{loadError}</p>;
+    return <p className="text-center text-SUIT_14 font-medium text-[#f56565]">{loadError}</p>;
   }
 
   return (
     <div className="my-[40px] flex h-auto min-w-[336px] max-w-[640px] flex-col">
-      <span className="font-pretendard-bold mb-[10px] text-[14px] text-[#3D3D3D]">답변 {answers.length}</span>
+      <span className="mb-[10px] text-SUIT_14 font-semibold text-[#3D3D3D]">답변 {answers.length}</span>
       {answers.length === 0 ? (
-        <p className="font-pretendard-medium text-center text-[14px] text-[#7b7b7c]">아직 답변이 없습니다.</p>
+        <p className="text-center text-SUIT_14 font-medium text-[#7b7b7c]">아직 답변이 없습니다.</p>
       ) : (
         answers.map((ans, index) => (
           <div
@@ -102,12 +102,12 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
             <div className="mb-[4px] flex items-center justify-between">
               <div className="flex items-center justify-between gap-[6px]">
                 {ans.isChaetaek && (
-                  <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#0062D2] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
-                    채택됨
+                  <div className="inline-flex h-[26px] items-center justify-center rounded-[13px] bg-[#0062D2] px-[14px] py-[6px]">
+                    <span className="text-SUIT_12 font-bold text-white">채택됨</span>
                   </div>
                 )}
-                <span className="font-pretendard-bold text-[14px]">@{ans.member?.uuidNickname || "익명"}</span>
-                <span className="font-pretendard-medium text-[12px] text-[#737373]">
+                <span className="text-SUIT_14 font-bold">@{ans.member?.uuidNickname || "익명"}</span>
+                <span className="text-SUIT_12 font-medium text-[#737373]">
                   • {ans.isPrivate ? "비공개" : ans.member?.major || "정보 없음"}
                 </span>
               </div>
@@ -115,15 +115,13 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                 <Button
                   variant="ghost"
                   onClick={() => openModalForAnswer(ans.answerPostId!)}
-                  className="font-pretendard-medium ml-[6px] h-[26px] rounded-[13px] border border-[#0062D2] px-[15px] py-[6px] text-[12px] text-[#0062D2]"
+                  className="ml-[6px] h-[26px] rounded-[13px] border border-[#0062D2] px-[15px] py-[6px] text-SUIT_12 font-medium text-[#0062D2]"
                 >
                   채택하기
                 </Button>
               )}
             </div>
-            <div className="font-pretendard-medium text-[14px] leading-relaxed text-[#444444]">
-              {ans.content || "내용 없음"}
-            </div>
+            <div className="text-SUIT_14 font-medium leading-relaxed text-[#444444]">{ans.content || "내용 없음"}</div>
             {ans.mediaFiles && ans.mediaFiles.length > 0 && (
               <div className="mt-4">
                 <AttachedFiles files={ans.mediaFiles.map(file => file.uploadedImageUrl || "")} />
@@ -132,7 +130,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
             <Accordion type="single" collapsible>
               <AccordionItem value={`item-${index}`}>
                 <div className="flex h-[24px] w-full justify-between">
-                  <p className="font-pretendard-medium text-[12px] text-[#bcbcbc]">
+                  <p className="text-SUIT_12 font-medium text-[#bcbcbc]">
                     {ans.createdDate ? getDateDiff(ans.createdDate) : "날짜 정보 없음"}
                   </p>
                   <div className="flex gap-4">
@@ -151,7 +149,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                         width={16}
                         height={16}
                       />
-                      <p className="font-pretendard-medium text-[14px] text-[#000000]">{ans.likeCount || 0}</p>
+                      <p className="text-SUIT_14 font-medium text-[#000000]">{ans.likeCount || 0}</p>
                     </div>
                     <AccordionTrigger>
                       <div className="mb-4 flex cursor-pointer items-center gap-1">
@@ -161,7 +159,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                           width={16}
                           height={16}
                         />
-                        <p className="font-pretendard-medium text-[14px] text-[#000000]">{ans.commentCount || 0}</p>
+                        <p className="text-SUIT_14 font-medium text-[#000000]">{ans.commentCount || 0}</p>
                       </div>
                     </AccordionTrigger>
                   </div>
@@ -174,7 +172,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                       onCommentAdded={() => incrementCommentCount(ans.answerPostId!)}
                     />
                   ) : (
-                    <p className="font-pretendard-medium text-[14px] text-[#7b7b7c]">댓글을 불러올 수 없습니다.</p>
+                    <p className="text-SUIT_14 font-medium text-[#7b7b7c]">댓글을 불러올 수 없습니다.</p>
                   )}
                 </AccordionContent>
               </AccordionItem>

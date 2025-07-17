@@ -45,7 +45,7 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
   }, []);
 
   // 질문 상세 페이지로 이동
-  const handleCardClick = (questionId: number) => {
+  const handleCardClick = (questionId: string) => {
     router.push(`/board/question/detail/${questionId}`);
   };
 
@@ -88,11 +88,11 @@ export default function AllQuestionListSection({ onViewAll }: AllQuestionListSec
                   type="button"
                   key={question.questionPostId}
                   className={`w-full cursor-pointer px-5 py-6 text-left ${index < questions.length - 1 ? "border-b border-[#EDEDED]" : ""}`}
-                  onClick={() => handleCardClick(Number(question.questionPostId))}
+                  onClick={() => handleCardClick(question.questionPostId as string)}
                 >
                   {/* 상단 부분 - 과목 태그 */}
                   <div className="mb-3">
-                    <SubjectTag subjectName={question.subject || "과목 없음"} type="question" />
+                    <SubjectTag subjectName={question.subject} type="question" />
                   </div>
 
                   {/* 게시물 제목 */}
