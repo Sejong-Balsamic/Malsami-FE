@@ -63,7 +63,7 @@ export default function MajorQuestionPage() {
         chaetaekStatus: filtering.chaetaekStatus,
         questionPresetTags: filtering.questionPresetTags,
         faculty: memberFaculty,
-        // query, TODO: 추후 추가. QuestionCommand에 추가해야함.
+        query,
       });
 
       if (response && response.questionPostsPage) {
