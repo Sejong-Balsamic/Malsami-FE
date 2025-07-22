@@ -1,4 +1,4 @@
-export interface CommonInputProps {
+export interface QuestionCommonInputProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -6,13 +6,13 @@ export interface CommonInputProps {
   className?: string;
 }
 
-export default function CommonInput({
+export default function QuestionCommonInput({
   value,
   onChange,
   onKeyDown,
   placeholder,
   className = "w-full rounded-[8px] border-2 border-ui-divider px-4 py-[18px] text-SUIT_14 font-medium placeholder-ui-muted focus:outline-none focus:border-question-main transition-colors",
-}: CommonInputProps) {
+}: QuestionCommonInputProps) {
   return (
     <input
       type="text"
@@ -25,7 +25,7 @@ export default function CommonInput({
   );
 }
 
-CommonInput.defaultProps = {
+QuestionCommonInput.defaultProps = {
   onKeyDown: undefined,
   placeholder: "",
   className:

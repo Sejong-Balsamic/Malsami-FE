@@ -1,7 +1,7 @@
 import { useState } from "react";
 import subjects from "@/types/subjects";
 import { FirstPageProps } from "./QuestionPostTypes";
-import SubjectSelector from "./SubjectSelector";
+import QuestionSubjectSelector from "./QuestionSubjectSelector";
 import JiJeongTagSelector from "./JiJeongTagSelector";
 import CustomTagSelector from "./CustomTagSelector";
 
@@ -40,7 +40,11 @@ function QuestionPostFirstPage({
     <div className="flex flex-1 flex-col">
       <div className="flex flex-col gap-7">
         {/* 과목명 섹션 */}
-        <SubjectSelector value={formData.subject} onChange={handleSubjectChange} onSelect={handleSubjectSelect} />
+        <QuestionSubjectSelector
+          value={formData.subject}
+          onChange={handleSubjectChange}
+          onSelect={handleSubjectSelect}
+        />
 
         {/* 기본 태그 섹션 - 과목명이 입력된 경우에만 표시 */}
         {isSubjectCompleted && (

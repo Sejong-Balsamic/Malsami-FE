@@ -1,4 +1,4 @@
-import CommonInput from "@/components/common/CommonInput";
+import QuestionCommonInput from "@/components/common/QuestionCommonInput";
 
 interface TitleInputProps {
   value: string;
@@ -20,7 +20,7 @@ export default function TitleInput({ value, onChange }: TitleInputProps) {
           <span className={value.length > 0 ? "text-question-main" : "text-gray-500"}>{value.length}</span> / 20자
         </span>
       </div>
-      <CommonInput
+      <QuestionCommonInput
         value={value}
         onChange={handleChange}
         placeholder="제목을 입력해주세요"
