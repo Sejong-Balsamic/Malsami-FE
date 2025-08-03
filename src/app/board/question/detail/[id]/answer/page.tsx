@@ -144,51 +144,133 @@ export default function AnswerPostPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="min-h-screen bg-white">
       <ScrollToTopOnLoad />
-      <CommonHeader title="답변 작성" rightType={RIGHT_ITEM.NONE} />
-      {/* 헤더 아래 여백 추가 */}
-      <div className="mt-[64px]">
-        {" "}
-        <div className="w-full min-w-[386px] max-w-[640px] bg-white p-5">
-          <div>
-            <div>
-              {/* 원문 */}
-              <OriginalQuestion questionPostId={questionPostId} />
-            </div>
-            {/* 로딩 중일 때 */}
-            {isSubmitting ? (
-              <div className="flex h-[500px] items-center justify-center">
-                <LoadingSpinner />
+      
+      {/* Fixed Header */}
+      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+        <CommonHeader title="답변 작성" rightType={RIGHT_ITEM.NONE} />
+      </div>
+
+      {/* 헤더 높이만큼 스페이서 */}
+      <div className="h-16 w-full" />
+
+      {/* Main Content */}
+      <main className="px-5">
+        {/* 원문 보기 */}
+        <OriginalQuestion questionPostId={questionPostId} />
+        
+        {/* 로딩 중일 때 */}
+        {isSubmitting ? (
+          <div className="flex h-[500px] items-center justify-center">
+            <LoadingSpinner />
+          </div>
+        ) : (
+          <form>
+            {/* 답변 섹션 */}
+            <div className="mt-4">
+              <h2 className="text-SUIT_16 font-medium text-black">답변</h2>
+              
+              <div className="mt-2 flex items-center justify-between">
+                <span className="text-SUIT_14 font-medium text-[#898989]">
+                  최대 2000자까지 작성할 수 있어요.
+                </span>
+                
+                {/* 익명 설정 */}
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    onClick={() => setFormData(prev => ({ ...prev, isPrivate: !prev.isPrivate }))}
+                    className="mr-1"
+                  >
+                    <img
+                      src={formData.isPrivate ? "/icons/chaetaekCheckboxChecked.svg" : "/icons/chaetaekCheckboxUnchecked.svg"}
+                      alt="익명 체크박스"
+                      width={16}
+                      height={16}
+                    />
+                  </button>
+                  <span className="text-SUIT_14 font-medium text-[#9B9B9B]">익명</span>
+                </div>
               </div>
-            ) : (
-              <form>
-                {/* 답변 */}
-                <AnswerInput value={formData.content} onChange={handleChange} />
-                {/* 파일 업로드 */}
+              
+              {/* 답변 입력란 */}
+              <div className="relative mt-3">
+                <textarea
+                  name="content"
+                  placeholder="답변을 작성해주세요."
+                  value={formData.content}
+                  onChange={handleChange}
+                  maxLength={2000}
+                  required
+                  className="w-full min-h-[226px] rounded-[8px] border-2 border-[#E2E2E2] bg-white px-4 py-4 pb-[36px] text-SUIT_14 font-medium resize-vertical"
+                />
+                
+                {/* 글자 수 카운터 - textarea 기준 아래 8px, 오른쪽 16px */}
+                <div 
+                  className="absolute text-right"
+                  style={{ 
+                    bottom: "8px", 
+                    right: "16px",
+                    fontSize: "12px", 
+                    lineHeight: "100%" 
+                  }}
+                >
+                  <span style={{ color: "#00E271", fontWeight: 600 }}>
+                    {formData.content.length}
+                  </span>
+                  <span style={{ color: "#C5C5C5", fontWeight: 500 }}>
+                    {" / 2000"}
+                  </span>
+                </div>
+              </div>
+            </div>
+            
+            {/* 이미지 섹션 */}
+            <div className="mt-7">
+              <h2 className="text-SUIT_16 font-medium text-black">이미지</h2>
+              
+              <div className="mt-2">
+                <span 
+                  className="text-SUIT_14 font-medium"
+                  style={{ 
+                    color: "#898989",
+                    fontSize: "14px",
+                    fontWeight: 500,
+                    lineHeight: "100%"
+                  }}
+                >
+                  최대 50MB까지 업로드할 수 있어요.
+                </span>
+              </div>
+              
+              {/* 이미지 업로드 영역 */}
+              <div className="mt-3">
                 <FileUploadInput
                   mediaFiles={formData.mediaFiles}
                   onFileChange={handleFileChange}
                   onFileDelete={handleFileDelete}
                 />
-                {/* 추가 설정 */}
-                <PrivateSettingInput
-                  isPrivate={formData.isPrivate}
-                  onToggle={() => setFormData(prev => ({ ...prev, isPrivate: !prev.isPrivate }))}
-                />
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={!isFormValid}
-                  className={`w-full rounded-md p-2 text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
-                >
-                  답변 등록
-                </button>
-              </form>
-            )}
-          </div>
-        </div>
-      </div>
+              </div>
+            </div>
+            
+            {/* 완료 버튼 */}
+            <div className="mt-[62px] mb-4">
+              <button
+                type="button"
+                onClick={handleSubmit}
+                disabled={!isFormValid}
+                className="w-full h-14 rounded-[8px] text-SUIT_18 font-extrabold text-white disabled:cursor-not-allowed"
+                style={{
+                  background: isFormValid ? "#00E271" : "#E2E2E2",
+                }}
+              >
+                완료
+              </button>
+            </div>
+          </form>
+        )}
+      </main>
     </div>
   );
 }
