@@ -3,8 +3,8 @@
 import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import memberApi from "@/apis/memberApi";
-import { MemberCommand } from "@/types/api/requests/memberCommand";
+import authApi from "@/apis/authApi";
+import { AuthCommand } from "@/types/api/requests/authCommand";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import CustomInput from "../common/CustomInput";
 import LoginSuccessModal from "./LoginSuccessModal";
@@ -30,11 +30,11 @@ export default function LoginForm() {
     setIsLoading(true);
 
     try {
-      const command: Partial<MemberCommand> = {
+      const command: Partial<AuthCommand> = {
         sejongPortalId: studentId,
         sejongPortalPassword: password,
       };
-      const getUserInfo = await memberApi.signIn(command);
+      const getUserInfo = await authApi.signIn(command);
 
       if (getUserInfo.member) {
         setUserName(getUserInfo.member.studentName || "");

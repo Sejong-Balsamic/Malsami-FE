@@ -8,11 +8,16 @@ interface FileUploadProps {
 
 function QnaPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploadProps) {
   return (
-    <div className="mt-4 flex flex-wrap gap-3">
+    <div className="flex flex-wrap gap-3">
       {/* 파일 추가 버튼 */}
       <label
         htmlFor="file-upload"
-        className="relative flex h-[100px] w-[100px] cursor-pointer items-center justify-center rounded-[8px] border-2 border-dashed border-ui-divider"
+        style={{
+          width: "100px",
+          height: "100px",
+          flexShrink: 0,
+        }}
+        className="relative flex cursor-pointer items-center justify-center rounded-[8px] border-2 border-dashed border-ui-divider"
       >
         <input
           id="file-upload"
@@ -36,7 +41,12 @@ function QnaPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploa
         return (
           <div
             key={file.name}
-            className="relative h-[100px] w-[100px] overflow-hidden rounded-[8px] border-2 border-question-main bg-gray-300"
+            style={{
+              width: "100px",
+              height: "100px",
+              flexShrink: 0,
+            }}
+            className="relative overflow-hidden rounded-[8px] border-2 border-question-main bg-gray-300"
           >
             <img src={imageUrl} alt={file.name} className="h-full w-full object-cover" />
             <button

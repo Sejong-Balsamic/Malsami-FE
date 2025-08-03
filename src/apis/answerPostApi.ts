@@ -5,15 +5,15 @@ import { postApiRequest } from "./apiUtils";
 export const answerPostApi = {
   // 답변글 저장
   saveAnswerPost: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/answer/post", command),
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/post", command),
 
   // 질문에 대한 답변글 조회
   getAnswersByQuestion: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/answer/get/all", command),
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/get/all", command),
 
   // 채택된 답변글 처리
   chaetaekAnswerPost: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/answer/chaetaek", command),
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/chaetaek", command),
 };
 
 export default answerPostApi;

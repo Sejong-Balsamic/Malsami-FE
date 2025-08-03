@@ -27,7 +27,7 @@ export default async function postAnswer(data: PostAnswerFormData) {
   }
 
   try {
-    const response = await apiClient.post("/api/answer/post", formData, {
+    const response = await apiClient.post("/api/question/answer/post", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
       },

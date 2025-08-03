@@ -7,8 +7,8 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import sameMember from "@/global/sameMember";
-import QnaDetail from "@/components/questionDetail/QnaDetail";
+import { isSameMemberById } from "@/global/memberUtil";
+import QuestionDetail from "@/components/questionDetail/QuestionDetail";
 import AnswerFAB from "@/components/questionDetail/AnswerFAB";
 import { Drawer, DrawerContent } from "@/components/shadcn/drawer";
 import Image from "next/image";
@@ -77,25 +77,36 @@ export default function Page() {
   // 오류 상태 처리
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
-  const isAuthor = questionDetails && sameMember(questionDetails.questionPost?.member?.memberId as string);
+  const isAuthor =
+    questionDetails?.questionPost?.isAuthor ??
+    (questionDetails && isSameMemberById(questionDetails.questionPost?.member?.memberId as string));
 
   return (
-    <div className="relative mx-auto w-full max-w-[640px] px-5">
+    <div className="min-h-screen bg-white">
       <ScrollToTopOnLoad />
-      <CommonHeader
-        title="내 전공 질문"
-        rightType={RIGHT_ITEM.MENU}
-        onRightClick={toggleDrawer}
-        subtitle={questionDetails?.questionPost?.member?.major || "내 전공"}
-      />
-      {/* 헤더 spacer는 CommonHeader 내부 h-16 으로 제공됨 */}
-      <div>
+
+      {/* 고정 헤더 */}
+      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+        <CommonHeader
+          title="내 전공 질문"
+          rightType={RIGHT_ITEM.MENU}
+          onRightClick={toggleDrawer}
+          subtitle={questionDetails?.questionPost?.member?.major || "내 전공"}
+        />
+      </div>
+
+      {/* 헤더 높이만큼 공백 */}
+      <div className="h-16 w-full" />
+
+      {/* 본문 영역 */}
+      <div className="relative mx-auto w-full max-w-[640px] px-5">
         {questionDetails && (
           <>
-            <QnaDetail questionDto={questionDetails} />
+            <QuestionDetail questionDto={questionDetails} />
             {!isAuthor && <AnswerFAB postId={questionDetails.questionPost?.questionPostId as string} />}
           </>
         )}
+
         {/* Drawer 컴포넌트 */}
         <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
           <DrawerContent>
