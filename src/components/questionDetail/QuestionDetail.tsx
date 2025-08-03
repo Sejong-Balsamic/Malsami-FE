@@ -15,6 +15,7 @@ import PresetTag from "@/components/common/tags/PresetTag";
 import SubjectTag from "@/components/common/tags/SubjectTag";
 import RewardTag from "@/components/common/tags/RewardTag";
 import HotTag from "@/components/common/tags/HotTag";
+import ChaetaekTag from "@/components/common/tags/ChaetaekTag";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 
 // 한국어 태그 매핑
@@ -81,12 +82,8 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
       <div className="mt-4 flex flex-wrap items-center gap-[4px]">
         {isHot && <HotTag />}
 
-        {/* 과목/채택 */}
-        {questionDto.questionPost?.chaetaekStatus && (
-          <div className="inline-flex h-[32px] items-center justify-center rounded bg-[#3D8BFF] px-[6px] py-[4px]">
-            <span className="text-SUIT_12 font-bold text-white">채택됨</span>
-          </div>
-        )}
+        {/* 채택 태그 */}
+        {questionDto.questionPost?.chaetaekStatus && <ChaetaekTag />}
 
         {/* 과목명 태그 */}
         <SubjectTag subjectName={questionDto.questionPost?.subject} type="question" />

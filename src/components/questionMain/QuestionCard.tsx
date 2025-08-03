@@ -3,6 +3,7 @@ import { getDateDiff } from "@/global/time";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import SubjectTag from "@/components/common/tags/SubjectTag";
 import RewardTag from "@/components/common/tags/RewardTag";
+import ChaetaekTag from "@/components/common/tags/ChaetaekTag";
 
 interface QuestionCardProps {
   question: QuestionPost;
@@ -24,12 +25,8 @@ function QuestionCard({ question }: QuestionCardProps) {
             {/* 채택 여부에 따른 태그 렌더링 */}
             {question.chaetaekStatus ? (
               <>
-                {/* 채택됨 태그 */}
-                <div className="inline-flex items-center justify-center rounded bg-[#0062D2] px-1.5 py-1">
-                  <span className="truncate text-SUIT_12 font-bold text-white" style={{ maxWidth: "120px" }}>
-                    채택됨
-                  </span>
-                </div>
+                {/* 채택 태그 */}
+                <ChaetaekTag />
                 {/* 과목명 태그 */}
                 <SubjectTag subjectName={question.subject} type="question" />
               </>
@@ -90,12 +87,8 @@ function QuestionCard({ question }: QuestionCardProps) {
           {/* 채택 여부에 따른 태그 렌더링 */}
           {question.chaetaekStatus ? (
             <>
-              {/* 채택됨 태그 */}
-              <div className="inline-flex items-center justify-center rounded bg-[#0062D2] px-1.5 py-1">
-                <span className="truncate text-SUIT_12 font-bold text-white" style={{ maxWidth: "120px" }}>
-                  채택됨
-                </span>
-              </div>
+              {/* 채택 태그 */}
+              <ChaetaekTag />
               {/* 과목명 태그 */}
               <SubjectTag subjectName={question.subject} type="question" />
             </>

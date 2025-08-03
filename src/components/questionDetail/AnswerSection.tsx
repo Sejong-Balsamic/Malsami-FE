@@ -7,6 +7,7 @@ import { ContentType } from "@/types/api/constants/contentType";
 import { isSameMemberById } from "@/global/memberUtil";
 import { AnswerPost } from "@/types/api/entities/postgres/answerPost";
 import ChaetaekCheckModal from "./ChaetaekCheckModal";
+import ChaetaekTag from "@/components/common/tags/ChaetaekTag";
 
 interface AnswerSectionProps {
   postId: string;
@@ -89,13 +90,13 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
       ) : (
         answers.map((answerPost, index) => (
           <div key={answerPost.answerPostId || index} className="flex">
-            {isAuthor && (
+            {isAuthor && !answerPost.isChaetaek && (
               <div className="mr-[8px] pt-[2px]">
                 <Image
                   src={
-                    selectedAnswerId === answerPost.answerPostId ? "/icons/CheckedIcon.svg" : "/icons/UnCheckedIcon.svg"
+                    selectedAnswerId === answerPost.answerPostId ? "/icons/chaetaekCheckboxChecked.svg" : "/icons/chaetaekCheckboxUnchecked.svg"
                   }
-                  alt={selectedAnswerId === answerPost.answerPostId ? "checked" : "unchecked"}
+                  alt={selectedAnswerId === answerPost.answerPostId ? "채택 선택됨" : "채택 선택 안됨"}
                   width={16}
                   height={16}
                   className="cursor-pointer"
@@ -110,11 +111,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
               {/* 상단 정보 */}
               <div className="flex items-center gap-[4px]">
                 {/* 채택 태그 */}
-                {answerPost.isChaetaek && (
-                  <div className="inline-flex items-center justify-center rounded bg-tag-accept px-[14px] py-[6px]">
-                    <span className="text-SUIT_12 font-bold text-white">채택됨</span>
-                  </div>
-                )}
+                {answerPost.isChaetaek && <ChaetaekTag />}
 
                 {/* 닉네임 */}
                 <span className="text-SUIT_14 font-medium text-ui-body">
@@ -170,7 +167,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                     width={16}
                     height={16}
                   />
-                  <span className="text-SUIT_12 font-medium text-ui-count">{answerPost.likeCount || 0}</span>
+                  <span className={`text-[12px] font-medium leading-[100%] ${answerPost.isLiked ? "text-[#00E271]" : "text-ui-count"}`}>{answerPost.likeCount || 0}</span>
                 </div>
               </div>
 
