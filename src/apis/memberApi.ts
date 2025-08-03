@@ -4,10 +4,6 @@ import { MemberDto } from "@/types/api/responses/memberDto";
 import { postApiRequest } from "./apiUtils";
 
 export const memberApi = {
-  // 로그인
-  signIn: async (command: Partial<MemberCommand>): Promise<MemberDto> =>
-    postApiRequest<MemberCommand, MemberDto>("/api/member/signin", command),
-
   // 내 정보 조회
   getMyInfo: async (command: Partial<MemberCommand> = {}): Promise<MemberDto> =>
     postApiRequest<MemberCommand, MemberDto>("/api/member/my-info", command),

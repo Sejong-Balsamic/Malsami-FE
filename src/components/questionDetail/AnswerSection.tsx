@@ -3,20 +3,30 @@ import Image from "next/image";
 import { formatDateTime } from "@/global/time";
 import getAnswer from "@/apis/question/getAnswer";
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
-import sameMember from "@/global/sameMember";
+import { ContentType } from "@/types/api/constants/contentType";
+import { isSameMemberById } from "@/global/memberUtil";
 import { AnswerPost } from "@/types/api/entities/postgres/answerPost";
 import ChaetaekCheckModal from "./ChaetaekCheckModal";
 
 interface AnswerSectionProps {
   postId: string;
+  isAuthor: boolean;
 }
 
-function AnswerSection({ postId }: AnswerSectionProps) {
+function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
   const [answers, setAnswers] = useState<AnswerPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentAnswerId, setCurrentAnswerId] = useState<string | null>(null);
+
+  // 작성자용: 선택된 답변 ID 상태
+  const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
+
+  // 답변 선택 핸들러 (단일 선택)
+  const handleSelect = (answerId: string) => {
+    setSelectedAnswerId(prev => (prev === answerId ? null : answerId));
+  };
 
   const closeModal = () => {
     setIsModalOpen(false);
@@ -25,7 +35,7 @@ function AnswerSection({ postId }: AnswerSectionProps) {
 
   const handleLikeClick = async (answerId: string) => {
     const targetAnswer = answers.find(a => a.answerPostId === answerId);
-    if (!targetAnswer || targetAnswer.isLiked || sameMember(targetAnswer.member?.memberId as string)) return;
+    if (!targetAnswer || targetAnswer.isLiked || isSameMemberById(targetAnswer.member?.memberId as string)) return;
 
     try {
       setAnswers(prevAnswers =>
@@ -34,7 +44,7 @@ function AnswerSection({ postId }: AnswerSectionProps) {
         ),
       );
 
-      await postLikeQuestion(answerId, "ANSWER");
+      await postLikeQuestion(answerId, ContentType.ANSWER);
     } catch (likeError) {
       console.error("좋아요 업데이트 실패:", likeError);
       setAnswers(prevAnswers =>
@@ -78,94 +88,125 @@ function AnswerSection({ postId }: AnswerSectionProps) {
         <p className="text-center text-SUIT_14 font-medium text-ui-muted">아직 답변이 없습니다.</p>
       ) : (
         answers.map((answerPost, index) => (
-          <div key={answerPost.answerPostId || index} className="flex flex-col">
-            {/* 상단 라인 */}
-            {index !== 0 && <div className="mx-auto h-[1px] w-[353px] rounded-[2px] bg-[#EDEDED]" />}
+          <div key={answerPost.answerPostId || index} className="flex">
+            {isAuthor && (
+              <div className="mr-[8px] pt-[2px]">
+                <Image
+                  src={
+                    selectedAnswerId === answerPost.answerPostId ? "/icons/CheckedIcon.svg" : "/icons/UnCheckedIcon.svg"
+                  }
+                  alt={selectedAnswerId === answerPost.answerPostId ? "checked" : "unchecked"}
+                  width={16}
+                  height={16}
+                  className="cursor-pointer"
+                  onClick={() => handleSelect(answerPost.answerPostId as string)}
+                />
+              </div>
+            )}
+            <div className="flex flex-1 flex-col">
+              {/* 상단 라인 */}
+              {index !== 0 && <div className="mx-auto h-[1px] w-[353px] rounded-[2px] bg-[#EDEDED]" />}
 
-            {/* 상단 정보 */}
-            <div className="flex items-center gap-[4px]">
-              {/* 채택 태그 */}
-              {answerPost.isChaetaek && (
-                <div className="inline-flex items-center justify-center rounded bg-tag-accept px-[14px] py-[6px]">
-                  <span className="text-SUIT_12 font-bold text-white">채택됨</span>
+              {/* 상단 정보 */}
+              <div className="flex items-center gap-[4px]">
+                {/* 채택 태그 */}
+                {answerPost.isChaetaek && (
+                  <div className="inline-flex items-center justify-center rounded bg-tag-accept px-[14px] py-[6px]">
+                    <span className="text-SUIT_12 font-bold text-white">채택됨</span>
+                  </div>
+                )}
+
+                {/* 닉네임 */}
+                <span className="text-SUIT_14 font-medium text-ui-body">
+                  @{answerPost.isPrivate ? "익명" : (answerPost.member?.uuidNickname ?? "익명")}
+                </span>
+
+                {/* 점 */}
+                <span className="text-ui-muted">·</span>
+
+                {/* 날짜 */}
+                <span className="text-SUIT_12 font-medium text-ui-muted">
+                  {answerPost.createdDate ? formatDateTime(answerPost.createdDate) : "--/-- --:--"}
+                </span>
+              </div>
+
+              {/* 본문 */}
+              <p className="mt-4 line-clamp-1 text-SUIT_14 font-medium leading-[19.6px] text-black">
+                {answerPost.content || "내용 없음"}
+              </p>
+
+              {/* 이미지 리스트 */}
+              {answerPost.mediaFiles && answerPost.mediaFiles.length > 0 && (
+                <div className="mt-2 flex gap-[8px] overflow-x-auto">
+                  {answerPost.mediaFiles.map((f, i) => (
+                    <Image
+                      key={i}
+                      src={f.uploadedImageUrl || ""}
+                      alt="ans-img"
+                      width={90}
+                      height={90}
+                      className="h-[90px] w-[90px] flex-shrink-0 rounded-[8px] object-cover"
+                    />
+                  ))}
                 </div>
               )}
 
-              {/* 닉네임 */}
-              <span className="text-SUIT_14 font-medium text-ui-body">
-                @{answerPost.isPrivate ? "익명" : (answerPost.member?.uuidNickname ?? "익명")}
-              </span>
-
-              {/* 점 */}
-              <span className="text-ui-muted">·</span>
-
-              {/* 전공 */}
-              <span className="text-SUIT_12 font-medium text-ui-body">{answerPost.member?.major ?? "전공 비공개"}</span>
-
-              {/* 점 */}
-              <span className="text-ui-muted">·</span>
-
-              {/* 날짜 */}
-              <span className="text-SUIT_12 font-medium text-ui-muted">
-                {answerPost.createdDate ? formatDateTime(answerPost.createdDate) : "--/-- --:--"}
-              </span>
-            </div>
-
-            {/* 본문 */}
-            <p className="mt-4 line-clamp-1 text-SUIT_14 font-medium leading-[19.6px] text-black">
-              {answerPost.content || "내용 없음"}
-            </p>
-
-            {/* 이미지 리스트 */}
-            {answerPost.mediaFiles && answerPost.mediaFiles.length > 0 && (
-              <div className="mt-2 flex gap-[8px] overflow-x-auto">
-                {answerPost.mediaFiles.map((f, i) => (
+              {/* 좋아요 영역 */}
+              <div className="mt-4 flex items-center gap-[8px] pb-5">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => answerPost.answerPostId && handleLikeClick(answerPost.answerPostId)}
+                  onKeyDown={e =>
+                    (e.key === "Enter" || e.key === " ") &&
+                    answerPost.answerPostId &&
+                    handleLikeClick(answerPost.answerPostId)
+                  }
+                  className="flex cursor-pointer items-center gap-[4px]"
+                >
                   <Image
-                    key={i}
-                    src={f.uploadedImageUrl || ""}
-                    alt="ans-img"
-                    width={90}
-                    height={90}
-                    className="h-[90px] w-[90px] flex-shrink-0 rounded-[8px] object-cover"
+                    src={answerPost.isLiked ? "/icons/newLikeThumbGreen.svg" : "/icons/newLikeThumbGray.svg"}
+                    alt="like"
+                    width={16}
+                    height={16}
                   />
-                ))}
+                  <span className="text-SUIT_12 font-medium text-ui-count">{answerPost.likeCount || 0}</span>
+                </div>
               </div>
-            )}
 
-            {/* 좋아요 영역 */}
-            <div className="mt-4 flex items-center gap-[8px] pb-5">
-              <div
-                role="button"
-                tabIndex={0}
-                onClick={() => answerPost.answerPostId && handleLikeClick(answerPost.answerPostId)}
-                onKeyDown={e =>
-                  (e.key === "Enter" || e.key === " ") &&
-                  answerPost.answerPostId &&
-                  handleLikeClick(answerPost.answerPostId)
-                }
-                className="flex cursor-pointer items-center gap-[4px]"
-              >
-                <Image
-                  src={answerPost.isLiked ? "/icons/newLikeThumbGreen.svg" : "/icons/newLikeThumbGray.svg"}
-                  alt="like"
-                  width={16}
-                  height={16}
+              {/* 채택 모달 */}
+              {answerPost.answerPostId && (
+                <ChaetaekCheckModal
+                  isOpen={isModalOpen && currentAnswerId === answerPost.answerPostId}
+                  author={answerPost.member?.uuidNickname || "익명"}
+                  onClose={closeModal}
+                  answerPostId={answerPost.answerPostId}
                 />
-                <span className="text-SUIT_12 font-medium text-ui-count">{answerPost.likeCount || 0}</span>
-              </div>
+              )}
             </div>
-
-            {/* 채택 모달 */}
-            {answerPost.answerPostId && (
-              <ChaetaekCheckModal
-                isOpen={isModalOpen && currentAnswerId === answerPost.answerPostId}
-                author={answerPost.member?.uuidNickname || "익명"}
-                onClose={closeModal}
-                answerPostId={answerPost.answerPostId}
-              />
-            )}
           </div>
         ))
+      )}
+
+      {/* 작성자 전용 채택 버튼 */}
+      {isAuthor && (
+        <div className="fixed bottom-[20px] left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-[20px]">
+          <button
+            type="button"
+            disabled={!selectedAnswerId}
+            onClick={() => {
+              if (selectedAnswerId) {
+                setCurrentAnswerId(selectedAnswerId);
+                setIsModalOpen(true);
+              }
+            }}
+            className={`h-[48px] w-full rounded-[12px] text-SUIT_16 font-bold text-white ${
+              selectedAnswerId ? "bg-question-main" : "bg-ui-disabled"
+            }`}
+          >
+            채택하기
+          </button>
+        </div>
       )}
     </div>
   );

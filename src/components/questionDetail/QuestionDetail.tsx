@@ -4,11 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/shadcn/drawer";
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
+import { ContentType } from "@/types/api/constants/contentType";
 import AnswerSection from "./AnswerSection";
 import { formatDateTime } from "@/global/time";
 import { useMemo } from "react";
 import CommentSection from "./QCommentSection";
-import sameMember from "@/global/sameMember";
+import { isSameMemberById } from "@/global/memberUtil";
 import AttachedFiles from "@/components/common/AttachedFiles";
 import PresetTag from "@/components/common/tags/PresetTag";
 import SubjectTag from "@/components/common/tags/SubjectTag";
@@ -36,7 +37,8 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
   const [isLiked, setIsLiked] = useState(questionDto.questionPost?.isLiked); // API 응답 값으로 초기화
   const [currentLikeCount, setCurrentLikeCount] = useState(questionDto.questionPost?.likeCount as number);
 
-  const isAuthor: boolean = sameMember(questionDto.questionPost?.member?.memberId as string); // 작성자 여부 확인
+  const isAuthor: boolean =
+    questionDto.questionPost?.isAuthor ?? isSameMemberById(questionDto.questionPost?.member?.memberId as string);
   // HOT 여부 : isPopular 사용
   const isHot = questionDto.questionPost?.isPopular === true;
 
@@ -48,13 +50,13 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
 
   const handleLikeClick = async () => {
     if (isLiked) return; // 이미 좋아요를 누른 상태라면 실행하지 않음
-    if (sameMember(questionDto.questionPost?.member?.memberId as string)) return; // 작성자가 좋아요를 누르지 못하도록 차단
+    if (isSameMemberById(questionDto.questionPost?.member?.memberId as string)) return; // 작성자가 좋아요를 누르지 못하도록 차단
 
     try {
       setIsLiked(true); // 즉시 반영: 버튼 비활성화 및 색상 변경
       setCurrentLikeCount(currentLikeCount + 1); // 즉시 반영: 좋아요 숫자 증가
 
-      await postLikeQuestion(questionDto.questionPost?.questionPostId as string, "QUESTION");
+      await postLikeQuestion(questionDto.questionPost?.questionPostId as string, ContentType.QUESTION);
     } catch (error) {
       console.error("좋아요 업데이트 실패");
       setIsLiked(false); // 실패 시 롤백
@@ -99,7 +101,7 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
           <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">{questionDto.questionPost?.title}</h1>
 
           {/* 전공 · 조회수 · 작성일 */}
-          <div className="mt-2 flex items-center gap-[4px] text-SUIT_12 font-medium text-ui-body">
+          <div className="mt-2 flex items-center gap-[4px] text-SUIT_12 font-medium text-ui-muted">
             {/* 작성자 전공 */}
             <span>{questionDto.questionPost?.member?.major ?? "전공 비공개"}</span>
             {/* 구분 점 */}
@@ -120,25 +122,25 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
           </div>
         </div>
 
-        {/* 첨부파일 */}
+        {/* 이미지 및 동영상 */}
         {files && files.length > 0 && (
           <div className="mt-2 overflow-x-auto">
             <div className="flex gap-[12px] pb-[10px]">
               {files.map((file, index) => (
                 <div
                   key={index}
-                  className="flex h-[96px] w-[96px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[8px] bg-[#EDEDED]"
+                  className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[8px] bg-[#EDEDED]"
                 >
                   <Image
                     src={file}
                     alt={`첨부 이미지 ${index + 1}`}
-                    width={96}
-                    height={96}
+                    width={120}
+                    height={120}
                     className="h-full w-full object-cover"
                     onError={e => {
                       const target = e.target as HTMLImageElement;
                       target.onerror = null;
-                      target.src = "/image/EasterEgg.svg"; // 이미지 로드 실패 시 기본 이미지
+                      target.src = "/image/imagePlaceHolder.png"; // 이미지 로드 실패 시 기본 이미지
                     }}
                   />
                 </div>
@@ -147,31 +149,35 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
           </div>
         )}
 
-        {/* 토픽 태그 (커스텀태그) */}
+        {/* 지정태그 */}
+        <div className="mt-3 flex flex-wrap gap-[8px]">
+          {questionDto.questionPost?.questionPresetTags?.map((tag, index) => (
+            <div
+              key={index}
+              className="flex h-[28px] w-auto min-w-[69px] flex-shrink-0 items-center justify-center gap-[4px] rounded-[34px] bg-tag-preset-question-bg px-[12px] py-[8px]"
+            >
+              <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-tag-preset-question-text">
+                {getKoreanTag(tag)}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {/* 커스텀태그 */}
         {questionDto.customTags && questionDto.customTags.length > 0 && (
           <div className="mt-3 flex flex-wrap gap-[8px]">
             {questionDto.customTags.map((tag, index) => (
               <div
                 key={index}
-                className="flex h-[32px] items-center justify-center rounded-[20px] bg-[#E2E2E2] px-[16px] py-[12px]"
+                className="inline-flex items-center justify-center gap-[10px] rounded-[34px] bg-tag-custom-bg px-[14px] py-[8px]"
               >
-                <span className="text-SUIT_14 font-medium leading-[19.6px] text-[#898989]">{tag}</span>
+                <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-tag-custom-text">
+                  {tag}
+                </span>
               </div>
             ))}
           </div>
         )}
-
-        {/* 지정태그 */}
-        <div className="mt-[16px] flex flex-wrap gap-[8px]">
-          {questionDto.questionPost?.questionPresetTags?.map((tag, index) => (
-            <div
-              key={index}
-              className="flex h-[32px] items-center justify-center rounded-[20px] bg-[#E2E2E2] px-[16px] py-[12px]"
-            >
-              <span className="text-SUIT_14 font-medium leading-[19.6px] text-[#898989]">{getKoreanTag(tag)}</span>
-            </div>
-          ))}
-        </div>
 
         {/* 얇은 구분선 */}
         <div className="mt-5 h-[1px] w-full bg-[#D7D7D7]"></div>
@@ -239,7 +245,7 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
 
       {/* 답변 영역 */}
       <div className="mt-5">
-        <AnswerSection postId={questionDto.questionPost?.questionPostId as string} />
+        <AnswerSection postId={questionDto.questionPost?.questionPostId as string} isAuthor={isAuthor} />
       </div>
     </div>
   );

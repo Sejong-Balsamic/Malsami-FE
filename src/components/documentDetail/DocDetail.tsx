@@ -8,7 +8,7 @@ import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { getDateDiff } from "@/global/time";
 import { DocumentDto } from "@/types/api/responses/documentDto";
 import CommentSection from "@/components/documentDetail/DCommentSection";
-import sameMember from "@/global/sameMember";
+import { isSameMemberById } from "@/global/memberUtil";
 import DownloadFile from "@/components/documentDetail/DownloadFile";
 
 // 한국어 태그 매핑
@@ -32,7 +32,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
 
   const handleLikeClick = async () => {
     if (isLiked || isDisliked) return;
-    if (sameMember(documentDto.documentPost?.member?.memberId || "")) return;
+    if (isSameMemberById(documentDto.documentPost?.member?.memberId || "")) return;
 
     try {
       setIsLiked(true);
@@ -53,7 +53,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
 
   const handleDisLikeClick = async () => {
     if (isLiked || isDisliked) return;
-    if (sameMember(documentDto.documentPost?.member?.memberId || "")) return;
+    if (isSameMemberById(documentDto.documentPost?.member?.memberId || "")) return;
 
     try {
       setIsDisliked(true);

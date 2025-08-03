@@ -7,7 +7,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import sameMember from "@/global/sameMember";
+import { isSameMemberById } from "@/global/memberUtil";
 import QuestionDetail from "@/components/questionDetail/QuestionDetail";
 import AnswerFAB from "@/components/questionDetail/AnswerFAB";
 import { Drawer, DrawerContent } from "@/components/shadcn/drawer";
@@ -77,7 +77,9 @@ export default function Page() {
   // 오류 상태 처리
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
-  const isAuthor = questionDetails && sameMember(questionDetails.questionPost?.member?.memberId as string);
+  const isAuthor =
+    questionDetails?.questionPost?.isAuthor ??
+    (questionDetails && isSameMemberById(questionDetails.questionPost?.member?.memberId as string));
 
   return (
     <div className="min-h-screen bg-white">
