@@ -9,9 +9,7 @@ import postAnswer from "@/apis/question/postAnswer";
 import { useDispatch } from "react-redux";
 import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
 import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
-import AnswerInput from "@/components/questionAnswer/AnswerInput";
 import FileUploadInput from "@/components/questionPost/FileUploadInput";
-import PrivateSettingInput from "@/components/questionPost/PrivateSettingInput";
 import OriginalQuestion from "@/components/questionAnswer/OriginalQuestion";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
@@ -146,7 +144,7 @@ export default function AnswerPostPage() {
   return (
     <div className="min-h-screen bg-white">
       <ScrollToTopOnLoad />
-      
+
       {/* Fixed Header */}
       <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
         <CommonHeader title="답변 작성" rightType={RIGHT_ITEM.NONE} />
@@ -159,7 +157,7 @@ export default function AnswerPostPage() {
       <main className="px-5">
         {/* 원문 보기 */}
         <OriginalQuestion questionPostId={questionPostId} />
-        
+
         {/* 로딩 중일 때 */}
         {isSubmitting ? (
           <div className="flex h-[500px] items-center justify-center">
@@ -170,12 +168,10 @@ export default function AnswerPostPage() {
             {/* 답변 섹션 */}
             <div className="mt-4">
               <h2 className="text-SUIT_16 font-medium text-black">답변</h2>
-              
+
               <div className="mt-2 flex items-center justify-between">
-                <span className="text-SUIT_14 font-medium text-[#898989]">
-                  최대 2000자까지 작성할 수 있어요.
-                </span>
-                
+                <span className="text-SUIT_14 font-medium text-[#898989]">최대 2000자까지 작성할 수 있어요.</span>
+
                 {/* 익명 설정 */}
                 <div className="flex items-center">
                   <button
@@ -184,7 +180,11 @@ export default function AnswerPostPage() {
                     className="mr-1"
                   >
                     <img
-                      src={formData.isPrivate ? "/icons/chaetaekCheckboxChecked.svg" : "/icons/chaetaekCheckboxUnchecked.svg"}
+                      src={
+                        formData.isPrivate
+                          ? "/icons/chaetaekCheckboxChecked.svg"
+                          : "/icons/chaetaekCheckboxUnchecked.svg"
+                      }
                       alt="익명 체크박스"
                       width={16}
                       height={16}
@@ -193,7 +193,7 @@ export default function AnswerPostPage() {
                   <span className="text-SUIT_14 font-medium text-[#9B9B9B]">익명</span>
                 </div>
               </div>
-              
+
               {/* 답변 입력란 */}
               <div className="relative mt-3">
                 <textarea
@@ -203,47 +203,43 @@ export default function AnswerPostPage() {
                   onChange={handleChange}
                   maxLength={2000}
                   required
-                  className="w-full min-h-[226px] rounded-[8px] border-2 border-[#E2E2E2] bg-white px-4 py-4 pb-[36px] text-SUIT_14 font-medium resize-vertical"
+                  className="resize-vertical min-h-[226px] w-full rounded-[8px] border-2 border-[#E2E2E2] bg-white px-4 py-4 pb-[36px] text-SUIT_14 font-medium"
                 />
-                
+
                 {/* 글자 수 카운터 - textarea 기준 아래 8px, 오른쪽 16px */}
-                <div 
+                <div
                   className="absolute text-right"
-                  style={{ 
-                    bottom: "8px", 
+                  style={{
+                    bottom: "8px",
                     right: "16px",
-                    fontSize: "12px", 
-                    lineHeight: "100%" 
+                    fontSize: "12px",
+                    lineHeight: "100%",
                   }}
                 >
-                  <span style={{ color: "#00E271", fontWeight: 600 }}>
-                    {formData.content.length}
-                  </span>
-                  <span style={{ color: "#C5C5C5", fontWeight: 500 }}>
-                    {" / 2000"}
-                  </span>
+                  <span style={{ color: "#00E271", fontWeight: 600 }}>{formData.content.length}</span>
+                  <span style={{ color: "#C5C5C5", fontWeight: 500 }}>{" / 2000"}</span>
                 </div>
               </div>
             </div>
-            
+
             {/* 이미지 섹션 */}
             <div className="mt-7">
               <h2 className="text-SUIT_16 font-medium text-black">이미지</h2>
-              
+
               <div className="mt-2">
-                <span 
+                <span
                   className="text-SUIT_14 font-medium"
-                  style={{ 
+                  style={{
                     color: "#898989",
                     fontSize: "14px",
                     fontWeight: 500,
-                    lineHeight: "100%"
+                    lineHeight: "100%",
                   }}
                 >
                   최대 50MB까지 업로드할 수 있어요.
                 </span>
               </div>
-              
+
               {/* 이미지 업로드 영역 */}
               <div className="mt-3">
                 <FileUploadInput
@@ -253,14 +249,14 @@ export default function AnswerPostPage() {
                 />
               </div>
             </div>
-            
+
             {/* 완료 버튼 */}
-            <div className="mt-[62px] mb-4">
+            <div className="mb-4 mt-[62px]">
               <button
                 type="button"
                 onClick={handleSubmit}
                 disabled={!isFormValid}
-                className="w-full h-14 rounded-[8px] text-SUIT_18 font-extrabold text-white disabled:cursor-not-allowed"
+                className="h-14 w-full rounded-[8px] text-SUIT_18 font-extrabold text-white disabled:cursor-not-allowed"
                 style={{
                   background: isFormValid ? "#00E271" : "#E2E2E2",
                 }}

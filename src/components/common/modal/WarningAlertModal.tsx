@@ -9,20 +9,20 @@ interface WarningAlertModalProps {
   onCancel: () => void;
 }
 
-function WarningAlertModal({
-  isOpen,
-  title,
-  message,
-  confirmLabel = "확인",
-  onConfirm,
-  onCancel,
-}: WarningAlertModalProps) {
+function WarningAlertModal({ isOpen, title, message, confirmLabel, onConfirm, onCancel }: WarningAlertModalProps) {
   if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 z-50 grid place-items-center">
       {/* 어두운 배경 */}
-      <div className="absolute inset-0 bg-black/30" onClick={onCancel} />
+      <div
+        className="absolute inset-0 bg-black/30"
+        onClick={onCancel}
+        onKeyDown={e => e.key === "Enter" && onCancel()}
+        role="button"
+        tabIndex={0}
+        aria-label="Close modal"
+      />
 
       {/* 모달 박스 */}
       <div className="relative h-[154px] w-[266px] rounded-[8px] bg-white shadow-[2px_2px_10px_rgba(0,0,0,0.10)]">
@@ -57,5 +57,9 @@ function WarningAlertModal({
     </div>
   );
 }
+
+WarningAlertModal.defaultProps = {
+  confirmLabel: "확인",
+};
 
 export default WarningAlertModal;

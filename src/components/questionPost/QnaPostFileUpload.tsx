@@ -15,7 +15,7 @@ function QnaPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploa
         style={{
           width: "100px",
           height: "100px",
-          flexShrink: 0
+          flexShrink: 0,
         }}
         className="relative flex cursor-pointer items-center justify-center rounded-[8px] border-2 border-dashed border-ui-divider"
       >
@@ -44,7 +44,7 @@ function QnaPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploa
             style={{
               width: "100px",
               height: "100px",
-              flexShrink: 0
+              flexShrink: 0,
             }}
             className="relative overflow-hidden rounded-[8px] border-2 border-question-main bg-gray-300"
           >

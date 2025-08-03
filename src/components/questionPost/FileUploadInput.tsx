@@ -7,7 +7,5 @@ interface FileUploadProps {
 }
 
 export default function FileUploadInput({ mediaFiles, onFileChange, onFileDelete }: FileUploadProps) {
-  return (
-    <QnaPostFileUpload mediaFiles={mediaFiles} onFileChange={onFileChange} onFileDelete={onFileDelete} />
-  );
+  return <QnaPostFileUpload mediaFiles={mediaFiles} onFileChange={onFileChange} onFileDelete={onFileDelete} />;
 }

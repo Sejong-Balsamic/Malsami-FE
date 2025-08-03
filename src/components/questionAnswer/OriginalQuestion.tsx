@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/shadcn/accordion";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import SubjectTag from "@/components/common/tags/SubjectTag";
@@ -46,12 +45,12 @@ function OriginalQuestion({ questionPostId }: { questionPostId: string }) {
                     <SubjectTag subjectName={questionData.questionPost?.subject} type="question" />
                     <RewardTag amount={questionData.questionPost?.rewardYeopjeon as number} />
                   </div>
-                  
+
                   {/* 제목 */}
                   <h3 className="mt-3 text-SUIT_16 font-medium text-black">
                     {questionData.questionPost?.title || "제목 없음"}
                   </h3>
-                  
+
                   {/* 화살표 아이콘 */}
                   <div className="mt-3 flex justify-center">
                     <img
@@ -62,9 +61,9 @@ function OriginalQuestion({ questionPostId }: { questionPostId: string }) {
                       className="transition-transform duration-200"
                     />
                   </div>
-                  
+
                   {/* 구분선 */}
-                  <div className="mt-2 h-1 w-full max-w-[433px] mx-auto rounded-[2px] bg-[#EDEDED]" />
+                  <div className="mx-auto mt-2 h-1 w-full max-w-[433px] rounded-[2px] bg-[#EDEDED]" />
                 </div>
               )}
             </div>

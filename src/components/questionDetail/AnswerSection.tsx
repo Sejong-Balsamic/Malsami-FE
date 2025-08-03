@@ -6,8 +6,8 @@ import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import { ContentType } from "@/types/api/constants/contentType";
 import { isSameMemberById } from "@/global/memberUtil";
 import { AnswerPost } from "@/types/api/entities/postgres/answerPost";
-import ChaetaekCheckModal from "./ChaetaekCheckModal";
 import ChaetaekTag from "@/components/common/tags/ChaetaekTag";
+import ChaetaekCheckModal from "./ChaetaekCheckModal";
 
 interface AnswerSectionProps {
   postId: string;
@@ -94,7 +94,9 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
               <div className="mr-[8px] pt-[2px]">
                 <Image
                   src={
-                    selectedAnswerId === answerPost.answerPostId ? "/icons/chaetaekCheckboxChecked.svg" : "/icons/chaetaekCheckboxUnchecked.svg"
+                    selectedAnswerId === answerPost.answerPostId
+                      ? "/icons/chaetaekCheckboxChecked.svg"
+                      : "/icons/chaetaekCheckboxUnchecked.svg"
                   }
                   alt={selectedAnswerId === answerPost.answerPostId ? "채택 선택됨" : "채택 선택 안됨"}
                   width={16}
@@ -167,7 +169,11 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                     width={16}
                     height={16}
                   />
-                  <span className={`text-[12px] font-medium leading-[100%] ${answerPost.isLiked ? "text-[#00E271]" : "text-ui-count"}`}>{answerPost.likeCount || 0}</span>
+                  <span
+                    className={`text-[12px] font-medium leading-[100%] ${answerPost.isLiked ? "text-[#00E271]" : "text-ui-count"}`}
+                  >
+                    {answerPost.likeCount || 0}
+                  </span>
                 </div>
               </div>
 
