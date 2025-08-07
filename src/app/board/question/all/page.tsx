@@ -9,6 +9,7 @@ import QuestionCardListSkeleton from "@/components/common/skeletons/QuestionCard
 import CommonPagination from "@/components/common/CommonPagination";
 import QuestionFilteringBottomSheet from "@/components/common/QuestionFilteringBottomSheet";
 import ActiveQuestionFilters from "@/components/common/ActiveQuestionFilters";
+import QuestionSearchBar from "@/components/search/QuestionSearchBar";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
@@ -24,6 +25,7 @@ export default function AllQuestionPage() {
   const [questionData, setQuestionData] = useState<QuestionPost[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const [query, setQuery] = useState<string>("");
 
   // 현재 적용된 필터링 상태
   const [currentFiltering, setCurrentFiltering] = useState<Partial<QuestionCommand>>({
@@ -43,6 +45,7 @@ export default function AllQuestionPage() {
           sortType: filtering.sortType || "LATEST",
           chaetaekStatus: filtering.chaetaekStatus,
           questionPresetTags: filtering.questionPresetTags,
+          query,
         });
 
         if (response && response.questionPostsPage) {
@@ -114,6 +117,12 @@ export default function AllQuestionPage() {
     dispatch(setQuestionFilteringOpen(true));
   };
 
+  // 검색 실행 핸들러
+  const handleSearch = async () => {
+    setCurrentPage(0);
+    await fetchAllQuestions(0);
+  };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -131,8 +140,10 @@ export default function AllQuestionPage() {
 
       {/* 메인 콘텐츠 */}
       <div className="px-5">
-        {/* 24px 공백 */}
-        <div className="h-6" />
+        {/* 16px 공백 */}
+        <div className="h-4" />
+
+        <QuestionSearchBar value={query} onChange={setQuery} onSearch={handleSearch} />
 
         {/* 현재 적용된 필터 */}
         <ActiveQuestionFilters
