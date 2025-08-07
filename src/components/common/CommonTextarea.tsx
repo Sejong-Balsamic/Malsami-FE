@@ -1,7 +1,6 @@
 /* eslint-disable react/require-default-props */
 import React from "react";
 
-// contentType prop을 추가했습니다. 'question' 또는 'document' 값을 가질 수 있습니다.
 export interface CommonTextareaProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
