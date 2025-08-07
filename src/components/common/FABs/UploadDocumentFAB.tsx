@@ -1,8 +1,7 @@
 "use client";
 
-import React from "react";
 import { useRouter } from "next/navigation";
-import Write from "@/../public/icons/write.svg";
+import Image from "next/image";
 
 interface UploadDocFABProps {
   isFABVisible: boolean;
@@ -24,7 +23,7 @@ function UploadDocumentFAB({ isFABVisible }: UploadDocFABProps) {
       }`}
     >
       <button type="button" onClick={handleDocumentClick} disabled={!isFABVisible} className="relative">
-        <Write />
+        <Image src="/icons/WriteDocument.svg" alt="WriteDocument" width={56} height={56} />
       </button>
     </div>
   );

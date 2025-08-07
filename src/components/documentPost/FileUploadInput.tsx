@@ -9,14 +9,9 @@ interface FileUploadProps {
 export default function FileUploadInput({ mediaFiles, onFileChange, onFileDelete }: FileUploadProps) {
   return (
     <div className="mb-[26px] block">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <span className="font-pretendard-semibold mr-1.5 text-lg">파일</span>
-          <span className="font-pretendard-medium text-custom-blue-500 text-xs">
-            여러장의 이미지는 zip파일로 업로드됩니다.
-          </span>
-        </div>
-        <span className="text-sm text-gray-500">{mediaFiles.length} / 10개</span>
+      <div className="mb-3 flex flex-col">
+        <h2 className="mb-2 text-SUIT_16 font-medium text-black">자료</h2>
+        <span className="mr-4 text-SUIT_14 font-medium text-[#898989]">최대 200MB까지 올릴 수 있어요.</span>
       </div>
       <DocPostFileUpload mediaFiles={mediaFiles} onFileChange={onFileChange} onFileDelete={onFileDelete} />
     </div>

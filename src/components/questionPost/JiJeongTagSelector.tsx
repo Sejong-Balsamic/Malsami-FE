@@ -3,15 +3,14 @@ import { JiJeongTagSelectorProps } from "./QuestionPostTypes";
 
 function JiJeongTagSelector({ selectedTags, onTagsSelect }: JiJeongTagSelectorProps) {
   const handleTagToggle = (tag: string) => {
+    // 이미 선택된 태그라면 해제
     if (selectedTags.includes(tag)) {
-      // 이미 선택된 태그면 제거
       onTagsSelect(selectedTags.filter(t => t !== tag));
-    } else if (selectedTags.length < 2) {
-      // 선택되지 않은 태그면 추가 (최대 2개)
+      return;
+    }
+    // 2개 미만일 때만 새 태그 추가
+    if (selectedTags.length < 2) {
       onTagsSelect([...selectedTags, tag]);
-    } else {
-      // 2개 이상 선택시 첫 번째 태그 제거하고 새 태그 추가
-      onTagsSelect([selectedTags[1], tag]);
     }
   };
 

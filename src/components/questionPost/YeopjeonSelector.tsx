@@ -23,7 +23,7 @@ export default function YeopjeonSelector({ value, onChange }: YeopjeonSelectorPr
   return (
     <div>
       <h2 className="font-suit-medium mb-3 text-base">엽전 현상금</h2>
-      <div className="flex items-center justify-center gap-4">
+      <div className="mb-8 flex items-center justify-center gap-4">
         {/* - 버튼 */}
         <button type="button" onClick={decrease} disabled={isZero} aria-label="감소">
           <div className="flex h-6 w-6 items-center justify-center">
@@ -44,7 +44,7 @@ export default function YeopjeonSelector({ value, onChange }: YeopjeonSelectorPr
           placeholder="0"
           value={Number(value) === 0 ? "" : Number(value)}
           onChange={handleInputChange}
-          className={`h-[50px] w-[106px] rounded-[8px] border-2 border-ui-divider px-4 text-center text-sm font-semibold focus:border-question-main focus:outline-none ${isZero ? "text-gray-400" : "text-black"}`}
+          className={`border-ui-border h-[50px] w-[106px] rounded-[8px] border-2 px-4 text-center text-sm font-semibold focus:border-question-main focus:outline-none ${isZero ? "text-gray-400" : "text-black"}`}
         />
 
         {/* + 버튼 */}

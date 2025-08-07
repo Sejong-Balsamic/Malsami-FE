@@ -10,6 +10,7 @@ export interface CommonTextareaProps {
   maxLength?: number;
   name?: string;
   required?: boolean;
+  contentType?: "question" | "document";
 }
 
 export default function CommonTextarea({
@@ -21,7 +22,11 @@ export default function CommonTextarea({
   maxLength,
   name,
   required = false,
+  contentType = "question",
 }: CommonTextareaProps) {
+  // contentType 값에 따라 동적으로 적용할 포커스 테두리 색깔 지정
+  const focusBorderClass = contentType === "document" ? "focus:border-document-main" : "focus:border-question-main";
+
   return (
     <textarea
       name={name}
@@ -31,7 +36,7 @@ export default function CommonTextarea({
       placeholder={placeholder}
       maxLength={maxLength}
       required={required}
-      className={`font-suit-medium w-full rounded-[8px] border-2 border-ui-divider px-4 py-[18px] text-[14px] placeholder-ui-muted transition-colors focus:border-question-main focus:outline-none ${className}`}
+      className={`font-suit-medium border-ui-border w-full rounded-[8px] border-2 px-4 py-[18px] text-[14px] placeholder-ui-muted transition-colors focus:outline-none ${focusBorderClass} ${className}`}
     />
   );
 }

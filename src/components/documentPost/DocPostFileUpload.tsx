@@ -1,4 +1,4 @@
-import React from "react";
+import Image from "next/image";
 
 interface FileUploadProps {
   mediaFiles: File[];
@@ -8,42 +8,33 @@ interface FileUploadProps {
 
 function DocPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploadProps) {
   return (
-    <div className="mb-[26px] block">
-      {/* 선택된 파일들 표시 */}
-      {mediaFiles.length > 0 && (
-        <ul className="mt-2 text-sm text-gray-500">
-          {mediaFiles.map(file => (
-            <li key={file.name} className="mb-2 flex items-center justify-between">
-              <span className="flex-1 truncate">{file.name}</span> {/* 파일 이름이 길면 말줄임 처리 */}
-              <button
-                type="button"
-                onClick={() => onFileDelete(file.name)}
-                className="font-pretendard-semibold ml-4 text-red-500 hover:text-red-700"
-              >
-                삭제
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-      {/* 파일 선택 버튼 */}
-      <button
-        type="button"
-        onClick={() => document.getElementById("file-input")?.click()}
-        className="font-pretendard-medium mt-2 flex h-36 w-full cursor-pointer items-center justify-center rounded-[14px] bg-[#F6F7FB] text-base text-[#939393]"
-      >
-        <div className="flex flex-col items-center justify-center">
-          <div className="flex items-center text-[#939393]">
-            <span className="text-3xl text-[#939393]">+&nbsp;</span>
-            파일 불러오기
+    <div className="border-ui-border flex flex-col gap-y-[20px] rounded-[14px] border-2 px-4 py-[18px]">
+      {/* 파일 목록 */}
+      {mediaFiles.map(file => (
+        <div key={file.name} className="flex items-center justify-between">
+          {/* 파일 아이콘 + 이름 */}
+          <div className="flex items-center gap-2 overflow-hidden">
+            <Image src="/icons/Document.svg" alt="file" width={20} height={20} />
+            <span className="truncate text-SUIT_14 font-medium text-black">{file.name}</span>
           </div>
-          <div className="my-2 text-sm text-gray-500">파일당 최대 30mb이하 (영상파일은 200mb 이하)</div>
-          <div className="text-sm text-gray-500">첨부파일 10개 이하까지 업로드 가능합니다.</div>
-        </div>
-      </button>
 
-      {/* 숨겨진 파일 입력 */}
-      <input type="file" id="file-input" multiple onChange={onFileChange} className="hidden" />
+          {/* 삭제 버튼 */}
+          <button type="button" onClick={() => onFileDelete(file.name)} aria-label="파일 삭제">
+            <Image src="/icons/deleteGray.svg" alt="delete" width={20} height={20} />
+          </button>
+        </div>
+      ))}
+
+      {/* +버튼 (아이콘만 표시) */}
+      <label htmlFor="doc-file-upload" className="flex cursor-pointer items-center justify-center">
+        <input id="doc-file-upload" type="file" multiple onChange={onFileChange} className="hidden cursor-pointer" />
+        <Image
+          src="/icons/interface-add-circle--button-remove-cross-add-buttons-plus-circle--Streamline-Core.svg"
+          alt="plus"
+          width={20}
+          height={20}
+        />
+      </label>
     </div>
   );
 }

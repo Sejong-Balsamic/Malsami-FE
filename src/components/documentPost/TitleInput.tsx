@@ -18,10 +18,11 @@ export default function TitleInput({ value, onChange }: TitleInputProps) {
         <h2 className="font-suit-medium mb-3 text-base">제목</h2>
       </div>
       <QuestionCommonInput
+        name="title"
         value={value}
         onChange={handleChange}
         placeholder="제목을 입력해주세요"
-        className="font-suit-medium border-ui-border w-full rounded-[8px] border-2 px-4 py-[18px] text-base placeholder-gray-400 focus:border-[#00E271] focus:outline-none"
+        className="font-suit-medium border-ui-border w-full rounded-[8px] border-2 px-4 py-[18px] text-base placeholder-gray-400 focus:border-document-main focus:outline-none"
       />
     </div>
   );

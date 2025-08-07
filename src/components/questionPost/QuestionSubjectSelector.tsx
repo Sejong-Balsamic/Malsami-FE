@@ -1,9 +1,9 @@
 import { useState } from "react";
 import subjects from "@/types/subjects";
-import CommonInput from "@/components/common/CommonInput";
+import QuestionCommonInput from "@/components/common/QuestionCommonInput";
 import { SubjectSelectorProps } from "./QuestionPostTypes";
 
-function SubjectSelector({ value, onChange }: SubjectSelectorProps) {
+function QuestionSubjectSelector({ value, onChange }: SubjectSelectorProps) {
   const [filteredSubjects, setFilteredSubjects] = useState<string[]>([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
 
@@ -46,7 +46,7 @@ function SubjectSelector({ value, onChange }: SubjectSelectorProps) {
     <div className="relative w-full">
       <h2 className="font-suit-medium mb-3 text-base">과목명</h2>
 
-      <CommonInput
+      <QuestionCommonInput
         value={value}
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
@@ -76,4 +76,4 @@ function SubjectSelector({ value, onChange }: SubjectSelectorProps) {
   );
 }
 
-export default SubjectSelector;
+export default QuestionSubjectSelector;

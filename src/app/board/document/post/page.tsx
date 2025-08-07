@@ -2,60 +2,36 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
-import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import subjects from "@/types/subjects";
 import { docMediaAllowedTypes } from "@/types/docMediaAllowedTypes";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import postNewDoc from "@/apis/document/postNewDoc";
+import { documentPostApi } from "@/apis/documentPostApi";
 import { useDispatch } from "react-redux";
-import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
+import { addToast } from "@/global/store/toastSlice";
 import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
-import TitleInput from "@/components/questionPost/TitleInput";
-import ContentInput from "@/components/documentPost/ContentInput";
-import FileUploadInput from "@/components/documentPost/FileUploadInput";
-import SubjectSearchInputComponent from "@/components/questionPost/SubjectSearchInputComponent";
-import CategoryInput from "@/components/documentPost/CategoryInput";
-import StudyYearInput from "@/components/documentPost/studyYearInput";
-import CustomTagsInput from "@/components/documentPost/CustomTagsInput";
-import PrivateSettingInput from "@/components/questionPost/PrivateSettingInput";
-import QnaPostSubjectModal from "@/deprecated/questionPost/QnaPostSubjectModal";
-import QnaPostCustomTagsModal from "@/deprecated/questionPost/QnaPostCustomTagsModal";
-import DocPostStudyYearModal from "@/components/documentPost/DocPostStudyYearModal";
-import DocPostCategoryTagsModal from "@/components/documentPost/DocPostCategoryTagsModal";
-
-interface DocPostFormData {
-  title: string;
-  content: string;
-  subject: string;
-  customTags: string[];
-  categoryTags: string[];
-  studyYear: number;
-  isPrivate: boolean;
-  mediaFiles: File[]; // File 배열로 정의
-}
+import DocumentPostFirstPage from "@/components/documentPost/DocumentPostFirstPage";
+import DocumentPostSecondPage from "@/components/documentPost/DocumentPostSecondPage";
+import { DocumentPostFormData } from "@/components/documentPost/DocumentPostTypes";
 
 export default function QnaPostPage() {
   const router = useRouter();
 
-  const [formData, setFormData] = useState<DocPostFormData>({
+  const [formData, setFormData] = useState<DocumentPostFormData>({
     title: "",
     content: "",
     subject: "",
     customTags: [],
-    categoryTags: [],
-    studyYear: 2024,
-    isPrivate: false,
+    documentTypes: [],
+    attendedYear: 2025,
+    isDepartmentPrivate: false,
     mediaFiles: [],
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
-  const [isCategoryTagsModalOpen, setIsCategoryTagsModalOpen] = useState(false);
-  const [isSubjectModalOpen, setIsSubjectModalOpen] = useState(false);
-  const [isStudyYearModalOpen, setIsStudyYearModalOpen] = useState(false);
-  const [isCustomTagsModalOpen, setIsCustomTagsModalOpen] = useState(false);
-  const [isUploading, setIsUploading] = useState(false); // 업로드 상태
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isUploading, setIsUploading] = useState(false);
   const dispatch = useDispatch();
 
   const showToast = (message: string) => {
@@ -74,23 +50,10 @@ export default function QnaPostPage() {
     );
   };
 
-  // 태그 삭제 함수
-  const removeTag = (tag: string): void => {
-    setFormData(prev => ({
-      ...prev,
-      customTags: prev.customTags.filter(t => t !== tag),
-    }));
-  };
-
-  const toggleCategoryTagsModal = () => setIsCategoryTagsModalOpen(!isCategoryTagsModalOpen);
-  const toggleSubjectModal = () => setIsSubjectModalOpen(!isSubjectModalOpen);
-  const toggleCustomTagsModal = () => setIsCustomTagsModalOpen(!isCustomTagsModalOpen);
-  const toggleStudyYearModal = () => setIsStudyYearModalOpen(!isStudyYearModalOpen);
-
   // 모든 필수 입력 필드가 채워져 있는지 확인
   const checkFormValidity = useCallback(() => {
-    const { title, content, subject, categoryTags } = formData;
-    return !!title && !!content && !!subject && categoryTags.length > 0;
+    const { title, content, subject, documentTypes } = formData;
+    return !!title && !!content && !!subject && documentTypes.length > 0;
   }, [formData]);
 
   // 입력값 변경 핸들러
@@ -109,35 +72,13 @@ export default function QnaPostPage() {
   }, [formData, checkFormValidity]);
 
   // subject(교과목명) 업데이트하는 함수
-  const handleSubjectChange = (subject: string) => {
-    setFormData(prev => ({ ...prev, subject }));
-  };
+  const handleSubjectChange = (subject: string) => setFormData(prev => ({ ...prev, subject }));
+
+  const handleCustomTagsSubmit = (tags: string[]) => setFormData(prev => ({ ...prev, customTags: tags }));
 
   // isPrivate 업데이트하는 함수
-  const handleIsPrivate = () => {
-    setFormData(prev => ({ ...prev, isPrivate: !prev.isPrivate }));
-  };
-
-  // 카테고리 선택 업데이트 함수
-  const handleCategoryTagsSelect = (selectedTags: string[]) => {
-    setFormData(prev => ({
-      ...prev,
-      categoryTags: selectedTags,
-    }));
-  };
-
-  // 커스텀 태그 업데이트 함수
-  const handleCustomTagsSubmit = (tags: string[]) => {
-    setFormData(prev => ({
-      ...prev,
-      customTags: tags,
-    }));
-  };
-
-  // 선택된 수강년도 처리 함수
-  const handleYearSubmit = (studyYear: number) => {
-    setFormData(prev => ({ ...prev, studyYear }));
-  };
+  const handleIsDepartmentPrivate = () =>
+    setFormData(prev => ({ ...prev, isDepartmentPrivate: !prev.isDepartmentPrivate }));
 
   // 파일 업데이트 함수 (파일 형식, 크기, 개수 조건 검사)
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -229,8 +170,16 @@ export default function QnaPostPage() {
     if (isFormValid) {
       setIsUploading(true); // 업로딩 시작
       try {
-        await postNewDoc(formData); // API 호출
-        localStorage.removeItem("docPostFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
+        await documentPostApi.saveDocumentPost({
+          title: formData.title,
+          content: formData.content,
+          subject: formData.subject,
+          customTags: formData.customTags,
+          attachmentFiles: formData.mediaFiles.length > 0 ? formData.mediaFiles : undefined,
+          attendedYear: formData.attendedYear,
+          documentTypes: formData.documentTypes as any,
+          isDepartmentPrivate: formData.isDepartmentPrivate,
+        });
         showToast("자료 게시글이 성공적으로 등록되었습니다.");
         router.push("/board/document");
       } catch (error) {
@@ -244,90 +193,47 @@ export default function QnaPostPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center bg-gray-100">
-      <ScrollToTopOnLoad />
-      <CommonHeader title="자료 작성하기" rightType={RIGHT_ITEM.NONE} />
-      <div>
-        <div className="min-h-screen w-full min-w-[386px] max-w-[640px] bg-white p-5">
-          <div className="rounded-lg">
-            {/* 로딩 중일 때 */}
+    <div className="flex min-h-screen flex-col bg-white">
+      <CommonHeader
+        title="자료 작성하기"
+        rightType={RIGHT_ITEM.NONE}
+        onLeftClick={currentPage === 2 ? () => setCurrentPage(1) : undefined}
+      />
+      <div className="flex flex-1 flex-col">
+        <main className="flex flex-1 flex-col px-5 pt-4">
+          <div className="flex flex-1 flex-col">
             {isUploading ? (
               <div className="flex h-[500px] items-center justify-center">
                 <LoadingSpinner />
               </div>
             ) : (
-              //  업로딩 중이 아닐 때 폼 내용 표시
-              <form>
-                {/* 제목 */}
-                <TitleInput value={formData.title} onChange={handleChange} />
-                {/* 설명 */}
-                <ContentInput value={formData.content} onChange={handleChange} />
-                {/* 파일 업로드 */}
-                <FileUploadInput
-                  mediaFiles={formData.mediaFiles}
-                  onFileChange={handleFileChange}
-                  onFileDelete={handleFileDelete}
-                />
-                {/* 교과목명 검색 */}
-                <SubjectSearchInputComponent value={formData.subject} onClick={toggleSubjectModal} />
-                {/* 카테고리 선택 */}
-                <CategoryInput tags={formData.categoryTags} onOpenModal={toggleCategoryTagsModal} />
-                {/* 수강년도 선택 */}
-                <StudyYearInput year={formData.studyYear} onOpenModal={toggleStudyYearModal} />
-                {/* 커스텀 태그 */}
-                <CustomTagsInput tags={formData.customTags} onClick={toggleCustomTagsModal} onRemoveTag={removeTag} />
-                {/* 추가 설정 */}
-                <PrivateSettingInput isPrivate={formData.isPrivate} onToggle={handleIsPrivate} />
-
-                <button
-                  type="button"
-                  onClick={handleSubmit}
-                  disabled={!isFormValid}
-                  className={`w-full rounded-[10px] p-2 text-white ${isFormValid ? "bg-custom-blue-500" : "bg-[#E2E2E2]"}`}
-                >
-                  작성완료
-                </button>
-              </form>
-            )}
-            {/* 모달들 */}
-            {/* 교과목명 검색 모달 */}
-            {isSubjectModalOpen && (
-              <QnaPostSubjectModal
-                isVisible={isSubjectModalOpen}
-                subject={formData.subject}
-                onClose={toggleSubjectModal}
-                onSelectSubject={handleSubjectChange}
-              />
-            )}
-            {/* 카테고리 선택 모달 */}
-            {isCategoryTagsModalOpen && (
-              <DocPostCategoryTagsModal
-                isVisible={isCategoryTagsModalOpen}
-                onClose={toggleCategoryTagsModal}
-                selectedTags={formData.categoryTags}
-                onSubmitTags={handleCategoryTagsSelect}
-              />
-            )}
-            {/* 커스텀 태그 선택 모달 */}
-            {isCustomTagsModalOpen && (
-              <QnaPostCustomTagsModal
-                isVisible={isCustomTagsModalOpen}
-                onClose={toggleCustomTagsModal}
-                initialTags={formData.customTags}
-                onTagsSubmit={handleCustomTagsSubmit}
-              />
-            )}
-            {/* 수강년도 선택 모달 */}
-            {isStudyYearModalOpen && (
-              <DocPostStudyYearModal
-                isVisible={isStudyYearModalOpen}
-                onClose={toggleStudyYearModal}
-                studyYear={formData.studyYear}
-                onSubmitStudyYear={handleYearSubmit}
-              />
+              <div className="flex flex-1 flex-col">
+                {currentPage === 1 ? (
+                  <DocumentPostFirstPage
+                    formData={formData}
+                    onSubjectChange={handleSubjectChange}
+                    onAttendedYearChange={year => setFormData(prev => ({ ...prev, attendedYear: year }))}
+                    onDocumentTypesChange={selectedTags =>
+                      setFormData(prev => ({ ...prev, documentTypes: selectedTags }))
+                    }
+                    onCustomTagsChange={handleCustomTagsSubmit}
+                    onNextPage={() => setCurrentPage(2)}
+                  />
+                ) : (
+                  <DocumentPostSecondPage
+                    formData={formData}
+                    onFormChange={handleChange}
+                    onFileChange={handleFileChange}
+                    onFileDelete={handleFileDelete}
+                    onDepartmentPrivateToggle={handleIsDepartmentPrivate}
+                    onSubmit={handleSubmit}
+                    isFormValid={isFormValid}
+                  />
+                )}
+              </div>
             )}
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );
