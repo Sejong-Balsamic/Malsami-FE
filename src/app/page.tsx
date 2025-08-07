@@ -48,7 +48,7 @@ export default function LandingPage() {
   return (
     <>
       {/* Header */}
-      <LandingHeader />
+      <LandingHeader contentType="document" />
 
       {/* Main Content */}
       <main className="px-5">
