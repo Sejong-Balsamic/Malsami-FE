@@ -1,19 +1,22 @@
+// updated types for document post
+import type { DocumentType } from "@/types/api/constants/documentType";
+
 export interface DocumentPostFormData {
   title: string;
   content: string;
   subject: string;
-  studyYear: number;
-  categoryTags: string[];
   customTags: string[];
-  isPrivate: boolean;
+  documentTypes: DocumentType[];
+  attendedYear: number;
+  isDepartmentPrivate: boolean;
   mediaFiles: File[];
 }
 
 export interface DocumentFirstPageProps {
   formData: DocumentPostFormData;
   onSubjectChange: (subject: string) => void;
-  onStudyYearChange: (year: number) => void;
-  onCategoryTagsChange: (tags: string[]) => void;
+  onAttendedYearChange: (year: number) => void;
+  onDocumentTypesChange: (tags: DocumentType[]) => void;
   onCustomTagsChange: (tags: string[]) => void;
   onNextPage: () => void;
 }
@@ -23,9 +26,9 @@ export interface DocumentSecondPageProps {
   onFormChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFileDelete: (fileName: string) => void;
-  onPrivateToggle: () => void;
   onSubmit: () => void;
   isFormValid: boolean;
+  onDepartmentPrivateToggle?: () => void;
 }
 
 export interface SubjectSelectorProps {

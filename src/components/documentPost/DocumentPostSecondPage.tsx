@@ -8,7 +8,7 @@ export default function DocumentPostSecondPage({
   onFormChange,
   onFileChange,
   onFileDelete,
-  onPrivateToggle,
+  onDepartmentPrivateToggle,
   onSubmit,
   isFormValid,
 }: DocumentSecondPageProps): JSX.Element {
@@ -19,8 +19,8 @@ export default function DocumentPostSecondPage({
         <ContentInput
           value={formData.content}
           onChange={onFormChange}
-          isPrivate={formData.isPrivate}
-          onTogglePrivate={onPrivateToggle}
+          isPrivate={formData.isDepartmentPrivate}
+          onTogglePrivate={onDepartmentPrivateToggle}
         />
         <FileUploadInput mediaFiles={formData.mediaFiles} onFileChange={onFileChange} onFileDelete={onFileDelete} />
       </div>

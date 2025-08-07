@@ -8,14 +8,14 @@ import { DocumentFirstPageProps } from "./DocumentPostTypes";
 export default function DocumentPostFirstPage({
   formData,
   onSubjectChange,
-  onStudyYearChange,
-  onCategoryTagsChange,
+  onAttendedYearChange,
+  onDocumentTypesChange,
   onCustomTagsChange,
   onNextPage,
 }: DocumentFirstPageProps): JSX.Element {
   const isSubjectCompleted = subjects.includes(formData.subject);
-  const isStudyYearCompleted = isSubjectCompleted && formData.studyYear !== null;
-  const isCategoryCompleted = isStudyYearCompleted && formData.categoryTags.length > 0;
+  const isAttendedYearCompleted = isSubjectCompleted && formData.attendedYear !== null;
+  const isCategoryCompleted = isAttendedYearCompleted && formData.documentTypes.length > 0;
 
   const handleRemoveCustomTag = (tag: string) => {
     onCustomTagsChange(formData.customTags.filter(t => t !== tag));
@@ -28,11 +28,13 @@ export default function DocumentPostFirstPage({
         <DocumentSubjectSelector value={formData.subject} onChange={onSubjectChange} />
 
         {/* 수강 학기년도 섹션. 과목명 입력된 경우에만 표시 */}
-        {isSubjectCompleted && <DocumentStudyYearSelector year={formData.studyYear} onYearChange={onStudyYearChange} />}
+        {isSubjectCompleted && (
+          <DocumentStudyYearSelector year={formData.attendedYear} onYearChange={onAttendedYearChange} />
+        )}
 
         {/* 기본 태그 섹션. 수강학기년도 선택된 경우에만 표시 */}
-        {isStudyYearCompleted && (
-          <DocumentJiJeongTagSelector selectedTags={formData.categoryTags} onTagsSelect={onCategoryTagsChange} />
+        {isAttendedYearCompleted && (
+          <DocumentJiJeongTagSelector selectedTags={formData.documentTypes} onTagsSelect={onDocumentTypesChange} />
         )}
 
         {/* 자유 태그 섹션. 기본 태그 선택된 경우에만 표시 */}

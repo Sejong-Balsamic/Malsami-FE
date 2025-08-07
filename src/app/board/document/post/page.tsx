@@ -13,29 +13,19 @@ import { addToast } from "@/global/store/toastSlice";
 import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
 import DocumentPostFirstPage from "@/components/documentPost/DocumentPostFirstPage";
 import DocumentPostSecondPage from "@/components/documentPost/DocumentPostSecondPage";
-
-interface DocPostFormData {
-  title: string;
-  content: string;
-  subject: string;
-  customTags: string[];
-  categoryTags: string[];
-  studyYear: number;
-  isPrivate: boolean;
-  mediaFiles: File[]; // File 배열로 정의
-}
+import { DocumentPostFormData } from "@/components/documentPost/DocumentPostTypes";
 
 export default function QnaPostPage() {
   const router = useRouter();
 
-  const [formData, setFormData] = useState<DocPostFormData>({
+  const [formData, setFormData] = useState<DocumentPostFormData>({
     title: "",
     content: "",
     subject: "",
     customTags: [],
-    categoryTags: [],
-    studyYear: 2025,
-    isPrivate: false,
+    documentTypes: [],
+    attendedYear: 2025,
+    isDepartmentPrivate: false,
     mediaFiles: [],
   });
 
@@ -62,8 +52,8 @@ export default function QnaPostPage() {
 
   // 모든 필수 입력 필드가 채워져 있는지 확인
   const checkFormValidity = useCallback(() => {
-    const { title, content, subject, categoryTags } = formData;
-    return !!title && !!content && !!subject && categoryTags.length > 0;
+    const { title, content, subject, documentTypes } = formData;
+    return !!title && !!content && !!subject && documentTypes.length > 0;
   }, [formData]);
 
   // 입력값 변경 핸들러
@@ -87,7 +77,8 @@ export default function QnaPostPage() {
   const handleCustomTagsSubmit = (tags: string[]) => setFormData(prev => ({ ...prev, customTags: tags }));
 
   // isPrivate 업데이트하는 함수
-  const handleIsPrivate = () => setFormData(prev => ({ ...prev, isPrivate: !prev.isPrivate }));
+  const handleIsDepartmentPrivate = () =>
+    setFormData(prev => ({ ...prev, isDepartmentPrivate: !prev.isDepartmentPrivate }));
 
   // 파일 업데이트 함수 (파일 형식, 크기, 개수 조건 검사)
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,15 +170,16 @@ export default function QnaPostPage() {
     if (isFormValid) {
       setIsUploading(true); // 업로딩 시작
       try {
+        const documentTypes = formData.documentTypes as any;
         await documentPostApi.saveDocumentPost({
           title: formData.title,
           content: formData.content,
           subject: formData.subject,
           customTags: formData.customTags,
           attachmentFiles: formData.mediaFiles.length > 0 ? formData.mediaFiles : undefined,
-          attendedYear: formData.studyYear,
-          documentTypes: formData.categoryTags as any,
-          isPrivate: formData.isPrivate,
+          attendedYear: formData.attendedYear,
+          documentTypes,
+          isDepartmentPrivate: formData.isDepartmentPrivate,
         });
         showToast("자료 게시글이 성공적으로 등록되었습니다.");
         router.push("/board/document");
@@ -221,9 +213,9 @@ export default function QnaPostPage() {
                   <DocumentPostFirstPage
                     formData={formData}
                     onSubjectChange={handleSubjectChange}
-                    onStudyYearChange={studyYear => setFormData(prev => ({ ...prev, studyYear }))}
-                    onCategoryTagsChange={selectedTags =>
-                      setFormData(prev => ({ ...prev, categoryTags: selectedTags }))
+                    onAttendedYearChange={year => setFormData(prev => ({ ...prev, attendedYear: year }))}
+                    onDocumentTypesChange={selectedTags =>
+                      setFormData(prev => ({ ...prev, documentTypes: selectedTags }))
                     }
                     onCustomTagsChange={handleCustomTagsSubmit}
                     onNextPage={() => setCurrentPage(2)}
@@ -234,7 +226,7 @@ export default function QnaPostPage() {
                     onFormChange={handleChange}
                     onFileChange={handleFileChange}
                     onFileDelete={handleFileDelete}
-                    onPrivateToggle={handleIsPrivate}
+                    onDepartmentPrivateToggle={handleIsDepartmentPrivate}
                     onSubmit={handleSubmit}
                     isFormValid={isFormValid}
                   />

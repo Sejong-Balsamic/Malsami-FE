@@ -1,12 +1,12 @@
-import docCategoryTags from "@/types/docCategoryTags";
+import { documentTypeLabels, DocumentType } from "@/types/api/constants/documentType";
 
 interface DocumentJiJeongTagSelectorProps {
-  selectedTags: string[];
-  onTagsSelect: (tags: string[]) => void;
+  selectedTags: DocumentType[];
+  onTagsSelect: (tags: DocumentType[]) => void;
 }
 
 export default function DocumentJiJeongTagSelector({ selectedTags, onTagsSelect }: DocumentJiJeongTagSelectorProps) {
-  const handleToggle = (tag: string) => {
+  const handleToggle = (tag: DocumentType) => {
     // 이미 선택된 태그라면 해제
     if (selectedTags.includes(tag)) {
       onTagsSelect(selectedTags.filter(t => t !== tag));
@@ -26,18 +26,18 @@ export default function DocumentJiJeongTagSelector({ selectedTags, onTagsSelect 
       </h2>
 
       <div className="flex flex-wrap gap-x-3 gap-y-2">
-        {docCategoryTags.map(category => (
+        {Object.entries(documentTypeLabels).map(([key, label]) => (
           <button
-            key={category.name}
+            key={key}
             type="button"
-            onClick={() => handleToggle(category.name)}
+            onClick={() => handleToggle(key as DocumentType)}
             className={`font-suit-medium rounded-full border-[1px] px-3 py-2 text-[16px] transition-colors ${
-              selectedTags.includes(category.name)
+              selectedTags.includes(key as DocumentType)
                 ? "border-document-main text-document-main"
                 : "border-ui-muted bg-white text-[#898989]"
             }`}
           >
-            {category.name}
+            {label}
           </button>
         ))}
       </div>
