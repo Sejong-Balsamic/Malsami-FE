@@ -30,5 +30,5 @@ export interface DocumentSecondPageProps {
 export interface SubjectSelectorProps {
   value: string;
   onChange: (value: string) => void;
-  onSelect: (subject: string) => void;
+  onSelect?: (subject: string) => void;
 }

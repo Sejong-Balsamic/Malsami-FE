@@ -1,4 +1,4 @@
-import TitleInput from "@/components/questionPost/TitleInput";
+import TitleInput from "@/components/documentPost/TitleInput";
 import ContentInput from "@/components/documentPost/ContentInput";
 import FileUploadInput from "@/components/documentPost/FileUploadInput";
 import { DocumentSecondPageProps } from "./DocumentPostTypes";
@@ -24,10 +24,10 @@ export default function DocumentPostSecondPage({
           onClick={onSubmit}
           disabled={!isFormValid}
           className={`w-full rounded-[8px] py-4 text-SUIT_18 font-extrabold text-white ${
-            isFormValid ? "bg-question-main" : "bg-ui-muted"
+            isFormValid ? "bg-document-main" : "bg-ui-muted"
           }`}
         >
-          작성완료
+          완료
         </button>
       </div>
     </div>

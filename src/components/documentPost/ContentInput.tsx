@@ -14,10 +14,7 @@ function ContentInput({ value, onChange }: ContentTextareaProps) {
   return (
     <label htmlFor="content" className="mb-[26px] block">
       <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <span className="font-pretendard-semibold mr-1.5 text-lg">설명</span>
-          <span className="font-pretendard-medium text-custom-blue-500 text-lg">(필수)</span>
-        </div>
+        <h2 className="font-suit-medium mb-3 text-base">본문</h2>
         <span className="text-sm text-gray-500">{value.length} / 500자</span>
       </div>
       <textarea
@@ -27,7 +24,7 @@ function ContentInput({ value, onChange }: ContentTextareaProps) {
         onChange={handleChange}
         maxLength={2000}
         required
-        className="font-pretendard-medium mt-3 h-40 w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base"
+        className="font-pretendard-medium mt-3 h-40 w-full rounded-[8px] border-2 border-[#E2E2E2] px-4 py-2 text-base"
       />
     </label>
   );

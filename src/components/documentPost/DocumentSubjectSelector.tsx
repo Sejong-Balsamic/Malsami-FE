@@ -3,7 +3,7 @@ import subjects from "@/types/subjects";
 import DocumentCommonInput from "@/components/common/DocumentCommonInput";
 import { SubjectSelectorProps } from "./DocumentPostTypes";
 
-function DocumentSubjectSelector({ value, onChange }: SubjectSelectorProps) {
+function DocumentSubjectSelector({ value, onChange, onSelect }: SubjectSelectorProps) {
   const [filteredSubjects, setFilteredSubjects] = useState<string[]>([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
 
@@ -39,6 +39,7 @@ function DocumentSubjectSelector({ value, onChange }: SubjectSelectorProps) {
   // 과목 선택 처리
   const handleSelectSubject = (subject: string) => {
     onChange(subject);
+    if (onSelect) onSelect(subject);
     setFilteredSubjects([]);
   };
 

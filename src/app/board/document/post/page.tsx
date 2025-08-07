@@ -9,7 +9,7 @@ import { docMediaAllowedTypes } from "@/types/docMediaAllowedTypes";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { useDispatch } from "react-redux";
-import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
+import { addToast } from "@/global/store/toastSlice";
 import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
 import DocumentPostFirstPage from "@/components/documentPost/DocumentPostFirstPage";
 import DocumentPostSecondPage from "@/components/documentPost/DocumentPostSecondPage";
@@ -34,14 +34,14 @@ export default function QnaPostPage() {
     subject: "",
     customTags: [],
     categoryTags: [],
-    studyYear: 2024,
+    studyYear: 2025,
     isPrivate: false,
     mediaFiles: [],
   });
 
   const [isFormValid, setIsFormValid] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isUploading, setIsUploading] = useState(false); // 업로드 상태
+  const [isUploading, setIsUploading] = useState(false);
   const dispatch = useDispatch();
 
   const showToast = (message: string) => {
@@ -82,9 +82,7 @@ export default function QnaPostPage() {
   }, [formData, checkFormValidity]);
 
   // subject(교과목명) 업데이트하는 함수
-  const handleSubjectChange = (subject: string) => {
-    setFormData(prev => ({ ...prev, subject }));
-  };
+  const handleSubjectChange = (subject: string) => setFormData(prev => ({ ...prev, subject }));
 
   const handleCustomTagsSubmit = (tags: string[]) => setFormData(prev => ({ ...prev, customTags: tags }));
 
@@ -203,36 +201,39 @@ export default function QnaPostPage() {
   return (
     <div className="flex min-h-screen flex-col bg-white">
       <CommonHeader title="자료 작성하기" rightType={RIGHT_ITEM.NONE} />
-      <div>
+      <div className="flex flex-1 flex-col">
         <main className="flex flex-1 flex-col px-5 pt-4">
-          {/* 로딩 중일 때 */}
-          {isUploading ? (
-            <div className="flex h-[500px] items-center justify-center">
-              <LoadingSpinner />
-            </div>
-          ) : (
-            <div className="flex flex-1 flex-col">
-              {currentPage === 1 ? (
-                <DocumentPostFirstPage
-                  formData={formData}
-                  onSubjectChange={handleSubjectChange}
-                  onStudyYearChange={studyYear => setFormData(prev => ({ ...prev, studyYear }))}
-                  onCategoryTagsChange={selectedTags => setFormData(prev => ({ ...prev, categoryTags: selectedTags }))}
-                  onCustomTagsChange={handleCustomTagsSubmit}
-                  onNextPage={() => setCurrentPage(2)}
-                />
-              ) : (
-                <DocumentPostSecondPage
-                  formData={formData}
-                  onFormChange={handleChange}
-                  onFileChange={handleFileChange}
-                  onFileDelete={handleFileDelete}
-                  onSubmit={handleSubmit}
-                  isFormValid={isFormValid}
-                />
-              )}
-            </div>
-          )}
+          <div className="flex flex-1 flex-col">
+            {isUploading ? (
+              <div className="flex h-[500px] items-center justify-center">
+                <LoadingSpinner />
+              </div>
+            ) : (
+              <div className="flex flex-1 flex-col">
+                {currentPage === 1 ? (
+                  <DocumentPostFirstPage
+                    formData={formData}
+                    onSubjectChange={handleSubjectChange}
+                    onStudyYearChange={studyYear => setFormData(prev => ({ ...prev, studyYear }))}
+                    onCategoryTagsChange={selectedTags =>
+                      setFormData(prev => ({ ...prev, categoryTags: selectedTags }))
+                    }
+                    onCustomTagsChange={handleCustomTagsSubmit}
+                    onNextPage={() => setCurrentPage(2)}
+                  />
+                ) : (
+                  <DocumentPostSecondPage
+                    formData={formData}
+                    onFormChange={handleChange}
+                    onFileChange={handleFileChange}
+                    onFileDelete={handleFileDelete}
+                    onSubmit={handleSubmit}
+                    isFormValid={isFormValid}
+                  />
+                )}
+              </div>
+            )}
+          </div>
         </main>
       </div>
     </div>
