@@ -13,6 +13,7 @@ import FileUploadInput from "@/components/questionPost/FileUploadInput";
 import OriginalQuestion from "@/components/questionAnswer/OriginalQuestion";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
+import CommonTextarea from "@/components/common/CommonTextarea";
 
 interface AnswerPostFormData {
   content: string;
@@ -196,28 +197,24 @@ export default function AnswerPostPage() {
 
               {/* 답변 입력란 */}
               <div className="relative mt-3">
-                <textarea
+                <CommonTextarea
                   name="content"
-                  placeholder="답변을 작성해주세요."
                   value={formData.content}
                   onChange={handleChange}
+                  placeholder="답변을 작성해주세요."
                   maxLength={2000}
                   required
-                  className="resize-vertical min-h-[226px] w-full rounded-[8px] border-2 border-[#E2E2E2] bg-white px-4 py-4 pb-[36px] text-SUIT_14 font-medium"
+                  contentType="question"
+                  className="min-h-[226px]"
                 />
 
-                {/* 글자 수 카운터 - textarea 기준 아래 8px, 오른쪽 16px */}
+                {/* 글자 수 카운터 */}
                 <div
                   className="absolute text-right"
-                  style={{
-                    bottom: "8px",
-                    right: "16px",
-                    fontSize: "12px",
-                    lineHeight: "100%",
-                  }}
+                  style={{ bottom: "16px", right: "16px", fontSize: "12px", lineHeight: "100%" }}
                 >
                   <span style={{ color: "#00E271", fontWeight: 600 }}>{formData.content.length}</span>
-                  <span style={{ color: "#C5C5C5", fontWeight: 500 }}>{" / 2000"}</span>
+                  <span style={{ color: "#C5C5C5", fontWeight: 500 }}> / 2000</span>
                 </div>
               </div>
             </div>
