@@ -52,6 +52,7 @@ const config: Config = {
           muted: "#C5C5C5", // 흐린 텍스트 색상
           body: "#616161", // 본문 텍스트 색상
           divider: "#F0F0F0", // 구분선 색상
+          border: "#E2E2E2", // 테두리 색상
           "image-bg": "#B5B5B5", // 이미지 배경색
           count: "#ACACAC", // 카운터용 회색 (좋아요·댓글·조회수 등)
           disabled: "#C5C5C5",

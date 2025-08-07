@@ -258,10 +258,9 @@ export default function AnswerPostPage() {
                 type="button"
                 onClick={handleSubmit}
                 disabled={!isFormValid}
-                className="h-14 w-full rounded-[8px] text-SUIT_18 font-extrabold text-white disabled:cursor-not-allowed"
-                style={{
-                  background: isFormValid ? "#00E271" : "#E2E2E2",
-                }}
+                className={`h-14 w-full rounded-[8px] text-SUIT_18 font-extrabold text-white disabled:cursor-not-allowed ${
+                  isFormValid ? "bg-[#00E271]" : "bg-ui-border"
+                }`}
               >
                 완료
               </button>
