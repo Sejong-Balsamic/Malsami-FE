@@ -2,6 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
+/* 기본 CSS 변수 */
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -16,19 +17,65 @@
   }
 }
 
+/* SUIT 폰트 */
+@font-face {
+  font-family: "SUIT";
+  font-weight: 400;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT-Regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "SUIT";
+  font-weight: 500;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT-Medium.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "SUIT";
+  font-weight: 600;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "SUIT";
+  font-weight: 700;
+  font-display: swap;
+  src: url("https://cdn.jsdelivr.net/gh/sunn-us/SUIT/fonts/static/woff2/SUIT-Bold.woff2") format("woff2");
+}
+
+/* 랜딩페이지 로고 폰트 */
+@font-face {
+  font-family: "TheTuesdayofYounah";
+  src: url("https://fastly.jsdelivr.net/gh/projectnoonnu/2506-1@1.0/TheTuesdayofYounah.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* 폰트 유틸리티 클래스 */
 @layer utilities {
-  .font-pretendard-light {
-    @apply font-pretendard font-light;
+  /* SUIT 폰트 클래스 */
+  .font-suit-medium {
+    @apply font-suit font-medium leading-[100%];
   }
-  .font-pretendard-regular {
-    @apply font-pretendard font-regular;
+  .font-suit-semibold {
+    @apply font-suit font-semibold leading-[100%];
   }
-  .font-pretendard-bold {
-    @apply font-pretendard font-bold;
+  .font-suit-bold {
+    @apply font-suit font-bold leading-[100%];
+  }
+
+  /* 랜딩페이지 로고 폰트 클래스 */
+  .font-tuesday-younah {
+    font-family: "TheTuesdayofYounah", sans-serif;
   }
 }
 
+/* 기본 스타일 */
 @layer base {
+  /* Shadcn/ui 색상 변수 */
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
@@ -56,6 +103,8 @@
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
   }
+
+  /* 다크모드 색상 변수 */
   .dark {
     --background: 0 0% 3.9%;
     --foreground: 0 0% 98%;
@@ -82,13 +131,23 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-}
 
-@layer base {
+  /* 전체 요소 기본 스타일 */
   * {
     @apply border-border;
   }
+
+  /* HTML 기본 스타일 */
+  html {
+    @apply bg-background text-foreground;
+  }
+
+  /* Body 기본 스타일 */
   body {
     @apply bg-background text-foreground;
+    font-synthesis: none;
+    font-family: "SUIT", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 }

@@ -43,3 +43,9 @@ out/
 # 타입스크립트 빌드 파일
 dist/
 tsconfig.tsbuildinfo
+
+# cursor 설정 파일
+.cursor.json
+
+# 환경 변수 파일 무시
+.env.local

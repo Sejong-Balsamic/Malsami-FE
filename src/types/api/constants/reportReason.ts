@@ -1,0 +1,18 @@
+// src/types/api/constants/reportReason.ts
+export const ReportReason = {
+  INAPPROPRIATE_BOARD: "INAPPROPRIATE_BOARD",
+  PROFANITY: "PROFANITY",
+  OBSCENE_INTERACTION: "OBSCENE_INTERACTION",
+  ADVERTISEMENT: "ADVERTISEMENT",
+  FRAUD_IMPERSONATION: "FRAUD_IMPERSONATION",
+  SPAM: "SPAM",
+  INFO_REQUEST: "INFO_REQUEST",
+  OFF_TOPIC: "OFF_TOPIC",
+  CASH_REQUEST: "CASH_REQUEST",
+  INAPPROPRIATE_PHOTOS: "INAPPROPRIATE_PHOTOS",
+  COPYRIGHT_VIOLATION: "COPYRIGHT_VIOLATION",
+  OTHER: "OTHER",
+} as const;
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export type ReportReason = keyof typeof ReportReason;

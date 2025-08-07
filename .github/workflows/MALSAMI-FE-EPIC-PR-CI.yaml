@@ -1,53 +1,59 @@
-name: MALSAMI-FE-INTEGRATION-CICD
+name: MALSAMI-FE-EPIC-PR-CI
 on:
+  workflow_dispatch:
   push:
     branches:
       - main
       - test
-  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Node.js 18
-        uses: actions/setup-node@v3
+      # .env.local 파일 생성
+      - name: Create .env.local file
+        run: |
+          echo -e "${{ secrets.ENV }}" > .env.local
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '18'
-          
-      - name: Log - Cache Setup
-        run: echo "캐시 설정을 시작합니다..."
+          node-version: "20.15.0"
+          cache: "npm"
 
       - name: Cache npm dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-npm-
 
-      - name: Log - Installing dependencies
-        run: echo "의존성을 설치 중입니다..."
+      - name: Cache node_modules
+        id: node-modules-cache
+        uses: actions/cache@v4
+        with:
+          path: "**/node_modules"
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-modules-
 
       - name: Install dependencies
+        if: steps.node-modules-cache.outputs.cache-hit != 'true'
         run: npm ci
 
       - name: Cache Next.js build
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
-          path: |
-            .next/cache
+          path: .next/cache
           key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
           restore-keys: |
             ${{ runner.os }}-nextjs-
 
-      - name: Log - Building project
-        run: echo "프로젝트를 빌드 중입니다..."
-
-      - name: Build with npm
+      - name: Build project
         run: npm run build
 
       - name: Docker setup
@@ -59,22 +65,16 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Log - Setting up Docker cache
-        run: echo "Docker 레이어 캐시를 설정 중입니다..."
-
       - name: Cache Docker layers
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ hashFiles('Dockerfile') }}-${{ hashFiles('package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-buildx-
 
-      - name: Log - Building and pushing Docker image
-        run: echo "Docker 이미지를 빌드하고 푸시 중입니다..."
-
       - name: Build and push Docker image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v5
         with:
           context: .
           file: ./Dockerfile
@@ -84,7 +84,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
           build-args: |
             NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
-          
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -92,7 +92,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@v1.0.3
@@ -102,13 +102,15 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: 2022
           script: |
+            set -e  # 에러 발생 시 스크립트 중단
+
             echo "배포를 시작합니다..."
             export PATH=$PATH:/usr/local/bin
             export PW=${{ secrets.SERVER_PASSWORD }}
             BRANCH=${{ github.ref_name }}
             PORT=3000
             CONTAINER_NAME="sejong-malsami-front"
-            
+
             if [ "$BRANCH" == "main" ]; then
               PORT=3004
               echo "메인 브랜치로 배포합니다. 포트는 $PORT입니다."
@@ -117,21 +119,24 @@ jobs:
               PORT=3003
               echo "테스트 브랜치로 배포합니다. 컨테이너 이름은 $CONTAINER_NAME, 포트는 $PORT입니다."
             fi
-            
+
             echo "도커 이미지를 풀링 중입니다: ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}"
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-            
-            echo "기존 컨테이너를 중지합니다: $CONTAINER_NAME"
-            echo $PW | sudo -S docker stop $CONTAINER_NAME || true
-            
-            echo "기존 컨테이너를 제거합니다: $CONTAINER_NAME"
-            echo $PW | sudo -S docker rm $CONTAINER_NAME || true
-            
-            echo "새로운 컨테이너를 실행합니다: $CONTAINER_NAME on port $PORT"
-            echo $PW | sudo -S docker run -d \
-              -p ${PORT}:3000 \
-              --name $CONTAINER_NAME \
+
+            echo "컨테이너 $CONTAINER_NAME 존재 여부 확인 중..."
+            if sudo docker ps -a --format '{{.Names}}' | grep -Eq "^${CONTAINER_NAME}\$"; then
+              echo "컨테이너 $CONTAINER_NAME 이(가) 존재합니다. 중지 및 삭제 중..."
+              echo $PW | sudo -S docker rm -f $CONTAINER_NAME
+              echo "컨테이너 $CONTAINER_NAME 이(가) 삭제되었습니다."
+            else
+              echo "존재하는 컨테이너 $CONTAINER_NAME 이(가) 없습니다."
+            fi
+
+            echo "새로운 컨테이너 $CONTAINER_NAME 실행 중..."
+            echo $PW | sudo -S docker run -d -p ${PORT}:3000 --name $CONTAINER_NAME \
+              --network sejong-malsami-network \
+              -v /var/run/docker.sock:/var/run/docker.sock \
               -e NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }} \
               ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
-            
+
             echo "배포가 완료되었습니다."
