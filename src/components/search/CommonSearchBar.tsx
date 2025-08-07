@@ -100,7 +100,7 @@ function CommonSearchBar() {
 
   return (
     <div className="relative w-full bg-white">
-      <div className="flex w-full items-center justify-between rounded-[12px] border-[1px] border-[#10DCB3] bg-white p-3.5">
+      <div className="flex w-full items-center justify-between rounded-[12px] border-[2px] border-[#10DCB3] bg-white p-3.5">
         <SearchBtn onClick={routeSearchValue} />
 
         {/* 입력 필드 */}

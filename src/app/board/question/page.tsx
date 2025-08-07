@@ -33,6 +33,16 @@ export default function QuestionPage() {
 
       {/* Main Content */}
       <main className="px-5 pt-4">
+        {/* 안내글 */}
+        <div className="mb-6 font-suit text-[24px] font-medium" style={{ lineHeight: "140%" }}>
+          <p>
+            궁금한 내용을 <span className="text-question-main">질문</span>하고,
+          </p>
+          <p>
+            다른 사람의 질문에 <span className="text-question-main">답변</span>해 주세요!
+          </p>
+        </div>
+
         {/* 검색바 */}
         <section aria-label="search" className="mb-5">
           <CommonSearchBar />

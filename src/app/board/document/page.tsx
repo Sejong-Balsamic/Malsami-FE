@@ -57,6 +57,15 @@ export default function DocumentBoardPage() {
 
       {/* Main Content */}
       <main className="px-5">
+        {/* 안내글 */}
+        <div className="mb-6 font-suit text-[24px] font-medium" style={{ lineHeight: "140%" }}>
+          <p>
+            필요한 자료를 <span className="text-document-main">구매</span>하고,
+          </p>
+          <p>
+            여러 자료를 <span className="text-document-main">직접 올려보세요</span>!
+          </p>
+        </div>
         {/* 검색바 섹션 */}
         <section aria-label="search" className="mb-6 mt-4">
           <CommonSearchBar />
