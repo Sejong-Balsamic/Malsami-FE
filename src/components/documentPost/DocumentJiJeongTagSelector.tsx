@@ -7,12 +7,15 @@ interface DocumentJiJeongTagSelectorProps {
 
 export default function DocumentJiJeongTagSelector({ selectedTags, onTagsSelect }: DocumentJiJeongTagSelectorProps) {
   const handleToggle = (tag: string) => {
+    // 이미 선택된 태그라면 해제
     if (selectedTags.includes(tag)) {
       onTagsSelect(selectedTags.filter(t => t !== tag));
-    } else if (selectedTags.length < 2) {
+      return;
+    }
+
+    // 2개 미만일 때만 새 태그 추가
+    if (selectedTags.length < 2) {
       onTagsSelect([...selectedTags, tag]);
-    } else {
-      onTagsSelect([selectedTags[1], tag]);
     }
   };
 

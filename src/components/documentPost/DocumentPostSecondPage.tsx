@@ -8,6 +8,7 @@ export default function DocumentPostSecondPage({
   onFormChange,
   onFileChange,
   onFileDelete,
+  onPrivateToggle,
   onSubmit,
   isFormValid,
 }: DocumentSecondPageProps): JSX.Element {
@@ -15,7 +16,12 @@ export default function DocumentPostSecondPage({
     <div className="flex flex-1 flex-col">
       <div className="flex flex-col gap-7">
         <TitleInput value={formData.title} onChange={onFormChange} />
-        <ContentInput value={formData.content} onChange={onFormChange} />
+        <ContentInput
+          value={formData.content}
+          onChange={onFormChange}
+          isPrivate={formData.isPrivate}
+          onTogglePrivate={onPrivateToggle}
+        />
         <FileUploadInput mediaFiles={formData.mediaFiles} onFileChange={onFileChange} onFileDelete={onFileDelete} />
       </div>
       <div className="mb-[60px] mt-auto">

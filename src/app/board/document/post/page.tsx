@@ -86,6 +86,9 @@ export default function QnaPostPage() {
 
   const handleCustomTagsSubmit = (tags: string[]) => setFormData(prev => ({ ...prev, customTags: tags }));
 
+  // isPrivate 업데이트하는 함수
+  const handleIsPrivate = () => setFormData(prev => ({ ...prev, isPrivate: !prev.isPrivate }));
+
   // 파일 업데이트 함수 (파일 형식, 크기, 개수 조건 검사)
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
@@ -200,7 +203,11 @@ export default function QnaPostPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-white">
-      <CommonHeader title="자료 작성하기" rightType={RIGHT_ITEM.NONE} />
+      <CommonHeader
+        title="자료 작성하기"
+        rightType={RIGHT_ITEM.NONE}
+        onLeftClick={currentPage === 2 ? () => setCurrentPage(1) : undefined}
+      />
       <div className="flex flex-1 flex-col">
         <main className="flex flex-1 flex-col px-5 pt-4">
           <div className="flex flex-1 flex-col">
@@ -227,6 +234,7 @@ export default function QnaPostPage() {
                     onFormChange={handleChange}
                     onFileChange={handleFileChange}
                     onFileDelete={handleFileDelete}
+                    onPrivateToggle={handleIsPrivate}
                     onSubmit={handleSubmit}
                     isFormValid={isFormValid}
                   />

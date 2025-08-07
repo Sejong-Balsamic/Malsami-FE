@@ -23,6 +23,7 @@ export interface DocumentSecondPageProps {
   onFormChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onFileChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onFileDelete: (fileName: string) => void;
+  onPrivateToggle: () => void;
   onSubmit: () => void;
   isFormValid: boolean;
 }

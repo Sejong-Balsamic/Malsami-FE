@@ -16,9 +16,6 @@ export default function TitleInput({ value, onChange }: TitleInputProps) {
     <div>
       <div className="mb-3 flex items-center justify-between">
         <h2 className="font-suit-medium mb-3 text-base">제목</h2>
-        <span className="text-sm text-gray-500">
-          <span className={value.length > 0 ? "text-document-main" : "text-gray-500"}>{value.length}</span> / 20자
-        </span>
       </div>
       <QuestionCommonInput
         name="title"

@@ -37,7 +37,9 @@ function ContentInput({ value, onChange, isPrivate = false, onTogglePrivate = un
                   height={16}
                 />
               </button>
-              <span className="font-suit-medium text-[14px] text-[#9B9B9B]">익명</span>
+              <span className="font-suit-medium text-[14px]" style={{ color: isPrivate ? "##00E271" : "#9B9B9B" }}>
+                익명
+              </span>
             </div>
           )}
         </div>
