@@ -193,7 +193,7 @@ export default function AnswerPostPage() {
                   </button>
                   <span
                     className="font-suit-medium text-[14px]"
-                    style={{ color: formData.isPrivate ? "##00E271" : "#9B9B9B" }}
+                    style={{ color: formData.isPrivate ? "#00E271" : "#9B9B9B" }}
                   >
                     익명
                   </span>

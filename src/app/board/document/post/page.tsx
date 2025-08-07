@@ -170,7 +170,6 @@ export default function QnaPostPage() {
     if (isFormValid) {
       setIsUploading(true); // 업로딩 시작
       try {
-        const documentTypes = formData.documentTypes as any;
         await documentPostApi.saveDocumentPost({
           title: formData.title,
           content: formData.content,
@@ -178,7 +177,7 @@ export default function QnaPostPage() {
           customTags: formData.customTags,
           attachmentFiles: formData.mediaFiles.length > 0 ? formData.mediaFiles : undefined,
           attendedYear: formData.attendedYear,
-          documentTypes,
+          documentTypes: formData.documentTypes as any,
           isDepartmentPrivate: formData.isDepartmentPrivate,
         });
         showToast("자료 게시글이 성공적으로 등록되었습니다.");
