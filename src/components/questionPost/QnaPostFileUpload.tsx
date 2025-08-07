@@ -17,7 +17,7 @@ function QnaPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploa
           height: "100px",
           flexShrink: 0,
         }}
-        className="border-ui-border relative flex cursor-pointer items-center justify-center rounded-[8px] border-2"
+        className="relative flex cursor-pointer items-center justify-center rounded-[8px] border-2 border-ui-border"
       >
         <input
           id="file-upload"
