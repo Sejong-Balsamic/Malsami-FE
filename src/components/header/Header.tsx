@@ -7,6 +7,8 @@ import LogoIcon from "@/components/icons/LogoIcon";
 import CloseIcon from "@/components/icons/CloseIcon";
 import MenuIcon from "@/components/icons/MenuIcon";
 import BellIcon from "@/components/icons/BellIcon";
+import BellDocumentIcon from "@/components/icons/BellDocumentIcon";
+import BellQuestionIcon from "@/components/icons/BellQuestionIcon";
 
 interface HeaderProps {
   // eslint-disable-next-line react/require-default-props
@@ -54,6 +56,10 @@ function Header({
     switch (rightType) {
       case RIGHT_ITEM.BELL:
         return <BellIcon isNotificationExist={hasNotification} />;
+      case RIGHT_ITEM.BELL_DOCUMENT:
+        return <BellDocumentIcon isNotificationExist={hasNotification} />;
+      case RIGHT_ITEM.BELL_QUESTION:
+        return <BellQuestionIcon isNotificationExist={hasNotification} />;
       case RIGHT_ITEM.CLOSE:
         return <CloseIcon />;
       case RIGHT_ITEM.MENU:

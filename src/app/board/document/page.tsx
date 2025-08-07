@@ -2,16 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import UploadDocumentFAB from "@/components/common/FABs/UploadDocumentFAB";
 import { memberApi } from "@/apis/memberApi";
 import MyFacultySection from "@/components/documentMain/MyFacultySection";
 import DocumentRequestBoardSection from "@/components/documentMain/DocumentRequestBoardSection";
 import TierBoardNavigateSection from "@/components/documentMain/TierBoardNavigateSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
-import CommonHeader from "@/components/header/CommonHeader";
+import LandingHeader from "@/components/header/LandingHeader";
 import CommonSearchBar from "@/components/search/CommonSearchBar";
-import { RIGHT_ITEM } from "@/types/header";
 
 export default function DocumentBoardPage() {
   const router = useRouter();
@@ -50,10 +48,8 @@ export default function DocumentBoardPage() {
 
   return (
     <>
-      <ScrollToTopOnLoad />
-
       {/* Header */}
-      <CommonHeader title="자료 게시판" rightType={RIGHT_ITEM.NONE} />
+      <LandingHeader contentType="document" />
 
       {/* Main Content */}
       <main className="px-5">

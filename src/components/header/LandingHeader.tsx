@@ -11,15 +11,24 @@ import CreditModal from "@/components/common/CreditModal";
 interface LandingHeaderProps {
   // eslint-disable-next-line react/require-default-props
   children?: ReactNode;
+  // eslint-disable-next-line react/require-default-props
+  contentType?: "document" | "question";
 }
 
-export default function LandingHeader({ children }: LandingHeaderProps) {
+export default function LandingHeader({ children, contentType }: LandingHeaderProps) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleLeftClick = () => setIsModalOpen(true);
   const handleRightClick = () => router.push("/notifications");
   const handleCloseModal = () => setIsModalOpen(false);
+
+  // contentType에 따라 적절한 bell 타입 결정
+  const getBellType = () => {
+    if (contentType === "document") return RIGHT_ITEM.BELL_DOCUMENT;
+    if (contentType === "question") return RIGHT_ITEM.BELL_QUESTION;
+    return RIGHT_ITEM.BELL; // 기본값
+  };
 
   return (
     <>
@@ -28,7 +37,7 @@ export default function LandingHeader({ children }: LandingHeaderProps) {
       <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
         <Header
           leftType={LEFT_ITEM.LOGO}
-          rightType={RIGHT_ITEM.BELL}
+          rightType={getBellType()}
           onLeftClick={handleLeftClick}
           onRightClick={handleRightClick}
           hasNotification={false}

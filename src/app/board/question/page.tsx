@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import Header from "@/components/header/Header";
+import LandingHeader from "@/components/header/LandingHeader";
 import CommonSearchBar from "@/components/search/CommonSearchBar";
 import HotQuestionSection from "@/components/landing/HotQuestionSection";
 import MajorQuestionSection from "@/components/landing/MajorQuestionSection";
@@ -9,7 +9,6 @@ import BountyQuestionSection from "@/components/landing/BountyQuestionSection";
 import QuestionListSection from "@/components/questionMain/QuestionListSection";
 import UploadQuestionFAB from "@/components/common/FABs/UploadQuestionFAB";
 import { useState } from "react";
-import { LEFT_ITEM } from "@/types/header";
 
 export default function QuestionPage() {
   const router = useRouter();
@@ -17,19 +16,9 @@ export default function QuestionPage() {
   const [questionActiveTab, setQuestionActiveTab] = useState<string>("주간");
   const [bountyActiveTab, setBountyActiveTab] = useState<"최근순" | "높은순">("최근순");
 
-  const handleBackClick = () => {
-    router.back();
-  };
-
   return (
-    <div className="min-h-screen bg-white">
-      {/* Fixed Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
-        <Header title="질문게시판" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
-      </div>
-
-      {/* 헤더 높이만큼 스페이서 (4rem) */}
-      <div className="h-16 w-full" />
+    <>
+      <LandingHeader contentType="question" />
 
       {/* Main Content */}
       <main className="px-5 pt-4">
@@ -79,6 +68,6 @@ export default function QuestionPage() {
 
       {/* 플로팅 버튼 (글쓰기) */}
       <UploadQuestionFAB isFABVisible />
-    </div>
+    </>
   );
 }

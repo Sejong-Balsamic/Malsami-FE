@@ -9,6 +9,8 @@ export type LeftItemType = (typeof LEFT_ITEM)[keyof typeof LEFT_ITEM];
 
 export const RIGHT_ITEM = {
   BELL: "BELL", // 알림 아이콘
+  BELL_DOCUMENT: "BELL_DOCUMENT", // 자료 알림 아이콘
+  BELL_QUESTION: "BELL_QUESTION", // 질문 알림 아이콘
   CLOSE: "CLOSE", // X 버튼
   MENU: "MENU", // 세로 점 3개 아이콘
   NONE: "NONE", // 없음
