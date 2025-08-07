@@ -16,8 +16,8 @@ jobs:
       - name: Set up Node.js 18
         uses: actions/setup-node@v3
         with:
-          node-version: '18'
-          cache: 'npm'
+          node-version: "18"
+          cache: "npm"
 
       - name: Cache npm dependencies
         uses: actions/cache@v3
@@ -31,7 +31,7 @@ jobs:
         id: node-modules-cache
         uses: actions/cache@v3
         with:
-          path: '**/node_modules'
+          path: "**/node_modules"
           key: ${{ runner.os }}-node-modules-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-modules-
@@ -80,7 +80,7 @@ jobs:
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
           build-args: |
             NEXT_PUBLIC_API_URL=${{ secrets.NEXT_PUBLIC_API_URL }}
-          
+
       - name: Move cache
         run: |
           rm -rf /tmp/.buildx-cache
@@ -103,18 +103,18 @@ jobs:
             BRANCH=${{ github.ref_name }}
             PORT=3000
             CONTAINER_NAME="sejong-malsami-front"
-            
+
             if [ "$BRANCH" == "main" ]; then
               PORT=3004
             elif [ "$BRANCH" == "test" ]; then
               CONTAINER_NAME="sejong-malsami-front-test"
               PORT=3003
             fi
-            
+
             echo $PW | sudo -S docker pull ${{ secrets.DOCKERHUB_USERNAME }}/sejong-malsami-front-container:${BRANCH}
             echo $PW | sudo -S docker stop $CONTAINER_NAME || true
             echo $PW | sudo -S docker rm $CONTAINER_NAME || true
-            
+
             echo $PW | sudo -S docker run -d \
               -p ${PORT}:3000 \
               --name $CONTAINER_NAME \

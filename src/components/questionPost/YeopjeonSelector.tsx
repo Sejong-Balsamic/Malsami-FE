@@ -44,7 +44,7 @@ export default function YeopjeonSelector({ value, onChange }: YeopjeonSelectorPr
           placeholder="0"
           value={Number(value) === 0 ? "" : Number(value)}
           onChange={handleInputChange}
-          className={`border-ui-border h-[50px] w-[106px] rounded-[8px] border-2 px-4 text-center text-sm font-semibold focus:border-question-main focus:outline-none ${isZero ? "text-gray-400" : "text-black"}`}
+          className={`h-[50px] w-[106px] rounded-[8px] border-2 border-ui-border px-4 text-center text-sm font-semibold focus:border-question-main focus:outline-none ${isZero ? "text-gray-400" : "text-black"}`}
         />
 
         {/* + 버튼 */}

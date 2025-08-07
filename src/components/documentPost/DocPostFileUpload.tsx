@@ -8,7 +8,7 @@ interface FileUploadProps {
 
 function DocPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploadProps) {
   return (
-    <div className="border-ui-border flex flex-col gap-y-[20px] rounded-[14px] border-2 px-4 py-[18px]">
+    <div className="flex flex-col gap-y-[20px] rounded-[14px] border-2 border-ui-border px-4 py-[18px]">
       {/* 파일 목록 */}
       {mediaFiles.map(file => (
         <div key={file.name} className="flex items-center justify-between">
