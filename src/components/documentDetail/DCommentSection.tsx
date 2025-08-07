@@ -7,7 +7,7 @@ import refreshComments from "@/apis/question/refreshComments";
 import { Comment } from "@/types/api/entities/postgres/comment";
 import { getDateDiff } from "@/global/time";
 import postLikeComment from "@/apis/question/postLikeComment";
-import sameMember from "@/global/sameMember";
+import { isSameMemberById } from "@/global/memberUtil";
 
 interface CommentSectionProps {
   postId: string;
@@ -76,7 +76,7 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
 
     const comment = updatedComments[commentIndex];
     if (comment.isLiked) return; // 이미 좋아요를 눌렀다면 실행하지 않음
-    if (sameMember(comment.member.memberId as string)) return; // 작성자가 좋아요를 누르지 못하도록 차단
+    if (isSameMemberById(comment.member.memberId as string)) return; // 작성자가 좋아요를 누르지 못하도록 차단
 
     try {
       updatedComments[commentIndex].isLiked = true; // 즉시 반영: 버튼 비활성화 및 색상 변경

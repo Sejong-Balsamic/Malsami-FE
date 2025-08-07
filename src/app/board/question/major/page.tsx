@@ -15,6 +15,7 @@ import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import { QuestionCommand } from "@/types/api/requests/questionCommand";
 import { memberApi } from "@/apis/memberApi";
 import { setQuestionFilteringOpen } from "@/global/store/bottomSheetSlice";
+import QuestionSearchBar from "@/components/search/QuestionSearchBar";
 
 export default function MajorQuestionPage() {
   const router = useRouter();
@@ -26,6 +27,7 @@ export default function MajorQuestionPage() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [memberFaculty, setMemberFaculty] = useState<string>("");
+  const [query, setQuery] = useState<string>("");
 
   // 현재 적용된 필터링 상태
   const [currentFiltering, setCurrentFiltering] = useState<Partial<QuestionCommand>>({
@@ -60,7 +62,8 @@ export default function MajorQuestionPage() {
         sortType: filtering.sortType || "LATEST",
         chaetaekStatus: filtering.chaetaekStatus,
         questionPresetTags: filtering.questionPresetTags,
-        faculty: memberFaculty, // 사용자 전공으로 필터링
+        faculty: memberFaculty,
+        query,
       });
 
       if (response && response.questionPostsPage) {
@@ -79,26 +82,27 @@ export default function MajorQuestionPage() {
   // 데이터 로드 (memberFaculty가 설정된 후에만)
   useEffect(() => {
     if (memberFaculty) {
-      fetchMajorQuestions(currentPage);
+      fetchMajorQuestions(currentPage, currentFiltering);
     }
   }, [currentPage, memberFaculty]);
 
   // 페이지 변경 핸들러
-  const handlePageChange = (pageNumber: number) => {
-    setCurrentPage(pageNumber);
-  };
+  const handlePageChange = (pageNumber: number) => setCurrentPage(pageNumber);
 
-  const handleBackClick = () => {
-    router.back();
-  };
+  const handleBackClick = () => router.back();
 
   // 필터링 핸들러들
   const handleQuestionConfirm = async (filtering: Partial<QuestionCommand>) => {
-    console.log("질문 필터링 적용:", filtering);
     // 필터링 상태 업데이트하고 API 호출
     setCurrentFiltering(filtering);
     setCurrentPage(0);
     await fetchMajorQuestions(0, filtering);
+  };
+
+  // 검색 실행 핸들러
+  const handleSearch = async () => {
+    setCurrentPage(0);
+    if (memberFaculty) await fetchMajorQuestions(0);
   };
 
   const handleFilterReset = async () => {
@@ -153,8 +157,10 @@ export default function MajorQuestionPage() {
 
       {/* 메인 콘텐츠 */}
       <div className="px-5">
-        {/* 24px 공백 */}
-        <div className="h-6" />
+        {/* 16px 공백 */}
+        <div className="h-4" />
+
+        <QuestionSearchBar value={query} onChange={setQuery} onSearch={handleSearch} />
 
         {/* 현재 적용된 필터 */}
         <ActiveQuestionFilters
@@ -162,16 +168,6 @@ export default function MajorQuestionPage() {
           onReset={handleFilterReset}
           onRemoveFilter={handleRemoveFilter}
         />
-
-        {/* 검색 컴포넌트 */}
-        {/* <section aria-label="qustion-detail-page-search" className="mb-5">
-          <QuestionDetailPageSearchComponent />
-        </section> */}
-
-        {/* 최근검색 컴포넌트 */}
-        {/* <section aria-label="recent-search" className="mb-5">
-          <RecentSearchComponent />
-        </section> */}
 
         {/* 질문 리스트 */}
         <div className="w-full bg-white">

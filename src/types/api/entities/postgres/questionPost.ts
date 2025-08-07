@@ -18,5 +18,7 @@ export interface QuestionPost extends BasePost {
   dailyScore?: number;
   weeklyScore?: number;
   isLiked?: boolean;
+  isPopular?: boolean;
+  isAuthor?: boolean;
   customTags?: string[];
 }

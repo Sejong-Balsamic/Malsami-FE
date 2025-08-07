@@ -60,7 +60,7 @@ export default function SearchDocCard({
                 <span className="ml-1 text-xs">{likeCount > 999 ? "999+" : likeCount}</span>
               </span>
               <span className="mx-1.5">·</span>
-              <Image src="/icons/ViewCountIcon.svg" width={14} height={14} alt="ViewCountIcon" />
+              <Image src="/viewCountGray.svg" width={14} height={14} alt="ViewCountIcon" />
               <span className="ml-1">{viewCount > 999 ? "999+" : viewCount}</span>
               <span className="mx-1.5">·</span>
               <span>{getDateDiff(createdDate)}</span>

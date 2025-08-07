@@ -15,7 +15,7 @@ export default async function postLikeQuestion(postId: string, contentType: stri
     formData.append("contentType", contentType);
 
     // 좋아요를 위한 POST 요청
-    const response = await apiClient.post<LikeResponse>("/api/likes/question/board", formData, {
+    const response = await apiClient.post<LikeResponse>("/api/question/like", formData, {
       headers: {
         "Content-Type": "multipart/form-data", // Content-Type 설정
       },

@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import { Button } from "@/components/shadcn/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/shadcn/accordion";
 import Image from "next/image";
-import { getDateDiff } from "@/global/time";
+import { formatDateTime } from "@/global/time";
 import getAnswer from "@/apis/question/getAnswer";
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
-import sameMember from "@/global/sameMember";
-import AttachedFiles from "@/components/common/AttachedFiles";
+import { ContentType } from "@/types/api/constants/contentType";
+import { isSameMemberById } from "@/global/memberUtil";
 import { AnswerPost } from "@/types/api/entities/postgres/answerPost";
-import CommentSection from "./ACommentSection";
+import ChaetaekTag from "@/components/common/tags/ChaetaekTag";
 import ChaetaekCheckModal from "./ChaetaekCheckModal";
 
 interface AnswerSectionProps {
@@ -23,9 +21,12 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentAnswerId, setCurrentAnswerId] = useState<string | null>(null);
 
-  const openModalForAnswer = (answerId: string) => {
-    setCurrentAnswerId(answerId);
-    setIsModalOpen(true);
+  // 작성자용: 선택된 답변 ID 상태
+  const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
+
+  // 답변 선택 핸들러 (단일 선택)
+  const handleSelect = (answerId: string) => {
+    setSelectedAnswerId(prev => (prev === answerId ? null : answerId));
   };
 
   const closeModal = () => {
@@ -33,17 +34,9 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
     setCurrentAnswerId(null);
   };
 
-  const incrementCommentCount = (answerId: string) => {
-    setAnswers(prevAnswers =>
-      prevAnswers.map(ans =>
-        ans.answerPostId === answerId ? { ...ans, commentCount: (ans.commentCount || 0) + 1 } : ans,
-      ),
-    );
-  };
-
   const handleLikeClick = async (answerId: string) => {
     const targetAnswer = answers.find(a => a.answerPostId === answerId);
-    if (!targetAnswer || targetAnswer.isLiked || sameMember(targetAnswer.member?.memberId as string)) return;
+    if (!targetAnswer || targetAnswer.isLiked || isSameMemberById(targetAnswer.member?.memberId as string)) return;
 
     try {
       setAnswers(prevAnswers =>
@@ -52,12 +45,14 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
         ),
       );
 
-      await postLikeQuestion(answerId, "ANSWER");
+      await postLikeQuestion(answerId, ContentType.ANSWER);
     } catch (likeError) {
       console.error("좋아요 업데이트 실패:", likeError);
       setAnswers(prevAnswers =>
-        prevAnswers.map(ans =>
-          ans.answerPostId === answerId ? { ...ans, isLiked: false, likeCount: (ans.likeCount || 0) - 1 } : ans,
+        prevAnswers.map(answerPost =>
+          answerPost.answerPostId === answerId
+            ? { ...answerPost, isLiked: false, likeCount: (answerPost.likeCount || 0) - 1 }
+            : answerPost,
         ),
       );
     }
@@ -89,104 +84,132 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
   }
 
   return (
-    <div className="my-[40px] flex h-auto min-w-[336px] max-w-[640px] flex-col">
-      <span className="mb-[10px] text-SUIT_14 font-semibold text-[#3D3D3D]">답변 {answers.length}</span>
+    <div className="flex h-auto min-w-[336px] max-w-[640px] flex-col">
       {answers.length === 0 ? (
-        <p className="text-center text-SUIT_14 font-medium text-[#7b7b7c]">아직 답변이 없습니다.</p>
+        <p className="text-center text-SUIT_14 font-medium text-ui-muted">아직 답변이 없습니다.</p>
       ) : (
-        answers.map((ans, index) => (
-          <div
-            key={ans.answerPostId || index} // answerPostId가 없을 경우 index 사용
-            className="my-[10px] flex flex-col gap-[12px] rounded-lg bg-[#f7f8fb] p-[12px]"
-          >
-            <div className="mb-[4px] flex items-center justify-between">
-              <div className="flex items-center justify-between gap-[6px]">
-                {ans.isChaetaek && (
-                  <div className="inline-flex h-[26px] items-center justify-center rounded-[13px] bg-[#0062D2] px-[14px] py-[6px]">
-                    <span className="text-SUIT_12 font-bold text-white">채택됨</span>
-                  </div>
-                )}
-                <span className="text-SUIT_14 font-bold">@{ans.member?.uuidNickname || "익명"}</span>
-                <span className="text-SUIT_12 font-medium text-[#737373]">
-                  • {ans.isPrivate ? "비공개" : ans.member?.major || "정보 없음"}
+        answers.map((answerPost, index) => (
+          <div key={answerPost.answerPostId || index} className="flex">
+            {isAuthor && !answerPost.isChaetaek && (
+              <div className="mr-[8px] pt-[2px]">
+                <Image
+                  src={
+                    selectedAnswerId === answerPost.answerPostId
+                      ? "/icons/chaetaekCheckboxChecked.svg"
+                      : "/icons/chaetaekCheckboxUnchecked.svg"
+                  }
+                  alt={selectedAnswerId === answerPost.answerPostId ? "채택 선택됨" : "채택 선택 안됨"}
+                  width={16}
+                  height={16}
+                  className="cursor-pointer"
+                  onClick={() => handleSelect(answerPost.answerPostId as string)}
+                />
+              </div>
+            )}
+            <div className="flex flex-1 flex-col">
+              {/* 상단 라인 */}
+              {index !== 0 && <div className="mx-auto h-[1px] w-[353px] rounded-[2px] bg-[#EDEDED]" />}
+
+              {/* 상단 정보 */}
+              <div className="flex items-center gap-[4px]">
+                {/* 채택 태그 */}
+                {answerPost.isChaetaek && <ChaetaekTag />}
+
+                {/* 닉네임 */}
+                <span className="text-SUIT_14 font-medium text-ui-body">
+                  @{answerPost.isPrivate ? "익명" : (answerPost.member?.uuidNickname ?? "익명")}
+                </span>
+
+                {/* 점 */}
+                <span className="text-ui-muted">·</span>
+
+                {/* 날짜 */}
+                <span className="text-SUIT_12 font-medium text-ui-muted">
+                  {answerPost.createdDate ? formatDateTime(answerPost.createdDate) : "--/-- --:--"}
                 </span>
               </div>
-              {isAuthor && !ans.isChaetaek && ans.answerPostId && (
-                <Button
-                  variant="ghost"
-                  onClick={() => openModalForAnswer(ans.answerPostId!)}
-                  className="ml-[6px] h-[26px] rounded-[13px] border border-[#0062D2] px-[15px] py-[6px] text-SUIT_12 font-medium text-[#0062D2]"
+
+              {/* 본문 */}
+              <p className="mt-4 line-clamp-1 text-SUIT_14 font-medium leading-[19.6px] text-black">
+                {answerPost.content || "내용 없음"}
+              </p>
+
+              {/* 이미지 리스트 */}
+              {answerPost.mediaFiles && answerPost.mediaFiles.length > 0 && (
+                <div className="mt-2 flex gap-[8px] overflow-x-auto">
+                  {answerPost.mediaFiles.map((f, i) => (
+                    <Image
+                      key={i}
+                      src={f.uploadedImageUrl || ""}
+                      alt="ans-img"
+                      width={90}
+                      height={90}
+                      className="h-[90px] w-[90px] flex-shrink-0 rounded-[8px] object-cover"
+                    />
+                  ))}
+                </div>
+              )}
+
+              {/* 좋아요 영역 */}
+              <div className="mt-4 flex items-center gap-[8px] pb-5">
+                <div
+                  role="button"
+                  tabIndex={0}
+                  onClick={() => answerPost.answerPostId && handleLikeClick(answerPost.answerPostId)}
+                  onKeyDown={e =>
+                    (e.key === "Enter" || e.key === " ") &&
+                    answerPost.answerPostId &&
+                    handleLikeClick(answerPost.answerPostId)
+                  }
+                  className="flex cursor-pointer items-center gap-[4px]"
                 >
-                  채택하기
-                </Button>
+                  <Image
+                    src={answerPost.isLiked ? "/icons/newLikeThumbGreen.svg" : "/icons/newLikeThumbGray.svg"}
+                    alt="like"
+                    width={16}
+                    height={16}
+                  />
+                  <span
+                    className={`text-[12px] font-medium leading-[100%] ${answerPost.isLiked ? "text-[#00E271]" : "text-ui-count"}`}
+                  >
+                    {answerPost.likeCount || 0}
+                  </span>
+                </div>
+              </div>
+
+              {/* 채택 모달 */}
+              {answerPost.answerPostId && (
+                <ChaetaekCheckModal
+                  isOpen={isModalOpen && currentAnswerId === answerPost.answerPostId}
+                  author={answerPost.member?.uuidNickname || "익명"}
+                  onClose={closeModal}
+                  answerPostId={answerPost.answerPostId}
+                />
               )}
             </div>
-            <div className="text-SUIT_14 font-medium leading-relaxed text-[#444444]">{ans.content || "내용 없음"}</div>
-            {ans.mediaFiles && ans.mediaFiles.length > 0 && (
-              <div className="mt-4">
-                <AttachedFiles files={ans.mediaFiles.map(file => file.uploadedImageUrl || "")} />
-              </div>
-            )}
-            <Accordion type="single" collapsible>
-              <AccordionItem value={`item-${index}`}>
-                <div className="flex h-[24px] w-full justify-between">
-                  <p className="text-SUIT_12 font-medium text-[#bcbcbc]">
-                    {ans.createdDate ? getDateDiff(ans.createdDate) : "날짜 정보 없음"}
-                  </p>
-                  <div className="flex gap-4">
-                    <div
-                      role="button"
-                      tabIndex={0}
-                      onClick={() => ans.answerPostId && handleLikeClick(ans.answerPostId)}
-                      onKeyDown={e =>
-                        (e.key === "Enter" || e.key === " ") && ans.answerPostId && handleLikeClick(ans.answerPostId)
-                      }
-                      className="mb-2 flex cursor-pointer items-center gap-1"
-                    >
-                      <Image
-                        src={ans.isLiked ? "/icons/Like_Clicked.svg" : "/icons/Like_Empty_UnClicked.svg"}
-                        alt={ans.isLiked ? "Like_Clicked" : "Like_Unclicked"}
-                        width={16}
-                        height={16}
-                      />
-                      <p className="text-SUIT_14 font-medium text-[#000000]">{ans.likeCount || 0}</p>
-                    </div>
-                    <AccordionTrigger>
-                      <div className="mb-4 flex cursor-pointer items-center gap-1">
-                        <Image
-                          src="/icons/Comment_Empty_UnClicked.svg"
-                          alt="Comment_Unclicked"
-                          width={16}
-                          height={16}
-                        />
-                        <p className="text-SUIT_14 font-medium text-[#000000]">{ans.commentCount || 0}</p>
-                      </div>
-                    </AccordionTrigger>
-                  </div>
-                </div>
-                <AccordionContent>
-                  {ans.answerPostId ? (
-                    <CommentSection
-                      postId={ans.answerPostId}
-                      contentType="ANSWER"
-                      onCommentAdded={() => incrementCommentCount(ans.answerPostId!)}
-                    />
-                  ) : (
-                    <p className="text-SUIT_14 font-medium text-[#7b7b7c]">댓글을 불러올 수 없습니다.</p>
-                  )}
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-            {ans.answerPostId && (
-              <ChaetaekCheckModal
-                isOpen={isModalOpen && currentAnswerId === ans.answerPostId}
-                author={ans.member?.uuidNickname || "익명"}
-                onClose={closeModal}
-                answerPostId={ans.answerPostId}
-              />
-            )}
           </div>
         ))
+      )}
+
+      {/* 작성자 전용 채택 버튼 */}
+      {isAuthor && (
+        <div className="fixed bottom-[20px] left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-[20px]">
+          <button
+            type="button"
+            disabled={!selectedAnswerId}
+            onClick={() => {
+              if (selectedAnswerId) {
+                setCurrentAnswerId(selectedAnswerId);
+                setIsModalOpen(true);
+              }
+            }}
+            className={`h-[48px] w-full rounded-[12px] text-SUIT_16 font-bold text-white ${
+              selectedAnswerId ? "bg-question-main" : "bg-ui-disabled"
+            }`}
+          >
+            채택하기
+          </button>
+        </div>
       )}
     </div>
   );

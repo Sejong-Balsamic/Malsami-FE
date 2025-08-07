@@ -34,7 +34,15 @@ const config: Config = {
         // 태그 색상
         tag: {
           yeopjeon: "#FFB000", // 엽전 태그 색상
-          accept: "#0062D2", // 채택 태그 색상
+          accept: "#3D8BFF", // 채택(답변) 태그 색상
+          // 지정태그(프리셋태그) 색상
+          "preset-question-bg": "#CAFFE5", // 질문 지정태그 배경색 (연한 초록)
+          "preset-question-text": "#00E271", // 질문 지정태그 텍스트색 (진한 초록)
+          "preset-document-bg": "#E3F2FD", // 자료 지정태그 배경색 (연한 파랑) - 필요시 사용
+          "preset-document-text": "#00D1F2", // 자료 지정태그 텍스트색 (진한 파랑) - 필요시 사용
+          // 커스텀태그 색상
+          "custom-bg": "#EDEDED", // 커스텀태그 배경색 (회색)
+          "custom-text": "#898989", // 커스텀태그 텍스트색 (진한 회색)
         },
 
         // UI 요소 색상
@@ -45,6 +53,8 @@ const config: Config = {
           body: "#616161", // 본문 텍스트 색상
           divider: "#F0F0F0", // 구분선 색상
           "image-bg": "#B5B5B5", // 이미지 배경색
+          count: "#ACACAC", // 카운터용 회색 (좋아요·댓글·조회수 등)
+          disabled: "#C5C5C5",
         },
 
         // Shadcn UI 색상 (유지)

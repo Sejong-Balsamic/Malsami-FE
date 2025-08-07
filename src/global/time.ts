@@ -28,4 +28,15 @@ const getTodayDate = (): string => {
   return todayDate;
 };
 
-export { getDateDiff, getTodayDate };
+// 날짜를 "MM/DD HH:mm" 형식으로 반환하는 함수
+const formatDateTime = (dateString: string): string => {
+  if (!dateString) return "";
+  const date = new Date(dateString);
+  const MM = String(date.getMonth() + 1).padStart(2, "0");
+  const DD = String(date.getDate()).padStart(2, "0");
+  const HH = String(date.getHours()).padStart(2, "0");
+  const mm = String(date.getMinutes()).padStart(2, "0");
+  return `${MM}/${DD} ${HH}:${mm}`;
+};
+
+export { getDateDiff, getTodayDate, formatDateTime };

@@ -20,6 +20,7 @@ export interface QuestionCommand {
   pageNumber?: number;
   pageSize?: number;
   faculty?: string;
+  query?: string;
   sortType?: SortType;
   chaetaekStatus?: ChaetaekStatus;
 }

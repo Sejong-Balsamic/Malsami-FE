@@ -8,4 +8,6 @@ export interface AuthCommand {
   memberId?: string;
   member?: Member;
   fcmToken?: string;
+  sejongPortalId?: string;
+  sejongPortalPassword?: string;
 }
