@@ -3,11 +3,13 @@
 import { useState, FormEvent, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
 import authApi from "@/apis/authApi";
 import { AuthCommand } from "@/types/api/requests/authCommand";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import CustomInput from "../common/CustomInput";
 import LoginSuccessModal from "./LoginSuccessModal";
+import { setMemberId } from "@/global/store/authSlice";
 
 export default function LoginForm() {
   const [studentId, setStudentId] = useState<string>("");
@@ -20,6 +22,7 @@ export default function LoginForm() {
   const [isFormValid, setIsFormValid] = useState<boolean>(false);
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setIsFormValid(!!studentId.trim() && !!password.trim());
@@ -36,10 +39,13 @@ export default function LoginForm() {
       };
       const getUserInfo = await authApi.signIn(command);
 
-      if (getUserInfo.member) {
-        setUserName(getUserInfo.member.studentName || "");
+      if (getUserInfo.accessToken && getUserInfo.studentName && getUserInfo.memberId) {
+        setUserName(getUserInfo.studentName || "");
         setIsFirstLogin(getUserInfo.isFirstLogin || false);
         setLoginFailedMessage(null);
+        
+        // Redux 상태에 memberId 저장
+        dispatch(setMemberId(getUserInfo.memberId));
 
         if (getUserInfo.isFirstLogin) {
           setIsLoginModalOpen(true);
