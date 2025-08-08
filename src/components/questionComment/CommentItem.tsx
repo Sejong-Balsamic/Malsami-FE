@@ -5,21 +5,21 @@ import Image from "next/image";
 import { Comment } from "@/types/api/entities/postgres/comment";
 import { isSameMemberById } from "@/global/memberUtil";
 import { commentApi } from "@/apis/commentApi";
+import { formatDateTime } from "@/global/time";
 
 interface CommentItemProps {
   comment: Comment;
+  isQuestionAuthor?: boolean;
 }
 
-export default function CommentItem({ comment }: CommentItemProps) {
+export default function CommentItem({ comment, isQuestionAuthor }: CommentItemProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [isDisliked, setIsDisliked] = useState(false);
   const [likeCount, setLikeCount] = useState<number>(comment.likeCount ?? 0);
   const [dislikeCount, setDislikeCount] = useState<number>(0);
 
-  const isAuthor: boolean = useMemo(
-    () => isSameMemberById(comment.member?.memberId as string),
-    [comment.member?.memberId],
-  );
+  // 현재 댓글이 질문 작성자의 것인지 확인 (부모에서 props로 전달받음)
+  const isAuthor = !!isQuestionAuthor;
 
   const handleLike = async () => {
     if (isLiked) return; // 이미 좋아요를 누른 상태라면 반응하지 않음
@@ -74,24 +74,29 @@ export default function CommentItem({ comment }: CommentItemProps) {
     <div className="px-5 py-4">
       {/* 헤더 */}
       <div className="mb-3 flex items-start justify-between">
-        <div className="flex items-center gap-2">
-          {isAuthor && (
-            <div className="inline-flex items-center justify-center gap-[10px] rounded-[4px] bg-question-main px-[6px] py-[4px]">
-              <span className="truncate text-SUIT_12 font-bold leading-[100%] text-white">작성자</span>
-            </div>
-          )}
+        <div className="flex items-center">
+          {/* 사용자 정보 그룹 */}
+          <div className="flex items-center gap-2">
+            {/* 작성자 태그 */}
+            {isAuthor && (
+              <div className="inline-flex items-center justify-center rounded-[4px] bg-question-main px-[6px] py-[4px]">
+                <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-white">작성자</span>
+              </div>
+            )}
 
-          {/* 사용자 @uuid */}
-          <div className="flex items-center gap-1">
-            <span className="text-SUIT_12 text-ui-body">@{nickname}</span>
+            {/* 사용자 @uuid + 작성일 */}
+            <div className="flex items-center gap-1">
+              <span className="text-SUIT_12 text-ui-body">@{nickname}</span>
+              <span className="text-ui-muted">•</span>
+              <span className="text-SUIT_12 text-ui-muted">
+                {comment.createdDate ? formatDateTime(comment.createdDate) : ""}
+              </span>
+            </div>
           </div>
         </div>
 
-        {/* 작성일 + 더보기 */}
-        <div className="flex items-center gap-2">
-          <span className="text-SUIT_12 text-ui-muted">
-            {comment.createdDate ? new Date(comment.createdDate).toLocaleDateString() : ""}
-          </span>
+        {/* 더보기 버튼 */}
+        <div className="flex items-center">
           <button onClick={handleMoreOptions} className="p-1">
             <Image src="/icons/threeDotsVerticalGray.svg" alt="더보기" width={14} height={14} />
           </button>

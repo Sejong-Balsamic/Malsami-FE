@@ -5,14 +5,38 @@ import getComments from "@/apis/question/getComments";
 import { commentApi } from "@/apis/commentApi";
 import { Comment } from "@/types/api/entities/postgres/comment";
 import CommentItem from "./CommentItem";
+import { getCurrentMemberInfo } from "@/global/memberUtil";
 
 interface CommentListProps {
   postId: string;
+  questionAuthorId?: string;
 }
 
-export default function CommentList({ postId }: CommentListProps) {
+export default function CommentList({ postId, questionAuthorId }: CommentListProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [questionAuthorMemberId, setQuestionAuthorMemberId] = useState<string | undefined>(questionAuthorId);
+
+  // 질문 게시글 작성자 ID 가져오기
+  useEffect(() => {
+    const fetchMyInfo = async () => {
+      try {
+        // 중앙 관리 함수로 회원 정보 가져오기 (캐싱 활용)
+        const memberInfo = await getCurrentMemberInfo();
+        if (memberInfo) {
+          // 현재 로그인한 사용자의 memberId 저장
+          setQuestionAuthorMemberId(memberInfo.memberId);
+        }
+      } catch (error) {
+        console.error('로그인 사용자 정보 가져오기 실패:', error);
+      }
+    };
+
+    // 질문 작성자 ID가 전달되지 않았을 경우 현재 로그인한 사용자 정보 가져오기
+    if (!questionAuthorId) {
+      fetchMyInfo();
+    }
+  }, [questionAuthorId]);
 
   useEffect(() => {
     const fetchComments = async () => {
@@ -59,10 +83,13 @@ export default function CommentList({ postId }: CommentListProps) {
     <div className="bg-white">
       {comments.map((comment, index) => (
         <div key={comment.commentId || index}>
-          <CommentItem comment={comment} />
+          <CommentItem 
+          comment={comment} 
+          isQuestionAuthor={comment.member?.memberId === questionAuthorMemberId} 
+        />
           {index < comments.length - 1 && (
             <div className="mx-5">
-              <div className="h-[1px] w-[353px] rounded-[2px] bg-ui-divider-thick" />
+              <div className="h-[1px] w-full bg-ui-divider" />
             </div>
           )}
         </div>

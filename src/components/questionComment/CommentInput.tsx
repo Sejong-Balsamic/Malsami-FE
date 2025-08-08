@@ -1,18 +1,42 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { commentApi } from "@/apis/commentApi";
+import memberApi from "@/apis/memberApi";
 import { ContentType } from "@/types/api/constants/contentType";
 
 interface CommentInputProps {
   postId: string;
+  isAuthor: boolean;
 }
 
-export default function CommentInput({ postId }: CommentInputProps) {
+export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
   const [comment, setComment] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isCurrentUserAuthor, setIsCurrentUserAuthor] = useState<boolean>(isAuthor);
+  
+  // memberApi를 통해 현재 로그인한 사용자가 질문 작성자인지 확인
+  useEffect(() => {
+    const checkIfAuthor = async () => {
+      if (!isAuthor) {
+        try {
+          const myInfo = await memberApi.getMyInfo();
+          if (myInfo && myInfo.member) {
+            // TODO: 질문 작성자와 현재 로그인한 사용자 비교
+            setIsCurrentUserAuthor(true); // 실제 구현에서는 비교 로직이 필요
+          }
+        } catch (error) {
+          console.error('사용자 정보 가져오기 실패:', error);
+        }
+      }
+    };
+    
+    if (isAuthor === undefined) {
+      checkIfAuthor();
+    }
+  }, [isAuthor]);
 
   const handleSubmit = async () => {
     if (!comment.trim() || isSubmitting) return;
@@ -47,15 +71,16 @@ export default function CommentInput({ postId }: CommentInputProps) {
   return (
     <div className="bg-white border-t border-[#E0E0E0] px-5 py-3">
       <div className="flex items-center gap-4 rounded-[24px] border-2 border-question-main bg-white px-4 py-3">
-        {/* 익명 체크박스 */}
+        {/* 익명 체크박스 - 작성자는 익명으로 댓글 작성 불가 */}
         <button
-          onClick={() => setIsAnonymous(prev => !prev)}
-          className="flex items-center gap-1"
+          onClick={() => !isCurrentUserAuthor && setIsAnonymous(prev => !prev)}
+          className={`flex items-center gap-1 ${isCurrentUserAuthor ? "opacity-50 cursor-not-allowed" : ""}`}
+          disabled={isCurrentUserAuthor}
         >
           <div className="relative h-4 w-4">
             <Image
               src={
-                isAnonymous 
+                isAnonymous && !isCurrentUserAuthor
                   ? "/icons/chaetaekCheckboxChecked.svg" 
                   : "/icons/chaetaekCheckboxUnchecked.svg"
               }
@@ -67,7 +92,7 @@ export default function CommentInput({ postId }: CommentInputProps) {
         </button>
 
         {/* 익명 텍스트 */}
-        <span className="text-SUIT_16 text-ui-body">익명</span>
+        <span className={`text-SUIT_16 ${isCurrentUserAuthor ? "text-ui-disabled" : "text-ui-body"}`}>익명</span>
 
         {/* 댓글 입력 필드 */}
         <input

@@ -95,11 +95,17 @@ export default function CommentPage() {
         />
 
         {/* 댓글 목록 */}
-        <CommentList postId={postId} />
+        <CommentList 
+          postId={postId} 
+          questionAuthorId={questionDetails?.questionPost?.member?.memberId}
+        />
 
         {/* 댓글 입력창 - 하단 고정 */}
         <div className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-[640px]">
-          <CommentInput postId={postId} />
+          <CommentInput 
+            postId={postId} 
+            isAuthor={questionDetails?.questionPost?.isAuthor || false} 
+          />
         </div>
 
         {/* 댓글 입력창 높이만큼 하단 여백 */}
