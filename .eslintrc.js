@@ -20,5 +20,5 @@ module.exports = {
     "import/no-named-as-default": "off", // 이 규칙 비활성화
     "react/no-array-index-key": "warn", // 이 규칙을 경고 수준으로 낮춤
   },
-  ignorePatterns: [".eslintrc.js", "CHANGELOG.md", "CHANGELOG.json", ".cursor/prompts/코드스타일_가이드라인_요약.md"],
+  ignorePatterns: [".eslintrc.js", "CHANGELOG.md", "CHANGELOG.json", ".cursor/prompts/코드스타일_가이드라인_요약.md", "version.yml"],
 };
