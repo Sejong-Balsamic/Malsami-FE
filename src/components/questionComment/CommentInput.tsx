@@ -68,8 +68,7 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
   };
 
   return (
-    <div className="border-t border-[#E0E0E0] bg-white px-5 py-3">
-      <div className="flex items-center gap-4 rounded-[24px] border-2 border-question-main bg-white px-4 py-3">
+      <div className="mx-[20px] mb-4 flex h-[52px] w-auto items-center gap-4 rounded-[7px] border-2 border-question-main bg-white px-4 flex-shrink-0">
         {/* 익명 체크박스 - 작성자는 익명으로 댓글 작성 불가 */}
         <button
           type="button"
@@ -92,7 +91,7 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
         </button>
 
         {/* 익명 텍스트 */}
-        <span className={`text-SUIT_16 ${isCurrentUserAuthor ? "text-ui-disabled" : "text-ui-body"}`}>익명</span>
+        <span className={`text-SUIT_14 font-medium leading-[100%] text-[#898989] ${isCurrentUserAuthor ? "opacity-50" : ""}`}>익명</span>
 
         {/* 댓글 입력 필드 */}
         <input
@@ -101,7 +100,7 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
           onChange={e => setComment(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="댓글을 입력하세요."
-          className="flex-1 border-none bg-transparent text-SUIT_16 text-black placeholder-ui-muted outline-none"
+          className="flex-1 border-none bg-transparent text-SUIT_14 font-medium leading-[100%] text-black placeholder:text-[#C5C5C5] placeholder:font-medium outline-none"
           disabled={isSubmitting}
         />
 
@@ -112,9 +111,9 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
           disabled={!comment.trim() || isSubmitting}
           className="flex h-8 w-8 items-center justify-center rounded-full transition-opacity disabled:opacity-50"
         >
-          <Image src="/icons/arrowUp.svg" alt="전송" width={20} height={20} className="rotate-180 transform" />
+          <Image src="/icons/arrowUpCircleGreen.svg" alt="전송" width={20} height={20} />
         </button>
       </div>
-    </div>
+      
   );
 }

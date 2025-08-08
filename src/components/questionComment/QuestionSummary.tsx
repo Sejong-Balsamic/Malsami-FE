@@ -8,6 +8,7 @@ import Image from "next/image";
 import HotTag from "@/components/common/tags/HotTag";
 import { useMemo } from "react";
 import { formatDateTime } from "@/global/time";
+import { QuestionPresetTagLabels } from "@/types/api/constants/questionPresetTag";
 
 interface QuestionSummaryProps {
   questionDto: QuestionDto;
@@ -23,7 +24,7 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
   return (
     <div className="bg-white">
       {/* 질문 전체 내용 */}
-      <div className="px-5 py-4">
+      <div className="px-5 pt-4">
         {/* 태그 영역 (HOT, 과목, 현상금, 채택) */}
         <div className="mb-3 flex flex-wrap items-center gap-[4px]">
           {isHot && <HotTag />}
@@ -91,7 +92,7 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
                     className="flex h-[28px] w-auto min-w-[69px] flex-shrink-0 items-center justify-center gap-[4px] rounded-[34px] bg-tag-preset-question-bg px-[12px] py-[8px]"
                   >
                     <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-tag-preset-question-text">
-                      {tag}
+                      {QuestionPresetTagLabels[tag] || tag}
                     </span>
                   </div>
                 ))}
@@ -120,7 +121,7 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
         <button
           type="button"
           onClick={onToggleExpanded}
-          className="mt-4 flex w-full items-center justify-center py-2 hover:opacity-80"
+          className="mt-4 flex w-full items-center justify-center hover:opacity-80"
           aria-label={isExpanded ? "내용 접기" : "내용 펼치기"}
         >
           <Image
