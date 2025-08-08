@@ -30,3 +30,23 @@ export function isSameMemberById(targetMemberId?: string | null): boolean {
 export function isSameMemberByMemberObject({ memberId }: { memberId?: string | null }): boolean {
   return isSameMemberById(memberId);
 }
+
+/**
+ * API 응답에서 제공되는 isAuthor(boolean) 플래그 또는 memberId 값을 통해
+ * 현재 로그인 사용자가 작성자인지 공통으로 판단합니다.
+ * - isAuthor 값이 명확히 주어지면 우선적으로 사용합니다.
+ * - 불분명할 경우(memberId만 존재) isSameMemberById 로 fallback 합니다.
+ */
+export function isMyContent({
+  isAuthorFlag,
+  memberId,
+}: {
+  isAuthorFlag?: boolean | null;
+  memberId?: string | null;
+}): boolean {
+  // isAuthorFlag 가 true/false 인 경우 그대로 사용 (undefined/null 이면 무시)
+  if (typeof isAuthorFlag === "boolean") {
+    return isAuthorFlag;
+  }
+  return isSameMemberById(memberId);
+}
