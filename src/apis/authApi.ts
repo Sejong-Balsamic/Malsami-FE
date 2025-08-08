@@ -1,7 +1,7 @@
 // src/apis/authApi.ts
 import { AuthDto } from "@/types/api/responses/authDto";
 import { AuthCommand } from "@/types/api/requests/authCommand";
-import { MemberDto } from "@/types/api/responses/memberDto";
+
 import { apiClient } from "./appClient";
 
 export const authApi = {

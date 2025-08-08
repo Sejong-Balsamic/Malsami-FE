@@ -71,8 +71,6 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
     ? "border-[#03b89e] text-[#03b89e] cursor-default" // 눌린 상태
     : "border-[#e7e7e7] text-[#aaaaaa] cursor-pointer"; // 기본 상태
 
-
-
   const files = questionDto.mediaFiles?.map(file => file.uploadedImageUrl) as string[];
 
   return (
@@ -201,12 +199,16 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
 
             {/* 오른쪽(댓글) */}
             <div className="flex w-1/2 justify-center">
-              <div 
+              <div
                 className="flex cursor-pointer items-center gap-[4px]"
-                onClick={() => router.push(`/board/question/detail/${questionDto.questionPost?.questionPostId}/comment`)}
+                onClick={() =>
+                  router.push(`/board/question/detail/${questionDto.questionPost?.questionPostId}/comment`)
+                }
               >
                 <Image src="/icons/newChatBubbleGray.svg" alt="Comment_UnClicked" width={16} height={16} />
-                <span className="text-SUIT_12 font-medium text-[#ACACAC]">{questionDto.questionPost?.commentCount || 0}</span>
+                <span className="text-SUIT_12 font-medium text-[#ACACAC]">
+                  {questionDto.questionPost?.commentCount || 0}
+                </span>
               </div>
             </div>
           </div>

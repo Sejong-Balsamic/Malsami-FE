@@ -1,11 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import getComments from "@/apis/question/getComments";
 import { commentApi } from "@/apis/commentApi";
 import { Comment } from "@/types/api/entities/postgres/comment";
-import CommentItem from "./CommentItem";
 import { getCurrentMemberInfo } from "@/global/memberUtil";
+import CommentItem from "./CommentItem";
 
 interface CommentListProps {
   postId: string;
@@ -28,7 +27,7 @@ export default function CommentList({ postId, questionAuthorId }: CommentListPro
           setQuestionAuthorMemberId(memberInfo.memberId);
         }
       } catch (error) {
-        console.error('로그인 사용자 정보 가져오기 실패:', error);
+        console.error("로그인 사용자 정보 가져오기 실패:", error);
       }
     };
 
@@ -83,10 +82,7 @@ export default function CommentList({ postId, questionAuthorId }: CommentListPro
     <div className="bg-white">
       {comments.map((comment, index) => (
         <div key={comment.commentId || index}>
-          <CommentItem 
-          comment={comment} 
-          isQuestionAuthor={comment.member?.memberId === questionAuthorMemberId} 
-        />
+          <CommentItem comment={comment} isQuestionAuthor={comment.member?.memberId === questionAuthorMemberId} />
           {index < comments.length - 1 && (
             <div className="mx-5">
               <div className="h-[1px] w-full bg-ui-divider" />
@@ -97,3 +93,7 @@ export default function CommentList({ postId, questionAuthorId }: CommentListPro
     </div>
   );
 }
+
+CommentList.defaultProps = {
+  questionAuthorId: undefined,
+};

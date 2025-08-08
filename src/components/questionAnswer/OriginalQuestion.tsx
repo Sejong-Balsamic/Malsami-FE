@@ -1,12 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo } from "react";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/shadcn/accordion";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/shadcn/accordion";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import SubjectTag from "@/components/common/tags/SubjectTag";
 import RewardTag from "@/components/common/tags/RewardTag";
@@ -68,24 +63,16 @@ export default function OriginalQuestion({ questionPostId }: OriginalQuestionPro
   const mediaFiles = (questionData?.mediaFiles?.map(f => f.uploadedImageUrl).filter(Boolean) as string[]) ?? [];
 
   return (
-    <Accordion
-      type="single"
-      collapsible
-      className="w-full"
-      onValueChange={value => setIsOpen(!!value)}
-    >
+    <Accordion type="single" collapsible className="w-full" onValueChange={value => setIsOpen(!!value)}>
       <AccordionItem value="preview" className="border-none">
         {/* HEADER (태그 + 제목 + ↓ 아이콘 + 구분선) */}
         <AccordionTrigger className="p-0 hover:no-underline">
           <div className="flex w-full flex-col items-start">
             {/* 태그 리스트 */}
-            <div className="flex flex-wrap items-center gap-[4px] mt-4">
+            <div className="mt-4 flex flex-wrap items-center gap-[4px]">
               {isHot && <HotTag />}
               {questionData?.questionPost?.chaetaekStatus && <ChaetaekTag />}
-              <SubjectTag
-                subjectName={questionData?.questionPost?.subject}
-                type="question"
-              />
+              <SubjectTag subjectName={questionData?.questionPost?.subject} type="question" />
               <RewardTag amount={questionData?.questionPost?.rewardYeopjeon as number} />
             </div>
 

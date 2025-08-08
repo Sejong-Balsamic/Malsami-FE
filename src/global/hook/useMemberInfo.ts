@@ -1,9 +1,8 @@
-import { useCallback, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState } from '@/global/store';
-import { setMemberInfo } from '@/global/store/authSlice';
-import memberApi from '@/apis/memberApi';
-import { Member } from '@/types/api/entities/postgres/member';
+import { useCallback, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/global/store";
+import { setMemberInfo } from "@/global/store/authSlice";
+import memberApi from "@/apis/memberApi";
 
 // 회원 정보 캐싱 유효 시간 (30분)
 const CACHE_EXPIRY_TIME = 30 * 60 * 1000;
@@ -26,33 +25,36 @@ export const useMemberInfo = () => {
   }, [memberInfo, lastFetchTime]);
 
   // API에서 회원 정보 가져오기
-  const fetchMemberInfo = useCallback(async (forceRefresh = false) => {
-    try {
-      // 이미 유효한 정보가 있고, 강제 갱신이 아니면 기존 정보 사용
-      if (isMemberInfoValid() && !forceRefresh) {
-        return memberInfo;
-      }
+  const fetchMemberInfo = useCallback(
+    async (forceRefresh = false) => {
+      try {
+        // 이미 유효한 정보가 있고, 강제 갱신이 아니면 기존 정보 사용
+        if (isMemberInfoValid() && !forceRefresh) {
+          return memberInfo;
+        }
 
-      // 로그인되지 않은 상태면 가져오지 않음
-      if (!isLoggedIn) {
+        // 로그인되지 않은 상태면 가져오지 않음
+        if (!isLoggedIn) {
+          return null;
+        }
+
+        // API 호출하여 회원 정보 가져오기
+        const response = await memberApi.getMyInfo();
+
+        if (response && response.member) {
+          // Redux에 회원 정보 저장
+          dispatch(setMemberInfo(response.member));
+          return response.member;
+        }
+
+        return null;
+      } catch (error) {
+        console.error("회원 정보 가져오기 실패:", error);
         return null;
       }
-
-      // API 호출하여 회원 정보 가져오기
-      const response = await memberApi.getMyInfo();
-      
-      if (response && response.member) {
-        // Redux에 회원 정보 저장
-        dispatch(setMemberInfo(response.member));
-        return response.member;
-      }
-      
-      return null;
-    } catch (error) {
-      console.error('회원 정보 가져오기 실패:', error);
-      return null;
-    }
-  }, [dispatch, memberInfo, isMemberInfoValid, isLoggedIn]);
+    },
+    [dispatch, memberInfo, isMemberInfoValid, isLoggedIn],
+  );
 
   // 초기 마운트 시 회원 정보 가져오기
   useEffect(() => {

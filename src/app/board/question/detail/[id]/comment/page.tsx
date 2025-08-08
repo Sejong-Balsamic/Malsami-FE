@@ -76,10 +76,7 @@ export default function CommentPage() {
     <div className="min-h-screen bg-white">
       {/* 고정 헤더 */}
       <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
-        <CommonHeader
-          title="댓글"
-          onLeftClick={handleBackClick}
-        />
+        <CommonHeader title="댓글" onLeftClick={handleBackClick} />
       </div>
 
       {/* 헤더 높이만큼 공백 */}
@@ -88,24 +85,14 @@ export default function CommentPage() {
       {/* 본문 영역 */}
       <div className="relative mx-auto w-full max-w-[640px]">
         {/* 질문 요약 */}
-        <QuestionSummary 
-          questionDto={questionDetails} 
-          isExpanded={isExpanded}
-          onToggleExpanded={toggleExpanded}
-        />
+        <QuestionSummary questionDto={questionDetails} isExpanded={isExpanded} onToggleExpanded={toggleExpanded} />
 
         {/* 댓글 목록 */}
-        <CommentList 
-          postId={postId} 
-          questionAuthorId={questionDetails?.questionPost?.member?.memberId}
-        />
+        <CommentList postId={postId} questionAuthorId={questionDetails?.questionPost?.member?.memberId} />
 
         {/* 댓글 입력창 - 하단 고정 */}
         <div className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-[640px]">
-          <CommentInput 
-            postId={postId} 
-            isAuthor={questionDetails?.questionPost?.isAuthor || false} 
-          />
+          <CommentInput postId={postId} isAuthor={questionDetails?.questionPost?.isAuthor || false} />
         </div>
 
         {/* 댓글 입력창 높이만큼 하단 여백 */}

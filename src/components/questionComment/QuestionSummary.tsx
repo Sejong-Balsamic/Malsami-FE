@@ -15,17 +15,10 @@ interface QuestionSummaryProps {
   onToggleExpanded: () => void;
 }
 
-export default function QuestionSummary({ 
-  questionDto, 
-  isExpanded, 
-  onToggleExpanded 
-}: QuestionSummaryProps) {
+export default function QuestionSummary({ questionDto, isExpanded, onToggleExpanded }: QuestionSummaryProps) {
   const { questionPost } = questionDto;
   const isHot = questionPost?.isPopular === true;
-  const formattedDate = useMemo(
-    () => formatDateTime(questionPost?.createdDate ?? ""),
-    [questionPost?.createdDate],
-  );
+  const formattedDate = useMemo(() => formatDateTime(questionPost?.createdDate ?? ""), [questionPost?.createdDate]);
 
   return (
     <div className="bg-white">
@@ -41,10 +34,10 @@ export default function QuestionSummary({
 
         {/* 제목 (항상 표시) */}
         <h2 className="text-SUIT_18 font-semibold leading-[18px] text-black">{questionPost?.title}</h2>
-        
+
         {/* 확장된 내용 (isExpanded가 true일 때만 표시) */}
         {isExpanded && (
-          <div className="mt-2 animate-slideDown">
+          <div className="animate-slideDown mt-2">
             {/* 전공 · 조회수 · 작성일 */}
             <div className="mt-2 flex items-center gap-[4px] text-SUIT_12 font-medium text-ui-muted">
               <span>{questionPost?.member?.major ?? "전공 비공개"}</span>
@@ -124,8 +117,9 @@ export default function QuestionSummary({
         )}
 
         {/* 확장/축소 버튼 - 항상 콘텐츠 마지막에 위치 */}
-        <button 
-          onClick={onToggleExpanded} 
+        <button
+          type="button"
+          onClick={onToggleExpanded}
           className="mt-4 flex w-full items-center justify-center py-2 hover:opacity-80"
           aria-label={isExpanded ? "내용 접기" : "내용 펼치기"}
         >
@@ -137,7 +131,7 @@ export default function QuestionSummary({
           />
         </button>
         {/* 구분선 - 화면 전체 너비 */}
-        <div className="-mx-5 mt-2 h-[4px] w-[calc(100%+40px)] bg-ui-divider-thick"></div>
+        <div className="-mx-5 mt-2 h-[4px] w-[calc(100%+40px)] bg-ui-divider-thick" />
       </div>
     </div>
   );

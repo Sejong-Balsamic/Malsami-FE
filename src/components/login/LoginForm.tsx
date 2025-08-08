@@ -7,9 +7,9 @@ import { useDispatch } from "react-redux";
 import authApi from "@/apis/authApi";
 import { AuthCommand } from "@/types/api/requests/authCommand";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
+import { setMemberId } from "@/global/store/authSlice";
 import CustomInput from "../common/CustomInput";
 import LoginSuccessModal from "./LoginSuccessModal";
-import { setMemberId } from "@/global/store/authSlice";
 
 export default function LoginForm() {
   const [studentId, setStudentId] = useState<string>("");
@@ -43,7 +43,7 @@ export default function LoginForm() {
         setUserName(getUserInfo.studentName || "");
         setIsFirstLogin(getUserInfo.isFirstLogin || false);
         setLoginFailedMessage(null);
-        
+
         // Redux 상태에 memberId 저장
         dispatch(setMemberId(getUserInfo.memberId));
 

@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { commentApi } from "@/apis/commentApi";
 import memberApi from "@/apis/memberApi";
-import { ContentType } from "@/types/api/constants/contentType";
 
 interface CommentInputProps {
   postId: string;
@@ -16,7 +15,7 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCurrentUserAuthor, setIsCurrentUserAuthor] = useState<boolean>(isAuthor);
-  
+
   // memberApi를 통해 현재 로그인한 사용자가 질문 작성자인지 확인
   useEffect(() => {
     const checkIfAuthor = async () => {
@@ -28,11 +27,11 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
             setIsCurrentUserAuthor(true); // 실제 구현에서는 비교 로직이 필요
           }
         } catch (error) {
-          console.error('사용자 정보 가져오기 실패:', error);
+          console.error("사용자 정보 가져오기 실패:", error);
         }
       }
     };
-    
+
     if (isAuthor === undefined) {
       checkIfAuthor();
     }
@@ -49,7 +48,7 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
         contentType: "QUESTION",
         isPrivate: isAnonymous,
       });
-      
+
       // 성공 시 입력창 초기화 및 페이지 새로고침으로 댓글 목록 갱신
       setComment("");
       window.location.reload(); // 댓글 작성 후 목록 새로고침
@@ -69,19 +68,20 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
   };
 
   return (
-    <div className="bg-white border-t border-[#E0E0E0] px-5 py-3">
+    <div className="border-t border-[#E0E0E0] bg-white px-5 py-3">
       <div className="flex items-center gap-4 rounded-[24px] border-2 border-question-main bg-white px-4 py-3">
         {/* 익명 체크박스 - 작성자는 익명으로 댓글 작성 불가 */}
         <button
+          type="button"
           onClick={() => !isCurrentUserAuthor && setIsAnonymous(prev => !prev)}
-          className={`flex items-center gap-1 ${isCurrentUserAuthor ? "opacity-50 cursor-not-allowed" : ""}`}
+          className={`flex items-center gap-1 ${isCurrentUserAuthor ? "cursor-not-allowed opacity-50" : ""}`}
           disabled={isCurrentUserAuthor}
         >
           <div className="relative h-4 w-4">
             <Image
               src={
                 isAnonymous && !isCurrentUserAuthor
-                  ? "/icons/chaetaekCheckboxChecked.svg" 
+                  ? "/icons/chaetaekCheckboxChecked.svg"
                   : "/icons/chaetaekCheckboxUnchecked.svg"
               }
               alt="익명 체크박스"
@@ -98,7 +98,7 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
         <input
           type="text"
           value={comment}
-          onChange={(e) => setComment(e.target.value)}
+          onChange={e => setComment(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="댓글을 입력하세요."
           className="flex-1 border-none bg-transparent text-SUIT_16 text-black placeholder-ui-muted outline-none"
@@ -107,11 +107,12 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
 
         {/* 전송 버튼 */}
         <button
+          type="button"
           onClick={handleSubmit}
           disabled={!comment.trim() || isSubmitting}
           className="flex h-8 w-8 items-center justify-center rounded-full transition-opacity disabled:opacity-50"
         >
-          <Image src="/icons/arrowUp.svg" alt="전송" width={20} height={20} className="transform rotate-180" />
+          <Image src="/icons/arrowUp.svg" alt="전송" width={20} height={20} className="rotate-180 transform" />
         </button>
       </div>
     </div>

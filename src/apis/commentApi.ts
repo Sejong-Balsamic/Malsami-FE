@@ -9,8 +9,7 @@ export const commentApi = {
    * 필수: content, postId, contentType
    * 선택: isPrivate (기본값: false)
    */
-  saveComment: (c: Partial<CommentCommand>) => 
-    postApiRequest<CommentCommand, CommentDto>("/api/comment/post", c),
+  saveComment: (c: Partial<CommentCommand>) => postApiRequest<CommentCommand, CommentDto>("/api/comment/post", c),
 
   /**
    * 특정 글에 작성된 댓글 조회 (최신순)
@@ -26,8 +25,7 @@ export const commentApi = {
    * Content-Type: multipart/form-data
    * 필수: postId (댓글 PK)
    */
-  commentLike: (c: Partial<CommentCommand>) => 
-    postApiRequest<CommentCommand, CommentDto>("/api/comment/like", c),
+  commentLike: (c: Partial<CommentCommand>) => postApiRequest<CommentCommand, CommentDto>("/api/comment/like", c),
 };
 
 export default commentApi;

@@ -33,7 +33,7 @@ const authSlice = createSlice({
         lastFetchTime: action.payload ? Date.now() : null,
       };
     },
-    logout: (state) => {
+    logout: state => {
       return {
         ...state,
         memberId: null,
@@ -42,7 +42,7 @@ const authSlice = createSlice({
         lastFetchTime: null,
       };
     },
-    updateLastFetchTime: (state) => {
+    updateLastFetchTime: state => {
       return {
         ...state,
         lastFetchTime: Date.now(),

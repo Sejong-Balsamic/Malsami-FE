@@ -1,24 +1,9 @@
-import { store } from "@/global/store";
-import { RootState } from "@/global/store";
+import { store, RootState } from "@/global/store";
 import { setMemberId, setMemberInfo } from "@/global/store/authSlice";
 import memberApi from "@/apis/memberApi";
 import { Member } from "@/types/api/entities/postgres/member";
 
 export const MEMBER_ID_SESSION_KEY = "memberId";
-
-/**
- * 로그인한 사용자의 memberId를 Redux 및 sessionStorage에 저장합니다.
- */
-export function saveLoggedInMemberId(memberId: string): void {
-  if (!memberId) return;
-  // Redux 저장
-  store.dispatch(setMemberId(memberId));
-  // sessionStorage 백업(새로고침 시 복구용)
-  sessionStorage.setItem(MEMBER_ID_SESSION_KEY, memberId);
-  
-  // 사용자 정보도 가져오기
-  fetchAndSaveMemberInfo();
-}
 
 /**
  * 회원 정보를 API로 가져와서 Redux에 저장합니다.
@@ -31,26 +16,40 @@ export async function fetchAndSaveMemberInfo(forceRefresh = false): Promise<Memb
   // 강제 갱신이 아니고, 캐싱된 정보가 유효하면 바로 반환
   const CACHE_EXPIRY_TIME = 30 * 60 * 1000; // 30분
   const now = Date.now();
-  
-  if (!forceRefresh && memberInfo && lastFetchTime && (now - lastFetchTime < CACHE_EXPIRY_TIME)) {
+
+  if (!forceRefresh && memberInfo && lastFetchTime && now - lastFetchTime < CACHE_EXPIRY_TIME) {
     return memberInfo;
   }
 
   try {
     // API 호출하여 회원 정보 가져오기
     const response = await memberApi.getMyInfo();
-    
+
     if (response && response.member) {
       // Redux에 회원 정보 저장
       store.dispatch(setMemberInfo(response.member));
       return response.member;
     }
-    
+
     return null;
   } catch (error) {
-    console.error('회원 정보 가져오기 실패:', error);
+    console.error("회원 정보 가져오기 실패:", error);
     return null;
   }
+}
+
+/**
+ * 로그인한 사용자의 memberId를 Redux 및 sessionStorage에 저장합니다.
+ */
+export function saveLoggedInMemberId(memberId: string): void {
+  if (!memberId) return;
+  // Redux 저장
+  store.dispatch(setMemberId(memberId));
+  // sessionStorage 백업(새로고침 시 복구용)
+  sessionStorage.setItem(MEMBER_ID_SESSION_KEY, memberId);
+
+  // 사용자 정보도 가져오기
+  fetchAndSaveMemberInfo();
 }
 
 /**
