@@ -40,7 +40,6 @@ jobs:
       version: ${{ steps.get_version.outputs.version }}
       project_type: ${{ steps.get_version.outputs.project_type }}
     steps:
-      -
       - name: CodeRabbit Summary 요청 댓글 달기
         run: |
           PR_NUMBER=${{ github.event.pull_request.number }}
