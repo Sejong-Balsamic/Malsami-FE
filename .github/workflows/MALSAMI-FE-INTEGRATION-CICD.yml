@@ -15,6 +15,11 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # .env.local 파일 생성
+      - name: Create .env.local file
+        run: |
+          echo -e "${{ secrets.ENV }}" > .env.local
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
