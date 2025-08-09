@@ -9,6 +9,8 @@ export interface AuthDto {
   studentName?: string;
   memberId?: string; // UUID
   fcmToken?: FcmToken;
+  isFirstLogin?: boolean;
+  isAdmin?: boolean;
   major?: string;
   studentIdString?: string;
   academicYear?: string;
