@@ -1,11 +1,26 @@
 {
   "metadata": {
-    "lastUpdated": "2025-08-09T19:29:49Z",
+    "lastUpdated": "2025-08-09T19:30:22Z",
     "currentVersion": "0.0.14",
     "projectType": "react",
-    "totalReleases": 4
+    "totalReleases": 5
   },
   "releases": [
+    {
+      "version": "0.0.14",
+      "project_type": "react",
+      "date": "2025-08-09",
+      "pr_number": 583,
+      "raw_summary": "\"body_html\": \"\\nSummary by CodeRabbit\\n\\nChores\\n\\n자동 리뷰 기능이 \\\"main\\\" 브랜치에서만 활성화되도록 설정이 변경되었습니다.\\n워크플로우 실행 시 PR에 CodeRabbit 요약 요청 댓글이 자동으로 추가됩니다.\\n버전이 0.0.12에서 0.0.14로 업데이트되었습니다.\\n버전 정보 및 마지막 업데이트 시간이 갱신되었습니다.\\n\\n\\n\\n\",\n  \"active_lock_reason\": null,\n  \"merged\": false,\n  \"mergeable\": true,\n  \"rebaseable\": false,\n  \"mergeable_state\": \"unstable\",\n  \"merged_by\": null,\n  \"comments\": 4,\n  \"review_comments\": 0,\n  \"maintainer_can_modify\": false,\n  \"commits\": 8,\n  \"additions\": 37,\n  \"deletions\": 9,\n  \"changed_files\": 5\n}",
+      "parsed_changes": {
+        "chores": [
+          "자동 리뷰 기능이 \\\"main\\\" 브랜치에서만 활성화되도록 설정이 변경되었습니다.",
+          "워크플로우 실행 시 PR에 CodeRabbit 요약 요청 댓글이 자동으로 추가됩니다.",
+          "버전이 0.0.12에서 0.0.14로 업데이트되었습니다.",
+          "버전 정보 및 마지막 업데이트 시간이 갱신되었습니다."
+        ]
+      }
+    },
     {
       "version": "0.0.14",
       "project_type": "react",
