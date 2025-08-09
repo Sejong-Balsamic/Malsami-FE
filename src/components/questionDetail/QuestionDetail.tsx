@@ -2,14 +2,13 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/shadcn/drawer";
+import { useRouter } from "next/navigation";
 import postLikeQuestion from "@/apis/question/postLikeQuestion";
 import { ContentType } from "@/types/api/constants/contentType";
 import AnswerSection from "./AnswerSection";
 import { formatDateTime } from "@/global/time";
 import { useMemo } from "react";
-import CommentSection from "./QCommentSection";
-import { isSameMemberById } from "@/global/memberUtil";
+import { isMyContent } from "@/global/memberUtil";
 import AttachedFiles from "@/components/common/AttachedFiles";
 import PresetTag from "@/components/common/tags/PresetTag";
 import SubjectTag from "@/components/common/tags/SubjectTag";
@@ -35,11 +34,14 @@ const getKoreanTag = (englishTag: string): string => {
 };
 
 function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
+  const router = useRouter();
   const [isLiked, setIsLiked] = useState(questionDto.questionPost?.isLiked); // API 응답 값으로 초기화
   const [currentLikeCount, setCurrentLikeCount] = useState(questionDto.questionPost?.likeCount as number);
 
-  const isAuthor: boolean =
-    questionDto.questionPost?.isAuthor ?? isSameMemberById(questionDto.questionPost?.member?.memberId as string);
+  const isAuthor: boolean = isMyContent({
+    isAuthorFlag: questionDto.questionPost?.isAuthor,
+    memberId: questionDto.questionPost?.member?.memberId as string,
+  });
   // HOT 여부 : isPopular 사용
   const isHot = questionDto.questionPost?.isPopular === true;
 
@@ -51,7 +53,7 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
 
   const handleLikeClick = async () => {
     if (isLiked) return; // 이미 좋아요를 누른 상태라면 실행하지 않음
-    if (isSameMemberById(questionDto.questionPost?.member?.memberId as string)) return; // 작성자가 좋아요를 누르지 못하도록 차단
+    if (isAuthor) return; // 작성자가 좋아요를 누르지 못하도록 차단
 
     try {
       setIsLiked(true); // 즉시 반영: 버튼 비활성화 및 색상 변경
@@ -68,11 +70,6 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
   const buttonClass = isLiked
     ? "border-[#03b89e] text-[#03b89e] cursor-default" // 눌린 상태
     : "border-[#e7e7e7] text-[#aaaaaa] cursor-pointer"; // 기본 상태
-
-  const [commentCount, setCommentCount] = useState(questionDto.questionPost?.commentCount);
-  const incrementCommentCount = () => {
-    setCommentCount(prevCount => (prevCount as number) + 1);
-  };
 
   const files = questionDto.mediaFiles?.map(file => file.uploadedImageUrl) as string[];
 
@@ -185,8 +182,8 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
             {/* 왼쪽(좋아요) */}
             <div className="flex w-1/2 justify-center">
               <div
-                onClick={!isLiked ? handleLikeClick : undefined}
-                className="flex cursor-pointer items-center gap-[4px]"
+                onClick={!isLiked && !isAuthor ? handleLikeClick : undefined}
+                className={`flex items-center gap-[4px] ${!isLiked && !isAuthor ? "cursor-pointer" : "cursor-default"}`}
               >
                 <Image
                   src={isLiked ? "/icons/newLikeThumbGreen.svg" : "/icons/newLikeThumbGray.svg"}
@@ -202,28 +199,17 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
 
             {/* 오른쪽(댓글) */}
             <div className="flex w-1/2 justify-center">
-              <Drawer>
-                <DrawerTrigger asChild>
-                  <div className="flex cursor-pointer items-center gap-[4px]">
-                    <Image src="/icons/newChatBubbleGray.svg" alt="Comment_UnClicked" width={16} height={16} />
-                    <span className="text-SUIT_12 font-medium text-[#ACACAC]">{commentCount}</span>
-                  </div>
-                </DrawerTrigger>
-                <DrawerContent className="px-[20px] pb-[20px]">
-                  <DrawerHeader className="px-0">
-                    <DrawerTitle className="flex text-SUIT_14 font-semibold text-[#3c3c3c]">
-                      댓글 {commentCount}
-                    </DrawerTitle>
-                  </DrawerHeader>
-                  <div className="max-h-[400px] overflow-y-auto">
-                    <CommentSection
-                      postId={questionDto.questionPost?.questionPostId as string}
-                      contentType="QUESTION"
-                      onCommentAdded={incrementCommentCount}
-                    />
-                  </div>
-                </DrawerContent>
-              </Drawer>
+              <div
+                className="flex cursor-pointer items-center gap-[4px]"
+                onClick={() =>
+                  router.push(`/board/question/detail/${questionDto.questionPost?.questionPostId}/comment`)
+                }
+              >
+                <Image src="/icons/newChatBubbleGray.svg" alt="Comment_UnClicked" width={16} height={16} />
+                <span className="text-SUIT_12 font-medium text-[#ACACAC]">
+                  {questionDto.questionPost?.commentCount || 0}
+                </span>
+              </div>
             </div>
           </div>
         </div>

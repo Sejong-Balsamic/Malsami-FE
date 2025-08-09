@@ -5,3 +5,7 @@ package.json
 **/.svn
 **/.hg
 **/node_modules
+eslintrc.js
+CHANGELOG.json
+CHANGELOG.md
+.cursor/prompts/코드스타일_가이드라인_요약.md

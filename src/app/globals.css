@@ -2,6 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+  .animate-slideDown {
+    animation: slideDown 0.3s ease-in-out;
+    overflow: hidden;
+  }
+  @keyframes slideDown {
+    from {
+      max-height: 0;
+      opacity: 0;
+    }
+    to {
+      max-height: 1000px;
+      opacity: 1;
+    }
+  }
+}
+
 /* 기본 CSS 변수 */
 :root {
   --foreground-rgb: 0, 0, 0;

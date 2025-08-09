@@ -1,19 +1,19 @@
 // src/apis/authApi.ts
 import { AuthDto } from "@/types/api/responses/authDto";
 import { AuthCommand } from "@/types/api/requests/authCommand";
-import { MemberDto } from "@/types/api/responses/memberDto";
+
 import { apiClient } from "./appClient";
 
 export const authApi = {
   // 로그인 (웹용)
-  signIn: async (command: Partial<AuthCommand>): Promise<MemberDto> => {
+  signIn: async (command: Partial<AuthCommand>): Promise<AuthDto> => {
     const formData = new FormData();
     Object.entries(command).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         formData.append(key, value.toString());
       }
     });
-    const response = await apiClient.post<MemberDto>("/api/auth/signin", formData, {
+    const response = await apiClient.post<AuthDto>("/api/auth/signin", formData, {
       headers: { "Content-Type": "multipart/form-data" },
       withCredentials: true,
     });
@@ -27,14 +27,14 @@ export const authApi = {
   },
 
   // 모바일용 로그인
-  signInForMobile: async (command: Partial<AuthCommand>): Promise<MemberDto> => {
+  signInForMobile: async (command: Partial<AuthCommand>): Promise<AuthDto> => {
     const formData = new FormData();
     Object.entries(command).forEach(([key, value]) => {
       if (value !== undefined && value !== null) {
         formData.append(key, value.toString());
       }
     });
-    const response = await apiClient.post<MemberDto>("/api/auth/mobile/signin", formData, {
+    const response = await apiClient.post<AuthDto>("/api/auth/mobile/signin", formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
     return response.data;
