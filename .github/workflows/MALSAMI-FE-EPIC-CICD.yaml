@@ -1,4 +1,4 @@
-name: MALSAMI-FE-EPIC-CICD
+name: MALSAMI-FE-EPIC-CI
 on:
   workflow_dispatch:
   push:
