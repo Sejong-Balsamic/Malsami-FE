@@ -1,14 +1,10 @@
-name: MALSAMI-FE-EPIC-CICD
+name: MALSAMI-FE-BUILD-TEST
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - main
-      - test
   pull_request:
     types: [opened, synchronize]
     branches:
-      - test
+      - main
 
 # 권한 설정
 permissions:

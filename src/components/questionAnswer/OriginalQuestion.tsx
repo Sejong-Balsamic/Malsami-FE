@@ -29,6 +29,7 @@ function OriginalQuestion({ questionPostId }: { questionPostId: string }) {
   }, [questionPostId]);
 
   const isHot = (questionData?.questionPost?.viewCount || 0) > 100;
+  const isOpen = questionData?.questionPost?.content !== undefined;
 
   return (
     <div className="mb-4 block">
@@ -54,8 +55,8 @@ function OriginalQuestion({ questionPostId }: { questionPostId: string }) {
                   {/* 화살표 아이콘 */}
                   <div className="mt-3 flex justify-center">
                     <img
-                      src="/icons/arrowDown.svg"
-                      alt="펼치기"
+                      src={isOpen ? "/icons/arrowUp.svg" : "/icons/arrowDown.svg"}
+                      alt={isOpen ? "접기" : "펼치기"}
                       width={20}
                       height={20}
                       className="transition-transform duration-200"
@@ -63,7 +64,7 @@ function OriginalQuestion({ questionPostId }: { questionPostId: string }) {
                   </div>
 
                   {/* 구분선 */}
-                  <div className="mx-auto mt-2 h-1 w-full max-w-[433px] rounded-[2px] bg-[#EDEDED]" />
+                  <div className="mx-auto mt-2 h-1 w-full max-w-[433px] rounded-sm bg-ui-divider-thick" />
                 </div>
               )}
             </div>
