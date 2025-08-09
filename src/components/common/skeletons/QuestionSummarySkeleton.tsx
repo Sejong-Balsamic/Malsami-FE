@@ -17,7 +17,8 @@ export default function QuestionSummarySkeleton() {
         </div>
 
         {/* 제목 스켈레톤 */}
-        <h2 className="mb-2 h-[18px] w-3/4 rounded bg-gray-200" />
+        {/* eslint-disable-next-line prettier/prettier */}
+        <h2 className="mb-2 h-[18px] w-3/4 rounded bg-gray-200" aria-label="질문 제목 로딩">&nbsp;</h2>
 
         {/* 축소된 상태이므로 펼친 컨텐츠는 제외 */}
 
@@ -25,7 +26,7 @@ export default function QuestionSummarySkeleton() {
         <div className="mt-4 flex w-full items-center justify-center py-2">
           <div className="h-[20px] w-[20px] rounded-full bg-gray-200" />
         </div>
-        
+
         {/* 구분선 */}
         <div className="-mx-5 mt-2 h-[4px] w-[calc(100%+40px)] bg-ui-divider-thick" />
       </div>

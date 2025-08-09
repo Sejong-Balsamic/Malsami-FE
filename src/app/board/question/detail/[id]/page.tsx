@@ -80,11 +80,7 @@ export default function Page() {
 
         {/* 고정 헤더 */}
         <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
-          <CommonHeader
-            title="내 전공 질문"
-            rightType={RIGHT_ITEM.MENU}
-            onRightClick={toggleDrawer}
-          />
+          <CommonHeader title="내 전공 질문" rightType={RIGHT_ITEM.MENU} onRightClick={toggleDrawer} />
         </div>
 
         {/* 헤더 높이만큼 공백 */}

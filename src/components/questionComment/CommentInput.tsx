@@ -52,7 +52,7 @@ export default function CommentInput({ postId, isAuthor, onCommentAdded }: Comme
 
       // 성공 시 입력창 초기화 및 댓글 목록만 새로고침
       setComment("");
-      
+
       // 댓글이 추가되었음을 부모 컴포넌트에 알림
       if (onCommentAdded) {
         onCommentAdded();
@@ -73,52 +73,59 @@ export default function CommentInput({ postId, isAuthor, onCommentAdded }: Comme
   };
 
   return (
-      <div className="mx-[20px] mb-4 flex h-[52px] w-auto items-center rounded-[7px] border-2 border-question-main bg-white flex-shrink-0">
-        {/* 익명 체크박스 - 작성자는 익명으로 댓글 작성 불가 */}
-        <button
-          type="button"
-          onClick={() => !isCurrentUserAuthor && setIsAnonymous(prev => !prev)}
-          className={`flex items-center gap-1 ml-4 ${isCurrentUserAuthor ? "cursor-not-allowed opacity-50" : ""}`}
-          disabled={isCurrentUserAuthor}
-        >
-          <div className="relative h-4 w-4">
-            <Image
-              src={
-                isAnonymous && !isCurrentUserAuthor
-                  ? "/icons/chaetaekCheckboxChecked.svg"
-                  : "/icons/chaetaekCheckboxUnchecked.svg"
-              }
-              alt="익명 체크박스"
-              width={16}
-              height={16}
-            />
-          </div>
-        </button>
+    <div className="mx-[20px] mb-4 flex h-[52px] w-auto flex-shrink-0 items-center rounded-[7px] border-2 border-question-main bg-white">
+      {/* 익명 체크박스 - 작성자는 익명으로 댓글 작성 불가 */}
+      <button
+        type="button"
+        onClick={() => !isCurrentUserAuthor && setIsAnonymous(prev => !prev)}
+        className={`ml-4 flex items-center gap-1 ${isCurrentUserAuthor ? "cursor-not-allowed opacity-50" : ""}`}
+        disabled={isCurrentUserAuthor}
+      >
+        <div className="relative h-4 w-4">
+          <Image
+            src={
+              isAnonymous && !isCurrentUserAuthor
+                ? "/icons/chaetaekCheckboxChecked.svg"
+                : "/icons/chaetaekCheckboxUnchecked.svg"
+            }
+            alt="익명 체크박스"
+            width={16}
+            height={16}
+          />
+        </div>
+      </button>
 
-        {/* 익명 텍스트 */}
-        <span className={`text-SUIT_14 font-medium leading-[100%] text-[#898989] ml-1 ${isCurrentUserAuthor ? "opacity-50" : ""}`}>익명</span>
+      {/* 익명 텍스트 */}
+      <span
+        className={`ml-1 text-SUIT_14 font-medium leading-[100%] text-[#898989] ${isCurrentUserAuthor ? "opacity-50" : ""}`}
+      >
+        익명
+      </span>
 
-        {/* 댓글 입력 필드 */}
-        <input
-          type="text"
-          value={comment}
-          onChange={e => setComment(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="댓글을 입력하세요."
-          className="flex-1 border-none bg-transparent text-SUIT_14 font-medium leading-[100%] ml-4  text-black placeholder:text-[#C5C5C5] placeholder:font-medium outline-none"
-          disabled={isSubmitting}
-        />
+      {/* 댓글 입력 필드 */}
+      <input
+        type="text"
+        value={comment}
+        onChange={e => setComment(e.target.value)}
+        onKeyPress={handleKeyPress}
+        placeholder="댓글을 입력하세요."
+        className="ml-4 flex-1 border-none bg-transparent text-SUIT_14 font-medium leading-[100%] text-black outline-none placeholder:font-medium placeholder:text-[#C5C5C5]"
+        disabled={isSubmitting}
+      />
 
-        {/* 전송 버튼 */}
-        <button
-          type="button"
-          onClick={handleSubmit}
-          disabled={!comment.trim() || isSubmitting}
-          className="flex h-8 w-8 items-center justify-center rounded-full transition-opacity disabled:opacity-50 mr-4"
-        >
-          <Image src="/icons/arrowUpCircleGreen.svg" alt="전송" width={20} height={20} />
-        </button>
-      </div>
-      
+      {/* 전송 버튼 */}
+      <button
+        type="button"
+        onClick={handleSubmit}
+        disabled={!comment.trim() || isSubmitting}
+        className="mr-4 flex h-8 w-8 items-center justify-center rounded-full transition-opacity disabled:opacity-50"
+      >
+        <Image src="/icons/arrowUpCircleGreen.svg" alt="전송" width={20} height={20} />
+      </button>
+    </div>
   );
 }
+
+CommentInput.defaultProps = {
+  onCommentAdded: () => {},
+};

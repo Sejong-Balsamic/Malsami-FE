@@ -56,7 +56,7 @@ export default function CommentPage() {
       };
 
       fetchData();
-      
+
       // 페이지 첫 로드 시 5초 후에도 댓글 로딩이 완료되지 않았으면 강제로 해제
       const timeout = setTimeout(() => {
         if (isMounted && isCommentsLoading) {
@@ -64,7 +64,7 @@ export default function CommentPage() {
           setIsCommentsLoading(false);
         }
       }, 5000);
-      
+
       return () => {
         clearTimeout(timeout);
       };
@@ -89,14 +89,14 @@ export default function CommentPage() {
     // refreshKey를 증가시켜 CommentList를 강제로 다시 마운트
     setRefreshKey(prev => prev + 1);
     setIsCommentsLoading(true);
-    
+
     // 3초 후에 강제로 로딩 상태 해제
     setTimeout(() => {
       setIsCommentsLoading(false);
       console.log("타이머로 로딩 상태 해제");
     }, 3000);
   };
-  
+
   // 디버깅용 로그
   console.log("페이지 렌더링 상태:", { isQuestionsLoading, isCommentsLoading });
 
@@ -126,18 +126,18 @@ export default function CommentPage() {
         {isCommentsLoading ? (
           <CommentListSkeleton />
         ) : (
-          <CommentList 
+          <CommentList
             key={`comments-${refreshKey}`} // refreshKey 변경 시 컴포넌트 강제 재마운트
-            postId={postId} 
+            postId={postId}
             questionAuthorId={questionDetails?.questionPost?.member?.memberId}
           />
         )}
 
         {/* 댓글 입력창 - 하단 고정 */}
         <div className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-[640px] bg-white pb-3 pt-3">
-          <CommentInput 
-            postId={postId} 
-            isAuthor={questionDetails?.questionPost?.isAuthor || false} 
+          <CommentInput
+            postId={postId}
+            isAuthor={questionDetails?.questionPost?.isAuthor || false}
             onCommentAdded={refreshComments}
           />
         </div>

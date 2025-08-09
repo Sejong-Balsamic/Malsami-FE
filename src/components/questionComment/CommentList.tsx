@@ -43,7 +43,7 @@ export default function CommentList({ postId, questionAuthorId, setIsLoading: se
     try {
       console.log("댓글 데이터 요청 시작");
       setIsLoading(true);
-      
+
       // commentApi를 통해 댓글 목록 가져오기
       const commentsData = await commentApi.getAllCommentsByPostId({
         postId,
@@ -51,7 +51,7 @@ export default function CommentList({ postId, questionAuthorId, setIsLoading: se
         pageNumber: 0,
         pageSize: 100, // 일단 많이 가져오기
       });
-      
+
       const list: Comment[] = commentsData.commentsPage?.content || [];
       console.log("댓글 데이터 받음:", list.length, "개");
       setComments(list);
@@ -75,7 +75,7 @@ export default function CommentList({ postId, questionAuthorId, setIsLoading: se
 
   // 부모 컴포넌트의 로딩 상태가 true일 때 다시 로드
   useEffect(() => {
-    // 부모의 로딩 상태를 직접 감지할 수 없으므로, 
+    // 부모의 로딩 상태를 직접 감지할 수 없으므로,
     // CommentPage에서 refreshComments를 호출하면
     // 새로운 함수 참조가 전달되어 이 효과가 트리거됩니다
     if (setParentLoading) {
@@ -100,10 +100,10 @@ export default function CommentList({ postId, questionAuthorId, setIsLoading: se
       </div>
     );
   }
-  
+
   // 디버깅용 로그
   console.log("댓글 목록 렌더링:", comments.length, "개");
-  
+
   return (
     <div className="bg-white">
       {comments.map((comment, index) => (

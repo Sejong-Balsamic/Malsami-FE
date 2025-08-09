@@ -60,7 +60,7 @@ export default function CommentListSkeleton() {
               </div>
             </div>
           </div>
-          
+
           {/* 마지막 아이템이 아니면 구분선 추가 */}
           {index < 2 && (
             <div className="mx-5">
