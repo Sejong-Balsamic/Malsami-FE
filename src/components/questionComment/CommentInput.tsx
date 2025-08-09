@@ -8,9 +8,10 @@ import memberApi from "@/apis/memberApi";
 interface CommentInputProps {
   postId: string;
   isAuthor: boolean;
+  onCommentAdded?: () => void;
 }
 
-export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
+export default function CommentInput({ postId, isAuthor, onCommentAdded }: CommentInputProps) {
   const [comment, setComment] = useState("");
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -49,9 +50,13 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
         isPrivate: isAnonymous,
       });
 
-      // 성공 시 입력창 초기화 및 페이지 새로고침으로 댓글 목록 갱신
+      // 성공 시 입력창 초기화 및 댓글 목록만 새로고침
       setComment("");
-      window.location.reload(); // 댓글 작성 후 목록 새로고침
+      
+      // 댓글이 추가되었음을 부모 컴포넌트에 알림
+      if (onCommentAdded) {
+        onCommentAdded();
+      }
     } catch (error) {
       console.error("댓글 작성 실패:", error);
       alert("댓글 작성에 실패했습니다. 다시 시도해주세요.");
@@ -68,12 +73,12 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
   };
 
   return (
-      <div className="mx-[20px] mb-4 flex h-[52px] w-auto items-center gap-4 rounded-[7px] border-2 border-question-main bg-white px-4 flex-shrink-0">
+      <div className="mx-[20px] mb-4 flex h-[52px] w-auto items-center rounded-[7px] border-2 border-question-main bg-white flex-shrink-0">
         {/* 익명 체크박스 - 작성자는 익명으로 댓글 작성 불가 */}
         <button
           type="button"
           onClick={() => !isCurrentUserAuthor && setIsAnonymous(prev => !prev)}
-          className={`flex items-center gap-1 ${isCurrentUserAuthor ? "cursor-not-allowed opacity-50" : ""}`}
+          className={`flex items-center gap-1 ml-4 ${isCurrentUserAuthor ? "cursor-not-allowed opacity-50" : ""}`}
           disabled={isCurrentUserAuthor}
         >
           <div className="relative h-4 w-4">
@@ -91,7 +96,7 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
         </button>
 
         {/* 익명 텍스트 */}
-        <span className={`text-SUIT_14 font-medium leading-[100%] text-[#898989] ${isCurrentUserAuthor ? "opacity-50" : ""}`}>익명</span>
+        <span className={`text-SUIT_14 font-medium leading-[100%] text-[#898989] ml-1 ${isCurrentUserAuthor ? "opacity-50" : ""}`}>익명</span>
 
         {/* 댓글 입력 필드 */}
         <input
@@ -100,7 +105,7 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
           onChange={e => setComment(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="댓글을 입력하세요."
-          className="flex-1 border-none bg-transparent text-SUIT_14 font-medium leading-[100%] text-black placeholder:text-[#C5C5C5] placeholder:font-medium outline-none"
+          className="flex-1 border-none bg-transparent text-SUIT_14 font-medium leading-[100%] ml-4  text-black placeholder:text-[#C5C5C5] placeholder:font-medium outline-none"
           disabled={isSubmitting}
         />
 
@@ -109,7 +114,7 @@ export default function CommentInput({ postId, isAuthor }: CommentInputProps) {
           type="button"
           onClick={handleSubmit}
           disabled={!comment.trim() || isSubmitting}
-          className="flex h-8 w-8 items-center justify-center rounded-full transition-opacity disabled:opacity-50"
+          className="flex h-8 w-8 items-center justify-center rounded-full transition-opacity disabled:opacity-50 mr-4"
         >
           <Image src="/icons/arrowUpCircleGreen.svg" alt="전송" width={20} height={20} />
         </button>

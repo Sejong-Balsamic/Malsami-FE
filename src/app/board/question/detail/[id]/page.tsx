@@ -6,7 +6,7 @@ import { RIGHT_ITEM } from "@/types/header";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import QuestionDetailSkeleton from "@/components/common/skeletons/QuestionDetailSkeleton";
 import { isSameMemberById } from "@/global/memberUtil";
 import QuestionDetail from "@/components/questionDetail/QuestionDetail";
 import AnswerFAB from "@/components/questionDetail/AnswerFAB";
@@ -73,7 +73,30 @@ export default function Page() {
   }, [postId, error, router]);
 
   // 로딩 상태 처리
-  if (isloading) return <LoadingSpinner />;
+  if (isloading) {
+    return (
+      <div className="min-h-screen bg-white">
+        <ScrollToTopOnLoad />
+
+        {/* 고정 헤더 */}
+        <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+          <CommonHeader
+            title="내 전공 질문"
+            rightType={RIGHT_ITEM.MENU}
+            onRightClick={toggleDrawer}
+          />
+        </div>
+
+        {/* 헤더 높이만큼 공백 */}
+        <div className="h-16 w-full" />
+
+        {/* 스켈레톤 UI */}
+        <div className="relative mx-auto w-full max-w-[640px] px-5">
+          <QuestionDetailSkeleton />
+        </div>
+      </div>
+    );
+  }
   // 오류 상태 처리
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
