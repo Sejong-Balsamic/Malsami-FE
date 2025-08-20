@@ -9,31 +9,22 @@ import { ContentType } from "@/types/api/constants/contentType";
 import { isSameMemberById } from "@/global/memberUtil";
 import { AnswerPost } from "@/types/api/entities/postgres/answerPost";
 import ChaetaekTag from "@/components/common/tags/ChaetaekTag";
-import ChaetaekCheckModal from "./ChaetaekCheckModal";
 
 interface AnswerSectionProps {
   postId: string;
   isAuthor: boolean;
+  selectedAnswerId: string | null;
+  onAnswerSelect: (answerId: string | null) => void;
 }
 
-function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
+function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: AnswerSectionProps) {
   const [answers, setAnswers] = useState<AnswerPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentAnswerId, setCurrentAnswerId] = useState<string | null>(null);
-
-  // 작성자용: 선택된 답변 ID 상태
-  const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
 
   // 답변 선택 핸들러 (단일 선택)
   const handleSelect = (answerId: string) => {
-    setSelectedAnswerId(prev => (prev === answerId ? null : answerId));
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setCurrentAnswerId(null);
+    onAnswerSelect(selectedAnswerId === answerId ? null : answerId);
   };
 
   const handleLikeClick = async (answerId: string) => {
@@ -178,40 +169,9 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                   </span>
                 </div>
               </div>
-
-              {/* 채택 모달 */}
-              {answerPost.answerPostId && (
-                <ChaetaekCheckModal
-                  isOpen={isModalOpen && currentAnswerId === answerPost.answerPostId}
-                  author={answerPost.member?.uuidNickname || "익명"}
-                  onClose={closeModal}
-                  answerPostId={answerPost.answerPostId}
-                />
-              )}
             </div>
           </div>
         ))
-      )}
-
-      {/* 작성자 전용 채택 버튼 */}
-      {isAuthor && (
-        <div className="fixed bottom-[20px] left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-[20px]">
-          <button
-            type="button"
-            disabled={!selectedAnswerId}
-            onClick={() => {
-              if (selectedAnswerId) {
-                setCurrentAnswerId(selectedAnswerId);
-                setIsModalOpen(true);
-              }
-            }}
-            className={`h-[48px] w-full rounded-[12px] text-SUIT_16 font-bold text-white ${
-              selectedAnswerId ? "bg-question-main" : "bg-ui-disabled"
-            }`}
-          >
-            채택하기
-          </button>
-        </div>
       )}
     </div>
   );

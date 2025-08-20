@@ -36,7 +36,13 @@ const getKoreanTag = (englishTag: string): string => {
   return tagMapping[englishTag] || englishTag; // 매핑되지 않은 경우 원래의 태그 반환
 };
 
-function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
+interface QuestionDetailProps {
+  questionDto: QuestionDto;
+  selectedAnswerId: string | null;
+  onAnswerSelect: (answerId: string | null) => void;
+}
+
+function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: QuestionDetailProps) {
   const router = useRouter();
   const dispatch = useDispatch();
   const [isLiked, setIsLiked] = useState(questionDto.questionPost?.isLiked || false);
@@ -261,7 +267,12 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
 
       {/* 답변 영역 */}
       <div className="mt-5">
-        <AnswerSection postId={questionDto.questionPost?.questionPostId as string} isAuthor={isAuthor} />
+        <AnswerSection 
+          postId={questionDto.questionPost?.questionPostId as string} 
+          isAuthor={isAuthor}
+          selectedAnswerId={selectedAnswerId}
+          onAnswerSelect={onAnswerSelect}
+        />
       </div>
     </div>
   );
