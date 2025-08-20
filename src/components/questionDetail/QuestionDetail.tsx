@@ -3,7 +3,8 @@
 import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import postLikeQuestion from "@/apis/question/postLikeQuestion";
+import { useDispatch } from "react-redux";
+import likeApi from "@/apis/likeApi";
 import { ContentType } from "@/types/api/constants/contentType";
 import AnswerSection from "./AnswerSection";
 import { formatDateTime } from "@/global/time";
@@ -16,6 +17,8 @@ import RewardTag from "@/components/common/tags/RewardTag";
 import HotTag from "@/components/common/tags/HotTag";
 import ChaetaekTag from "@/components/common/tags/ChaetaekTag";
 import { QuestionDto } from "@/types/api/responses/questionDto";
+import { addToast } from "@/global/store/toastSlice";
+import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -35,8 +38,9 @@ const getKoreanTag = (englishTag: string): string => {
 
 function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
   const router = useRouter();
-  const [isLiked, setIsLiked] = useState(questionDto.questionPost?.isLiked); // API 응답 값으로 초기화
-  const [currentLikeCount, setCurrentLikeCount] = useState(questionDto.questionPost?.likeCount as number);
+  const dispatch = useDispatch();
+  const [isLiked, setIsLiked] = useState(questionDto.questionPost?.isLiked || false);
+  const [currentLikeCount, setCurrentLikeCount] = useState(questionDto.questionPost?.likeCount || 0);
 
   const isAuthor: boolean = isMyContent({
     isAuthorFlag: questionDto.questionPost?.isAuthor,
@@ -51,19 +55,48 @@ function QuestionDetail({ questionDto }: { questionDto: QuestionDto }) {
     [questionDto.questionPost?.createdDate],
   );
 
+  const showToast = (message: string, color: "blue" | "orange" | "green" = "orange") => {
+    dispatch(
+      addToast({
+        id: Date.now().toString(),
+        icon: <ToastIcon color={color} />,
+        title: message,
+        color,
+        action: (
+          <ToastAction color={color} altText="확인">
+            확인
+          </ToastAction>
+        ),
+      }),
+    );
+  };
+
   const handleLikeClick = async () => {
-    if (isLiked) return; // 이미 좋아요를 누른 상태라면 실행하지 않음
-    if (isAuthor) return; // 작성자가 좋아요를 누르지 못하도록 차단
+    // 이미 좋아요를 누른 상태라면 실행하지 않음
+    if (isLiked) return;
+    
+    // 작성자가 자신의 글에 좋아요를 누르려고 하면 경고 토스트 표시
+    if (isAuthor) {
+      showToast("본인 게시글에는 좋아요를 누를 수 없습니다.", "orange");
+      return;
+    }
 
     try {
-      setIsLiked(true); // 즉시 반영: 버튼 비활성화 및 색상 변경
-      setCurrentLikeCount(currentLikeCount + 1); // 즉시 반영: 좋아요 숫자 증가
+      // 즉시 반영: 버튼 비활성화 및 색상 변경
+      setIsLiked(true);
+      setCurrentLikeCount(prevCount => prevCount + 1);
 
-      await postLikeQuestion(questionDto.questionPost?.questionPostId as string, ContentType.QUESTION);
+      // API 호출 (새로운 likeApi 사용)
+      await likeApi.questionBoardLike({
+        postId: questionDto.questionPost?.questionPostId,
+        contentType: ContentType.QUESTION,
+      });
     } catch (error) {
-      console.error("좋아요 업데이트 실패");
-      setIsLiked(false); // 실패 시 롤백
-      setCurrentLikeCount(currentLikeCount - 1); // 숫자도 원래대로 롤백
+      console.error("좋아요 업데이트 실패:", error);
+      // 실패 시 롤백
+      setIsLiked(false);
+      setCurrentLikeCount(prevCount => prevCount - 1);
+      showToast("좋아요 처리 중 오류가 발생했습니다.", "orange");
     }
   };
 
