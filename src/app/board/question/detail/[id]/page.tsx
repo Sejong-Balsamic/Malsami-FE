@@ -132,6 +132,7 @@ export default function Page() {
               postId={questionDetails.questionPost?.questionPostId as string}
               isAuthor={isAuthor}
               selectedAnswerId={selectedAnswerId}
+              hasChaetaek={questionDetails.questionPost?.chaetaekStatus || false}
               onChaetaekComplete={() => setSelectedAnswerId(null)}
             />
           </>

@@ -6,10 +6,17 @@ interface QuestionDetailFABProps {
   postId: string;
   isAuthor: boolean;
   selectedAnswerId: string | null;
+  hasChaetaek?: boolean;
   onChaetaekComplete?: () => void;
 }
 
-function QuestionDetailFAB({ postId, isAuthor, selectedAnswerId, onChaetaekComplete }: QuestionDetailFABProps) {
+function QuestionDetailFAB({
+  postId,
+  isAuthor,
+  selectedAnswerId,
+  hasChaetaek = false,
+  onChaetaekComplete,
+}: QuestionDetailFABProps) {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -52,13 +59,19 @@ function QuestionDetailFAB({ postId, isAuthor, selectedAnswerId, onChaetaekCompl
       <div className="fixed bottom-[20px] left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-[20px]">
         <button
           type="button"
-          disabled={!selectedAnswerId}
+          disabled={hasChaetaek || !selectedAnswerId}
           onClick={handleChaetaekClick}
           className={`h-[48px] w-full rounded-[12px] text-SUIT_16 font-bold text-white transition-colors ${
-            selectedAnswerId ? "cursor-pointer bg-question-main" : "cursor-not-allowed bg-ui-disabled"
+            // eslint-disable-next-line no-nested-ternary
+            hasChaetaek
+              ? "cursor-not-allowed bg-ui-disabled"
+              : selectedAnswerId
+                ? "cursor-pointer bg-question-main"
+                : "cursor-not-allowed bg-ui-disabled"
           }`}
         >
-          {selectedAnswerId ? "채택하기" : "채택할 답변을 선택하세요"}
+          {/* eslint-disable-next-line no-nested-ternary */}
+          {hasChaetaek ? "이미 채택된 글입니다" : selectedAnswerId ? "채택하기" : "채택할 답변을 선택하세요"}
         </button>
       </div>
 
@@ -76,6 +89,7 @@ function QuestionDetailFAB({ postId, isAuthor, selectedAnswerId, onChaetaekCompl
 }
 
 QuestionDetailFAB.defaultProps = {
+  hasChaetaek: false,
   onChaetaekComplete: undefined,
 };
 
