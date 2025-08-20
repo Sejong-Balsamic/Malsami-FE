@@ -437,13 +437,16 @@ const response = await postApiRequest<Command, Dto>("/api/...", command);
 
 ## 🛠 개발 명령어
 
-### 자주 사용하는 명령어
+
+** 매우 중요한 CLI 명령어 사용법**:
+```bash 
+source ~/.zshrc &&
+```
+를 붙여서 모든 명령어를 실행해야지 작동함
+
+**코드 변경 후 마지막에 꼭 실행**:
 ```bash
-npm run dev          # 개발 서버 실행
-npm run build        # 프로덕션 빌드
-npm run lint         # 린트 검사
-npm run lint:fix     # 린트 자동 수정
-npm run prettier     # 코드 포맷팅
+source ~/.zshrc && npm run build
 ```
 
 ### 환경 설정

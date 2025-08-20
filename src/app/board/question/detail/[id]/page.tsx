@@ -9,7 +9,7 @@ import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import QuestionDetailSkeleton from "@/components/common/skeletons/QuestionDetailSkeleton";
 import { isSameMemberById } from "@/global/memberUtil";
 import QuestionDetail from "@/components/questionDetail/QuestionDetail";
-import AnswerFAB from "@/components/questionDetail/AnswerFAB";
+import QuestionDetailFAB from "@/components/questionDetail/QuestionDetailFAB";
 import { Drawer, DrawerContent } from "@/components/shadcn/drawer";
 import Image from "next/image";
 import { Button } from "@/components/shadcn/button";
@@ -28,6 +28,7 @@ export default function Page() {
   const [isloading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
 
   // Drawer 열기/닫기 핸들러
   const toggleDrawer = () => setIsDrawerOpen(prev => !prev);
@@ -96,9 +97,10 @@ export default function Page() {
   // 오류 상태 처리
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
-  const isAuthor =
+  const isAuthor: boolean =
     questionDetails?.questionPost?.isAuthor ??
-    (questionDetails && isSameMemberById(questionDetails.questionPost?.member?.memberId as string));
+    (questionDetails && isSameMemberById(questionDetails.questionPost?.member?.memberId as string)) ??
+    false;
 
   return (
     <div className="min-h-screen bg-white">
@@ -121,8 +123,18 @@ export default function Page() {
       <div className="relative mx-auto w-full max-w-[640px] px-5">
         {questionDetails && (
           <>
-            <QuestionDetail questionDto={questionDetails} />
-            {!isAuthor && <AnswerFAB postId={questionDetails.questionPost?.questionPostId as string} />}
+            <QuestionDetail
+              questionDto={questionDetails}
+              selectedAnswerId={selectedAnswerId}
+              onAnswerSelect={setSelectedAnswerId}
+            />
+            <QuestionDetailFAB
+              postId={questionDetails.questionPost?.questionPostId as string}
+              isAuthor={isAuthor}
+              selectedAnswerId={selectedAnswerId}
+              hasChaetaek={questionDetails.questionPost?.chaetaekStatus || false}
+              onChaetaekComplete={() => setSelectedAnswerId(null)}
+            />
           </>
         )}
 
