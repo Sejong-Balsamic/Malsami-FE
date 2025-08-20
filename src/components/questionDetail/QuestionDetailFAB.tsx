@@ -40,11 +40,11 @@ function QuestionDetailFAB({
   // 작성자가 아닌 경우: 답변하기 버튼
   if (!isAuthor) {
     return (
-      <div className="fixed bottom-[20px] left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-[20px]">
+      <div className="fixed bottom-5 left-1/2 z-50 w-full max-w-screen-sm -translate-x-1/2 px-5">
         <button
           onClick={handleAnswerClick}
           aria-label="답변 작성"
-          className="h-[48px] w-full rounded-[12px] bg-question-main text-SUIT_16 font-bold text-white"
+          className="h-12 w-full rounded-xl bg-question-main text-SUIT_16 font-bold text-white"
           type="button"
         >
           답변하기
@@ -56,12 +56,12 @@ function QuestionDetailFAB({
   // 작성자인 경우
   return (
     <>
-      <div className="fixed bottom-[20px] left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-[20px]">
+      <div className="fixed bottom-5 left-1/2 z-50 w-full max-w-screen-sm -translate-x-1/2 px-5">
         <button
           type="button"
           disabled={hasChaetaek || !selectedAnswerId}
           onClick={handleChaetaekClick}
-          className={`h-[48px] w-full rounded-[12px] text-SUIT_16 font-bold text-white transition-colors ${
+          className={`h-12 w-full rounded-xl text-SUIT_16 font-bold text-white transition-colors ${
             // eslint-disable-next-line no-nested-ternary
             hasChaetaek
               ? "cursor-not-allowed bg-ui-disabled"
