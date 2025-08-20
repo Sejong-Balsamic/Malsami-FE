@@ -4,16 +4,14 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import getQuestionDetails from "@/apis/question/getQuestionDetails";
 import QuestionDetailSkeleton from "@/components/common/skeletons/QuestionDetailSkeleton";
 import { isSameMemberById } from "@/global/memberUtil";
 import QuestionDetail from "@/components/questionDetail/QuestionDetail";
 import QuestionDetailFAB from "@/components/questionDetail/QuestionDetailFAB";
-import { Drawer, DrawerContent } from "@/components/shadcn/drawer";
 import Image from "next/image";
-import { Button } from "@/components/shadcn/button";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+import CommonContextMenu from "@/components/common/CommonContextMenu";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 
 export default function Page() {
@@ -27,11 +25,23 @@ export default function Page() {
   const [questionDetails, setQuestionDetails] = useState<QuestionDto | null>(null);
   const [isloading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
-  // Drawer 열기/닫기 핸들러
-  const toggleDrawer = () => setIsDrawerOpen(prev => !prev);
+  // 메뉴 열기/닫기 핸들러
+  const toggleMenu = () => setIsMenuOpen(prev => !prev);
+
+  // 신고/차단 핸들러
+  const handleReport = () => {
+    // TODO: 신고 기능 구현
+    console.log("신고하기");
+  };
+
+  const handleBlock = () => {
+    // TODO: 차단 기능 구현
+    console.log("차단하기");
+  };
 
   // API 호출 (postId 변경 시마다)
   useEffect(() => {
@@ -76,12 +86,14 @@ export default function Page() {
   // 로딩 상태 처리
   if (isloading) {
     return (
-      <div className="min-h-screen bg-white">
+      <div className="min-h-screen overflow-x-hidden bg-white">
         <ScrollToTopOnLoad />
 
         {/* 고정 헤더 */}
-        <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
-          <CommonHeader title="내 전공 질문" rightType={RIGHT_ITEM.MENU} onRightClick={toggleDrawer} />
+        <div className="fixed left-0 right-0 top-0 z-50 bg-white">
+          <div className="relative mx-auto w-full max-w-[640px]">
+            <CommonHeader title="내 전공 질문" rightType={RIGHT_ITEM.NONE} />
+          </div>
         </div>
 
         {/* 헤더 높이만큼 공백 */}
@@ -103,24 +115,33 @@ export default function Page() {
     false;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen overflow-x-hidden bg-white">
       <ScrollToTopOnLoad />
 
       {/* 고정 헤더 */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
-        <CommonHeader
-          title="내 전공 질문"
-          rightType={RIGHT_ITEM.MENU}
-          onRightClick={toggleDrawer}
-          subtitle={questionDetails?.questionPost?.member?.major || "내 전공"}
-        />
+      <div className="fixed left-0 right-0 top-0 z-50 bg-white">
+        <div className="relative mx-auto w-full max-w-[640px]">
+          <CommonHeader
+            title="내 전공 질문"
+            rightType={RIGHT_ITEM.NONE}
+            subtitle={questionDetails?.questionPost?.member?.major || "내 전공"}
+          />
+          <button
+            ref={menuButtonRef}
+            type="button"
+            className="absolute right-5 top-1/2 flex-shrink-0 -translate-y-1/2 p-1"
+            onClick={toggleMenu}
+          >
+            <Image src="/icons/three-dots-vertical.svg" alt="메뉴" width={20} height={20} />
+          </button>
+        </div>
       </div>
 
       {/* 헤더 높이만큼 공백 */}
       <div className="h-16 w-full" />
 
       {/* 본문 영역 */}
-      <div className="relative mx-auto w-full max-w-[640px] px-5">
+      <div className="relative mx-auto w-full max-w-[640px] px-5 pb-20">
         {questionDetails && (
           <>
             <QuestionDetail
@@ -138,29 +159,14 @@ export default function Page() {
           </>
         )}
 
-        {/* Drawer 컴포넌트 */}
-        <Drawer open={isDrawerOpen} onOpenChange={setIsDrawerOpen}>
-          <DrawerContent>
-            <VisuallyHidden>
-              <h1>Options</h1>
-              <p>차피 안 보이는 부분</p>
-            </VisuallyHidden>
-            <div className="flex flex-col pb-[30px]">
-              <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
-                <Image src="/icons/Share.svg" alt="share" width={12} height={15} />
-                공유하기
-              </Button>
-              <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
-                <Image src="/icons/Block.svg" alt="block" width={12} height={12} />
-                차단하기
-              </Button>
-              <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
-                <Image src="/icons/Report.svg" alt="report" width={12} height={12} />
-                신고하기
-              </Button>
-            </div>
-          </DrawerContent>
-        </Drawer>
+        {/* Context Menu */}
+        <CommonContextMenu
+          isOpen={isMenuOpen}
+          onClose={() => setIsMenuOpen(false)}
+          triggerRef={menuButtonRef}
+          onReport={handleReport}
+          onBlock={handleBlock}
+        />
       </div>
     </div>
   );

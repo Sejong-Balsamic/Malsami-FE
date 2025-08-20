@@ -40,7 +40,7 @@ function QuestionDetailFAB({
   // 작성자가 아닌 경우: 답변하기 버튼
   if (!isAuthor) {
     return (
-      <div className="fixed bottom-5 left-1/2 z-50 w-full max-w-screen-sm -translate-x-1/2 px-5">
+      <div className="fixed bottom-5 left-1/2 z-50 w-[calc(100%-40px)] max-w-[600px] -translate-x-1/2">
         <button
           onClick={handleAnswerClick}
           aria-label="답변 작성"
@@ -56,7 +56,7 @@ function QuestionDetailFAB({
   // 작성자인 경우
   return (
     <>
-      <div className="fixed bottom-5 left-1/2 z-50 w-full max-w-screen-sm -translate-x-1/2 px-5">
+      <div className="fixed bottom-5 left-1/2 z-50 w-[calc(100%-40px)] max-w-[600px] -translate-x-1/2">
         <button
           type="button"
           disabled={hasChaetaek || !selectedAnswerId}

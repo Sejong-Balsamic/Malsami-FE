@@ -157,7 +157,7 @@ export default function AnswerPostPage() {
       {/* Main Content */}
       <main className="px-5">
         {/* 원문 보기 */}
-        <OriginalQuestion questionPostId={questionPostId} />
+        <OriginalQuestion questionPostId={questionPostId} isInAnswerPage />
 
         {/* 로딩 중일 때 */}
         {isSubmitting ? (
@@ -253,7 +253,7 @@ export default function AnswerPostPage() {
             </div>
 
             {/* 완료 버튼 */}
-            <div className="mb-4 mt-[62px]">
+            <div className="mb-6 mt-8">
               <button
                 type="button"
                 onClick={handleSubmit}

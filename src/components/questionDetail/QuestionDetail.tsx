@@ -131,7 +131,9 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
       {/* 글 정보 */}
       <div className="flex w-full flex-col">
         <div className="mt-3">
-          <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">{questionDto.questionPost?.title}</h1>
+          <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">
+            {questionDto.questionPost?.title}
+          </h1>
 
           {/* 전공 · 조회수 · 작성일 */}
           <div className="mt-2 flex items-center gap-[4px] text-SUIT_12 font-medium text-ui-muted">
