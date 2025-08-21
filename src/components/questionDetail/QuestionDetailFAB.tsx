@@ -1,0 +1,96 @@
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import ChaetaekCheckModal from "./ChaetaekCheckModal";
+
+interface QuestionDetailFABProps {
+  postId: string;
+  isAuthor: boolean;
+  selectedAnswerId: string | null;
+  hasChaetaek?: boolean;
+  onChaetaekComplete?: () => void;
+}
+
+function QuestionDetailFAB({
+  postId,
+  isAuthor,
+  selectedAnswerId,
+  hasChaetaek = false,
+  onChaetaekComplete,
+}: QuestionDetailFABProps) {
+  const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleAnswerClick = () => {
+    router.push(`/board/question/detail/${postId}/answer`);
+  };
+
+  const handleChaetaekClick = () => {
+    if (selectedAnswerId) {
+      setIsModalOpen(true);
+    }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+    if (onChaetaekComplete) {
+      onChaetaekComplete();
+    }
+  };
+
+  // 작성자가 아닌 경우: 답변하기 버튼
+  if (!isAuthor) {
+    return (
+      <div className="fixed bottom-5 left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-5">
+        <button
+          onClick={handleAnswerClick}
+          aria-label="답변 작성"
+          className="h-12 w-full rounded-xl bg-question-main text-SUIT_16 font-bold text-white"
+          type="button"
+        >
+          답변하기
+        </button>
+      </div>
+    );
+  }
+
+  // 작성자인 경우
+  return (
+    <>
+      <div className="fixed bottom-5 left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-5">
+        <button
+          type="button"
+          disabled={hasChaetaek || !selectedAnswerId}
+          onClick={handleChaetaekClick}
+          className={`h-12 w-full rounded-xl text-SUIT_16 font-bold text-white transition-colors ${
+            // eslint-disable-next-line no-nested-ternary
+            hasChaetaek
+              ? "cursor-not-allowed bg-ui-disabled"
+              : selectedAnswerId
+                ? "cursor-pointer bg-question-main"
+                : "cursor-not-allowed bg-ui-disabled"
+          }`}
+        >
+          {/* eslint-disable-next-line no-nested-ternary */}
+          {hasChaetaek ? "이미 채택된 글입니다" : selectedAnswerId ? "채택하기" : "채택할 답변을 선택하세요"}
+        </button>
+      </div>
+
+      {/* 채택 확인 모달 */}
+      {selectedAnswerId && (
+        <ChaetaekCheckModal
+          isOpen={isModalOpen}
+          author="" // AnswerSection에서 관리하므로 빈 값
+          onClose={closeModal}
+          answerPostId={selectedAnswerId}
+        />
+      )}
+    </>
+  );
+}
+
+QuestionDetailFAB.defaultProps = {
+  hasChaetaek: false,
+  onChaetaekComplete: undefined,
+};
+
+export default QuestionDetailFAB;

@@ -1,44 +1,69 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
 import { formatDateTime } from "@/global/time";
 import getAnswer from "@/apis/question/getAnswer";
-import postLikeQuestion from "@/apis/question/postLikeQuestion";
+import likeApi from "@/apis/likeApi";
 import { ContentType } from "@/types/api/constants/contentType";
 import { isSameMemberById } from "@/global/memberUtil";
 import { AnswerPost } from "@/types/api/entities/postgres/answerPost";
 import ChaetaekTag from "@/components/common/tags/ChaetaekTag";
-import ChaetaekCheckModal from "./ChaetaekCheckModal";
+import { addToast } from "@/global/store/toastSlice";
+import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import CommonContextMenu from "@/components/common/CommonContextMenu";
 
 interface AnswerSectionProps {
   postId: string;
   isAuthor: boolean;
+  selectedAnswerId: string | null;
+  onAnswerSelect: (answerId: string | null) => void;
 }
 
-function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
+function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: AnswerSectionProps) {
+  const dispatch = useDispatch();
   const [answers, setAnswers] = useState<AnswerPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [currentAnswerId, setCurrentAnswerId] = useState<string | null>(null);
+  const [openMenuId, setOpenMenuId] = useState<string | null>(null);
+  const menuButtonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
 
-  // 작성자용: 선택된 답변 ID 상태
-  const [selectedAnswerId, setSelectedAnswerId] = useState<string | null>(null);
+  // 토스트 표시 함수
+  const showToast = (message: string, color: "blue" | "orange" | "green" = "orange") => {
+    dispatch(
+      addToast({
+        id: Date.now().toString(),
+        icon: <ToastIcon color={color} />,
+        title: message,
+        color,
+        action: (
+          <ToastAction color={color} altText="확인">
+            확인
+          </ToastAction>
+        ),
+      }),
+    );
+  };
 
   // 답변 선택 핸들러 (단일 선택)
   const handleSelect = (answerId: string) => {
-    setSelectedAnswerId(prev => (prev === answerId ? null : answerId));
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setCurrentAnswerId(null);
+    onAnswerSelect(selectedAnswerId === answerId ? null : answerId);
   };
 
   const handleLikeClick = async (answerId: string) => {
     const targetAnswer = answers.find(a => a.answerPostId === answerId);
-    if (!targetAnswer || targetAnswer.isLiked || isSameMemberById(targetAnswer.member?.memberId as string)) return;
+    if (!targetAnswer) return;
+
+    // 이미 좋아요를 누른 경우
+    if (targetAnswer.isLiked) return;
+
+    // 본인 답변인 경우
+    const isMyAnswer = isSameMemberById(targetAnswer.member?.memberId as string);
+    if (isMyAnswer) {
+      showToast("본인 답변에는 좋아요를 누를 수 없습니다.", "orange");
+      return;
+    }
 
     try {
       setAnswers(prevAnswers =>
@@ -47,7 +72,10 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
         ),
       );
 
-      await postLikeQuestion(answerId, ContentType.ANSWER);
+      await likeApi.questionBoardLike({
+        postId: answerId,
+        contentType: ContentType.ANSWER,
+      });
     } catch (likeError) {
       console.error("좋아요 업데이트 실패:", likeError);
       setAnswers(prevAnswers =>
@@ -57,6 +85,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
             : answerPost,
         ),
       );
+      showToast("좋아요 처리 중 오류가 발생했습니다.", "orange");
     }
   };
 
@@ -85,14 +114,18 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
     return <p className="text-center text-SUIT_14 font-medium text-[#f56565]">{loadError}</p>;
   }
 
+  // 채택된 답변이 있는지 확인
+  const hasChaetaekAnswer = answers.some(answer => answer.isChaetaek);
+
   return (
-    <div className="flex h-auto min-w-[336px] max-w-[640px] flex-col">
+    <div className="flex h-auto flex-col">
       {answers.length === 0 ? (
         <p className="text-center text-SUIT_14 font-medium text-ui-muted">아직 답변이 없습니다.</p>
       ) : (
         answers.map((answerPost, index) => (
           <div key={answerPost.answerPostId || index} className="flex">
-            {isAuthor && !answerPost.isChaetaek && (
+            {/* 작성자이고, 아직 채택된 답변이 없을 때만 선택 UI 표시 */}
+            {isAuthor && !hasChaetaekAnswer && (
               <div className="mr-[8px] pt-[2px]">
                 <Image
                   src={
@@ -110,25 +143,45 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
             )}
             <div className="flex flex-1 flex-col">
               {/* 상단 라인 */}
-              {index !== 0 && <div className="mx-auto h-[1px] w-[353px] rounded-[2px] bg-[#EDEDED]" />}
+              {index !== 0 && <div className="my-4 h-[1px] w-full rounded-[2px] bg-[#EDEDED]" />}
 
               {/* 상단 정보 */}
-              <div className="flex items-center gap-[4px]">
-                {/* 채택 태그 */}
-                {answerPost.isChaetaek && <ChaetaekTag />}
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-[4px]">
+                  {/* 채택 태그 */}
+                  {answerPost.isChaetaek && <ChaetaekTag />}
 
-                {/* 닉네임 */}
-                <span className="text-SUIT_14 font-medium text-ui-body">
-                  @{answerPost.isPrivate ? "익명" : (answerPost.member?.uuidNickname ?? "익명")}
-                </span>
+                  {/* 닉네임 */}
+                  <span className="text-SUIT_14 font-medium text-ui-body">
+                    @{answerPost.isPrivate ? "익명" : (answerPost.member?.uuidNickname ?? "익명")}
+                  </span>
 
-                {/* 점 */}
-                <span className="text-ui-muted">·</span>
+                  {/* 점 */}
+                  <span className="text-ui-muted">·</span>
 
-                {/* 날짜 */}
-                <span className="text-SUIT_12 font-medium text-ui-muted">
-                  {answerPost.createdDate ? formatDateTime(answerPost.createdDate) : "--/-- --:--"}
-                </span>
+                  {/* 날짜 */}
+                  <span className="text-SUIT_12 font-medium text-ui-muted">
+                    {answerPost.createdDate ? formatDateTime(answerPost.createdDate) : "--/-- --:--"}
+                  </span>
+                </div>
+
+                {/* 메뉴 버튼 */}
+                <button
+                  type="button"
+                  ref={el => {
+                    if (answerPost.answerPostId) {
+                      menuButtonRefs.current[answerPost.answerPostId] = el;
+                    }
+                  }}
+                  onClick={() => {
+                    if (answerPost.answerPostId) {
+                      setOpenMenuId(openMenuId === answerPost.answerPostId ? null : answerPost.answerPostId);
+                    }
+                  }}
+                  className="ml-auto flex-shrink-0"
+                >
+                  <Image src="/icons/threeDotsVerticalGray.svg" alt="메뉴" width={14} height={14} />
+                </button>
               </div>
 
               {/* 본문 */}
@@ -153,7 +206,7 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
               )}
 
               {/* 좋아요 영역 */}
-              <div className="mt-4 flex items-center gap-[8px] pb-5">
+              <div className="mt-4 flex items-center gap-[8px]">
                 <div
                   role="button"
                   tabIndex={0}
@@ -178,40 +231,24 @@ function AnswerSection({ postId, isAuthor }: AnswerSectionProps) {
                   </span>
                 </div>
               </div>
-
-              {/* 채택 모달 */}
-              {answerPost.answerPostId && (
-                <ChaetaekCheckModal
-                  isOpen={isModalOpen && currentAnswerId === answerPost.answerPostId}
-                  author={answerPost.member?.uuidNickname || "익명"}
-                  onClose={closeModal}
-                  answerPostId={answerPost.answerPostId}
-                />
-              )}
             </div>
           </div>
         ))
       )}
 
-      {/* 작성자 전용 채택 버튼 */}
-      {isAuthor && (
-        <div className="fixed bottom-[20px] left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-[20px]">
-          <button
-            type="button"
-            disabled={!selectedAnswerId}
-            onClick={() => {
-              if (selectedAnswerId) {
-                setCurrentAnswerId(selectedAnswerId);
-                setIsModalOpen(true);
-              }
-            }}
-            className={`h-[48px] w-full rounded-[12px] text-SUIT_16 font-bold text-white ${
-              selectedAnswerId ? "bg-question-main" : "bg-ui-disabled"
-            }`}
-          >
-            채택하기
-          </button>
-        </div>
+      {/* 컨텍스트 메뉴 */}
+      {openMenuId && menuButtonRefs.current[openMenuId] && (
+        <CommonContextMenu
+          isOpen
+          onClose={() => setOpenMenuId(null)}
+          triggerRef={{ current: menuButtonRefs.current[openMenuId] }}
+          onReport={() => {
+            showToast("신고 기능이 준비 중입니다.", "orange");
+          }}
+          onBlock={() => {
+            showToast("차단 기능이 준비 중입니다.", "orange");
+          }}
+        />
       )}
     </div>
   );
