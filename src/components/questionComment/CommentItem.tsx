@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Image from "next/image";
 import { Comment } from "@/types/api/entities/postgres/comment";
 import { commentApi } from "@/apis/commentApi";
 import { LikeType } from "@/types/api/constants/likeType";
 import { formatDateTime } from "@/global/time";
 import useCommonToast from "@/global/hook/useCommonToast";
+import CommonContextMenu from "@/components/common/CommonContextMenu";
 
 interface CommentItemProps {
   comment: Comment;
@@ -18,6 +19,8 @@ export default function CommentItem({ comment, isQuestionAuthor }: CommentItemPr
   const [isDisliked, setIsDisliked] = useState(false);
   const [likeCount, setLikeCount] = useState<number>(comment.likeCount ?? 0);
   const [dislikeCount, setDislikeCount] = useState<number>(0);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const { showWarningToast } = useCommonToast();
 
@@ -78,7 +81,7 @@ export default function CommentItem({ comment, isQuestionAuthor }: CommentItemPr
   };
 
   const handleMoreOptions = () => {
-    // TODO: 더보기 옵션 모달
+    setIsMenuOpen(!isMenuOpen);
   };
 
   const nickname = comment.isPrivate ? "익명" : (comment.member?.uuidNickname ?? "익명");
@@ -112,7 +115,7 @@ export default function CommentItem({ comment, isQuestionAuthor }: CommentItemPr
 
         {/* 더보기 버튼 */}
         <div className="flex items-center">
-          <button type="button" onClick={handleMoreOptions} className="p-1">
+          <button type="button" ref={menuButtonRef} onClick={handleMoreOptions} className="p-1">
             <Image src="/icons/threeDotsVerticalGray.svg" alt="더보기" width={14} height={14} />
           </button>
         </div>
@@ -148,6 +151,21 @@ export default function CommentItem({ comment, isQuestionAuthor }: CommentItemPr
           <span className="text-SUIT_12 font-medium text-ui-count">{dislikeCount}</span>
         </button>
       </div>
+
+      {/* 컨텍스트 메뉴 */}
+      {isMenuOpen && menuButtonRef.current && (
+        <CommonContextMenu
+          isOpen
+          onClose={() => setIsMenuOpen(false)}
+          triggerRef={menuButtonRef}
+          onReport={() => {
+            showWarningToast("신고 기능이 준비 중입니다.");
+          }}
+          onBlock={() => {
+            showWarningToast("차단 기능이 준비 중입니다.");
+          }}
+        />
+      )}
     </div>
   );
 }
