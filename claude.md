@@ -477,6 +477,22 @@ source ~/.zshrc && npm run build
 - [ ] 타입 시스템 통합
 - [ ] 명명 규칙 준수
 
----
+### 코드 변경 완료 후 필수 TODOList에 첨부되어야함
+- [ ] **스타일 가이드라인 검수**
+  - [ ] Tailwind CSS 클래스 사용 (text-SUIT_14, text-SUIT_16 등)
+  - [ ] 색상 시스템 준수 (ui-muted, ui-divider 등)
+  - [ ] 하드코딩된 픽셀값 제거
+  - [ ] 반응형 디자인 적용
+- [ ] **명명 규칙 검수**
+  - [ ] Boolean 변수 is 접두사 확인
+  - [ ] 컴포넌트 Props 인터페이스 명명
+  - [ ] 이벤트 핸들러 handle 접두사
+- [ ] **빌드 테스트 실행**
+  ```bash
+  source ~/.zshrc && npm run build
+  ```
+  - [ ] ESLint 오류 해결
+  - [ ] TypeScript 타입 오류 해결
+  - [ ] Prettier 포맷팅 오류 해결
 
-이 문서는 Malsami-FE 프로젝트의 완전한 개발 가이드입니다. 새로운 기능 개발이나 리팩토링 시 이 가이드를 참조하여 일관된 코드 품질을 유지해 주세요.
+---

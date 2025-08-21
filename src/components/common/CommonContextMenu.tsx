@@ -19,29 +19,53 @@ export default function CommonContextMenu({ isOpen, onClose, triggerRef, onRepor
   useEffect(() => {
     if (!isOpen || !triggerRef.current || !menuRef.current) return;
 
-    const triggerRect = triggerRef.current.getBoundingClientRect();
-    const menuHeight = 88; // 고정 높이
-    const menuWidth = 157; // 고정 너비
-    const { innerHeight: viewportHeight, scrollY } = window;
+    const calculatePosition = () => {
+      if (!triggerRef.current) return;
+      
+      const triggerRect = triggerRef.current.getBoundingClientRect();
+      const menuHeight = 88; // 고정 높이
+      const menuWidth = 157; // 고정 너비
+      const { innerHeight: viewportHeight, innerWidth: viewportWidth } = window;
 
-    // 화면 아래쪽에 공간이 충분한지 확인
-    const spaceBelow = viewportHeight - triggerRect.bottom;
-    const showAbove = spaceBelow < menuHeight + 10; // 10px 마진
+      // 화면 아래쪽에 공간이 충분한지 확인
+      const spaceBelow = viewportHeight - triggerRect.bottom;
+      const showAbove = spaceBelow < menuHeight + 10; // 10px 마진
 
-    // 위치 계산
-    const top = showAbove
-      ? triggerRect.top + scrollY - menuHeight - 8 // 위쪽에 표시
-      : triggerRect.bottom + scrollY + 8; // 아래쪽에 표시
+      // 위치 계산 (12px 간격) - fixed 포지션이므로 scrollY 추가 안 함
+      const top = showAbove
+        ? triggerRect.top - menuHeight - 12 // 위쪽에 표시
+        : triggerRect.bottom + 12; // 아래쪽에 표시 (12px 간격)
 
-    // 좌측 정렬 (트리거 버튼의 오른쪽 끝에서 메뉴의 오른쪽 끝을 맞춤)
-    let left = triggerRect.right - menuWidth;
+      // 좌측 정렬 (트리거 버튼의 오른쪽 끝에서 메뉴의 오른쪽 끝을 맞춤)
+      let left = triggerRect.right - menuWidth;
 
-    // 화면 왼쪽 벗어남 방지
-    if (left < 10) {
-      left = 10;
-    }
+      // 화면 왼쪽 벗어남 방지
+      if (left < 10) {
+        left = 10;
+      }
+      
+      // 화면 오른쪽 벗어남 방지
+      if (left + menuWidth > viewportWidth - 10) {
+        left = viewportWidth - menuWidth - 10;
+      }
 
-    setPosition({ top, left, showAbove });
+      setPosition({ top, left, showAbove });
+    };
+
+    calculatePosition();
+    
+    // 스크롤 시 위치 재계산
+    const handleScroll = () => {
+      calculatePosition();
+    };
+    
+    window.addEventListener('scroll', handleScroll, true);
+    window.addEventListener('resize', calculatePosition);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll, true);
+      window.removeEventListener('resize', calculatePosition);
+    };
   }, [isOpen, triggerRef]);
 
   // 외부 클릭 감지
@@ -102,15 +126,7 @@ export default function CommonContextMenu({ isOpen, onClose, triggerRef, onRepor
           {/* 신고 아이콘 (20x20) */}
           <Image src="/icons/reportContextMenu.svg" alt="신고" width={20} height={20} className="flex-shrink-0" />
           {/* 신고 텍스트 - 8px gap */}
-          <span
-            className="ml-2 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-[14px] font-[500] leading-[14px] text-[#000000]"
-            style={{
-              fontFamily: "SUIT",
-              display: "-webkit-box",
-              WebkitBoxOrient: "vertical",
-              WebkitLineClamp: 1,
-            }}
-          >
+          <span className="ml-2 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-SUIT_14 font-medium text-black">
             신고
           </span>
           {/* 오른쪽 화살표 (16x16) - 오른쪽에서 12px */}
@@ -134,15 +150,7 @@ export default function CommonContextMenu({ isOpen, onClose, triggerRef, onRepor
           {/* 차단 아이콘 (20x20) */}
           <Image src="/icons/blockContextMenu.svg" alt="차단" width={20} height={20} className="flex-shrink-0" />
           {/* 차단 텍스트 - 8px gap */}
-          <span
-            className="ml-2 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-[14px] font-[500] leading-[14px] text-[#000000]"
-            style={{
-              fontFamily: "SUIT",
-              display: "-webkit-box",
-              WebkitBoxOrient: "vertical",
-              WebkitLineClamp: 1,
-            }}
-          >
+          <span className="ml-2 flex-1 overflow-hidden text-ellipsis whitespace-nowrap text-SUIT_14 font-medium text-black">
             차단
           </span>
         </div>

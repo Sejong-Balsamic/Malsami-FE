@@ -10,7 +10,6 @@ import QuestionDetailSkeleton from "@/components/common/skeletons/QuestionDetail
 import { isSameMemberById } from "@/global/memberUtil";
 import QuestionDetail from "@/components/questionDetail/QuestionDetail";
 import QuestionDetailFAB from "@/components/questionDetail/QuestionDetailFAB";
-import Image from "next/image";
 import CommonContextMenu from "@/components/common/CommonContextMenu";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 
@@ -123,17 +122,11 @@ export default function Page() {
         <div className="relative mx-auto w-full max-w-[640px]">
           <CommonHeader
             title="내 전공 질문"
-            rightType={RIGHT_ITEM.NONE}
+            rightType={RIGHT_ITEM.MENU}
+            onRightClick={toggleMenu}
             subtitle={questionDetails?.questionPost?.member?.major || "내 전공"}
+            rightButtonRef={menuButtonRef}
           />
-          <button
-            ref={menuButtonRef}
-            type="button"
-            className="absolute right-5 top-1/2 flex-shrink-0 -translate-y-1/2 p-1"
-            onClick={toggleMenu}
-          >
-            <Image src="/icons/three-dots-vertical.svg" alt="메뉴" width={20} height={20} />
-          </button>
         </div>
       </div>
 

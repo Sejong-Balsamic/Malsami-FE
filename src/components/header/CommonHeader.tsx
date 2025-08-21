@@ -19,6 +19,8 @@ interface CommonHeaderProps {
   onLeftClick?: () => void;
   // eslint-disable-next-line react/require-default-props
   children?: ReactNode;
+  // eslint-disable-next-line react/require-default-props
+  rightButtonRef?: React.RefObject<HTMLButtonElement>;
 }
 
 export default function CommonHeader({
@@ -28,6 +30,7 @@ export default function CommonHeader({
   onRightClick,
   onLeftClick,
   children,
+  rightButtonRef,
 }: CommonHeaderProps) {
   const router = useRouter();
   const handleLeftClick = () => {
@@ -50,6 +53,7 @@ export default function CommonHeader({
           onRightClick={handleRightClick}
           title={title}
           subtitle={subtitle}
+          rightButtonRef={rightButtonRef}
         />
       </div>
 
