@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
 import { formatDateTime } from "@/global/time";
 import getAnswer from "@/apis/question/getAnswer";
 import likeApi from "@/apis/likeApi";
@@ -10,8 +9,7 @@ import { ContentType } from "@/types/api/constants/contentType";
 import { isSameMemberById } from "@/global/memberUtil";
 import { AnswerPost } from "@/types/api/entities/postgres/answerPost";
 import ChaetaekTag from "@/components/common/tags/ChaetaekTag";
-import { addToast } from "@/global/store/toastSlice";
-import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import useCommonToast from "@/global/hook/useCommonToast";
 import CommonContextMenu from "@/components/common/CommonContextMenu";
 
 interface AnswerSectionProps {
@@ -22,29 +20,13 @@ interface AnswerSectionProps {
 }
 
 function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: AnswerSectionProps) {
-  const dispatch = useDispatch();
   const [answers, setAnswers] = useState<AnswerPost[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const menuButtonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
 
-  // 토스트 표시 함수
-  const showToast = (message: string, color: "blue" | "orange" | "green" = "orange") => {
-    dispatch(
-      addToast({
-        id: Date.now().toString(),
-        icon: <ToastIcon color={color} />,
-        title: message,
-        color,
-        action: (
-          <ToastAction color={color} altText="확인">
-            확인
-          </ToastAction>
-        ),
-      }),
-    );
-  };
+  const { showWarningToast } = useCommonToast();
 
   // 답변 선택 핸들러 (단일 선택)
   const handleSelect = (answerId: string) => {
@@ -61,7 +43,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
     // 본인 답변인 경우
     const isMyAnswer = isSameMemberById(targetAnswer.member?.memberId as string);
     if (isMyAnswer) {
-      showToast("본인 답변에는 좋아요를 누를 수 없습니다.", "orange");
+      showWarningToast("본인 답변에는 좋아요를 누를 수 없습니다.");
       return;
     }
 
@@ -85,7 +67,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
             : answerPost,
         ),
       );
-      showToast("좋아요 처리 중 오류가 발생했습니다.", "orange");
+      showWarningToast("좋아요 처리 중 오류가 발생했습니다.");
     }
   };
 
@@ -243,10 +225,10 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
           onClose={() => setOpenMenuId(null)}
           triggerRef={{ current: menuButtonRefs.current[openMenuId] }}
           onReport={() => {
-            showToast("신고 기능이 준비 중입니다.", "orange");
+            showWarningToast("신고 기능이 준비 중입니다.");
           }}
           onBlock={() => {
-            showToast("차단 기능이 준비 중입니다.", "orange");
+            showWarningToast("차단 기능이 준비 중입니다.");
           }}
         />
       )}

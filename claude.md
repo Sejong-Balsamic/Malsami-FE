@@ -323,6 +323,54 @@ className="w-1/2"          // 부모 기준 50%
 className="flex-1"         // 나머지 모든 공간
 ```
 
+### 🚨 스타일링 엄격 규칙 (절대 준수!)
+
+#### 기준 화면 크기
+- **iPhone 15 Pro**: 393 * 852px (개발 기준)
+- **최대 컨테이너 너비**: 640px (`max-w-[640px]`)
+
+#### 절대 금지사항
+```typescript
+// ❌ 인라인 스타일 절대 금지
+style={{ width: "calc(100% - 40px)", maxWidth: "600px" }}
+style={{ background: "rgba(0, 0, 0, 0.40)" }}
+
+// ❌ 픽셀값 하드코딩 금지  
+className="fixed bottom-[100px]"
+className="w-[393px] h-[852px]"
+
+// ❌ z-index 하드코딩 금지
+className="z-[200]"
+```
+
+#### 올바른 Tailwind 사용법
+```typescript
+// ✅ 컨테이너 및 위치 지정
+className="fixed bottom-5 left-1/2 w-full max-w-[640px] -translate-x-1/2 px-5"
+
+// ✅ 배경 및 투명도
+className="bg-black/40 backdrop-blur-sm"
+
+// ✅ z-index 시스템
+className="z-50"          // 표준 z-index
+className="z-10"          // 낮은 우선순위
+className="z-20"          // 중간 우선순위
+
+// ✅ 너비 시스템
+className="w-full"        // 부모 기준 100%
+className="w-screen"      // 뷰포트 기준 100%  
+className="max-w-[640px]" // 최대 너비 제한
+```
+
+#### 반응형 간격 시스템
+```typescript
+// ✅ 표준 간격 사용
+className="p-5"           // 20px 패딩 (iPhone 15 Pro 기준)
+className="mx-5"          // 좌우 20px 마진
+className="gap-4"         // 16px 간격
+className="space-y-3"     // 수직 12px 간격
+```
+
 ---
 
 ## 📝 개발 가이드라인
@@ -456,6 +504,40 @@ source ~/.zshrc && npm run build
 
 ---
 
+## 🔔 토스트 알림 시스템
+
+### 새로운 토스트 시스템 (권장)
+```typescript
+import useCommonToast from "@/global/hook/useCommonToast";
+
+const MyComponent = () => {
+  const { showToast, showConfirmToast, showWarningToast, showYeopjeonToast } = useCommonToast();
+  
+  // 기본 사용법
+  showToast("메시지", "confirm"); // confirm, warning, yeopjeon 타입 지원
+  
+  // 편의 메서드
+  showConfirmToast("성공 메시지");     // 초록색 확인 아이콘
+  showWarningToast("경고 메시지");     // 노란색 경고 아이콘  
+  showYeopjeonToast("엽전 메시지");    // 엽전 아이콘
+};
+```
+
+### ❌ 사용 금지 (Deprecated)
+```typescript
+// 절대 사용하지 말 것!
+import { showToast } from "@/global/toastUtils";           // deprecated
+import { ToastIcon, ToastAction } from "@/components/shadcn/toast"; // deprecated
+import { useToast } from "@/global/hook/useToast";         // deprecated
+```
+
+### 토스트 아이콘 종류
+- **confirm**: `/icons/confirmToast.svg` (초록색 체크)
+- **warning**: `/icons/warningToast.svg` (노란색 경고)  
+- **yeopjeon**: `/icons/yeopjeonToast.svg` (엽전 아이콘)
+
+---
+
 ## 📌 중요 체크리스트
 
 ### 새 컴포넌트 작성 시
@@ -464,18 +546,21 @@ source ~/.zshrc && npm run build
 - [ ] 스켈레톤 UI 함께 작성
 - [ ] Tailwind CSS 클래스 사용 (인라인 스타일 금지)
 - [ ] 반응형 디자인 적용
+- [ ] **새로운 토스트 시스템 사용** (`useCommonToast`)
 
 ### API 개발 시  
 - [ ] apiUtils.ts의 postApiRequest 사용
 - [ ] Command/Dto 타입 정의
 - [ ] FormData 기반 통신
 - [ ] 적절한 에러 처리
+- [ ] **에러 메시지에 토스트 알림 적용**
 
 ### 리팩토링 시
 - [ ] deprecated 폴더 확인 및 제거
 - [ ] 새로운 API 패턴으로 변경
 - [ ] 타입 시스템 통합
 - [ ] 명명 규칙 준수
+- [ ] **기존 토스트를 새 시스템으로 변경**
 
 ### 모든 답변 답변 에 대해서 확인해야할점 
 - [ ] **스타일 가이드라인 검수**
@@ -487,6 +572,10 @@ source ~/.zshrc && npm run build
   - [ ] Boolean 변수 is 접두사 확인
   - [ ] 컴포넌트 Props 인터페이스 명명
   - [ ] 이벤트 핸들러 handle 접두사
+- [ ] **토스트 시스템 검수**
+  - [ ] useCommonToast 사용 확인
+  - [ ] deprecated 토스트 시스템 사용 금지
+  - [ ] 적절한 토스트 타입 선택 (confirm/warning/yeopjeon)
 - [ ] **빌드 테스트 실행**
   ```bash
   source ~/.zshrc && npm run build

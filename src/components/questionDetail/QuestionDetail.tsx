@@ -17,8 +17,7 @@ import RewardTag from "@/components/common/tags/RewardTag";
 import HotTag from "@/components/common/tags/HotTag";
 import ChaetaekTag from "@/components/common/tags/ChaetaekTag";
 import { QuestionDto } from "@/types/api/responses/questionDto";
-import { addToast } from "@/global/store/toastSlice";
-import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import useCommonToast from "@/global/hook/useCommonToast";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -45,6 +44,7 @@ interface QuestionDetailProps {
 function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: QuestionDetailProps) {
   const router = useRouter();
   const dispatch = useDispatch();
+  const { showWarningToast } = useCommonToast();
   const [isLiked, setIsLiked] = useState(questionDto.questionPost?.isLiked || false);
   const [currentLikeCount, setCurrentLikeCount] = useState(questionDto.questionPost?.likeCount || 0);
 
@@ -61,29 +61,13 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
     [questionDto.questionPost?.createdDate],
   );
 
-  const showToast = (message: string, color: "blue" | "orange" | "green" = "orange") => {
-    dispatch(
-      addToast({
-        id: Date.now().toString(),
-        icon: <ToastIcon color={color} />,
-        title: message,
-        color,
-        action: (
-          <ToastAction color={color} altText="확인">
-            확인
-          </ToastAction>
-        ),
-      }),
-    );
-  };
-
   const handleLikeClick = async () => {
     // 이미 좋아요를 누른 상태라면 실행하지 않음
     if (isLiked) return;
-    
+
     // 작성자가 자신의 글에 좋아요를 누르려고 하면 경고 토스트 표시
     if (isAuthor) {
-      showToast("본인 게시글에는 좋아요를 누를 수 없습니다.", "orange");
+      showWarningToast("본인 게시글에는 좋아요를 누를 수 없습니다.");
       return;
     }
 
@@ -102,7 +86,7 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
       // 실패 시 롤백
       setIsLiked(false);
       setCurrentLikeCount(prevCount => prevCount - 1);
-      showToast("좋아요 처리 중 오류가 발생했습니다.", "orange");
+      showWarningToast("좋아요 처리 중 오류가 발생했습니다.");
     }
   };
 
@@ -131,9 +115,7 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
       {/* 글 정보 */}
       <div className="flex w-full flex-col">
         <div className="mt-3">
-          <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">
-            {questionDto.questionPost?.title}
-          </h1>
+          <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">{questionDto.questionPost?.title}</h1>
 
           {/* 전공 · 조회수 · 작성일 */}
           <div className="mt-2 flex items-center gap-[4px] text-SUIT_12 font-medium text-ui-muted">
@@ -269,8 +251,8 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
 
       {/* 답변 영역 */}
       <div className="mt-5">
-        <AnswerSection 
-          postId={questionDto.questionPost?.questionPostId as string} 
+        <AnswerSection
+          postId={questionDto.questionPost?.questionPostId as string}
           isAuthor={isAuthor}
           selectedAnswerId={selectedAnswerId}
           onAnswerSelect={onAnswerSelect}

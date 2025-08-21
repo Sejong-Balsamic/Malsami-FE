@@ -4,9 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import subjects from "@/types/subjects";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { useDispatch } from "react-redux";
-import { addToast } from "@/global/store/toastSlice";
-import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import useCommonToast from "@/global/hook/useCommonToast";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import { QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
@@ -18,7 +16,6 @@ import { QuestionCommand } from "@/types/api/requests/questionCommand";
 
 export default function QnaPostPage() {
   const router = useRouter();
-  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState<QuestionPostFormData>({
     title: "",
@@ -37,28 +34,14 @@ export default function QnaPostPage() {
   const [isUploading, setIsUploading] = useState(false);
   const mediaAllowedTypes = ["image/jpeg", "image/png", "image/webp", "image/jpg"];
 
-  const showToast = (message: string) => {
-    dispatch(
-      addToast({
-        id: Date.now().toString(),
-        icon: <ToastIcon color="blue" />,
-        title: message,
-        color: "blue",
-        action: (
-          <ToastAction color="blue" altText="확인">
-            확인
-          </ToastAction>
-        ),
-      }),
-    );
-  };
+  const { showConfirmToast, showWarningToast } = useCommonToast();
 
   // 첫 번째 페이지에서 다음 페이지로 이동하는 함수
   const goToNextPage = () => {
     if (formData.subject && formData.questionPresetTags.length > 0) {
       setCurrentPage(2);
     } else {
-      showToast("교과목명을 입력해주세요.");
+      showWarningToast("교과목명을 입력해주세요.");
     }
   };
 
@@ -106,11 +89,11 @@ export default function QnaPostPage() {
       const filteredFiles = filesArray.filter(file => mediaAllowedTypes.includes(file.type));
 
       if (filteredFiles.length !== filesArray.length) {
-        showToast("JPEG,JPG,PNG,WEBP 형식의 파일만 업로드할 수 있습니다.");
+        showWarningToast("JPEG,JPG,PNG,WEBP 형식의 파일만 업로드할 수 있습니다.");
         e.target.value = "";
       } else if (formData.attachmentFiles.length + filteredFiles.length > 10) {
         // 최대 10개 파일 업로드 가능
-        showToast("최대 10개의 파일만 업로드할 수 있습니다.");
+        showWarningToast("최대 10개의 파일만 업로드할 수 있습니다.");
         e.target.value = ""; // 선택한 파일 무효화
       } else {
         setFormData(prevFormData => ({
@@ -141,15 +124,15 @@ export default function QnaPostPage() {
   const handleSubmit = async () => {
     // 유효성 검사
     if (!formData.title.trim()) {
-      showToast("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showWarningToast("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     if (!formData.content.trim()) {
-      showToast("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showWarningToast("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     if (!subjects.includes(formData.subject)) {
-      showToast("정확한 교과목명을 입력하세요.");
+      showWarningToast("정확한 교과목명을 입력하세요.");
       return;
     }
 
@@ -171,16 +154,16 @@ export default function QnaPostPage() {
         // API 호출
         await questionPostApi.saveQuestionPost(command);
 
-        showToast("Q&A 게시글이 성공적으로 등록되었습니다.");
+        showConfirmToast("Q&A 게시글이 성공적으로 등록되었습니다.");
         router.push("/board/question");
       } catch (error) {
         console.error("게시글 등록 오류:", error);
-        showToast("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+        showWarningToast("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
       } finally {
         setIsUploading(false); // 업로딩 종료
       }
     } else {
-      showToast("모든 필수 항목을 채워주세요.");
+      showWarningToast("모든 필수 항목을 채워주세요.");
     }
   };
 

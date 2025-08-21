@@ -1,10 +1,20 @@
 /* eslint-disable */
 "use client";
 
+/**
+ * @deprecated 이 토스트 훅은 더 이상 사용되지 않습니다.
+ * 새로운 useCommonToast를 사용해주세요.
+ *
+ * 사용법:
+ * import { useCommonToast } from "@/global/hook/useCommonToast";
+ * const { showToast } = useCommonToast();
+ * showToast("confirm", "메시지");
+ */
+
 // Inspired by react-hot-toast library
 import * as React from "react";
 
-import type { ToastActionElement, ToastProps } from "@/components/shadcn/toast";
+import type { ToastActionElement, ToastProps } from "@/deprecated/components/shadcn/toast";
 
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 100000;
@@ -156,7 +166,7 @@ function toast({ icon, ...props }: Toast) {
       id,
       icon,
       open: true,
-      onOpenChange: open => {
+      onOpenChange: (open: any) => {
         if (!open) dismiss();
       },
     },

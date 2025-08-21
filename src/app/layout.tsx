@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Toaster } from "@/components/shadcn/toaster";
+import CommonToast from "@/components/common/CommonToast";
 import LoginDirectModal from "@/components/common/LoginDirectModal";
 import FcmInitializer from "@/components/common/FcmInitializer"; // FCM 초기화 컴포넌트
 import { initializeFirebase } from "@/global/firebaseUtil";
@@ -49,7 +49,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <FcmInitializer />
           {/* 클라이언트 사이드 레이아웃 (Nav 표시 조건 포함) */}
           <ClientLayout>{children}</ClientLayout>
-          <Toaster />
+          <CommonToast />
           <LoginDirectModal />
         </Providers>
       </body>
