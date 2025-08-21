@@ -2,9 +2,7 @@
 
 import React, { useState, useRef } from "react";
 import Image from "next/image";
-import { useDispatch } from "react-redux";
-import { addToast } from "@/global/store/toastSlice";
-import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import useCommonToast from "@/global/hook/useCommonToast";
 import CommonContextMenu from "@/components/common/CommonContextMenu";
 
 interface CommentProps {
@@ -23,25 +21,10 @@ interface CommentListProps {
 }
 
 function CommentList({ comments }: CommentListProps) {
-  const dispatch = useDispatch();
+  const { showWarningToast } = useCommonToast();
   const [openMenuId, setOpenMenuId] = useState<string | null>(null);
   const menuButtonRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
 
-  const showToast = (message: string, color: "blue" | "orange" | "green" = "orange") => {
-    dispatch(
-      addToast({
-        id: Date.now().toString(),
-        icon: <ToastIcon color={color} />,
-        title: message,
-        color,
-        action: (
-          <ToastAction color={color} altText="확인">
-            확인
-          </ToastAction>
-        ),
-      }),
-    );
-  };
   return (
     <div>
       {comments.length === 0 ? (
@@ -84,10 +67,10 @@ function CommentList({ comments }: CommentListProps) {
           onClose={() => setOpenMenuId(null)}
           triggerRef={{ current: menuButtonRefs.current[openMenuId] }}
           onReport={() => {
-            showToast("신고 기능이 준비 중입니다.", "orange");
+            showWarningToast("신고 기능이 준비 중입니다.");
           }}
           onBlock={() => {
-            showToast("차단 기능이 준비 중입니다.", "orange");
+            showWarningToast("차단 기능이 준비 중입니다.");
           }}
         />
       )}

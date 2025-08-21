@@ -8,9 +8,7 @@ import subjects from "@/types/subjects";
 import { docMediaAllowedTypes } from "@/types/docMediaAllowedTypes";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { documentPostApi } from "@/apis/documentPostApi";
-import { useDispatch } from "react-redux";
-import { addToast } from "@/global/store/toastSlice";
-import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import useCommonToast from "@/global/hook/useCommonToast";
 import DocumentPostFirstPage from "@/components/documentPost/DocumentPostFirstPage";
 import DocumentPostSecondPage from "@/components/documentPost/DocumentPostSecondPage";
 import { DocumentPostFormData } from "@/components/documentPost/DocumentPostTypes";
@@ -32,23 +30,8 @@ export default function QnaPostPage() {
   const [isFormValid, setIsFormValid] = useState(false);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isUploading, setIsUploading] = useState(false);
-  const dispatch = useDispatch();
 
-  const showToast = (message: string) => {
-    dispatch(
-      addToast({
-        id: Date.now().toString(),
-        icon: <ToastIcon color="blue" />,
-        title: message,
-        color: "blue",
-        action: (
-          <ToastAction color="blue" altText="확인">
-            확인
-          </ToastAction>
-        ),
-      }),
-    );
-  };
+  const { showConfirmToast, showWarningToast } = useCommonToast();
 
   // 모든 필수 입력 필드가 채워져 있는지 확인
   const checkFormValidity = useCallback(() => {
@@ -104,10 +87,10 @@ export default function QnaPostPage() {
         const isValidType = docMediaAllowedTypes.includes(file.type) || isExtensionAllowed(file.name); // 허용된 형식 또는 확장자
         const isValidSize = isFileSizeValid(file); // 파일 크기 검사
         if (!isValidType) {
-          showToast(`"${file.name}"는 지원하지 않는 파일 형식입니다.`);
+          showWarningToast(`"${file.name}"는 지원하지 않는 파일 형식입니다.`);
         } else if (!isValidSize) {
           const maxSize = file.type.startsWith("video/") ? "200MB" : "30MB";
-          showToast(`"${file.name}" 파일은 최대 ${maxSize}를 초과할 수 없습니다.`);
+          showWarningToast(`"${file.name}" 파일은 최대 ${maxSize}를 초과할 수 없습니다.`);
         }
         return isValidType && isValidSize;
       });
@@ -121,14 +104,14 @@ export default function QnaPostPage() {
       const existingFilesTotalSize = formData.mediaFiles.reduce((acc, file) => acc + file.size, 0);
       // 전체 파일 크기 제한 검사
       if (existingFilesTotalSize + newFilesTotalSize > 1024 * 1024 * 1000) {
-        showToast("전체 파일 크기는 1KB를 초과할 수 없습니다.");
+        showWarningToast("전체 파일 크기는 1KB를 초과할 수 없습니다.");
         e.target.value = ""; // 파일 무효화
         return;
       }
 
       // 총 파일 개수 검사
       if (formData.mediaFiles.length + filteredFiles.length > 10) {
-        showToast("최대 10개의 파일만 업로드할 수 있습니다.");
+        showWarningToast("최대 10개의 파일만 업로드할 수 있습니다.");
         e.target.value = ""; // 파일 무효화
         return;
       }
@@ -155,15 +138,15 @@ export default function QnaPostPage() {
   const handleSubmit = async () => {
     // 제목에 공백만 입력된 경우 확인
     if (!formData.title.trim()) {
-      showToast("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showWarningToast("제목을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     if (!formData.content.trim()) {
-      showToast("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showWarningToast("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     if (!subjects.includes(formData.subject)) {
-      showToast("정확한 교과목명을 입력하세요.");
+      showWarningToast("정확한 교과목명을 입력하세요.");
       return;
     }
 
@@ -180,15 +163,15 @@ export default function QnaPostPage() {
           documentTypes: formData.documentTypes as any,
           isDepartmentPrivate: formData.isDepartmentPrivate,
         });
-        showToast("자료 게시글이 성공적으로 등록되었습니다.");
+        showConfirmToast("자료 게시글이 성공적으로 등록되었습니다.");
         router.push("/board/document");
       } catch (error) {
-        showToast("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+        showWarningToast("게시글 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
       } finally {
         setIsUploading(false); // 업로딩 종료
       }
     } else {
-      showToast("모든 필수 항목을 채워주세요.");
+      showWarningToast("모든 필수 항목을 채워주세요.");
     }
   };
 

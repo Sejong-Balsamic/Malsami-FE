@@ -1,13 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useToast } from "@/global/hook/useToast";
-import { ToastAction, ToastIcon } from "@/components/shadcn/toast";
+import useCommonToast from "@/global/hook/useCommonToast";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 
 function Page() {
-  const { toast } = useToast();
+  const { showConfirmToast } = useCommonToast();
 
   return (
     <div className="relative mx-auto w-full max-w-[640px]">
@@ -23,15 +22,7 @@ function Page() {
         <button
           type="button"
           onClick={() => {
-            toast({
-              icon: <ToastIcon color="blue" />,
-              title: "토스트가 많이많이 구워졌어요",
-              action: (
-                <ToastAction color="blue" altText="확인">
-                  확인
-                </ToastAction>
-              ),
-            });
+            showConfirmToast("토스트가 많이많이 구워졌어요");
           }}
         >
           <Image

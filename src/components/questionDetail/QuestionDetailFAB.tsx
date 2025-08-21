@@ -40,15 +40,17 @@ function QuestionDetailFAB({
   // 작성자가 아닌 경우: 답변하기 버튼
   if (!isAuthor) {
     return (
-      <div className="fixed bottom-5 left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-5">
-        <button
-          onClick={handleAnswerClick}
-          aria-label="답변 작성"
-          className="h-12 w-full rounded-xl bg-question-main text-SUIT_16 font-bold text-white"
-          type="button"
-        >
-          답변하기
-        </button>
+      <div className="fixed bottom-5 left-0 right-0 z-50 px-5">
+        <div className="mx-auto max-w-[600px]">
+          <button
+            onClick={handleAnswerClick}
+            aria-label="답변 작성"
+            className="h-12 w-full rounded-xl bg-question-main text-SUIT_16 font-bold text-white"
+            type="button"
+          >
+            답변하기
+          </button>
+        </div>
       </div>
     );
   }
@@ -56,23 +58,25 @@ function QuestionDetailFAB({
   // 작성자인 경우
   return (
     <>
-      <div className="fixed bottom-5 left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-5">
-        <button
-          type="button"
-          disabled={hasChaetaek || !selectedAnswerId}
-          onClick={handleChaetaekClick}
-          className={`h-12 w-full rounded-xl text-SUIT_16 font-bold text-white transition-colors ${
-            // eslint-disable-next-line no-nested-ternary
-            hasChaetaek
-              ? "cursor-not-allowed bg-ui-disabled"
-              : selectedAnswerId
-                ? "cursor-pointer bg-question-main"
-                : "cursor-not-allowed bg-ui-disabled"
-          }`}
-        >
-          {/* eslint-disable-next-line no-nested-ternary */}
-          {hasChaetaek ? "이미 채택된 글입니다" : selectedAnswerId ? "채택하기" : "채택할 답변을 선택하세요"}
-        </button>
+      <div className="fixed bottom-5 left-0 right-0 z-50 px-5">
+        <div className="mx-auto max-w-[600px]">
+          <button
+            type="button"
+            disabled={hasChaetaek || !selectedAnswerId}
+            onClick={handleChaetaekClick}
+            className={`h-12 w-full rounded-xl text-SUIT_16 font-bold text-white transition-colors ${
+              // eslint-disable-next-line no-nested-ternary
+              hasChaetaek
+                ? "cursor-not-allowed bg-ui-disabled"
+                : selectedAnswerId
+                  ? "cursor-pointer bg-question-main"
+                  : "cursor-not-allowed bg-ui-disabled"
+            }`}
+          >
+            {/* eslint-disable-next-line no-nested-ternary */}
+            {hasChaetaek ? "이미 채택된 글입니다" : selectedAnswerId ? "채택하기" : "채택할 답변을 선택하세요"}
+          </button>
+        </div>
       </div>
 
       {/* 채택 확인 모달 */}

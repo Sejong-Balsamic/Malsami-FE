@@ -1,21 +1,22 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { commentApi } from "@/apis/commentApi";
 import { Comment } from "@/types/api/entities/postgres/comment";
 import { getCurrentMemberInfo } from "@/global/memberUtil";
+import useCommonToast from "@/global/hook/useCommonToast";
 import CommentItem from "./CommentItem";
 
 interface CommentListProps {
   postId: string;
   questionAuthorId?: string;
-  setIsLoading?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function CommentList({ postId, questionAuthorId, setIsLoading: setParentLoading }: CommentListProps) {
+export default function CommentList({ postId, questionAuthorId }: CommentListProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [questionAuthorMemberId, setQuestionAuthorMemberId] = useState<string | undefined>(questionAuthorId);
+  const { showWarningToast } = useCommonToast();
 
   // 질문 게시글 작성자 ID 가져오기
   useEffect(() => {
@@ -38,8 +39,10 @@ export default function CommentList({ postId, questionAuthorId, setIsLoading: se
     }
   }, [questionAuthorId]);
 
-  // 댓글 데이터 가져오는 함수
-  const fetchComments = async () => {
+  // 댓글 데이터 로드 함수
+  const fetchComments = useCallback(async () => {
+    if (!postId) return;
+
     try {
       console.log("댓글 데이터 요청 시작");
       setIsLoading(true);
@@ -57,31 +60,18 @@ export default function CommentList({ postId, questionAuthorId, setIsLoading: se
       setComments(list);
     } catch (error) {
       console.error("댓글 목록 가져오기 실패:", error);
+      showWarningToast("댓글을 불러오는데 실패했습니다.");
     } finally {
       setIsLoading(false);
-      if (setParentLoading) {
-        console.log("부모 컴포넌트 로딩 상태 false로 설정");
-        setParentLoading(false);
-      }
     }
-  };
+  }, [postId, showWarningToast]);
 
   // 초기 로딩 및 postId 변경 시 데이터 로드
   useEffect(() => {
-    if (postId) {
-      fetchComments();
-    }
-  }, [postId]);
+    fetchComments();
+  }, [fetchComments]);
 
-  // 부모 컴포넌트의 로딩 상태가 true일 때 다시 로드
-  useEffect(() => {
-    // 부모의 로딩 상태를 직접 감지할 수 없으므로,
-    // CommentPage에서 refreshComments를 호출하면
-    // 새로운 함수 참조가 전달되어 이 효과가 트리거됩니다
-    if (setParentLoading) {
-      fetchComments();
-    }
-  }, [setParentLoading]);
+  // 이 useEffect를 제거하여 무한 루프 방지
 
   // 로딩 상태 표시
   if (isLoading) {
@@ -122,5 +112,4 @@ export default function CommentList({ postId, questionAuthorId, setIsLoading: se
 
 CommentList.defaultProps = {
   questionAuthorId: undefined,
-  setIsLoading: undefined,
 };

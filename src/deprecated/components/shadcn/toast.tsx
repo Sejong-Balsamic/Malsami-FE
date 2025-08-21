@@ -1,6 +1,14 @@
 /* eslint-disable */
 "use client";
 
+/**
+ * @deprecated 이 토스트 시스템은 더 이상 사용되지 않습니다.
+ * 새로운 CommonToast와 useCommonToast를 사용해주세요.
+ * 
+ * 기존: shadcn/ui 기반 토스트 (책 아이콘)
+ * 신규: CommonToast 컴포넌트 (confirm, warning, yeopjeon 아이콘)
+ */
+
 import * as React from "react";
 import * as ToastPrimitives from "@radix-ui/react-toast";
 import { cva, type VariantProps } from "class-variance-authority";

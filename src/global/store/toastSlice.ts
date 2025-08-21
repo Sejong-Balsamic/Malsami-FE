@@ -1,14 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// Toast 타입 정의
-interface Toast {
+export interface Toast {
   id: string;
   title: string;
   description?: string;
-  icon?: React.ReactNode;
-  action?: React.ReactNode;
-  color?: "blue" | "green" | "orange";
+  type: "confirm" | "warning" | "yeopjeon";
 }
+
+export type ToastType = Toast;
 
 // Slice 상태 타입 정의
 interface ToastState {
