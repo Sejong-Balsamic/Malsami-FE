@@ -52,14 +52,12 @@ function OriginalQuestion({ questionPostId, isInAnswerPage = false }: OriginalQu
         <div className={`pt-4 ${isInAnswerPage ? "" : "px-5"}`}>
           <div className="animate-pulse">
             <div className="mb-3 flex gap-2">
-              <div className="h-6 w-16 rounded-full bg-gray-200" />
-              <div className="h-6 w-20 rounded-full bg-gray-200" />
+              <div className="bg-ui-skeleton h-6 w-16 rounded-full" />
+              <div className="bg-ui-skeleton h-6 w-20 rounded-full" />
             </div>
-            <div className="mb-4 h-5 rounded bg-gray-200" />
+            <div className="bg-ui-skeleton mb-4 h-5 rounded" />
           </div>
-          <div
-            className={`mt-2 h-[4px] bg-ui-divider-thick ${isInAnswerPage ? "w-full" : "-mx-5 w-[calc(100%+40px)]"}`}
-          />
+          <div className={`mt-2 h-1 bg-ui-divider-thick ${isInAnswerPage ? "w-full" : "-mx-5 w-[calc(100%+40px)]"}`} />
         </div>
       </div>
     );
@@ -72,7 +70,7 @@ function OriginalQuestion({ questionPostId, isInAnswerPage = false }: OriginalQu
       {/* 질문 전체 내용 */}
       <div className={`pt-4 ${isInAnswerPage ? "" : "px-5"}`}>
         {/* 태그 영역 (HOT, 과목, 현상금, 채택) */}
-        <div className="mb-3 flex flex-wrap items-center gap-[4px]">
+        <div className="mb-3 flex flex-wrap items-center gap-1">
           {isHot && <HotTag />}
           {!!questionPost?.chaetaekStatus && <ChaetaekTag />}
           <SubjectTag subjectName={questionPost?.subject} type="question" />
@@ -80,13 +78,13 @@ function OriginalQuestion({ questionPostId, isInAnswerPage = false }: OriginalQu
         </div>
 
         {/* 제목 (항상 표시) */}
-        <h2 className="text-SUIT_18 font-semibold leading-[18px] text-black">{questionPost?.title}</h2>
+        <h2 className="text-SUIT_18 font-semibold leading-tight text-black">{questionPost?.title}</h2>
 
         {/* 확장된 내용 (isExpanded가 true일 때만 표시) */}
         {isExpanded && (
           <div className="animate-slideDown mt-2">
             {/* 전공 · 조회수 · 작성일 */}
-            <div className="mt-2 flex items-center gap-[4px] text-SUIT_12 font-medium text-ui-muted">
+            <div className="mt-2 flex items-center gap-1 text-SUIT_12 font-medium text-ui-muted">
               <span>{questionPost?.member?.major ?? "전공 비공개"}</span>
               <span className="text-ui-muted">•</span>
               <span className="inline-flex items-center gap-1">
@@ -98,18 +96,16 @@ function OriginalQuestion({ questionPostId, isInAnswerPage = false }: OriginalQu
             </div>
 
             {/* 본문 텍스트 */}
-            <div className="mt-[16px] text-SUIT_16 font-medium leading-[22.4px] text-black">
-              {questionPost?.content}
-            </div>
+            <div className="mt-4 text-SUIT_16 font-medium leading-relaxed text-black">{questionPost?.content}</div>
 
             {/* 이미지 및 동영상 */}
             {Array.isArray(questionData.mediaFiles) && questionData.mediaFiles.length > 0 && (
               <div className="mt-2 overflow-x-auto">
-                <div className="flex gap-[12px] pb-[10px]">
+                <div className="flex gap-3 pb-2">
                   {questionData.mediaFiles.map((file, index) => (
                     <div
                       key={index}
-                      className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[8px] bg-[#EDEDED]"
+                      className="h-30 w-30 bg-ui-skeleton flex flex-shrink-0 items-center justify-center overflow-hidden rounded-lg"
                     >
                       <Image
                         src={file.uploadedImageUrl || ""}
@@ -131,13 +127,13 @@ function OriginalQuestion({ questionPostId, isInAnswerPage = false }: OriginalQu
 
             {/* 지정태그 */}
             {questionPost?.questionPresetTags && questionPost.questionPresetTags.length > 0 && (
-              <div className="mt-3 flex flex-wrap gap-[8px]">
+              <div className="mt-3 flex flex-wrap gap-2">
                 {questionPost.questionPresetTags.map((tag, index) => (
                   <div
                     key={index}
-                    className="flex h-[28px] w-auto min-w-[69px] flex-shrink-0 items-center justify-center gap-[4px] rounded-[34px] bg-tag-preset-question-bg px-[12px] py-[8px]"
+                    className="flex h-7 w-auto min-w-16 flex-shrink-0 items-center justify-center gap-1 rounded-full bg-tag-preset-question-bg px-3 py-2"
                   >
-                    <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-tag-preset-question-text">
+                    <span className="line-clamp-1 overflow-hidden text-ellipsis text-SUIT_12 font-bold leading-none text-tag-preset-question-text">
                       {QuestionPresetTagLabels[tag] || tag}
                     </span>
                   </div>
@@ -147,13 +143,13 @@ function OriginalQuestion({ questionPostId, isInAnswerPage = false }: OriginalQu
 
             {/* 커스텀태그 */}
             {questionData.customTags && questionData.customTags.length > 0 && (
-              <div className="mt-3 flex flex-wrap gap-[8px]">
+              <div className="mt-3 flex flex-wrap gap-2">
                 {questionData.customTags.map((tag, index) => (
                   <div
                     key={index}
-                    className="inline-flex items-center justify-center gap-[10px] rounded-[34px] bg-tag-custom-bg px-[14px] py-[8px]"
+                    className="inline-flex items-center justify-center gap-2 rounded-full bg-tag-custom-bg px-3 py-[8px]"
                   >
-                    <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-tag-custom-text">
+                    <span className="line-clamp-1 overflow-hidden text-ellipsis text-SUIT_12 font-bold leading-none text-tag-custom-text">
                       {tag}
                     </span>
                   </div>
@@ -178,9 +174,7 @@ function OriginalQuestion({ questionPostId, isInAnswerPage = false }: OriginalQu
           />
         </button>
         {/* 구분선 - 화면 전체 너비 */}
-        <div
-          className={`mt-2 h-[4px] bg-ui-divider-thick ${isInAnswerPage ? "w-full" : "-mx-5 w-[calc(100%+40px)]"}`}
-        />
+        <div className={`mt-2 h-1 bg-ui-divider-thick ${isInAnswerPage ? "w-full" : "-mx-5 w-[calc(100%+40px)]"}`} />
       </div>
     </div>
   );

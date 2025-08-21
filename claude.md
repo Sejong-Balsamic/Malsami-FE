@@ -477,7 +477,7 @@ source ~/.zshrc && npm run build
 - [ ] 타입 시스템 통합
 - [ ] 명명 규칙 준수
 
-### 코드 변경 완료 후 필수 TODOList에 첨부되어야함
+### 모든 답변 답변 에 대해서 확인해야할점 
 - [ ] **스타일 가이드라인 검수**
   - [ ] Tailwind CSS 클래스 사용 (text-SUIT_14, text-SUIT_16 등)
   - [ ] 색상 시스템 준수 (ui-muted, ui-divider 등)

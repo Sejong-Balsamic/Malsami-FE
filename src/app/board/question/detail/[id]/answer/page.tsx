@@ -10,8 +10,10 @@ import { useDispatch } from "react-redux";
 import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
 import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
 import FileUploadInput from "@/components/questionPost/FileUploadInput";
-import OriginalQuestion from "@/components/questionAnswer/OriginalQuestion";
+import QuestionSummary from "@/components/questionComment/QuestionSummary";
 import CommonHeader from "@/components/header/CommonHeader";
+import getQuestionDetails from "@/apis/question/getQuestionDetails";
+import { QuestionDto } from "@/types/api/responses/questionDto";
 import { RIGHT_ITEM } from "@/types/header";
 import CommonTextarea from "@/components/common/CommonTextarea";
 
@@ -28,6 +30,9 @@ export default function AnswerPostPage() {
   const params = useParams(); // URL에서 파라미터 추출
   const questionPostId = Array.isArray(params.id) ? params.id[0] : params.id; // id를 추출
   const [isSubmitting, setisSubmitting] = useState(false); // 업로드 상태
+  const [questionDetails, setQuestionDetails] = useState<QuestionDto | null>(null);
+  const [isQuestionsLoading, setIsQuestionsLoading] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false); // 기본값은 축소 상태
 
   const [formData, setFormData] = useState<AnswerPostFormData>({
     content: "",
@@ -104,6 +109,42 @@ export default function AnswerPostPage() {
     setIsFormValid(checkFormValidity());
   }, [formData]);
 
+  // 질문 상세 정보 가져오기
+  useEffect(() => {
+    let isMounted = true;
+
+    if (questionPostId) {
+      const fetchData = async () => {
+        try {
+          setIsQuestionsLoading(true);
+          const data = await getQuestionDetails(questionPostId);
+
+          if (isMounted) {
+            setQuestionDetails({
+              ...data,
+              questionPost: {
+                ...data.questionPost,
+                questionPostId,
+              },
+            });
+          }
+        } catch (innerError) {
+          showToast("질문 정보를 불러오는데 실패했습니다.");
+        } finally {
+          if (isMounted) {
+            setIsQuestionsLoading(false);
+          }
+        }
+      };
+
+      fetchData();
+    }
+
+    return () => {
+      isMounted = false;
+    };
+  }, [questionPostId, dispatch]);
+
   // 제출 핸들러
   const handleSubmit = async () => {
     if (isSubmitting) return;
@@ -155,118 +196,117 @@ export default function AnswerPostPage() {
       <div className="h-16 w-full" />
 
       {/* Main Content */}
-      <main className="px-5">
-        {/* 원문 보기 */}
-        <OriginalQuestion questionPostId={questionPostId} isInAnswerPage />
+      <main>
+        {/* 원문 보기 - QuestionSummary 사용 */}
+        {!isQuestionsLoading && questionDetails && (
+          <QuestionSummary
+            questionDto={questionDetails}
+            isExpanded={isExpanded}
+            onToggleExpanded={() => setIsExpanded(!isExpanded)}
+          />
+        )}
 
-        {/* 로딩 중일 때 */}
-        {isSubmitting ? (
-          <div className="flex h-[500px] items-center justify-center">
-            <LoadingSpinner />
-          </div>
-        ) : (
-          <form>
-            {/* 답변 섹션 */}
-            <div className="mt-4">
-              <h2 className="text-SUIT_16 font-medium text-black">답변</h2>
+        {/* 답변 작성 폼 */}
+        <div className="px-5">
+          {/* 로딩 중일 때 */}
+          {isSubmitting ? (
+            <div className="flex h-screen items-center justify-center">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            <form>
+              {/* 답변 섹션 */}
+              <div className="mt-4">
+                <h2 className="text-SUIT_16 font-medium text-black">답변</h2>
 
-              <div className="mt-2 flex items-center justify-between">
-                <span className="text-SUIT_14 font-medium text-[#898989]">최대 2000자까지 작성할 수 있어요.</span>
+                <div className="mt-2 flex items-center justify-between">
+                  <span className="text-SUIT_14 font-medium text-ui-muted">최대 2000자까지 작성할 수 있어요.</span>
 
-                {/* 익명 설정 */}
-                <div className="flex items-center">
-                  <button
-                    type="button"
-                    onClick={() => setFormData(prev => ({ ...prev, isPrivate: !prev.isPrivate }))}
-                    className="mr-1"
-                  >
-                    <img
-                      src={
-                        formData.isPrivate
-                          ? "/icons/chaetaekCheckboxChecked.svg"
-                          : "/icons/chaetaekCheckboxUnchecked.svg"
-                      }
-                      alt="익명 체크박스"
-                      width={16}
-                      height={16}
-                    />
-                  </button>
-                  <span
-                    className="font-suit-medium text-[14px]"
-                    style={{ color: formData.isPrivate ? "#00E271" : "#9B9B9B" }}
-                  >
-                    익명
+                  {/* 익명 설정 */}
+                  <div className="flex items-center">
+                    <button
+                      type="button"
+                      onClick={() => setFormData(prev => ({ ...prev, isPrivate: !prev.isPrivate }))}
+                      className="mr-1"
+                    >
+                      <img
+                        src={
+                          formData.isPrivate
+                            ? "/icons/chaetaekCheckboxChecked.svg"
+                            : "/icons/chaetaekCheckboxUnchecked.svg"
+                        }
+                        alt="익명 체크박스"
+                        width={16}
+                        height={16}
+                      />
+                    </button>
+                    <span
+                      className={`text-SUIT_14 font-medium ${
+                        formData.isPrivate ? "text-question-main" : "text-ui-muted"
+                      }`}
+                    >
+                      익명
+                    </span>
+                  </div>
+                </div>
+
+                {/* 답변 입력란 */}
+                <div className="relative mt-3">
+                  <CommonTextarea
+                    name="content"
+                    value={formData.content}
+                    onChange={handleChange}
+                    placeholder="답변을 작성해주세요."
+                    maxLength={2000}
+                    required
+                    contentType="question"
+                    className="min-h-56"
+                  />
+
+                  {/* 글자 수 카운터 */}
+                  <div className="absolute bottom-4 right-4 text-right text-SUIT_12 leading-none">
+                    <span className="font-semibold text-question-main">{formData.content.length}</span>
+                    <span className="font-medium text-ui-muted"> / 2000</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* 이미지 섹션 */}
+              <div className="mt-7">
+                <h2 className="text-SUIT_16 font-medium text-black">이미지</h2>
+
+                <div className="mt-2">
+                  <span className="text-SUIT_14 font-medium leading-none text-ui-muted">
+                    최대 50MB까지 업로드할 수 있어요.
                   </span>
                 </div>
-              </div>
 
-              {/* 답변 입력란 */}
-              <div className="relative mt-3">
-                <CommonTextarea
-                  name="content"
-                  value={formData.content}
-                  onChange={handleChange}
-                  placeholder="답변을 작성해주세요."
-                  maxLength={2000}
-                  required
-                  contentType="question"
-                  className="min-h-[226px]"
-                />
-
-                {/* 글자 수 카운터 */}
-                <div
-                  className="absolute text-right"
-                  style={{ bottom: "16px", right: "16px", fontSize: "12px", lineHeight: "100%" }}
-                >
-                  <span style={{ color: "#00E271", fontWeight: 600 }}>{formData.content.length}</span>
-                  <span style={{ color: "#C5C5C5", fontWeight: 500 }}> / 2000</span>
+                {/* 이미지 업로드 영역 */}
+                <div className="mt-3">
+                  <FileUploadInput
+                    mediaFiles={formData.mediaFiles}
+                    onFileChange={handleFileChange}
+                    onFileDelete={handleFileDelete}
+                  />
                 </div>
               </div>
-            </div>
 
-            {/* 이미지 섹션 */}
-            <div className="mt-7">
-              <h2 className="text-SUIT_16 font-medium text-black">이미지</h2>
-
-              <div className="mt-2">
-                <span
-                  className="text-SUIT_14 font-medium"
-                  style={{
-                    color: "#898989",
-                    fontSize: "14px",
-                    fontWeight: 500,
-                    lineHeight: "100%",
-                  }}
+              {/* 완료 버튼 */}
+              <div className="mb-6 mt-8">
+                <button
+                  type="button"
+                  onClick={handleSubmit}
+                  disabled={!isFormValid}
+                  className={`h-14 w-full rounded-lg text-SUIT_18 font-extrabold text-white disabled:cursor-not-allowed ${
+                    isFormValid ? "bg-question-main" : "bg-ui-border"
+                  }`}
                 >
-                  최대 50MB까지 업로드할 수 있어요.
-                </span>
+                  완료
+                </button>
               </div>
-
-              {/* 이미지 업로드 영역 */}
-              <div className="mt-3">
-                <FileUploadInput
-                  mediaFiles={formData.mediaFiles}
-                  onFileChange={handleFileChange}
-                  onFileDelete={handleFileDelete}
-                />
-              </div>
-            </div>
-
-            {/* 완료 버튼 */}
-            <div className="mb-6 mt-8">
-              <button
-                type="button"
-                onClick={handleSubmit}
-                disabled={!isFormValid}
-                className={`h-14 w-full rounded-[8px] text-SUIT_18 font-extrabold text-white disabled:cursor-not-allowed ${
-                  isFormValid ? "bg-[#00E271]" : "bg-ui-border"
-                }`}
-              >
-                완료
-              </button>
-            </div>
-          </form>
-        )}
+            </form>
+          )}
+        </div>
       </main>
     </div>
   );

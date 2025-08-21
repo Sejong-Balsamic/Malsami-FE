@@ -17,11 +17,13 @@ export default function CommonContextMenu({ isOpen, onClose, triggerRef, onRepor
 
   // 메뉴 위치 계산
   useEffect(() => {
-    if (!isOpen || !triggerRef.current || !menuRef.current) return;
+    if (!isOpen || !triggerRef.current || !menuRef.current) {
+      return undefined;
+    }
 
     const calculatePosition = () => {
       if (!triggerRef.current) return;
-      
+
       const triggerRect = triggerRef.current.getBoundingClientRect();
       const menuHeight = 88; // 고정 높이
       const menuWidth = 157; // 고정 너비
@@ -43,7 +45,7 @@ export default function CommonContextMenu({ isOpen, onClose, triggerRef, onRepor
       if (left < 10) {
         left = 10;
       }
-      
+
       // 화면 오른쪽 벗어남 방지
       if (left + menuWidth > viewportWidth - 10) {
         left = viewportWidth - menuWidth - 10;
@@ -53,23 +55,27 @@ export default function CommonContextMenu({ isOpen, onClose, triggerRef, onRepor
     };
 
     calculatePosition();
-    
+
     // 스크롤 시 위치 재계산
     const handleScroll = () => {
       calculatePosition();
     };
-    
-    window.addEventListener('scroll', handleScroll, true);
-    window.addEventListener('resize', calculatePosition);
-    
+
+    window.addEventListener("scroll", handleScroll, true);
+    window.addEventListener("resize", calculatePosition);
+
     return () => {
-      window.removeEventListener('scroll', handleScroll, true);
-      window.removeEventListener('resize', calculatePosition);
+      window.removeEventListener("scroll", handleScroll, true);
+      window.removeEventListener("resize", calculatePosition);
     };
   }, [isOpen, triggerRef]);
 
   // 외부 클릭 감지
   useEffect(() => {
+    if (!isOpen) {
+      return undefined;
+    }
+
     const handleClickOutside = (event: MouseEvent) => {
       if (
         menuRef.current &&
@@ -81,9 +87,8 @@ export default function CommonContextMenu({ isOpen, onClose, triggerRef, onRepor
       }
     };
 
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
+    document.addEventListener("mousedown", handleClickOutside);
+
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
