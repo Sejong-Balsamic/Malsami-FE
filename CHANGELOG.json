@@ -1,11 +1,54 @@
 {
   "metadata": {
-    "lastUpdated": "2025-08-21T09:43:01Z",
-    "currentVersion": "0.1.3",
+    "lastUpdated": "2025-08-21T15:42:54Z",
+    "currentVersion": "0.1.6",
     "projectType": "react",
-    "totalReleases": 7
+    "totalReleases": 8
   },
   "releases": [
+    {
+      "version": "0.1.6",
+      "project_type": "react",
+      "date": "2025-08-21",
+      "pr_number": 600,
+      "raw_summary": "Summary by CodeRabbit\n\nNew Features\n\n공통 토스트 시스템(useCommonToast, CommonToast) 도입\n질문 본문 아코디언(접기/펼치기) 헤더 추가\n\n\nStyle\n\n답변/질문 화면 하단 고정 액션바 레이아웃 개선\n\n\nRefactor\n\n기존 Redux 기반 토스트 전면 교체\n댓글 리스트 내부 로딩/에러 관리로 단순화\n좋아요 API 엔드포인트 및 요청 스키마 정리(Like/Dislike 분리)\n일부 컴포넌트 props 축소/변경 및 구형 컴포넌트 폐기/이전\n\n\nDocumentation\n\n스타일 가이드(절대 규칙) 추가, 새 토스트 사용법 및 체크리스트 문서화\n\n\nChores\n\n버전 0.1.6으로 업데이트, README 최신 버전 배너 추가",
+      "parsed_changes": {
+        "new_features": {
+          "title": "New Features",
+          "items": [
+            "공통 토스트 시스템(useCommonToast, CommonToast) 도입",
+            "질문 본문 아코디언(접기/펼치기) 헤더 추가"
+          ]
+        },
+        "style": {
+          "title": "Style",
+          "items": [
+            "답변/질문 화면 하단 고정 액션바 레이아웃 개선"
+          ]
+        },
+        "refactor": {
+          "title": "Refactor",
+          "items": [
+            "기존 Redux 기반 토스트 전면 교체",
+            "댓글 리스트 내부 로딩/에러 관리로 단순화",
+            "좋아요 API 엔드포인트 및 요청 스키마 정리(Like/Dislike 분리)",
+            "일부 컴포넌트 props 축소/변경 및 구형 컴포넌트 폐기/이전"
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "스타일 가이드(절대 규칙) 추가, 새 토스트 사용법 및 체크리스트 문서화"
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "버전 0.1.6으로 업데이트, README 최신 버전 배너 추가"
+          ]
+        }
+      }
+    },
     {
       "version": "0.1.3",
       "project_type": "react",
