@@ -5,7 +5,7 @@ interface ContentTextareaProps {
 
 function AnswerInput({ value, onChange }: ContentTextareaProps) {
   return (
-    <label htmlFor="content" className="mb-[26px] block">
+    <label htmlFor="content" className="mb-6 block">
       <div className="flex items-center justify-between">
         <div className="flex items-center">
           <span className="font-pretendard-semibold mr-1.5 text-lg">답변</span>
@@ -20,7 +20,7 @@ function AnswerInput({ value, onChange }: ContentTextareaProps) {
         onChange={onChange}
         maxLength={2000}
         required
-        className="font-pretendard-medium mt-3 h-40 w-full rounded-[8px] border-2 border-[#BDBDBD] px-4 py-2 text-base"
+        className="font-pretendard-medium mt-3 h-40 w-full rounded-lg border-2 border-ui-border px-4 py-2 text-base"
       />
     </label>
   );

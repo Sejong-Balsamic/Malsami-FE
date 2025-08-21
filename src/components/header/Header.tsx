@@ -27,6 +27,8 @@ interface HeaderProps {
   hasNotification?: boolean;
   // eslint-disable-next-line react/require-default-props
   isFixed?: boolean; // 고정 헤더 여부
+  // eslint-disable-next-line react/require-default-props
+  rightButtonRef?: React.RefObject<HTMLButtonElement>; // 오른쪽 버튼 ref
 }
 
 function Header({
@@ -38,6 +40,7 @@ function Header({
   onRightClick = () => {},
   hasNotification = false,
   isFixed = false,
+  rightButtonRef,
 }: HeaderProps) {
   // 왼쪽 아이콘 결정
   const renderLeftItem = () => {
@@ -111,6 +114,7 @@ function Header({
 
       {/* 오른쪽 버튼 */}
       <button
+        ref={rightButtonRef}
         type="button"
         onClick={onRightClick}
         className="flex h-10 w-10 items-center justify-center rounded-full hover:bg-gray-100"
