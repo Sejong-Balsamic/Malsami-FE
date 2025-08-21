@@ -6,8 +6,11 @@ import postComment from "@/apis/question/postComment";
 import refreshComments from "@/apis/question/refreshComments";
 import { Comment } from "@/types/api/entities/postgres/comment";
 import { getDateDiff } from "@/global/time";
-import postLikeComment from "@/apis/question/postLikeComment";
+import likeApi from "@/apis/likeApi";
+import { ContentType } from "@/types/api/constants/contentType";
+import { LikeType } from "@/types/api/constants/likeType";
 import { isSameMemberById } from "@/global/memberUtil";
+import useCommonToast from "@/global/hook/useCommonToast";
 
 interface CommentSectionProps {
   postId: string;
@@ -15,11 +18,14 @@ interface CommentSectionProps {
   onCommentAdded: () => void;
 }
 
+// 사용하지않습니다 해당 UI는 사용하지않스빈다 depreacted
 function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionProps) {
   const [content, setContent] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
   const [comments, setComments] = useState<Comment[]>([]);
   const [totalComments, setTotalComments] = useState(0);
+
+  const { showWarningToast } = useCommonToast();
 
   useEffect(() => {
     const loadComments = async () => {
@@ -83,12 +89,17 @@ function CommentSection({ postId, contentType, onCommentAdded }: CommentSectionP
       updatedComments[commentIndex].likeCount += 1; // 즉시 반영: 좋아요 숫자 증가
       setComments(updatedComments);
 
-      await postLikeComment(commentId); // API 호출
+      await likeApi.commentLike({
+        postId: commentId,
+        contentType: ContentType.COMMENT,
+        likeType: LikeType.LIKE,
+      }); // API 호출
     } catch (error) {
       console.error("댓글 좋아요 실패:", error);
       updatedComments[commentIndex].isLiked = false; // 실패 시 롤백
       updatedComments[commentIndex].likeCount -= 1; // 숫자도 원래대로 롤백
       setComments(updatedComments);
+      showWarningToast("좋아요 처리 중 오류가 발생했습니다.");
     }
   };
 

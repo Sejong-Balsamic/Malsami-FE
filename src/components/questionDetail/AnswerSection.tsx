@@ -6,6 +6,7 @@ import { formatDateTime } from "@/global/time";
 import getAnswer from "@/apis/question/getAnswer";
 import likeApi from "@/apis/likeApi";
 import { ContentType } from "@/types/api/constants/contentType";
+import { LikeType } from "@/types/api/constants/likeType";
 import { isSameMemberById } from "@/global/memberUtil";
 import { AnswerPost } from "@/types/api/entities/postgres/answerPost";
 import ChaetaekTag from "@/components/common/tags/ChaetaekTag";
@@ -57,6 +58,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
       await likeApi.questionBoardLike({
         postId: answerId,
         contentType: ContentType.ANSWER,
+        likeType: LikeType.LIKE,
       });
     } catch (likeError) {
       console.error("좋아요 업데이트 실패:", likeError);

@@ -112,7 +112,7 @@ export default function CommentPage() {
         />
 
         {/* 댓글 입력창 - 하단 고정 */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-[640px] bg-white pb-3 pt-3">
+        <div className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-[640px] bg-white">
           <CommentInput
             postId={postId}
             isAuthor={questionDetails?.questionPost?.isAuthor || false}

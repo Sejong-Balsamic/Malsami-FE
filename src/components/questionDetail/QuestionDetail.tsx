@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import likeApi from "@/apis/likeApi";
 import { ContentType } from "@/types/api/constants/contentType";
+import { LikeType } from "@/types/api/constants/likeType";
 import AnswerSection from "./AnswerSection";
 import { formatDateTime } from "@/global/time";
 import { useMemo } from "react";
@@ -76,10 +77,11 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
       setIsLiked(true);
       setCurrentLikeCount(prevCount => prevCount + 1);
 
-      // API 호출 (새로운 likeApi 사용)
+      // 좋아요 API 호출
       await likeApi.questionBoardLike({
         postId: questionDto.questionPost?.questionPostId,
         contentType: ContentType.QUESTION,
+        likeType: LikeType.LIKE,
       });
     } catch (error) {
       console.error("좋아요 업데이트 실패:", error);
