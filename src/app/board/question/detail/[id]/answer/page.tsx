@@ -7,8 +7,7 @@ import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import postAnswer from "@/apis/question/postAnswer";
 import { useDispatch } from "react-redux";
-import { addToast } from "@/global/store/toastSlice"; // Toast 액션 가져오기
-import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import useCommonToast from "@/global/hook/useCommonToast";
 import FileUploadInput from "@/components/questionPost/FileUploadInput";
 import QuestionSummary from "@/components/questionComment/QuestionSummary";
 import CommonHeader from "@/components/header/CommonHeader";
@@ -43,21 +42,7 @@ export default function AnswerPostPage() {
   const [isFormValid, setIsFormValid] = useState(false);
   const mediaAllowedTypes = ["image/jpeg", "image/png"];
 
-  const showToast = (message: string) => {
-    dispatch(
-      addToast({
-        id: Date.now().toString(),
-        icon: <ToastIcon color="blue" />,
-        title: message,
-        color: "blue",
-        action: (
-          <ToastAction color="blue" altText="확인">
-            확인
-          </ToastAction>
-        ),
-      }),
-    );
-  };
+  const { showConfirmToast, showWarningToast } = useCommonToast();
 
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -77,7 +62,7 @@ export default function AnswerPostPage() {
       const filteredFiles = filesArray.filter(file => mediaAllowedTypes.includes(file.type));
 
       if (filteredFiles.length !== filesArray.length) {
-        showToast("JPEG 또는 PNG 형식의 파일만 업로드할 수 있습니다.");
+        showWarningToast("JPEG 또는 PNG 형식의 파일만 업로드할 수 있습니다.");
         e.target.value = ""; // 선택한 파일 무효화
       } else {
         setFormData(prevFormData => ({
@@ -129,7 +114,7 @@ export default function AnswerPostPage() {
             });
           }
         } catch (innerError) {
-          showToast("질문 정보를 불러오는데 실패했습니다.");
+          showWarningToast("질문 정보를 불러오는데 실패했습니다.");
         } finally {
           if (isMounted) {
             setIsQuestionsLoading(false);
@@ -150,7 +135,7 @@ export default function AnswerPostPage() {
     if (isSubmitting) return;
 
     if (!formData.content.trim()) {
-      showToast("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
+      showWarningToast("질문을 입력해주세요. (공백만 입력할 수 없습니다)");
       return;
     }
     setisSubmitting(true);
@@ -163,23 +148,23 @@ export default function AnswerPostPage() {
           isPrivate: formData.isPrivate,
           mediaFiles: formData.mediaFiles,
         }); // API 호출
-        showToast("답변이 성공적으로 등록되었습니다.");
+        showConfirmToast("답변이 성공적으로 등록되었습니다.");
         localStorage.removeItem("answerFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
         router.push(`/board/question/detail/${questionPostId}`); // 작성 완료 후 해당 질문 상세 페이지로 이동
       } catch (error) {
         // AxiosError 확인
         if (axios.isAxiosError(error)) {
           const errorMessage = error.response?.data?.errorMessage || "오류가 발생했습니다.";
-          showToast(errorMessage);
+          showWarningToast(errorMessage);
         } else {
           // 예상치 못한 오류 처리
-          showToast("답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
+          showWarningToast("답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
         }
       } finally {
         setisSubmitting(false);
       }
     } else {
-      showToast("모든 필수 항목을 채워주세요.");
+      showWarningToast("모든 필수 항목을 채워주세요.");
     }
   };
 
@@ -292,18 +277,21 @@ export default function AnswerPostPage() {
               </div>
 
               {/* 완료 버튼 */}
-              <div className="mb-6 mt-8">
+              <div className="fixed bottom-4 left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-5">
                 <button
                   type="button"
                   onClick={handleSubmit}
                   disabled={!isFormValid}
-                  className={`h-14 w-full rounded-lg text-SUIT_18 font-extrabold text-white disabled:cursor-not-allowed ${
+                  className={`h-12 w-full rounded-lg text-SUIT_18 font-extrabold text-white disabled:cursor-not-allowed ${
                     isFormValid ? "bg-question-main" : "bg-ui-border"
                   }`}
                 >
                   완료
                 </button>
               </div>
+
+              {/* 하단 완료 버튼 공간 확보 */}
+              <div className="h-20" />
             </form>
           )}
         </div>

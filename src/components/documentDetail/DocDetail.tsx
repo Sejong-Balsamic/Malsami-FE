@@ -7,9 +7,9 @@ import { documentPostApi } from "@/apis/documentPostApi"; // API 호출로 변�
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { getDateDiff } from "@/global/time";
 import { DocumentDto } from "@/types/api/responses/documentDto";
-import CommentSection from "@/components/documentDetail/DCommentSection";
 import { isSameMemberById } from "@/global/memberUtil";
 import DownloadFile from "@/components/documentDetail/DownloadFile";
+import CommentSection from "@/deprecated/DCommentSection";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {

@@ -4,8 +4,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import WarningAlertModal from "@/components/common/modal/WarningAlertModal";
 import authApi from "@/apis/authApi";
-import { addToast } from "@/global/store/toastSlice";
-import { ToastIcon, ToastAction } from "@/components/shadcn/toast";
+import useCommonToast from "@/global/hook/useCommonToast";
 import { RootState } from "@/global/store";
 import { logout as logoutAction } from "@/global/store/authSlice";
 
@@ -20,33 +19,19 @@ function Facility() {
   const fcmToken = useSelector((state: RootState) => state.fcm.fcmToken);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const showToast = (message: string) => {
-    dispatch(
-      addToast({
-        id: Date.now().toString(),
-        icon: <ToastIcon color="orange" />,
-        title: message,
-        color: "orange",
-        action: (
-          <ToastAction color="orange" altText="확인">
-            확인
-          </ToastAction>
-        ),
-      }),
-    );
-  };
+  const { showConfirmToast } = useCommonToast();
 
   const handleLogout = async () => {
     try {
       await authApi.logout({ fcmToken: fcmToken || "" });
       sessionStorage.removeItem("memberId");
       dispatch(logoutAction());
-      showToast("로그아웃 되었습니다.");
+      showConfirmToast("로그아웃 되었습니다.");
       setIsModalOpen(false);
       router.push("/");
     } catch (error) {
       console.error("로그아웃 실패:", error);
-      showToast("로그아웃 실패. 다시 시도해주세요.");
+      showConfirmToast("로그아웃 실패. 다시 시도해주세요.");
     }
   };
 

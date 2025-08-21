@@ -9,8 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import { useDispatch } from "react-redux";
-import { showToast } from "@/global/toastUtils";
+import useCommonToast from "@/global/hook/useCommonToast";
 import { Drawer, DrawerContent } from "@/components/shadcn/drawer";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import Image from "next/image";
@@ -20,7 +19,7 @@ import { DocumentDto } from "@/types/api/responses/documentDto";
 
 export default function Page() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const { showWarningToast } = useCommonToast();
 
   // URL 파라미터 가져옴
   const params = useParams();
@@ -62,11 +61,11 @@ export default function Page() {
           if (isMounted && !error) {
             if (axios.isAxiosError(innerError)) {
               const message = innerError.response?.data?.errorMessage || "알 수 없는 오류가 발생했습니다.";
-              showToast(dispatch, message, "orange");
+              showWarningToast(message);
               setError(message);
               router.back();
             } else {
-              showToast(dispatch, "예상치 못한 오류가 발생했습니다.", "orange");
+              showWarningToast("예상치 못한 오류가 발생했습니다.");
               router.back();
             }
           }
@@ -82,7 +81,7 @@ export default function Page() {
     return () => {
       isMounted = false;
     };
-  }, [postId, error, router, dispatch]);
+  }, [postId, error, router, showWarningToast]);
 
   // 로딩 상태 처리
   if (isLoading) return <LoadingSpinner />;

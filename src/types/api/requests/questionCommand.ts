@@ -3,6 +3,7 @@ import { QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
 import { ContentType } from "@/types/api/constants/contentType";
 import { SortType } from "@/types/api/constants/sortType";
 import { ChaetaekStatus } from "@/types/api/constants/chaetaekStatus";
+import { LikeType } from "@/types/api/constants/likeType";
 
 export interface QuestionCommand {
   postId?: string;
@@ -16,6 +17,7 @@ export interface QuestionCommand {
   customTags?: string[];
   rewardYeopjeon?: number;
   contentType?: ContentType;
+  likeType?: LikeType;
   isPrivate?: boolean;
   pageNumber?: number;
   pageSize?: number;
