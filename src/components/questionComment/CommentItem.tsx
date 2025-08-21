@@ -4,7 +4,9 @@ import { useState } from "react";
 import Image from "next/image";
 import { Comment } from "@/types/api/entities/postgres/comment";
 import { commentApi } from "@/apis/commentApi";
+import { LikeType } from "@/types/api/constants/likeType";
 import { formatDateTime } from "@/global/time";
+import useCommonToast from "@/global/hook/useCommonToast";
 
 interface CommentItemProps {
   comment: Comment;
@@ -16,6 +18,8 @@ export default function CommentItem({ comment, isQuestionAuthor }: CommentItemPr
   const [isDisliked, setIsDisliked] = useState(false);
   const [likeCount, setLikeCount] = useState<number>(comment.likeCount ?? 0);
   const [dislikeCount, setDislikeCount] = useState<number>(0);
+
+  const { showWarningToast } = useCommonToast();
 
   // 현재 댓글이 질문 작성자의 것인지 확인 (부모에서 props로 전달받음)
   const isAuthor = !!isQuestionAuthor;
@@ -32,24 +36,24 @@ export default function CommentItem({ comment, isQuestionAuthor }: CommentItemPr
       setLikeCount(prev => prev + 1);
       setIsLiked(true);
 
-      // API 호출
+      // API 호출 - commentApi 사용
       await commentApi.commentLike({
         postId: comment.commentId,
+        likeType: LikeType.LIKE,
       });
     } catch (error) {
       console.error("좋아요 처리 실패:", error);
       // 실패시 상태 되돌리기
       setLikeCount(prev => Math.max(0, prev - 1));
       setIsLiked(false);
+      showWarningToast("좋아요 처리 중 오류가 발생했습니다.");
     }
   };
 
   const handleDislike = async () => {
-    if (isDisliked) {
-      // 이미 싫어요를 누른 상태라면 취소
-      setDislikeCount(prev => Math.max(0, prev - 1));
-      setIsDisliked(false);
-    } else {
+    if (isDisliked) return; // 이미 싫어요를 누른 상태라면 반응하지 않음
+
+    try {
       // 좋아요가 눌려있었다면 취소
       if (isLiked) {
         setLikeCount(prev => Math.max(0, prev - 1));
@@ -59,7 +63,17 @@ export default function CommentItem({ comment, isQuestionAuthor }: CommentItemPr
       setDislikeCount(prev => prev + 1);
       setIsDisliked(true);
 
-      // 싫어요 API가 없을 가능성이 있으므로 클라이언트에서만 처리
+      // API 호출 - 댓글 싫어요
+      await commentApi.commentLike({
+        postId: comment.commentId,
+        likeType: LikeType.DISLIKE,
+      });
+    } catch (error) {
+      console.error("싫어요 처리 실패:", error);
+      // 실패시 상태 되돌리기
+      setDislikeCount(prev => Math.max(0, prev - 1));
+      setIsDisliked(false);
+      showWarningToast("싫어요 처리 중 오류가 발생했습니다.");
     }
   };
 

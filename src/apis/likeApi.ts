@@ -7,17 +7,17 @@ import { CommentDto } from "@/types/api/responses/commentDto";
 import { postApiRequest } from "./apiUtils";
 
 export const likeApi = {
-  // 질문 게시판 좋아요
+  // 질문 게시판 좋아요 (질문글, 답변글 모두)
   questionBoardLike: async (command: Partial<QuestionCommand>): Promise<QuestionDto> =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/likes/question/board", command),
+    postApiRequest<QuestionCommand, QuestionDto>("/api/question/like", command),
 
   // 자료 게시판 좋아요
   documentBoardLike: async (command: Partial<DocumentCommand>): Promise<DocumentDto> =>
-    postApiRequest<DocumentCommand, DocumentDto>("/api/likes/document/board", command),
+    postApiRequest<DocumentCommand, DocumentDto>("/api/document/like", command),
 
   // 댓글 좋아요
   commentLike: async (command: Partial<CommentCommand>): Promise<CommentDto> =>
-    postApiRequest<CommentCommand, CommentDto>("/api/likes/comment", command),
+    postApiRequest<CommentCommand, CommentDto>("/api/comment/like", command),
 };
 
 export default likeApi;
