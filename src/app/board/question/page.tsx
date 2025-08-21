@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import LandingHeader from "@/components/header/LandingHeader";
-import CommonSearchBar from "@/components/search/CommonSearchBar";
+import CommonMainSearchBar from "@/components/common/CommonMainSearchBar";
 import HotQuestionSection from "@/components/landing/HotQuestionSection";
 import MajorQuestionSection from "@/components/landing/MajorQuestionSection";
 import BountyQuestionSection from "@/components/landing/BountyQuestionSection";
@@ -21,20 +21,22 @@ export default function QuestionPage() {
       <LandingHeader contentType="question" />
 
       {/* Main Content */}
-      <main className="px-5 pt-4">
-        {/* 안내글 */}
-        <div className="mb-6 font-suit text-[24px] font-medium" style={{ lineHeight: "140%" }}>
-          <p>
-            궁금한 내용을 <span className="text-question-main">질문</span>하고,
-          </p>
-          <p>
-            다른 사람의 질문에 <span className="text-question-main">답변</span>해 주세요!
-          </p>
-        </div>
+      <main className="px-5">
+        {/* 안내글 섹션 - 헤더로부터 40px 아래 */}
+        <section aria-label="intro" className="mt-10">
+          <div className="font-suit text-[24px] font-medium leading-[140%]">
+            <p>
+              궁금한 내용을 <span className="text-question-main">질문</span>하고,
+            </p>
+            <p>
+              다른 사람의 질문에 <span className="text-question-main">답변</span>해 주세요!
+            </p>
+          </div>
+        </section>
 
-        {/* 검색바 */}
-        <section aria-label="search" className="mb-5">
-          <CommonSearchBar />
+        {/* 검색바 섹션 - 안내글로부터 24px 아래 */}
+        <section aria-label="search" className="mb-5 mt-6">
+          <CommonMainSearchBar contentType="question" />
         </section>
 
         {/* HOT 인기질문 섹션 */}
