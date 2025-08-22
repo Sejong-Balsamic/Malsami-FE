@@ -42,7 +42,7 @@ export default function TierBoardNavigateSection() {
   };
 
   return (
-    <div className="flex justify-between gap-2 px-2">
+    <div className="flex justify-between gap-2">
       {PostTiersKeys.map(tier => (
         <TierBoardNavigateCard
           key={tier}
