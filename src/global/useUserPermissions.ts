@@ -8,7 +8,7 @@ export default function useUserPermissions() {
   useEffect(() => {
     const fetchPermissions = async () => {
       try {
-        const data = await memberApi.getMyInfo(); // getMyInfo로 가정
+        const data = await memberApi.getAccessInfo(); // 엽전 정보 API 호출
         setMemberInfo(data || null);
       } catch (error) {
         console.error("Failed to fetch user permissions:", error);

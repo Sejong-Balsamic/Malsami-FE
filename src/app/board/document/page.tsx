@@ -9,7 +9,7 @@ import DocumentRequestBoardSection from "@/components/documentMain/DocumentReque
 import TierBoardNavigateSection from "@/components/documentMain/TierBoardNavigateSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
 import LandingHeader from "@/components/header/LandingHeader";
-import CommonSearchBar from "@/components/search/CommonSearchBar";
+import CommonMainSearchBar from "@/components/common/CommonMainSearchBar";
 
 export default function DocumentBoardPage() {
   const router = useRouter();
@@ -53,24 +53,34 @@ export default function DocumentBoardPage() {
 
       {/* Main Content */}
       <main className="px-5">
-        {/* 안내글 */}
-        <div className="mb-6 font-suit text-[24px] font-medium" style={{ lineHeight: "140%" }}>
-          <p>
-            필요한 자료를 <span className="text-document-main">구매</span>하고,
-          </p>
-          <p>
-            여러 자료를 <span className="text-document-main">직접 올려보세요</span>!
-          </p>
-        </div>
-        {/* 검색바 섹션 */}
-        <section aria-label="search" className="mb-6 mt-4">
-          <CommonSearchBar />
+        {/* 안내글 섹션 - 헤더로부터 40px 아래 */}
+        <section aria-label="intro" className="mt-10">
+          <div className="font-suit text-[24px] font-medium leading-[140%]">
+            <p>
+              필요한 자료를 <span className="text-document-main">구매</span>하고,
+            </p>
+            <p>
+              여러 자료를 <span className="text-document-main">직접 올려보세요</span>!
+            </p>
+          </div>
         </section>
 
-        {/* 티어 네비게이션 섹션 */}
-        <section aria-labelledby="DocBoardNavigationSection" className="mb-6">
-          <h1 className="text-SUIT_18 font-bold text-[#0CD4AE]">엽전을 모아</h1>
-          <h1 className="mb-3 text-SUIT_18 font-bold text-black">다양한 게시판들을 이용할 수 있어요.</h1>
+        {/* 검색바 섹션 - 안내글로부터 20px 아래 */}
+        <section aria-label="search" className="mt-5">
+          <CommonMainSearchBar contentType="document" />
+        </section>
+
+        {/* 계급게시판 섹션 - 검색창으로부터 60px 아래 */}
+        <section aria-labelledby="tier-board-navigation" className="mb-6 mt-[60px]">
+          <div className="mb-2">
+            <div className="flex items-center gap-2">
+              <img src="/icons/yeopjeon.svg" alt="엽전 아이콘" width={24} height={24} />
+              <h2 className="text-SUIT_16 font-bold text-black">계급게시판</h2>
+            </div>
+            <p className="ml-8 mt-2 text-[12px] font-medium leading-[100%]" style={{ color: "#898989" }}>
+              엽전을 모아 더 높은 계급의 게시판을 사용하세요!
+            </p>
+          </div>
           <TierBoardNavigateSection />
         </section>
 

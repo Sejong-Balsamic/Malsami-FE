@@ -1,11 +1,46 @@
 {
   "metadata": {
-    "lastUpdated": "2025-08-21T15:42:54Z",
-    "currentVersion": "0.1.6",
+    "lastUpdated": "2025-08-22T10:43:39Z",
+    "currentVersion": "0.1.8",
     "projectType": "react",
-    "totalReleases": 8
+    "totalReleases": 9
   },
   "releases": [
+    {
+      "version": "0.1.8",
+      "project_type": "react",
+      "date": "2025-08-22",
+      "pr_number": 604,
+      "raw_summary": "Summary by CodeRabbit\n\n\nNew Features\n\n메인 검색바 도입(문서/질문 지원, @주제 자동완성, 검색 이동/초기화).\n계급게시판 접근 시 보유 엽전 부족 안내 토스트 및 필요 엽전 계산.\n댓글 더보기 컨텍스트 메뉴 추가(신고/차단 진입점, 준비 중 알림).\n\n\n\nStyle\n\n문서/질문 게시판 상단 레이아웃 개편(인트로·검색·계급게시판 3블록), 타이포/간격 개선, 아이콘·문구 업데이트.\n\n\n\nDocumentation\n\nREADME 최신 버전 표기 갱신.\n\n\n\nChores\n\n앱 버전 0.1.8로 상향 및 메타데이터 업데이트.",
+      "parsed_changes": {
+        "new_features": {
+          "title": "New Features",
+          "items": [
+            "메인 검색바 도입(문서/질문 지원, @주제 자동완성, 검색 이동/초기화).",
+            "계급게시판 접근 시 보유 엽전 부족 안내 토스트 및 필요 엽전 계산.",
+            "댓글 더보기 컨텍스트 메뉴 추가(신고/차단 진입점, 준비 중 알림)."
+          ]
+        },
+        "style": {
+          "title": "Style",
+          "items": [
+            "문서/질문 게시판 상단 레이아웃 개편(인트로·검색·계급게시판 3블록), 타이포/간격 개선, 아이콘·문구 업데이트."
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "README 최신 버전 표기 갱신."
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "앱 버전 0.1.8로 상향 및 메타데이터 업데이트."
+          ]
+        }
+      }
+    },
     {
       "version": "0.1.6",
       "project_type": "react",
