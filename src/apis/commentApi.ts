@@ -23,7 +23,7 @@ export const commentApi = {
   /**
    * 댓글 좋아요
    * Content-Type: multipart/form-data
-   * 필수: postId (댓글 PK)
+   * 필수: postId (댓글 PK), contentType
    */
   commentLike: (c: Partial<CommentCommand>) => postApiRequest<CommentCommand, CommentDto>("/api/comment/like", c),
 };

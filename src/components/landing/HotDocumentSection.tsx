@@ -35,12 +35,12 @@ const MOCK_DAILY_DATA = generateMockData(20, "일간");
 
 export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab }: HotDocumentsSectionProps) {
   const [documents, setDocuments] = useState<DocumentPost[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // 탭 변경에 따른 데이터 로드
   useEffect(() => {
     const fetchDocuments = async () => {
-      setLoading(true);
+      setIsLoading(true);
       try {
         if (activeTab === "주간") {
           const response = await documentPostApi.getWeeklyPopularDocumentPost();
@@ -77,7 +77,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
         setDocuments(activeTab === "주간" ? MOCK_WEEKLY_DATA : MOCK_DAILY_DATA);
         console.log("API 호출 실패로 목데이터를 사용합니다.");
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
@@ -87,7 +87,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
   return (
     <div>
       {/* 헤더 영역: 제목, 탭, 전체보기 */}
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-2 flex items-center justify-between">
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />
@@ -144,12 +144,12 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
 
       {/* 카드 스와이핑 영역 */}
       {/* 로딩 중일 때 스켈레톤 표시 */}
-      {loading && <MovingCardSkeleton />}
+      {isLoading && <MovingCardSkeleton />}
       {/* 데이터가 있을 때 MovingCardDocument 컴포넌트 렌더링 */}
-      {!loading && documents.length > 0 && <MovingCardDocument data={documents} />}
+      {!isLoading && documents.length > 0 && <MovingCardDocument data={documents} />}
       {/* 데이터가 없을 때 표시되는 메시지 */}
-      {!loading && documents.length === 0 && (
-        <div className="flex h-[194px] w-full items-center justify-center">
+      {!isLoading && documents.length === 0 && (
+        <div className="flex h-48 w-full items-center justify-center">
           <span>표시할 인기 자료가 없습니다.</span>
         </div>
       )}

@@ -1,16 +1,18 @@
+interface SearchInputFieldProps {
+  subject: string;
+  searchValue: string;
+  placeholder: string;
+  onValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+}
+
 export default function SearchInputField({
   subject,
   searchValue,
   placeholder,
   onValueChange,
   onKeyDown,
-}: {
-  subject: string;
-  searchValue: string;
-  placeholder: string;
-  onValueChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-}) {
+}: SearchInputFieldProps) {
   return (
     <div className="flex flex-1 items-center overflow-hidden">
       {/* subject 부분 */}
@@ -27,11 +29,7 @@ export default function SearchInputField({
         value={searchValue}
         onChange={onValueChange}
         onKeyDown={onKeyDown}
-        className="font-pretendard-medium flex-grow bg-transparent text-sm text-black placeholder-gray-400 outline-none"
-        style={{
-          flex: 1, // `input`이 나머지 공간을 차지하도록 설정
-          minWidth: "0px", // `flex-grow`가 잘 동작하도록 최소 크기 제한
-        }}
+        className="min-w-0 flex-1 bg-transparent text-SUIT_16 font-medium leading-tight text-black placeholder-ui-muted focus:outline-none"
       />
     </div>
   );
