@@ -47,7 +47,7 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
   return (
     <div>
       {/* 헤더 영역: 제목, 탭, 전체보기 */}
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-2 flex items-center justify-between">
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />

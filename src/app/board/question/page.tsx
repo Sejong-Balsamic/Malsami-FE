@@ -49,7 +49,7 @@ export default function QuestionPage() {
         </section>
 
         {/* 전체 질문 섹션 */}
-        <section aria-labelledby="all-questions-heading" className="mb-8">
+        <section aria-labelledby="all-questions-heading" className="mb-5">
           <QuestionListSection onViewAll={() => router.push("/board/question/all")} />
         </section>
 

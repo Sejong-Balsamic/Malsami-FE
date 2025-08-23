@@ -46,7 +46,7 @@ export default function MajorQuestionSection({ onViewAll }: MajorQuestionSection
   return (
     <div>
       {/* 헤더 영역: 제목, 전체보기 */}
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-2 flex items-center justify-between">
         <div>
           <div className="flex items-center">
             <Image src="/icons/openFileFolder.svg" alt="학과" width={24} height={24} />

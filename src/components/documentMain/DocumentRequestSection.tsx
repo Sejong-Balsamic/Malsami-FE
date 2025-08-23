@@ -42,7 +42,7 @@ export default function DocumentRequestSection() {
   return (
     <div>
       {/* 콘텐츠 제목 */}
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center">
           <h2 className="text-SUIT_18 font-medium">자료 요청</h2>
         </div>
