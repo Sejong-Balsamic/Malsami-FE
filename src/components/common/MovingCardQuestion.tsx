@@ -1,6 +1,9 @@
+"use client";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import Card from "./Card";
 
@@ -10,55 +13,47 @@ interface MovingCardQuestionProps {
 
 function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
   const router = useRouter();
-  const screenWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-  const slidesPerView = (data?.length || 0) > 1 ? 2 : 1; // 데이터가 10보다 작을 때
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleCardClick = (postId: string) => {
-    if (!postId) {
-      console.error("Invalid postId:", postId);
-      return;
-    }
-    console.log("Clicked card postId:", postId);
+    if (!postId) return;
     router.push(`/board/question/detail/${postId}`);
   };
 
+  if (!isMounted) {
+    return null;
+  }
+
+  if (data.length === 0) return null;
+
   return (
-    data.length > 0 && (
+    <div className="-mx-5 w-screen overflow-hidden">
       <Swiper
         key={`swiper-container-${data.length}`}
         modules={[Autoplay]}
-        slidesPerView={slidesPerView}
-        spaceBetween={20}
+        slidesPerView="auto"
+        spaceBetween={12}
         loop={data.length >= 2}
         autoplay={
-          screenWidth >= 580
+          data.length >= 2
             ? {
                 delay: 5000,
                 disableOnInteraction: false,
               }
             : false
         }
-        breakpoints={{
-          0: {
-            slidesPerView: 1.3,
-          },
-          580: {
-            slidesPerView: 2,
-          },
-        }}
-        className="w-full"
+        className="!pl-5"
       >
         {data.map((questionPost, index) => (
-          <SwiperSlide
-            key={questionPost.questionPostId || questionPost.title || index}
-            className="flex items-center justify-center p-1"
-          >
+          <SwiperSlide key={questionPost.questionPostId || questionPost.title || index} className="!w-[292px]">
             <div
               onClick={() => {
                 if (questionPost.questionPostId) {
                   handleCardClick(questionPost.questionPostId);
-                } else {
-                  console.error("Invalid or undefined postId:", questionPost);
                 }
               }}
               onKeyDown={e =>
@@ -82,7 +77,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
           </SwiperSlide>
         ))}
       </Swiper>
-    )
+    </div>
   );
 }
 

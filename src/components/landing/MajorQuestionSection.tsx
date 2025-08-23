@@ -6,6 +6,7 @@ import MovingCardSkeleton from "@/components/common/MovingCardSkeleton";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import MovingCardQuestion from "@/components/common/MovingCardQuestion";
+import { useMemberInfo } from "@/global/hook/useMemberInfo";
 
 interface MajorQuestionSectionProps {
   onViewAll: () => void;
@@ -14,6 +15,7 @@ interface MajorQuestionSectionProps {
 export default function MajorQuestionSection({ onViewAll }: MajorQuestionSectionProps) {
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const { memberInfo } = useMemberInfo();
 
   // 내 전공 질문 데이터 로드
   useEffect(() => {
@@ -45,9 +47,12 @@ export default function MajorQuestionSection({ onViewAll }: MajorQuestionSection
     <div>
       {/* 헤더 영역: 제목, 전체보기 */}
       <div className="mb-4 flex items-center justify-between">
-        <div className="flex items-center">
-          <Image src="/icons/openFileFolder.svg" alt="학과" width={24} height={24} />
-          <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">내 전공관련 질문</h2>
+        <div>
+          <div className="flex items-center">
+            <Image src="/icons/openFileFolder.svg" alt="학과" width={24} height={24} />
+            <h2 className="ml-2 whitespace-nowrap text-SUIT_18 font-medium">내 전공 질문</h2>
+          </div>
+          {memberInfo?.major && <p className="ml-8 mt-2 text-SUIT_12 font-medium text-[#898989]">{memberInfo.major}</p>}
         </div>
 
         {/* 전체보기 링크 */}

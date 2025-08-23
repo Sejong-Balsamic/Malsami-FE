@@ -27,10 +27,9 @@ export default function SearchInputField({
         value={searchValue}
         onChange={onValueChange}
         onKeyDown={onKeyDown}
-        className="font-pretendard-medium flex-grow bg-transparent text-sm text-black placeholder-gray-400 outline-none"
+        className="flex-1 bg-transparent text-SUIT_16 font-medium leading-[100%] text-black placeholder-ui-muted focus:outline-none"
         style={{
-          flex: 1, // `input`이 나머지 공간을 차지하도록 설정
-          minWidth: "0px", // `flex-grow`가 잘 동작하도록 최소 크기 제한
+          minWidth: "0px", // flex가 잘 동작하도록 최소 크기 제한
         }}
       />
     </div>

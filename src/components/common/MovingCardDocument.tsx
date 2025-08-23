@@ -1,7 +1,10 @@
+"use client";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import Card from "./Card";
 
@@ -11,53 +14,48 @@ interface MovingCardDocumentProps {
 
 function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
   const router = useRouter();
-  const screenWidth = typeof window !== "undefined" ? window.innerWidth : 0;
-  const slidesPerView = (data?.length || 0) > 1 ? 2 : 1; // 데이터가 10보다 작을 때
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
 
   const handleCardClick = (postId: string) => {
-    if (!postId) {
-      console.error("Invalid postId:", postId);
-      return;
-    }
-    console.log("Clicked card postId:", postId);
+    if (!postId) return;
     router.push(`/board/document/detail/${postId}`);
   };
 
+  if (!isMounted) {
+    return null;
+  }
+
+  if (data.length === 0) return null;
+
   return (
-    data.length > 0 && (
+    <div className="-mx-5 w-screen overflow-hidden">
       <Swiper
         key={`swiper-container-${data.length}`}
         modules={[Autoplay]}
-        slidesPerView={slidesPerView}
-        spaceBetween={20}
+        slidesPerView="auto"
+        spaceBetween={12}
         loop={data.length >= 2}
         autoplay={
-          screenWidth >= 580
+          data.length >= 2
             ? {
                 delay: 5000,
                 disableOnInteraction: false,
               }
             : false
         }
-        breakpoints={{
-          0: {
-            slidesPerView: 1.3,
-          },
-          580: {
-            slidesPerView: 2,
-          },
-        }}
-        className="w-full"
+        className="!pl-5"
       >
         {data.map((documentPost, index) => {
           return (
-            <SwiperSlide key={documentPost.documentPostId || index} className="flex items-center justify-center p-1">
+            <SwiperSlide key={documentPost.documentPostId || index} className="!w-[292px]">
               <div
                 onClick={() => {
                   if (documentPost.documentPostId) {
                     handleCardClick(documentPost.documentPostId);
-                  } else {
-                    console.error("Invalid or undefined documentPostId:", documentPost);
                   }
                 }}
                 onKeyDown={e =>
@@ -81,7 +79,7 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
           );
         })}
       </Swiper>
-    )
+    </div>
   );
 }
 
