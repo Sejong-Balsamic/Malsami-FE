@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import { Comment } from "@/types/api/entities/postgres/comment";
 import { commentApi } from "@/apis/commentApi";
+import { ContentType } from "@/types/api/constants/contentType";
 import { LikeType } from "@/types/api/constants/likeType";
 import { formatDateTime } from "@/global/time";
 import useCommonToast from "@/global/hook/useCommonToast";
@@ -42,6 +43,7 @@ export default function CommentItem({ comment, isQuestionAuthor }: CommentItemPr
       // API 호출 - commentApi 사용
       await commentApi.commentLike({
         postId: comment.commentId,
+        contentType: ContentType.COMMENT,
         likeType: LikeType.LIKE,
       });
     } catch (error) {
@@ -69,6 +71,7 @@ export default function CommentItem({ comment, isQuestionAuthor }: CommentItemPr
       // API 호출 - 댓글 싫어요
       await commentApi.commentLike({
         postId: comment.commentId,
+        contentType: ContentType.COMMENT,
         likeType: LikeType.DISLIKE,
       });
     } catch (error) {

@@ -69,7 +69,7 @@ export default function LandingPage() {
         </section>
 
         {/* HOT 인기자료 섹션 */}
-        <section ref={hotDocumentRef} aria-labelledby="hot-documents-heading" className="mb-8">
+        <section ref={hotDocumentRef} aria-labelledby="hot-documents-heading" className="mb-5">
           <HotDocumentsSection
             activeTab={documentActiveTab}
             onTabChange={setDocumentActiveTab}
@@ -78,12 +78,12 @@ export default function LandingPage() {
         </section>
 
         {/* 자료 게시판 섹션 */}
-        <section aria-labelledby="all-documents-heading" className="mb-8">
+        <section aria-labelledby="all-documents-heading" className="mb-5">
           <LandingAllDocumentsSection onViewAll={() => router.push("/board/document")} />
         </section>
 
         {/* HOT 인기질문 섹션 */}
-        <section ref={hotQuestionRef} aria-labelledby="hot-questions-heading" className="mb-8">
+        <section ref={hotQuestionRef} aria-labelledby="hot-questions-heading" className="mb-5">
           <HotQuestionsSection
             activeTab={questionActiveTab}
             onTabChange={setQuestionActiveTab}
@@ -92,7 +92,7 @@ export default function LandingPage() {
         </section>
 
         {/* 질문 게시판 섹션 */}
-        <section aria-labelledby="all-questions-heading" className="mb-8">
+        <section aria-labelledby="all-questions-heading" className="mb-5">
           <LandingAllQuestionsSection onViewAll={() => router.push("/board/question")} />
         </section>
       </main>

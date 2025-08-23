@@ -94,12 +94,12 @@ export default function DocumentBoardPage() {
         </section>
 
         {/* 🎓 내 전공 관련 자료 섹션 */}
-        <section aria-labelledby="my-faculty" className="mb-8">
+        <section aria-labelledby="my-faculty" className="mb-5">
           <MyFacultySection facultys={myFacultys} />
         </section>
 
         {/* 📄 자료 요청 게시판 섹션 (카드 리스트 형태) */}
-        <section aria-labelledby="document-request-board" className="mb-8">
+        <section aria-labelledby="document-request-board" className="mb-5">
           <DocumentRequestBoardSection />
         </section>
       </main>

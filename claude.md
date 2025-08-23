@@ -325,6 +325,28 @@ className="flex-1"         // 나머지 모든 공간
 
 ### 🚨 스타일링 엄격 규칙 (절대 준수!)
 
+#### 🎨 **Figma 디자인 → 프로젝트 표준 변환 원칙 (매우 중요!)**
+**⚠️ 모든 Figma 디자인 사양은 반드시 프로젝트 표준으로 변환해야 합니다! ⚠️**
+
+- ❌ **절대 금지**: Figma에서 제공하는 픽셀 값이나 색상 코드를 그대로 사용
+- ✅ **필수**: 모든 값을 Tailwind CSS 유틸리티 클래스로 변환
+- ✅ **필수**: 프로젝트 색상 시스템 사용 (document-main, question-main, ui-muted 등)
+
+#### Figma → Tailwind 변환 가이드
+```typescript
+// ❌ Figma 값 그대로 사용 (절대 금지!)
+className="w-[292px] h-[194px]"           // Figma 픽셀 값
+className="bg-[#00D1F2]"                  // Figma 색상 코드
+style={{ color: "#A7A7A7" }}             // 인라인 Figma 색상
+className="text-[12px]"                   // Figma 폰트 크기
+
+// ✅ 프로젝트 표준으로 변환 (필수!)
+className="w-72 h-48"                     // Tailwind 표준 클래스
+className="bg-document-main"              // 프로젝트 색상 시스템
+className="text-ui-muted"                 // 프로젝트 색상 토큰
+className="text-SUIT_12"                  // 프로젝트 폰트 시스템
+```
+
 #### 기준 화면 크기
 - **iPhone 15 Pro**: 393 * 852px (개발 기준)
 - **최대 컨테이너 너비**: 640px (`max-w-[640px]`)
@@ -335,9 +357,14 @@ className="flex-1"         // 나머지 모든 공간
 style={{ width: "calc(100% - 40px)", maxWidth: "600px" }}
 style={{ background: "rgba(0, 0, 0, 0.40)" }}
 
-// ❌ 픽셀값 하드코딩 금지  
+// ❌ 픽셀값 하드코딩 금지 (Figma 값 포함!)
 className="fixed bottom-[100px]"
 className="w-[393px] h-[852px]"
+className="w-[292px] h-[194px]"         // Figma에서 온 값이어도 금지!
+
+// ❌ 색상 코드 하드코딩 금지 (Figma 색상 포함!)
+className="bg-[#00D1F2]"                // Figma 색상이어도 금지!
+className="text-[#A7A7A7]"              // Figma 색상이어도 금지!
 
 // ❌ z-index 하드코딩 금지
 className="z-[200]"
@@ -563,10 +590,16 @@ import { useToast } from "@/global/hook/useToast";         // deprecated
 - [ ] **기존 토스트를 새 시스템으로 변경**
 
 ### 모든 답변 답변 에 대해서 확인해야할점 
+- [ ] **🎨 Figma → 프로젝트 표준 변환 검수 (가장 중요!)**
+  - [ ] Figma 픽셀값(w-[292px] 등) 사용 금지 확인
+  - [ ] Figma 색상코드(#00D1F2 등) 사용 금지 확인
+  - [ ] Tailwind 표준 클래스 변환 완료 확인
+  - [ ] 프로젝트 색상 시스템 사용 확인
 - [ ] **스타일 가이드라인 검수**
   - [ ] Tailwind CSS 클래스 사용 (text-SUIT_14, text-SUIT_16 등)
   - [ ] 색상 시스템 준수 (ui-muted, ui-divider 등)
   - [ ] 하드코딩된 픽셀값 제거
+  - [ ] 인라인 스타일 제거 확인
   - [ ] 반응형 디자인 적용
 - [ ] **명명 규칙 검수**
   - [ ] Boolean 변수 is 접두사 확인

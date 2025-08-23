@@ -15,12 +15,12 @@ interface BountyQuestionSectionProps {
 
 export default function BountyQuestionSection({ onViewAll, activeTab, onTabChange }: BountyQuestionSectionProps) {
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // 탭 변경에 따른 데이터 로드
   useEffect(() => {
     const fetchQuestions = async () => {
-      setLoading(true);
+      setIsLoading(true);
       try {
         // 새로운 정렬 타입 사용
         const response = await questionPostApi.getFilteredQuestionPosts({
@@ -35,7 +35,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
         console.error("현상금 질문을 불러오는데 실패했습니다:", error);
         setQuestions([]);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
@@ -45,7 +45,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
   return (
     <div>
       {/* 헤더 영역: 제목, 탭, 전체보기 */}
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-2 flex items-center justify-between">
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/moneyBag.svg" alt="엽전" width={24} height={24} />
@@ -106,12 +106,12 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
 
       {/* 카드 스와이핑 영역 */}
       {/* 로딩 중일 때 스켈레톤 표시 */}
-      {loading && <MovingCardSkeleton />}
+      {isLoading && <MovingCardSkeleton />}
       {/* 데이터가 있을 때 MovingCardQuestion 컴포넌트 렌더링 */}
-      {!loading && questions.length > 0 && <MovingCardQuestion data={questions} />}
+      {!isLoading && questions.length > 0 && <MovingCardQuestion data={questions} />}
       {/* 데이터가 없을 때 표시되는 메시지 */}
-      {!loading && questions.length === 0 && (
-        <div className="flex h-[194px] w-full items-center justify-center">
+      {!isLoading && questions.length === 0 && (
+        <div className="flex h-48 w-full items-center justify-center">
           <span>표시할 현상금 질문이 없습니다.</span>
         </div>
       )}
