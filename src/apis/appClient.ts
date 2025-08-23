@@ -45,7 +45,13 @@ apiClient.interceptors.response.use(
 
     if (error.response?.status === 403 && !isRedirecting) {
       isRedirecting = true;
-      store.dispatch(showModal("해당 페이지는 로그인을 해야 열람할 수 있습니다."));
+      store.dispatch(showModal("로그인 후 이용가능합니다."));
+      
+      // isRedirecting을 일정 시간 후 초기화
+      setTimeout(() => {
+        isRedirecting = false;
+      }, 1000);
+      
       return Promise.reject(error);
     }
 
@@ -62,7 +68,12 @@ apiClient.interceptors.response.use(
         console.error("리프레시 토큰 요청 실패:", refreshError);
         if (!isRedirecting) {
           isRedirecting = true;
-          store.dispatch(showModal("해당 페이지는 로그인을 해야 열람할 수 있습니다."));
+          store.dispatch(showModal("로그인 후 이용가능합니다."));
+          
+          // isRedirecting을 일정 시간 후 초기화
+          setTimeout(() => {
+            isRedirecting = false;
+          }, 1000);
         }
         return Promise.reject(refreshError);
       }
@@ -79,12 +90,12 @@ apiClient.interceptors.response.use(
         // 로그인 모달 표시
         store.dispatch(showModal("로그인 후 이용가능합니다."));
         
-        // 현재 페이지가 홈이 아니면 홈으로 리다이렉트
-        if (window.location.pathname !== "/") {
-          setTimeout(() => {
-            window.location.href = "/";
-          }, 100);
-        }
+        // 리다이렉트 제거 - 모달만 표시
+        
+        // isRedirecting을 일정 시간 후 초기화
+        setTimeout(() => {
+          isRedirecting = false;
+        }, 1000);
         
         return Promise.reject(error);
       }

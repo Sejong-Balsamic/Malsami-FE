@@ -13,7 +13,7 @@ function WarningAlertModal({ isOpen, title, message, confirmLabel, onConfirm, on
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 grid place-items-center">
+    <div className="fixed inset-0 z-[80] grid place-items-center">
       {/* 어두운 배경 */}
       <div
         className="absolute inset-0 bg-black/30"
