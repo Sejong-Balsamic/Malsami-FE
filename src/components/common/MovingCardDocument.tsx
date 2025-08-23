@@ -47,7 +47,7 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
               }
             : false
         }
-        className="!pl-5"
+        className="!pl-5 [&_.swiper-wrapper]:!my-3"
       >
         {data.map((documentPost, index) => {
           return (

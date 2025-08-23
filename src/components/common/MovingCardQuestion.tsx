@@ -46,7 +46,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
               }
             : false
         }
-        className="!pl-5"
+        className="!pl-5 [&_.swiper-wrapper]:!my-3"
       >
         {data.map((questionPost, index) => (
           <SwiperSlide key={questionPost.questionPostId || questionPost.title || index} className="!w-[292px]">
