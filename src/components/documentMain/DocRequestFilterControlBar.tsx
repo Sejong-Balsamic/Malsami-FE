@@ -15,7 +15,7 @@ interface RequestFilterControlBarProps {
 function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFilterControlBarProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
+  const showModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   // 태그 삭제 핸들러
@@ -69,7 +69,7 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
           alt="filter"
           width={16}
           height={16}
-          onClick={openModal}
+          onClick={showModal}
           style={{ cursor: "pointer" }}
         />
       </div>

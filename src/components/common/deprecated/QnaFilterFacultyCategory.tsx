@@ -27,7 +27,7 @@ function QnaFilterFacultyCategory({
 
   // 모달 열고 닫기
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const openModal = () => setIsModalOpen(true);
+  const showModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   // "전체" 버튼 클릭 -> 부모 콜백 호출
@@ -80,7 +80,7 @@ function QnaFilterFacultyCategory({
           {displayedFaculty === "단과대 선택" ? (
             <button
               type="button"
-              onClick={openModal}
+              onClick={showModal}
               className={`font-pretendard-medium flex-1 p-1 text-lg ${
                 isAllFacultySelected ? "text-[#ABABAB]" : "text-[#ABABAB]"
               } `}
@@ -106,7 +106,7 @@ function QnaFilterFacultyCategory({
                 {displayedFaculty}
               </button>
               {/* 토글 아이콘 */}
-              <button type="button" onClick={openModal} className="px-2">
+              <button type="button" onClick={showModal} className="px-2">
                 <Image src="/icons/ToggleIcon.svg" width={14} height={14} alt="ToggleIcon" />
               </button>
             </>

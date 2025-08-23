@@ -4,12 +4,12 @@ interface InfoAlertModalProps {
   isOpen: boolean;
   title: string;
   message: string;
-  confirmLabel?: string;
+  confirmLabel: string;
   onConfirm: () => void;
   onCancel: () => void;
 }
 
-function InfoAlertModal({ isOpen, title, message, confirmLabel, onConfirm, onCancel }: InfoAlertModalProps) {
+function InfoAlertModal({ isOpen, title, message, confirmLabel = "로그인", onConfirm, onCancel }: InfoAlertModalProps) {
   if (!isOpen) return null;
 
   return (
@@ -60,9 +60,5 @@ function InfoAlertModal({ isOpen, title, message, confirmLabel, onConfirm, onCan
     </div>
   );
 }
-
-InfoAlertModal.defaultProps = {
-  confirmLabel: "로그인",
-};
 
 export default InfoAlertModal;

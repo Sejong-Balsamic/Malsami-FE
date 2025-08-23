@@ -69,6 +69,27 @@ apiClient.interceptors.response.use(
     }
 
     const errorData = error.response?.data;
+    
+    // MISSING_REFRESH_TOKEN 에러 처리
+    if (errorData && typeof errorData === "object" && "errorCode" in errorData) {
+      const errorCode = (errorData as { errorCode: string }).errorCode;
+      
+      if (errorCode === "MISSING_REFRESH_TOKEN" && !isRedirecting) {
+        isRedirecting = true;
+        // 로그인 모달 표시
+        store.dispatch(showModal("로그인 후 이용가능합니다."));
+        
+        // 현재 페이지가 홈이 아니면 홈으로 리다이렉트
+        if (window.location.pathname !== "/") {
+          setTimeout(() => {
+            window.location.href = "/";
+          }, 100);
+        }
+        
+        return Promise.reject(error);
+      }
+    }
+    
     const errorMessage =
       errorData && typeof errorData === "object" && "errorMessage" in errorData
         ? (errorData as { errorMessage: string }).errorMessage

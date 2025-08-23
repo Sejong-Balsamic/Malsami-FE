@@ -2,6 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { showModal } from "@/global/store/modalSlice";
 import LandingHeader from "@/components/header/LandingHeader";
 import LandingAllDocumentsSection from "@/components/landing/LandingAllDocumentsSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
@@ -14,6 +16,7 @@ import LandingWriteFAB from "@/components/common/FABs/LandingWriteFAB";
 
 export default function LandingPage() {
   const router = useRouter();
+  const dispatch = useDispatch();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [userName, setUserName] = useState<string>("");
 
@@ -45,6 +48,16 @@ export default function LandingPage() {
     storeUserName();
   }, []);
 
+  // 로그인 체크 함수
+  const checkLoginAndNavigate = (path: string) => {
+    const accessToken = sessionStorage.getItem("accessToken");
+    if (!accessToken) {
+      dispatch(showModal("로그인 후 이용가능합니다."));
+    } else {
+      router.push(path);
+    }
+  };
+
   return (
     <>
       {/* Header */}
@@ -65,7 +78,7 @@ export default function LandingPage() {
 
         {/* 공지사항 섹션 */}
         <section aria-labelledby="notice-heading" className="mb-6">
-          <NoticeSection onViewAll={() => router.push("/notice")} />
+          <NoticeSection onViewAll={() => checkLoginAndNavigate("/notice")} />
         </section>
 
         {/* HOT 인기자료 섹션 */}
@@ -73,13 +86,13 @@ export default function LandingPage() {
           <HotDocumentsSection
             activeTab={documentActiveTab}
             onTabChange={setDocumentActiveTab}
-            onViewAll={() => router.push("/board/document/hot")}
+            onViewAll={() => checkLoginAndNavigate("/board/document/hot")}
           />
         </section>
 
         {/* 자료 게시판 섹션 */}
         <section aria-labelledby="all-documents-heading" className="mb-5">
-          <LandingAllDocumentsSection onViewAll={() => router.push("/board/document")} />
+          <LandingAllDocumentsSection onViewAll={() => checkLoginAndNavigate("/board/document")} />
         </section>
 
         {/* HOT 인기질문 섹션 */}
@@ -87,13 +100,13 @@ export default function LandingPage() {
           <HotQuestionsSection
             activeTab={questionActiveTab}
             onTabChange={setQuestionActiveTab}
-            onViewAll={() => router.push("/board/question/hot")}
+            onViewAll={() => checkLoginAndNavigate("/board/question/hot")}
           />
         </section>
 
         {/* 질문 게시판 섹션 */}
         <section aria-labelledby="all-questions-heading" className="mb-5">
-          <LandingAllQuestionsSection onViewAll={() => router.push("/board/question")} />
+          <LandingAllQuestionsSection onViewAll={() => checkLoginAndNavigate("/board/question")} />
         </section>
       </main>
 

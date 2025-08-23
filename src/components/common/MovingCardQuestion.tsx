@@ -21,6 +21,20 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
 
   const handleCardClick = (postId: string) => {
     if (!postId) return;
+
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    // 로그인 체크
+    if (!accessToken) {
+      // 동적 import로 Redux 관련 코드 실행
+      import("@/global/store/modalSlice").then(({ showModal }) => {
+        import("@/global/store").then(({ store }) => {
+          store.dispatch(showModal("로그인 후 이용가능합니다."));
+        });
+      });
+      return;
+    }
+
     router.push(`/board/question/detail/${postId}`);
   };
 
