@@ -51,7 +51,7 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
       >
         {data.map((documentPost, index) => {
           return (
-            <SwiperSlide key={documentPost.documentPostId || index} className="!w-[292px]">
+            <SwiperSlide key={documentPost.documentPostId || index} className="!w-72">
               <div
                 onClick={() => {
                   if (documentPost.documentPostId) {

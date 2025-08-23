@@ -14,13 +14,13 @@ interface MajorQuestionSectionProps {
 
 export default function MajorQuestionSection({ onViewAll }: MajorQuestionSectionProps) {
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const { memberInfo } = useMemberInfo();
 
   // 내 전공 질문 데이터 로드
   useEffect(() => {
     const fetchQuestions = async () => {
-      setLoading(true);
+      setIsLoading(true);
       try {
         // 사용자의 전공에 맞는 질문들을 가져오는 API 호출
         // 실제로는 사용자의 전공 정보를 가져와서 필터링해야 함
@@ -36,7 +36,7 @@ export default function MajorQuestionSection({ onViewAll }: MajorQuestionSection
         console.error("내 전공 질문을 불러오는데 실패했습니다:", error);
         setQuestions([]);
       } finally {
-        setLoading(false);
+        setIsLoading(false);
       }
     };
 
@@ -67,12 +67,12 @@ export default function MajorQuestionSection({ onViewAll }: MajorQuestionSection
 
       {/* 카드 스와이핑 영역 */}
       {/* 로딩 중일 때 스켈레톤 표시 */}
-      {loading && <MovingCardSkeleton />}
+      {isLoading && <MovingCardSkeleton />}
       {/* 데이터가 있을 때 MovingCardQuestion 컴포넌트 렌더링 */}
-      {!loading && questions.length > 0 && <MovingCardQuestion data={questions} />}
+      {!isLoading && questions.length > 0 && <MovingCardQuestion data={questions} />}
       {/* 데이터가 없을 때 표시되는 메시지 */}
-      {!loading && questions.length === 0 && (
-        <div className="flex h-[194px] w-full items-center justify-center">
+      {!isLoading && questions.length === 0 && (
+        <div className="flex h-48 w-full items-center justify-center">
           <span>표시할 전공 관련 질문이 없습니다.</span>
         </div>
       )}

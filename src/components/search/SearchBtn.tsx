@@ -1,4 +1,8 @@
-export default function SearchBtn({ onClick }: { onClick: () => void }) {
+interface SearchBtnProps {
+  onClick: () => void;
+}
+
+export default function SearchBtn({ onClick }: SearchBtnProps) {
   return (
     <button type="button" className="flex items-center justify-center" onClick={onClick} aria-label="검색">
       <svg
@@ -11,8 +15,7 @@ export default function SearchBtn({ onClick }: { onClick: () => void }) {
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
-        className="lucide lucide-search h-6 w-6"
-        style={{ color: "#00E271" }}
+        className="lucide lucide-search h-6 w-6 text-question-main"
       >
         <circle cx="11" cy="11" r="8" />
         <path d="m21 21-4.3-4.3" />

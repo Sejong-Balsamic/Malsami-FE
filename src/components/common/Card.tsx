@@ -60,11 +60,11 @@ export default function Card({
 
   return (
     <article
-      className="relative flex h-[174px] w-[292px] flex-col rounded-[8px] bg-white shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]"
+      className="relative flex h-44 w-72 flex-col rounded-lg bg-white shadow-md"
       onClick={onClick}
     >
       {/* 상단 Row: 순번 + 과목 태그 */}
-      <div className="ml-[16px] mt-[16px] flex items-start gap-[8px]">
+      <div className="ml-4 mt-4 flex items-start gap-2">
         {/* 순번 */}
         {number && <span className="text-[18px] font-bold leading-[18px] text-[#1D1E27]">{number}</span>}
         {/* 과목 태그 */}
@@ -73,15 +73,15 @@ export default function Card({
       </div>
 
       {/* 제목 */}
-      <h2 className="mx-[16px] mt-[16px] line-clamp-1 text-[16px] font-bold leading-[16px] text-[#1D1E27]">{title}</h2>
+      <h2 className="mx-4 mt-4 line-clamp-1 text-base font-bold leading-4 text-black">{title}</h2>
 
       {/* 본문 내용 */}
-      <p className="mx-[16px] mt-[8px] line-clamp-2 text-[14px] font-normal leading-[19.6px] text-[#616161]">
+      <p className="mx-4 mt-2 line-clamp-2 text-sm font-normal leading-5 text-ui-body">
         {content}
       </p>
 
       {/* 하단 Row: 커스텀 태그 + 좋아요/답변 */}
-      <div className="absolute bottom-[16px] left-[16px] right-[16px] flex items-center justify-between">
+      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
         {/* 커스텀 태그 */}
         <div className="flex gap-2 overflow-hidden whitespace-nowrap">
           {customTags && customTags.map((tag, index) => <CustomTag key={`${tag}-${index}`} tagName={tag} />)}
@@ -90,14 +90,14 @@ export default function Card({
         {/* 좋아요 수와 답변 수 표시 */}
         <div className="ml-2 flex flex-shrink-0 items-center gap-[4px]">
           {/* 좋아요 */}
-          <span className="flex items-center gap-[4px]">
+          <span className="flex items-center gap-1">
             <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
-            <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">{likeCount}</span>
+            <span className="text-xs font-medium leading-3 text-ui-muted">{likeCount}</span>
           </span>
 
           {/* 답변 수 (질문 카드인 경우에만 표시) */}
           {answerCount !== undefined && (
-            <span className="ml-[8px] flex items-center gap-[4px]">
+            <span className="ml-2 flex items-center gap-1">
               <Image src={getCommentIconPath()} alt="답변" width={14} height={14} />
               <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">{answerCount}</span>
             </span>
