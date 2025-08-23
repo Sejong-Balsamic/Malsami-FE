@@ -87,7 +87,7 @@ export default function LandingPage() {
           <HotQuestionsSection
             activeTab={questionActiveTab}
             onTabChange={setQuestionActiveTab}
-            onViewAll={() => router.push("/board/question")}
+            onViewAll={() => router.push("/board/question/hot")}
           />
         </section>
 
