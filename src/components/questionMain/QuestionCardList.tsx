@@ -1,6 +1,9 @@
 import React from "react";
 import { useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
+import { RootState } from "@/global/store";
+import { showModal } from "@/global/store/modalSlice";
 import QuestionCard from "./QuestionCard";
 
 interface QuestionCardListProps {
@@ -9,6 +12,8 @@ interface QuestionCardListProps {
 
 export default function QuestionCardList({ data }: QuestionCardListProps) {
   const router = useRouter();
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   if (!data || data.length === 0) {
     return (
@@ -18,6 +23,14 @@ export default function QuestionCardList({ data }: QuestionCardListProps) {
     );
   }
 
+  const handleQuestionClick = (questionId: string) => {
+    if (!isLoggedIn) {
+      dispatch(showModal("로그인이 필요합니다"));
+      return;
+    }
+    router.push(`/board/question/detail/${questionId}`);
+  };
+
   return (
     <div className="w-full">
       {data.map((question, index) => (
@@ -25,10 +38,10 @@ export default function QuestionCardList({ data }: QuestionCardListProps) {
           <div
             role="button"
             tabIndex={0}
-            onClick={() => router.push(`/board/question/detail/${question.questionPostId}`)}
+            onClick={() => handleQuestionClick(question.questionPostId || "")}
             onKeyDown={e => {
               if (e.key === "Enter" || e.key === " ") {
-                router.push(`/board/question/detail/${question.questionPostId}`);
+                handleQuestionClick(question.questionPostId || "");
               }
             }}
             className="cursor-pointer"
