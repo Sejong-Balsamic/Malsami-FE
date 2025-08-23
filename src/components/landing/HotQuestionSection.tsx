@@ -51,7 +51,7 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />
-            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">HOT 인기 질문</h2>
+            <h2 className="ml-2.5 whitespace-nowrap text-SUIT_18 font-medium">HOT 인기 질문</h2>
           </div>
 
           {/* 주간/일간 버튼 */}
@@ -63,11 +63,11 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
               className="relative flex items-center justify-center"
             >
               <div
-                className={`flex h-[20px] w-[37px] items-center justify-center rounded-[34px] px-[8px] py-[4px] ${
-                  activeTab === "주간" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
+                className={`flex h-5 w-9 items-center justify-center rounded-full px-2 py-1 ${
+                  activeTab === "주간" ? "bg-green-100" : "bg-gray-200"
                 }`}
               >
-                <span className={`text-[12px] ${activeTab === "주간" ? "text-[#00E271]" : "text-[#898989]"}`}>
+                <span className={`text-SUIT_12 ${activeTab === "주간" ? "text-green-500" : "text-gray-500"}`}>
                   주간
                 </span>
               </div>
@@ -77,14 +77,14 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
             <button
               type="button"
               onClick={() => onTabChange("일간")}
-              className="relative ml-[4px] flex items-center justify-center"
+              className="relative ml-1 flex items-center justify-center"
             >
               <div
-                className={`flex h-[20px] w-[37px] items-center justify-center rounded-[34px] px-[8px] py-[4px] ${
-                  activeTab === "일간" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
+                className={`flex h-5 w-9 items-center justify-center rounded-full px-2 py-1 ${
+                  activeTab === "일간" ? "bg-green-100" : "bg-gray-200"
                 }`}
               >
-                <span className={`text-[12px] ${activeTab === "일간" ? "text-[#00E271]" : "text-[#898989]"}`}>
+                <span className={`text-SUIT_12 ${activeTab === "일간" ? "text-green-500" : "text-gray-500"}`}>
                   일간
                 </span>
               </div>
@@ -96,7 +96,7 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
         <button
           type="button"
           onClick={onViewAll}
-          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
+          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-ui-muted"
         >
           전체보기
         </button>
