@@ -1,11 +1,48 @@
 {
   "metadata": {
-    "lastUpdated": "2025-08-22T10:43:39Z",
-    "currentVersion": "0.1.8",
+    "lastUpdated": "2025-08-23T14:11:34Z",
+    "currentVersion": "0.1.9",
     "projectType": "react",
-    "totalReleases": 9
+    "totalReleases": 10
   },
   "releases": [
+    {
+      "version": "0.1.9",
+      "project_type": "react",
+      "date": "2025-08-23",
+      "pr_number": 608,
+      "raw_summary": "Summary by CodeRabbit\n\n\nNew Features\n\n내 전공 질문 섹션에 사용자 전공 표시 추가.\n카드/슬라이더에 키보드 접근성 및 버튼 라벨링 강화, 콘텐츠 수에 따른 자동재생 개선.\n\n\n\nStyle\n\n전역적으로 Figma 픽셀·색상값을 프로젝트 표준(Tailwind/컬러 토큰)으로 치환.\n카드와 스켈레톤 카드 리디자인(크기·간격·그림자·타이포 스케일 조정).\n여러 섹션의 세로 간격 축소로 화면 밀도 개선.\n\n\n\nDocumentation\n\n스타일 가이드에 “Figma → 프로젝트 표준 변환” 섹션 추가 및 체크리스트 보강.\nREADME 최신 버전 정보 갱신.\n\n\n\nChores\n\n앱 버전 0.1.9로 업데이트 및 메타데이터 최신화.",
+      "parsed_changes": {
+        "new_features": {
+          "title": "New Features",
+          "items": [
+            "내 전공 질문 섹션에 사용자 전공 표시 추가.",
+            "카드/슬라이더에 키보드 접근성 및 버튼 라벨링 강화, 콘텐츠 수에 따른 자동재생 개선."
+          ]
+        },
+        "style": {
+          "title": "Style",
+          "items": [
+            "전역적으로 Figma 픽셀·색상값을 프로젝트 표준(Tailwind/컬러 토큰)으로 치환.",
+            "카드와 스켈레톤 카드 리디자인(크기·간격·그림자·타이포 스케일 조정).",
+            "여러 섹션의 세로 간격 축소로 화면 밀도 개선."
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "스타일 가이드에 “Figma → 프로젝트 표준 변환” 섹션 추가 및 체크리스트 보강.",
+            "README 최신 버전 정보 갱신."
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "앱 버전 0.1.9로 업데이트 및 메타데이터 최신화."
+          ]
+        }
+      }
+    },
     {
       "version": "0.1.8",
       "project_type": "react",
