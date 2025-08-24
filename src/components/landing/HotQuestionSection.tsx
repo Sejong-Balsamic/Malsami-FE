@@ -63,7 +63,7 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
               className="relative flex items-center justify-center"
             >
               <div
-                className={`flex h-5 items-center justify-center rounded-full px-2 py-1 ${
+                className={`flex h-5 w-10 items-center justify-center rounded-full px-2 py-1 ${
                   activeTab === "주간" ? "bg-green-100" : "bg-gray-200"
                 }`}
               >
@@ -82,7 +82,7 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
               className="relative ml-1 flex items-center justify-center"
             >
               <div
-                className={`flex h-5 items-center justify-center rounded-full px-2 py-1 ${
+                className={`flex h-5 w-10 items-center justify-center rounded-full px-2 py-1 ${
                   activeTab === "일간" ? "bg-green-100" : "bg-gray-200"
                 }`}
               >

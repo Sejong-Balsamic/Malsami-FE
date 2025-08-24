@@ -103,11 +103,13 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
               className="relative flex items-center justify-center"
             >
               <div
-                className={`flex h-[20px] w-[37px] items-center justify-center rounded-[34px] px-[8px] py-[4px] ${
+                className={`flex h-5 w-10 items-center justify-center rounded-full px-2 py-1 ${
                   activeTab === "주간" ? "bg-[#DDFBFF]" : "bg-[#EDEDED]"
                 }`}
               >
-                <span className={`text-[12px] ${activeTab === "주간" ? "text-[#00D1F2]" : "text-[#898989]"}`}>
+                <span
+                  className={`whitespace-nowrap text-SUIT_12 ${activeTab === "주간" ? "text-[#00D1F2]" : "text-[#898989]"}`}
+                >
                   주간
                 </span>
               </div>
@@ -120,11 +122,13 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
               className="relative ml-[4px] flex items-center justify-center"
             >
               <div
-                className={`flex h-[20px] w-[37px] items-center justify-center rounded-[34px] px-[8px] py-[4px] ${
+                className={`flex h-5 w-10 items-center justify-center rounded-full px-2 py-1 ${
                   activeTab === "일간" ? "bg-[#DDFBFF]" : "bg-[#EDEDED]"
                 }`}
               >
-                <span className={`text-[12px] ${activeTab === "일간" ? "text-[#00D1F2]" : "text-[#898989]"}`}>
+                <span
+                  className={`whitespace-nowrap text-SUIT_12 ${activeTab === "일간" ? "text-[#00D1F2]" : "text-[#898989]"}`}
+                >
                   일간
                 </span>
               </div>

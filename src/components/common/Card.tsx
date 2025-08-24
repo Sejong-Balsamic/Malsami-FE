@@ -60,7 +60,7 @@ export default function Card({
 
   return (
     <article
-      className="relative flex h-44 w-72 flex-col rounded-lg bg-white shadow-md"
+      className="relative flex h-44 w-72 flex-col rounded-lg bg-white shadow-card-custom"
       onClick={onClick}
     >
       {/* 상단 Row: 순번 + 과목 태그 */}
