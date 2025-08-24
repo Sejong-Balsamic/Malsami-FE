@@ -24,8 +24,9 @@ export default function QuestionCardList({ data }: QuestionCardListProps) {
   }
 
   const handleQuestionClick = (questionId: string) => {
+    if (!questionId) return;
     if (!isLoggedIn) {
-      dispatch(showModal("로그인이 필요합니다"));
+      dispatch(showModal("로그인 후 이용가능합니다."));
       return;
     }
     router.push(`/board/question/detail/${questionId}`);
