@@ -38,7 +38,13 @@ export default function PinnedNoticeCard({ noticePost }: PinnedNoticeCardProps) 
 
       {/* 오른쪽 영역: 화살표 (NoticeSection과 동일) */}
       <div className="ml-2 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#37E36D] text-white transition-colors hover:opacity-90">
-        <Image src="/icons/arrowRight.svg" alt="오른쪽 화살표" width={13} height={13} />
+        <Image
+          src="/icons/arrowRight.svg"
+          alt="오른쪽 화살표"
+          width={13}
+          height={13}
+          style={{ width: "auto", height: "auto" }}
+        />
       </div>
     </div>
   );

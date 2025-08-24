@@ -95,7 +95,13 @@ export default function NoticeSection({ onViewAll }: NoticeSectionProps) {
 
         {/* 화살표 아이콘 */}
         <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#37E36D] text-white transition-colors hover:opacity-90">
-          <Image src="/icons/arrowRight.svg" alt="오른쪽 화살표" width={13} height={13} />
+          <Image
+            src="/icons/arrowRight.svg"
+            alt="오른쪽 화살표"
+            width={13}
+            height={13}
+            style={{ width: "auto", height: "auto" }}
+          />
         </div>
       </div>
     </div>

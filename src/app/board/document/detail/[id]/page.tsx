@@ -60,13 +60,38 @@ export default function Page() {
           console.error("문서 상세 정보 가져오기 실패:", innerError);
           if (isMounted && !error) {
             if (axios.isAxiosError(innerError)) {
-              const message = innerError.response?.data?.errorMessage || "알 수 없는 오류가 발생했습니다.";
-              showWarningToast(message);
-              setError(message);
-              router.back();
+              // 인증 관련 에러(401, 403)는 appClient에서 처리하므로 여기서는 router.back()만 실행
+              if (innerError.response?.status === 401 || innerError.response?.status === 403) {
+                if (typeof window !== "undefined" && window.history.length > 1) {
+                  router.back();
+                } else {
+                  router.replace("/");
+                }
+              } else if (innerError.response?.data?.errorCode === "MISSING_REFRESH_TOKEN") {
+                // MISSING_REFRESH_TOKEN 에러도 appClient에서 모달 처리
+                if (typeof window !== "undefined" && window.history.length > 1) {
+                  router.back();
+                } else {
+                  router.replace("/");
+                }
+              } else {
+                // 다른 에러는 기존 로직 유지
+                const message = innerError.response?.data?.errorMessage || "알 수 없는 오류가 발생했습니다.";
+                showWarningToast(message);
+                setError(message);
+                if (typeof window !== "undefined" && window.history.length > 1) {
+                  router.back();
+                } else {
+                  router.replace("/");
+                }
+              }
             } else {
               showWarningToast("예상치 못한 오류가 발생했습니다.");
-              router.back();
+              if (typeof window !== "undefined" && window.history.length > 1) {
+                router.back();
+              } else {
+                router.replace("/");
+              }
             }
           }
         } finally {

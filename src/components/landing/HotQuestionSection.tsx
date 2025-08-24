@@ -63,11 +63,13 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
               className="relative flex items-center justify-center"
             >
               <div
-                className={`flex h-5 w-9 items-center justify-center rounded-full px-2 py-1 ${
+                className={`flex h-5 w-10 items-center justify-center rounded-full px-2 py-1 ${
                   activeTab === "주간" ? "bg-green-100" : "bg-gray-200"
                 }`}
               >
-                <span className={`text-SUIT_12 ${activeTab === "주간" ? "text-green-500" : "text-gray-500"}`}>
+                <span
+                  className={`whitespace-nowrap text-SUIT_12 ${activeTab === "주간" ? "text-green-500" : "text-gray-500"}`}
+                >
                   주간
                 </span>
               </div>
@@ -80,11 +82,13 @@ export default function HotQuestionsSection({ onViewAll, onTabChange, activeTab 
               className="relative ml-1 flex items-center justify-center"
             >
               <div
-                className={`flex h-5 w-9 items-center justify-center rounded-full px-2 py-1 ${
+                className={`flex h-5 w-10 items-center justify-center rounded-full px-2 py-1 ${
                   activeTab === "일간" ? "bg-green-100" : "bg-gray-200"
                 }`}
               >
-                <span className={`text-SUIT_12 ${activeTab === "일간" ? "text-green-500" : "text-gray-500"}`}>
+                <span
+                  className={`whitespace-nowrap text-SUIT_12 ${activeTab === "일간" ? "text-green-500" : "text-gray-500"}`}
+                >
                   일간
                 </span>
               </div>

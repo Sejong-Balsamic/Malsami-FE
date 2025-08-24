@@ -12,7 +12,14 @@ export default function WelcomeSection({ userName }: WelcomeSectionProps) {
   return (
     <div className="flex flex-col">
       <div className="z-40 flex w-full flex-row items-center">
-        <Image src="/image/Mascot.png" alt="웰컴 캐릭터" width={100} height={100} className="mr-3 object-contain" />
+        <Image
+          src="/image/Mascot.png"
+          alt="웰컴 캐릭터"
+          width={100}
+          height={100}
+          className="mr-3 object-contain"
+          style={{ width: "auto", height: "auto" }}
+        />
         <div className="flex w-full">
           <div className="text-SUIT_18 font-medium">
             반가워요, <span className="font-semibold">{userName}</span>님!

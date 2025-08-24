@@ -8,6 +8,8 @@ import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import { useRouter } from "next/navigation";
 import AllQuestionsSectionSkeleton from "@/components/common/skeletons/AllQuestionsSectionSkeleton";
+import { useDispatch } from "react-redux";
+import { showModal } from "@/global/store/modalSlice";
 
 interface AllQuestionsSectionProps {
   onViewAll: () => void;
@@ -17,6 +19,7 @@ export default function AllQuestionsSection({ onViewAll }: AllQuestionsSectionPr
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -45,6 +48,14 @@ export default function AllQuestionsSection({ onViewAll }: AllQuestionsSectionPr
 
   // 질문 상세 페이지로 이동
   const handleCardClick = (questionId: string) => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    // 로그인 체크
+    if (!accessToken) {
+      dispatch(showModal("로그인 후 이용가능합니다."));
+      return;
+    }
+
     router.push(`/board/question/detail/${questionId}`);
   };
 

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { showModal } from "@/global/store/modalSlice";
 import UploadDocumentFAB from "@/components/common/FABs/UploadDocumentFAB";
 import { memberApi } from "@/apis/memberApi";
 import MyFacultySection from "@/components/documentMain/MyFacultySection";
@@ -13,9 +15,19 @@ import CommonMainSearchBar from "@/components/common/CommonMainSearchBar";
 
 export default function DocumentBoardPage() {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [myFacultys, setMyFacultys] = useState<string[]>([]);
   const [isFABVisible, setIsFABVisible] = useState(true); // FAB 버튼 상태 관리
   const [HotDocumentActiveTab, setHotDocumentActiveTab] = useState("주간");
+
+  // 로그인 체크
+  useEffect(() => {
+    const accessToken = sessionStorage.getItem("accessToken");
+    if (!accessToken) {
+      dispatch(showModal("로그인 후 이용가능합니다."));
+      router.push("/");
+    }
+  }, [dispatch, router]);
 
   // 내 정보 불러오기 (학과 조회)
   useEffect(() => {

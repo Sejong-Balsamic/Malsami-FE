@@ -15,7 +15,7 @@ interface FilterControlBarProps {
 function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBarProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
+  const showModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
   // 태그 삭제 처리
@@ -80,7 +80,7 @@ function QnaFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
           alt="filter"
           width={18}
           height={18}
-          onClick={openModal}
+          onClick={showModal}
           className="ml-1.5 cursor-pointer"
         />
       </div>

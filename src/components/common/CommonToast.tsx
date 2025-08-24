@@ -60,7 +60,7 @@ export default function CommonToast() {
   const currentToast = toasts[0]; // 첫 번째 토스트만 표시
 
   return (
-    <div className="fixed bottom-20 left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2">
+    <div className="fixed bottom-20 left-1/2 z-[80] w-full max-w-[640px] -translate-x-1/2">
       <div
         className={`mx-5 flex h-10 items-center rounded-lg bg-black/40 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${
           isVisible && !isRemoving ? "opacity-100" : "opacity-0"

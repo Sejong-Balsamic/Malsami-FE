@@ -16,6 +16,7 @@ const config: Config = {
       },
       boxShadow: {
         "left-custom": "-5px 0px 5px -5px rgba(128, 128, 128, 1)",
+        "card-custom": "2px 2px 10px 0px rgba(0, 0, 0, 0.1)",
       },
       fontSynthesis: {
         none: "none",
