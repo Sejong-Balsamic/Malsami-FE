@@ -91,47 +91,43 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/fire.svg" alt="인기" width={18} height={24} />
-            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">HOT 인기자료</h2>
+            <h2 className="ml-2 whitespace-nowrap text-SUIT_18 font-medium">HOT 인기자료</h2>
           </div>
 
           {/* 주간/일간 버튼 */}
-          <div className="mt-0 flex items-center">
+          <div className="flex items-center gap-1">
             {/* 주간 버튼 */}
             <button
               type="button"
               onClick={() => onTabChange("주간")}
-              className="relative flex items-center justify-center"
+              className={`flex h-5 items-center justify-center rounded-full px-2 py-1 ${
+                activeTab === "주간" ? "bg-document-main/10" : "bg-tag-custom-bg"
+              }`}
             >
-              <div
-                className={`flex h-5 w-10 items-center justify-center rounded-full px-2 py-1 ${
-                  activeTab === "주간" ? "bg-[#DDFBFF]" : "bg-[#EDEDED]"
+              <span
+                className={`whitespace-nowrap text-SUIT_12 ${
+                  activeTab === "주간" ? "text-document-main" : "text-tag-custom-text"
                 }`}
               >
-                <span
-                  className={`whitespace-nowrap text-SUIT_12 ${activeTab === "주간" ? "text-[#00D1F2]" : "text-[#898989]"}`}
-                >
-                  주간
-                </span>
-              </div>
+                주간
+              </span>
             </button>
 
             {/* 일간 버튼 */}
             <button
               type="button"
               onClick={() => onTabChange("일간")}
-              className="relative ml-[4px] flex items-center justify-center"
+              className={`flex h-5 items-center justify-center rounded-full px-2 py-1 ${
+                activeTab === "일간" ? "bg-document-main/10" : "bg-tag-custom-bg"
+              }`}
             >
-              <div
-                className={`flex h-5 w-10 items-center justify-center rounded-full px-2 py-1 ${
-                  activeTab === "일간" ? "bg-[#DDFBFF]" : "bg-[#EDEDED]"
+              <span
+                className={`whitespace-nowrap text-SUIT_12 ${
+                  activeTab === "일간" ? "text-document-main" : "text-tag-custom-text"
                 }`}
               >
-                <span
-                  className={`whitespace-nowrap text-SUIT_12 ${activeTab === "일간" ? "text-[#00D1F2]" : "text-[#898989]"}`}
-                >
-                  일간
-                </span>
-              </div>
+                일간
+              </span>
             </button>
           </div>
         </div>
@@ -140,7 +136,7 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
         <button
           type="button"
           onClick={onViewAll}
-          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
+          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-ui-muted"
         >
           전체보기
         </button>
