@@ -6,6 +6,8 @@ import SubjectTag from "@/components/common/tags/SubjectTag";
 import CustomTag from "@/components/common/tags/CustomTag";
 import { useRouter } from "next/navigation";
 import AllDocumentsSectionSkeleton from "@/components/common/skeletons/AllDocumentsSectionSkeleton";
+import { useDispatch } from "react-redux";
+import { showModal } from "@/global/store/modalSlice";
 
 // 카드 항목의 타입 정의
 interface CardItem {
@@ -63,6 +65,7 @@ export default function AllDocumentsSection({ onViewAll }: AllDocumentsSectionPr
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [documents, setDocuments] = useState<CardItem[]>([]);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     // 실제 API 호출로 대체될 부분
@@ -87,6 +90,14 @@ export default function AllDocumentsSection({ onViewAll }: AllDocumentsSectionPr
 
   // 자료 상세 페이지로 이동
   const handleCardClick = (documentId: number) => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    // 로그인 체크
+    if (!accessToken) {
+      dispatch(showModal("로그인 후 이용가능합니다."));
+      return;
+    }
+
     router.push(`/board/document/detail/${documentId}`);
   };
 

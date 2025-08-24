@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { showModal } from "@/global/store/modalSlice";
 import subjects from "@/types/subjects";
 import queryApi from "@/apis/queryApi";
 import SearchInputField from "./SearchInputField";
@@ -20,6 +22,7 @@ function LandingSearchBar() {
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
   const [isLoadingPlaceholders, setIsLoadingPlaceholders] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   // 인기검색어 API 호출
   const fetchPlaceholders = useCallback(async () => {
@@ -64,8 +67,20 @@ function LandingSearchBar() {
     return () => clearInterval(interval);
   }, [placeholders]);
 
+  // 로그인 체크
+  const checkLogin = () => {
+    const accessToken = sessionStorage.getItem("accessToken");
+    return !!accessToken;
+  };
+
   // 검색 실행
   const routeSearchValue = () => {
+    // 로그인 체크
+    if (!checkLogin()) {
+      dispatch(showModal("로그인 후 이용가능합니다."));
+      return;
+    }
+
     if (!searchValue.trim() && !subject.trim()) return;
     const updatedQuery = `?query=${encodeURIComponent(searchValue.trim())}&subject=${encodeURIComponent(
       subject.trim(),
@@ -112,7 +127,7 @@ function LandingSearchBar() {
           setSearchValue(searchValue.replace(/@[^ ]*/, "").trim());
           setFilteredTerms([]);
         } else {
-          routeSearchValue();
+          routeSearchValue(); // 이미 로그인 체크 포함됨
         }
         break;
       default:

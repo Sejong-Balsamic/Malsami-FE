@@ -3,8 +3,9 @@
 import React from "react";
 
 interface SubjectTagProps {
+  // eslint-disable-next-line react/require-default-props
   subjectName?: string;
-  type?: "question" | "document";
+  type: "question" | "document";
 }
 
 /**
@@ -12,7 +13,7 @@ interface SubjectTagProps {
  * @param subjectName - 과목명 (없으면 "과목 없음")
  * @param type - 게시글 타입 (question | document) 에 따라 태그 색상이 달라집니다.
  */
-export default function SubjectTag({ subjectName, type }: SubjectTagProps) {
+export default function SubjectTag({ subjectName = "과목 없음", type = "question" }: SubjectTagProps) {
   const text = subjectName ?? "과목 없음";
   const bgColorClass = type === "question" ? "bg-question-main" : "bg-document-main";
 
@@ -24,8 +25,3 @@ export default function SubjectTag({ subjectName, type }: SubjectTagProps) {
     </div>
   );
 }
-
-SubjectTag.defaultProps = {
-  subjectName: "과목 없음",
-  type: "question",
-};

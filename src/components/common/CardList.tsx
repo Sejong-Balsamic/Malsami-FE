@@ -54,7 +54,7 @@ export default function CardList() {
         <div key={data.createdDate} className="py-5">
           {/* 상단 부분 */}
           <div className="mb-3 flex justify-between">
-            <SubjectTag subjectName={data.subject} />
+            <SubjectTag subjectName={data.subject} type="document" />
             <span className="text-SUIT_12 font-medium text-[#D1D1D1]">{getDateDiff(data.createdDate)}</span>
           </div>
 

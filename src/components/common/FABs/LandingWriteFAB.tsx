@@ -3,21 +3,50 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { useDispatch } from "react-redux";
+import { showModal } from "@/global/store/modalSlice";
 
 function LandingWriteFAB() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const toggleMenu = () => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    // 로그인 체크
+    if (!accessToken) {
+      dispatch(showModal("로그인 후 이용가능합니다."));
+      return;
+    }
+
     setIsMenuOpen(prev => !prev);
   };
 
   const handleDocumentClick = () => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    // 로그인 체크
+    if (!accessToken) {
+      setIsMenuOpen(false);
+      dispatch(showModal("로그인 후 이용가능합니다."));
+      return;
+    }
+
     setIsMenuOpen(false);
     router.push("/board/document/post");
   };
 
   const handleQuestionClick = () => {
+    const accessToken = sessionStorage.getItem("accessToken");
+
+    // 로그인 체크
+    if (!accessToken) {
+      setIsMenuOpen(false);
+      dispatch(showModal("로그인 후 이용가능합니다."));
+      return;
+    }
+
     setIsMenuOpen(false);
     router.push("/board/question/post");
   };

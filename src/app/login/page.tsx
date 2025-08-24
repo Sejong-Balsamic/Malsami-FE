@@ -1,11 +1,25 @@
 "use client";
 
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import LoginForm from "@/components/login/LoginForm";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 
 export default function LoginPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    // 로그인 상태 확인 (sessionStorage에서 accessToken 확인)
+    const accessToken = typeof window !== "undefined" ? sessionStorage.getItem("accessToken") : null;
+
+    if (accessToken) {
+      // 이미 로그인된 상태면 홈으로 리다이렉션
+      router.replace("/");
+    }
+  }, [router]);
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
