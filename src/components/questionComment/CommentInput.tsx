@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { commentApi } from "@/apis/commentApi";
 import memberApi from "@/apis/memberApi";
+import useCommonToast from "@/global/hook/useCommonToast";
 
 interface CommentInputProps {
   postId: string;
@@ -16,6 +17,7 @@ export default function CommentInput({ postId, isAuthor, onCommentAdded }: Comme
   const [isAnonymous, setIsAnonymous] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isCurrentUserAuthor, setIsCurrentUserAuthor] = useState<boolean>(isAuthor);
+  const { showWarningToast } = useCommonToast();
 
   // memberApi를 통해 현재 로그인한 사용자가 질문 작성자인지 확인
   useEffect(() => {
@@ -28,7 +30,7 @@ export default function CommentInput({ postId, isAuthor, onCommentAdded }: Comme
             setIsCurrentUserAuthor(true); // 실제 구현에서는 비교 로직이 필요
           }
         } catch (error) {
-          console.error("사용자 정보 가져오기 실패:", error);
+          // 에러 처리
         }
       }
     };
@@ -58,8 +60,7 @@ export default function CommentInput({ postId, isAuthor, onCommentAdded }: Comme
         onCommentAdded();
       }
     } catch (error) {
-      console.error("댓글 작성 실패:", error);
-      alert("댓글 작성에 실패했습니다. 다시 시도해주세요.");
+      showWarningToast("댓글 작성에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsSubmitting(false);
     }

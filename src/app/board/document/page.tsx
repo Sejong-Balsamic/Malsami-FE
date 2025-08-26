@@ -11,7 +11,8 @@ import DocumentRequestBoardSection from "@/components/documentMain/DocumentReque
 import TierBoardNavigateSection from "@/components/documentMain/TierBoardNavigateSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
 import LandingHeader from "@/components/header/LandingHeader";
-import CommonMainSearchBar from "@/components/common/CommonMainSearchBar";
+import SearchBar from "@/components/common/SearchBar";
+import Image from "next/image";
 
 export default function DocumentBoardPage() {
   const router = useRouter();
@@ -37,7 +38,6 @@ export default function DocumentBoardPage() {
         const faculties = memberInfo?.member?.faculties || [];
         setMyFacultys(faculties);
       } catch (error) {
-        console.error("내 정보 데이터를 불러오는 중 오류 발생:", error);
         setMyFacultys([]);
       }
     };
@@ -79,17 +79,28 @@ export default function DocumentBoardPage() {
 
         {/* 검색바 섹션 - 안내글로부터 20px 아래 */}
         <section aria-label="search" className="mt-5">
-          <CommonMainSearchBar contentType="document" />
+          <SearchBar
+            variant="colored"
+            borderColor="rgb(0, 209, 242)"
+            placeholder="자료를 검색해보세요"
+            showLoginCheck
+            onSearch={query => {
+              if (query.trim()) {
+                router.push(`/search/${encodeURIComponent(query)}`);
+              }
+            }}
+            className="w-full"
+          />
         </section>
 
         {/* 계급게시판 섹션 - 검색창으로부터 60px 아래 */}
         <section aria-labelledby="tier-board-navigation" className="mb-6 mt-[60px]">
           <div className="mb-2">
             <div className="flex items-center gap-2">
-              <img src="/icons/yeopjeon.svg" alt="엽전 아이콘" width={24} height={24} />
+              <Image src="/icons/yeopjeon.svg" alt="엽전 아이콘" width={24} height={24} />
               <h2 className="text-SUIT_16 font-bold text-black">계급게시판</h2>
             </div>
-            <p className="ml-8 mt-2 text-[12px] font-medium leading-[100%]" style={{ color: "#898989" }}>
+            <p className="ml-8 mt-2 text-SUIT_12 font-medium leading-tight text-ui-muted">
               엽전을 모아 더 높은 계급의 게시판을 사용하세요!
             </p>
           </div>

@@ -1,43 +1,90 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { showModal } from "@/global/store/modalSlice";
 import { Search, X } from "lucide-react";
 import subjects from "@/types/subjects";
 import AutoCompleteSuggestionList from "@/components/search/AutoCompleteSuggestionList";
-
-interface CommonMainSearchBarProps {
-  // eslint-disable-next-line react/require-default-props
-  contentType?: "document" | "question";
-}
+import queryApi from "@/apis/queryApi";
 
 const savedSearchTerms: string[] = subjects;
-const placeholders = ["과목명, 키워드 등을 입력하세요."];
 
-export default function CommonMainSearchBar({ contentType = "question" }: CommonMainSearchBarProps) {
+export default function LandingSearchBar() {
   const [searchValue, setSearchValue] = useState("");
   const [subject, setSubject] = useState("");
   const [filteredTerms, setFilteredTerms] = useState<string[]>([]);
   const [activeSuggestionIndex, setActiveSuggestionIndex] = useState(-1);
+  const [placeholders, setPlaceholders] = useState<string[]>([]);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [isLoadingPlaceholders, setIsLoadingPlaceholders] = useState(false);
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  // 색상 설정
-  const borderColor = contentType === "document" ? "#00D1F2" : "#00E271";
+  // 기본 설정값들
+  const placeholder = "과목명, 키워드 등을 입력하세요.";
+  const showLoginCheck = true;
+  const className = "";
 
-  // placeholder 3초마다 변경 (필요시)
+  // 인기검색어 API 호출
+  const fetchPlaceholders = useCallback(async () => {
+    if (isLoadingPlaceholders) return;
+
+    setIsLoadingPlaceholders(true);
+    try {
+      const topKeywords = await queryApi.getTopKeywords({ topN: 10 });
+      const searchHistoryList = topKeywords.searchHistoryList ?? [];
+
+      const keywords = searchHistoryList
+        .map(item => item.keyword)
+        .filter((keyword): keyword is string => Boolean(keyword?.trim()));
+
+      if (keywords.length > 0) {
+        setPlaceholders(keywords);
+      } else {
+        setPlaceholders([placeholder]);
+      }
+    } catch (error) {
+      setPlaceholders([placeholder]);
+    } finally {
+      setIsLoadingPlaceholders(false);
+    }
+  }, [placeholder]);
+
+  // 컴포넌트 마운트 시 인기검색어 호출
   useEffect(() => {
+    fetchPlaceholders();
+  }, [fetchPlaceholders]);
+
+  // placeholders 2초마다 전환
+  useEffect(() => {
+    if (placeholders.length === 0) return undefined;
+
     const interval = setInterval(() => {
-      setPlaceholderIndex(prevIndex => (prevIndex + 1) % placeholders.length);
-    }, 3000);
+      setPlaceholderIndex(prev => (prev + 1) % placeholders.length);
+    }, 2000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [placeholders]);
+
+  // 로그인 체크
+  const checkLogin = () => {
+    const accessToken = sessionStorage.getItem("accessToken");
+    return !!accessToken;
+  };
 
   // 검색 실행
-  const routeSearchValue = () => {
+  const handleSearch = () => {
+    // 로그인 체크
+    if (showLoginCheck && !checkLogin()) {
+      dispatch(showModal("로그인 후 이용가능합니다."));
+      return;
+    }
+
     if (!searchValue.trim() && !subject.trim()) return;
+
     const updatedQuery = `?query=${encodeURIComponent(searchValue.trim())}&subject=${encodeURIComponent(
       subject.trim(),
     )}`;
@@ -83,7 +130,7 @@ export default function CommonMainSearchBar({ contentType = "question" }: Common
           setSearchValue(searchValue.replace(/@[^ ]*/, "").trim());
           setFilteredTerms([]);
         } else {
-          routeSearchValue();
+          handleSearch();
         }
         break;
       default:
@@ -103,13 +150,19 @@ export default function CommonMainSearchBar({ contentType = "question" }: Common
     setFilteredTerms([]);
   };
 
+  // Gradient 스타일 (랜딩페이지 전용)
   return (
-    <div className="relative w-full bg-white">
-      <div className="flex h-[52px] w-full items-center rounded-lg border-2 bg-white" style={{ borderColor }}>
-        {/* 입력 필드 */}
-        <div className="flex flex-1 items-center pl-[18px]">
+    <div className={`relative w-full ${className}`}>
+      <div className="relative mx-auto flex h-[52px] w-full items-center overflow-hidden rounded-lg bg-white">
+        {/* Gradient border 효과 */}
+        <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-document-main to-question-main p-0.5">
+          <div className="h-full w-full rounded-md bg-white" />
+        </div>
+
+        {/* 실제 입력 필드 */}
+        <div className="relative flex h-full w-full items-center">
           {subject && (
-            <span className="mr-2 flex-shrink-0 text-SUIT_16 font-medium" style={{ color: borderColor }}>
+            <span className="z-10 ml-[18px] mr-2 flex-shrink-0 text-SUIT_16 font-medium text-question-main">
               {subject}
             </span>
           )}
@@ -118,23 +171,29 @@ export default function CommonMainSearchBar({ contentType = "question" }: Common
             value={searchValue}
             onChange={handleValueChange}
             onKeyDown={handleKeyDown}
-            placeholder={placeholders[placeholderIndex]}
-            className="flex-1 bg-transparent text-SUIT_16 font-medium leading-[100%] text-black placeholder-ui-muted focus:outline-none"
+            placeholder={placeholders[placeholderIndex] || placeholder}
+            className={`z-10 flex-1 bg-transparent py-4 pr-12 text-SUIT_16 font-medium text-black placeholder-ui-muted outline-none ${
+              subject ? "" : "pl-[18px]"
+            }`}
           />
-        </div>
 
-        {/* 오른쪽 버튼들 */}
-        <div className="flex items-center pr-4">
           {/* 삭제 버튼 */}
           {(searchValue || subject) && (
-            <button type="button" onClick={handleClearSearch} className="mr-2 rounded-full bg-gray-200 p-1">
+            <button
+              type="button"
+              onClick={handleClearSearch}
+              className="absolute right-12 z-10 rounded-full bg-gray-200 p-1"
+            >
               <X className="h-4 w-4 text-gray-600" />
             </button>
           )}
 
-          {/* 검색 아이콘 */}
-          <button type="button" onClick={routeSearchValue} className="flex items-center justify-center">
-            <Search className="h-6 w-6" style={{ color: borderColor }} />
+          <button
+            type="button"
+            onClick={handleSearch}
+            className="absolute right-4 z-10 flex items-center justify-center"
+          >
+            <Search className="h-5 w-5 text-question-main" />
           </button>
         </div>
       </div>
