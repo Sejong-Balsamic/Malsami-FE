@@ -2,7 +2,7 @@
 # 범용 프로젝트 버전 자동 관리 워크플로우 v2.0
 # ===================================================================
 #
-# 이 워크플로우는 다양한 프로젝트 타입에서 main 브랜치에 푸시될 때마다 
+# 이 워크플로우는 다양한 프로젝트 타입에서 main 브랜치에 푸시될 때마다
 # patch 버전을 자동으로 증가시키고 모든 관련 파일을 동기화합니다.
 #
 # 주요 개선사항:
@@ -13,7 +13,7 @@
 #
 # 지원 프로젝트 타입:
 # - spring: build.gradle
-# - flutter: pubspec.yaml  
+# - flutter: pubspec.yaml
 # - react/node: package.json
 # - react-native: Info.plist + build.gradle
 # - react-native-expo: app.json
@@ -27,9 +27,9 @@ on:
   push:
     branches: ["main"]
     paths-ignore:
-      - 'CHANGELOG.md'
-      - 'CHANGELOG.json'
-      - 'version.yml'  # 무한 루프 방지
+      - "CHANGELOG.md"
+      - "CHANGELOG.json"
+      - "version.yml" # 무한 루프 방지
   workflow_dispatch:
 
 permissions:
@@ -96,7 +96,7 @@ jobs:
 
           # 모든 변경사항 스테이징
           git add -A
-          
+
           # 변경사항이 있는지 확인
           if git diff --staged --quiet; then
             echo "ℹ️ 변경사항이 없습니다. (이미 동기화됨)"
@@ -118,9 +118,9 @@ jobs:
         run: |
           NEW_VERSION="${{ steps.version.outputs.new_version }}"
           TAG_NAME="v$NEW_VERSION"
-          
+
           echo "🏷️ Git 태그 생성 중: $TAG_NAME"
-          
+
           # 기존 태그 확인
           if git tag -l | grep -q "^$TAG_NAME$"; then
             echo "⚠️ 태그 $TAG_NAME이 이미 존재합니다. 건너뛰기."
@@ -149,7 +149,7 @@ jobs:
           echo "  🕐 시간: $(date '+%Y-%m-%d %H:%M:%S UTC')"
           echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
           echo ""
-          
+
           # 실패한 경우에만 에러 표시
           if [ "${{ job.status }}" != "success" ]; then
             echo "❌ 일부 단계에서 오류가 발생했습니다. 로그를 확인해주세요."
