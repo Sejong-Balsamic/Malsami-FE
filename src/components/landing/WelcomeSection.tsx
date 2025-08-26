@@ -32,9 +32,12 @@ export default function WelcomeSection({ userName }: WelcomeSectionProps) {
         </div>
       )}
 
-      <div className="mt-30 relative">
-        {/* 마스코트 이미지 - SearchBar 오른쪽에 걸치게 배치 */}
-        <div className="absolute -top-16 right-0 z-10 w-32 md:w-40">
+      <div className="mt-10 relative">
+        {/* LoginOrSearchButton 먼저 배치 */}
+        <LoginOrSearchButton />
+
+        {/* 마스코트 이미지 - 버튼 오른쪽 위에 겹치도록 배치 */}
+        <div className="absolute -top-28 right-0 z-10 w-32 md:w-40">
           <Image
             src={isLoggedIn ? "/image/landingHoldingBookMascot.png" : "/image/landingHiMascot.png"}
             alt={isLoggedIn ? "책을 든 마스코트" : "인사하는 마스코트"}
@@ -44,8 +47,6 @@ export default function WelcomeSection({ userName }: WelcomeSectionProps) {
             priority
           />
         </div>
-
-        <LoginOrSearchButton />
       </div>
     </div>
   );
