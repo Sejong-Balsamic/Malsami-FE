@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import SearchBar from "@/components/common/SearchBar";
+import LandingSearchBar from "@/components/common/LandingSearchBar";
 
 export default function LoginOrSearchButton() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -19,12 +19,9 @@ export default function LoginOrSearchButton() {
 
   if (isLoggedIn) {
     return (
-      <SearchBar
-        variant="gradient"
-        placeholder="과목명, 키워드 등을 입력하세요."
-        showLoginCheck
-        className="mx-auto max-w-[640px]"
-      />
+      <div className="mx-auto max-w-[640px]">
+        <LandingSearchBar />
+      </div>
     );
   }
 
