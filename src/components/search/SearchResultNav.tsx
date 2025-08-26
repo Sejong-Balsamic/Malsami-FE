@@ -3,8 +3,6 @@ import Image from "next/image";
 import subjects from "@/types/subjects";
 import AutoCompleteSuggestionList from "./AutoCompleteSuggestionList";
 import SearchInputField from "./SearchInputField";
-import SearchClearBtn from "./SearchClearBtn";
-import SearchBtn from "./SearchBtn";
 
 interface SearchHeaderProps {
   searchValue: string;
@@ -85,29 +83,33 @@ function SearchResultNav({
   };
 
   return (
-    <div className="relative h-[64px] w-full border-b-[2px] border-b-[#EAEAEA] bg-white">
-      <div className="flex items-center px-5 py-3">
-        {/* 뒤로가기 버튼 */}
-        <button type="button" onClick={onBack} className="mr-2.5 flex-shrink-0 cursor-pointer">
-          <Image src="/icons/BackIcon.svg" alt="뒤로가기" width={10} height={20} />
-        </button>
+    <div className="relative w-full bg-white">
+      <div className="my-2">
+        {/* 그라디언트 테두리 */}
+        <div className="rounded-lg bg-gradient-to-r from-document-main to-question-main p-[2px]">
+          {/* 실제 검색 영역 */}
+          <div className="flex h-10 w-full items-center justify-between rounded-lg bg-white py-[18px] pl-3 pr-4">
+            {/* 뒤로가기 */}
+            <button type="button" onClick={onBack} className="mr-2 flex-shrink-0">
+              <Image src="/icons/backBlue.svg" alt="뒤로가기" width={20} height={20} />
+            </button>
 
-        {/* 검색 입력 필드 */}
-        <div className="flex h-10 w-full items-center justify-between rounded-lg bg-[#EEEEEE] p-2">
-          {/* 검색 아이콘 */}
-          <SearchBtn onClick={onSearch} />
+            {/* 입력 필드 */}
+            <SearchInputField
+              subject={subject}
+              searchValue={searchValue}
+              placeholder={placeholders[placeholderIndex]}
+              onValueChange={handleValueChange}
+              onKeyDown={handleKeyDown}
+            />
 
-          {/* 입력 필드 */}
-          <SearchInputField
-            subject={subject}
-            searchValue={searchValue}
-            placeholder={placeholders[placeholderIndex]}
-            onValueChange={handleValueChange}
-            onKeyDown={handleKeyDown}
-          />
-
-          {/* 삭제 버튼 */}
-          {(searchValue || subject) && <SearchClearBtn onClick={handleClearSearch} />}
+            {/* 삭제 버튼 */}
+            {(searchValue || subject) && (
+              <button type="button" onClick={handleClearSearch} className="ml-2 flex-shrink-0">
+                <Image src="/icons/deleteGreen.svg" alt="삭제" width={18} height={18} />
+              </button>
+            )}
+          </div>
         </div>
       </div>
 
