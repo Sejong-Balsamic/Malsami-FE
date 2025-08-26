@@ -40,7 +40,6 @@ export default function LandingPage() {
       const studentName = memberInfo?.member?.studentName || "종이";
       setUserName(studentName);
     } catch (error) {
-      console.error("사용자 정보 불러오기 실패:", error);
       setUserName("종이");
     }
   };

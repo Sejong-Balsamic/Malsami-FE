@@ -10,7 +10,6 @@ function LoginDirectModal() {
   const dispatch = useDispatch();
   const { isVisible, content } = useSelector((state: RootState) => state.modal);
 
-  console.log("Modal State:", { isVisible, content });
 
   const handleConfirm = () => {
     dispatch(closeModal());
