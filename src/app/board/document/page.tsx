@@ -11,7 +11,7 @@ import DocumentRequestBoardSection from "@/components/documentMain/DocumentReque
 import TierBoardNavigateSection from "@/components/documentMain/TierBoardNavigateSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
 import LandingHeader from "@/components/header/LandingHeader";
-import CommonMainSearchBar from "@/components/common/CommonMainSearchBar";
+import SearchBar from "@/components/common/SearchBar";
 
 export default function DocumentBoardPage() {
   const router = useRouter();
@@ -79,7 +79,7 @@ export default function DocumentBoardPage() {
 
         {/* 검색바 섹션 - 안내글로부터 20px 아래 */}
         <section aria-label="search" className="mt-5">
-          <CommonMainSearchBar contentType="document" />
+          <SearchBar variant="colored" borderColor="#00D1F2" />
         </section>
 
         {/* 계급게시판 섹션 - 검색창으로부터 60px 아래 */}

@@ -1,4 +1,4 @@
-import CommonSearchBar from "@/components/search/CommonSearchBar";
+import SearchBar from "@/components/common/SearchBar";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
@@ -11,7 +11,7 @@ export default function SearchPage() {
         <CommonHeader title="검색" rightType={RIGHT_ITEM.NONE} />
         <div className="mb-1" />
         <div className="px-2">
-          <CommonSearchBar />
+          <SearchBar variant="default" />
         </div>
       </div>
     </div>
