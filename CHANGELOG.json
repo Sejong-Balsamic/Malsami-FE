@@ -1,11 +1,89 @@
 {
   "metadata": {
-    "lastUpdated": "2025-08-22T10:43:39Z",
-    "currentVersion": "0.1.8",
+    "lastUpdated": "2025-08-24T06:42:18Z",
+    "currentVersion": "0.1.10",
     "projectType": "react",
-    "totalReleases": 9
+    "totalReleases": 11
   },
   "releases": [
+    {
+      "version": "0.1.10",
+      "project_type": "react",
+      "date": "2025-08-24",
+      "pr_number": 614,
+      "raw_summary": "Summary by CodeRabbit\n\n신기능\n\n로그인 필요 시 안내 모달 도입 및 홈/문서/질문/검색/카드/FAB/내비게이션에 로그인 게이트 적용\n로그인 상태에서 로그인 페이지 접근 시 자동 홈 이동\n404 페이지 전면 개편(이미지, 안내 문구, 뒤로가기/홈 이동 버튼)\n\n\n개선/버그 수정\n\n문서 상세 오류 처리 고도화(상황별 안내 및 히스토리 기반 이동), SSR 가드 추가\n\n\n스타일\n\n카드 그림자 커스텀, 탭 pill 스타일 개선, 아이콘 자동 크기, 토스트 z-index 상향\n\n\n문서\n\nREADME 최신 버전 표기 업데이트\n\n\n작업\n\n앱 버전 0.1.10으로 업데이트",
+      "parsed_changes": {
+        "신기능": {
+          "title": "신기능",
+          "items": [
+            "로그인 필요 시 안내 모달 도입 및 홈/문서/질문/검색/카드/FAB/내비게이션에 로그인 게이트 적용",
+            "로그인 상태에서 로그인 페이지 접근 시 자동 홈 이동",
+            "404 페이지 전면 개편(이미지, 안내 문구, 뒤로가기/홈 이동 버튼)"
+          ]
+        },
+        "개선_버그_수정": {
+          "title": "개선/버그 수정",
+          "items": [
+            "문서 상세 오류 처리 고도화(상황별 안내 및 히스토리 기반 이동), SSR 가드 추가"
+          ]
+        },
+        "스타일": {
+          "title": "스타일",
+          "items": [
+            "카드 그림자 커스텀, 탭 pill 스타일 개선, 아이콘 자동 크기, 토스트 z-index 상향"
+          ]
+        },
+        "문서": {
+          "title": "문서",
+          "items": [
+            "README 최신 버전 표기 업데이트"
+          ]
+        },
+        "작업": {
+          "title": "작업",
+          "items": [
+            "앱 버전 0.1.10으로 업데이트"
+          ]
+        }
+      }
+    },
+    {
+      "version": "0.1.9",
+      "project_type": "react",
+      "date": "2025-08-23",
+      "pr_number": 608,
+      "raw_summary": "Summary by CodeRabbit\n\n\nNew Features\n\n내 전공 질문 섹션에 사용자 전공 표시 추가.\n카드/슬라이더에 키보드 접근성 및 버튼 라벨링 강화, 콘텐츠 수에 따른 자동재생 개선.\n\n\n\nStyle\n\n전역적으로 Figma 픽셀·색상값을 프로젝트 표준(Tailwind/컬러 토큰)으로 치환.\n카드와 스켈레톤 카드 리디자인(크기·간격·그림자·타이포 스케일 조정).\n여러 섹션의 세로 간격 축소로 화면 밀도 개선.\n\n\n\nDocumentation\n\n스타일 가이드에 “Figma → 프로젝트 표준 변환” 섹션 추가 및 체크리스트 보강.\nREADME 최신 버전 정보 갱신.\n\n\n\nChores\n\n앱 버전 0.1.9로 업데이트 및 메타데이터 최신화.",
+      "parsed_changes": {
+        "new_features": {
+          "title": "New Features",
+          "items": [
+            "내 전공 질문 섹션에 사용자 전공 표시 추가.",
+            "카드/슬라이더에 키보드 접근성 및 버튼 라벨링 강화, 콘텐츠 수에 따른 자동재생 개선."
+          ]
+        },
+        "style": {
+          "title": "Style",
+          "items": [
+            "전역적으로 Figma 픽셀·색상값을 프로젝트 표준(Tailwind/컬러 토큰)으로 치환.",
+            "카드와 스켈레톤 카드 리디자인(크기·간격·그림자·타이포 스케일 조정).",
+            "여러 섹션의 세로 간격 축소로 화면 밀도 개선."
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "스타일 가이드에 “Figma → 프로젝트 표준 변환” 섹션 추가 및 체크리스트 보강.",
+            "README 최신 버전 정보 갱신."
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "앱 버전 0.1.9로 업데이트 및 메타데이터 최신화."
+          ]
+        }
+      }
+    },
     {
       "version": "0.1.8",
       "project_type": "react",
