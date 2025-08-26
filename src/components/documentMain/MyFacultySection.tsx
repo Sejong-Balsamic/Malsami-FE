@@ -21,8 +21,9 @@ export default function MyFacultySection({ facultys }: { facultys: string[] }) {
 
       setIsLoading(true);
       const command: Partial<DocumentCommand> = {
-        faculty: facultys.join(","), // string[]를 단일 string으로 변환 (예: "컴퓨터공학,전자공학")
+        faculty: facultys[0], // 첫 번째 학과만 사용
         pageSize: 10, // 표시할 개수 제한
+        sortType: "LATEST", // 정렬 기준
       };
 
       try {
