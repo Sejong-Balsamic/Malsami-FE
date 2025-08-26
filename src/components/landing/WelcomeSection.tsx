@@ -32,7 +32,7 @@ export default function WelcomeSection({ userName }: WelcomeSectionProps) {
         </div>
       )}
 
-      <div className="mt-10 relative">
+      <div className="relative mt-10">
         <div className="absolute -top-28 right-0 z-0 w-32 md:w-40">
           <Image
             src={isLoggedIn ? "/image/landingHoldingBookMascot.png" : "/image/landingHiMascot.png"}
@@ -43,8 +43,8 @@ export default function WelcomeSection({ userName }: WelcomeSectionProps) {
             priority
           />
         </div>
-        
-        <div className="relative z-10">
+
+        <div className="relative z-10 mt-32">
           <LoginOrSearchButton />
         </div>
       </div>
