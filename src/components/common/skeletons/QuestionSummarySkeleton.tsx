@@ -18,7 +18,9 @@ export default function QuestionSummarySkeleton() {
 
         {/* 제목 스켈레톤 */}
         {/* eslint-disable-next-line prettier/prettier */}
-        <h2 className="mb-2 h-[18px] w-3/4 rounded bg-gray-200" aria-label="질문 제목 로딩">&nbsp;</h2>
+        <h2 className="mb-2 h-[18px] w-3/4 rounded bg-gray-200" aria-label="질문 제목 로딩">
+          &nbsp;
+        </h2>
 
         {/* 축소된 상태이므로 펼친 컨텐츠는 제외 */}
 
