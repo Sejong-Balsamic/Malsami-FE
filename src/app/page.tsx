@@ -66,14 +66,8 @@ export default function LandingPage() {
       {/* Main Content */}
       <main className="px-5">
         {/* 캐릭터와 인사말 섹션 */}
-        <section aria-labelledby="welcome-heading" className="mb-6 mt-8">
+        <section aria-labelledby="welcome-heading" className="mb-6">
           <WelcomeSection userName={userName} />
-        </section>
-
-        {/* 검색창 섹션 */}
-        <section aria-label="search" className="mb-6">
-          {/* SearchBar 컴포넌트로 분리 가능 */}
-          {/* <SearchBar /> */}
         </section>
 
         {/* 공지사항 섹션 */}

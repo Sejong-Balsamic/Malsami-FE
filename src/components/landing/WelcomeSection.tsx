@@ -1,36 +1,38 @@
 "use client";
 
-import React from "react";
-import Image from "next/image";
-import LandingSearchBar from "@/components/search/LandingSearchBar";
+import React, { useEffect, useState } from "react";
+import LoginOrSearchButton from "@/components/landing/LoginOrSearchButton";
 
 interface WelcomeSectionProps {
   userName: string;
 }
 
 export default function WelcomeSection({ userName }: WelcomeSectionProps) {
-  return (
-    <div className="flex flex-col">
-      <div className="z-40 flex w-full flex-row items-center">
-        <Image
-          src="/image/Mascot.png"
-          alt="웰컴 캐릭터"
-          width={100}
-          height={100}
-          className="mr-3 object-contain"
-          style={{ width: "auto", height: "auto" }}
-        />
-        <div className="flex w-full">
-          <div className="text-SUIT_18 font-medium">
-            반가워요, <span className="font-semibold">{userName}</span>님!
-            <div>궁금한 자료를 검색해보세요!</div>
-          </div>
-        </div>
-      </div>
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-      {/* 검색바 - 위로 10px 겹치게 */}
-      <div className="-mt-[10px]">
-        <LandingSearchBar />
+  useEffect(() => {
+    const accessToken = sessionStorage.getItem("accessToken");
+    setIsLoggedIn(!!accessToken);
+  }, []);
+
+  return (
+    <div className="mt-10">
+      {isLoggedIn ? (
+        <div className="text-SUIT_24 font-medium leading-relaxed text-black">
+          반가워요, <span className="font-bold text-document-main">{userName}</span>님!
+          <br />
+          궁금한 자료를 검색해볼까요 :)
+        </div>
+      ) : (
+        <div className="text-SUIT_24 font-medium leading-relaxed text-black">
+          반가워요!
+          <br />
+          로그인 후 이용해 주세요 :)
+        </div>
+      )}
+
+      <div className="mt-[154px]">
+        <LoginOrSearchButton />
       </div>
     </div>
   );
