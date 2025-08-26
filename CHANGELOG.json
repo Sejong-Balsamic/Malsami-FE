@@ -1,11 +1,53 @@
 {
   "metadata": {
-    "lastUpdated": "2025-08-24T06:42:18Z",
-    "currentVersion": "0.1.10",
+    "lastUpdated": "2025-08-26T12:53:32Z",
+    "currentVersion": "0.1.13",
     "projectType": "react",
-    "totalReleases": 11
+    "totalReleases": 12
   },
   "releases": [
+    {
+      "version": "0.1.13",
+      "project_type": "react",
+      "date": "2025-08-26",
+      "pr_number": 623,
+      "raw_summary": "Summary by CodeRabbit\n\nNew Features\n\n통합 SearchBar 도입: 자동완성, 순환 플레이스홀더, 로그인 확인, 다중 변형(gradient/colored/default) 지원\n로그인 상태에 따른 LoginOrSearchButton 추가(비로그인 시 로그인 버튼, 로그인 시 검색바)\n\n\nUI/UX\n\n검색 UI 전면 리디자인(그라데이션 테두리, 아이콘/텍스트 스타일 개선), 탭 라벨 축약 및 언더라인 스타일\n문서 상세 min-h-screen, 검색 페이지 패딩 조정, 홈 상단 검색 섹션 제거\n\n\nBehavior\n\n내 학과 섹션: 최신순 정렬, 첫 학과만 반영\n댓글 입력 실패 시 토스트 경고 표시\n\n\nDocumentation\n\nREADME 최신 버전 갱신, 가이드/템플릿 문서 대폭 보강\n\n\nChores\n\n버전 업데이트: 0.1.13",
+      "parsed_changes": {
+        "new_features": {
+          "title": "New Features",
+          "items": [
+            "통합 SearchBar 도입: 자동완성, 순환 플레이스홀더, 로그인 확인, 다중 변형(gradient/colored/default) 지원",
+            "로그인 상태에 따른 LoginOrSearchButton 추가(비로그인 시 로그인 버튼, 로그인 시 검색바)"
+          ]
+        },
+        "ui_ux": {
+          "title": "UI/UX",
+          "items": [
+            "검색 UI 전면 리디자인(그라데이션 테두리, 아이콘/텍스트 스타일 개선), 탭 라벨 축약 및 언더라인 스타일",
+            "문서 상세 min-h-screen, 검색 페이지 패딩 조정, 홈 상단 검색 섹션 제거"
+          ]
+        },
+        "behavior": {
+          "title": "Behavior",
+          "items": [
+            "내 학과 섹션: 최신순 정렬, 첫 학과만 반영",
+            "댓글 입력 실패 시 토스트 경고 표시"
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "README 최신 버전 갱신, 가이드/템플릿 문서 대폭 보강"
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "버전 업데이트: 0.1.13"
+          ]
+        }
+      }
+    },
     {
       "version": "0.1.10",
       "project_type": "react",
