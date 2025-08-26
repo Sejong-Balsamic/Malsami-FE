@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import LoginOrSearchButton from "@/components/landing/LoginOrSearchButton";
 
 interface WelcomeSectionProps {
@@ -31,7 +32,19 @@ export default function WelcomeSection({ userName }: WelcomeSectionProps) {
         </div>
       )}
 
-      <div className="mt-[154px]">
+      <div className="mt-30 relative">
+        {/* 마스코트 이미지 - SearchBar 오른쪽에 걸치게 배치 */}
+        <div className="absolute -top-16 right-0 z-10 w-32 md:w-40">
+          <Image
+            src={isLoggedIn ? "/image/landingHoldingBookMascot.png" : "/image/landingHiMascot.png"}
+            alt={isLoggedIn ? "책을 든 마스코트" : "인사하는 마스코트"}
+            width={160}
+            height={160}
+            className="h-auto w-full"
+            priority
+          />
+        </div>
+
         <LoginOrSearchButton />
       </div>
     </div>

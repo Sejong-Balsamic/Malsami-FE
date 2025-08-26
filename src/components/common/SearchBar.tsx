@@ -287,9 +287,7 @@ export default function SearchBar({
 
         {/* 입력 필드 */}
         <div className="flex flex-1 items-center">
-          {subject && (
-            <span className="mr-2 flex-shrink-0 text-SUIT_16 font-medium text-[#10DCB3]">{subject}</span>
-          )}
+          {subject && <span className="mr-2 flex-shrink-0 text-SUIT_16 font-medium text-[#10DCB3]">{subject}</span>}
           <input
             type="text"
             value={searchValue}

@@ -59,10 +59,7 @@ export default function Card({
   };
 
   return (
-    <article
-      className="relative flex h-44 w-72 flex-col rounded-lg bg-white shadow-card-custom"
-      onClick={onClick}
-    >
+    <article className="relative flex h-44 w-72 flex-col rounded-lg bg-white shadow-card-custom" onClick={onClick}>
       {/* 상단 Row: 순번 + 과목 태그 */}
       <div className="ml-4 mt-4 flex items-start gap-2">
         {/* 순번 */}
@@ -76,9 +73,7 @@ export default function Card({
       <h2 className="mx-4 mt-4 line-clamp-1 text-base font-bold leading-4 text-black">{title}</h2>
 
       {/* 본문 내용 */}
-      <p className="mx-4 mt-2 line-clamp-2 text-sm font-normal leading-5 text-ui-body">
-        {content}
-      </p>
+      <p className="mx-4 mt-2 line-clamp-2 text-sm font-normal leading-5 text-ui-body">{content}</p>
 
       {/* 하단 Row: 커스텀 태그 + 좋아요/답변 */}
       <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
