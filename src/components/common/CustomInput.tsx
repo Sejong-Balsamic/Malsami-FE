@@ -1,79 +1,42 @@
-// /* eslint-disable */
+/* eslint-disable */
 
-// import { InputHTMLAttributes } from "react";
-// import clsx from "clsx"; //여러 개의 className을 동적으로 조합할 때 유용
-
-// // InputHTMLAttributes<HTMLInputElement>는 <input> 태그에서 사용할 수 있는 모든 기본 속성을 포함
-// // & { label: string; }를 추가하여 label이라는 커스텀 속성 추가
-// type InputProps = InputHTMLAttributes<HTMLInputElement> & {
-//   label: string;
-// };
-
-// function Input({ label, className, ...props }: InputProps) {
-//   return (
-//     <label className="block w-full text-SUIT_14 font-medium text-[#C2C2C2]">
-//       {label}
-//       <input
-//         className={clsx(
-//           "mt-1 w-full py-2 text-SUIT_16 text-black caret-[#09E5BA]", // 공통 스타일
-//           "border-b-2 border-[##E6E6E6]", // focus 되지 않은 상태의 border
-//           "focus:border-b-2 focus:outline-none", // focus 상태의 border
-//           className,
-//         )}
-//         style={{
-//           borderImageSource: "linear-gradient(to right, #08E4BB, #5FF48D)",
-//           borderImageSlice: 1,
-//         }}
-//         {...props}
-//       />
-//     </label>
-//   );
-// }
-
-// export default Input;
-
-// Fix: 위에 코드와 같이  tailwind의 자체 focus 속성만으로 focus 시 border-b색 변하게 수정 필요
-import { InputHTMLAttributes, useState } from "react";
+import { InputHTMLAttributes, ReactNode, useState } from "react";
 import clsx from "clsx";
 
 type InputProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
+  rightElement?: ReactNode; // 입력창 우측에 배치할 요소 (아이콘 등)
 };
 
-function CustomInput({ label, className, ...props }: InputProps) {
-  const [isFocused, setIsFocused] = useState(false); // focus 상태를 저장할 state
-
-  const handleFocus = () => {
-    setIsFocused(true); // focus 되었을 때 state를 true로 변경
-  };
-
-  const handleBlur = () => {
-    setIsFocused(false); // focus가 해제되었을 때 state를 false로 변경
-  };
+function CustomInput({ label, className, rightElement, ...props }: InputProps) {
+  const [isFocused, setIsFocused] = useState(false);
 
   return (
-    // eslint-disable-next-line jsx-a11y/label-has-associated-control
     <label className="block w-full text-SUIT_14 font-medium text-[#C2C2C2]">
       {label}
-      <input
-        className={clsx(
-          "mt-1 w-full py-2 text-SUIT_16 text-black caret-[#09E5BA]", // 공통 스타일
-          "border-b-2 border-[##E6E6E6]", // focus 되지 않은 상태의 border
-          "focus:border-b-2 focus:outline-none", // focus 상태의 border
-          className,
-        )}
-        style={{
-          // isFocused state에 따라 border 스타일 변경
-          ...(isFocused && {
-            borderImageSource: "linear-gradient(to right, #08E4BB, #5FF48D)",
-            borderImageSlice: 1,
-          }),
-        }}
-        onFocus={handleFocus} // input 요소에 focus 되었을 때 handleFocus 함수 호출
-        onBlur={handleBlur} // input 요소에서 focus가 해제되었을 때 handleBlur 함수 호출
-        // eslint-disable-next-line react/jsx-props-no-spreading
-        {...props} // 비밀번호 Input에서 props에 type="password"가 적용됨
-      />
+      <div className="relative mt-1 w-full">
+        <input
+          className={clsx(
+            "w-full border-2 px-4 py-3 text-SUIT_16 text-black outline-none transition-all duration-200",
+            isFocused ? "rounded-lg border-transparent" : "rounded-lg border-ui-border",
+            // 우측 아이콘 공간 확보
+            rightElement ? "pr-12" : "",
+            className,
+          )}
+          style={
+            isFocused
+              ? {
+                  borderImageSource: "linear-gradient(to right, #00D1F2, #00E271)",
+                  borderImageSlice: 1,
+                }
+              : {}
+          }
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          {...props}
+        />
+        {rightElement && <span className="absolute right-4 top-1/2 -translate-y-1/2 transform">{rightElement}</span>}
+      </div>
     </label>
   );
 }

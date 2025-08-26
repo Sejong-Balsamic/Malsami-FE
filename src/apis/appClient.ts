@@ -44,14 +44,16 @@ apiClient.interceptors.response.use(
     const originalRequest = error.config as InternalAxiosRequestConfig; // 타입 수정
 
     if (error.response?.status === 403 && !isRedirecting) {
-      isRedirecting = true;
-      store.dispatch(showModal("로그인 후 이용가능합니다."));
-      
-      // isRedirecting을 일정 시간 후 초기화
-      setTimeout(() => {
-        isRedirecting = false;
-      }, 1000);
-      
+      const errorData = error.response.data as { errorCode?: string } | undefined;
+      if (errorData?.errorCode !== "SEJONG_AUTH_DATA_FETCH_ERROR") {
+        isRedirecting = true;
+        store.dispatch(showModal("로그인 후 이용가능합니다."));
+
+        // isRedirecting을 일정 시간 후 초기화
+        setTimeout(() => {
+          isRedirecting = false;
+        }, 1000);
+      }
       return Promise.reject(error);
     }
 
@@ -69,7 +71,7 @@ apiClient.interceptors.response.use(
         if (!isRedirecting) {
           isRedirecting = true;
           store.dispatch(showModal("로그인 후 이용가능합니다."));
-          
+
           // isRedirecting을 일정 시간 후 초기화
           setTimeout(() => {
             isRedirecting = false;
@@ -80,27 +82,27 @@ apiClient.interceptors.response.use(
     }
 
     const errorData = error.response?.data;
-    
+
     // MISSING_REFRESH_TOKEN 에러 처리
     if (errorData && typeof errorData === "object" && "errorCode" in errorData) {
       const errorCode = (errorData as { errorCode: string }).errorCode;
-      
+
       if (errorCode === "MISSING_REFRESH_TOKEN" && !isRedirecting) {
         isRedirecting = true;
         // 로그인 모달 표시
         store.dispatch(showModal("로그인 후 이용가능합니다."));
-        
+
         // 리다이렉트 제거 - 모달만 표시
-        
+
         // isRedirecting을 일정 시간 후 초기화
         setTimeout(() => {
           isRedirecting = false;
         }, 1000);
-        
+
         return Promise.reject(error);
       }
     }
-    
+
     const errorMessage =
       errorData && typeof errorData === "object" && "errorMessage" in errorData
         ? (errorData as { errorMessage: string }).errorMessage
