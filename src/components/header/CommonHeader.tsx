@@ -45,7 +45,7 @@ export default function CommonHeader({
   return (
     <>
       {/* fixed 헤더 */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <div className="fixed top-0 z-40 w-full max-w-[640px] bg-white">
         <Header
           leftType={LEFT_ITEM.BACK}
           rightType={rightType}
