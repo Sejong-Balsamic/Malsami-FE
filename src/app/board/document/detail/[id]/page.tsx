@@ -57,7 +57,6 @@ export default function Page() {
             });
           }
         } catch (innerError) {
-          console.error("문서 상세 정보 가져오기 실패:", innerError);
           if (isMounted && !error) {
             if (axios.isAxiosError(innerError)) {
               // 인증 관련 에러(401, 403)는 appClient에서 처리하므로 여기서는 router.back()만 실행
@@ -114,7 +113,7 @@ export default function Page() {
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
   return (
-    <div className="mx-auto w-full max-w-[640px]" style={{ height: "943px" }}>
+    <div className="mx-auto min-h-screen w-full max-w-[640px]">
       <ScrollToTopOnLoad />
       <CommonHeader title="자료 상세보기" rightType={RIGHT_ITEM.MENU} onRightClick={toggleDrawer} />
       <div>
@@ -126,16 +125,16 @@ export default function Page() {
               <h1>Options</h1>
               <p>차피 안 보이는 부분</p>
             </VisuallyHidden>
-            <div className="flex flex-col pb-[30px]">
-              <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
+            <div className="flex flex-col pb-8">
+              <Button variant="ghost" className="font-pretendard-semibold gap-2.5 text-SUIT_16 text-orange-500">
                 <Image src="/icons/Share.svg" alt="option" width={12} height={15} />
                 공유하기
               </Button>
-              <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
+              <Button variant="ghost" className="font-pretendard-semibold gap-2.5 text-SUIT_16 text-orange-500">
                 <Image src="/icons/Block.svg" alt="option" width={12} height={12} />
                 차단하기
               </Button>
-              <Button variant="ghost" className="font-pretendard-semibold gap-[10px] text-[16px] text-[#f46b02]">
+              <Button variant="ghost" className="font-pretendard-semibold gap-2.5 text-SUIT_16 text-orange-500">
                 <Image src="/icons/Report.svg" alt="option" width={12} height={12} />
                 신고하기
               </Button>

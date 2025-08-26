@@ -10,12 +10,12 @@ import AutoCompleteSuggestionList from "@/components/search/AutoCompleteSuggesti
 import queryApi from "@/apis/queryApi";
 
 interface SearchBarProps {
-  variant?: "default" | "gradient" | "colored";
-  borderColor?: string;
-  placeholder?: string;
-  showLoginCheck?: boolean;
-  onSearch?: (query: string, subject: string) => void;
-  className?: string;
+  variant: "default" | "gradient" | "colored";
+  borderColor: string;
+  placeholder: string;
+  showLoginCheck: boolean;
+  onSearch: (query: string, subject: string) => void;
+  className: string;
 }
 
 const savedSearchTerms: string[] = subjects;

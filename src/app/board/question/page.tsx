@@ -36,7 +36,18 @@ export default function QuestionPage() {
 
         {/* 검색바 섹션 - 안내글로부터 24px 아래 */}
         <section aria-label="search" className="mb-12 mt-6">
-          <SearchBar variant="colored" borderColor="#00E271" />
+          <SearchBar
+            variant="colored"
+            borderColor="rgb(0, 232, 187)"
+            placeholder="질문을 검색해보세요"
+            showLoginCheck
+            onSearch={query => {
+              if (query.trim()) {
+                router.push(`/search/${encodeURIComponent(query)}`);
+              }
+            }}
+            className="w-full"
+          />
         </section>
 
         {/* HOT 인기질문 섹션 */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
@@ -85,14 +85,14 @@ export default function AnswerPostPage() {
   };
 
   // 유효성 검사
-  const checkFormValidity = () => {
+  const checkFormValidity = useCallback(() => {
     return !!formData.content.trim();
-  };
+  }, [formData.content]);
 
   // 폼 데이터 변경 시 유효성 검사 실행
   useEffect(() => {
     setIsFormValid(checkFormValidity());
-  }, [formData]);
+  }, [checkFormValidity]);
 
   // 질문 상세 정보 가져오기
   useEffect(() => {
@@ -128,7 +128,7 @@ export default function AnswerPostPage() {
     return () => {
       isMounted = false;
     };
-  }, [questionPostId, dispatch]);
+  }, [questionPostId, dispatch, showWarningToast]);
 
   // 제출 핸들러
   const handleSubmit = async () => {
