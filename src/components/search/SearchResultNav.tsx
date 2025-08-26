@@ -86,9 +86,9 @@ function SearchResultNav({
     <div className="relative w-full bg-white">
       <div className="my-2">
         {/* 그라디언트 테두리 */}
-        <div className="rounded-lg bg-gradient-to-r from-document-main to-question-main p-[2px]">
+        <div className="rounded-lg bg-gradient-to-r from-document-main to-question-main p-0.5">
           {/* 실제 검색 영역 */}
-          <div className="flex h-10 w-full items-center justify-between rounded-lg bg-white py-[18px] pl-3 pr-4">
+          <div className="flex w-full items-center justify-between rounded-lg bg-white py-4 pl-3 pr-4">
             {/* 뒤로가기 */}
             <button type="button" onClick={onBack} className="mr-2 flex-shrink-0">
               <Image src="/icons/backBlue.svg" alt="뒤로가기" width={20} height={20} />
