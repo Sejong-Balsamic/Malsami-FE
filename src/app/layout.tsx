@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import CommonToast from "@/components/common/CommonToast";
-import LoginDirectModal from "@/components/common/LoginDirectModal";
 import FcmInitializer from "@/components/common/FcmInitializer"; // FCM 초기화 컴포넌트
 import { initializeFirebase } from "@/global/firebaseUtil";
 import Providers from "@/app/providers"; // Redux Provider 컴포넌트
@@ -50,7 +49,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {/* 클라이언트 사이드 레이아웃 (Nav 표시 조건 포함) */}
           <ClientLayout>{children}</ClientLayout>
           <CommonToast />
-          <LoginDirectModal />
         </Providers>
       </body>
     </html>
