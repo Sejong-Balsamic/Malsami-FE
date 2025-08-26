@@ -163,7 +163,7 @@ export default function LandingAllDocumentsSection({ onViewAll }: LandingAllDocu
                     {/* eslint-disable-next-line react/no-array-index-key */}
                     <div className="flex gap-2 overflow-hidden whitespace-nowrap">
                       {document.customTags.map((customTag, tagIndex) => (
-                        <CustomTag key={`${document.id}-tag-${tagIndex}`} tagName={customTag} />
+                        <CustomTag key={`${document.id}-${customTag}-${tagIndex}`} tagName={customTag} />
                       ))}
                     </div>
 

@@ -609,8 +609,9 @@ import { useToast } from "@/global/hook/useToast";         // deprecated
   - [ ] useCommonToast 사용 확인
   - [ ] deprecated 토스트 시스템 사용 금지
   - [ ] 적절한 토스트 타입 선택 (confirm/warning/yeopjeon)
-- [ ] **빌드 테스트 실행**
+- [ ] **무조건 실행할 빌드 테스트 및 prettier 적용 실행**
   ```bash
+  source ~/.zshrc && npx prettier --write .
   source ~/.zshrc && npm run build
   ```
   - [ ] ESLint 오류 해결

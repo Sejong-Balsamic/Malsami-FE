@@ -38,18 +38,13 @@ export function Toaster() {
   };
 
   return (
-    <div className="fixed top-4 left-1/2 z-[100] flex -translate-x-1/2 flex-col gap-2" style={{ width: "calc(100% - 40px)", maxWidth: "600px" }}>
+    <div
+      className="fixed left-1/2 top-4 z-[100] flex -translate-x-1/2 flex-col gap-2"
+      style={{ width: "calc(100% - 40px)", maxWidth: "600px" }}
+    >
       {toasts.map(({ id, title, type }) => (
-        <div
-          key={id}
-          className="flex items-center gap-3 rounded-lg bg-white p-4 shadow-lg border w-full"
-        >
-          <Image
-            src={getToastIcon(type)}
-            alt={`${type} icon`}
-            width={20}
-            height={20}
-          />
+        <div key={id} className="flex w-full items-center gap-3 rounded-lg border bg-white p-4 shadow-lg">
+          <Image src={getToastIcon(type)} alt={`${type} icon`} width={20} height={20} />
           <span className="text-SUIT_14 font-medium text-black">{title}</span>
         </div>
       ))}

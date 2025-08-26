@@ -9,3 +9,10 @@ eslintrc.js
 CHANGELOG.json
 CHANGELOG.md
 .cursor/prompts/코드스타일_가이드라인_요약.md
+
+# YAML 파일들 무시
+*.yaml
+*.yml
+
+# Markdown 파일들 무시
+*.md
