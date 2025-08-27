@@ -1,3 +1,6 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/require-default-props */
+
 "use client";
 
 import { useState, FormEvent, useEffect } from "react";
@@ -6,14 +9,20 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import authApi from "@/apis/authApi";
 import { AuthCommand } from "@/types/api/requests/authCommand";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { setMemberId } from "@/global/store/authSlice";
-import CustomInput from "../common/CustomInput";
+import LoginInput from "../common/LoginInput";
 import LoginSuccessModal from "./LoginSuccessModal";
 
-export default function LoginForm() {
+interface LoginFormProps {
+  onShowLoading?: () => void;
+  onShowSuccess?: () => Promise<void> | void;
+  onHideOverlay?: () => void;
+}
+
+export default function LoginForm({ onShowLoading = () => {}, onShowSuccess, onHideOverlay }: LoginFormProps) {
   const [studentId, setStudentId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loginFailedMessage, setLoginFailedMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
@@ -28,6 +37,10 @@ export default function LoginForm() {
     setIsFormValid(!!studentId.trim() && !!password.trim());
   }, [studentId, password]);
 
+  const togglePassword = () => {
+    setShowPassword(prev => !prev);
+  };
+
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -40,6 +53,9 @@ export default function LoginForm() {
       const getUserInfo = await authApi.signIn(command);
 
       if (getUserInfo.accessToken && getUserInfo.studentName && getUserInfo.memberId) {
+        // 로그인 성공 시에만 로딩 오버레이 표시
+        onShowLoading?.();
+
         setUserName(getUserInfo.studentName || "");
         setIsFirstLogin(getUserInfo.isFirstLogin || false);
         setLoginFailedMessage(null);
@@ -50,14 +66,23 @@ export default function LoginForm() {
         if (getUserInfo.isFirstLogin) {
           setIsLoginModalOpen(true);
         } else {
+          // 성공 오버레이 표시 후 메인 페이지로 이동
+          if (onShowSuccess) {
+            await onShowSuccess();
+          }
+          // 성공 메시지 표시 직후 페이지 이동
           router.push("/");
         }
       } else {
+        // 로그인 실패 시 에러 메시지만 표시
         setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+        onHideOverlay?.();
       }
     } catch (error) {
       console.error("로그인 실패:", error);
+      // 로그인 실패 시 에러 메시지만 표시
       setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+      onHideOverlay?.();
     } finally {
       setIsLoading(false);
     }
@@ -73,43 +98,51 @@ export default function LoginForm() {
       <form onSubmit={handleLogin} className="flex flex-1 flex-col">
         {/* 상단 Input 영역 */}
         <div className="flex flex-col space-y-8">
-          <CustomInput
+          <LoginInput
             label="학번"
             placeholder="학번을 입력해주세요."
             value={studentId}
             onChange={e => setStudentId(e.target.value)}
           />
-          <CustomInput
+          <LoginInput
             label="비밀번호"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="비밀번호를 입력해주세요."
             value={password}
             onChange={e => setPassword(e.target.value)}
+            rightElement={
+              <button
+                type="button"
+                onMouseDown={e => e.preventDefault()}
+                onClick={togglePassword}
+                aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
+                className="focus:outline-none"
+              >
+                <Image
+                  src={showPassword ? "/icons/viewEyeGray.svg" : "/icons/viewCloseEyeGray.svg"}
+                  alt={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
+                  width={20}
+                  height={20}
+                />
+              </button>
+            }
           />
 
           {/* 에러 메시지 */}
           {loginFailedMessage && (
             <div className="flex items-center">
               <Image src="/icons/ErrorExclamation.svg" alt="ErrorExclamation" width={18} height={18} />
-              <p className="ml-2 text-SUIT_14 font-medium text-[#FF3232]">{loginFailedMessage}</p>
+              <p className="ml-2 text-SUIT_14 font-medium text-red-500">{loginFailedMessage}</p>
             </div>
           )}
         </div>
 
-        {isLoading && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-60">
-            <LoadingSpinner />
-          </div>
-        )}
-
         {/* 로그인 제출 버튼 */}
-        <div className="mb-[60px] mt-auto">
+        <div className="mb-10 mt-auto">
           <button
             type="submit"
             className={`w-full rounded-md py-4 text-SUIT_16 font-extrabold text-white ${
-              isFormValid
-                ? "bg-gradient-to-r from-[#08E4BB] to-[#5FF48D] hover:from-[#07D1AA] hover:to-[#50E47F]"
-                : "bg-[#D1D1D1]"
+              isFormValid ? "bg-gradient-to-r from-document-main to-question-main hover:opacity-90" : "bg-ui-muted"
             }`}
             disabled={!isFormValid || isLoading}
           >

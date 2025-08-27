@@ -48,7 +48,7 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
   if (data.length === 0) return null;
 
   return (
-    <div className="-mx-5 w-screen overflow-hidden">
+    <div className="-mx-5 overflow-hidden">
       <Swiper
         key={`swiper-container-${data.length}`}
         modules={[Autoplay]}
@@ -63,7 +63,7 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
               }
             : false
         }
-        className="!pl-5 [&_.swiper-wrapper]:!my-3"
+        className="!pl-5 !pr-5 [&_.swiper-wrapper]:!my-3"
       >
         {data.map((documentPost, index) => {
           return (

@@ -4,7 +4,7 @@ import React from "react";
 
 export default function MovingCardSkeleton() {
   return (
-    <div className="-mx-5 flex h-48 w-screen gap-3 overflow-hidden pl-5">
+    <div className="-mx-5 flex h-48 gap-3 overflow-hidden pl-5 pr-5">
       {Array.from({ length: 3 }, (_, index) => (
         <div
           key={`moving-skeleton-${index}`}

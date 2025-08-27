@@ -1,11 +1,56 @@
 {
   "metadata": {
-    "lastUpdated": "2025-08-26T12:53:32Z",
-    "currentVersion": "0.1.13",
+    "lastUpdated": "2025-08-27T10:47:08Z",
+    "currentVersion": "0.1.17",
     "projectType": "react",
-    "totalReleases": 12
+    "totalReleases": 13
   },
   "releases": [
+    {
+      "version": "0.1.17",
+      "project_type": "react",
+      "date": "2025-08-27",
+      "pr_number": 630,
+      "raw_summary": "Summary by CodeRabbit\n\nNew Features\n\n전역 로그인 모달 추가\n로그인 페이지 오버레이(로딩/성공) 흐름 도입\n새로운 라벨 입력 컴포넌트(LoginInput) 추가\n\n\nRefactor\n\n로그인 폼 콜백 기반 흐름 및 비밀번호 표시 전환\n특정 403 오류에서 로그인 모달 미노출\n레이아웃에 모달 전역 마운트\n\n\nStyle\n\n헤더 z-index 조정, 카드/스켈레톤 패딩·폭 개선\n로그인 성공 모달 타이포·버튼 스타일 업데이트\n애니메이션 delay 유틸 및 keyframes/animations 확장\n\n\nDocumentation\n\nREADME 최신 버전 정보 갱신\n\n\nChores\n\n버전 0.1.17로 상향 및 version.yml 메타데이터 갱신",
+      "parsed_changes": {
+        "new_features": {
+          "title": "New Features",
+          "items": [
+            "전역 로그인 모달 추가",
+            "로그인 페이지 오버레이(로딩/성공) 흐름 도입",
+            "새로운 라벨 입력 컴포넌트(LoginInput) 추가"
+          ]
+        },
+        "refactor": {
+          "title": "Refactor",
+          "items": [
+            "로그인 폼 콜백 기반 흐름 및 비밀번호 표시 전환",
+            "특정 403 오류에서 로그인 모달 미노출",
+            "레이아웃에 모달 전역 마운트"
+          ]
+        },
+        "style": {
+          "title": "Style",
+          "items": [
+            "헤더 z-index 조정, 카드/스켈레톤 패딩·폭 개선",
+            "로그인 성공 모달 타이포·버튼 스타일 업데이트",
+            "애니메이션 delay 유틸 및 keyframes/animations 확장"
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "README 최신 버전 정보 갱신"
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "버전 0.1.17로 상향 및 version.yml 메타데이터 갱신"
+          ]
+        }
+      }
+    },
     {
       "version": "0.1.13",
       "project_type": "react",
