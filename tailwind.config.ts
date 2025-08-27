@@ -154,8 +154,14 @@ const config: Config = {
           "100%": { opacity: "0" },
         },
         scaleIn: {
-          "0%": { transform: "scale(0.8)", opacity: "0" },
+          "0%": { transform: "scale(0)", opacity: "0" },
+          "50%": { transform: "scale(1.1)", opacity: "1" },
           "100%": { transform: "scale(1)", opacity: "1" },
+        },
+        popIn: {
+          "0%": { transform: "scale(0) rotate(-180deg)", opacity: "0" },
+          "50%": { transform: "scale(1.2) rotate(10deg)", opacity: "1" },
+          "100%": { transform: "scale(1) rotate(0deg)", opacity: "1" },
         },
         slideInUp: {
           "0%": { transform: "translateY(20px)", opacity: "0" },
@@ -168,7 +174,8 @@ const config: Config = {
         moveToHamburger: "moveToHamburger 1.5s ease-in-out forwards",
         fadeIn: "fadeIn 0.3s ease-out",
         fadeOut: "fadeOut 0.3s ease-out",
-        scaleIn: "scaleIn 0.5s ease-out",
+        scaleIn: "scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+        popIn: "popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
         slideInUp: "slideInUp 0.5s ease-out",
       },
       animationDelay: {

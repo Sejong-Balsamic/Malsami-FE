@@ -9,21 +9,19 @@ import LoadingSpinner from "@/components/common/LoadingSpinner";
 import Image from "next/image";
 
 export default function LoginPage() {
-  const [isLoginLoading, setIsLoginLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [overlayState, setOverlayState] = useState<"none" | "loading" | "success">("none");
 
   const triggerLoadingOverlay = () => {
-    setIsLoginLoading(true);
+    setOverlayState("loading");
   };
 
   const triggerSuccessOverlay = async () => {
-    // 로딩 오버레이 유지하면서 성공 메시지로 전환
-    setIsLoginLoading(false);
-    setShowSuccess(true);
+    // 로딩에서 성공으로 즉시 전환
+    setOverlayState("success");
 
-    // 성공 메시지 표시 후 메인 페이지로 이동
+    // 1.5초 후 메인 페이지로 이동
     await new Promise<void>(resolve => {
-      setTimeout(() => resolve(), 1200);
+      setTimeout(() => resolve(), 1500);
     });
   };
 
@@ -31,12 +29,26 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <div className="relative flex h-screen w-full max-w-2xl flex-col bg-white">
-        {/* 로딩 오버레이 */}
-        {isLoginLoading && (
-          <div className="absolute inset-0 z-50 flex animate-fadeIn flex-col items-center justify-center bg-white">
-            <LoadingSpinner />
-            <h2 className="mt-10 text-SUIT_24 font-bold text-black">로그인 중이에요!</h2>
-            <p className="mt-3 text-SUIT_14 font-medium text-ui-muted">잠시만 기다려주세요 :)</p>
+        {/* 로딩/성공 오버레이 - 하나의 컨테이너로 통합 */}
+        {overlayState !== "none" && (
+          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white">
+            {overlayState === "loading" ? (
+              <>
+                <LoadingSpinner />
+                <h2 className="mt-10 text-SUIT_24 font-bold text-black">로그인 중이에요!</h2>
+                <p className="mt-3 text-SUIT_14 font-medium text-ui-muted">잠시만 기다려주세요 :)</p>
+              </>
+            ) : (
+              <>
+                <div className="animate-popIn">
+                  <Image src="/icons/loginSuccess.svg" alt="성공" width={80} height={80} />
+                </div>
+                <h2 className="mt-10 animate-slideInUp text-SUIT_24 font-bold text-black">로그인 완료!</h2>
+                <p className="animation-delay-200 mt-3 animate-slideInUp text-SUIT_14 font-medium text-ui-muted">
+                  메인 페이지로 이동합니다...
+                </p>
+              </>
+            )}
           </div>
         )}
         <CommonHeader title="로그인" rightType={RIGHT_ITEM.NONE} />
@@ -60,18 +72,6 @@ export default function LoginPage() {
             <LoginForm onShowLoading={triggerLoadingOverlay} onShowSuccess={triggerSuccessOverlay} />
           </div>
         </div>
-        {/* 성공 오버레이 */}
-        {showSuccess && (
-          <div className="absolute inset-0 z-50 flex animate-fadeIn flex-col items-center justify-center bg-white">
-            <div className="animate-scaleIn">
-              <Image src="/icons/loginSuccess.svg" alt="성공" width={80} height={80} />
-            </div>
-            <h2 className="mt-10 animate-slideInUp text-SUIT_24 font-bold text-black">로그인 완료!</h2>
-            <p className="animation-delay-200 mt-3 animate-slideInUp text-SUIT_14 font-medium text-ui-muted">
-              메인 페이지로 이동합니다...
-            </p>
-          </div>
-        )}
       </div>
     </div>
   );
