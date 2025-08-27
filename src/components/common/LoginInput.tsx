@@ -17,14 +17,14 @@ function LoginInput({ label, className, rightElement, ...props }: InputProps) {
       <div className="relative mt-1 w-full">
         <div
           className={clsx(
-            "relative rounded-lg",
-            isFocused && "bg-gradient-to-r from-document-main to-question-main p-[2px]",
+            "relative rounded-lg transition-all duration-200",
+            isFocused ? "bg-gradient-to-r from-document-main to-question-main p-0.5" : "",
           )}
         >
           <input
             className={clsx(
-              "w-full rounded-lg border-2 bg-white px-4 py-3 text-SUIT_16 text-black outline-none transition-all duration-200",
-              isFocused ? "border-transparent" : "border-ui-border",
+              "w-full rounded-lg bg-white px-4 py-3 text-SUIT_16 text-black outline-none transition-all duration-200",
+              isFocused ? "border-0" : "border-2 border-ui-border",
               // 우측 아이콘 공간 확보
               rightElement ? "pr-12" : "",
               className,

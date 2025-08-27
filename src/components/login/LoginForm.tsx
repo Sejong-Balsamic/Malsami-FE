@@ -102,8 +102,18 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
             value={password}
             onChange={e => setPassword(e.target.value)}
             rightElement={
-              <button type="button" onClick={togglePassword} aria-label="비밀번호 표시" className="focus:outline-none">
-                <Image src="/icons/viewEyeGray.svg" alt="비밀번호 표시" width={20} height={20} />
+              <button
+                type="button"
+                onClick={togglePassword}
+                aria-label={showPassword ? "비밀번호 표시" : "비밀번호 숨기기"}
+                className="focus:outline-none"
+              >
+                <Image
+                  src={showPassword ? "/icons/viewEyeGray.svg" : "/icons/viewCloseEyeGray.svg"}
+                  alt={showPassword ? "비밀번호 표시" : "비밀번호 숨기기"}
+                  width={20}
+                  height={20}
+                />
               </button>
             }
           />
@@ -118,7 +128,7 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
         </div>
 
         {/* 로그인 제출 버튼 */}
-        <div className="mb-15 mt-auto">
+        <div className="mb-10 mt-auto">
           <button
             type="submit"
             className={`w-full rounded-md py-4 text-SUIT_16 font-extrabold text-white ${
