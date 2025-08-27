@@ -16,7 +16,12 @@ export default function LoginPage() {
   };
 
   const triggerSuccessOverlay = async () => {
-    // 로딩에서 성공으로 즉시 전환
+    // 로딩 오버레이를 최소 2초 유지
+    await new Promise<void>(resolve => {
+      setTimeout(() => resolve(), 2000);
+    });
+
+    // 로딩에서 성공으로 전환
     setOverlayState("success");
 
     // 1.5초 후 메인 페이지로 이동
