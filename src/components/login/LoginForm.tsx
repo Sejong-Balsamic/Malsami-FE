@@ -1,3 +1,6 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable react/require-default-props */
+
 "use client";
 
 import { useState, FormEvent, useEffect } from "react";
@@ -6,14 +9,19 @@ import Image from "next/image";
 import { useDispatch } from "react-redux";
 import authApi from "@/apis/authApi";
 import { AuthCommand } from "@/types/api/requests/authCommand";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { setMemberId } from "@/global/store/authSlice";
 import CustomInput from "../common/CustomInput";
 import LoginSuccessModal from "./LoginSuccessModal";
 
-export default function LoginForm() {
+interface LoginFormProps {
+  onShowLoading?: () => void;
+  onShowSuccess?: () => Promise<void> | void;
+}
+
+export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: LoginFormProps) {
   const [studentId, setStudentId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const [loginFailedMessage, setLoginFailedMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState<boolean>(false);
@@ -28,9 +36,14 @@ export default function LoginForm() {
     setIsFormValid(!!studentId.trim() && !!password.trim());
   }, [studentId, password]);
 
+  const togglePassword = () => {
+    setShowPassword(prev => !prev);
+  };
+
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    onShowLoading?.();
 
     try {
       const command: Partial<AuthCommand> = {
@@ -50,6 +63,9 @@ export default function LoginForm() {
         if (getUserInfo.isFirstLogin) {
           setIsLoginModalOpen(true);
         } else {
+          if (onShowSuccess) {
+            await onShowSuccess();
+          }
           router.push("/");
         }
       } else {
@@ -81,10 +97,15 @@ export default function LoginForm() {
           />
           <CustomInput
             label="비밀번호"
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="비밀번호를 입력해주세요."
             value={password}
             onChange={e => setPassword(e.target.value)}
+            rightElement={
+              <button type="button" onClick={togglePassword} aria-label="비밀번호 표시" className="focus:outline-none">
+                <Image src="/icons/viewEyeGray.svg" alt="비밀번호 표시" width={24} height={24} />
+              </button>
+            }
           />
 
           {/* 에러 메시지 */}
@@ -96,19 +117,13 @@ export default function LoginForm() {
           )}
         </div>
 
-        {isLoading && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center bg-white bg-opacity-60">
-            <LoadingSpinner />
-          </div>
-        )}
-
         {/* 로그인 제출 버튼 */}
         <div className="mb-[60px] mt-auto">
           <button
             type="submit"
             className={`w-full rounded-md py-4 text-SUIT_16 font-extrabold text-white ${
               isFormValid
-                ? "bg-gradient-to-r from-[#08E4BB] to-[#5FF48D] hover:from-[#07D1AA] hover:to-[#50E47F]"
+                ? "bg-gradient-to-r from-[#00D1F2] to-[#00E271] hover:from-[#00D7F2] hover:to-[#50E47F]"
                 : "bg-[#D1D1D1]"
             }`}
             disabled={!isFormValid || isLoading}
