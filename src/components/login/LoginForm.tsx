@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import authApi from "@/apis/authApi";
 import { AuthCommand } from "@/types/api/requests/authCommand";
 import { setMemberId } from "@/global/store/authSlice";
-import CustomInput from "../common/CustomInput";
+import LoginInput from "../common/LoginInput";
 import LoginSuccessModal from "./LoginSuccessModal";
 
 interface LoginFormProps {
@@ -89,13 +89,13 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
       <form onSubmit={handleLogin} className="flex flex-1 flex-col">
         {/* 상단 Input 영역 */}
         <div className="flex flex-col space-y-8">
-          <CustomInput
+          <LoginInput
             label="학번"
             placeholder="학번을 입력해주세요."
             value={studentId}
             onChange={e => setStudentId(e.target.value)}
           />
-          <CustomInput
+          <LoginInput
             label="비밀번호"
             type={showPassword ? "text" : "password"}
             placeholder="비밀번호를 입력해주세요."
@@ -103,7 +103,7 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
             onChange={e => setPassword(e.target.value)}
             rightElement={
               <button type="button" onClick={togglePassword} aria-label="비밀번호 표시" className="focus:outline-none">
-                <Image src="/icons/viewEyeGray.svg" alt="비밀번호 표시" width={24} height={24} />
+                <Image src="/icons/viewEyeGray.svg" alt="비밀번호 표시" width={20} height={20} />
               </button>
             }
           />
