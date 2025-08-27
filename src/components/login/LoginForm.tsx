@@ -112,19 +112,17 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
           {loginFailedMessage && (
             <div className="flex items-center">
               <Image src="/icons/ErrorExclamation.svg" alt="ErrorExclamation" width={18} height={18} />
-              <p className="ml-2 text-SUIT_14 font-medium text-[#FF3232]">{loginFailedMessage}</p>
+              <p className="ml-2 text-SUIT_14 font-medium text-red-500">{loginFailedMessage}</p>
             </div>
           )}
         </div>
 
         {/* 로그인 제출 버튼 */}
-        <div className="mb-[60px] mt-auto">
+        <div className="mb-15 mt-auto">
           <button
             type="submit"
             className={`w-full rounded-md py-4 text-SUIT_16 font-extrabold text-white ${
-              isFormValid
-                ? "bg-gradient-to-r from-[#00D1F2] to-[#00E271] hover:from-[#00D7F2] hover:to-[#50E47F]"
-                : "bg-[#D1D1D1]"
+              isFormValid ? "bg-gradient-to-r from-document-main to-question-main hover:opacity-90" : "bg-ui-muted"
             }`}
             disabled={!isFormValid || isLoading}
           >

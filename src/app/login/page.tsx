@@ -28,7 +28,7 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <div className="relative flex h-screen w-full max-w-[640px] flex-col bg-white">
+      <div className="relative flex h-screen w-full max-w-2xl flex-col bg-white">
         {isLoginLoading && (
           <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white">
             <LoadingSpinner />
@@ -50,7 +50,7 @@ export default function LoginPage() {
 
             {/* 설명 문구 */}
             <p className="mb-10 text-SUIT_14 font-medium leading-4 text-ui-muted">
-              <span className="font-bold text-[#898989]">세종대학교 포털</span>의 학번과 비밀번호로 로그인해주세요.
+              <span className="font-bold text-ui-muted">세종대학교 포털</span>의 학번과 비밀번호로 로그인해주세요.
               <br />
               비밀번호는 서버에 저장되지 않아요!
             </p>
