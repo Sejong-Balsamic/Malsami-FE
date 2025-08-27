@@ -104,13 +104,14 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
             rightElement={
               <button
                 type="button"
+                onMouseDown={e => e.preventDefault()}
                 onClick={togglePassword}
-                aria-label={showPassword ? "비밀번호 표시" : "비밀번호 숨기기"}
+                aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
                 className="focus:outline-none"
               >
                 <Image
                   src={showPassword ? "/icons/viewEyeGray.svg" : "/icons/viewCloseEyeGray.svg"}
-                  alt={showPassword ? "비밀번호 표시" : "비밀번호 숨기기"}
+                  alt={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
                   width={20}
                   height={20}
                 />

@@ -33,8 +33,10 @@ function LoginInput({ label, className, rightElement, ...props }: InputProps) {
             onBlur={() => setIsFocused(false)}
             {...props}
           />
-          {rightElement && <span className="absolute right-4 top-1/2 -translate-y-1/2 transform">{rightElement}</span>}
         </div>
+        {rightElement && (
+          <span className="absolute right-4 top-1/2 z-10 -translate-y-1/2 transform">{rightElement}</span>
+        )}
       </div>
     </label>
   );
