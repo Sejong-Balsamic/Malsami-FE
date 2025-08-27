@@ -63,9 +63,11 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
         if (getUserInfo.isFirstLogin) {
           setIsLoginModalOpen(true);
         } else {
+          // 성공 오버레이 표시 후 메인 페이지로 이동
           if (onShowSuccess) {
             await onShowSuccess();
           }
+          // 성공 메시지 표시 직후 페이지 이동
           router.push("/");
         }
       } else {

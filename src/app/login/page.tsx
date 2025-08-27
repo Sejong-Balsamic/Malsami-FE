@@ -14,23 +14,26 @@ export default function LoginPage() {
 
   const triggerLoadingOverlay = () => {
     setIsLoginLoading(true);
-    setTimeout(() => setIsLoginLoading(false), 2500);
   };
 
   const triggerSuccessOverlay = async () => {
+    // 로딩 오버레이 유지하면서 성공 메시지로 전환
+    setIsLoginLoading(false);
     setShowSuccess(true);
+
+    // 성공 메시지 표시 후 메인 페이지로 이동
     await new Promise<void>(resolve => {
-      setTimeout(() => resolve(), 1000);
+      setTimeout(() => resolve(), 1200);
     });
-    setShowSuccess(false);
   };
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100">
       <ScrollToTopOnLoad />
       <div className="relative flex h-screen w-full max-w-2xl flex-col bg-white">
+        {/* 로딩 오버레이 */}
         {isLoginLoading && (
-          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white">
+          <div className="absolute inset-0 z-50 flex animate-fadeIn flex-col items-center justify-center bg-white">
             <LoadingSpinner />
             <h2 className="mt-10 text-SUIT_24 font-bold text-black">로그인 중이에요!</h2>
             <p className="mt-3 text-SUIT_14 font-medium text-ui-muted">잠시만 기다려주세요 :)</p>
@@ -57,10 +60,16 @@ export default function LoginPage() {
             <LoginForm onShowLoading={triggerLoadingOverlay} onShowSuccess={triggerSuccessOverlay} />
           </div>
         </div>
+        {/* 성공 오버레이 */}
         {showSuccess && (
-          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white">
-            <Image src="/icons/loginSuccess.svg" alt="성공" width={80} height={80} />
-            <h2 className="mt-10 text-SUIT_24 font-bold text-black">로그인 완료!</h2>
+          <div className="absolute inset-0 z-50 flex animate-fadeIn flex-col items-center justify-center bg-white">
+            <div className="animate-scaleIn">
+              <Image src="/icons/loginSuccess.svg" alt="성공" width={80} height={80} />
+            </div>
+            <h2 className="mt-10 animate-slideInUp text-SUIT_24 font-bold text-black">로그인 완료!</h2>
+            <p className="animation-delay-200 mt-3 animate-slideInUp text-SUIT_14 font-medium text-ui-muted">
+              메인 페이지로 이동합니다...
+            </p>
           </div>
         )}
       </div>

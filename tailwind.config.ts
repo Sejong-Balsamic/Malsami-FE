@@ -145,11 +145,36 @@ const config: Config = {
           "90%": { transform: "translate(225px, 5px) rotate(5deg)" },
           "100%": { transform: "translate(250px, 0px) rotate(0deg)" },
         },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        fadeOut: {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
+        scaleIn: {
+          "0%": { transform: "scale(0.8)", opacity: "0" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
+        slideInUp: {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         moveToHamburger: "moveToHamburger 1.5s ease-in-out forwards",
+        fadeIn: "fadeIn 0.3s ease-out",
+        fadeOut: "fadeOut 0.3s ease-out",
+        scaleIn: "scaleIn 0.5s ease-out",
+        slideInUp: "slideInUp 0.5s ease-out",
+      },
+      animationDelay: {
+        "200": "200ms",
+        "400": "400ms",
+        "600": "600ms",
       },
       backgroundImage: {
         "toast-bg": "url('/image/ToastBG.png')",
