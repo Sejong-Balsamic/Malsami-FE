@@ -145,11 +145,43 @@ const config: Config = {
           "90%": { transform: "translate(225px, 5px) rotate(5deg)" },
           "100%": { transform: "translate(250px, 0px) rotate(0deg)" },
         },
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        fadeOut: {
+          "0%": { opacity: "1" },
+          "100%": { opacity: "0" },
+        },
+        scaleIn: {
+          "0%": { transform: "scale(0)", opacity: "0" },
+          "50%": { transform: "scale(1.1)", opacity: "1" },
+          "100%": { transform: "scale(1)", opacity: "1" },
+        },
+        popIn: {
+          "0%": { transform: "scale(0) rotate(-180deg)", opacity: "0" },
+          "50%": { transform: "scale(1.2) rotate(10deg)", opacity: "1" },
+          "100%": { transform: "scale(1) rotate(0deg)", opacity: "1" },
+        },
+        slideInUp: {
+          "0%": { transform: "translateY(20px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         moveToHamburger: "moveToHamburger 1.5s ease-in-out forwards",
+        fadeIn: "fadeIn 0.3s ease-out",
+        fadeOut: "fadeOut 0.3s ease-out",
+        scaleIn: "scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+        popIn: "popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
+        slideInUp: "slideInUp 0.5s ease-out",
+      },
+      animationDelay: {
+        "200": "200ms",
+        "400": "400ms",
+        "600": "600ms",
       },
       backgroundImage: {
         "toast-bg": "url('/image/ToastBG.png')",

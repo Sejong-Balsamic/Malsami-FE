@@ -10,15 +10,16 @@ import { useDispatch } from "react-redux";
 import authApi from "@/apis/authApi";
 import { AuthCommand } from "@/types/api/requests/authCommand";
 import { setMemberId } from "@/global/store/authSlice";
-import CustomInput from "../common/CustomInput";
+import LoginInput from "../common/LoginInput";
 import LoginSuccessModal from "./LoginSuccessModal";
 
 interface LoginFormProps {
   onShowLoading?: () => void;
   onShowSuccess?: () => Promise<void> | void;
+  onHideOverlay?: () => void;
 }
 
-export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: LoginFormProps) {
+export default function LoginForm({ onShowLoading = () => {}, onShowSuccess, onHideOverlay }: LoginFormProps) {
   const [studentId, setStudentId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -43,7 +44,6 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    onShowLoading?.();
 
     try {
       const command: Partial<AuthCommand> = {
@@ -53,6 +53,9 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
       const getUserInfo = await authApi.signIn(command);
 
       if (getUserInfo.accessToken && getUserInfo.studentName && getUserInfo.memberId) {
+        // 로그인 성공 시에만 로딩 오버레이 표시
+        onShowLoading?.();
+
         setUserName(getUserInfo.studentName || "");
         setIsFirstLogin(getUserInfo.isFirstLogin || false);
         setLoginFailedMessage(null);
@@ -63,17 +66,23 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
         if (getUserInfo.isFirstLogin) {
           setIsLoginModalOpen(true);
         } else {
+          // 성공 오버레이 표시 후 메인 페이지로 이동
           if (onShowSuccess) {
             await onShowSuccess();
           }
+          // 성공 메시지 표시 직후 페이지 이동
           router.push("/");
         }
       } else {
+        // 로그인 실패 시 에러 메시지만 표시
         setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+        onHideOverlay?.();
       }
     } catch (error) {
       console.error("로그인 실패:", error);
+      // 로그인 실패 시 에러 메시지만 표시
       setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+      onHideOverlay?.();
     } finally {
       setIsLoading(false);
     }
@@ -89,21 +98,32 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
       <form onSubmit={handleLogin} className="flex flex-1 flex-col">
         {/* 상단 Input 영역 */}
         <div className="flex flex-col space-y-8">
-          <CustomInput
+          <LoginInput
             label="학번"
             placeholder="학번을 입력해주세요."
             value={studentId}
             onChange={e => setStudentId(e.target.value)}
           />
-          <CustomInput
+          <LoginInput
             label="비밀번호"
             type={showPassword ? "text" : "password"}
             placeholder="비밀번호를 입력해주세요."
             value={password}
             onChange={e => setPassword(e.target.value)}
             rightElement={
-              <button type="button" onClick={togglePassword} aria-label="비밀번호 표시" className="focus:outline-none">
-                <Image src="/icons/viewEyeGray.svg" alt="비밀번호 표시" width={24} height={24} />
+              <button
+                type="button"
+                onMouseDown={e => e.preventDefault()}
+                onClick={togglePassword}
+                aria-label={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
+                className="focus:outline-none"
+              >
+                <Image
+                  src={showPassword ? "/icons/viewEyeGray.svg" : "/icons/viewCloseEyeGray.svg"}
+                  alt={showPassword ? "비밀번호 숨기기" : "비밀번호 표시"}
+                  width={20}
+                  height={20}
+                />
               </button>
             }
           />
@@ -112,19 +132,17 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
           {loginFailedMessage && (
             <div className="flex items-center">
               <Image src="/icons/ErrorExclamation.svg" alt="ErrorExclamation" width={18} height={18} />
-              <p className="ml-2 text-SUIT_14 font-medium text-[#FF3232]">{loginFailedMessage}</p>
+              <p className="ml-2 text-SUIT_14 font-medium text-red-500">{loginFailedMessage}</p>
             </div>
           )}
         </div>
 
         {/* 로그인 제출 버튼 */}
-        <div className="mb-[60px] mt-auto">
+        <div className="mb-10 mt-auto">
           <button
             type="submit"
             className={`w-full rounded-md py-4 text-SUIT_16 font-extrabold text-white ${
-              isFormValid
-                ? "bg-gradient-to-r from-[#00D1F2] to-[#00E271] hover:from-[#00D7F2] hover:to-[#50E47F]"
-                : "bg-[#D1D1D1]"
+              isFormValid ? "bg-gradient-to-r from-document-main to-question-main hover:opacity-90" : "bg-ui-muted"
             }`}
             disabled={!isFormValid || isLoading}
           >

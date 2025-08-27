@@ -70,7 +70,7 @@ function OriginalQuestion({ questionPostId }: { questionPostId: string }) {
             </div>
           </AccordionTrigger>
           <AccordionContent className="pb-0 transition-all duration-300 ease-in-out">
-            <div className="animate-fadeIn mt-4 rounded-md bg-gray-100 p-[14px]">
+            <div className="mt-4 animate-fadeIn rounded-md bg-gray-100 p-[14px]">
               <p className="text-SUIT_14 font-medium text-[#444444]">
                 {questionData?.questionPost?.content || "질문 내용을 불러오는 데 실패했습니다."}
               </p>

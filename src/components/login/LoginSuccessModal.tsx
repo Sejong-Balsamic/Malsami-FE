@@ -7,7 +7,7 @@ interface LoginSuccessModalProps {
 
 function LoginSuccessModal({ onClose, userName }: LoginSuccessModalProps) {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/50">
       <div className="w-full max-w-sm rounded-3xl bg-white p-10 text-center shadow-lg">
         {/* 이미지 */}
         <Image
@@ -18,15 +18,15 @@ function LoginSuccessModal({ onClose, userName }: LoginSuccessModalProps) {
           className="mx-auto mb-10"
         />
         {/* 성공 메시지 */}
-        <h2 className="font-pretendard-bold mb-2 text-[20px]">{userName}님 반가워요!</h2>
-        <p className="font-pretendard-semibold mb-6 text-[14px] text-[#9B9B9B]">
+        <h2 className="mb-2 text-SUIT_20 font-bold">{userName}님 반가워요!</h2>
+        <p className="mb-6 text-SUIT_14 font-semibold text-ui-muted">
           세종 말싸미에서 다양한 학습 자료들을 만나보세요!
         </p>
         {/* 확인 버튼 */}
         <button
           type="button"
           onClick={onClose}
-          className="font-pretendard-semibold bg-custom-orange-300 hover:bg-custom-orange-400 rounded-3xl px-6 py-3 text-[16px] text-white"
+          className="rounded-3xl bg-tag-yeopjeon px-6 py-3 text-SUIT_16 font-semibold text-white hover:opacity-90"
         >
           100 포인트 받기
         </button>
