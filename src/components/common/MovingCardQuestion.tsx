@@ -47,7 +47,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
   if (data.length === 0) return null;
 
   return (
-    <div className="-mx-5 w-screen overflow-hidden">
+    <div className="-mx-5 overflow-hidden">
       <Swiper
         key={`swiper-container-${data.length}`}
         modules={[Autoplay]}
@@ -62,7 +62,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
               }
             : false
         }
-        className="!pl-5 [&_.swiper-wrapper]:!my-3"
+        className="!pl-5 !pr-5 [&_.swiper-wrapper]:!my-3"
       >
         {data.map((questionPost, index) => (
           <SwiperSlide key={questionPost.questionPostId || questionPost.title || index} className="!w-72">
