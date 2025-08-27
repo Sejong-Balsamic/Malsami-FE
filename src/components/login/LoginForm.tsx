@@ -43,7 +43,6 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    onShowLoading?.();
 
     try {
       const command: Partial<AuthCommand> = {
@@ -53,6 +52,9 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
       const getUserInfo = await authApi.signIn(command);
 
       if (getUserInfo.accessToken && getUserInfo.studentName && getUserInfo.memberId) {
+        // 로그인 성공 시에만 로딩 오버레이 표시
+        onShowLoading?.();
+
         setUserName(getUserInfo.studentName || "");
         setIsFirstLogin(getUserInfo.isFirstLogin || false);
         setLoginFailedMessage(null);
@@ -71,10 +73,12 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
           router.push("/");
         }
       } else {
+        // 로그인 실패 시 에러 메시지만 표시
         setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
       }
     } catch (error) {
       console.error("로그인 실패:", error);
+      // 로그인 실패 시 에러 메시지만 표시
       setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsLoading(false);
