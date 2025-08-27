@@ -3,12 +3,12 @@
 import { InputHTMLAttributes, ReactNode, useState } from "react";
 import clsx from "clsx";
 
-type InputProps = InputHTMLAttributes<HTMLInputElement> & {
+interface LoginInputProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string;
   rightElement?: ReactNode; // 입력창 우측에 배치할 요소 (아이콘 등)
-};
+}
 
-function LoginInput({ label, className, rightElement, ...props }: InputProps) {
+function LoginInput({ label, className, rightElement, ...props }: LoginInputProps) {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
@@ -23,7 +23,7 @@ function LoginInput({ label, className, rightElement, ...props }: InputProps) {
         >
           <input
             className={clsx(
-              "w-full rounded-lg bg-white px-4 py-3 text-SUIT_16 text-black outline-none transition-all duration-200",
+              "w-full rounded-lg bg-background px-4 py-3 text-SUIT_16 text-foreground outline-none transition-all duration-200",
               isFocused ? "border-0" : "border-2 border-ui-border",
               // 우측 아이콘 공간 확보
               rightElement ? "pr-12" : "",

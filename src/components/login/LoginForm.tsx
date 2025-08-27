@@ -16,9 +16,10 @@ import LoginSuccessModal from "./LoginSuccessModal";
 interface LoginFormProps {
   onShowLoading?: () => void;
   onShowSuccess?: () => Promise<void> | void;
+  onHideOverlay?: () => void;
 }
 
-export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: LoginFormProps) {
+export default function LoginForm({ onShowLoading = () => {}, onShowSuccess, onHideOverlay }: LoginFormProps) {
   const [studentId, setStudentId] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
@@ -75,11 +76,13 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess }: L
       } else {
         // 로그인 실패 시 에러 메시지만 표시
         setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+        onHideOverlay?.();
       }
     } catch (error) {
       console.error("로그인 실패:", error);
       // 로그인 실패 시 에러 메시지만 표시
       setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+      onHideOverlay?.();
     } finally {
       setIsLoading(false);
     }
