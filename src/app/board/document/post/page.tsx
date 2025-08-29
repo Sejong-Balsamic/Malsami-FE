@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import subjects from "@/types/subjects";
-import { docMediaAllowedTypes } from "@/types/docMediaAllowedTypes";
+import { documentMediaAllowedTypes } from "@/types/documentMediaAllowedTypes";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { documentPostApi } from "@/apis/documentPostApi";
 import useCommonToast from "@/global/hook/useCommonToast";
@@ -68,7 +68,7 @@ export default function QnaPostPage() {
     if (e.target.files) {
       const filesArray = Array.from(e.target.files);
 
-      // 확장자 Hwp 확인. 임시로 수정. 나중에 docMediaAllowedTypes에 추가하여야 함.
+      // 일부 브라우저가 MIME 타입을 제공하지 않는 경우(예: .hwp, .hwpx) 확장자 기반으로 허용 여부를 추가 확인합니다.
       const allowedExtensions = [".hwp", ".hwpx"];
       const isExtensionAllowed = (fileName: string) => {
         const extension = fileName.slice(fileName.lastIndexOf(".")).toLowerCase();
@@ -84,7 +84,7 @@ export default function QnaPostPage() {
       };
       // 파일 크기 및 형식 검사
       const filteredFiles = filesArray.filter(file => {
-        const isValidType = docMediaAllowedTypes.includes(file.type) || isExtensionAllowed(file.name); // 허용된 형식 또는 확장자
+        const isValidType = documentMediaAllowedTypes.includes(file.type) || isExtensionAllowed(file.name); // 허용된 형식 또는 확장자
         const isValidSize = isFileSizeValid(file); // 파일 크기 검사
         if (!isValidType) {
           showWarningToast(`"${file.name}"는 지원하지 않는 파일 형식입니다.`);

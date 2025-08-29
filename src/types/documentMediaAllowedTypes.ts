@@ -1,7 +1,9 @@
-export const docMediaAllowedTypes = [
+export const documentMediaAllowedTypes = [
   // 이미지 파일 형식
   "image/jpeg",
   "image/png",
+  "image/gif", // GIF
+  "image/svg+xml", // SVG
   "image/webp",
   "image/jpg",
   // 문서 파일 형식
@@ -20,9 +22,7 @@ export const docMediaAllowedTypes = [
   "video/quicktime", // MOV
   // 음악 파일 형식
   "audio/mpeg", // MP3
-  "audio/wav", // WAV
   "audio/aac", // AAC
-  "audio/ogg", // OGG
 ];
 
-export default docMediaAllowedTypes;
+export default documentMediaAllowedTypes;
