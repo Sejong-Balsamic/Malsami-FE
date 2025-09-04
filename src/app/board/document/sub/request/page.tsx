@@ -4,11 +4,11 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import Header from "@/components/header/Header";
-import DocumentCardList from "@/components/documentMain/DocumentCardList";
+import DocumentRequestCardList from "@/components/documentMain/DocumentRequestCardList";
 import CommonPagination from "@/components/common/CommonPagination";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { documentRequestPostApi } from "@/apis/documentRequestPostApi";
-import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
+import { DocumentRequestPost } from "@/types/api/entities/postgres/documentRequestPost";
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { setDocumentFilteringOpen } from "@/global/store/bottomSheetSlice";
 import DocumentFilteringBottomSheet from "@/components/common/DocumentFilteringBottomSheet";
@@ -19,7 +19,7 @@ export default function DocumentRequestPage() {
 
   // 상태 관리
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [documentData, setDocumentData] = useState<DocumentPost[]>([]);
+  const [documentData, setDocumentData] = useState<DocumentRequestPost[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
 
@@ -115,7 +115,7 @@ export default function DocumentRequestPage() {
               <span className="text-SUIT_14 font-medium text-[#C5C5C5]">로딩 중...</span>
             </div>
           )}
-          {!isLoading && documentData.length > 0 && <DocumentCardList data={documentData} />}
+          {!isLoading && documentData.length > 0 && <DocumentRequestCardList data={documentData} />}
           {!isLoading && documentData.length === 0 && (
             <div className="flex h-40 items-center justify-center">
               <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 자료요청이 없습니다.</span>
