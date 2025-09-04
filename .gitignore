@@ -49,3 +49,4 @@ tsconfig.tsbuildinfo
 
 # 환경 변수 파일 무시
 .env.local
+/Malsami-BE/
