@@ -1,4 +1,4 @@
-export const documentMediaAllowedTypes = [
+export const DOCUMENT_MEDIA_ALLOWED_TYPES = [
   // 이미지 파일 형식
   "image/jpeg",
   "image/png",
@@ -25,4 +25,4 @@ export const documentMediaAllowedTypes = [
   "audio/aac", // AAC
 ];
 
-export default documentMediaAllowedTypes;
+export default DOCUMENT_MEDIA_ALLOWED_TYPES;

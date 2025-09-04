@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import subjects from "@/types/subjects";
-import { documentMediaAllowedTypes } from "@/types/documentMediaAllowedTypes";
+import { DOCUMENT_MEDIA_ALLOWED_TYPES } from "@/types/documentMediaAllowedTypes";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { documentPostApi } from "@/apis/documentPostApi";
 import useCommonToast from "@/global/hook/useCommonToast";
@@ -13,7 +13,7 @@ import DocumentPostFirstPage from "@/components/documentPost/DocumentPostFirstPa
 import DocumentPostSecondPage from "@/components/documentPost/DocumentPostSecondPage";
 import { DocumentPostFormData } from "@/components/documentPost/DocumentPostTypes";
 
-export default function QnaPostPage() {
+export default function DocumentPostPage() {
   const router = useRouter();
 
   const [formData, setFormData] = useState<DocumentPostFormData>({
@@ -84,7 +84,7 @@ export default function QnaPostPage() {
       };
       // 파일 크기 및 형식 검사
       const filteredFiles = filesArray.filter(file => {
-        const isValidType = documentMediaAllowedTypes.includes(file.type) || isExtensionAllowed(file.name); // 허용된 형식 또는 확장자
+        const isValidType = DOCUMENT_MEDIA_ALLOWED_TYPES.includes(file.type) || isExtensionAllowed(file.name); // 허용된 형식 또는 확장자
         const isValidSize = isFileSizeValid(file); // 파일 크기 검사
         if (!isValidType) {
           showWarningToast(`"${file.name}"는 지원하지 않는 파일 형식입니다.`);
