@@ -11,9 +11,13 @@ import AllQuestionsSectionSkeleton from "@/components/common/skeletons/AllQuesti
 
 interface LandingAllQuestionsSectionProps {
   onViewAll: () => void;
+  onCardClick?: (questionId: string) => void;
 }
 
-export default function LandingAllQuestionsSection({ onViewAll }: LandingAllQuestionsSectionProps) {
+export default function LandingAllQuestionsSection({
+  onViewAll,
+  onCardClick = undefined,
+}: LandingAllQuestionsSectionProps) {
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
@@ -46,7 +50,11 @@ export default function LandingAllQuestionsSection({ onViewAll }: LandingAllQues
   // 질문 상세 페이지로 이동
   const handleCardClick = (questionId: string) => {
     if (!questionId) return;
-    router.push(`/board/question/detail/${questionId}`);
+    if (onCardClick) {
+      onCardClick(questionId);
+    } else {
+      router.push(`/board/question/detail/${questionId}`);
+    }
   };
 
   // 데이터가 없는 경우 빈 상태 처리
