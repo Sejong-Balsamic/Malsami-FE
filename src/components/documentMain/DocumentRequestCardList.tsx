@@ -27,8 +27,9 @@ export default function DocumentRequestCardList({ data }: DocumentRequestCardLis
   /**
    * 자료 요청 카드 클릭 핸들러
    */
-  const handleCardClick = (documentRequestPostId: string) => {
-    router.push(`/board/document-request/detail/${documentRequestPostId || ""}`);
+  const handleCardClick = (documentRequestPostId?: string) => {
+    if (!documentRequestPostId) return;
+    router.push(`/board/document-request/detail/${documentRequestPostId}`);
   };
 
   return (
@@ -38,10 +39,10 @@ export default function DocumentRequestCardList({ data }: DocumentRequestCardLis
           <div
             role="button"
             tabIndex={0}
-            onClick={() => handleCardClick(document.documentRequestPostId || "")}
+            onClick={() => handleCardClick(document.documentRequestPostId)}
             onKeyDown={e => {
               if (e.key === "Enter" || e.key === " ") {
-                handleCardClick(document.documentRequestPostId || "");
+                handleCardClick(document.documentRequestPostId);
               }
             }}
             className="cursor-pointer"

@@ -11,9 +11,13 @@ import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 
 interface LandingAllDocumentsSectionProps {
   onViewAll: () => void;
+  onCardClick?: (documentId: string) => void;
 }
 
-export default function LandingAllDocumentsSection({ onViewAll }: LandingAllDocumentsSectionProps) {
+export default function LandingAllDocumentsSection({
+  onViewAll,
+  onCardClick = undefined,
+}: LandingAllDocumentsSectionProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [documents, setDocuments] = useState<DocumentPost[]>([]);
   const router = useRouter();
@@ -45,8 +49,13 @@ export default function LandingAllDocumentsSection({ onViewAll }: LandingAllDocu
   }, []);
 
   // 자료 상세 페이지로 이동
-  const handleCardClick = (documentId: string) => {
-    router.push(`/board/document/detail/${documentId}`);
+  const handleCardClick = (documentId?: string) => {
+    if (!documentId) return;
+    if (onCardClick) {
+      onCardClick(documentId);
+    } else {
+      router.push(`/board/document/detail/${documentId}`);
+    }
   };
 
   // 데이터가 없는 경우 빈 상태 처리
@@ -88,7 +97,7 @@ export default function LandingAllDocumentsSection({ onViewAll }: LandingAllDocu
                   type="button"
                   key={document.documentPostId}
                   className={`w-full cursor-pointer px-5 py-6 text-left ${index < documents.length - 1 ? "border-b border-[#EDEDED]" : ""}`}
-                  onClick={() => handleCardClick(document.documentPostId as string)}
+                  onClick={() => handleCardClick(document.documentPostId)}
                 >
                   {/* 상단 부분 - 과목 태그 */}
                   <div className="mb-3">
