@@ -1,109 +1,102 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { noticePostApi } from "@/apis/noticePostApi";
 import { NoticePost } from "@/types/api/entities/postgres/noticePost";
+import MovingCardNotice from "@/components/common/MovingCardNotice";
+import MovingNoticeCardSkeleton from "@/components/common/skeletons/MovingNoticeCardSkeleton";
 
 interface NoticeSectionProps {
-  // eslint-disable-next-line react/require-default-props
-  onViewAll?: () => void;
+  onViewAll: () => void;
 }
 
+// 목 데이터 생성 함수
+const generateMockNoticeData = (count: number = 10): NoticePost[] => {
+  return Array.from({ length: count }, (_, i) => ({
+    noticePostId: `mock-notice-${i}`,
+    title: `공지사항 제목 ${i + 1}: 중요한 내용을 알려드립니다`,
+    content: `공지사항 ${i + 1}의 내용입니다. 학생 여러분께 중요한 정보를 안내드리며, 자세한 내용은 본문을 확인해 주시기 바랍니다. 많은 관심 부탁드립니다.`,
+    likeCount: 5 + Math.floor(Math.random() * 20),
+    viewCount: 50 + Math.floor(Math.random() * 200),
+    createdDate: new Date(Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000).toISOString(),
+    isLiked: false,
+    isHidden: false,
+  }));
+};
+
+// 목 데이터
+const MOCK_NOTICE_DATA = generateMockNoticeData(10);
+
 export default function NoticeSection({ onViewAll }: NoticeSectionProps) {
-  const router = useRouter();
-  const [latestNotice, setLatestNotice] = useState<NoticePost | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [notices, setNotices] = useState<NoticePost[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    const fetchLatestNotice = async () => {
+    const fetchNotices = async () => {
+      setIsLoading(true);
       try {
         const response = await noticePostApi.getFilteredNoticePosts({
           pageNumber: 0,
-          pageSize: 1,
+          pageSize: 10,
           sortType: "LATEST",
         });
 
-        if (response.noticePostsPage?.content && response.noticePostsPage.content.length > 0) {
-          setLatestNotice(response.noticePostsPage.content[0]);
+        if (
+          response &&
+          response.noticePostsPage &&
+          response.noticePostsPage.content &&
+          response.noticePostsPage.content.length > 0
+        ) {
+          setNotices(response.noticePostsPage.content);
+        } else {
+          // API 응답이 비어있으면 목 데이터 사용
+          console.log("공지사항 API 응답이 비어있어 목 데이터를 사용합니다.");
+          setNotices(MOCK_NOTICE_DATA);
         }
       } catch (error) {
-        // 공지사항을 불러오는 중 오류가 발생했습니다
+        console.error("공지사항을 불러오는데 실패했습니다:", error);
+        // API 호출 실패 시 목 데이터 사용
+        setNotices(MOCK_NOTICE_DATA);
+        console.log("API 호출 실패로 목 데이터를 사용합니다.");
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchLatestNotice();
+    fetchNotices();
   }, []);
 
-  const handleNoticeClick = () => {
-    if (onViewAll) {
-      onViewAll();
-    } else {
-      router.push("/notice");
-    }
-  };
-
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleNoticeClick();
-    }
-  };
-
-  if (isLoading) {
-    return (
-      <div className="animate-pulse rounded-[12px] bg-[#D9FFD4] p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="h-10 w-10 rounded-full bg-white shadow-sm" />
-            <div>
-              <div className="mb-1 h-[20px] w-16 rounded bg-white/50" />
-              <div className="h-[20px] w-48 rounded bg-white/50" />
-            </div>
-          </div>
-          <div className="h-8 w-8 rounded-full bg-[#37E36D]" />
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <div
-      role="button"
-      tabIndex={0}
-      className="cursor-pointer rounded-[12px] bg-[#D9FFD4] p-4 transition-all duration-200 hover:shadow-md"
-      onClick={handleNoticeClick}
-      onKeyDown={handleKeyDown}
-    >
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          {/* 확성기 아이콘 */}
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-sm">
-            <Image src="/icons/Megaphone.svg" alt="공지사항" width={30} height={30} className="text-orange-500" />
-          </div>
-
-          <div className="flex-1">
-            <h3 className="font-suit-bold mb-1 text-sm leading-5 text-black">공지사항</h3>
-            <p className="font-suit-medium line-clamp-1 text-sm leading-5 text-[#252525]">
-              {latestNotice?.title || "자료 업로드 방식이 변경되었어요!"}
-            </p>
-          </div>
+    <div>
+      {/* 헤더 영역: 제목, 전체보기 */}
+      <div className="mb-2 flex items-center justify-between">
+        <div className="flex items-center">
+          <Image src="/icons/noticeMegaphone.svg" alt="공지사항" width={24} height={24} />
+          <h2 className="ml-2 text-SUIT_18 font-medium">공지사항</h2>
         </div>
 
-        {/* 화살표 아이콘 */}
-        <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#37E36D] text-white transition-colors hover:opacity-90">
-          <Image
-            src="/icons/arrowRight.svg"
-            alt="오른쪽 화살표"
-            width={13}
-            height={13}
-            style={{ width: "auto", height: "auto" }}
-          />
-        </div>
+        {/* 전체보기 링크 */}
+        <button
+          type="button"
+          onClick={onViewAll}
+          className="flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-ui-muted"
+        >
+          전체보기
+        </button>
       </div>
+
+      {/* 카드 스와이핑 영역 */}
+      {/* 로딩 중일 때 스켈레톤 표시 */}
+      {isLoading && <MovingNoticeCardSkeleton />}
+      {/* 데이터가 있을 때 MovingCardNotice 컴포넌트 렌더링 */}
+      {!isLoading && notices.length > 0 && <MovingCardNotice data={notices} />}
+      {/* 데이터가 없을 때 표시되는 메시지 */}
+      {!isLoading && notices.length === 0 && (
+        <div className="h-33 flex w-full items-center justify-center">
+          <span>표시할 공지사항이 없습니다.</span>
+        </div>
+      )}
     </div>
   );
 }

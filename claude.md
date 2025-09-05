@@ -555,17 +555,41 @@ const response = await postApiRequest<Command, Dto>("/api/...", command);
 
 ** 매우 중요한 CLI 명령어 사용법**:
 
+### 🚨 모든 작업 후 필수 실행 명령어 🚨
+
+**반드시 이 순서대로 실행하세요:**
+
+1. **Prettier 포맷팅**
+```bash
+source ~/.zshrc && npx prettier --write .
+```
+
+2. **빌드 테스트** 
+```bash
+source ~/.zshrc && npm run build
+```
+
+⚠️ **이 두 명령어를 실행하지 않으면 코드 검토를 통과하지 못합니다!** ⚠️
+
+### 일반 CLI 사용법
+
 ```bash
 source ~/.zshrc &&
 ```
 
 를 붙여서 모든 명령어를 실행해야지 작동함
 
-**코드 변경 후 마지막에 꼭 실행**:
+**🚨 코드 변경 후 반드시 실행 (매우 중요!) 🚨**:
 
 ```bash
+# 1단계: Prettier 포맷팅 (반드시 먼저!)
+source ~/.zshrc && npx prettier --write .
+
+# 2단계: 빌드 테스트 (반드시!)
 source ~/.zshrc && npm run build
 ```
+
+**⚠️ 주의: 위 두 명령어를 순서대로 실행하지 않으면 안됩니다! ⚠️**
 
 ### 환경 설정
 
@@ -660,13 +684,23 @@ import { useToast } from "@/global/hook/useToast"; // deprecated
   - [ ] useCommonToast 사용 확인
   - [ ] deprecated 토스트 시스템 사용 금지
   - [ ] 적절한 토스트 타입 선택 (confirm/warning/yeopjeon)
-- [ ] **무조건 실행할 빌드 테스트 및 prettier 적용 실행**
+- [ ] **🚨 최종 검증 단계 (반드시 실행!) 🚨**
+  
+  **1단계 - Prettier 포맷팅:**
   ```bash
   source ~/.zshrc && npx prettier --write .
+  ```
+  
+  **2단계 - 빌드 테스트:**
+  ```bash
   source ~/.zshrc && npm run build
   ```
+  
+  **오류 해결:**
   - [ ] ESLint 오류 해결
   - [ ] TypeScript 타입 오류 해결
   - [ ] Prettier 포맷팅 오류 해결
+  
+  **⚠️ 이 단계들을 건너뛰면 절대 안됩니다! ⚠️**
 
 ---
