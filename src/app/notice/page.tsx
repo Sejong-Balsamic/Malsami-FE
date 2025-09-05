@@ -47,7 +47,6 @@ export default function NoticePage() {
           setPinnedNoticePostData(noticePostsApiResponse.noticePostsPage.content[0]);
         }
       } catch (apiError) {
-        console.error("Failed to fetch notice posts:", apiError);
         setNoticeDataFetchErrorMessage(
           apiError instanceof Error ? apiError.message : "공지사항을 불러오는데 실패했습니다.",
         );
