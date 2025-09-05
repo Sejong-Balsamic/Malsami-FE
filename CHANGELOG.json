@@ -1,11 +1,49 @@
 {
   "metadata": {
-    "lastUpdated": "2025-08-27T10:47:08Z",
-    "currentVersion": "0.1.17",
+    "lastUpdated": "2025-09-05T17:08:34Z",
+    "currentVersion": "0.1.21",
     "projectType": "react",
-    "totalReleases": 13
+    "totalReleases": 14
   },
   "releases": [
+    {
+      "version": "0.1.21",
+      "project_type": "react",
+      "date": "2025-09-05",
+      "pr_number": 639,
+      "raw_summary": "Summary by CodeRabbit\n\nNew Features\n\n랜딩 문서/질문 카드 클릭으로 상세 페이지 이동 지원\n공지 섹션에 가로 캐러셀(자동재생)·스켈레톤 로딩·전체보기 버튼 추가\n공지/고정 공지 카드 클릭 시 공지 목록으로 이동\n문서 요청 리스트 컴포넌트 추가\n\n\nImprovements\n\n업로드 파일 아이콘이 파일 유형별로 동적 표시\n공지 목록 페이지 크기 10개로 고정해 초기 로딩 안정화\n미디어 허용 유형에 GIF/SVG 추가, 일부 오디오 제거\n\n\nDocumentation\n\n사용 가이드·필수 실행 단계 및 버전 표기 업데이트\n\n\nChores\n\n버전 0.1.21로 상향, .gitignore 정리",
+      "parsed_changes": {
+        "new_features": {
+          "title": "New Features",
+          "items": [
+            "랜딩 문서/질문 카드 클릭으로 상세 페이지 이동 지원",
+            "공지 섹션에 가로 캐러셀(자동재생)·스켈레톤 로딩·전체보기 버튼 추가",
+            "공지/고정 공지 카드 클릭 시 공지 목록으로 이동",
+            "문서 요청 리스트 컴포넌트 추가"
+          ]
+        },
+        "improvements": {
+          "title": "Improvements",
+          "items": [
+            "업로드 파일 아이콘이 파일 유형별로 동적 표시",
+            "공지 목록 페이지 크기 10개로 고정해 초기 로딩 안정화",
+            "미디어 허용 유형에 GIF/SVG 추가, 일부 오디오 제거"
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "사용 가이드·필수 실행 단계 및 버전 표기 업데이트"
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "버전 0.1.21로 상향, .gitignore 정리"
+          ]
+        }
+      }
+    },
     {
       "version": "0.1.17",
       "project_type": "react",
