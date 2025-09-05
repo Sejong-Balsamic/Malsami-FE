@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { NoticePost } from "@/types/api/entities/postgres/noticePost";
 
 interface PinnedNoticeCardProps {
@@ -15,9 +16,29 @@ interface PinnedNoticeCardProps {
  * @param noticePost - 공지사항 데이터
  */
 export default function PinnedNoticeCard({ noticePost }: PinnedNoticeCardProps) {
-  // 1. 렌더링
+  const router = useRouter();
+
+  // 1. 클릭 핸들러 - 공지사항 전체보기 페이지로 이동
+  const handleCardClick = () => {
+    router.push("/notice");
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleCardClick();
+    }
+  };
+
+  // 2. 렌더링
   return (
-    <div className="flex h-16 w-full flex-shrink-0 cursor-pointer items-center justify-between rounded-2xl bg-[#D9FFD4] p-4 transition-opacity hover:opacity-90">
+    <div
+      className="flex h-16 w-full flex-shrink-0 cursor-pointer items-center justify-between rounded-2xl bg-[#D9FFD4] p-4 transition-opacity hover:opacity-90"
+      onClick={handleCardClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+    >
       {/* 왼쪽 영역: 흰색 원 + 핀 아이콘 + 제목 */}
       <div className="flex min-w-0 flex-1 items-center space-x-2.5">
         {/* 흰색 원 + 핀 아이콘 */}

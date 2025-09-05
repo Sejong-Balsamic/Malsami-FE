@@ -24,7 +24,7 @@ export default function NoticeCard({ notice, onClick }: NoticeCardProps) {
   };
 
   return (
-    <article
+    <div
       className="h-33 flex w-72 cursor-pointer flex-col rounded-lg bg-white shadow-card-custom transition-all duration-200 hover:shadow-lg"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
@@ -57,6 +57,6 @@ export default function NoticeCard({ notice, onClick }: NoticeCardProps) {
           <span className="text-SUIT_12 font-medium text-ui-muted">{notice.viewCount || 0}</span>
         </div>
       </div>
-    </article>
+    </div>
   );
 }

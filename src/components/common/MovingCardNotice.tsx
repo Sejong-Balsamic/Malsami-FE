@@ -23,9 +23,7 @@ function MovingCardNotice({ data = [] }: MovingCardNoticeProps) {
     setIsMounted(true);
   }, []);
 
-  const handleCardClick = (postId: string) => {
-    if (!postId) return;
-
+  const handleCardClick = () => {
     const accessToken = sessionStorage.getItem("accessToken");
 
     // 로그인 체크
@@ -34,7 +32,8 @@ function MovingCardNotice({ data = [] }: MovingCardNoticeProps) {
       return;
     }
 
-    router.push(`/notice/${postId}`);
+    // 공지사항 전체보기 페이지로 이동
+    router.push("/notice");
   };
 
   if (!isMounted) {
@@ -66,11 +65,7 @@ function MovingCardNotice({ data = [] }: MovingCardNoticeProps) {
             <SwiperSlide key={notice.noticePostId || index} className="!w-72">
               <NoticeCard
                 notice={notice}
-                onClick={() => {
-                  if (notice.noticePostId) {
-                    handleCardClick(notice.noticePostId);
-                  }
-                }}
+                onClick={handleCardClick}
               />
             </SwiperSlide>
           );

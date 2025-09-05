@@ -51,14 +51,11 @@ export default function NoticeSection({ onViewAll }: NoticeSectionProps) {
           setNotices(response.noticePostsPage.content);
         } else {
           // API 응답이 비어있으면 목 데이터 사용
-          console.log("공지사항 API 응답이 비어있어 목 데이터를 사용합니다.");
           setNotices(MOCK_NOTICE_DATA);
         }
       } catch (error) {
-        console.error("공지사항을 불러오는데 실패했습니다:", error);
         // API 호출 실패 시 목 데이터 사용
         setNotices(MOCK_NOTICE_DATA);
-        console.log("API 호출 실패로 목 데이터를 사용합니다.");
       } finally {
         setIsLoading(false);
       }

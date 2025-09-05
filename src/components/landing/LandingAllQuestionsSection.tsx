@@ -14,6 +14,10 @@ interface LandingAllQuestionsSectionProps {
   onCardClick?: (questionId: string) => void;
 }
 
+LandingAllQuestionsSection.defaultProps = {
+  onCardClick: undefined,
+};
+
 export default function LandingAllQuestionsSection({
   onViewAll,
   onCardClick = undefined,

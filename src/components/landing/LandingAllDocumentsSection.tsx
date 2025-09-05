@@ -14,6 +14,10 @@ interface LandingAllDocumentsSectionProps {
   onCardClick?: (documentId: string) => void;
 }
 
+LandingAllDocumentsSection.defaultProps = {
+  onCardClick: undefined,
+};
+
 export default function LandingAllDocumentsSection({
   onViewAll,
   onCardClick = undefined,
