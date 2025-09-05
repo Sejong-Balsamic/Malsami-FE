@@ -554,9 +554,9 @@ const response = await postApiRequest<Command, Dto>("/api/...", command);
 
 ** 매우 중요한 CLI 명령어 사용법**:
 
-### 🚨 모든 작업 후 필수 실행 명령어 🚨
+## 🚨 모든 작업 후 필수 실행 명령어
 
-**반드시 이 순서대로 실행하세요:**
+다음 순서를 반드시 지키세요:
 
 1. **Prettier 포맷팅**
 ```bash
@@ -578,17 +578,7 @@ source ~/.zshrc &&
 
 를 붙여서 모든 명령어를 실행해야지 작동함
 
-**🚨 코드 변경 후 반드시 실행 (매우 중요!) 🚨**:
-
-```bash
-# 1단계: Prettier 포맷팅 (반드시 먼저!)
-source ~/.zshrc && npx prettier --write .
-
-# 2단계: 빌드 테스트 (반드시!)
-source ~/.zshrc && npm run build
-```
-
-**⚠️ 주의: 위 두 명령어를 순서대로 실행하지 않으면 안됩니다! ⚠️**
+위의 "🚨 모든 작업 후 필수 실행 명령어" 섹션을 참조하세요.
 
 ### 환경 설정
 
@@ -685,15 +675,7 @@ import { useToast } from "@/global/hook/useToast"; // deprecated
   - [ ] 적절한 토스트 타입 선택 (confirm/warning/yeopjeon)
 - [ ] **🚨 최종 검증 단계 (반드시 실행!) 🚨**
   
-  **1단계 - Prettier 포맷팅:**
-  ```bash
-  source ~/.zshrc && npx prettier --write .
-  ```
-  
-  **2단계 - 빌드 테스트:**
-  ```bash
-  source ~/.zshrc && npm run build
-  ```
+  위의 "🚨 모든 작업 후 필수 실행 명령어" 섹션 참조
   
   **오류 해결:**
   - [ ] ESLint 오류 해결

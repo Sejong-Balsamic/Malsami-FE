@@ -23,21 +23,13 @@ export default function PinnedNoticeCard({ noticePost }: PinnedNoticeCardProps) 
     router.push("/notice");
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleCardClick();
-    }
-  };
-
   // 2. 렌더링
   return (
-    <div
-      className="flex h-16 w-full flex-shrink-0 cursor-pointer items-center justify-between rounded-2xl bg-[#D9FFD4] p-4 transition-opacity hover:opacity-90"
+    <button
+      type="button"
+      aria-label="공지사항 전체보기"
+      className="flex h-16 w-full flex-shrink-0 cursor-pointer items-center justify-between rounded-2xl bg-green-100 p-4 transition-opacity hover:opacity-90"
       onClick={handleCardClick}
-      onKeyDown={handleKeyDown}
-      role="button"
-      tabIndex={0}
     >
       {/* 왼쪽 영역: 흰색 원 + 핀 아이콘 + 제목 */}
       <div className="flex min-w-0 flex-1 items-center space-x-2.5">
@@ -58,15 +50,9 @@ export default function PinnedNoticeCard({ noticePost }: PinnedNoticeCardProps) 
       </div>
 
       {/* 오른쪽 영역: 화살표 (NoticeSection과 동일) */}
-      <div className="ml-2 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-[#37E36D] text-white transition-colors hover:opacity-90">
-        <Image
-          src="/icons/arrowRight.svg"
-          alt="오른쪽 화살표"
-          width={13}
-          height={13}
-          style={{ width: "auto", height: "auto" }}
-        />
+      <div className="ml-2 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-green-500 text-white transition-colors hover:opacity-90">
+        <Image src="/icons/arrowRight.svg" alt="오른쪽 화살표" width={13} height={13} />
       </div>
-    </div>
+    </button>
   );
 }
