@@ -6,7 +6,7 @@ import NoticeCardSkeleton from "./NoticeCardSkeleton";
 export default function MovingNoticeCardSkeleton() {
   return (
     <div className="-mx-5 overflow-hidden">
-      <div className="flex gap-3 px-5 py-3">
+      <div className="my-3 flex gap-3 px-5">
         <NoticeCardSkeleton />
         <NoticeCardSkeleton />
         <NoticeCardSkeleton />

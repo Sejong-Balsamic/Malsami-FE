@@ -37,7 +37,7 @@ export default function NoticeCard({ notice, onClick }: NoticeCardProps) {
       </div>
 
       {/* 중간: 본문 내용 (2줄) */}
-      <div className="mx-4 mb-3 mt-2 flex-1">
+      <div className="mx-4 mb-5 mt-2 flex-1">
         <p className="line-clamp-2 text-SUIT_14 font-normal leading-5 text-ui-body">
           {notice.content || "공지사항 내용입니다."}
         </p>
