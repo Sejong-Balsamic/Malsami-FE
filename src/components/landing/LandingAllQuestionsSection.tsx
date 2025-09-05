@@ -2,26 +2,22 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import { useSelector, useDispatch } from "react-redux";
 import SubjectTag from "@/components/common/tags/SubjectTag";
 import CustomTag from "@/components/common/tags/CustomTag";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import { useRouter } from "next/navigation";
-import { RootState } from "@/global/store";
-import { showModal } from "@/global/store/modalSlice";
 import AllQuestionsSectionSkeleton from "@/components/common/skeletons/AllQuestionsSectionSkeleton";
 
 interface LandingAllQuestionsSectionProps {
   onViewAll: () => void;
+  onCardClick: ((questionId: string) => void) | undefined;
 }
 
-export default function LandingAllQuestionsSection({ onViewAll }: LandingAllQuestionsSectionProps) {
+function LandingAllQuestionsSection({ onViewAll, onCardClick = undefined }: LandingAllQuestionsSectionProps) {
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -51,11 +47,11 @@ export default function LandingAllQuestionsSection({ onViewAll }: LandingAllQues
   // 질문 상세 페이지로 이동
   const handleCardClick = (questionId: string) => {
     if (!questionId) return;
-    if (!isLoggedIn) {
-      dispatch(showModal("로그인 후 이용가능합니다."));
-      return;
+    if (onCardClick) {
+      onCardClick(questionId);
+    } else {
+      router.push(`/board/question/detail/${questionId}`);
     }
-    router.push(`/board/question/detail/${questionId}`);
   };
 
   // 데이터가 없는 경우 빈 상태 처리
@@ -153,3 +149,5 @@ export default function LandingAllQuestionsSection({ onViewAll }: LandingAllQues
     </div>
   );
 }
+
+export default LandingAllQuestionsSection;

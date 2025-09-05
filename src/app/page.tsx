@@ -85,7 +85,10 @@ export default function LandingPage() {
 
         {/* 자료 게시판 섹션 */}
         <section aria-labelledby="all-documents-heading" className="mb-5">
-          <LandingAllDocumentsSection onViewAll={() => checkLoginAndNavigate("/board/document")} />
+          <LandingAllDocumentsSection
+            onViewAll={() => checkLoginAndNavigate("/board/document")}
+            onCardClick={documentId => checkLoginAndNavigate(`/board/document/detail/${documentId}`)}
+          />
         </section>
 
         {/* HOT 인기질문 섹션 */}
@@ -99,7 +102,10 @@ export default function LandingPage() {
 
         {/* 질문 게시판 섹션 */}
         <section aria-labelledby="all-questions-heading" className="mb-5">
-          <LandingAllQuestionsSection onViewAll={() => checkLoginAndNavigate("/board/question")} />
+          <LandingAllQuestionsSection
+            onViewAll={() => checkLoginAndNavigate("/board/question")}
+            onCardClick={questionId => checkLoginAndNavigate(`/board/question/detail/${questionId}`)}
+          />
         </section>
       </main>
 

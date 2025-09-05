@@ -5,7 +5,9 @@ import "swiper/css";
 import { Autoplay } from "swiper/modules";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
+import { showModal } from "@/global/store/modalSlice";
 import Card from "./Card";
 
 interface MovingCardDocumentProps {
@@ -14,6 +16,7 @@ interface MovingCardDocumentProps {
 
 function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
   const router = useRouter();
+  const dispatch = useDispatch();
   const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
@@ -27,14 +30,7 @@ function MovingCardDocument({ data = [] }: MovingCardDocumentProps) {
 
     // 로그인 체크
     if (!accessToken) {
-      // 동적 import로 Redux 관련 코드 실행 (에러 핸들링 추가)
-      Promise.all([import("@/global/store/modalSlice"), import("@/global/store")])
-        .then(([{ showModal }, { store }]) => {
-          store.dispatch(showModal("로그인 후 이용가능합니다."));
-        })
-        .catch(err => {
-          console.error("로그인 모달 로드 실패:", err);
-        });
+      dispatch(showModal("로그인 후 이용가능합니다."));
       return;
     }
 

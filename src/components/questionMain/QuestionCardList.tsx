@@ -1,9 +1,6 @@
 import React from "react";
 import { useRouter } from "next/navigation";
-import { useSelector, useDispatch } from "react-redux";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
-import { RootState } from "@/global/store";
-import { showModal } from "@/global/store/modalSlice";
 import QuestionCard from "./QuestionCard";
 
 interface QuestionCardListProps {
@@ -12,8 +9,6 @@ interface QuestionCardListProps {
 
 export default function QuestionCardList({ data }: QuestionCardListProps) {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   if (!data || data.length === 0) {
     return (
@@ -25,10 +20,6 @@ export default function QuestionCardList({ data }: QuestionCardListProps) {
 
   const handleQuestionClick = (questionId: string) => {
     if (!questionId) return;
-    if (!isLoggedIn) {
-      dispatch(showModal("로그인 후 이용가능합니다."));
-      return;
-    }
     router.push(`/board/question/detail/${questionId}`);
   };
 

@@ -79,7 +79,6 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess, onH
         onHideOverlay?.();
       }
     } catch (error) {
-      console.error("로그인 실패:", error);
       // 로그인 실패 시 에러 메시지만 표시
       setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
       onHideOverlay?.();

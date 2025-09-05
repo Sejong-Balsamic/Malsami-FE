@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { getFileIconInfo } from "@/constants/fileIconMap";
 
 interface FileUploadProps {
   mediaFiles: File[];
@@ -10,20 +11,23 @@ function DocPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploa
   return (
     <div className="flex flex-col gap-y-[20px] rounded-[14px] border-2 border-ui-border px-4 py-[18px]">
       {/* 파일 목록 */}
-      {mediaFiles.map(file => (
-        <div key={file.name} className="flex items-center justify-between">
-          {/* 파일 아이콘 + 이름 */}
-          <div className="flex items-center gap-2 overflow-hidden">
-            <Image src="/icons/Document.svg" alt="file" width={20} height={20} />
-            <span className="truncate text-SUIT_14 font-medium text-black">{file.name}</span>
-          </div>
+      {mediaFiles.map(file => {
+        const { iconSrc, label } = getFileIconInfo(file);
+        return (
+          <div key={file.name} className="flex items-center justify-between">
+            {/* 파일 아이콘 + 이름 */}
+            <div className="flex items-center gap-2 overflow-hidden">
+              <Image src={iconSrc} alt={label} width={20} height={20} />
+              <span className="truncate text-SUIT_14 font-medium text-black">{file.name}</span>
+            </div>
 
-          {/* 삭제 버튼 */}
-          <button type="button" onClick={() => onFileDelete(file.name)} aria-label="파일 삭제">
-            <Image src="/icons/deleteGray.svg" alt="delete" width={20} height={20} />
-          </button>
-        </div>
-      ))}
+            {/* 삭제 버튼 */}
+            <button type="button" onClick={() => onFileDelete(file.name)} aria-label="파일 삭제">
+              <Image src="/icons/deleteGray.svg" alt="delete" width={20} height={20} />
+            </button>
+          </div>
+        );
+      })}
 
       {/* +버튼 (아이콘만 표시) */}
       <label htmlFor="doc-file-upload" className="flex cursor-pointer items-center justify-center">

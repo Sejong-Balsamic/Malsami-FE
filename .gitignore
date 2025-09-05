@@ -49,3 +49,9 @@ tsconfig.tsbuildinfo
 
 # 환경 변수 파일 무시
 .env.local
+
+# Claude Code 설정 (로컬 전용)
+.claude/
+
+# 백엔드 코드
+/Malsami-BE/

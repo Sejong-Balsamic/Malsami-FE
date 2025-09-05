@@ -2,6 +2,7 @@
 
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { NoticePost } from "@/types/api/entities/postgres/noticePost";
 import { getDateDiff } from "@/global/time";
 
@@ -15,12 +16,32 @@ interface NoticeCardProps {
  * @param noticePost - 공지사항 데이터
  */
 export default function NoticeCard({ noticePost }: NoticeCardProps) {
+  const router = useRouter();
+
   // 1. 시간 문자열 생성
   const timeString = noticePost.createdDate ? getDateDiff(noticePost.createdDate) : "";
 
-  // 4. 렌더링
+  // 2. 클릭 핸들러 - 공지사항 전체보기 페이지로 이동
+  const handleCardClick = () => {
+    router.push("/notice");
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleCardClick();
+    }
+  };
+
+  // 3. 렌더링
   return (
-    <div className="w-full">
+    <div
+      className="-m-2 w-full cursor-pointer rounded-md p-2 transition-all duration-200 hover:bg-gray-50"
+      onClick={handleCardClick}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+    >
       {/* 제목과 시간 - 첫 번째 줄 */}
       <div className="flex items-start justify-between">
         {/* 제목 */}
