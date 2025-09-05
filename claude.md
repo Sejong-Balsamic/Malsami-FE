@@ -271,8 +271,7 @@ const featureSlice = createSlice({
 global/hook/
 ├── useLogout.ts                  # 로그아웃 로직
 ├── useMemberInfo.ts              # 회원 정보 관리
-├── useToast.ts                   # 토스트 알림 관리
-└── useOptimalPageSizeForBoard.ts # 페이지네이션 관리
+└── useToast.ts                   # 토스트 알림 관리
 ```
 
 ---

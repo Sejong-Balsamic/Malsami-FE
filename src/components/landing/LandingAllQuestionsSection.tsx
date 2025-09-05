@@ -11,17 +11,10 @@ import AllQuestionsSectionSkeleton from "@/components/common/skeletons/AllQuesti
 
 interface LandingAllQuestionsSectionProps {
   onViewAll: () => void;
-  onCardClick?: (questionId: string) => void;
+  onCardClick: ((questionId: string) => void) | undefined;
 }
 
-LandingAllQuestionsSection.defaultProps = {
-  onCardClick: undefined,
-};
-
-export default function LandingAllQuestionsSection({
-  onViewAll,
-  onCardClick = undefined,
-}: LandingAllQuestionsSectionProps) {
+function LandingAllQuestionsSection({ onViewAll, onCardClick = undefined }: LandingAllQuestionsSectionProps) {
   const [questions, setQuestions] = useState<QuestionPost[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
@@ -156,3 +149,5 @@ export default function LandingAllQuestionsSection({
     </div>
   );
 }
+
+export default LandingAllQuestionsSection;

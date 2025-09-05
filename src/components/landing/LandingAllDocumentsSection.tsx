@@ -11,17 +11,10 @@ import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 
 interface LandingAllDocumentsSectionProps {
   onViewAll: () => void;
-  onCardClick?: (documentId: string) => void;
+  onCardClick: ((documentId: string) => void) | undefined;
 }
 
-LandingAllDocumentsSection.defaultProps = {
-  onCardClick: undefined,
-};
-
-export default function LandingAllDocumentsSection({
-  onViewAll,
-  onCardClick = undefined,
-}: LandingAllDocumentsSectionProps) {
+function LandingAllDocumentsSection({ onViewAll, onCardClick = undefined }: LandingAllDocumentsSectionProps) {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [documents, setDocuments] = useState<DocumentPost[]>([]);
   const router = useRouter();
@@ -157,3 +150,5 @@ export default function LandingAllDocumentsSection({
     </div>
   );
 }
+
+export default LandingAllDocumentsSection;

@@ -10,11 +10,10 @@ import NoticeCard from "@/components/notice/NoticeCard";
 import PinnedNoticeCard from "@/components/notice/PinnedNoticeCard";
 import CommonPagination from "@/components/common/CommonPagination";
 import NoticeListSkeleton from "@/components/common/skeletons/NoticeListSkeleton";
-import { useOptimalPageSizeForBoard } from "@/global/hook/useOptimalPageSizeForBoard";
 
 export default function NoticePage() {
-  // 1. 커스텀 훅 - 공지사항 게시판 타입으로 고정 페이지 크기 가져오기
-  const fixedOptimalPageSizeForNotice = useOptimalPageSizeForBoard("NOTICE");
+  // 1. 고정 페이지 크기 - 10개로 고정
+  const fixedPageSize = 10;
 
   // 2. 상태 선언
   const [isNoticeDataCurrentlyLoading, setIsNoticeDataCurrentlyLoading] = useState<boolean>(true);
@@ -32,7 +31,7 @@ export default function NoticePage() {
 
         const noticePostsApiResponse = await noticePostApi.getFilteredNoticePosts({
           pageNumber: requestedPageNumber,
-          pageSize: fixedOptimalPageSizeForNotice, // Redux에서 가져온 고정 페이지 크기 사용
+          pageSize: fixedPageSize, // 10개 고정
           sortType: "LATEST",
         });
 
@@ -56,7 +55,7 @@ export default function NoticePage() {
         setIsNoticeDataCurrentlyLoading(false);
       }
     },
-    [fixedOptimalPageSizeForNotice],
+    [fixedPageSize],
   );
 
   // 4. 페이지 변경 요청 핸들러
@@ -64,13 +63,10 @@ export default function NoticePage() {
     fetchNoticePostsDataByPageNumber(requestedNewPageNumber);
   };
 
-  // 5. useEffect - 페이지 크기가 결정되면 데이터 가져오기
+  // 5. useEffect - 초기 데이터 로드
   useEffect(() => {
-    // 페이지 크기가 0이 아닐 때만 API 호출 (Redux 초기화 완료 후)
-    if (fixedOptimalPageSizeForNotice > 0) {
-      fetchNoticePostsDataByPageNumber(0);
-    }
-  }, [fixedOptimalPageSizeForNotice, fetchNoticePostsDataByPageNumber]);
+    fetchNoticePostsDataByPageNumber(0);
+  }, [fetchNoticePostsDataByPageNumber]);
 
   // 6. 로딩 상태 렌더링
   if (isNoticeDataCurrentlyLoading) {
