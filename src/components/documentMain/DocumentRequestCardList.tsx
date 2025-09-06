@@ -54,7 +54,7 @@ export default function DocumentRequestCardList({ data }: DocumentRequestCardLis
               content={document.content || "내용이 없습니다."}
               documentTypes={document.documentTypes || []}
               createdDate={document.createdDate || ""}
-              thumbnailUrl={""} // 자료 요청은 썸네일 없음
+              thumbnailUrl="" // 자료 요청은 썸네일 없음
               viewCount={document.viewCount || 0}
               likeCount={document.likeCount || 0}
             />
