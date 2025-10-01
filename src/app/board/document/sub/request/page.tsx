@@ -143,7 +143,6 @@ export default function DocumentRequestPage() {
         onConfirm={handleDocumentConfirm}
         currentFiltering={currentFiltering} // 현재 적용된 필터링 상태 전달
         trigger={<div />} // 빈 트리거 (Header의 메뉴 버튼으로 제어)
-        activeColor="#00D1F2" // 파란색 테마
       />
     </div>
   );
