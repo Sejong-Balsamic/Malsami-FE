@@ -21,6 +21,10 @@ export const likeApi = {
   noticeBoardLike: async (command: Partial<NoticePostCommand>): Promise<NoticePostDto> =>
     postApiRequest<NoticePostCommand, NoticePostDto>("/api/notice/like", command),
 
+  // 공지사항 좋아요 취소
+  cancelNoticeBoardLike: async (command: Partial<NoticePostCommand>): Promise<void> =>
+    postApiRequest<NoticePostCommand, void>("/api/notice/like/cancel", command),
+
   // 댓글 좋아요
   commentLike: async (command: Partial<CommentCommand>): Promise<CommentDto> =>
     postApiRequest<CommentCommand, CommentDto>("/api/comment/like", command),

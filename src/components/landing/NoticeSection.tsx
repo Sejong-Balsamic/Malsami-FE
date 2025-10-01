@@ -36,7 +36,7 @@ export default function NoticeSection({ onViewAll }: NoticeSectionProps) {
     const fetchNotices = async () => {
       setIsLoading(true);
       try {
-        const response = await noticePostApi.getFilteredNoticePosts({
+        const response = await noticePostApi.fetchFilteredNoticePosts({
           pageNumber: 0,
           pageSize: 10,
           sortType: "LATEST",

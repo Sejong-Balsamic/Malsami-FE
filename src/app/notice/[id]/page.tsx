@@ -34,10 +34,11 @@ export default function Page() {
       const fetchData = async () => {
         try {
           setIsLoading(true);
+          setError(null);
           const command: Partial<NoticePostCommand> = {
             noticePostId: postId,
           };
-          const data = await noticePostApi.getNoticePost(command);
+          const data = await noticePostApi.fetchNoticePost(command);
 
           if (isMounted) {
             setNoticeDetails(data);
@@ -91,7 +92,7 @@ export default function Page() {
     return () => {
       isMounted = false;
     };
-  }, [postId, error, router, showWarningToast]);
+  }, [postId, router, showWarningToast]);
 
   // 오류 상태 처리
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;

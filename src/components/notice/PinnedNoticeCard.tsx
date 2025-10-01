@@ -35,7 +35,7 @@ export default function PinnedNoticeCard({ noticePost }: PinnedNoticeCardProps) 
       }}
       role="button"
       tabIndex={0}
-      aria-label={`고정된 공지: ${noticePost.title}`}
+      aria-label={`고정된 공지: ${noticePost.title ?? "제목 없음"}`}
     >
       {/* 핀 아이콘 */}
       <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white">

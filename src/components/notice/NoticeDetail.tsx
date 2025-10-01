@@ -23,14 +23,24 @@ export default function NoticeDetail({ noticePostDto }: NoticeDetailProps) {
     try {
       setIsLikeLoading(true);
       const command: Partial<NoticePostCommand> = {
-        noticePostId: noticePostDto.noticePost?.noticePostId,
+        postId: noticePostDto.noticePost?.noticePostId,
       };
 
-      const response = await likeApi.noticeBoardLike(command);
-
-      if (response.noticePost) {
-        setIsLiked(response.noticePost.isLiked || false);
-        setLikeCount(response.noticePost.likeCount || 0);
+      if (isLiked) {
+        // 좋아요 취소
+        await likeApi.cancelNoticeBoardLike(command);
+        setIsLiked(false);
+        setLikeCount(prev => Math.max(0, prev - 1));
+      } else {
+        // 좋아요 추가
+        const response = await likeApi.noticeBoardLike(command);
+        if (response.noticePost) {
+          setIsLiked(response.noticePost.isLiked || true);
+          setLikeCount(response.noticePost.likeCount || likeCount + 1);
+        } else {
+          setIsLiked(true);
+          setLikeCount(prev => prev + 1);
+        }
       }
     } catch (error) {
       showWarningToast("좋아요 처리 중 오류가 발생했습니다.");
@@ -53,7 +63,7 @@ export default function NoticeDetail({ noticePostDto }: NoticeDetailProps) {
           <span className="text-SUIT_12 text-ui-muted">운영자</span>
           <span className="text-ui-muted">·</span>
           <div className="flex items-center gap-1">
-            <Image src="/viewCountGray.svg" width={12} height={12} alt="" />
+            <Image src="/viewCountGray.svg" width={12} height={12} alt="조회수" />
             <span className="text-SUIT_12 text-ui-muted">{noticePostDto.noticePost?.viewCount || 0}</span>
           </div>
         </div>

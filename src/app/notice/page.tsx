@@ -25,7 +25,7 @@ export default function NoticePage() {
   // 핀된 공지사항 가져오기
   const fetchPinnedNoticePosts = useCallback(async () => {
     try {
-      const pinnedResponse = await noticePostApi.getPinnedNoticePosts();
+      const pinnedResponse = await noticePostApi.fetchPinnedNoticePosts();
       if (pinnedResponse.noticePosts) {
         setPinnedNoticePosts(pinnedResponse.noticePosts);
       }
@@ -47,7 +47,7 @@ export default function NoticePage() {
           await fetchPinnedNoticePosts();
         }
 
-        const noticePostsApiResponse = await noticePostApi.getFilteredNoticePosts({
+        const noticePostsApiResponse = await noticePostApi.fetchFilteredNoticePosts({
           pageNumber: requestedPageNumber,
           pageSize: fixedPageSize,
           sortType: "LATEST",
@@ -126,8 +126,8 @@ export default function NoticePage() {
         {/* 핀 고정 공지사항 (별도 API로 가져온 핀된 공지사항) */}
         {pinnedNoticePosts.length > 0 && (
           <>
-            {pinnedNoticePosts.map(pinnedNotice => (
-              <div key={pinnedNotice.noticePostId} className="mb-3">
+            {pinnedNoticePosts.map((pinnedNotice, index) => (
+              <div key={pinnedNotice.noticePostId || `pinned-${index}`} className="mb-3">
                 <PinnedNoticeCard noticePost={pinnedNotice} />
               </div>
             ))}
@@ -138,8 +138,8 @@ export default function NoticePage() {
 
         {/* 일반 공지사항 리스트 */}
         <div className="space-y-4">
-          {currentNoticePostsPageData?.content?.map(noticePost => (
-            <NoticeCard key={noticePost.noticePostId} noticePost={noticePost} />
+          {currentNoticePostsPageData?.content?.map((noticePost, index) => (
+            <NoticeCard key={noticePost.noticePostId || `notice-${index}`} noticePost={noticePost} />
           ))}
         </div>
 
