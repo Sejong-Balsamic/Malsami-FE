@@ -65,34 +65,39 @@ export default function NoticeDetail({ noticePostDto }: NoticeDetailProps) {
 
         {/* 얇은 구분선 (본문 아래 20px) */}
         <hr className="mt-5 h-px w-full rounded-sm bg-ui-divider" />
-      </div>
 
-      {/* 두꺼운 구분선 (50px 간격) */}
-      <div className="mt-12 border-t-8 border-ui-divider" />
-
-      {/* 좋아요 버튼 (정중앙) */}
-      <div className="flex justify-center py-8">
-        <button
-          type="button"
-          onClick={handleLikeToggle}
-          disabled={isLikeLoading}
-          className="flex flex-col items-center gap-2 transition-colors disabled:opacity-50"
-          aria-label={isLiked ? "좋아요 취소" : "좋아요"}
-        >
-          <Image
-            src={isLiked ? "/icons/newLikeThumbBlue.svg" : "/icons/newLikeThumbGray.svg"}
-            alt="좋아요"
-            width={24}
-            height={24}
-            className={`transition-all ${isLiked ? "scale-110" : ""}`}
-          />
-          <span
-            className={`text-SUIT_14 font-medium transition-colors ${isLiked ? "text-document-main" : "text-ui-muted"}`}
+        {/* 좋아요 버튼 (가로 배치, 아이콘과 숫자 사이 4px) */}
+        <div className="flex justify-center py-3">
+          <button
+            type="button"
+            onClick={handleLikeToggle}
+            disabled={isLikeLoading}
+            className="flex items-center gap-1 transition-colors disabled:opacity-50"
+            aria-label={isLiked ? "좋아요 취소" : "좋아요"}
           >
-            {likeCount}
-          </span>
-        </button>
+            <Image
+              src={isLiked ? "/icons/newLikeThumbBlue.svg" : "/icons/newLikeThumbGray.svg"}
+              alt="좋아요"
+              width={20}
+              height={20}
+              className="flex-shrink-0"
+            />
+            <span
+              className={`text-SUIT_12 font-medium leading-none transition-colors ${
+                isLiked ? "text-document-main" : "text-ui-muted"
+              }`}
+            >
+              {likeCount}
+            </span>
+          </button>
+        </div>
       </div>
+
+      {/* 두꺼운 구분선 (전체 너비, 패딩 바깥쪽) */}
+      <div className="border-t-8 border-ui-divider" />
+
+      {/* 하단 여백 */}
+      <div className="h-16" />
     </div>
   );
 }

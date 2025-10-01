@@ -101,7 +101,7 @@ export default function Page() {
   return (
     <div className="mx-auto min-h-screen w-full max-w-[640px]">
       <ScrollToTopOnLoad />
-      <CommonHeader title="공지사항 상세보기" rightType={RIGHT_ITEM.NONE} />
+      <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
       <div>{noticeDetails && <NoticeDetail noticePostDto={noticeDetails} />}</div>
     </div>
   );
