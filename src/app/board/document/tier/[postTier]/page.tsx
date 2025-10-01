@@ -242,7 +242,6 @@ export default function DocumentTierPage({ params }: DocumentTierPageProps) {
         onConfirm={handleDocumentConfirm}
         currentFiltering={currentFiltering}
         trigger={<div />} // 빈 트리거 (Header의 메뉴 버튼으로 제어)
-        activeColor="#00D1F2" // 파란색 테마
       />
     </div>
   );
