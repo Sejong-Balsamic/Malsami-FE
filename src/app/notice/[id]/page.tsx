@@ -8,7 +8,7 @@ import NoticeDetail from "@/components/notice/NoticeDetail";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { NoticePostCommand } from "@/types/api/requests/noticePostCommand";
-import LoadingSpinner from "@/components/common/LoadingSpinner";
+import NoticeDetailSkeleton from "@/components/common/skeletons/NoticeDetailSkeleton";
 import useCommonToast from "@/global/hook/useCommonToast";
 import noticePostApi from "@/apis/noticePostApi";
 import { NoticePostDto } from "@/types/api/responses/noticePostDto";
@@ -93,8 +93,6 @@ export default function Page() {
     };
   }, [postId, error, router, showWarningToast]);
 
-  // 로딩 상태 처리
-  if (isLoading) return <LoadingSpinner />;
   // 오류 상태 처리
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
@@ -102,7 +100,9 @@ export default function Page() {
     <div className="mx-auto min-h-screen w-full max-w-[640px]">
       <ScrollToTopOnLoad />
       <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
-      <div>{noticeDetails && <NoticeDetail noticePostDto={noticeDetails} />}</div>
+      <div>
+        {isLoading ? <NoticeDetailSkeleton /> : noticeDetails && <NoticeDetail noticePostDto={noticeDetails} />}
+      </div>
     </div>
   );
 }

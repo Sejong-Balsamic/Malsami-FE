@@ -43,8 +43,8 @@ export default function NoticeDetail({ noticePostDto }: NoticeDetailProps) {
     <div className="flex flex-col">
       {/* 헤더 아래 16px */}
       <div className="px-5 pt-4">
-        {/* 제목 */}
-        <h1 className="text-SUIT_20 font-semibold leading-tight text-black">
+        {/* 제목 - 18px */}
+        <h1 className="text-SUIT_18 font-semibold leading-tight text-black">
           {noticePostDto.noticePost?.title || "제목 없음"}
         </h1>
 
@@ -58,16 +58,16 @@ export default function NoticeDetail({ noticePostDto }: NoticeDetailProps) {
           </div>
         </div>
 
-        {/* 본문 (메타정보 아래 16px) */}
-        <div className="whitespace-pre-wrap pt-4 text-SUIT_16 leading-relaxed text-black">
+        {/* 본문 (메타정보 아래 16px) - 14px */}
+        <div className="whitespace-pre-wrap pt-4 text-SUIT_14 leading-relaxed text-black">
           {noticePostDto.noticePost?.content || "내용 없음"}
         </div>
 
         {/* 얇은 구분선 (본문 아래 20px) */}
         <hr className="mt-5 h-px w-full rounded-sm bg-ui-divider" />
 
-        {/* 좋아요 버튼 (가로 배치, 아이콘과 숫자 사이 4px) */}
-        <div className="flex justify-center py-3">
+        {/* 좋아요 버튼 */}
+        <div className="mb-3 mt-3 flex justify-center">
           <button
             type="button"
             onClick={handleLikeToggle}
@@ -78,8 +78,8 @@ export default function NoticeDetail({ noticePostDto }: NoticeDetailProps) {
             <Image
               src={isLiked ? "/icons/newLikeThumbBlue.svg" : "/icons/newLikeThumbGray.svg"}
               alt="좋아요"
-              width={20}
-              height={20}
+              width={16}
+              height={16}
               className="flex-shrink-0"
             />
             <span
@@ -96,8 +96,10 @@ export default function NoticeDetail({ noticePostDto }: NoticeDetailProps) {
       {/* 두꺼운 구분선 (전체 너비, 패딩 바깥쪽) */}
       <div className="border-t-8 border-ui-divider" />
 
-      {/* 하단 여백 */}
-      <div className="h-16" />
+      {/* 댓글 작성 불가 메시지 - 남은 공간의 정중앙에 배치 */}
+      <div className="flex min-h-[300px] w-full flex-1 items-center justify-center">
+        <span className="text-SUIT_12 font-semibold text-[#898989]">댓글 작성이 불가능한 글입니다.</span>
+      </div>
     </div>
   );
 }
