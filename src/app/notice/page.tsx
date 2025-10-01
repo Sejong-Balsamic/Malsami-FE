@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback, useMemo } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import { noticePostApi } from "@/apis/noticePostApi";
@@ -18,20 +18,22 @@ export default function NoticePage() {
   // 상태 선언
   const [isNoticeDataCurrentlyLoading, setIsNoticeDataCurrentlyLoading] = useState<boolean>(true);
   const [currentNoticePostsPageData, setCurrentNoticePostsPageData] = useState<Page<NoticePost> | null>(null);
+  const [pinnedNoticePosts, setPinnedNoticePosts] = useState<NoticePost[]>([]);
   const [activePageNumber, setActivePageNumber] = useState<number>(0);
   const [noticeDataFetchErrorMessage, setNoticeDataFetchErrorMessage] = useState<string | null>(null);
 
-  // isPinned가 true인 공지사항과 일반 공지사항 분리
-  const { pinnedNotices, regularNotices } = useMemo(() => {
-    if (!currentNoticePostsPageData?.content) {
-      return { pinnedNotices: [], regularNotices: [] };
+  // 핀된 공지사항 가져오기
+  const fetchPinnedNoticePosts = useCallback(async () => {
+    try {
+      const pinnedResponse = await noticePostApi.getPinnedNoticePosts();
+      if (pinnedResponse.noticePosts) {
+        setPinnedNoticePosts(pinnedResponse.noticePosts);
+      }
+    } catch (error) {
+      console.error("핀된 공지사항을 불러오는데 실패했습니다:", error);
+      // 핀된 공지사항 실패는 전체 로딩 실패로 처리하지 않음
     }
-
-    const pinned = currentNoticePostsPageData.content.filter(notice => notice.isPinned === true);
-    const regular = currentNoticePostsPageData.content.filter(notice => notice.isPinned !== true);
-
-    return { pinnedNotices: pinned, regularNotices: regular };
-  }, [currentNoticePostsPageData]);
+  }, []);
 
   // 공지사항 데이터 가져오기
   const fetchNoticePostsDataByPageNumber = useCallback(
@@ -39,6 +41,11 @@ export default function NoticePage() {
       try {
         setIsNoticeDataCurrentlyLoading(true);
         setNoticeDataFetchErrorMessage(null);
+
+        // 첫 페이지인 경우 핀된 공지사항도 함께 가져오기
+        if (requestedPageNumber === 0) {
+          await fetchPinnedNoticePosts();
+        }
 
         const noticePostsApiResponse = await noticePostApi.getFilteredNoticePosts({
           pageNumber: requestedPageNumber,
@@ -56,7 +63,7 @@ export default function NoticePage() {
         setIsNoticeDataCurrentlyLoading(false);
       }
     },
-    [fixedPageSize],
+    [fixedPageSize, fetchPinnedNoticePosts],
   );
 
   // 페이지 변경 요청 핸들러
@@ -116,10 +123,10 @@ export default function NoticePage() {
         {/* 헤더 아래 20px 간격 */}
         <div className="h-5" />
 
-        {/* 핀 고정 공지사항 (isPinned: true) */}
-        {pinnedNotices.length > 0 && (
+        {/* 핀 고정 공지사항 (별도 API로 가져온 핀된 공지사항) */}
+        {pinnedNoticePosts.length > 0 && (
           <>
-            {pinnedNotices.map(pinnedNotice => (
+            {pinnedNoticePosts.map(pinnedNotice => (
               <div key={pinnedNotice.noticePostId} className="mb-3">
                 <PinnedNoticeCard noticePost={pinnedNotice} />
               </div>
@@ -131,7 +138,7 @@ export default function NoticePage() {
 
         {/* 일반 공지사항 리스트 */}
         <div className="space-y-4">
-          {regularNotices.map(noticePost => (
+          {currentNoticePostsPageData?.content?.map(noticePost => (
             <NoticeCard key={noticePost.noticePostId} noticePost={noticePost} />
           ))}
         </div>

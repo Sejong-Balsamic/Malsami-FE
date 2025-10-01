@@ -9,7 +9,11 @@ export const noticePostApi = {
 
   // 단일 공지사항 상세 조회
   getNoticePost: async (command: Partial<NoticePostCommand>): Promise<NoticePostDto> =>
-    postApiRequest<NoticePostCommand, NoticePostDto>("/api/notice/detail", command),
+    postApiRequest<NoticePostCommand, NoticePostDto>("/api/notice/get", command),
+
+  // PIN된 공지사항 조회
+  getPinnedNoticePosts: async (): Promise<NoticePostDto> =>
+    postApiRequest<NoticePostCommand, NoticePostDto>("/api/notice/get/pinned", {}),
 };
 
 export default noticePostApi;
