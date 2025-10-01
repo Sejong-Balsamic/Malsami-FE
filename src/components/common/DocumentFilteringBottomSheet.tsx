@@ -23,8 +23,6 @@ interface DocumentFilteringBottomSheetProps {
   onConfirm: (filters: Partial<DocumentCommand>) => void;
   trigger: React.ReactNode;
   currentFiltering: Partial<DocumentCommand>;
-  // eslint-disable-next-line react/require-default-props
-  activeColor?: string;
 }
 
 const SORT_OPTIONS = [
@@ -44,7 +42,6 @@ export default function DocumentFilteringBottomSheet({
   onConfirm,
   trigger,
   currentFiltering,
-  activeColor = "#5EF48D", // 기본값 제공 (함수 매개변수에서)
 }: DocumentFilteringBottomSheetProps) {
   const dispatch = useDispatch();
   const isOpen = useSelector((state: RootState) => state.bottomSheet.documentFilteringOpen);
@@ -100,7 +97,7 @@ export default function DocumentFilteringBottomSheet({
 
       <DrawerContent className="mx-auto flex max-h-[80vh] w-full max-w-[640px] flex-col rounded-t-[30px] p-0">
         {/* 헤더: 필터링, X버튼 */}
-        <DrawerHeader className="sticky top-0 flex flex-row items-center justify-between rounded-t-[30px] border-b-2 border-[#F3F3F3] px-[30px] pb-[26px] pt-[10px]">
+        <DrawerHeader className="sticky top-0 flex flex-row items-center justify-between rounded-t-[30px] border-b-2 border-ui-divider-thick px-[30px] pb-[26px] pt-[10px]">
           <DrawerTitle className="font-suit-semibold text-[18px]">자료게시판 필터링</DrawerTitle>
           <DrawerClose onClick={handleClose}>
             <IconWrapper21x21 src="/icons/x-lg.svg" />
@@ -145,9 +142,13 @@ export default function DocumentFilteringBottomSheet({
         </div>
 
         {/* 하단: 초기화 버튼, 확인 버튼 */}
-        <div className="sticky bottom-0 flex gap-4 p-6">
-          <FilteringButton type="refresh" onClick={handleReset} />
-          <FilteringButton type="submit" onClick={handleConfirm} activeColor={activeColor} />
+        <div className="sticky bottom-0 flex gap-1 p-6">
+          <div className="flex-[1]">
+            <FilteringButton type="refresh" onClick={handleReset} />
+          </div>
+          <div className="flex-[2.5]">
+            <FilteringButton type="submit" onClick={handleConfirm} activeColor="#00D1F2" />
+          </div>
         </div>
       </DrawerContent>
     </Drawer>

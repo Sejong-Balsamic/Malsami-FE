@@ -16,13 +16,13 @@ export type SortType = (typeof SortType)[keyof typeof SortType];
 
 // 백엔드와 매핑되는 한국어 라벨
 export const sortTypeLabels: Record<SortType, string> = {
-  LATEST: "최신순",
+  LATEST: "최신 순",
   OLDEST: "과거순",
-  MOST_LIKED: "추천순",
-  REWARD_YEOPJEON: "엽전 현상금 높은순",
-  REWARD_YEOPJEON_DESCENDING: "엽전 현상금 높은순",
-  REWARD_YEOPJEON_LATEST: "엽전 현상금 최신순",
-  VIEW_COUNT: "조회수 많은순",
-  COMMENT_COUNT: "댓글순",
-  DOWNLOAD_COUNT: "다운로드순",
+  MOST_LIKED: "추천 순",
+  REWARD_YEOPJEON: "현상금 순",
+  REWARD_YEOPJEON_DESCENDING: "현상금 순",
+  REWARD_YEOPJEON_LATEST: "현상금 순",
+  VIEW_COUNT: "조회수 순",
+  COMMENT_COUNT: "댓글 순",
+  DOWNLOAD_COUNT: "다운로드 순",
 };

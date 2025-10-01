@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 /**
  * FilteringButton 컴포넌트
@@ -25,32 +26,29 @@ function FilteringButton({ type, onClick, activeColor }: FilteringButtonProps): 
     if (type === "refresh") {
       return {
         backgroundClass: "bg-white border border-ui-divider",
-        textClass: "text-ui-muted font-suit-medium text-[16px]",
+        textClass: "text-ui-muted font-suit-bold text-[18px]",
         text: "초기화",
         style: {},
       };
     }
 
     // submit 버튼인 경우
-    // 사용자 지정 색상이 있으면 그라디언트 생성, 없으면 기본 그라디언트 사용
+    // 사용자 지정 색상이 있으면 단색 배경, 없으면 기본 그라디언트 사용
     if (activeColor) {
-      // 약간 밝은 버전의 색상 생성 (그라데이션용)
-      const brighterColor = activeColor;
-
       return {
         backgroundClass: "",
-        textClass: "text-white font-suit-medium text-[16px]",
-        text: "확인",
+        textClass: "text-white font-suit-bold text-[18px]",
+        text: "적용",
         style: {
-          background: `linear-gradient(to right, ${activeColor}, ${brighterColor})`,
+          backgroundColor: activeColor,
         },
       };
     }
 
     return {
       backgroundClass: "bg-gradient-to-r from-question-main to-[#5ef48c]",
-      textClass: "text-white font-suit-medium text-[16px]",
-      text: "확인",
+      textClass: "text-white font-suit-bold text-[18px]",
+      text: "적용",
       style: {},
     };
   };
@@ -66,13 +64,26 @@ function FilteringButton({ type, onClick, activeColor }: FilteringButtonProps): 
 
   return (
     <div
-      className={`h-11 flex-1 rounded-lg ${buttonStyles.backgroundClass} flex cursor-pointer items-center justify-center transition-all duration-200 hover:opacity-90`}
+      className={`h-11 w-full rounded-lg ${buttonStyles.backgroundClass} flex cursor-pointer items-center justify-center transition-all duration-200 hover:opacity-90`}
       role="button"
       tabIndex={0}
       onClick={onClick}
       onKeyDown={handleKeyDown}
       style={buttonStyles.style}
     >
+      {type === "refresh" && (
+        <Image
+          src="/icons/reset.svg"
+          alt="초기화"
+          width={14}
+          height={14}
+          className="mr-1"
+          style={{
+            filter:
+              "invert(1) brightness(0) saturate(100%) invert(78%) sepia(0%) saturate(0%) hue-rotate(0deg) brightness(89%) contrast(89%)",
+          }}
+        />
+      )}
       <span className={` ${buttonStyles.textClass}`}>{buttonStyles.text}</span>
     </div>
   );
