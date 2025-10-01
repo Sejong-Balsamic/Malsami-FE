@@ -182,9 +182,13 @@ export default function QuestionFilteringBottomSheet({
         </div>
 
         {/* 하단: 초기화 버튼, 확인 버튼 */}
-        <div className="sticky bottom-0 flex gap-4 p-6">
-          <FilteringButton type="refresh" onClick={handleReset} />
-          <FilteringButton type="submit" onClick={handleConfirm} />
+        <div className="sticky bottom-0 flex gap-1 p-6">
+          <div className="flex-[1]">
+            <FilteringButton type="refresh" onClick={handleReset} />
+          </div>
+          <div className="flex-[2.5]">
+            <FilteringButton type="submit" onClick={handleConfirm} activeColor="#00E271" />
+          </div>
         </div>
       </DrawerContent>
     </Drawer>
