@@ -9,4 +9,5 @@ export interface NoticePost extends BasePost {
   content?: string;
   isHidden?: boolean;
   isLiked?: boolean;
+  isPinned?: boolean;
 }

@@ -9,9 +9,9 @@ export default function DocumentFilteringTag({ label, isSelected, onClick }: Doc
     <button
       type="button"
       onClick={onClick}
-      className={`font-suit-semibold flex items-center justify-center rounded-[20px] border px-3 py-[6px] text-[14px] transition-colors ${
-        isSelected ? "border-document-sub bg-document-sub text-white" : "border-[#D1D1D1] bg-white hover:bg-gray-50"
-      } `}
+      className={`font-suit-bold flex items-center justify-center rounded-[20px] border px-3 py-2 text-[16px] hover:bg-gray-50 ${
+        isSelected ? "border-document-main text-document-main" : "border-ui-muted text-tag-custom-text"
+      }`}
     >
       {label}
     </button>

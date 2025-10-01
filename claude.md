@@ -570,6 +570,82 @@ source ~/.zshrc && npm run build
 
 ⚠️ **이 두 명령어를 실행하지 않으면 코드 검토를 통과하지 못합니다!** ⚠️
 
+### 🔍 빌드 성공/실패 판단 기준 (매우 중요!)
+
+#### ✅ 빌드 성공 판단 기준
+
+다음 **모든** 조건을 만족해야 빌드 성공:
+
+1. **컴파일 성공 메시지**: 
+   ```
+   ✓ Compiled successfully
+   ```
+
+2. **.next 디렉토리 생성 확인**:
+   ```bash
+   ls -la .next/ # 디렉토리와 빌드 파일들이 존재해야 함
+   ```
+
+3. **치명적 에러 없음**: 
+   - `Error: ` 메시지 없음
+   - `Failed to compile.` 후에 실제 Error가 없음
+   - TypeScript 에러 없음
+
+#### ❌ 빌드 실패 판단 기준
+
+다음 **하나라도** 발견되면 빌드 실패:
+
+1. **컴파일 실패**:
+   ```
+   ✗ Failed to compile
+   Error: [실제 에러 메시지]
+   ```
+
+2. **TypeScript 에러**:
+   ```
+   Type error: Property 'xxx' does not exist on type 'yyy'
+   ```
+
+3. **Module not found 에러**:
+   ```
+   Module not found: Can't resolve 'xxx'
+   ```
+
+4. **.next 디렉토리 미생성**: 빌드 완료 후 .next 폴더가 없음
+
+#### ⚠️ ESLint 경고는 빌드 성공!
+
+**중요**: ESLint 경고는 빌드 실패가 아닙니다!
+
+```bash
+# 이런 메시지들은 빌드 성공 (경고일 뿐):
+Warning: Unexpected console statement.  no-console
+Warning: Using `<img>` could result in slower LCP  @next/next/no-img-element
+Warning: Do not use Array index in keys  react/no-array-index-key
+
+# 실제 컴파일도 성공했다면:
+✓ Compiled successfully
+```
+
+#### 🤖 Claude의 빌드 판단 프로세스
+
+1. **`npm run build` 실행**
+2. **출력에서 `✓ Compiled successfully` 확인**
+3. **`.next` 디렉토리 존재 확인**: `ls -la .next/`
+4. **실제 Error 메시지 스캔** (Warning 제외)
+5. **최종 판단**: 
+   - 성공: "빌드가 성공적으로 완료되었습니다"
+   - 실패: "빌드 실패: [구체적인 에러 원인]"
+
+#### 📋 빌드 확인 체크리스트
+
+- [ ] `✓ Compiled successfully` 메시지 확인
+- [ ] `.next/` 디렉토리 생성 확인  
+- [ ] TypeScript 에러 없음 확인
+- [ ] Module not found 에러 없음 확인
+- [ ] ESLint 경고와 실제 에러 구분
+- [ ] 빌드 최종 상태 정확히 보고
+
 ### 일반 CLI 사용법
 
 ```bash

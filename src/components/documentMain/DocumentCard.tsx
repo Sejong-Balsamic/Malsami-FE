@@ -44,7 +44,7 @@ export default function DocumentCard({
   // 이미지가 없는 경우의 레이아웃
   if (!isImageExist) {
     return (
-      <div className="min-h-[120px] w-full bg-white">
+      <div className="w-full bg-white">
         {/* 상단: 태그들과 시간 */}
         <div className="flex items-start justify-between">
           {/* 태그 영역 */}

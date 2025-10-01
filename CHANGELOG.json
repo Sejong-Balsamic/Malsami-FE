@@ -1,11 +1,47 @@
 {
   "metadata": {
-    "lastUpdated": "2025-09-05T17:08:34Z",
-    "currentVersion": "0.1.21",
+    "lastUpdated": "2025-10-01T13:31:52Z",
+    "currentVersion": "0.1.25",
     "projectType": "react",
-    "totalReleases": 14
+    "totalReleases": 15
   },
   "releases": [
+    {
+      "version": "0.1.25",
+      "project_type": "react",
+      "date": "2025-10-01",
+      "pr_number": 646,
+      "raw_summary": "Summary by CodeRabbit\n\nNew Features\n\n공지사항 상세 페이지 추가(로딩 스켈레톤 포함) 및 좋아요/취소 기능 지원\n고정(핀) 공지 다건 표기 및 목록 상단 노출\n\n\nStyle\n\n공지 카드/핀 카드 레이아웃 개선 및 접근성 향상(키보드 포커스·라벨)\n필터링 바텀시트/태그/버튼의 타이포그래피·색상 토큰·레이아웃 정리\n문서 카드 최소 높이 제거로 가변 높이 지원\n\n\nDocumentation\n\n빌드 성공/실패 기준 가이드 추가\n\n\nChores\n\n앱 및 동기화 버전 갱신 (README, package, version 설정)",
+      "parsed_changes": {
+        "new_features": {
+          "title": "New Features",
+          "items": [
+            "공지사항 상세 페이지 추가(로딩 스켈레톤 포함) 및 좋아요/취소 기능 지원",
+            "고정(핀) 공지 다건 표기 및 목록 상단 노출"
+          ]
+        },
+        "style": {
+          "title": "Style",
+          "items": [
+            "공지 카드/핀 카드 레이아웃 개선 및 접근성 향상(키보드 포커스·라벨)",
+            "필터링 바텀시트/태그/버튼의 타이포그래피·색상 토큰·레이아웃 정리",
+            "문서 카드 최소 높이 제거로 가변 높이 지원"
+          ]
+        },
+        "documentation": {
+          "title": "Documentation",
+          "items": [
+            "빌드 성공/실패 기준 가이드 추가"
+          ]
+        },
+        "chores": {
+          "title": "Chores",
+          "items": [
+            "앱 및 동기화 버전 갱신 (README, package, version 설정)"
+          ]
+        }
+      }
+    },
     {
       "version": "0.1.21",
       "project_type": "react",

@@ -166,7 +166,6 @@ export default function MyFacultyDocumentPage() {
         onReset={handleFilterReset}
         onConfirm={handleDocumentConfirm}
         currentFiltering={currentFiltering}
-        activeColor="#0CD4AE"
         trigger={<div />}
       />
     </div>
