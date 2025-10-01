@@ -13,7 +13,7 @@ import NoticeListSkeleton from "@/components/common/skeletons/NoticeListSkeleton
 
 export default function NoticePage() {
   // 고정 페이지 크기 - 10개로 고정
-  const fixedPageSize = 10;
+  const FIXED_PAGE_SIZE = 10;
 
   // 상태 선언
   const [isNoticeDataCurrentlyLoading, setIsNoticeDataCurrentlyLoading] = useState<boolean>(true);
@@ -49,7 +49,7 @@ export default function NoticePage() {
 
         const noticePostsApiResponse = await noticePostApi.fetchFilteredNoticePosts({
           pageNumber: requestedPageNumber,
-          pageSize: fixedPageSize,
+          pageSize: FIXED_PAGE_SIZE,
           sortType: "LATEST",
         });
 
@@ -63,7 +63,7 @@ export default function NoticePage() {
         setIsNoticeDataCurrentlyLoading(false);
       }
     },
-    [fixedPageSize, fetchPinnedNoticePosts],
+    [FIXED_PAGE_SIZE, fetchPinnedNoticePosts],
   );
 
   // 페이지 변경 요청 핸들러
