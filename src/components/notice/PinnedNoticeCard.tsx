@@ -11,48 +11,47 @@ interface PinnedNoticeCardProps {
 
 /**
  * 핀으로 고정된 공지사항 카드 컴포넌트
- * NoticeSection과 동일한 스타일 적용
+ * isPinned: true인 공지사항을 상단에 표시
  *
  * @param noticePost - 공지사항 데이터
  */
 export default function PinnedNoticeCard({ noticePost }: PinnedNoticeCardProps) {
   const router = useRouter();
 
-  // 1. 클릭 핸들러 - 공지사항 전체보기 페이지로 이동
+  // 클릭 핸들러 - 공지사항 상세 페이지로 이동
   const handleCardClick = () => {
-    router.push("/notice");
+    router.push(`/notice/${noticePost.noticePostId}`);
   };
 
-  // 2. 렌더링
   return (
-    <button
-      type="button"
-      aria-label="공지사항 전체보기"
-      className="flex h-16 w-full flex-shrink-0 cursor-pointer items-center justify-between rounded-2xl bg-green-100 p-4 transition-opacity hover:opacity-90"
+    <div
+      className="flex w-full cursor-pointer items-center gap-3 rounded-xl bg-blue-50 p-4 transition-all hover:bg-blue-100"
       onClick={handleCardClick}
+      onKeyDown={e => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          handleCardClick();
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`고정된 공지: ${noticePost.title}`}
     >
-      {/* 왼쪽 영역: 흰색 원 + 핀 아이콘 + 제목 */}
-      <div className="flex min-w-0 flex-1 items-center space-x-2.5">
-        {/* 흰색 원 + 핀 아이콘 */}
-        <div className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-white shadow-sm">
-          <Image src="/icons/pushPin.svg" alt="고정됨" width={24} height={24} />
-        </div>
-
-        {/* 제목 */}
-        <div className="min-w-0 flex-1">
-          <h3 className="font-suit-bold truncate text-sm leading-5 text-black">
-            {noticePost.title || "중요 공지사항"}
-          </h3>
-          <p className="font-suit-medium truncate text-xs leading-4 text-gray-600">
-            {noticePost.content?.slice(0, 20) || "공지사항 내용"}...
-          </p>
-        </div>
+      {/* 핀 아이콘 */}
+      <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-white">
+        <Image src="/icons/pushpinBlue.svg" alt="고정" width={20} height={20} />
       </div>
 
-      {/* 오른쪽 영역: 화살표 (NoticeSection과 동일) */}
-      <div className="ml-2 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full bg-green-500 text-white transition-colors hover:opacity-90">
-        <Image src="/icons/arrowRight.svg" alt="오른쪽 화살표" width={13} height={13} />
+      {/* 텍스트 영역 */}
+      <div className="min-w-0 flex-1">
+        <h3 className="line-clamp-1 text-SUIT_14 font-semibold leading-tight text-black">
+          {noticePost.title || "제목 없음"}
+        </h3>
+        <p className="mt-1 line-clamp-1 text-SUIT_12 font-medium text-gray-600">{noticePost.content || "내용 없음"}</p>
       </div>
-    </button>
+
+      {/* 화살표 아이콘 */}
+      <Image src="/icons/arrowRight.svg" alt="이동" width={16} height={16} className="flex-shrink-0 opacity-60" />
+    </div>
   );
 }
