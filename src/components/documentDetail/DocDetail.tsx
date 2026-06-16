@@ -9,7 +9,7 @@ import { getDateDiff } from "@/global/time";
 import { DocumentDto } from "@/types/api/responses/documentDto";
 import { isSameMemberById } from "@/global/memberUtil";
 import DownloadFile from "@/components/documentDetail/DownloadFile";
-import CommentSection from "@/deprecated/DCommentSection";
+import DocumentCommentSection from "@/components/documentDetail/DocumentCommentSection";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -187,7 +187,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
                   </DrawerTitle>
                 </DrawerHeader>
                 <div className="max-h-[400px] overflow-y-auto">
-                  <CommentSection
+                  <DocumentCommentSection
                     postId={documentDto.documentPost?.documentPostId || ""}
                     contentType="DOCUMENT"
                     onCommentAdded={incrementCommentCount}
