@@ -92,7 +92,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
   }, [postId]);
 
   if (isLoading) {
-    return <p className="text-center text-SUIT_14 font-medium text-[#7b7b7c]">답변을 불러오는 중입니다...</p>;
+    return <p className="text-center text-SUIT_14 font-medium text-ui-body-soft">답변을 불러오는 중입니다...</p>;
   }
 
   if (loadError) {
@@ -128,7 +128,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
             )}
             <div className="flex flex-1 flex-col">
               {/* 상단 라인 */}
-              {index !== 0 && <div className="my-4 h-[1px] w-full rounded-[2px] bg-[#EDEDED]" />}
+              {index !== 0 && <div className="my-4 h-[1px] w-full rounded-[2px] bg-ui-divider-thick" />}
 
               {/* 상단 정보 */}
               <div className="flex items-center justify-between">
@@ -210,7 +210,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                     height={16}
                   />
                   <span
-                    className={`text-[12px] font-medium leading-[100%] ${answerPost.isLiked ? "text-[#00E271]" : "text-ui-count"}`}
+                    className={`text-[12px] font-medium leading-[100%] ${answerPost.isLiked ? "text-question-main" : "text-ui-count"}`}
                   >
                     {answerPost.likeCount || 0}
                   </span>

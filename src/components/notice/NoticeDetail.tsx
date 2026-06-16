@@ -108,7 +108,7 @@ export default function NoticeDetail({ noticePostDto }: NoticeDetailProps) {
 
       {/* 댓글 작성 불가 메시지 - 남은 공간의 정중앙에 배치 */}
       <div className="flex min-h-[300px] w-full flex-1 items-center justify-center">
-        <span className="text-SUIT_12 font-semibold text-[#898989]">댓글 작성이 불가능한 글입니다.</span>
+        <span className="text-SUIT_12 font-semibold text-tag-custom-text">댓글 작성이 불가능한 글입니다.</span>
       </div>
     </div>
   );

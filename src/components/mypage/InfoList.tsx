@@ -32,7 +32,7 @@ function InfoList({ memberDto }: { memberDto: MemberDto | null }) {
           </div>
           <div className="text-SUIT_14 font-medium text-ui-muted">내 작성글</div>
         </button>
-        <div className="absolute bottom-[24px] left-2/3 top-[24px] w-[2px] bg-[#95E4DA]" />
+        <div className="absolute bottom-[24px] left-2/3 top-[24px] w-[2px] bg-legacy-teal-sub" />
         <button
           onClick={() => router.push("/mypage/mypost/doc/hot")}
           type="button"

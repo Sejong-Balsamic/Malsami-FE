@@ -60,7 +60,7 @@ function QuestionCard({
           </div>
 
           {/* 엽전, 좋아요, 댓글 부분 */}
-          <div className="font-pretendard-semibold flex flex-row justify-between text-xs text-[#D0D0D0]">
+          <div className="font-pretendard-semibold flex flex-row justify-between text-xs text-ui-muted">
             <YeopjeonTag point={rewardYeopjeon} />
             <div>
               <span className="mr-1.5">

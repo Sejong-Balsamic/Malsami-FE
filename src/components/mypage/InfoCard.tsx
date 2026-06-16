@@ -25,7 +25,7 @@ function InfoCard({ memberDto }: { memberDto: MemberDto | null }) {
   return (
     <div className="relative w-full">
       <Swiper effect="flip" modules={[EffectFlip]} className="h-full w-full">
-        <SwiperSlide className="flex rounded-[15px] bg-[#95e4da]">
+        <SwiperSlide className="flex rounded-[15px] bg-legacy-teal-sub">
           <div className="flex h-full w-full flex-col gap-7 px-[20px] py-5">
             <div>
               <div className="flex items-center justify-between">
@@ -43,6 +43,7 @@ function InfoCard({ memberDto }: { memberDto: MemberDto | null }) {
                 <div className="font-pretendard-medium text-[14px]">{currentRank}</div>
                 <div className="flex items-center gap-1">
                   <span className="font-pretendard-medium text-[14px] text-[#016C5D]">{nextRank}</span>
+                  {/* TODO(style): #016C5D 매핑 토큰 없음 (다크 틸) — 추후 토큰화 검토 */}
                 </div>
               </div>
             </div>
@@ -56,7 +57,7 @@ function InfoCard({ memberDto }: { memberDto: MemberDto | null }) {
                   </span>
                 </div>
               </div>
-              <div className="absolute bottom-0 left-1/2 top-0 w-[2px] bg-[#03B89E]" />
+              <div className="absolute bottom-0 left-1/2 top-0 w-[2px] bg-legacy-teal" />
               <div className="flex flex-col items-center justify-center">
                 <div className="font-pretendard-medium text-[16px]">받은 좋아요</div>
                 <div className="flex items-center gap-2">
@@ -69,15 +70,15 @@ function InfoCard({ memberDto }: { memberDto: MemberDto | null }) {
             </div>
           </div>
         </SwiperSlide>
-        <SwiperSlide className="flex items-stretch rounded-[15px] border-2 border-[#95e4da] bg-white">
+        <SwiperSlide className="flex items-stretch rounded-[15px] border-2 border-legacy-teal-sub bg-white">
           <div className="flex h-full w-full flex-col gap-3 p-5">
             <span className="font-pretendard-medium text-[14px]">
               <span className="font-pretendard-semibold">세종말싸미</span>에는
-              <span className="font-pretendard-semibold text-[#03B89E]"> 경험치</span>를 기준으로 품계가 존재합니다.
+              <span className="font-pretendard-semibold text-legacy-teal"> 경험치</span>를 기준으로 품계가 존재합니다.
               <br />
               종9품 ~ 정1품까지 총 18개로 이루어져 있으며 각 품계의 경험치 기준은 아래 표를 참고해주세요.
             </span>
-            <ScrollArea className="relative h-[98px] w-full rounded-[15px] bg-[#95e4da] p-2">
+            <ScrollArea className="relative h-[98px] w-full rounded-[15px] bg-legacy-teal-sub p-2">
               <div className="grid h-auto w-full grid-cols-3 gap-2 p-1" style={{ gridTemplateColumns: "1fr 1fr 2fr" }}>
                 {Object.entries(expTierRanges)
                   .reverse()

@@ -15,7 +15,7 @@ interface LandingSectionBaseProps {
 // 스켈레톤 컴포넌트
 function LandingCardSkeleton() {
   return (
-    <div className="w-full divide-y divide-[#EAEAEA] rounded-[22px] border border-[#F1F1F1] bg-white px-6 shadow-lg shadow-gray-200">
+    <div className="w-full divide-y divide-ui-divider-light rounded-[22px] border border-ui-divider-light bg-white px-6 shadow-lg shadow-gray-200">
       {Array.from({ length: 3 }, (_, index) => (
         <div key={`skeleton-${index}`} className="animate-pulse py-5">
           {/* 상단 부분 - 과목 태그 */}
@@ -70,7 +70,7 @@ export default function LandingSectionBase({
         <button
           type="button"
           onClick={onViewAll}
-          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
+          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-ui-muted-soft"
         >
           전체보기
         </button>

@@ -114,7 +114,7 @@ export default function BountyQuestionPage() {
           {!isLoading && currentPageQuestions.length > 0 && <QuestionCardList data={currentPageQuestions} />}
           {!isLoading && currentPageQuestions.length === 0 && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 엽전현상금 질문이 없습니다.</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">표시할 엽전현상금 질문이 없습니다.</span>
             </div>
           )}
         </div>

@@ -39,7 +39,7 @@ function UploadFAB() {
       {isOpen && <div className="fixed inset-0 z-[60] bg-black/30 backdrop-blur-sm" />}
       <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger asChild>
-          <button type="button" className="relative z-[70] h-[50px] w-[50px] rounded-full bg-[#03b89e] shadow-lg">
+          <button type="button" className="relative z-[70] h-[50px] w-[50px] rounded-full bg-legacy-teal shadow-lg">
             {isOpen ? <Close /> : <Upload />}
           </button>
         </DropdownMenuTrigger>
@@ -52,7 +52,7 @@ function UploadFAB() {
                 className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
                 onClick={handleQuestionClick}
               >
-                <QuestionIcon className="h-[50px] w-[50px] text-[#03b89e]" />
+                <QuestionIcon className="h-[50px] w-[50px] text-legacy-teal" />
               </button>
             </DropdownMenuItem>
             <DropdownMenuItem className="flex items-center gap-[10px]">
@@ -62,7 +62,7 @@ function UploadFAB() {
                 className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
                 onClick={handleDocumentClick}
               >
-                <DocumentIcon className="h-[50px] w-[50px] text-[#03b89e]" />
+                <DocumentIcon className="h-[50px] w-[50px] text-legacy-teal" />
               </button>
             </DropdownMenuItem>
           </div>

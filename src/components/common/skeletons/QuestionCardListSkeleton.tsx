@@ -11,7 +11,7 @@ export default function QuestionCardListSkeleton() {
           {index < 2 && (
             <>
               <div className="h-4" />
-              <div className="h-px w-full bg-[#F0F0F0]" />
+              <div className="h-px w-full bg-ui-divider" />
               <div className="h-4" />
             </>
           )}

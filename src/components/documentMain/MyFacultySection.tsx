@@ -72,7 +72,7 @@ export default function MyFacultySection({ facultys }: { facultys: string[] }) {
         </div>
         <button
           type="button"
-          className="text-SUIT_14 font-medium text-[#A7A7A7]"
+          className="text-SUIT_14 font-medium text-ui-muted-soft"
           onClick={() => router.push("/board/document/sub/my-faculty")}
         >
           전체보기

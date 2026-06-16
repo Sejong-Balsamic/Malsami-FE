@@ -93,8 +93,8 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
   };
 
   const buttonClass = isLiked
-    ? "border-[#03b89e] text-[#03b89e] cursor-default" // 눌린 상태
-    : "border-[#e7e7e7] text-[#aaaaaa] cursor-pointer"; // 기본 상태
+    ? "border-legacy-teal text-legacy-teal cursor-default" // 눌린 상태
+    : "border-ui-divider-light text-ui-count cursor-pointer"; // 기본 상태
 
   const files = questionDto.mediaFiles?.map(file => file.uploadedImageUrl) as string[];
 
@@ -148,7 +148,7 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
               {files.map((file, index) => (
                 <div
                   key={index}
-                  className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[8px] bg-[#EDEDED]"
+                  className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[8px] bg-ui-divider-thick"
                 >
                   <Image
                     src={file}
@@ -216,7 +216,7 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
                   width={16}
                   height={16}
                 />
-                <span className={`text-SUIT_12 font-medium ${isLiked ? "text-[#03b89e]" : "text-[#ACACAC]"}`}>
+                <span className={`text-SUIT_12 font-medium ${isLiked ? "text-legacy-teal" : "text-ui-count"}`}>
                   {currentLikeCount}
                 </span>
               </div>
@@ -231,7 +231,7 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
                 }
               >
                 <Image src="/icons/newChatBubbleGray.svg" alt="Comment_UnClicked" width={16} height={16} />
-                <span className="text-SUIT_12 font-medium text-[#ACACAC]">
+                <span className="text-SUIT_12 font-medium text-ui-count">
                   {questionDto.questionPost?.commentCount || 0}
                 </span>
               </div>
@@ -240,13 +240,13 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
         </div>
 
         {/* 두꺼운 구분선 (전체 가로폭) */}
-        <div className="-mx-5 h-[4px] w-[calc(100%+40px)] rounded-[2px] bg-[#EDEDED]"></div>
+        <div className="-mx-5 h-[4px] w-[calc(100%+40px)] rounded-[2px] bg-ui-divider-thick"></div>
       </div>
 
       {/* 답변 섹션 */}
       <div className="mt-4 flex items-center gap-[8px]">
         <Image src="/icons/answerBubbleGray.svg" alt="답변" width={16} height={16} />
-        <span className="text-SUIT_14 font-semibold text-[#898989]">
+        <span className="text-SUIT_14 font-semibold text-tag-custom-text">
           답변 {questionDto.questionPost?.answerCount || 0}
         </span>
       </div>

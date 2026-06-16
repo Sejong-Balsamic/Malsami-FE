@@ -98,7 +98,7 @@ export default function CommentInput({ postId, isAuthor, onCommentAdded }: Comme
 
       {/* 익명 텍스트 */}
       <span
-        className={`ml-1 text-SUIT_14 font-medium leading-[100%] text-[#898989] ${isCurrentUserAuthor ? "opacity-50" : ""}`}
+        className={`ml-1 text-SUIT_14 font-medium leading-[100%] text-tag-custom-text ${isCurrentUserAuthor ? "opacity-50" : ""}`}
       >
         익명
       </span>
@@ -110,7 +110,7 @@ export default function CommentInput({ postId, isAuthor, onCommentAdded }: Comme
         onChange={e => setComment(e.target.value)}
         onKeyPress={handleKeyPress}
         placeholder="댓글을 입력하세요."
-        className="ml-4 flex-1 border-none bg-transparent text-SUIT_14 font-medium leading-[100%] text-black outline-none placeholder:font-medium placeholder:text-[#C5C5C5]"
+        className="ml-4 flex-1 border-none bg-transparent text-SUIT_14 font-medium leading-[100%] text-black outline-none placeholder:font-medium placeholder:text-ui-muted"
         disabled={isSubmitting}
       />
 

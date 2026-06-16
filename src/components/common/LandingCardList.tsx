@@ -58,7 +58,7 @@ export default function LandingCardList() {
   return (
     <div className="w-full space-y-4">
       {dats.map(data => (
-        <div key={data.id} className="rounded-xl border border-[#F1F1F1] bg-white p-5 shadow-md">
+        <div key={data.id} className="rounded-xl border border-ui-divider-light bg-white p-5 shadow-md">
           {/* 상단 부분 */}
           <div className="mb-2">
             <SubjectTag subjectName={data.subject} type={data.type} />
@@ -68,7 +68,7 @@ export default function LandingCardList() {
           <h3 className="mb-1 text-SUIT_16 font-bold leading-tight">{data.title}</h3>
 
           {/* 게시물 내용 */}
-          <p className="mb-4 line-clamp-2 text-SUIT_16 font-medium text-[#676767]">{data.content}</p>
+          <p className="mb-4 line-clamp-2 text-SUIT_16 font-medium text-ui-body">{data.content}</p>
 
           {/* 하단 부분 */}
           <div className="flex items-center justify-between">
@@ -80,7 +80,7 @@ export default function LandingCardList() {
             </div>
 
             {/* 좋아요 및 댓글 */}
-            <div className="flex items-center gap-3 text-SUIT_14 font-medium text-[#929292]">
+            <div className="flex items-center gap-3 text-SUIT_14 font-medium text-ui-muted-soft">
               {/* 좋아요 - 자료게시판용 파란색 아이콘 사용 */}
               <span className="flex items-center">
                 {data.isLiked ? (

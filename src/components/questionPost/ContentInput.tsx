@@ -24,7 +24,7 @@ function ContentInput({ value, onChange, isPrivate = false, onTogglePrivate = un
         <h2 className="mb-2 text-SUIT_16 font-medium text-black">본문</h2>
 
         <div className="flex justify-between">
-          <span className="mr-4 text-SUIT_14 font-medium text-[#898989]">최대 2000자까지 작성할 수 있어요.</span>
+          <span className="mr-4 text-SUIT_14 font-medium text-tag-custom-text">최대 2000자까지 작성할 수 있어요.</span>
 
           {/* 익명 설정 */}
           {onTogglePrivate && (
@@ -37,7 +37,9 @@ function ContentInput({ value, onChange, isPrivate = false, onTogglePrivate = un
                   height={16}
                 />
               </button>
-              <span className="font-suit-medium text-[14px]" style={{ color: isPrivate ? "#00E271" : "#9B9B9B" }}>
+              <span
+                className={`font-suit-medium text-SUIT_14 ${isPrivate ? "text-question-main" : "text-ui-muted-soft"}`}
+              >
                 익명
               </span>
             </div>
@@ -59,12 +61,9 @@ function ContentInput({ value, onChange, isPrivate = false, onTogglePrivate = un
         />
 
         {/* 글자 수 카운터 */}
-        <div
-          className="absolute text-right"
-          style={{ bottom: "16px", right: "16px", fontSize: "12px", lineHeight: "100%" }}
-        >
-          <span style={{ color: "#00E271", fontWeight: 600 }}>{value.length}</span>
-          <span style={{ color: "#C5C5C5", fontWeight: 500 }}> / 2000</span>
+        <div className="absolute bottom-4 right-4 text-right text-[12px] leading-[100%]">
+          <span className="font-semibold text-question-main">{value.length}</span>
+          <span className="font-medium text-ui-muted"> / 2000</span>
         </div>
       </div>
     </div>

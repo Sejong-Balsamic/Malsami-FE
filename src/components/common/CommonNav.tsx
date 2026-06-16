@@ -64,7 +64,7 @@ function CommonNav() {
                 height: "auto",
               }}
             />
-            <span className="text-center font-suit text-[12px]" style={{ color: isActive ? "black" : "#A2A2A2" }}>
+            <span className={`text-center font-suit text-[12px] ${isActive ? "text-black" : "text-ui-muted-soft"}`}>
               {item.label}
             </span>
           </button>

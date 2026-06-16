@@ -209,13 +209,13 @@ export default function DocumentTierPage({ params }: DocumentTierPageProps) {
         <div className="w-full bg-white">
           {isLoading && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">로딩 중...</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">로딩 중...</span>
             </div>
           )}
           {!isLoading && documentData.length > 0 && <DocumentCardList data={documentData} />}
           {!isLoading && documentData.length === 0 && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">
+              <span className="text-SUIT_14 font-medium text-ui-muted">
                 표시할 {TIER_DISPLAY_NAME[postTier.toUpperCase()]} 자료가 없습니다.
               </span>
             </div>

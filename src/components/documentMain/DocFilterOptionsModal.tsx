@@ -128,7 +128,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                 </div>
 
                 <h1 className="font-pretendard-bold mb-[20px] text-xl">
-                  태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-[#A4A4A4]">최대 2개</span>
+                  태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-ui-muted">최대 2개</span>
                 </h1>
                 <div className="mb-[40px] flex flex-wrap justify-between gap-x-[7px] gap-y-[20px]">
                   {DocTypesKeys.map(docTypeKey => (
@@ -151,7 +151,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                 </div>
                 <button
                   onClick={resetFilters}
-                  className="font-pretendard-medium flex flex-row gap-x-1 text-sm text-[#A4A4A4]"
+                  className="font-pretendard-medium flex flex-row gap-x-1 text-sm text-ui-muted"
                 >
                   <Image src="/icons/ResetIcon.svg" alt="Reset" width={14} height={17} />
                   <span>초기화</span>

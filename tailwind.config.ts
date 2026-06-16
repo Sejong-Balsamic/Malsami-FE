@@ -52,12 +52,22 @@ const config: Config = {
           "tag-text": "#616161", // 태그 텍스트 색상
           muted: "#C5C5C5", // 흐린 텍스트 색상
           body: "#616161", // 본문 텍스트 색상
+          "body-soft": "#737373", // 본문 보조 회색 (옛 #737373/#727272 통합)
           divider: "#F0F0F0", // 얇은 구분선 색상
           "divider-thick": "#EDEDED", // 두꺼운 구분선 색상 (4px)
+          "divider-light": "#F1F1F1", // 카드 테두리용 옅은 구분선 (옛 #F1F1F1/#EEEEEE/#E7E7E7 통합)
           border: "#E2E2E2", // 테두리 색상
           "image-bg": "#B5B5B5", // 이미지 배경색
           count: "#ACACAC", // 카운터용 회색 (좋아요·댓글·조회수 등)
+          "muted-soft": "#A7A7A7", // 살짝 진한 흐린 회색 (옛 #A7A7A7/#929292/#A4A4A4 통합)
           disabled: "#C5C5C5",
+        },
+
+        // 레거시 색상 (옛 디자인 청록/채택 파랑 — 점진적 통일용 토큰화)
+        legacy: {
+          teal: "#03B89E", // 옛 자료게시판 청록 (체크박스·강조선 등)
+          "teal-sub": "#95E4DA", // 옛 자료게시판 청록 보조
+          "accept-blue": "#0062D2", // 옛 채택/필터 파랑
         },
 
         // Shadcn UI 색상 (유지)

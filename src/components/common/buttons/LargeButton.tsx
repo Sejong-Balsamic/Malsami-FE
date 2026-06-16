@@ -19,7 +19,7 @@ function LargeButton(): JSX.Element {
 
   return (
     <div
-      className={`h-14 w-[361px] rounded-lg ${isClicked ? "bg-gradient-to-r from-[#07e4ba] to-[#5ef48c]" : "bg-[#d1d1d1]"}`}
+      className={`h-14 w-[361px] rounded-lg ${isClicked ? "bg-gradient-to-r from-[#07e4ba] to-[#5ef48c]" : "bg-ui-muted"}`}
       onClick={() => setIsClicked(!isClicked)}
       onKeyDown={handleKeyDown}
       role="button"

@@ -16,7 +16,7 @@ function ScrollFAB({ targetRef }: ScrollFABProps) {
     <div className="z-0">
       <button
         type="button"
-        className="relative flex h-[50px] w-[50px] items-center justify-center rounded-full border border-[#E1E1E1] bg-white shadow-lg"
+        className="relative flex h-[50px] w-[50px] items-center justify-center rounded-full border border-ui-border bg-white shadow-lg"
         onClick={handleScroll}
       >
         <Image src="/icons/Scroll.svg" alt="Scroll Down" width={22} height={11} />

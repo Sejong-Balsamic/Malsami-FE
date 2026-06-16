@@ -25,7 +25,7 @@ function DownloadSuccessModal({ isOpen, onClose }: ModalProps) {
       >
         <div className="flex h-48 w-[336px] flex-col items-center justify-center rounded-2xl bg-white/50 p-[20px]">
           <h1 className="font-pretendard-bold pb-[10px] text-[18px]">파일 다운로드</h1>
-          <div className="font-pretendard-medium w-full border-t-2 border-[#EEEEEE] pb-[20px] pt-[10px] text-center text-[16px]">
+          <div className="font-pretendard-medium w-full border-t-2 border-ui-divider-light pb-[20px] pt-[10px] text-center text-[16px]">
             파일이 성공적으로 다운로드되었습니다!
             <br />
             엽전 현상금이 소모되었습니다!
@@ -34,7 +34,7 @@ function DownloadSuccessModal({ isOpen, onClose }: ModalProps) {
             <button
               type="button"
               onClick={handleConfirm}
-              className="font-pretendard-semibold h-[30px] w-full rounded-lg bg-[#0062d2] text-[14px] text-white"
+              className="font-pretendard-semibold h-[30px] w-full rounded-lg bg-legacy-accept-blue text-[14px] text-white"
             >
               확인
             </button>

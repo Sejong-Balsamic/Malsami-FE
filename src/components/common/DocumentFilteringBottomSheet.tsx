@@ -147,7 +147,7 @@ export default function DocumentFilteringBottomSheet({
             <FilteringButton type="refresh" onClick={handleReset} />
           </div>
           <div className="flex-[2.5]">
-            <FilteringButton type="submit" onClick={handleConfirm} activeColor="#00D1F2" />
+            <FilteringButton type="submit" onClick={handleConfirm} activeColorClass="bg-document-main" />
           </div>
         </div>
       </DrawerContent>

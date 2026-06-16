@@ -52,14 +52,16 @@ export default function MajorQuestionSection({ onViewAll }: MajorQuestionSection
             <Image src="/icons/openFileFolder.svg" alt="학과" width={24} height={24} />
             <h2 className="ml-2 whitespace-nowrap text-SUIT_18 font-medium">내 전공 질문</h2>
           </div>
-          {memberInfo?.major && <p className="ml-8 mt-2 text-SUIT_12 font-medium text-[#898989]">{memberInfo.major}</p>}
+          {memberInfo?.major && (
+            <p className="ml-8 mt-2 text-SUIT_12 font-medium text-tag-custom-text">{memberInfo.major}</p>
+          )}
         </div>
 
         {/* 전체보기 링크 */}
         <button
           type="button"
           onClick={onViewAll}
-          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
+          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-ui-muted-soft"
         >
           전체보기
         </button>

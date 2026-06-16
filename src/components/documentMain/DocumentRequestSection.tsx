@@ -48,7 +48,7 @@ export default function DocumentRequestSection() {
         </div>
         <button
           type="button"
-          className="text-SUIT_14 font-medium text-[#A7A7A7]"
+          className="text-SUIT_14 font-medium text-ui-muted-soft"
           onClick={() => router.push("/board/document/sub/request")}
         >
           전체보기

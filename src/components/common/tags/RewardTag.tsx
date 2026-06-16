@@ -15,7 +15,7 @@ export default function RewardTag({ amount }: RewardTagProps) {
   if (!amount || amount <= 0) return null;
 
   return (
-    <div className="inline-flex items-center justify-center gap-1 rounded bg-[#FFB000] px-1.5 py-1">
+    <div className="inline-flex items-center justify-center gap-1 rounded bg-tag-yeopjeon px-1.5 py-1">
       <Image src="/icons/yeopjeon.svg" alt="엽전" width={12} height={12} />
       <span className="line-clamp-1 text-SUIT_12 font-bold text-white">{amount}</span>
     </div>

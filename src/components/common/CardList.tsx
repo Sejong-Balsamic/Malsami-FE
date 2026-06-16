@@ -49,20 +49,20 @@ const datas = [
 
 export default function CardList() {
   return (
-    <div className="w-full divide-y divide-[#EAEAEA] px-5">
+    <div className="w-full divide-y divide-ui-divider-light px-5">
       {datas.map(data => (
         <div key={data.createdDate} className="py-5">
           {/* 상단 부분 */}
           <div className="mb-3 flex justify-between">
             <SubjectTag subjectName={data.subject} type="document" />
-            <span className="text-SUIT_12 font-medium text-[#D1D1D1]">{getDateDiff(data.createdDate)}</span>
+            <span className="text-SUIT_12 font-medium text-ui-muted">{getDateDiff(data.createdDate)}</span>
           </div>
 
           {/* 중간 부분. 제목,본문,썸네일 */}
           <div className="flex flex-row justify-between">
             <div>
               <p className="mb-1 line-clamp-1 text-SUIT_14 font-semibold leading-6">{data.title}</p>
-              <p className="mb-2.5 line-clamp-2 text-SUIT_14 font-medium text-[#929292]">{data.content}</p>
+              <p className="mb-2.5 line-clamp-2 text-SUIT_14 font-medium text-ui-muted-soft">{data.content}</p>
             </div>
             {/* 썸네일 */}
             {data.thumbnailUrl && (
@@ -80,7 +80,7 @@ export default function CardList() {
           {/* 하단 부분 */}
           <div className="flex justify-between">
             {/* 좋아요, 댓글 */}
-            <div className="flex items-center text-SUIT_12 font-semibold text-[#C3C3C3]">
+            <div className="flex items-center text-SUIT_12 font-semibold text-ui-muted">
               <span className="flex">
                 {data.isLiked ? (
                   <Image src="/icons/newLikeThumbBlue.svg" alt="좋아요 누름" width={16} height={16} />

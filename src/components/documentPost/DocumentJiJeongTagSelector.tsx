@@ -22,7 +22,7 @@ export default function DocumentJiJeongTagSelector({ selectedTags, onTagsSelect 
   return (
     <div>
       <h2 className="font-suit-medium mb-3 text-base">
-        기본 태그 <span className="font-suit-medium ml-1.5 text-[14px] text-[#A4A4A4]">최대 2개</span>
+        기본 태그 <span className="font-suit-medium ml-1.5 text-[14px] text-ui-muted">최대 2개</span>
       </h2>
 
       <div className="flex flex-wrap gap-x-3 gap-y-2">
@@ -34,7 +34,7 @@ export default function DocumentJiJeongTagSelector({ selectedTags, onTagsSelect 
             className={`font-suit-medium rounded-full border-[1px] px-3 py-2 text-[16px] transition-colors ${
               selectedTags.includes(key as DocumentType)
                 ? "border-document-main text-document-main"
-                : "border-ui-muted bg-white text-[#898989]"
+                : "border-ui-muted bg-white text-tag-custom-text"
             }`}
           >
             {label}

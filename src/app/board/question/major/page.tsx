@@ -175,7 +175,7 @@ export default function MajorQuestionPage() {
           {!isLoading && questionData.length > 0 && <QuestionCardList data={questionData} />}
           {!isLoading && questionData.length === 0 && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">
+              <span className="text-SUIT_14 font-medium text-ui-muted">
                 {memberFaculty ? `${memberFaculty} 관련 질문이 없습니다.` : "전공 정보를 불러올 수 없습니다."}
               </span>
             </div>

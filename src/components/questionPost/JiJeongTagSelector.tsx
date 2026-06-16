@@ -27,7 +27,7 @@ function JiJeongTagSelector({ selectedTags, onTagsSelect }: JiJeongTagSelectorPr
             className={`font-suit-medium rounded-full border-[1px] px-3 py-2 text-[16px] transition-colors ${
               selectedTags.includes(tag)
                 ? "border-question-main text-question-main"
-                : "border-ui-muted bg-white text-[#898989]"
+                : "border-ui-muted bg-white text-tag-custom-text"
             }`}
           >
             {label}

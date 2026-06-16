@@ -52,13 +52,13 @@ function DownloadFile({ documentFiles }: DocumentDto) {
         >
           <div className="flex flex-col">
             <div className="font-pretendard-medium text-[12px]">{file.originalFileName}</div>
-            <div className="font-pretendard-medium text-[12px] text-[#737373]">
+            <div className="font-pretendard-medium text-[12px] text-ui-body-soft">
               {formatFileSize(file.fileSize as number)}
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-1">
             <Image src="/icons/Download.svg" alt="Download" width={12} height={15} />
-            <div className="font-pretendard-medium text-[12px] text-[#737373]">다운 {file.totalDownloadCount}회</div>
+            <div className="font-pretendard-medium text-[12px] text-ui-body-soft">다운 {file.totalDownloadCount}회</div>
           </div>
         </div>
       ))}

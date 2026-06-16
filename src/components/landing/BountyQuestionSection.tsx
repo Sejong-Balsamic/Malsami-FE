@@ -62,12 +62,12 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
             >
               <div
                 className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-[8px] py-[4px] ${
-                  activeTab === "최근순" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
+                  activeTab === "최근순" ? "bg-tag-preset-question-bg" : "bg-ui-divider-thick"
                 }`}
               >
                 <span
                   className={`whitespace-nowrap text-[12px] ${
-                    activeTab === "최근순" ? "text-[#00E271]" : "text-[#898989]"
+                    activeTab === "최근순" ? "text-question-main" : "text-tag-custom-text"
                   }`}
                 >
                   최근순
@@ -83,10 +83,12 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
             >
               <div
                 className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-[8px] py-[4px] ${
-                  activeTab === "높은순" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
+                  activeTab === "높은순" ? "bg-tag-preset-question-bg" : "bg-ui-divider-thick"
                 }`}
               >
-                <span className={`text-[12px] ${activeTab === "높은순" ? "text-[#00E271]" : "text-[#898989]"}`}>
+                <span
+                  className={`text-[12px] ${activeTab === "높은순" ? "text-question-main" : "text-tag-custom-text"}`}
+                >
                   높은순
                 </span>
               </div>
@@ -98,7 +100,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
         <button
           type="button"
           onClick={onViewAll}
-          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
+          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-ui-muted-soft"
         >
           전체보기
         </button>

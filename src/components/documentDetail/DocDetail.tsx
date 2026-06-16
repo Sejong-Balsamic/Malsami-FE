@@ -73,7 +73,9 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
   };
 
   const buttonClass = (isActive: boolean) =>
-    isActive ? "border-[#03b89e] text-[#03b89e] cursor-default" : "border-[#e7e7e7] text-[#aaaaaa] cursor-pointer";
+    isActive
+      ? "border-legacy-teal text-legacy-teal cursor-default"
+      : "border-ui-divider-light text-ui-count cursor-pointer";
 
   const incrementCommentCount = () => {
     setCommentCount(prev => (prev !== undefined ? prev + 1 : 1));
@@ -84,7 +86,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
       {/* 교과목명 */}
       <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
         <div className="flex items-center">
-          <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
+          <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-legacy-teal px-[14px] py-[6px] text-[12px] text-white">
             {documentDto.documentPost?.subject || "과목명 없음"}
           </div>
         </div>
@@ -94,7 +96,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
       <div className="flex h-auto min-w-[336px] max-w-[640px] flex-col">
         <div className="mt-[20px]">
           <span className="font-pretendard-bold text-[18px]">{documentDto.documentPost?.title || "제목 없음"}</span>
-          <div className="font-pretendard-medium mt-[10px] text-[14px] leading-normal text-[#727272]">
+          <div className="font-pretendard-medium mt-[10px] text-[14px] leading-normal text-ui-body-soft">
             {documentDto.documentPost?.content || "내용 없음"}
           </div>
         </div>
@@ -105,9 +107,9 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
             {documentDto.documentPost?.documentTypes?.map((tag, index) => (
               <div
                 key={index}
-                className="flex h-[25px] w-auto items-center justify-center rounded-[28px] border border-[#e7e7e7] px-[10px]"
+                className="flex h-[25px] w-auto items-center justify-center rounded-[28px] border border-ui-divider-light px-[10px]"
               >
-                <span className="font-pretendard-medium text-[14px] text-[#aaaaaa]">{getKoreanTag(tag)}</span>
+                <span className="font-pretendard-medium text-[14px] text-ui-count">{getKoreanTag(tag)}</span>
               </div>
             )) || <span>태그 없음</span>}
           </div>
@@ -121,10 +123,10 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
               </span>
             </div>
             <div>
-              <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">
+              <span className="font-pretendard-medium mr-[3px] text-[12px] text-ui-muted">
                 {getDateDiff(documentDto.documentPost?.createdDate || "") || "날짜 없음"}
               </span>
-              <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">
+              <span className="font-pretendard-medium mr-[3px] text-[12px] text-ui-muted">
                 • 조회수 {documentDto.documentPost?.viewCount || 0}
               </span>
             </div>
@@ -147,7 +149,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
                   height={16}
                 />
                 <span
-                  className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}
+                  className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-legacy-teal" : "text-ui-count"}`}
                 >
                   {currentLikeCount}
                 </span>
@@ -166,7 +168,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
                   height={16}
                 />
                 <span
-                  className={`font-pretendard-semibold text-[12px] ${isDisliked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}
+                  className={`font-pretendard-semibold text-[12px] ${isDisliked ? "text-legacy-teal" : "text-ui-count"}`}
                 >
                   {currentDislikeCount}
                 </span>
@@ -175,9 +177,9 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
             {/* 댓글 */}
             <Drawer>
               <DrawerTrigger asChild>
-                <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
+                <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-ui-divider-light">
                   <Image src="/icons/Comment_UnClicked.svg" alt="Comment_UnClicked" width={16} height={16} />
-                  <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">{commentCount}</span>
+                  <span className="font-pretendard-semibold text-[12px] text-ui-count">{commentCount}</span>
                 </div>
               </DrawerTrigger>
               <DrawerContent className="px-[20px] pb-[20px]">

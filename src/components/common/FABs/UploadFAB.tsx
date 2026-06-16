@@ -50,7 +50,7 @@ function UploadFAB() {
       <div className="relative">
         <button
           type="button"
-          className="relative z-[70] h-[50px] w-[50px] rounded-full bg-[#03b89e] shadow-lg"
+          className="relative z-[70] h-[50px] w-[50px] rounded-full bg-legacy-teal shadow-lg"
           onClick={toggleDivVisibility}
         >
           <Upload />
@@ -64,7 +64,7 @@ function UploadFAB() {
                 className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
                 onClick={handleQuestionClick}
               >
-                <QuestionIcon className="h-[50px] w-[50px] text-[#03b89e]" />
+                <QuestionIcon className="h-[50px] w-[50px] text-legacy-teal" />
               </button>
             </div>
             <div className="flex items-center gap-[10px]">
@@ -74,7 +74,7 @@ function UploadFAB() {
                 className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
                 onClick={handleDocumentClick}
               >
-                <DocumentIcon className="h-[50px] w-[50px] text-[#03b89e]" />
+                <DocumentIcon className="h-[50px] w-[50px] text-legacy-teal" />
               </button>
             </div>
           </div>

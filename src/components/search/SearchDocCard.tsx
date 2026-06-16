@@ -44,7 +44,7 @@ export default function SearchDocCard({
           {/* 제목 */}
           <p className="font-pretendard-bold mb-1 line-clamp-1 text-sm text-black">{title}</p>
           {/* 내용 */}
-          <p className="font-pretendard-medium mb-2 line-clamp-1 text-sm text-[#737373]">{content}</p>
+          <p className="font-pretendard-medium mb-2 line-clamp-1 text-sm text-ui-body-soft">{content}</p>
           {/* 태그 및 기타 정보 */}
           <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
             <div className="flex flex-wrap items-center">

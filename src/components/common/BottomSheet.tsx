@@ -49,7 +49,7 @@ export default function BottomSheet({ onReset, onConfirm, children: mainContent,
 
       <DrawerContent className="mx-auto flex max-h-[80vh] w-full max-w-[640px] flex-col rounded-t-[30px] p-0">
         {/* 헤더: 필터링, X버튼 */}
-        <DrawerHeader className="sticky top-0 flex flex-row items-center justify-between rounded-t-[30px] border-b-2 border-[#F3F3F3] px-[30px] pb-[26px] pt-[10px]">
+        <DrawerHeader className="sticky top-0 flex flex-row items-center justify-between rounded-t-[30px] border-b-2 border-ui-divider-light px-[30px] pb-[26px] pt-[10px]">
           <DrawerTitle className="font-suit-semibold text-[18px]">필터링</DrawerTitle>
           <DrawerClose onClick={handleClose}>
             <IconWrapper21x21 src="/icons/x-lg.svg" />

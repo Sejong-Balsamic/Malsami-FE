@@ -27,7 +27,7 @@ function ChaetaekSuccessModal({ isOpen, onClose, author }: ModalProps) {
       >
         <div className="flex h-48 w-[336px] flex-col items-center justify-center rounded-2xl bg-white/50 p-[20px]">
           <h1 className="font-pretendard-bold pb-[10px] text-[18px]">답변 채택</h1>
-          <div className="font-pretendard-medium w-full border-t-2 border-[#EEEEEE] pb-[20px] pt-[10px] text-center text-[16px]">
+          <div className="font-pretendard-medium w-full border-t-2 border-ui-divider-light pb-[20px] pt-[10px] text-center text-[16px]">
             답변이 채택되었습니다!
             <br />
             엽전 현상금이 @{author}에게 지급됩니다!
@@ -36,7 +36,7 @@ function ChaetaekSuccessModal({ isOpen, onClose, author }: ModalProps) {
             <button
               type="button"
               onClick={handleConfirm}
-              className="font-pretendard-semibold h-[30px] w-full rounded-lg bg-[#0062d2] text-[14px] text-white"
+              className="font-pretendard-semibold h-[30px] w-full rounded-lg bg-legacy-accept-blue text-[14px] text-white"
             >
               확인
             </button>

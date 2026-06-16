@@ -42,7 +42,7 @@ function CategoryCard({ title, color, subject, likeCount, commentCount }: Catego
           </div>
 
           {/* 좋아요, 댓글 부분 */}
-          <div className="font-pretendard-semibold flex flex-row justify-end text-xs text-[#D0D0D0]">
+          <div className="font-pretendard-semibold flex flex-row justify-end text-xs text-ui-muted">
             <div>
               <span className="mr-1.5">
                 <Image src="/icons/newLikeThumbBlue.svg" width={14} height={14} alt="LikeIcon" />

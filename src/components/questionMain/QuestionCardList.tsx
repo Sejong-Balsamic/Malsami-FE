@@ -13,7 +13,7 @@ export default function QuestionCardList({ data }: QuestionCardListProps) {
   if (!data || data.length === 0) {
     return (
       <div className="flex h-40 items-center justify-center">
-        <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 질문이 없습니다.</span>
+        <span className="text-SUIT_14 font-medium text-ui-muted">표시할 질문이 없습니다.</span>
       </div>
     );
   }
@@ -45,7 +45,7 @@ export default function QuestionCardList({ data }: QuestionCardListProps) {
           {index < data.length - 1 && (
             <>
               <div className="h-4" />
-              <div className="h-px w-full bg-[#F0F0F0]" />
+              <div className="h-px w-full bg-ui-divider" />
               <div className="h-4" />
             </>
           )}

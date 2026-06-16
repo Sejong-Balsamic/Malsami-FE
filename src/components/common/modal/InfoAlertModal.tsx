@@ -49,10 +49,7 @@ function InfoAlertModal({ isOpen, title, message, confirmLabel = "로그인", on
         <button
           type="button"
           onClick={onConfirm}
-          className="absolute bottom-[20px] right-[16px] h-[40px] w-[115px] rounded-[8px] text-SUIT_14 font-semibold text-white"
-          style={{
-            background: "linear-gradient(91deg, #00D1F2 0%, #00E271 100%)",
-          }}
+          className="absolute bottom-[20px] right-[16px] h-[40px] w-[115px] rounded-[8px] bg-gradient-to-r from-document-main to-question-main text-SUIT_14 font-semibold text-white"
         >
           {confirmLabel}
         </button>

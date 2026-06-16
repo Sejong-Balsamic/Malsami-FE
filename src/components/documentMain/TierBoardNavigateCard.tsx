@@ -41,11 +41,9 @@ export default function TierBoardNavigateCard({
       <Link
         href={accessible ? link : "#"}
         onClick={handleCardClick}
-        className="group relative flex h-[70px] w-[70px] items-center justify-center rounded-full border transition-transform hover:scale-105 xs:h-[82px] xs:w-[82px]"
-        style={{
-          backgroundColor: accessible ? "#FFF" : "#EDEDED",
-          borderColor: accessible ? "#EDEDED" : "transparent",
-        }}
+        className={`group relative flex h-[70px] w-[70px] items-center justify-center rounded-full border transition-transform hover:scale-105 xs:h-[82px] xs:w-[82px] ${
+          accessible ? "border-ui-divider-thick bg-white" : "border-transparent bg-ui-divider-thick"
+        }`}
       >
         <Image
           src={imageSrc}
@@ -58,10 +56,7 @@ export default function TierBoardNavigateCard({
       </Link>
       {/* 게시판 카테고리 제목 */}
       <span
-        className="text-SUIT_14 font-medium xs:text-SUIT_16"
-        style={{
-          color: accessible ? "#000000" : "#898989",
-        }}
+        className={`text-SUIT_14 font-medium xs:text-SUIT_16 ${accessible ? "text-black" : "text-tag-custom-text"}`}
       >
         {PostTiers[tier].KR}
       </span>

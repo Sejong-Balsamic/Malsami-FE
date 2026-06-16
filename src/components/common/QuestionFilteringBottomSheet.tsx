@@ -187,7 +187,7 @@ export default function QuestionFilteringBottomSheet({
             <FilteringButton type="refresh" onClick={handleReset} />
           </div>
           <div className="flex-[2.5]">
-            <FilteringButton type="submit" onClick={handleConfirm} activeColor="#00E271" />
+            <FilteringButton type="submit" onClick={handleConfirm} activeColorClass="bg-question-main" />
           </div>
         </div>
       </DrawerContent>

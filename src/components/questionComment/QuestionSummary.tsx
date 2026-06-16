@@ -63,7 +63,7 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
                   {questionDto.mediaFiles.map((file, index) => (
                     <div
                       key={index}
-                      className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[8px] bg-[#EDEDED]"
+                      className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[8px] bg-ui-divider-thick"
                     >
                       <Image
                         src={file.uploadedImageUrl || ""}

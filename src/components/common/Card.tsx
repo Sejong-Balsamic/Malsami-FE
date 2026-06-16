@@ -94,7 +94,7 @@ export default function Card({
           {answerCount !== undefined && (
             <span className="ml-2 flex items-center gap-1">
               <Image src={getCommentIconPath()} alt="답변" width={14} height={14} />
-              <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">{answerCount}</span>
+              <span className="text-[12px] font-medium leading-[12px] text-ui-muted">{answerCount}</span>
             </span>
           )}
         </div>

@@ -51,7 +51,7 @@ export default function AllDocumentsSection({ onViewAll }: AllDocumentsSectionPr
 
   // 데이터가 없는 경우 빈 상태 처리
   const renderEmptyState = () => (
-    <div className="flex h-40 w-full items-center justify-center rounded-lg border border-[#F1F1F1] bg-white p-5 text-[#929292] shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]">
+    <div className="flex h-40 w-full items-center justify-center rounded-lg border border-ui-divider-light bg-white p-5 text-ui-muted-soft shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]">
       표시할 자료가 없습니다.
     </div>
   );
@@ -69,7 +69,7 @@ export default function AllDocumentsSection({ onViewAll }: AllDocumentsSectionPr
         <button
           type="button"
           onClick={onViewAll}
-          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
+          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-ui-muted-soft"
         >
           전체보기
         </button>
@@ -87,7 +87,7 @@ export default function AllDocumentsSection({ onViewAll }: AllDocumentsSectionPr
                 <button
                   type="button"
                   key={document.documentPostId}
-                  className={`w-full cursor-pointer px-5 py-6 text-left ${index < documents.length - 1 ? "border-b border-[#EDEDED]" : ""}`}
+                  className={`w-full cursor-pointer px-5 py-6 text-left ${index < documents.length - 1 ? "border-b border-ui-divider-thick" : ""}`}
                   onClick={() => handleCardClick(document.documentPostId as string)}
                 >
                   {/* 상단 부분 - 과목 태그 */}
@@ -101,7 +101,7 @@ export default function AllDocumentsSection({ onViewAll }: AllDocumentsSectionPr
                   </h3>
 
                   {/* 게시물 내용 */}
-                  <p className="mb-4 line-clamp-2 text-SUIT_14 font-medium leading-[22.4px] text-[#616161]">
+                  <p className="mb-4 line-clamp-2 text-SUIT_14 font-medium leading-[22.4px] text-ui-body">
                     {document.content}
                   </p>
 
@@ -120,7 +120,7 @@ export default function AllDocumentsSection({ onViewAll }: AllDocumentsSectionPr
                       {/* 좋아요 */}
                       <span className="flex items-center gap-[4px]">
                         <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
-                        <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">
+                        <span className="text-[12px] font-medium leading-[12px] text-ui-muted">
                           {document.likeCount || 0}
                         </span>
                       </span>
@@ -128,7 +128,7 @@ export default function AllDocumentsSection({ onViewAll }: AllDocumentsSectionPr
                       {/* 댓글 */}
                       <span className="ml-[8px] flex items-center gap-[4px]">
                         <Image src="/icons/newChatBubbleGray.svg" alt="댓글" width={14} height={14} />
-                        <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">
+                        <span className="text-[12px] font-medium leading-[12px] text-ui-muted">
                           {document.commentCount || 0}
                         </span>
                       </span>

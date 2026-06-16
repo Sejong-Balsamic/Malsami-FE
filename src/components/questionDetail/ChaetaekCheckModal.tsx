@@ -42,7 +42,7 @@ function ChaetaekCheckModal({ isOpen, onClose, answerPostId, author }: ModalProp
       >
         <div className="flex h-48 w-[336px] flex-col items-center justify-center rounded-2xl bg-white/50 p-[20px]">
           <h1 className="font-pretendard-bold pb-[10px] text-[18px]">답변 채택</h1>
-          <div className="font-pretendard-medium w-full border-t-2 border-[#EEEEEE] pb-[20px] pt-[10px] text-center text-[16px]">
+          <div className="font-pretendard-medium w-full border-t-2 border-ui-divider-light pb-[20px] pt-[10px] text-center text-[16px]">
             채택하시겠습니까?
             <br />
             채택한 경우 취소가 불가능합니다.
@@ -51,14 +51,14 @@ function ChaetaekCheckModal({ isOpen, onClose, answerPostId, author }: ModalProp
             <button
               type="button"
               onClick={onClose}
-              className="font-pretendard-semibold h-[30px] w-[140px] rounded-lg border border-[#0062d2] bg-white text-[14px] text-[#0062d2]"
+              className="font-pretendard-semibold h-[30px] w-[140px] rounded-lg border border-legacy-accept-blue bg-white text-[14px] text-legacy-accept-blue"
             >
               취소
             </button>
             <button
               type="submit"
               onClick={handleConfirm}
-              className="font-pretendard-semibold h-[30px] w-[140px] rounded-lg bg-[#0062d2] text-[14px] text-white"
+              className="font-pretendard-semibold h-[30px] w-[140px] rounded-lg bg-legacy-accept-blue text-[14px] text-white"
             >
               확인
             </button>

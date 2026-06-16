@@ -30,7 +30,7 @@ function CustomTagSelector({ tags, onTagsSubmit, onRemoveTag }: CustomTagSelecto
   return (
     <div>
       <h2 className="font-suit-medium text-4 mb-2">자유 태그</h2>
-      <h3 className="font-suit-medium mb-3 text-[14px] text-[#898989]">
+      <h3 className="font-suit-medium mb-3 text-[14px] text-tag-custom-text">
         기본 태그 외에 필요한 태그가 있다면 추가해보세요!
       </h3>
 

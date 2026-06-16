@@ -107,7 +107,7 @@ function Header({
             {/* 6px 공백 */}
             <div className="h-0.5" />
             {/* 부제목 */}
-            <div className="text-SUIT_12 font-medium text-[#898989]">{subtitle}</div>
+            <div className="text-SUIT_12 font-medium text-tag-custom-text">{subtitle}</div>
           </>
         )}
       </div>
