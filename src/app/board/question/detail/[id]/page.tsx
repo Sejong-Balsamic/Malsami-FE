@@ -5,7 +5,7 @@ import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
-import getQuestionDetails from "@/apis/question/getQuestionDetails";
+import { questionPostApi } from "@/apis/questionPostApi";
 import QuestionDetailSkeleton from "@/components/common/skeletons/QuestionDetailSkeleton";
 import { isSameMemberById } from "@/global/memberUtil";
 import QuestionDetail from "@/components/questionDetail/QuestionDetail";
@@ -50,7 +50,8 @@ export default function Page() {
       const fetchData = async () => {
         try {
           setIsLoading(true); // 로딩 상태 활성화
-          const data = await getQuestionDetails(postId);
+          // 신식 API 패턴(questionPostApi) 사용 — postId를 Command로 전달
+          const data = await questionPostApi.getQuestionPost({ postId });
 
           if (isMounted) {
             // postId 설정

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import chaetaekAnswer from "@/apis/question/chaetaekAnswer";
+import { answerPostApi } from "@/apis/answerPostApi";
 import ChaetaekSuccessModal from "./ChaetaekSuccessModal";
 
 interface ModalProps {
@@ -14,8 +14,8 @@ function ChaetaekCheckModal({ isOpen, onClose, answerPostId, author }: ModalProp
 
   const handleConfirm = async () => {
     try {
-      const response = await chaetaekAnswer(answerPostId);
-      console.log("채택 성공:", response);
+      // 신식 API 패턴(answerPostApi) 사용 — 채택 대상 답변 PK를 postId로 전달
+      await answerPostApi.chaetaekAnswerPost({ postId: answerPostId });
       setIsSuccessModalOpen(true);
     } catch (error) {
       console.error("채택 요청 실패:", error);

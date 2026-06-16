@@ -5,13 +5,13 @@ import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import postAnswer from "@/apis/question/postAnswer";
+import { answerPostApi } from "@/apis/answerPostApi";
 import { useDispatch } from "react-redux";
 import useCommonToast from "@/global/hook/useCommonToast";
 import FileUploadInput from "@/components/questionPost/FileUploadInput";
 import QuestionSummary from "@/components/questionComment/QuestionSummary";
 import CommonHeader from "@/components/header/CommonHeader";
-import getQuestionDetails from "@/apis/question/getQuestionDetails";
+import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 import { RIGHT_ITEM } from "@/types/header";
 import CommonTextarea from "@/components/common/CommonTextarea";
@@ -102,7 +102,8 @@ export default function AnswerPostPage() {
       const fetchData = async () => {
         try {
           setIsQuestionsLoading(true);
-          const data = await getQuestionDetails(questionPostId);
+          // 신식 API 패턴(questionPostApi) 사용
+          const data = await questionPostApi.getQuestionPost({ postId: questionPostId });
 
           if (isMounted) {
             setQuestionDetails({
@@ -142,12 +143,13 @@ export default function AnswerPostPage() {
 
     if (isFormValid) {
       try {
-        await postAnswer({
+        // 신식 API 패턴(answerPostApi) 사용 — 첨부파일은 attachmentFiles 키로 전송
+        await answerPostApi.saveAnswerPost({
           content: formData.content,
           questionPostId,
           isPrivate: formData.isPrivate,
-          mediaFiles: formData.mediaFiles,
-        }); // API 호출
+          attachmentFiles: formData.mediaFiles,
+        });
         showConfirmToast("답변이 성공적으로 등록되었습니다.");
         localStorage.removeItem("answerFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
         router.push(`/board/question/detail/${questionPostId}`); // 작성 완료 후 해당 질문 상세 페이지로 이동

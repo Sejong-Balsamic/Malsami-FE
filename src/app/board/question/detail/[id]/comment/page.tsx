@@ -4,7 +4,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import CommonHeader from "@/components/header/CommonHeader";
 
-import getQuestionDetails from "@/apis/question/getQuestionDetails";
+import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 import QuestionSummary from "@/components/questionComment/QuestionSummary";
 import CommentList from "@/components/questionComment/CommentList";
@@ -32,7 +32,8 @@ export default function CommentPage() {
       const fetchData = async () => {
         try {
           setIsQuestionsLoading(true);
-          const data = await getQuestionDetails(postId);
+          // 신식 API 패턴(questionPostApi) 사용
+          const data = await questionPostApi.getQuestionPost({ postId });
 
           if (isMounted) {
             setQuestionDetails({

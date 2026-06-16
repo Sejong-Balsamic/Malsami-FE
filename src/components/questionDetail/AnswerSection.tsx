@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { formatDateTime } from "@/global/time";
-import getAnswer from "@/apis/question/getAnswer";
+import { answerPostApi } from "@/apis/answerPostApi";
 import likeApi from "@/apis/likeApi";
 import { ContentType } from "@/types/api/constants/contentType";
 import { LikeType } from "@/types/api/constants/likeType";
@@ -77,8 +77,9 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
     const fetchAnswers = async () => {
       try {
         setIsLoading(true);
-        const response = await getAnswer(postId);
-        setAnswers(Array.isArray(response) ? response : []);
+        // 신식 API 패턴(answerPostApi) 사용 — 응답 Dto에서 answerPosts 추출
+        const response = await answerPostApi.getAnswersByQuestion({ questionPostId: postId });
+        setAnswers(Array.isArray(response.answerPosts) ? response.answerPosts : []);
       } catch (fetchError) {
         console.error("답변 불러오기 실패:", fetchError);
         setLoadError("답변을 불러오는 중 오류가 발생했습니다.");
