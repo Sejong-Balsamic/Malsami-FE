@@ -199,7 +199,7 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
         )}
 
         {/* 얇은 구분선 */}
-        <div className="mt-5 h-[1px] w-full bg-[#D7D7D7]"></div>
+        <div className="mt-5 h-[1px] w-full bg-ui-muted"></div>
 
         {/* 좋아요 및 댓글 액션 */}
         <div className="mb-[15px] mt-[15px] flex justify-center">

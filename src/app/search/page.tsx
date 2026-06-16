@@ -18,7 +18,7 @@ export default function SearchPage() {
         <div className="px-2">
           <SearchBar
             variant="default"
-            borderColor="rgb(0, 232, 187)"
+            borderColor="question"
             placeholder="검색어를 입력하세요"
             showLoginCheck
             onSearch={query => {

@@ -46,7 +46,7 @@ export default function SearchDocCard({
           {/* 내용 */}
           <p className="font-pretendard-medium mb-2 line-clamp-1 text-sm text-ui-body-soft">{content}</p>
           {/* 태그 및 기타 정보 */}
-          <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
+          <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-ui-muted">
             <div className="flex flex-wrap items-center">
               <span className="font-pretendard-medium text-custom-blue-500 mr-3.5 text-xs">
                 {PostTiersKeys.includes(postTier as PostTiersKey)

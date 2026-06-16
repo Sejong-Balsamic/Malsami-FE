@@ -38,7 +38,7 @@ export default function QuestionPage() {
         <section aria-label="search" className="mb-12 mt-6">
           <SearchBar
             variant="colored"
-            borderColor="rgb(0, 232, 187)"
+            borderColor="question"
             placeholder="질문을 검색해보세요"
             showLoginCheck
             onSearch={query => {

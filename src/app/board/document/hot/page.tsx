@@ -118,7 +118,7 @@ export default function HotDocumentPage() {
           secondTab="일간"
           activeTab={activeTab}
           onTabChange={handleTabChange}
-          activeColor="#00D1F2"
+          activeColor="document"
         />
 
         {/* 24px 공백 */}

@@ -9,9 +9,18 @@ import subjects from "@/types/subjects";
 import AutoCompleteSuggestionList from "@/components/search/AutoCompleteSuggestionList";
 import queryApi from "@/apis/queryApi";
 
+// colored variant 테두리/강조 색상 테마 (프로젝트 색상 토큰으로 통일)
+type SearchBarColorTheme = "document" | "question";
+
+// 테마별 Tailwind 클래스 매핑 (동적 클래스 조합 시 purge 방지를 위해 리터럴로 명시)
+const colorThemeClassMap: Record<SearchBarColorTheme, { border: string; text: string }> = {
+  document: { border: "border-document-main", text: "text-document-main" },
+  question: { border: "border-question-main", text: "text-question-main" },
+};
+
 interface SearchBarProps {
   variant: "default" | "gradient" | "colored";
-  borderColor: string;
+  borderColor: SearchBarColorTheme;
   placeholder: string;
   showLoginCheck: boolean;
   onSearch: (query: string, subject: string) => void;
@@ -22,12 +31,14 @@ const savedSearchTerms: string[] = subjects;
 
 export default function SearchBar({
   variant = "default",
-  borderColor = "#00E271",
+  borderColor = "question",
   placeholder,
   showLoginCheck = true,
   onSearch,
   className = "",
 }: SearchBarProps) {
+  // colored variant에서 사용할 테마 클래스
+  const colorClasses = colorThemeClassMap[borderColor] ?? colorThemeClassMap.question;
   const [searchValue, setSearchValue] = useState("");
   const [subject, setSubject] = useState("");
   const [filteredTerms, setFilteredTerms] = useState<string[]>([]);
@@ -231,13 +242,11 @@ export default function SearchBar({
   if (variant === "colored") {
     return (
       <div className={`relative w-full bg-white ${className}`}>
-        <div className="flex h-[52px] w-full items-center rounded-lg border-2 bg-white" style={{ borderColor }}>
+        <div className={`flex h-[52px] w-full items-center rounded-lg border-2 bg-white ${colorClasses.border}`}>
           {/* 입력 필드 */}
           <div className="flex flex-1 items-center pl-[18px]">
             {subject && (
-              <span className="mr-2 flex-shrink-0 text-SUIT_16 font-medium" style={{ color: borderColor }}>
-                {subject}
-              </span>
+              <span className={`mr-2 flex-shrink-0 text-SUIT_16 font-medium ${colorClasses.text}`}>{subject}</span>
             )}
             <input
               type="text"
@@ -260,7 +269,7 @@ export default function SearchBar({
 
             {/* 검색 아이콘 */}
             <button type="button" onClick={handleSearch} className="flex items-center justify-center">
-              <Search className="h-6 w-6" style={{ color: borderColor }} />
+              <Search className={`h-6 w-6 ${colorClasses.text}`} />
             </button>
           </div>
         </div>

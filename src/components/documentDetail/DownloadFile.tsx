@@ -47,7 +47,7 @@ function DownloadFile({ documentFiles }: DocumentDto) {
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
           key={file.documentFileId} // documentFileId를 key로 사용
-          className="flex h-auto w-auto items-center justify-between rounded-[10px] bg-[#f7f8fb] p-[14px]"
+          className="flex h-auto w-auto items-center justify-between rounded-[10px] bg-ui-tag-bg p-[14px]"
           onClick={() => handleDownloadClick(file)} // 버튼 클릭 시 모달 열기
         >
           <div className="flex flex-col">

@@ -77,7 +77,7 @@ export default function CommentList({ postId, questionAuthorId }: CommentListPro
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-8">
-        <div className="text-[14px] text-[#757575]">댓글을 불러오는 중...</div>
+        <div className="text-[14px] text-ui-body-soft">댓글을 불러오는 중...</div>
       </div>
     );
   }
@@ -86,7 +86,7 @@ export default function CommentList({ postId, questionAuthorId }: CommentListPro
   if (comments.length === 0) {
     return (
       <div className="flex items-center justify-center py-8">
-        <div className="text-[14px] text-[#757575]">아직 댓글이 없습니다.</div>
+        <div className="text-[14px] text-ui-body-soft">아직 댓글이 없습니다.</div>
       </div>
     );
   }

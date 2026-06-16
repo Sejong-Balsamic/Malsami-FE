@@ -1,9 +1,18 @@
+// 활성 탭 색상 테마 (프로젝트 색상 토큰으로 통일)
+type ActiveColorTheme = "document" | "question";
+
+// 테마별 Tailwind 클래스 매핑 (동적 클래스 조합 시 purge 방지를 위해 리터럴로 명시)
+const activeColorClassMap: Record<ActiveColorTheme, { text: string; bg: string }> = {
+  document: { text: "text-document-main", bg: "bg-document-main" },
+  question: { text: "text-question-main", bg: "bg-question-main" },
+};
+
 interface TwoTabFilterProps<T extends string> {
   firstTab: T;
   secondTab: T;
   activeTab: T;
   onTabChange: (tab: T) => void;
-  activeColor?: string;
+  activeColor?: ActiveColorTheme;
 }
 
 export default function TwoTabFilter<T extends string>({
@@ -13,6 +22,8 @@ export default function TwoTabFilter<T extends string>({
   onTabChange,
   activeColor,
 }: TwoTabFilterProps<T>) {
+  const colorClasses = activeColorClassMap[activeColor ?? "question"];
+
   return (
     <div className="relative w-full">
       {/* 탭 버튼들 */}
@@ -20,8 +31,9 @@ export default function TwoTabFilter<T extends string>({
         {/* 첫 번째 탭 */}
         <button type="button" onClick={() => onTabChange(firstTab)} className="flex-1 pb-3 text-center">
           <span
-            className={`whitespace-nowrap text-SUIT_18 ${activeTab === firstTab ? `font-semibold` : "font-medium text-ui-muted"}`}
-            style={{ color: activeTab === firstTab ? activeColor : undefined }}
+            className={`whitespace-nowrap text-SUIT_18 ${
+              activeTab === firstTab ? `font-semibold ${colorClasses.text}` : "font-medium text-ui-muted"
+            }`}
           >
             {firstTab}
           </span>
@@ -30,8 +42,9 @@ export default function TwoTabFilter<T extends string>({
         {/* 두 번째 탭 */}
         <button type="button" onClick={() => onTabChange(secondTab)} className="flex-1 pb-3 text-center">
           <span
-            className={`whitespace-nowrap text-SUIT_18 ${activeTab === secondTab ? `font-semibold` : "font-medium text-ui-muted"}`}
-            style={{ color: activeTab === secondTab ? activeColor : undefined }}
+            className={`whitespace-nowrap text-SUIT_18 ${
+              activeTab === secondTab ? `font-semibold ${colorClasses.text}` : "font-medium text-ui-muted"
+            }`}
           >
             {secondTab}
           </span>
@@ -47,13 +60,12 @@ export default function TwoTabFilter<T extends string>({
           activeTab === firstTab
             ? "left-0" // 왼쪽 절반
             : "right-0" // 오른쪽 절반
-        }`}
-        style={{ backgroundColor: activeColor }}
+        } ${colorClasses.bg}`}
       />
     </div>
   );
 }
 
 TwoTabFilter.defaultProps = {
-  activeColor: "question.main",
+  activeColor: "question",
 };

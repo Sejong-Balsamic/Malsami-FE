@@ -89,7 +89,7 @@ export default function HotQuestionPage() {
           secondTab="일간"
           activeTab={activeTab}
           onTabChange={handleTabChange}
-          activeColor="#00E8BB"
+          activeColor="question"
         />
 
         {/* 24px 공백 */}

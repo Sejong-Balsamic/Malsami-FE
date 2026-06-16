@@ -55,7 +55,7 @@ function CommentList({ comments }: CommentListProps) {
             <p className="font-pretendard-medium min-h-[20px] w-full text-[14px] text-ui-body-soft">
               {comment.content}
             </p>
-            <div className="font-pretendard-medium mb-[10px] text-[12px] text-[#bcbcbc]">
+            <div className="font-pretendard-medium mb-[10px] text-[12px] text-ui-muted">
               {new Date(comment.createdDate).toLocaleDateString()}
             </div>
           </div>

@@ -102,7 +102,7 @@ export default function BountyQuestionPage() {
           secondTab="높은순"
           activeTab={activeTab}
           onTabChange={handleTabChange}
-          activeColor="#00D1F2"
+          activeColor="document"
         />
 
         {/* 24px 공백 */}
