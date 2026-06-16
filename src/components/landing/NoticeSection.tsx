@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { noticePostApi } from "@/apis/noticePostApi";
 import { NoticePost } from "@/types/api/entities/postgres/noticePost";
-import MovingCardNotice from "@/components/common/MovingCardNotice";
+import MovingCardNotice from "@/components/landing/MovingCardNotice";
 import MovingNoticeCardSkeleton from "@/components/common/skeletons/MovingNoticeCardSkeleton";
 
 interface NoticeSectionProps {

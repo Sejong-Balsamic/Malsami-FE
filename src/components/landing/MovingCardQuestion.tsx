@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
 import { showModal } from "@/global/store/modalSlice";
-import Card from "./Card";
+import Card from "@/components/common/Card";
 
 interface MovingCardQuestionProps {
   data: QuestionPost[];

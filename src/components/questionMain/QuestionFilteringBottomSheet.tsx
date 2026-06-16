@@ -14,9 +14,9 @@ import { QuestionCommand } from "@/types/api/requests/questionCommand";
 import { SortType, sortTypeLabels } from "@/types/api/constants/sortType";
 import { ChaetaekStatus, chaetaekStatusLabels } from "@/types/api/constants/chaetaekStatus";
 import { QuestionPresetTag, QuestionPresetTagLabels } from "@/types/api/constants/questionPresetTag";
-import IconWrapper21x21 from "./IconWrapper21x21";
-import FilteringButton from "./buttons/FilteringButton";
-import QuestionFilteringTag from "./tags/QuestionFilteringTag";
+import IconWrapper21x21 from "@/components/common/IconWrapper21x21";
+import FilteringButton from "@/components/common/buttons/FilteringButton";
+import QuestionFilteringTag from "@/components/common/tags/QuestionFilteringTag";
 
 interface QuestionFilteringBottomSheetProps {
   onReset: () => void;

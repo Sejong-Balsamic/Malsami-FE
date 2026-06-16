@@ -14,9 +14,9 @@ import { RootState } from "@/global/store";
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { SortType, sortTypeLabels } from "@/types/api/constants/sortType";
 import { DocumentType, documentTypeLabels } from "@/types/api/constants/documentType";
-import IconWrapper21x21 from "./IconWrapper21x21";
-import FilteringButton from "./buttons/FilteringButton";
-import DocumentFilteringTag from "./tags/DocumentFilteringTag";
+import IconWrapper21x21 from "@/components/common/IconWrapper21x21";
+import FilteringButton from "@/components/common/buttons/FilteringButton";
+import DocumentFilteringTag from "@/components/common/tags/DocumentFilteringTag";
 
 interface DocumentFilteringBottomSheetProps {
   onReset: () => void;

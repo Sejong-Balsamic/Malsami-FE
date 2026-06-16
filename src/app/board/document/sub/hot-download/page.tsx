@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import Header from "@/components/header/Header";
 import DocumentCardList from "@/components/documentMain/DocumentCardList";
 import CommonPagination from "@/components/common/CommonPagination";
-import DocumentFilteringBottomSheet from "@/components/common/DocumentFilteringBottomSheet";
+import DocumentFilteringBottomSheet from "@/components/documentMain/DocumentFilteringBottomSheet";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";

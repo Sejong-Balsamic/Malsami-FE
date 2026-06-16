@@ -4,8 +4,8 @@
 "use client";
 
 import React, { useState } from "react";
-import DocumentFilteringBottomSheet from "@/components/common/DocumentFilteringBottomSheet";
-import QuestionFilteringBottomSheet from "@/components/common/QuestionFilteringBottomSheet";
+import DocumentFilteringBottomSheet from "@/components/documentMain/DocumentFilteringBottomSheet";
+import QuestionFilteringBottomSheet from "@/components/questionMain/QuestionFilteringBottomSheet";
 import { useDispatch } from "react-redux";
 import { setDocumentFilteringOpen, setQuestionFilteringOpen } from "@/global/store/bottomSheetSlice";
 import { QuestionCommand } from "@/types/api/requests/questionCommand";

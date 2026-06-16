@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import MovingCardSkeleton from "@/components/common/MovingCardSkeleton";
+import MovingCardSkeleton from "@/components/landing/MovingCardSkeleton";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
-import MovingCardQuestion from "@/components/common/MovingCardQuestion";
+import MovingCardQuestion from "@/components/landing/MovingCardQuestion";
 
 interface BountyQuestionSectionProps {
   onViewAll: () => void;

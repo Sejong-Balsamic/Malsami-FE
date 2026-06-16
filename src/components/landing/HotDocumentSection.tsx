@@ -5,7 +5,7 @@ import Image from "next/image";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import MovingCardDocument from "@/components/common/MovingCardDocument";
-import MovingCardSkeleton from "@/components/common/MovingCardSkeleton";
+import MovingCardSkeleton from "@/components/landing/MovingCardSkeleton";
 
 interface HotDocumentsSectionProps {
   onViewAll: () => void;

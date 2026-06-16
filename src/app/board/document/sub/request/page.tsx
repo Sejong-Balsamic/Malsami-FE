@@ -11,7 +11,7 @@ import { documentRequestPostApi } from "@/apis/documentRequestPostApi";
 import { DocumentRequestPost } from "@/types/api/entities/postgres/documentRequestPost";
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { setDocumentFilteringOpen } from "@/global/store/bottomSheetSlice";
-import DocumentFilteringBottomSheet from "@/components/common/DocumentFilteringBottomSheet";
+import DocumentFilteringBottomSheet from "@/components/documentMain/DocumentFilteringBottomSheet";
 
 export default function DocumentRequestPage() {
   const router = useRouter();

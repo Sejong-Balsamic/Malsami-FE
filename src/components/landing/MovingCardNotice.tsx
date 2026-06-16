@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { NoticePost } from "@/types/api/entities/postgres/noticePost";
 import { showModal } from "@/global/store/modalSlice";
-import NoticeCard from "./NoticeCard";
+import NoticeCard from "@/components/common/NoticeCard";
 
 interface MovingCardNoticeProps {
   data: NoticePost[];
