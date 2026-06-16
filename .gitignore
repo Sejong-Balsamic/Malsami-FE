@@ -56,3 +56,6 @@ tsconfig.tsbuildinfo
 # 백엔드 코드
 /Malsami-BE/
 .gstack/
+
+# brainstorming visual companion
+.superpowers/
