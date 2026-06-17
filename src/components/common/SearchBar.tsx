@@ -181,7 +181,7 @@ export default function SearchBar({
   if (variant === "gradient") {
     return (
       <div className={`relative w-full ${className}`}>
-        <div className="relative mx-auto flex h-[52px] w-full items-center overflow-hidden rounded-lg bg-white">
+        <div className="h-13 relative mx-auto flex w-full items-center overflow-hidden rounded-lg bg-white">
           {/* Gradient border 효과 */}
           <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-document-main to-question-main p-0.5">
             <div className="h-full w-full rounded-md bg-white" />
@@ -190,7 +190,7 @@ export default function SearchBar({
           {/* 실제 입력 필드 */}
           <div className="relative flex h-full w-full items-center">
             {subject && (
-              <span className="z-10 ml-[18px] mr-2 flex-shrink-0 text-SUIT_16 font-medium text-question-main">
+              <span className="ml-4.5 z-10 mr-2 flex-shrink-0 text-SUIT_16 font-medium text-question-main">
                 {subject}
               </span>
             )}
@@ -201,7 +201,7 @@ export default function SearchBar({
               onKeyDown={handleKeyDown}
               placeholder={placeholders[placeholderIndex] || "과목명, 키워드 등을 입력하세요."}
               className={`z-10 flex-1 bg-transparent py-4 pr-12 text-SUIT_16 font-medium text-black placeholder-ui-muted outline-none ${
-                subject ? "" : "pl-[18px]"
+                subject ? "" : "pl-4.5"
               }`}
             />
 
@@ -242,9 +242,9 @@ export default function SearchBar({
   if (variant === "colored") {
     return (
       <div className={`relative w-full bg-white ${className}`}>
-        <div className={`flex h-[52px] w-full items-center rounded-lg border-2 bg-white ${colorClasses.border}`}>
+        <div className={`h-13 flex w-full items-center rounded-lg border-2 bg-white ${colorClasses.border}`}>
           {/* 입력 필드 */}
-          <div className="flex flex-1 items-center pl-[18px]">
+          <div className="pl-4.5 flex flex-1 items-center">
             {subject && (
               <span className={`mr-2 flex-shrink-0 text-SUIT_16 font-medium ${colorClasses.text}`}>{subject}</span>
             )}
