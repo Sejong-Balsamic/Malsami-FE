@@ -115,7 +115,7 @@ export default function CommonPagination({ currentPage, totalPages, onPageChange
               </button>
 
               {/* 현재 페이지 표시용 밑줄 */}
-              {isCurrentPage && <div className="mt-0.5 h-px w-[14px] rounded-[2px] bg-[#08E4BA]" />}
+              {isCurrentPage && <div className="mt-0.5 h-px w-[14px] rounded-[2px] bg-question-main" />}
             </div>
           );
         })}

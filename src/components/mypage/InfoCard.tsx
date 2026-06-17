@@ -42,8 +42,7 @@ function InfoCard({ memberDto }: { memberDto: MemberDto | null }) {
               <div className="flex items-center justify-between">
                 <div className="font-pretendard-medium text-[14px]">{currentRank}</div>
                 <div className="flex items-center gap-1">
-                  <span className="font-pretendard-medium text-[14px] text-[#016C5D]">{nextRank}</span>
-                  {/* TODO(style): #016C5D 매핑 토큰 없음 (다크 틸) — 추후 토큰화 검토 */}
+                  <span className="font-pretendard-medium text-[14px] text-mypage-teal">{nextRank}</span>
                 </div>
               </div>
             </div>

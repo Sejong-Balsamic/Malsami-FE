@@ -63,7 +63,7 @@ export default function Card({
       {/* 상단 Row: 순번 + 과목 태그 */}
       <div className="ml-4 mt-4 flex items-start gap-2">
         {/* 순번 */}
-        {number && <span className="text-[18px] font-bold leading-[18px] text-[#1D1E27]">{number}</span>}
+        {number && <span className="text-[18px] font-bold leading-[18px] text-black">{number}</span>}
         {/* 과목 태그 */}
         <SubjectTag subjectName={subject} type={type} />
         {isCurrentlyPopular && <HotTag />}

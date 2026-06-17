@@ -289,14 +289,14 @@ export default function SearchBar({
   // Default 스타일
   return (
     <div className={`relative w-full bg-white ${className}`}>
-      <div className="flex w-full items-center justify-between rounded-[12px] border-[1px] border-[#10DCB3] bg-white p-3.5">
+      <div className="flex w-full items-center justify-between rounded-[12px] border-[1px] border-question-main bg-white p-3.5">
         <button type="button" onClick={handleSearch} className="flex items-center justify-center pr-3">
-          <Search className="h-6 w-6 text-[#10DCB3]" />
+          <Search className="h-6 w-6 text-question-main" />
         </button>
 
         {/* 입력 필드 */}
         <div className="flex flex-1 items-center">
-          {subject && <span className="mr-2 flex-shrink-0 text-SUIT_16 font-medium text-[#10DCB3]">{subject}</span>}
+          {subject && <span className="mr-2 flex-shrink-0 text-SUIT_16 font-medium text-question-main">{subject}</span>}
           <input
             type="text"
             value={searchValue}

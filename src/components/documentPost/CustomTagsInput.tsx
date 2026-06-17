@@ -15,7 +15,7 @@ export default function CustomTagsInput({ tags, onClick, onRemoveTag }: CustomTa
         {tags.map(tag => (
           <span
             key={tag}
-            className="font-pretendard-bold flex items-center rounded-full bg-[#5ED513] px-3 text-xs text-white"
+            className="font-pretendard-bold flex items-center rounded-full bg-tag-green px-3 text-xs text-white"
           >
             {tag}
             <button type="button" onClick={() => onRemoveTag(tag)} className="ml-2 text-base font-bold text-white">

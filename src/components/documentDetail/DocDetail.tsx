@@ -184,7 +184,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
               </DrawerTrigger>
               <DrawerContent className="px-[20px] pb-[20px]">
                 <DrawerHeader className="px-0">
-                  <DrawerTitle className="font-pretendard-bold flex text-[14px] text-[#3c3c3c]">
+                  <DrawerTitle className="font-pretendard-bold flex text-[14px] text-ui-body">
                     댓글 {commentCount}
                   </DrawerTitle>
                 </DrawerHeader>

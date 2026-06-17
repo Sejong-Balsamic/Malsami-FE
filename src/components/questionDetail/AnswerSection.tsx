@@ -96,7 +96,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
   }
 
   if (loadError) {
-    return <p className="text-center text-SUIT_14 font-medium text-[#f56565]">{loadError}</p>;
+    return <p className="text-center text-SUIT_14 font-medium text-ui-error">{loadError}</p>;
   }
 
   // 채택된 답변이 있는지 확인

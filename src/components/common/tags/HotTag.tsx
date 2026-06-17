@@ -5,7 +5,7 @@
  */
 export default function HotTag() {
   return (
-    <div className="inline-flex items-center justify-center rounded bg-[#FF6723] px-1.5 py-1">
+    <div className="inline-flex items-center justify-center rounded bg-tag-hot px-1.5 py-1">
       <span className="text-SUIT_12 font-medium text-white">HOT</span>
     </div>
   );
