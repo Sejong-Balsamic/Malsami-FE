@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/shadcn/drawer";
-import { documentPostApi } from "@/apis/documentPostApi"; // API 호출로 변경
+import { likeApi } from "@/apis/likeApi"; // 통합 좋아요 API 호출로 교체
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { getDateDiff } from "@/global/time";
 import { DocumentDto } from "@/types/api/responses/documentDto";
@@ -43,7 +43,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
         contentType: "DOCUMENT",
         likeType: "LIKE",
       };
-      await documentPostApi.documentBoardLike(command); // API 호출
+      await likeApi.documentBoardLike(command); // 통합 좋아요 API 호출로 교체
     } catch (error) {
       console.error("좋아요 업데이트 실패:", error);
       setIsLiked(false);
@@ -64,7 +64,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
         contentType: "DOCUMENT",
         likeType: "DISLIKE",
       };
-      await documentPostApi.documentBoardLike(command); // API 호출
+      await likeApi.documentBoardLike(command); // 통합 좋아요 API 호출로 교체
     } catch (error) {
       console.error("싫어요 업데이트 실패:", error);
       setIsDisliked(false);

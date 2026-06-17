@@ -23,10 +23,6 @@ export const documentPostApi = {
   getHotDownload: (c: Partial<DocumentCommand>) =>
     postApiRequest<DocumentCommand, DocumentDto>("/api/document/hot-download", c),
 
-  /* 좋아요 / 싫어요 */
-  documentBoardLike: (c: Partial<DocumentCommand>) =>
-    postApiRequest<DocumentCommand, DocumentDto>("/api/document/like", c),
-
   /* 파일 다운로드 */
   downloadDocumentFile: (c: Partial<DocumentCommand>) =>
     postApiRequest<DocumentCommand, any>("/api/document/file/download", c),
