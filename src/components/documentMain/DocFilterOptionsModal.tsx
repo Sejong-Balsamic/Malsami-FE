@@ -3,7 +3,7 @@
 import React, { ReactNode, useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
-import { DocFilterOptions } from "@/types/DocFilterOptions";
+import { DocFilterOptions } from "@/types/docFilterOptions";
 import { DocTypesKeys, DocTypes } from "@/types/docTypes";
 import { SortType, sortTypeLabels } from "@/types/api/constants/sortType";
 

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
-import { DocFilterOptions } from "@/types/DocFilterOptions";
+import { DocFilterOptions } from "@/types/docFilterOptions";
 import { DocTypes, DocTypesKey } from "@/types/docTypes";
 import { sortTypeLabels } from "@/types/api/constants/sortType";
 import PresetTag from "@/components/common/tags/PresetTag";

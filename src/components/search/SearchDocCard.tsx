@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getDateDiff } from "@/global/time";
-import { DocCardProps } from "@/types/docCard.type";
+import { DocCardProps } from "@/types/docCard";
 import SubjectTag from "@/components/common/tags/SubjectTag";
 import { PostTiers, PostTiersKey, PostTiersKeys } from "@/types/postTiers";
 

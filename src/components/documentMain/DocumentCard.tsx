@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { getDateDiff } from "@/global/time";
-import { DocCardProps } from "@/types/docCard.type";
+import { DocCardProps } from "@/types/docCard";
 
 // 태그 번역 정의
 const tagTranslations: { [key: string]: string } = {

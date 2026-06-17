@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import Pagination from "@/components/common/Pagination";
-import { DocFilterOptions } from "@/types/DocFilterOptions";
+import { DocFilterOptions } from "@/types/docFilterOptions";
 import { PostTiers, PostTiersKeys } from "@/types/postTiers";
 import { PostTier } from "@/types/api/constants/postTier";
 import { DocumentCommand } from "@/types/api/requests/documentCommand";

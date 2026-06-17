@@ -5,7 +5,7 @@ import Image from "next/image";
 import facultys from "@/types/facultys";
 import SubmitFormBtn from "@/components/common/SubmitFormBtn";
 import { DocTypesKeys, DocTypes } from "@/types/docTypes";
-import { DocFilterOptions } from "@/types/DocFilterOptions";
+import { DocFilterOptions } from "@/types/docFilterOptions";
 import { SortType, sortTypeLabels } from "@/types/api/constants/sortType";
 
 interface DocRequestFilterOptionsModalProps {
