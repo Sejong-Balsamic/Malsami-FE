@@ -188,6 +188,27 @@ const config: Config = {
           "0%": { transform: "translateY(20px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
+        tossFadeIn: {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        tossPopIn: {
+          "0%": { opacity: "0", transform: "scale(0.94)" },
+          "60%": { opacity: "1", transform: "scale(1.01)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        tossSlideUp: {
+          "0%": { opacity: "0", transform: "translateY(16px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        tossSheetUp: {
+          "0%": { transform: "translateY(100%)" },
+          "100%": { transform: "translateY(0)" },
+        },
+      },
+      transitionTimingFunction: {
+        toss: "cubic-bezier(0.22, 1, 0.36, 1)",
+        "toss-spring": "cubic-bezier(0.34, 1.56, 0.64, 1)",
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -198,6 +219,10 @@ const config: Config = {
         scaleIn: "scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
         popIn: "popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
         slideInUp: "slideInUp 0.5s ease-out",
+        "toss-fade-in": "tossFadeIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "toss-pop-in": "tossPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both",
+        "toss-slide-up": "tossSlideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "toss-sheet-up": "tossSheetUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both",
       },
       animationDelay: {
         "200": "200ms",
