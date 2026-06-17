@@ -1,6 +1,6 @@
 "use client";
 
-import { isApiError } from "@/apis/apiUtils";
+import useApiErrorHandler from "@/global/hook/useApiErrorHandler";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
@@ -20,6 +20,7 @@ import { DocumentDto } from "@/types/api/responses/documentDto";
 export default function Page() {
   const router = useRouter();
   const { showWarningToast } = useCommonToast();
+  const { handleApiError } = useApiErrorHandler();
 
   // URL 파라미터 가져옴
   const params = useParams();
@@ -58,40 +59,9 @@ export default function Page() {
           }
         } catch (innerError) {
           if (isMounted && !error) {
-            if (isApiError(innerError)) {
-              // 인증 관련 에러(401, 403)는 appClient에서 처리하므로 여기서는 router.back()만 실행
-              if (innerError.response?.status === 401 || innerError.response?.status === 403) {
-                if (typeof window !== "undefined" && window.history.length > 1) {
-                  router.back();
-                } else {
-                  router.replace("/");
-                }
-              } else if (innerError.response?.data?.errorCode === "MISSING_REFRESH_TOKEN") {
-                // MISSING_REFRESH_TOKEN 에러도 appClient에서 모달 처리
-                if (typeof window !== "undefined" && window.history.length > 1) {
-                  router.back();
-                } else {
-                  router.replace("/");
-                }
-              } else {
-                // 다른 에러는 기존 로직 유지
-                const message = innerError.response?.data?.errorMessage || "알 수 없는 오류가 발생했습니다.";
-                showWarningToast(message);
-                setError(message);
-                if (typeof window !== "undefined" && window.history.length > 1) {
-                  router.back();
-                } else {
-                  router.replace("/");
-                }
-              }
-            } else {
-              showWarningToast("예상치 못한 오류가 발생했습니다.");
-              if (typeof window !== "undefined" && window.history.length > 1) {
-                router.back();
-              } else {
-                router.replace("/");
-              }
-            }
+            // 공통 에러 핸들러 호출 (뒤로가기 이동 옵션 활성화)
+            const message = handleApiError(innerError, "자료 상세 정보를 가져오는데 실패했습니다.", true);
+            setError(message);
           }
         } finally {
           if (isMounted) {
