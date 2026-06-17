@@ -5,7 +5,7 @@ import { showModal } from "@/global/store/modalSlice";
 import { AuthDto } from "@/types/api/responses/authDto";
 
 export const apiClient = axios.create({
-  baseURL: "https://api.sejong-malsami.co.kr",
+  baseURL: "https://api.sejong-malsami.suhsaechan.kr",
   withCredentials: true,
 });
 
