@@ -53,6 +53,9 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess, onH
       const getUserInfo = await authApi.signIn(command);
 
       if (getUserInfo.accessToken && getUserInfo.studentName && getUserInfo.memberId) {
+        // 세션스토리지에 액세스 토큰 명시적 저장 (authApi 이관에 따른 조치)
+        sessionStorage.setItem("accessToken", getUserInfo.accessToken);
+
         // 로그인 성공 시에만 로딩 오버레이 표시
         onShowLoading?.();
 

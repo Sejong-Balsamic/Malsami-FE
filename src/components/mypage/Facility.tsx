@@ -25,6 +25,7 @@ function Facility() {
     try {
       await authApi.logout({ fcmToken: fcmToken || "" });
       sessionStorage.removeItem("memberId");
+      sessionStorage.removeItem("accessToken"); // 명시적 토큰 정리
       dispatch(logoutAction());
       showConfirmToast("로그아웃 되었습니다.");
       setIsModalOpen(false);

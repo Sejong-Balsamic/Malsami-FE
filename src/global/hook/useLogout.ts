@@ -9,6 +9,7 @@ export default function useLogout() {
   const handleLogout = async () => {
     try {
       await authApi.logout({}); // 기존 로그아웃 함수 호출
+      sessionStorage.removeItem("accessToken"); // 명시적 토큰 정리
       showConfirmToast("로그아웃 되었습니다.");
       setTimeout(() => {
         window.location.href = "/";
