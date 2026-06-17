@@ -6,6 +6,7 @@ import { getFcmToken } from "@/global/firebaseUtil"; // FCM 토큰 발급 함수
 import sendFcmTokenToServer from "@/global/sendFcmToken"; // FCM 토큰 서버 전송 함수
 import { RootState, AppDispatch } from "@/global/store"; // Redux Store 타입
 import { setFcmToken, setIsFcmTokenSentToServer } from "@/global/store/fcmSlice"; // Redux 액션
+import useAuthCheck from "@/global/hook/useAuthCheck";
 
 export default function FcmInitializer() {
   // Redux의 dispatch를 사용하여 상태 변경
@@ -13,6 +14,8 @@ export default function FcmInitializer() {
 
   // Redux Store에서 fcmToken과 전송 여부 상태를 가져옴
   const { fcmToken, isFcmTokenSentToServer } = useSelector((state: RootState) => state.fcm);
+
+  const { isLoggedIn } = useAuthCheck();
 
   useEffect(() => {
     async function fetchAndSendToken() {
@@ -22,10 +25,8 @@ export default function FcmInitializer() {
         return;
       }
 
-      // 1. 로그인 상태 확인 (세션 스토리지에서 accessToken 확인)
-      const accessToken = sessionStorage.getItem("accessToken");
-
-      if (!accessToken) {
+      // 1. 로그인 상태 확인 (useAuthCheck 훅으로 추상화)
+      if (!isLoggedIn) {
         console.log("로그인하지 않은 상태입니다. FCM 토큰 검색과 전송을 생략합니다.");
         return;
       }
