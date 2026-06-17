@@ -1,6 +1,6 @@
 "use client";
 
-import axios from "axios";
+import { isApiError } from "@/apis/apiUtils";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
@@ -58,7 +58,7 @@ export default function Page() {
           }
         } catch (innerError) {
           if (isMounted && !error) {
-            if (axios.isAxiosError(innerError)) {
+            if (isApiError(innerError)) {
               // 인증 관련 에러(401, 403)는 appClient에서 처리하므로 여기서는 router.back()만 실행
               if (innerError.response?.status === 401 || innerError.response?.status === 403) {
                 if (typeof window !== "undefined" && window.history.length > 1) {

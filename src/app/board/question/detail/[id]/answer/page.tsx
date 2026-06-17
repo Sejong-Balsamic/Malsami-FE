@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import axios from "axios";
+import { isApiError } from "@/apis/apiUtils";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { answerPostApi } from "@/apis/answerPostApi";
@@ -155,7 +155,7 @@ export default function AnswerPostPage() {
         router.push(`/board/question/detail/${questionPostId}`); // 작성 완료 후 해당 질문 상세 페이지로 이동
       } catch (error) {
         // AxiosError 확인
-        if (axios.isAxiosError(error)) {
+        if (isApiError(error)) {
           const errorMessage = error.response?.data?.errorMessage || "오류가 발생했습니다.";
           showWarningToast(errorMessage);
         } else {
