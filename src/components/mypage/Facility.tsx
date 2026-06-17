@@ -5,7 +5,7 @@ import WarningAlertModal from "@/components/common/modal/WarningAlertModal";
 import useLogout from "@/global/hook/useLogout";
 
 const SECTION_BORDER = "border-b border-ui-divider";
-const ROW_PADDING = "p-[24px]";
+const ROW_PADDING = "p-6"; // p-[24px] ➔ p-6 (24px)
 const ROW_GAP = "gap-6";
 const TITLE_FONT = "text-SUIT_16 font-medium";
 
@@ -19,44 +19,38 @@ function Facility() {
     await handleLogout();
   };
 
+  const handleLeave = () => {
+    router.push("/mypage/withdraw");
+  };
+
   return (
-    <div className="flex flex-col">
+    <div className="relative mx-auto w-full max-w-[640px]">
       <div className={`grid w-full grid-cols-1 ${ROW_GAP} ${SECTION_BORDER} ${ROW_PADDING}`}>
-        {/* 로그아웃 */}
-        <button onClick={() => setIsModalOpen(true)} type="button" className="flex w-full items-center justify-between">
-          <span className={TITLE_FONT}>로그아웃</span>
-          <Image src="/icons/Move.svg" alt="move" width={7} height={14} className="h-[14px] w-[7px]" />
-        </button>
-        {/* 회원 탈퇴 */}
-        <button
-          onClick={() => router.push("/mypage/withdraw")}
-          type="button"
-          className="flex w-full items-center justify-between"
-        >
+        <button onClick={handleLeave} type="button" className="flex w-full items-center justify-between">
           <span className={TITLE_FONT}>회원탈퇴</span>
-          <Image src="/icons/Move.svg" alt="move" width={7} height={14} className="h-[14px] w-[7px]" />
+          <Image src="/icons/Move.svg" alt="move" width={7} height={14} className="w-1.75 h-3.5" />
         </button>
         <button
           onClick={() => router.push("/mypage/policy")}
           type="button"
           className="flex w-full items-center justify-between"
         >
-          <span className="font-pretendard-semibold text-[18px]">개인정보 처리방침</span>
-          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} className="h-[14px] w-[7px]" />
+          <span className="font-pretendard-semibold text-SUIT_18">개인정보 처리방침</span>
+          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} className="w-1.75 h-3.5" />
         </button>
       </div>
       <div className={`grid w-full grid-cols-1 ${ROW_GAP} ${SECTION_BORDER} ${ROW_PADDING}`}>
         <button onClick={() => router.push("/help")} type="button" className="flex w-full items-center justify-between">
           <span className={TITLE_FONT}>세종말싸미 이용도우미</span>
-          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} className="h-[14px] w-[7px]" />
+          <Image src="/icons/mypage/Move_gray.svg" alt="Move" width={7} height={14} className="w-1.75 h-3.5" />
         </button>
         <button
           onClick={() => router.push("/mypage/rule")}
           type="button"
           className="flex w-full items-center justify-between"
         >
-          <span className="font-pretendard-semibold text-[18px]">이용규칙</span>
-          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} className="h-[14px] w-[7px]" />
+          <span className="font-pretendard-semibold text-SUIT_18">이용규칙</span>
+          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} className="w-1.75 h-3.5" />
         </button>
       </div>
       <div className={`grid w-full grid-cols-1 ${SECTION_BORDER} ${ROW_PADDING}`}>
@@ -65,8 +59,8 @@ function Facility() {
           type="button"
           className="flex w-full items-center justify-between"
         >
-          <span className="font-pretendard-semibold text-[18px]">공지사항</span>
-          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} className="h-[14px] w-[7px]" />
+          <span className="font-pretendard-semibold text-SUIT_18">공지사항</span>
+          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} className="w-1.75 h-3.5" />
         </button>
       </div>
 

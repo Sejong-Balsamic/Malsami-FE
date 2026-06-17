@@ -43,7 +43,7 @@ function TierImage({ memberInfo }: { memberInfo: MemberDto | null }) {
       {tierImage && (
         <Image src={tierImage} alt={altText} width={150} height={150} className="absolute top-[-130px] z-0" />
       )}
-      <div className="absolute h-full w-full flex-col gap-7 rounded-[15px] bg-white px-[20px] py-[30px]" />
+      <div className="py-7.5 absolute h-full w-full flex-col gap-7 rounded-2xl bg-white px-5" />
     </div>
   );
 }
