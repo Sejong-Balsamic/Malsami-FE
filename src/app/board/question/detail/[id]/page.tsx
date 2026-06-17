@@ -87,21 +87,18 @@ export default function Page() {
   // 로딩 상태 처리
   if (isloading) {
     return (
-      <div className="min-h-screen overflow-x-hidden bg-white">
+      <div className="min-h-screen overflow-x-hidden bg-gray-100">
         <ScrollToTopOnLoad />
 
-        {/* 고정 헤더 */}
-        <div className="fixed left-0 right-0 top-0 z-50 bg-white">
-          <div className="relative mx-auto w-full max-w-[640px]">
-            <CommonHeader title="내 전공 질문" rightType={RIGHT_ITEM.NONE} />
-          </div>
+        {/* 고정 헤더 — PC에서도 컨테이너 폭 안에서만 흰 배경 */}
+        <div className="fixed left-1/2 top-0 z-50 w-full max-w-[640px] -translate-x-1/2 bg-white">
+          <CommonHeader title="질문 상세" rightType={RIGHT_ITEM.NONE} />
         </div>
 
-        {/* 헤더 높이만큼 공백 */}
-        <div className="h-16 w-full" />
-
-        {/* 스켈레톤 UI */}
-        <div className="relative mx-auto w-full max-w-[640px] px-5">
+        {/* 본문 컨테이너 — 컨테이너 영역만 흰 배경, 바깥은 회색 */}
+        <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white px-5">
+          {/* 헤더 높이만큼 공백 */}
+          <div className="h-16 w-full" />
           <QuestionDetailSkeleton />
         </div>
       </div>
@@ -116,27 +113,24 @@ export default function Page() {
     false;
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white">
+    <div className="min-h-screen overflow-x-hidden bg-gray-100">
       <ScrollToTopOnLoad />
 
-      {/* 고정 헤더 */}
-      <div className="fixed left-0 right-0 top-0 z-50 bg-white">
-        <div className="relative mx-auto w-full max-w-[640px]">
-          <CommonHeader
-            title="내 전공 질문"
-            rightType={RIGHT_ITEM.MENU}
-            onRightClick={toggleMenu}
-            subtitle={questionDetails?.questionPost?.member?.major || "내 전공"}
-            rightButtonRef={menuButtonRef}
-          />
-        </div>
+      {/* 고정 헤더 — PC에서도 컨테이너 폭 안에서만 흰 배경 */}
+      <div className="fixed left-1/2 top-0 z-50 w-full max-w-[640px] -translate-x-1/2 bg-white">
+        <CommonHeader
+          title={questionDetails?.questionPost?.subject || "질문 상세"}
+          rightType={RIGHT_ITEM.MENU}
+          onRightClick={toggleMenu}
+          subtitle={questionDetails?.questionPost?.member?.major || "전공 비공개"}
+          rightButtonRef={menuButtonRef}
+        />
       </div>
 
-      {/* 헤더 높이만큼 공백 */}
-      <div className="h-16 w-full" />
-
-      {/* 본문 영역 */}
-      <div className="relative mx-auto w-full max-w-[640px] px-5 pb-20">
+      {/* 본문 컨테이너 — 컨테이너 영역만 흰 배경, 바깥은 회색 */}
+      <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white px-5 pb-20">
+        {/* 헤더 높이만큼 공백 */}
+        <div className="h-16 w-full" />
         {questionDetails && (
           <>
             <QuestionDetail
