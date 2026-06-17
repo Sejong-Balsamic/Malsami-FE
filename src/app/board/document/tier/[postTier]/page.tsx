@@ -52,7 +52,7 @@ function AccessRestrictedModal({ postTier, closeModal }: { postTier: PostTier; c
             height={170}
             className="mb-4 rounded-full"
           />
-          <h1 className="font-pretendard-bold text-lg">게시판 입장 제한</h1>
+          <h1 className="font-suit-bold text-lg">게시판 입장 제한</h1>
           <p className="mt-2 text-sm text-gray-600">
             해당 게시판은 게시판 등급이 <span className="font-bold">{TIER_DISPLAY_NAME[tierUpper]} 이상</span>일
             경우에만 입장이 가능합니다

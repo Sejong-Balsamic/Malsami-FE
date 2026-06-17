@@ -49,7 +49,7 @@ function SubjectSearchInput({ value, onChange }: SubjectSearchInputProps) {
           value={value}
           onChange={handleValueChange}
           onKeyDown={handleKeyDown}
-          className="font-pretendard-medium ml-3 w-full bg-transparent text-sm text-black placeholder-gray-400 outline-none"
+          className="font-suit-medium ml-3 w-full bg-transparent text-sm text-black placeholder-gray-400 outline-none"
         />
       </div>
 

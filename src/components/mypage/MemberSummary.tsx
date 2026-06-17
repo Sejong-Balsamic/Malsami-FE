@@ -8,15 +8,11 @@ function MemberSummary({ memberInfo }: { memberInfo: MemberDto | null }) {
         <div className="flex w-full pb-2.5">
           <div className="flex flex-col items-end">
             <div className="flex items-end gap-1.5">
-              <span className="font-pretendard-semibold text-SUIT_18">
-                {memberInfo?.member?.studentName || "사용자"}
-              </span>
-              <span className="font-pretendard-medium text-SUIT_14">
-                @{memberInfo?.member?.uuidNickname || "아이디"}
-              </span>
+              <span className="font-suit-semibold text-SUIT_18">{memberInfo?.member?.studentName || "사용자"}</span>
+              <span className="font-suit-medium text-SUIT_14">@{memberInfo?.member?.uuidNickname || "아이디"}</span>
             </div>
             <div>
-              <span className="font-pretendard-medium text-SUIT_14 text-ui-body-soft">
+              <span className="font-suit-medium text-SUIT_14 text-ui-body-soft">
                 {memberInfo?.member?.studentId} | {memberInfo?.member?.major}
               </span>
             </div>
@@ -28,7 +24,7 @@ function MemberSummary({ memberInfo }: { memberInfo: MemberDto | null }) {
             className="flex h-7 items-center justify-between gap-2 rounded-full border-2 border-mypage-teal-light bg-white px-3"
           >
             <Image src="/icons/Yeopjeon.svg" alt="Yeopjeon" width={16} height={16} className="h-4 w-4" />
-            <span className="font-pretendard-semibold text-SUIT_14 text-legacy-teal">
+            <span className="font-suit-semibold text-SUIT_14 text-legacy-teal">
               {memberInfo?.yeopjeon?.yeopjeon || "0"}
             </span>
             <Image src="/icons/Move.svg" alt="Move" width={6} height={12} className="h-3 w-1.5" />

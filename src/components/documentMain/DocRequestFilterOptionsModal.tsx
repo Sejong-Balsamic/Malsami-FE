@@ -110,7 +110,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
               ref={contentRef}
             >
               <>
-                <h1 className="font-pretendard-bold mb-[20px] text-xl">정렬</h1>
+                <h1 className="font-suit-bold mb-[20px] text-xl">정렬</h1>
                 <div className="mb-[30px] flex flex-col">
                   {Object.keys(sortTypeLabels).map(docSortType => (
                     <li key={docSortType} className="flex rounded-xl py-[10px]">
@@ -120,13 +120,11 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                         onKeyDown={e => e.key === "Enter" && setSortType(docSortType as SortType)}
                       >
                         {sortType === docSortType ? (
-                          <span className="font-pretendard-bold text-custom-blue-500 text-base">
+                          <span className="font-suit-bold text-custom-blue-500 text-base">
                             {sortTypeLabels[docSortType as SortType]}
                           </span>
                         ) : (
-                          <span className="font-pretendard-medium text-base">
-                            {sortTypeLabels[docSortType as SortType]}
-                          </span>
+                          <span className="font-suit-medium text-base">{sortTypeLabels[docSortType as SortType]}</span>
                         )}
                         {sortType === docSortType ? (
                           <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
@@ -138,8 +136,8 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                   ))}
                 </div>
 
-                <h1 className="font-pretendard-bold mb-[20px] text-xl">
-                  태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-ui-muted">최대 2개</span>
+                <h1 className="font-suit-bold mb-[20px] text-xl">
+                  태그 선택 <span className="font-suit-medium ml-1.5 text-sm text-ui-muted">최대 2개</span>
                 </h1>
                 <div className="mb-[40px] flex flex-wrap justify-between gap-x-[7px] gap-y-[20px]">
                   {DocTypesKeys.map(docTypeKey => (
@@ -153,7 +151,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                               : [...prevTags, docTypeKey].slice(0, 2), // 태그 선택 2개만 가능하게
                         )
                       }
-                      className={`font-pretendard-bold border-custom-blue-500 rounded-[40px] border-2 px-3 py-1 text-xs ${
+                      className={`font-suit-bold border-custom-blue-500 rounded-[40px] border-2 px-3 py-1 text-xs ${
                         docTypes.includes(docTypeKey) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
                       }`}
                     >
@@ -162,7 +160,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                   ))}
                 </div>
 
-                <h1 className="font-pretendard-bold mb-[20px] text-xl">단과대 선택</h1>
+                <h1 className="font-suit-bold mb-[20px] text-xl">단과대 선택</h1>
                 <div className="mb-[30px] flex flex-col">
                   {/* 새찬님이 올려준 코드 보면서 수정해야함. 전역으로 관리하는 facultys로 수정 필요 */}
                   {facultys.map(option => (
@@ -173,9 +171,9 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                         onKeyDown={e => e.key === "Enter" && setFaculty(option)}
                       >
                         {faculty === option ? (
-                          <span className="font-pretendard-bold text-custom-blue-500 text-base">{option}</span>
+                          <span className="font-suit-bold text-custom-blue-500 text-base">{option}</span>
                         ) : (
-                          <span className="font-pretendard-medium text-base">{option}</span>
+                          <span className="font-suit-medium text-base">{option}</span>
                         )}
                         {faculty === option ? (
                           <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
@@ -190,7 +188,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                   onClick={() => {
                     resetFilters(); // 필터 초기화
                   }}
-                  className="font-pretendard-medium flex flex-row gap-x-1 text-sm text-ui-muted"
+                  className="font-suit-medium flex flex-row gap-x-1 text-sm text-ui-muted"
                 >
                   <Image src="/icons/ResetIcon.svg" alt="Reset" width={14} height={17} />
                   <span>초기화</span>

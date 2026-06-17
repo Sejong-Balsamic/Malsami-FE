@@ -96,15 +96,15 @@ export default function Page() {
               <p>차피 안 보이는 부분</p>
             </VisuallyHidden>
             <div className="flex flex-col pb-8">
-              <Button variant="ghost" className="font-pretendard-semibold gap-2.5 text-SUIT_16 text-orange-500">
+              <Button variant="ghost" className="font-suit-semibold gap-2.5 text-SUIT_16 text-orange-500">
                 <Image src="/icons/Share.svg" alt="option" width={12} height={15} />
                 공유하기
               </Button>
-              <Button variant="ghost" className="font-pretendard-semibold gap-2.5 text-SUIT_16 text-orange-500">
+              <Button variant="ghost" className="font-suit-semibold gap-2.5 text-SUIT_16 text-orange-500">
                 <Image src="/icons/Block.svg" alt="option" width={12} height={12} />
                 차단하기
               </Button>
-              <Button variant="ghost" className="font-pretendard-semibold gap-2.5 text-SUIT_16 text-orange-500">
+              <Button variant="ghost" className="font-suit-semibold gap-2.5 text-SUIT_16 text-orange-500">
                 <Image src="/icons/Report.svg" alt="option" width={12} height={12} />
                 신고하기
               </Button>

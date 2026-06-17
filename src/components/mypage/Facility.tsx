@@ -35,7 +35,7 @@ function Facility() {
           type="button"
           className="flex w-full items-center justify-between"
         >
-          <span className="font-pretendard-semibold text-SUIT_18">개인정보 처리방침</span>
+          <span className="font-suit-semibold text-SUIT_18">개인정보 처리방침</span>
           <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} />
         </button>
       </div>
@@ -49,7 +49,7 @@ function Facility() {
           type="button"
           className="flex w-full items-center justify-between"
         >
-          <span className="font-pretendard-semibold text-SUIT_18">이용규칙</span>
+          <span className="font-suit-semibold text-SUIT_18">이용규칙</span>
           <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} />
         </button>
       </div>
@@ -59,7 +59,7 @@ function Facility() {
           type="button"
           className="flex w-full items-center justify-between"
         >
-          <span className="font-pretendard-semibold text-SUIT_18">공지사항</span>
+          <span className="font-suit-semibold text-SUIT_18">공지사항</span>
           <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} />
         </button>
       </div>

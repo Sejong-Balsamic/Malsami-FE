@@ -44,8 +44,8 @@ function ChaetaekCheckModal({ isOpen, onClose, answerPostId, author }: ModalProp
         }}
       >
         <div className="flex h-48 w-full flex-col items-center justify-center rounded-2xl bg-white/50 p-5">
-          <h1 className="font-pretendard-bold pb-2.5 text-SUIT_18">답변 채택</h1>
-          <div className="font-pretendard-medium w-full border-t-2 border-ui-divider-light pb-5 pt-2.5 text-center text-SUIT_16">
+          <h1 className="font-suit-bold pb-2.5 text-SUIT_18">답변 채택</h1>
+          <div className="font-suit-medium w-full border-t-2 border-ui-divider-light pb-5 pt-2.5 text-center text-SUIT_16">
             채택하시겠습니까?
             <br />
             채택한 경우 취소가 불가능합니다.
@@ -54,14 +54,14 @@ function ChaetaekCheckModal({ isOpen, onClose, answerPostId, author }: ModalProp
             <button
               type="button"
               onClick={onClose}
-              className="font-pretendard-semibold h-8 flex-1 rounded-lg border border-legacy-accept-blue bg-white text-SUIT_14 text-legacy-accept-blue"
+              className="font-suit-semibold h-8 flex-1 rounded-lg border border-legacy-accept-blue bg-white text-SUIT_14 text-legacy-accept-blue"
             >
               취소
             </button>
             <button
               type="submit"
               onClick={handleConfirm}
-              className="font-pretendard-semibold h-8 flex-1 rounded-lg bg-legacy-accept-blue text-SUIT_14 text-white"
+              className="font-suit-semibold h-8 flex-1 rounded-lg bg-legacy-accept-blue text-SUIT_14 text-white"
             >
               확인
             </button>

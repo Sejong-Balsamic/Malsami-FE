@@ -34,7 +34,7 @@ function Page() {
           />
         </button>
 
-        <span className="font-pretendard-bold text-xl">개발 중 ~^^</span>
+        <span className="font-suit-bold text-xl">개발 중 ~^^</span>
       </div>
     </div>
   );

@@ -18,7 +18,7 @@ function Page() {
         />
         <div className="relative z-20 flex h-[calc(100vh-64px)] flex-col items-center justify-center gap-[30px]">
           <Image src="/icons/CheonminIcon.svg" alt="icon" width={18} height={18} className="h-[200px] w-[200px]" />
-          <span className="font-pretendard-bold text-xl">개발 중 ~^^</span>
+          <span className="font-suit-bold text-xl">개발 중 ~^^</span>
         </div>
       </div>
     </div>

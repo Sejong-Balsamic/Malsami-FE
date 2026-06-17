@@ -87,7 +87,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
       {/* 교과목명 */}
       <div className="mt-8 h-6 w-full max-w-[640px]">
         <div className="flex items-center">
-          <div className="font-pretendard-bold flex h-6 items-center justify-center rounded-xl bg-legacy-teal px-3.5 py-1.5 text-SUIT_12 text-white">
+          <div className="font-suit-bold flex h-6 items-center justify-center rounded-xl bg-legacy-teal px-3.5 py-1.5 text-SUIT_12 text-white">
             {documentDto.documentPost?.subject || "과목명 없음"}
           </div>
         </div>
@@ -96,8 +96,8 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
       {/* 글 정보 */}
       <div className="flex h-auto w-full max-w-[640px] flex-col">
         <div className="mt-5">
-          <span className="font-pretendard-bold text-SUIT_18">{documentDto.documentPost?.title || "제목 없음"}</span>
-          <div className="font-pretendard-medium mt-2.5 text-SUIT_14 leading-normal text-ui-body-soft">
+          <span className="font-suit-bold text-SUIT_18">{documentDto.documentPost?.title || "제목 없음"}</span>
+          <div className="font-suit-medium mt-2.5 text-SUIT_14 leading-normal text-ui-body-soft">
             {documentDto.documentPost?.content || "내용 없음"}
           </div>
         </div>
@@ -110,7 +110,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
                 key={index}
                 className="flex h-6 w-auto items-center justify-center rounded-full border border-ui-divider-light px-2.5"
               >
-                <span className="font-pretendard-medium text-SUIT_14 text-ui-count">{getKoreanTag(tag)}</span>
+                <span className="font-suit-medium text-SUIT_14 text-ui-count">{getKoreanTag(tag)}</span>
               </div>
             )) || <span>태그 없음</span>}
           </div>
@@ -119,15 +119,15 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
         <div className="flex h-[72px] w-full max-w-[640px] flex-col">
           <div className="mt-5 text-right">
             <div>
-              <span className="font-pretendard-medium mb-1 text-SUIT_12">
+              <span className="font-suit-medium mb-1 text-SUIT_12">
                 @{documentDto.documentPost?.member?.uuidNickname || "익명"}
               </span>
             </div>
             <div>
-              <span className="font-pretendard-medium mr-1 text-SUIT_12 text-ui-muted">
+              <span className="font-suit-medium mr-1 text-SUIT_12 text-ui-muted">
                 {getDateDiff(documentDto.documentPost?.createdDate || "") || "날짜 없음"}
               </span>
-              <span className="font-pretendard-medium mr-1 text-SUIT_12 text-ui-muted">
+              <span className="font-suit-medium mr-1 text-SUIT_12 text-ui-muted">
                 • 조회수 {documentDto.documentPost?.viewCount || 0}
               </span>
             </div>
@@ -149,9 +149,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
                   width={16}
                   height={16}
                 />
-                <span
-                  className={`font-pretendard-semibold text-SUIT_12 ${isLiked ? "text-legacy-teal" : "text-ui-count"}`}
-                >
+                <span className={`font-suit-semibold text-SUIT_12 ${isLiked ? "text-legacy-teal" : "text-ui-count"}`}>
                   {currentLikeCount}
                 </span>
               </div>
@@ -169,7 +167,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
                   height={16}
                 />
                 <span
-                  className={`font-pretendard-semibold text-SUIT_12 ${isDisliked ? "text-legacy-teal" : "text-ui-count"}`}
+                  className={`font-suit-semibold text-SUIT_12 ${isDisliked ? "text-legacy-teal" : "text-ui-count"}`}
                 >
                   {currentDislikeCount}
                 </span>
@@ -180,12 +178,12 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
               <DrawerTrigger asChild>
                 <div className="flex h-8 w-[70px] cursor-pointer items-center justify-center gap-1 rounded-full border-2 border-ui-divider-light">
                   <Image src="/icons/Comment_UnClicked.svg" alt="Comment_UnClicked" width={16} height={16} />
-                  <span className="font-pretendard-semibold text-SUIT_12 text-ui-count">{commentCount}</span>
+                  <span className="font-suit-semibold text-SUIT_12 text-ui-count">{commentCount}</span>
                 </div>
               </DrawerTrigger>
               <DrawerContent className="px-5 pb-5">
                 <DrawerHeader className="px-0">
-                  <DrawerTitle className="font-pretendard-bold flex text-SUIT_14 text-ui-body">
+                  <DrawerTitle className="font-suit-bold flex text-SUIT_14 text-ui-body">
                     댓글 {commentCount}
                   </DrawerTitle>
                 </DrawerHeader>

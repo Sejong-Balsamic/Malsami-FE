@@ -7,11 +7,11 @@ export default function SubjectSearchInputComponent({ value, onClick }: SubjectS
   return (
     <button className="mb-[26px] flex flex-col items-start" type="button" onClick={onClick}>
       <div className="mb-3">
-        <span className="font-pretendard-semibold mr-1.5 text-lg">교과목명 검색 {">"}</span>
-        <span className="font-pretendard-medium text-custom-blue-500 text-lg">(필수)</span>
+        <span className="font-suit-semibold mr-1.5 text-lg">교과목명 검색 {">"}</span>
+        <span className="font-suit-medium text-custom-blue-500 text-lg">(필수)</span>
       </div>
       {value && (
-        <div className="font-pretendard-bold bg-custom-blue-500 rounded-full px-3 py-1 text-xs text-white">{value}</div>
+        <div className="font-suit-bold bg-custom-blue-500 rounded-full px-3 py-1 text-xs text-white">{value}</div>
       )}
     </button>
   );

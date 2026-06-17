@@ -101,7 +101,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
               ref={contentRef}
             >
               <>
-                <h1 className="font-pretendard-bold mb-[20px] text-xl">정렬</h1>
+                <h1 className="font-suit-bold mb-[20px] text-xl">정렬</h1>
                 <div className="mb-[30px] flex flex-col">
                   {SORT_TYPE_KEYS.map(docSortType => (
                     <li key={docSortType} className="flex rounded-xl py-[10px]">
@@ -111,11 +111,11 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                         onKeyDown={e => e.key === "Enter" && setSortType(docSortType)}
                       >
                         {sortType === docSortType ? (
-                          <span className="font-pretendard-bold text-custom-blue-500 text-base">
+                          <span className="font-suit-bold text-custom-blue-500 text-base">
                             {sortTypeLabels[docSortType]}
                           </span>
                         ) : (
-                          <span className="font-pretendard-medium text-base">{sortTypeLabels[docSortType]}</span>
+                          <span className="font-suit-medium text-base">{sortTypeLabels[docSortType]}</span>
                         )}
                         {sortType === docSortType ? (
                           <Image src="/icons/CheckedIcon.svg" alt="CheckedIcon" width={14} height={14} />
@@ -127,8 +127,8 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                   ))}
                 </div>
 
-                <h1 className="font-pretendard-bold mb-[20px] text-xl">
-                  태그 선택 <span className="font-pretendard-medium ml-1.5 text-sm text-ui-muted">최대 2개</span>
+                <h1 className="font-suit-bold mb-[20px] text-xl">
+                  태그 선택 <span className="font-suit-medium ml-1.5 text-sm text-ui-muted">최대 2개</span>
                 </h1>
                 <div className="mb-[40px] flex flex-wrap justify-between gap-x-[7px] gap-y-[20px]">
                   {DocTypesKeys.map(docTypeKey => (
@@ -141,7 +141,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                             : [...prevTags, docTypeKey].slice(0, 2),
                         )
                       }
-                      className={`font-pretendard-bold border-custom-blue-500 rounded-[40px] border-2 px-3 py-1 text-xs ${
+                      className={`font-suit-bold border-custom-blue-500 rounded-[40px] border-2 px-3 py-1 text-xs ${
                         docTypes.includes(docTypeKey) ? "bg-custom-blue-500 text-white" : "text-custom-blue-500"
                       }`}
                     >
@@ -149,10 +149,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                     </button>
                   ))}
                 </div>
-                <button
-                  onClick={resetFilters}
-                  className="font-pretendard-medium flex flex-row gap-x-1 text-sm text-ui-muted"
-                >
+                <button onClick={resetFilters} className="font-suit-medium flex flex-row gap-x-1 text-sm text-ui-muted">
                   <Image src="/icons/ResetIcon.svg" alt="Reset" width={14} height={17} />
                   <span>초기화</span>
                 </button>

@@ -31,16 +31,16 @@ function CommentList({ comments }: CommentListProps) {
   return (
     <div>
       {comments.length === 0 ? (
-        <p className="font-pretendard-medium text-SUIT_14 text-ui-body-soft">댓글이 없습니다.</p>
+        <p className="font-suit-medium text-SUIT_14 text-ui-body-soft">댓글이 없습니다.</p>
       ) : (
         comments.map(comment => (
           <div key={comment.commentId} className="w-full rounded-lg bg-white p-3.5">
             <div className="mb-1 flex items-start justify-between">
               <div className="flex-1">
                 {!comment.isPrivate ? (
-                  <span className="font-pretendard-bold text-SUIT_14">@{comment.member.uuidNickname}</span>
+                  <span className="font-suit-bold text-SUIT_14">@{comment.member.uuidNickname}</span>
                 ) : (
-                  <span className="font-pretendard-medium text-SUIT_12 text-ui-body-soft">비공개</span>
+                  <span className="font-suit-medium text-SUIT_12 text-ui-body-soft">비공개</span>
                 )}
               </div>
               {/* 메뉴 버튼 */}
@@ -55,10 +55,8 @@ function CommentList({ comments }: CommentListProps) {
                 <Image src="/icons/three-dots-vertical.svg" alt="멤뉴" width={20} height={20} />
               </button>
             </div>
-            <p className="font-pretendard-medium min-h-[20px] w-full text-SUIT_14 text-ui-body-soft">
-              {comment.content}
-            </p>
-            <div className="font-pretendard-medium mb-2.5 text-SUIT_12 text-ui-muted">
+            <p className="font-suit-medium min-h-[20px] w-full text-SUIT_14 text-ui-body-soft">{comment.content}</p>
+            <div className="font-suit-medium mb-2.5 text-SUIT_12 text-ui-muted">
               {new Date(comment.createdDate).toLocaleDateString()}
             </div>
           </div>

@@ -9,7 +9,7 @@ export default function AdjustButton({ amount, onClick, disabled }: AdjustButton
     <button
       type="button"
       onClick={() => onClick(amount)}
-      className="font-pretendard-bold w-20 rounded-full bg-gray-200 px-2 py-1 text-base"
+      className="font-suit-bold w-20 rounded-full bg-gray-200 px-2 py-1 text-base"
       disabled={disabled}
     >
       {amount > 0 ? `+ ${amount}` : `- ${Math.abs(amount)}`}
