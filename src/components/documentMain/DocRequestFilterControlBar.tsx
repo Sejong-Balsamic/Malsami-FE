@@ -70,7 +70,7 @@ function DocRequestFilterControlBar({ filterOptions, onFilterChange }: RequestFi
           width={16}
           height={16}
           onClick={showModal}
-          style={{ cursor: "pointer" }}
+          className="cursor-pointer"
         />
       </div>
       {isModalOpen && (
