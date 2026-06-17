@@ -12,6 +12,7 @@ export interface DocumentCommand {
   content?: string;
   subject?: string;
   faculty?: string;
+  query?: string;
   documentTypes?: DocumentType[];
   attachmentFiles?: File[];
   attendedYear?: number;

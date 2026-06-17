@@ -7,6 +7,7 @@ import Header from "@/components/header/Header";
 import DocumentCardList from "@/components/documentMain/DocumentCardList";
 import CommonPagination from "@/components/common/CommonPagination";
 import DocumentFilteringBottomSheet from "@/components/documentMain/DocumentFilteringBottomSheet";
+import BoardSearchBar from "@/components/common/BoardSearchBar";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
@@ -24,6 +25,7 @@ export default function MyFacultyDocumentPage() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [memberFaculty, setMemberFaculty] = useState<string>("");
+  const [query, setQuery] = useState<string>("");
 
   // 현재 적용된 필터링 상태
   const [currentFiltering, setCurrentFiltering] = useState<Partial<DocumentCommand>>({
@@ -58,6 +60,7 @@ export default function MyFacultyDocumentPage() {
           sortType: filtering.sortType || "LATEST",
           documentTypes: filtering.documentTypes,
           faculty: memberFaculty, // 사용자 전공으로 필터링
+          query, // 검색어
         });
 
         if (response && response.documentPostsPage) {
@@ -71,8 +74,14 @@ export default function MyFacultyDocumentPage() {
         setIsLoading(false);
       }
     },
-    [currentFiltering, memberFaculty],
+    [currentFiltering, memberFaculty, query],
   );
+
+  // 검색 실행 핸들러
+  const handleSearch = async () => {
+    setCurrentPage(0);
+    if (memberFaculty) await fetchFacultyDocuments(0);
+  };
 
   // 데이터 로드 (memberFaculty가 설정된 후에만)
   useEffect(() => {
@@ -127,8 +136,11 @@ export default function MyFacultyDocumentPage() {
 
       {/* 메인 콘텐츠 */}
       <div className="px-5">
-        {/* 24px 공백 */}
-        <div className="h-6" />
+        {/* 16px 공백 */}
+        <div className="h-4" />
+
+        {/* 검색바 */}
+        <BoardSearchBar value={query} onChange={setQuery} onSearch={handleSearch} theme="document" />
 
         {/* 자료 리스트 */}
         <div className="w-full bg-white">
