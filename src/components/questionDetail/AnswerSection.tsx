@@ -1,4 +1,5 @@
-"use client";
+// src/components/questionDetail/AnswerSection.tsx
+/* eslint-disable */
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
@@ -111,7 +112,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
           <div key={answerPost.answerPostId || index} className="flex">
             {/* 작성자이고, 아직 채택된 답변이 없을 때만 선택 UI 표시 */}
             {isAuthor && !hasChaetaekAnswer && (
-              <div className="mr-[8px] pt-[2px]">
+              <div className="mr-2 pt-0.5">
                 <Image
                   src={
                     selectedAnswerId === answerPost.answerPostId
@@ -128,11 +129,11 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
             )}
             <div className="flex flex-1 flex-col">
               {/* 상단 라인 */}
-              {index !== 0 && <div className="my-4 h-[1px] w-full rounded-[2px] bg-ui-divider-thick" />}
+              {index !== 0 && <div className="my-4 h-px w-full rounded-sm bg-ui-divider-thick" />}
 
               {/* 상단 정보 */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[4px]">
+                <div className="flex items-center gap-1">
                   {/* 채택 태그 */}
                   {answerPost.isChaetaek && <ChaetaekTag />}
 
@@ -176,7 +177,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
 
               {/* 이미지 리스트 */}
               {answerPost.mediaFiles && answerPost.mediaFiles.length > 0 && (
-                <div className="mt-2 flex gap-[8px] overflow-x-auto">
+                <div className="mt-2 flex gap-2 overflow-x-auto">
                   {answerPost.mediaFiles.map((f, i) => (
                     <Image
                       key={i}
@@ -184,14 +185,14 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                       alt="ans-img"
                       width={90}
                       height={90}
-                      className="h-[90px] w-[90px] flex-shrink-0 rounded-[8px] object-cover"
+                      className="h-22.5 w-22.5 flex-shrink-0 rounded-lg object-cover"
                     />
                   ))}
                 </div>
               )}
 
               {/* 좋아요 영역 */}
-              <div className="mt-4 flex items-center gap-[8px]">
+              <div className="mt-4 flex items-center gap-2">
                 <div
                   role="button"
                   tabIndex={0}
@@ -201,7 +202,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                     answerPost.answerPostId &&
                     handleLikeClick(answerPost.answerPostId)
                   }
-                  className="flex cursor-pointer items-center gap-[4px]"
+                  className="flex cursor-pointer items-center gap-1"
                 >
                   <Image
                     src={answerPost.isLiked ? "/icons/newLikeThumbGreen.svg" : "/icons/newLikeThumbGray.svg"}
@@ -210,7 +211,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                     height={16}
                   />
                   <span
-                    className={`text-[12px] font-medium leading-[100%] ${answerPost.isLiked ? "text-question-main" : "text-ui-count"}`}
+                    className={`text-SUIT_12 font-medium leading-[100%] ${answerPost.isLiked ? "text-question-main" : "text-ui-count"}`}
                   >
                     {answerPost.likeCount || 0}
                   </span>

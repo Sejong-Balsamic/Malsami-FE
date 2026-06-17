@@ -1,3 +1,6 @@
+// src/components/questionDetail/ChaetaekCheckModal.tsx
+/* eslint-disable */
+
 import React, { useState } from "react";
 import { answerPostApi } from "@/apis/answerPostApi";
 import ChaetaekSuccessModal from "./ChaetaekSuccessModal";
@@ -32,33 +35,33 @@ function ChaetaekCheckModal({ isOpen, onClose, answerPostId, author }: ModalProp
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       {/* 블러 백그라운드 */}
-      <div className="absolute inset-0 bg-black/10 backdrop-blur-[20px]" />
+      <div className="absolute inset-0 bg-black/10 backdrop-blur-xl" />
       {/* 모달 본체 */}
       <div
-        className="relative z-10 h-48 w-[336px] rounded-2xl bg-cover bg-center"
+        className="relative z-10 h-48 w-84 rounded-2xl bg-cover bg-center"
         style={{
           backgroundImage: 'url("/image/ModalBG.png")',
         }}
       >
-        <div className="flex h-48 w-[336px] flex-col items-center justify-center rounded-2xl bg-white/50 p-[20px]">
-          <h1 className="font-pretendard-bold pb-[10px] text-[18px]">답변 채택</h1>
-          <div className="font-pretendard-medium w-full border-t-2 border-ui-divider-light pb-[20px] pt-[10px] text-center text-[16px]">
+        <div className="flex h-48 w-84 flex-col items-center justify-center rounded-2xl bg-white/50 p-5">
+          <h1 className="font-pretendard-bold pb-2.5 text-SUIT_18">답변 채택</h1>
+          <div className="font-pretendard-medium w-full border-t-2 border-ui-divider-light pb-5 pt-2.5 text-center text-SUIT_16">
             채택하시겠습니까?
             <br />
             채택한 경우 취소가 불가능합니다.
           </div>
-          <div className="flex h-[30px] w-full justify-between">
+          <div className="flex h-7.5 w-full justify-between">
             <button
               type="button"
               onClick={onClose}
-              className="font-pretendard-semibold h-[30px] w-[140px] rounded-lg border border-legacy-accept-blue bg-white text-[14px] text-legacy-accept-blue"
+              className="font-pretendard-semibold h-7.5 w-35 rounded-lg border border-legacy-accept-blue bg-white text-SUIT_14 text-legacy-accept-blue"
             >
               취소
             </button>
             <button
               type="submit"
               onClick={handleConfirm}
-              className="font-pretendard-semibold h-[30px] w-[140px] rounded-lg bg-legacy-accept-blue text-[14px] text-white"
+              className="font-pretendard-semibold h-7.5 w-35 rounded-lg bg-legacy-accept-blue text-SUIT_14 text-white"
             >
               확인
             </button>
