@@ -44,6 +44,28 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess, onH
   const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
+    setLoginFailedMessage(null);
+
+    // 성공/실패 여부와 무관하게 "로그인 중" 오버레이를 먼저 노출
+    onShowLoading?.();
+    const startedAt = Date.now();
+
+    // 실패 시에도 최소 1초간 "로그인 중" 화면을 유지하기 위한 보정 대기
+    const waitMinimumLoading = async () => {
+      const elapsed = Date.now() - startedAt;
+      const remaining = 1000 - elapsed;
+      if (remaining > 0) {
+        await new Promise<void>(resolve => {
+          setTimeout(() => resolve(), remaining);
+        });
+      }
+    };
+
+    const handleLoginFailure = async () => {
+      await waitMinimumLoading();
+      onHideOverlay?.();
+      setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
+    };
 
     try {
       const command: Partial<AuthCommand> = {
@@ -56,12 +78,8 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess, onH
         // 세션스토리지에 액세스 토큰 명시적 저장 (authApi 이관에 따른 조치)
         sessionStorage.setItem("accessToken", getUserInfo.accessToken);
 
-        // 로그인 성공 시에만 로딩 오버레이 표시
-        onShowLoading?.();
-
         setUserName(getUserInfo.studentName || "");
         setIsFirstLogin(getUserInfo.isFirstLogin || false);
-        setLoginFailedMessage(null);
 
         // Redux 상태에 memberId 저장
         dispatch(setMemberId(getUserInfo.memberId));
@@ -77,14 +95,12 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess, onH
           router.push("/");
         }
       } else {
-        // 로그인 실패 시 에러 메시지만 표시
-        setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
-        onHideOverlay?.();
+        // 로그인 실패: 최소 1초 로딩 노출 후 에러 메시지 표시
+        await handleLoginFailure();
       }
     } catch (error) {
-      // 로그인 실패 시 에러 메시지만 표시
-      setLoginFailedMessage("로그인에 실패했습니다. 다시 시도해주세요.");
-      onHideOverlay?.();
+      // 로그인 실패: 최소 1초 로딩 노출 후 에러 메시지 표시
+      await handleLoginFailure();
     } finally {
       setIsLoading(false);
     }
