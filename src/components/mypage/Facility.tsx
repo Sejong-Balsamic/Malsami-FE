@@ -1,12 +1,8 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import WarningAlertModal from "@/components/common/modal/WarningAlertModal";
-import authApi from "@/apis/authApi";
-import useCommonToast from "@/global/hook/useCommonToast";
-import { RootState } from "@/global/store";
-import { logout as logoutAction } from "@/global/store/authSlice";
+import useLogout from "@/global/hook/useLogout";
 
 const SECTION_BORDER = "border-b border-ui-divider";
 const ROW_PADDING = "p-[24px]";
@@ -15,25 +11,12 @@ const TITLE_FONT = "text-SUIT_16 font-medium";
 
 function Facility() {
   const router = useRouter();
-  const dispatch = useDispatch();
-  const fcmToken = useSelector((state: RootState) => state.fcm.fcmToken);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleLogout = useLogout();
 
-  const { showConfirmToast } = useCommonToast();
-
-  const handleLogout = async () => {
-    try {
-      await authApi.logout({ fcmToken: fcmToken || "" });
-      sessionStorage.removeItem("memberId");
-      sessionStorage.removeItem("accessToken"); // 명시적 토큰 정리
-      dispatch(logoutAction());
-      showConfirmToast("로그아웃 되었습니다.");
-      setIsModalOpen(false);
-      router.push("/");
-    } catch (error) {
-      console.error("로그아웃 실패:", error);
-      showConfirmToast("로그아웃 실패. 다시 시도해주세요.");
-    }
+  const handleLogoutClick = async () => {
+    setIsModalOpen(false);
+    await handleLogout();
   };
 
   return (
@@ -94,7 +77,7 @@ function Facility() {
         message="정말 로그아웃하시겠습니까?"
         confirmLabel="확인"
         onCancel={() => setIsModalOpen(false)}
-        onConfirm={handleLogout}
+        onConfirm={handleLogoutClick}
       />
     </div>
   );
