@@ -15,10 +15,6 @@ export const memberApi = {
   // 접근 정보 조회
   getAccessInfo: async (command: Partial<MemberCommand> = {}): Promise<MemberDto> =>
     postApiRequest<MemberCommand, MemberDto>("/api/member/yeopjeon-info", command),
-
-  // 모든 회원 게시물 조회
-  getAllMemberPost: async (command: Partial<MemberCommand> = {}): Promise<MemberDto> =>
-    postApiRequest<MemberCommand, MemberDto>("/api/member/my-post", command),
 };
 
 export default memberApi;
