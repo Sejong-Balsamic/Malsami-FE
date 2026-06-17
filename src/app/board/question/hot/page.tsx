@@ -31,9 +31,6 @@ export default function HotQuestionPage() {
           questionPostApi.getDailyPopularQuestionPost(),
         ]);
 
-        console.log("주간 인기질문 데이터:", weeklyResponse);
-        console.log("일간 인기질문 데이터:", dailyResponse);
-
         setWeeklyQuestions(weeklyResponse.questionPostsPage?.content || []);
         setDailyQuestions(dailyResponse.questionPostsPage?.content || []);
       } catch (error) {

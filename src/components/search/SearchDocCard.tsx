@@ -22,7 +22,6 @@ export default function SearchDocCard({
       console.error("Invalid postId:", postId);
       return;
     }
-    console.log("Clicked card postId:", postId);
     router.push(`/board/document/detail/${postId}`);
   };
   return (

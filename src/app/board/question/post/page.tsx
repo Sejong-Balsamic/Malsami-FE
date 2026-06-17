@@ -149,7 +149,6 @@ export default function QnaPostPage() {
           isPrivate: formData.isPrivate,
           attachmentFiles: formData.attachmentFiles.length > 0 ? formData.attachmentFiles : undefined,
         };
-        console.log(command);
 
         // API 호출
         await questionPostApi.saveQuestionPost(command);

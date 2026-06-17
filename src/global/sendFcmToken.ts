@@ -11,7 +11,6 @@ async function sendFcmTokenToServer(fcmToken: string): Promise<FcmResponse | nul
     // 표준 API 호출로 전환
     const response = await authApi.saveFcmToken({ fcmToken });
 
-    console.log("FCM 토큰 서버로 전송 성공:", response);
     return response as unknown as FcmResponse; // 타입 얼라인
   } catch (error) {
     console.error("FCM 토큰 서버 전송 실패:", error);

@@ -36,12 +36,10 @@ export default function Page() {
   // 신고/차단 핸들러
   const handleReport = () => {
     // TODO: 신고 기능 구현
-    console.log("신고하기");
   };
 
   const handleBlock = () => {
     // TODO: 차단 기능 구현
-    console.log("차단하기");
   };
 
   // API 호출 (postId 변경 시마다)

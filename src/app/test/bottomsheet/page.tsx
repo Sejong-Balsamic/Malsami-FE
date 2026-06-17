@@ -40,11 +40,8 @@ export default function BottomSheetTestPage() {
         ...filtering,
       };
 
-      console.log("자료게시판 API 호출:", apiParams);
-
       try {
         const response = await documentPostApi.filteredDocumentPost(apiParams);
-        console.log("자료게시판 API 성공:", response);
       } catch (error) {
         console.error("자료게시판 API 실패:", error);
       } finally {
@@ -117,11 +114,8 @@ export default function BottomSheetTestPage() {
         ...filtering,
       };
 
-      console.log("질문게시판 API 호출:", apiParams);
-
       try {
         const response = await questionPostApi.getFilteredQuestionPosts(apiParams);
-        console.log("질문게시판 API 성공:", response);
       } catch (error) {
         console.error("질문게시판 API 실패:", error);
       } finally {

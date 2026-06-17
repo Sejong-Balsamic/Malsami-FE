@@ -78,13 +78,11 @@ export default function CommentPage() {
 
   // 댓글이 추가되었을 때 댓글 목록만 다시 로드
   const refreshComments = () => {
-    console.log("댓글 새로고침 요청");
     // refreshKey를 증가시켜 CommentList를 강제로 다시 마운트
     setRefreshKey(prev => prev + 1);
   };
 
   // 디버깅용 로그
-  console.log("페이지 렌더링 상태:", { isQuestionsLoading });
 
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
   if (!questionDetails && !isQuestionsLoading) return <p>질문을 찾을 수 없습니다.</p>;

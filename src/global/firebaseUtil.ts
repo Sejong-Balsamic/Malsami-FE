@@ -43,7 +43,6 @@ export async function getFcmToken(): Promise<string | null> {
       serviceWorkerRegistration: registration, // 서비스 워커 등록 객체 전달
     });
     if (currentToken) {
-      console.log("FCM 토큰:", currentToken);
       return currentToken;
     }
     console.warn("사용 가능한 FCM 토큰이 없습니다. 재발급해야함");

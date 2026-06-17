@@ -27,7 +27,6 @@ export default function FcmInitializer() {
 
       // 1. 로그인 상태 확인 (useAuthCheck 훅으로 추상화)
       if (!isLoggedIn) {
-        console.log("로그인하지 않은 상태입니다. FCM 토큰 검색과 전송을 생략합니다.");
         return;
       }
 
@@ -51,11 +50,9 @@ export default function FcmInitializer() {
         if (newToken) {
           // Redux에 FCM 토큰 저장
           dispatch(setFcmToken(newToken));
-          console.log("FCM 토큰 Redux Store에 저장:", newToken);
 
           // 5. FCM 토큰 서버로 전송
           await sendFcmTokenToServer(newToken);
-          console.log("FCM 토큰 서버로 전송 완료");
 
           // Redux에 전송 완료 상태 저장
           dispatch(setIsFcmTokenSentToServer(true));

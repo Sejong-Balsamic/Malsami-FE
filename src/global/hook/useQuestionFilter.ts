@@ -19,7 +19,6 @@ export default function useQuestionFilter() {
     try {
       const result = await questionPostApi.getFilteredQuestionPosts(filters);
       // 결과 처리 로직
-      console.log("Question filter result:", result);
       return result;
     } catch (error) {
       console.error("Question filter error:", error);

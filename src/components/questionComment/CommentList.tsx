@@ -44,7 +44,6 @@ export default function CommentList({ postId, questionAuthorId }: CommentListPro
     if (!postId) return;
 
     try {
-      console.log("댓글 데이터 요청 시작");
       setIsLoading(true);
 
       // commentApi를 통해 댓글 목록 가져오기
@@ -56,7 +55,6 @@ export default function CommentList({ postId, questionAuthorId }: CommentListPro
       });
 
       const list: Comment[] = commentsData.commentsPage?.content || [];
-      console.log("댓글 데이터 받음:", list.length, "개");
       setComments(list);
     } catch (error) {
       console.error("댓글 목록 가져오기 실패:", error);
@@ -92,7 +90,6 @@ export default function CommentList({ postId, questionAuthorId }: CommentListPro
   }
 
   // 디버깅용 로그
-  console.log("댓글 목록 렌더링:", comments.length, "개");
 
   return (
     <div className="bg-white">

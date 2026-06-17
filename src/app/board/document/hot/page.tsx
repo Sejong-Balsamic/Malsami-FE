@@ -55,9 +55,6 @@ export default function HotDocumentPage() {
           documentPostApi.getDailyPopularDocumentPost(),
         ]);
 
-        console.log("주간 인기자료 데이터:", weeklyResponse);
-        console.log("일간 인기자료 데이터:", dailyResponse);
-
         // API 응답이 비어있으면 목데이터 사용
         const weeklyContent = weeklyResponse.documentPostsPage?.content || [];
         const dailyContent = dailyResponse.documentPostsPage?.content || [];

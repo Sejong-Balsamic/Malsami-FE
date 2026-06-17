@@ -36,9 +36,6 @@ export default function BountyQuestionPage() {
           }),
         ]);
 
-        console.log("엽전현상금 최근순 데이터:", latestResponse);
-        console.log("엽전현상금 높은순 데이터:", highestResponse);
-
         // 현상금이 있는 질문만 필터링
         const latestBountyFiltered = (latestResponse.questionPostsPage?.content || []).filter(
           question => question.rewardYeopjeon && question.rewardYeopjeon > 0,
