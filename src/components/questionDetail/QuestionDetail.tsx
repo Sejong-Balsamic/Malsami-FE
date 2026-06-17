@@ -148,7 +148,7 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
               {files.map((file, index) => (
                 <div
                   key={index}
-                  className="flex h-30 w-30 flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-ui-divider-thick"
+                  className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-ui-divider-thick"
                 >
                   <Image
                     src={file}
@@ -202,8 +202,8 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
         <div className="mt-5 h-px w-full bg-ui-muted"></div>
 
         {/* 좋아요 및 댓글 액션 */}
-        <div className="mb-3.75 mt-3.75 flex justify-center">
-          <div className="flex w-full max-w-[433px] divide-x divide-transparent">
+        <div className="mb-4 mt-4 flex justify-center">
+          <div className="flex w-full max-w-md divide-x divide-transparent">
             {/* 왼쪽(좋아요) */}
             <div className="flex w-1/2 justify-center">
               <div

@@ -185,7 +185,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                       alt="ans-img"
                       width={90}
                       height={90}
-                      className="h-22.5 w-22.5 flex-shrink-0 rounded-lg object-cover"
+                      className="h-[90px] w-[90px] flex-shrink-0 rounded-lg object-cover"
                     />
                   ))}
                 </div>

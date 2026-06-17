@@ -34,7 +34,7 @@ function CommentList({ comments }: CommentListProps) {
         <p className="font-pretendard-medium text-SUIT_14 text-ui-body-soft">댓글이 없습니다.</p>
       ) : (
         comments.map(comment => (
-          <div key={comment.commentId} className="min-h-22 min-w-77.5 rounded-lg bg-white p-3.5">
+          <div key={comment.commentId} className="w-full rounded-lg bg-white p-3.5">
             <div className="mb-1 flex items-start justify-between">
               <div className="flex-1">
                 {!comment.isPrivate ? (

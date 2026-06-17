@@ -52,7 +52,7 @@ function InfoCard({ memberDto }: { memberDto: MemberDto | null }) {
               <div className="flex flex-col items-center justify-center">
                 <div className="font-pretendard-medium text-SUIT_16">상위</div>
                 <div className="flex items-center gap-2">
-                  <Image src="/icons/mypage/Rank.svg" alt="Rank" width={18} height={18} className="h-4.5 w-4.5" />
+                  <Image src="/icons/mypage/Rank.svg" alt="Rank" width={18} height={18} />
                   <span className="font-pretendard-semibold text-SUIT_20">
                     {memberDto ? <AnimatedNumber target={memberDto.expPercentile || 0} /> : "0"}%
                   </span>
@@ -62,7 +62,7 @@ function InfoCard({ memberDto }: { memberDto: MemberDto | null }) {
               <div className="flex flex-col items-center justify-center">
                 <div className="font-pretendard-medium text-SUIT_16">받은 좋아요</div>
                 <div className="flex items-center gap-2">
-                  <Image src="/icons/mypage/Like.svg" alt="Like" width={18} height={18} className="h-4.5 w-4.5" />
+                  <Image src="/icons/mypage/Like.svg" alt="Like" width={18} height={18} />
                   <span className="font-pretendard-semibold text-SUIT_20">
                     {memberDto ? <AnimatedNumber target={memberDto.totalLikeCount || 0} /> : "0"}
                   </span>

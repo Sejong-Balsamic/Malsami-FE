@@ -46,13 +46,13 @@ export default function QuestionDetailSkeleton() {
       </div>
 
       {/* 첨부 이미지 영역 */}
-      <div className="h-50 mb-6 w-full rounded bg-gray-200" />
+      <div className="mb-6 h-48 w-full rounded bg-gray-200" />
 
       {/* 좋아요, 댓글 카운트 */}
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-15 h-6 rounded bg-gray-200" />
-          <div className="w-15 h-6 rounded bg-gray-200" />
+          <div className="h-6 w-16 rounded bg-gray-200" />
+          <div className="h-6 w-16 rounded bg-gray-200" />
         </div>
         <div className="h-6 w-10 rounded bg-gray-200" />
       </div>
@@ -62,7 +62,7 @@ export default function QuestionDetailSkeleton() {
 
       {/* 답변 섹션 헤더 */}
       <div className="mt-6 flex items-center justify-between">
-        <div className="w-30 h-6 rounded bg-gray-200" />
+        <div className="h-6 w-28 rounded bg-gray-200" />
         <div className="h-6 w-20 rounded bg-gray-200" />
       </div>
 

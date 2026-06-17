@@ -85,16 +85,16 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
   return (
     <div className="flex flex-col justify-center px-5">
       {/* 교과목명 */}
-      <div className="mt-7.5 h-6.5 w-84 max-w-[640px]">
+      <div className="mt-8 h-6 w-full max-w-[640px]">
         <div className="flex items-center">
-          <div className="font-pretendard-bold flex h-6.5 items-center justify-center rounded-[13px] bg-legacy-teal px-3.5 py-1.5 text-SUIT_12 text-white">
+          <div className="font-pretendard-bold flex h-6 items-center justify-center rounded-xl bg-legacy-teal px-3.5 py-1.5 text-SUIT_12 text-white">
             {documentDto.documentPost?.subject || "과목명 없음"}
           </div>
         </div>
       </div>
 
       {/* 글 정보 */}
-      <div className="flex h-auto min-w-84 max-w-[640px] flex-col">
+      <div className="flex h-auto w-full max-w-[640px] flex-col">
         <div className="mt-5">
           <span className="font-pretendard-bold text-SUIT_18">{documentDto.documentPost?.title || "제목 없음"}</span>
           <div className="font-pretendard-medium mt-2.5 text-SUIT_14 leading-normal text-ui-body-soft">
@@ -103,7 +103,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
         </div>
         <DownloadFile documentFiles={documentDto.documentFiles || []} /> {/* 기본값 제공 */}
         {/* 카테고리 */}
-        <div className="mt-5 h-6.5 w-84 max-w-[640px]">
+        <div className="mt-5 h-6 w-full max-w-[640px]">
           <div className="flex items-center gap-2.5">
             {documentDto.documentPost?.documentTypes?.map((tag, index) => (
               <div
@@ -116,7 +116,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
           </div>
         </div>
         {/* 작성자 정보 */}
-        <div className="flex h-18 min-w-84 max-w-[640px] flex-col">
+        <div className="flex h-[72px] w-full max-w-[640px] flex-col">
           <div className="mt-5 text-right">
             <div>
               <span className="font-pretendard-medium mb-1 text-SUIT_12">
@@ -133,13 +133,13 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
             </div>
           </div>
         </div>
-        <div className="flex justify-start border-b-2 py-7.5">
+        <div className="flex justify-start border-b-2 py-8">
           <div className="flex w-full items-center justify-between">
             <div className="flex items-center gap-2.5">
               {/* 좋아요 */}
               <div
                 onClick={!isLiked ? handleLikeClick : undefined}
-                className={`flex h-7.5 w-17.5 items-center justify-center gap-1.25 rounded-full border-2 ${buttonClass(
+                className={`flex h-8 w-[70px] items-center justify-center gap-1 rounded-full border-2 ${buttonClass(
                   isLiked,
                 )}`}
               >
@@ -158,7 +158,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
               {/* 싫어요 */}
               <div
                 onClick={!isDisliked ? handleDisLikeClick : undefined}
-                className={`flex h-7.5 w-17.5 items-center justify-center gap-1.25 rounded-full border-2 ${buttonClass(
+                className={`flex h-8 w-[70px] items-center justify-center gap-1 rounded-full border-2 ${buttonClass(
                   isDisliked,
                 )}`}
               >
@@ -178,7 +178,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
             {/* 댓글 */}
             <Drawer>
               <DrawerTrigger asChild>
-                <div className="flex h-7.5 w-17.5 cursor-pointer items-center justify-center gap-1.25 rounded-full border-2 border-ui-divider-light">
+                <div className="flex h-8 w-[70px] cursor-pointer items-center justify-center gap-1 rounded-full border-2 border-ui-divider-light">
                   <Image src="/icons/Comment_UnClicked.svg" alt="Comment_UnClicked" width={16} height={16} />
                   <span className="font-pretendard-semibold text-SUIT_12 text-ui-count">{commentCount}</span>
                 </div>

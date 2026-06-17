@@ -25,7 +25,7 @@ export default function NoticeCard({ notice, onClick }: NoticeCardProps) {
 
   return (
     <div
-      className="h-33 flex w-72 cursor-pointer flex-col rounded-lg bg-white shadow-card-custom transition-all duration-200 hover:shadow-lg"
+      className="flex h-32 w-72 cursor-pointer flex-col rounded-lg bg-white shadow-card-custom transition-all duration-200 hover:shadow-lg"
       onClick={handleClick}
       onKeyDown={handleKeyDown}
       role="button"

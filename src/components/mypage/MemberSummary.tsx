@@ -4,7 +4,7 @@ import { MemberDto } from "@/types/api/responses/memberDto"; // 경로 확인 �
 function MemberSummary({ memberInfo }: { memberInfo: MemberDto | null }) {
   return (
     <div className="flex">
-      <div className="pt-7.5 float-right pb-2.5">
+      <div className="float-right pb-2.5 pt-8">
         <div className="flex w-full pb-2.5">
           <div className="flex flex-col items-end">
             <div className="flex items-end gap-1.5">

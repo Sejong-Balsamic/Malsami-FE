@@ -90,7 +90,7 @@ export default function NoticeSection({ onViewAll }: NoticeSectionProps) {
       {!isLoading && notices.length > 0 && <MovingCardNotice data={notices} />}
       {/* 데이터가 없을 때 표시되는 메시지 */}
       {!isLoading && notices.length === 0 && (
-        <div className="h-33 flex w-full items-center justify-center">
+        <div className="flex h-32 w-full items-center justify-center">
           <span>표시할 공지사항이 없습니다.</span>
         </div>
       )}

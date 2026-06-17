@@ -28,7 +28,7 @@ function Facility() {
       <div className={`grid w-full grid-cols-1 ${ROW_GAP} ${SECTION_BORDER} ${ROW_PADDING}`}>
         <button onClick={handleLeave} type="button" className="flex w-full items-center justify-between">
           <span className={TITLE_FONT}>회원탈퇴</span>
-          <Image src="/icons/Move.svg" alt="move" width={7} height={14} className="w-1.75 h-3.5" />
+          <Image src="/icons/Move.svg" alt="move" width={7} height={14} />
         </button>
         <button
           onClick={() => router.push("/mypage/policy")}
@@ -36,13 +36,13 @@ function Facility() {
           className="flex w-full items-center justify-between"
         >
           <span className="font-pretendard-semibold text-SUIT_18">개인정보 처리방침</span>
-          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} className="w-1.75 h-3.5" />
+          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} />
         </button>
       </div>
       <div className={`grid w-full grid-cols-1 ${ROW_GAP} ${SECTION_BORDER} ${ROW_PADDING}`}>
         <button onClick={() => router.push("/help")} type="button" className="flex w-full items-center justify-between">
           <span className={TITLE_FONT}>세종말싸미 이용도우미</span>
-          <Image src="/icons/mypage/Move_gray.svg" alt="Move" width={7} height={14} className="w-1.75 h-3.5" />
+          <Image src="/icons/mypage/Move_gray.svg" alt="Move" width={7} height={14} />
         </button>
         <button
           onClick={() => router.push("/mypage/rule")}
@@ -50,7 +50,7 @@ function Facility() {
           className="flex w-full items-center justify-between"
         >
           <span className="font-pretendard-semibold text-SUIT_18">이용규칙</span>
-          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} className="w-1.75 h-3.5" />
+          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} />
         </button>
       </div>
       <div className={`grid w-full grid-cols-1 ${SECTION_BORDER} ${ROW_PADDING}`}>
@@ -60,7 +60,7 @@ function Facility() {
           className="flex w-full items-center justify-between"
         >
           <span className="font-pretendard-semibold text-SUIT_18">공지사항</span>
-          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} className="w-1.75 h-3.5" />
+          <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} />
         </button>
       </div>
 
