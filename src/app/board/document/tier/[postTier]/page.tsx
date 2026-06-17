@@ -14,7 +14,7 @@ import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { setDocumentFilteringOpen } from "@/global/store/bottomSheetSlice";
 import { PostTier } from "@/types/api/constants/postTier";
-import useUserPermissions from "@/global/useUserPermissions";
+import useUserPermissions from "@/global/hook/useUserPermissions";
 
 // 티어 표시 매핑
 const TIER_DISPLAY_NAME: Record<string, string> = {
