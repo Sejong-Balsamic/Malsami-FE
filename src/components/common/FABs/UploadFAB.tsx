@@ -57,7 +57,7 @@ function UploadFAB() {
         </button>
         {isDivVisible && (
           <div className="absolute bottom-[70px] right-0 z-[65] flex flex-col items-center space-y-[10px]">
-            <div className="flex items-center gap-[10px]">
+            <div className="flex items-center gap-2.5">
               <span className="font-suit-medium w-[70px] text-right text-[14px] text-white">질문 올리기</span>
               <button
                 type="button"
@@ -67,7 +67,7 @@ function UploadFAB() {
                 <QuestionIcon className="h-[50px] w-[50px] text-legacy-teal" />
               </button>
             </div>
-            <div className="flex items-center gap-[10px]">
+            <div className="flex items-center gap-2.5">
               <span className="font-suit-medium w-[70px] text-right text-[14px] text-white">자료 올리기</span>
               <button
                 type="button"

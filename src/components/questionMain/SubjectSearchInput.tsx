@@ -42,7 +42,7 @@ function SubjectSearchInput({ value, onChange }: SubjectSearchInputProps) {
 
   return (
     <>
-      <div className="flex w-full items-center rounded-[8px] border-2 border-ui-muted px-0 py-2">
+      <div className="flex w-full items-center rounded-lg border-2 border-ui-muted px-0 py-2">
         <input
           type="text"
           placeholder="교과목명을 입력하세요."

@@ -68,7 +68,7 @@ export default function MyFacultySection({ facultys }: { facultys: string[] }) {
       <div className="mb-2 flex items-center justify-between">
         <div className="flex items-center">
           <Image src="/icons/openFileFolder.svg" alt="내 전공" width={24} height={24} />
-          <h2 className="ml-[10px] text-SUIT_18 font-medium">내 전공 관련 자료</h2>
+          <h2 className="ml-2.5 text-SUIT_18 font-medium">내 전공 관련 자료</h2>
         </div>
         <button
           type="button"

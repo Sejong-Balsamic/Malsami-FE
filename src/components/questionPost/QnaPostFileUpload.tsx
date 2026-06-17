@@ -12,7 +12,7 @@ function QnaPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploa
       {/* 파일 추가 버튼 */}
       <label
         htmlFor="file-upload"
-        className="relative flex h-[100px] w-[100px] flex-shrink-0 cursor-pointer items-center justify-center rounded-[8px] border-2 border-ui-border"
+        className="relative flex h-[100px] w-[100px] flex-shrink-0 cursor-pointer items-center justify-center rounded-lg border-2 border-ui-border"
       >
         <input
           id="file-upload"
@@ -36,7 +36,7 @@ function QnaPostFileUpload({ mediaFiles, onFileChange, onFileDelete }: FileUploa
         return (
           <div
             key={file.name}
-            className="relative h-[100px] w-[100px] flex-shrink-0 overflow-hidden rounded-[8px] border-2 border-question-main bg-gray-300"
+            className="relative h-[100px] w-[100px] flex-shrink-0 overflow-hidden rounded-lg border-2 border-question-main bg-gray-300"
           >
             <img src={imageUrl} alt={file.name} className="h-full w-full object-cover" />
             <button

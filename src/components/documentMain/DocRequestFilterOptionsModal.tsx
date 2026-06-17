@@ -110,7 +110,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
               ref={contentRef}
             >
               <>
-                <h1 className="font-suit-bold mb-[20px] text-xl">정렬</h1>
+                <h1 className="font-suit-bold mb-5 text-xl">정렬</h1>
                 <div className="mb-[30px] flex flex-col">
                   {Object.keys(sortTypeLabels).map(docSortType => (
                     <li key={docSortType} className="flex rounded-xl py-[10px]">
@@ -136,7 +136,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                   ))}
                 </div>
 
-                <h1 className="font-suit-bold mb-[20px] text-xl">
+                <h1 className="font-suit-bold mb-5 text-xl">
                   태그 선택 <span className="font-suit-medium ml-1.5 text-sm text-ui-muted">최대 2개</span>
                 </h1>
                 <div className="mb-[40px] flex flex-wrap justify-between gap-x-[7px] gap-y-[20px]">
@@ -160,7 +160,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                   ))}
                 </div>
 
-                <h1 className="font-suit-bold mb-[20px] text-xl">단과대 선택</h1>
+                <h1 className="font-suit-bold mb-5 text-xl">단과대 선택</h1>
                 <div className="mb-[30px] flex flex-col">
                   {/* 새찬님이 올려준 코드 보면서 수정해야함. 전역으로 관리하는 facultys로 수정 필요 */}
                   {facultys.map(option => (

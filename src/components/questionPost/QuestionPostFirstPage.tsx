@@ -68,7 +68,7 @@ function QuestionPostFirstPage({
             type="button"
             onClick={onNextPage}
             disabled={!isJijeongTagsCompleted}
-            className={`w-full rounded-[8px] py-4 text-SUIT_18 font-extrabold text-white ${
+            className={`w-full rounded-lg py-4 text-SUIT_18 font-extrabold text-white ${
               isJijeongTagsCompleted ? "bg-question-main" : "bg-ui-muted"
             }`}
           >

@@ -62,7 +62,7 @@ export default function LandingSectionBase({
         <div className="flex flex-1 flex-wrap items-center">
           <div className="flex items-center">
             <Image src={iconSrc} alt={iconAlt} width={24} height={24} />
-            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_16 font-medium">{title}</h2>
+            <h2 className="ml-2.5 whitespace-nowrap text-SUIT_16 font-medium">{title}</h2>
           </div>
         </div>
 

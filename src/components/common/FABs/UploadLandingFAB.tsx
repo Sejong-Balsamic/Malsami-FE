@@ -44,8 +44,8 @@ function UploadFAB() {
           </button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
-          <div className="relative mb-[5px] flex w-auto flex-col items-center gap-[10px]">
-            <DropdownMenuItem className="flex items-center gap-[10px]">
+          <div className="relative mb-[5px] flex w-auto flex-col items-center gap-2.5">
+            <DropdownMenuItem className="flex items-center gap-2.5">
               <span className="font-suit-medium w-[70px] text-right text-[14px] text-white">질문 올리기</span>
               <button
                 type="button"
@@ -55,7 +55,7 @@ function UploadFAB() {
                 <QuestionIcon className="h-[50px] w-[50px] text-legacy-teal" />
               </button>
             </DropdownMenuItem>
-            <DropdownMenuItem className="flex items-center gap-[10px]">
+            <DropdownMenuItem className="flex items-center gap-2.5">
               <span className="font-suit-medium w-[70px] text-right text-[14px] text-white">자료 올리기</span>
               <button
                 type="button"

@@ -83,7 +83,7 @@ export default function Card({
         </div>
 
         {/* 좋아요 수와 답변 수 표시 */}
-        <div className="ml-2 flex flex-shrink-0 items-center gap-[4px]">
+        <div className="ml-2 flex flex-shrink-0 items-center gap-1">
           {/* 좋아요 */}
           <span className="flex items-center gap-1">
             <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />

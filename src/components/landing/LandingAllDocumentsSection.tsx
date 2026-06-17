@@ -68,7 +68,7 @@ function LandingAllDocumentsSection({ onViewAll, onCardClick = undefined }: Land
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center">
           <Image src="/icons/openFileFolder.svg" alt="자료" width={18} height={18} />
-          <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">전체 자료 게시판</h2>
+          <h2 className="ml-2.5 whitespace-nowrap text-SUIT_18 font-medium">전체 자료 게시판</h2>
         </div>
 
         {/* 전체보기 링크 */}
@@ -122,9 +122,9 @@ function LandingAllDocumentsSection({ onViewAll, onCardClick = undefined }: Land
                     </div>
 
                     {/* 좋아요 및 댓글 */}
-                    <div className="flex items-center gap-[4px]">
+                    <div className="flex items-center gap-1">
                       {/* 좋아요 */}
-                      <span className="flex items-center gap-[4px]">
+                      <span className="flex items-center gap-1">
                         <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
                         <span className="text-[12px] font-medium leading-[12px] text-ui-muted">
                           {document.likeCount || 0}
@@ -132,7 +132,7 @@ function LandingAllDocumentsSection({ onViewAll, onCardClick = undefined }: Land
                       </span>
 
                       {/* 댓글 */}
-                      <span className="ml-[8px] flex items-center gap-[4px]">
+                      <span className="ml-2 flex items-center gap-1">
                         <Image src="/icons/newChatBubbleGray.svg" alt="댓글" width={14} height={14} />
                         <span className="text-[12px] font-medium leading-[12px] text-ui-muted">
                           {document.commentCount || 0}

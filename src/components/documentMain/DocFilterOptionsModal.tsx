@@ -101,7 +101,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
               ref={contentRef}
             >
               <>
-                <h1 className="font-suit-bold mb-[20px] text-xl">정렬</h1>
+                <h1 className="font-suit-bold mb-5 text-xl">정렬</h1>
                 <div className="mb-[30px] flex flex-col">
                   {SORT_TYPE_KEYS.map(docSortType => (
                     <li key={docSortType} className="flex rounded-xl py-[10px]">
@@ -127,7 +127,7 @@ const DocFilterOptionsModal: React.FC<DocFilterOptionsModalProps> = ({
                   ))}
                 </div>
 
-                <h1 className="font-suit-bold mb-[20px] text-xl">
+                <h1 className="font-suit-bold mb-5 text-xl">
                   태그 선택 <span className="font-suit-medium ml-1.5 text-sm text-ui-muted">최대 2개</span>
                 </h1>
                 <div className="mb-[40px] flex flex-wrap justify-between gap-x-[7px] gap-y-[20px]">
