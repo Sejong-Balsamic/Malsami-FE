@@ -1,3 +1,4 @@
+// src/components/documentDetail/DocDetail.tsx
 /* eslint-disable */
 
 import { useState } from "react";
@@ -82,63 +83,63 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
   };
 
   return (
-    <div className="flex flex-col justify-center px-[20px]">
+    <div className="flex flex-col justify-center px-5">
       {/* 교과목명 */}
-      <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
+      <div className="mt-7.5 h-6.5 w-84 max-w-[640px]">
         <div className="flex items-center">
-          <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-legacy-teal px-[14px] py-[6px] text-[12px] text-white">
+          <div className="font-pretendard-bold flex h-6.5 items-center justify-center rounded-[13px] bg-legacy-teal px-3.5 py-1.5 text-SUIT_12 text-white">
             {documentDto.documentPost?.subject || "과목명 없음"}
           </div>
         </div>
       </div>
 
       {/* 글 정보 */}
-      <div className="flex h-auto min-w-[336px] max-w-[640px] flex-col">
-        <div className="mt-[20px]">
-          <span className="font-pretendard-bold text-[18px]">{documentDto.documentPost?.title || "제목 없음"}</span>
-          <div className="font-pretendard-medium mt-[10px] text-[14px] leading-normal text-ui-body-soft">
+      <div className="flex h-auto min-w-84 max-w-[640px] flex-col">
+        <div className="mt-5">
+          <span className="font-pretendard-bold text-SUIT_18">{documentDto.documentPost?.title || "제목 없음"}</span>
+          <div className="font-pretendard-medium mt-2.5 text-SUIT_14 leading-normal text-ui-body-soft">
             {documentDto.documentPost?.content || "내용 없음"}
           </div>
         </div>
         <DownloadFile documentFiles={documentDto.documentFiles || []} /> {/* 기본값 제공 */}
         {/* 카테고리 */}
-        <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
-          <div className="flex items-center gap-[10px]">
+        <div className="mt-5 h-6.5 w-84 max-w-[640px]">
+          <div className="flex items-center gap-2.5">
             {documentDto.documentPost?.documentTypes?.map((tag, index) => (
               <div
                 key={index}
-                className="flex h-[25px] w-auto items-center justify-center rounded-[28px] border border-ui-divider-light px-[10px]"
+                className="flex h-6 w-auto items-center justify-center rounded-full border border-ui-divider-light px-2.5"
               >
-                <span className="font-pretendard-medium text-[14px] text-ui-count">{getKoreanTag(tag)}</span>
+                <span className="font-pretendard-medium text-SUIT_14 text-ui-count">{getKoreanTag(tag)}</span>
               </div>
             )) || <span>태그 없음</span>}
           </div>
         </div>
         {/* 작성자 정보 */}
-        <div className="flex h-[72px] min-w-[336px] max-w-[640px] flex-col">
-          <div className="mt-[20px] text-right">
+        <div className="flex h-18 min-w-84 max-w-[640px] flex-col">
+          <div className="mt-5 text-right">
             <div>
-              <span className="font-pretendard-medium mb-[4px] text-[12px]">
+              <span className="font-pretendard-medium mb-1 text-SUIT_12">
                 @{documentDto.documentPost?.member?.uuidNickname || "익명"}
               </span>
             </div>
             <div>
-              <span className="font-pretendard-medium mr-[3px] text-[12px] text-ui-muted">
+              <span className="font-pretendard-medium mr-1 text-SUIT_12 text-ui-muted">
                 {getDateDiff(documentDto.documentPost?.createdDate || "") || "날짜 없음"}
               </span>
-              <span className="font-pretendard-medium mr-[3px] text-[12px] text-ui-muted">
+              <span className="font-pretendard-medium mr-1 text-SUIT_12 text-ui-muted">
                 • 조회수 {documentDto.documentPost?.viewCount || 0}
               </span>
             </div>
           </div>
         </div>
-        <div className="flex justify-start border-b-2 py-[30px]">
+        <div className="flex justify-start border-b-2 py-7.5">
           <div className="flex w-full items-center justify-between">
-            <div className="flex items-center gap-[10px]">
+            <div className="flex items-center gap-2.5">
               {/* 좋아요 */}
               <div
                 onClick={!isLiked ? handleLikeClick : undefined}
-                className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
+                className={`flex h-7.5 w-17.5 items-center justify-center gap-1.25 rounded-full border-2 ${buttonClass(
                   isLiked,
                 )}`}
               >
@@ -149,7 +150,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
                   height={16}
                 />
                 <span
-                  className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-legacy-teal" : "text-ui-count"}`}
+                  className={`font-pretendard-semibold text-SUIT_12 ${isLiked ? "text-legacy-teal" : "text-ui-count"}`}
                 >
                   {currentLikeCount}
                 </span>
@@ -157,7 +158,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
               {/* 싫어요 */}
               <div
                 onClick={!isDisliked ? handleDisLikeClick : undefined}
-                className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
+                className={`flex h-7.5 w-17.5 items-center justify-center gap-1.25 rounded-full border-2 ${buttonClass(
                   isDisliked,
                 )}`}
               >
@@ -168,7 +169,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
                   height={16}
                 />
                 <span
-                  className={`font-pretendard-semibold text-[12px] ${isDisliked ? "text-legacy-teal" : "text-ui-count"}`}
+                  className={`font-pretendard-semibold text-SUIT_12 ${isDisliked ? "text-legacy-teal" : "text-ui-count"}`}
                 >
                   {currentDislikeCount}
                 </span>
@@ -177,18 +178,18 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
             {/* 댓글 */}
             <Drawer>
               <DrawerTrigger asChild>
-                <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-ui-divider-light">
+                <div className="flex h-7.5 w-17.5 cursor-pointer items-center justify-center gap-1.25 rounded-full border-2 border-ui-divider-light">
                   <Image src="/icons/Comment_UnClicked.svg" alt="Comment_UnClicked" width={16} height={16} />
-                  <span className="font-pretendard-semibold text-[12px] text-ui-count">{commentCount}</span>
+                  <span className="font-pretendard-semibold text-SUIT_12 text-ui-count">{commentCount}</span>
                 </div>
               </DrawerTrigger>
-              <DrawerContent className="px-[20px] pb-[20px]">
+              <DrawerContent className="px-5 pb-5">
                 <DrawerHeader className="px-0">
-                  <DrawerTitle className="font-pretendard-bold flex text-[14px] text-ui-body">
+                  <DrawerTitle className="font-pretendard-bold flex text-SUIT_14 text-ui-body">
                     댓글 {commentCount}
                   </DrawerTitle>
                 </DrawerHeader>
-                <div className="max-h-[400px] overflow-y-auto">
+                <div className="max-h-100 overflow-y-auto">
                   <DocumentCommentSection
                     postId={documentDto.documentPost?.documentPostId || ""}
                     contentType="DOCUMENT"
