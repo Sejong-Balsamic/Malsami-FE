@@ -16,6 +16,7 @@ import Image from "next/image";
 import { Button } from "@/components/shadcn/button";
 import documentPostApi from "@/apis/documentPostApi";
 import { DocumentDto } from "@/types/api/responses/documentDto";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 export default function Page() {
   const router = useRouter();
@@ -83,7 +84,7 @@ export default function Page() {
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
   return (
-    <div className="mx-auto min-h-screen w-full max-w-[640px]">
+    <PageContainer className="min-h-screen">
       <ScrollToTopOnLoad />
       <CommonHeader title="자료 상세보기" rightType={RIGHT_ITEM.MENU} onRightClick={toggleDrawer} />
       <div>
@@ -112,6 +113,6 @@ export default function Page() {
           </DrawerContent>
         </Drawer>
       </div>
-    </div>
+    </PageContainer>
   );
 }

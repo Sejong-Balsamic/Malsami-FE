@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import LandingSearchBar from "@/components/common/LandingSearchBar";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 export default function LoginOrSearchButton() {
   const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
@@ -19,14 +20,14 @@ export default function LoginOrSearchButton() {
 
   if (isLoggedIn) {
     return (
-      <div className="mx-auto max-w-[640px]">
+      <div className="mx-auto max-w-container lg:max-w-container-lg">
         <LandingSearchBar />
       </div>
     );
   }
 
   return (
-    <div className="mx-auto w-full max-w-[640px]">
+    <PageContainer>
       <button
         type="button"
         onClick={handleLoginClick}
@@ -34,6 +35,6 @@ export default function LoginOrSearchButton() {
       >
         <span className="text-[18px] font-bold leading-[100%] text-white">로그인</span>
       </button>
-    </div>
+    </PageContainer>
   );
 }

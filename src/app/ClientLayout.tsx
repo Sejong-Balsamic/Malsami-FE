@@ -16,7 +16,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       <div className="flex min-h-screen justify-center bg-gray-100">
         {/* 메인 컨테이너 - 모바일 640px 고정, PC(lg)에서 확장 */}
         <div
-          className={`relative mx-auto w-full max-w-[640px] bg-white lg:max-w-[960px] ${shouldShowNav ? "min-h-screen pb-[70px]" : "min-h-screen"}`}
+          className={`relative mx-auto w-full max-w-container bg-white lg:max-w-container-lg ${shouldShowNav ? "min-h-screen pb-[70px]" : "min-h-screen"}`}
         >
           {children}
         </div>

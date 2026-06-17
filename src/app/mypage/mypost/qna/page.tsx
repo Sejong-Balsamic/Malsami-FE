@@ -3,10 +3,11 @@
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import Image from "next/image";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 function Page() {
   return (
-    <div className="relative mx-auto w-full max-w-[640px]">
+    <PageContainer>
       <CommonHeader title="내가 올린 질문" rightType={RIGHT_ITEM.NONE} />
       <div>
         <Image
@@ -21,7 +22,7 @@ function Page() {
           <span className="font-suit-bold text-xl">개발 중 ~^^</span>
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }
 

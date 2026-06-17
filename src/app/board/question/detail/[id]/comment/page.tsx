@@ -12,6 +12,7 @@ import CommentList from "@/components/questionComment/CommentList";
 import CommentInput from "@/components/questionComment/CommentInput";
 import QuestionSummarySkeleton from "@/components/common/skeletons/QuestionSummarySkeleton";
 import useCommonToast from "@/global/hook/useCommonToast";
+import { PageContainer, TopBarContainer, BottomBarContainer } from "@/components/layout/AppContainer";
 
 export default function CommentPage() {
   const router = useRouter();
@@ -90,15 +91,15 @@ export default function CommentPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* 고정 헤더 */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <CommonHeader title="댓글" onLeftClick={handleBackClick} />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이만큼 공백 */}
       <div className="h-16 w-full" />
 
       {/* 본문 영역 */}
-      <div className="relative mx-auto w-full max-w-[640px]">
+      <PageContainer>
         {/* 질문 요약 - 항상 표시 */}
         {isQuestionsLoading ? (
           <QuestionSummarySkeleton />
@@ -114,17 +115,17 @@ export default function CommentPage() {
         />
 
         {/* 댓글 입력창 - 하단 고정 */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 mx-auto max-w-[640px] bg-white">
+        <BottomBarContainer className="bg-white">
           <CommentInput
             postId={postId}
             isAuthor={questionDetails?.questionPost?.isAuthor || false}
             onCommentAdded={refreshComments}
           />
-        </div>
+        </BottomBarContainer>
 
         {/* 댓글 입력창 높이만큼 하단 여백 */}
         <div className="h-20 w-full" />
-      </div>
+      </PageContainer>
     </div>
   );
 }

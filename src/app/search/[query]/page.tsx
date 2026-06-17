@@ -13,6 +13,7 @@ import SearchDocContainer from "@/components/search/SearchDocContainer";
 import SearchQnaContainer from "@/components/search/SearchQnaContainer";
 import { RootState } from "@/global/store";
 import { QueryDto } from "@/types/api/responses/queryDto";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 export default function SearchResultPage() {
   const router = useRouter();
@@ -84,7 +85,7 @@ export default function SearchResultPage() {
   return (
     <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <div className="min-h-screen w-full max-w-[640px] bg-white px-5">
+      <PageContainer className="min-h-screen bg-white px-5">
         {/* 헤더 */}
         <SearchResultNav
           searchValue={searchValue}
@@ -115,7 +116,7 @@ export default function SearchResultPage() {
             subject={executedSubject}
           />
         )}
-      </div>
+      </PageContainer>
     </div>
   );
 }

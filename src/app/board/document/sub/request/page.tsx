@@ -13,6 +13,7 @@ import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { setDocumentFilteringOpen } from "@/global/store/bottomSheetSlice";
 import DocumentFilteringBottomSheet from "@/components/documentMain/DocumentFilteringBottomSheet";
 import BoardSearchBar from "@/components/common/BoardSearchBar";
+import { TopBarContainer } from "@/components/layout/AppContainer";
 
 export default function DocumentRequestPage() {
   const router = useRouter();
@@ -99,7 +100,7 @@ export default function DocumentRequestPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <Header
           title="자료요청"
           leftType={LEFT_ITEM.BACK}
@@ -107,7 +108,7 @@ export default function DocumentRequestPage() {
           onLeftClick={handleBackClick}
           onRightClick={handleMenuClick}
         />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 (4rem) */}
       <div className="h-16 w-full" />

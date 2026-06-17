@@ -12,6 +12,7 @@ import Facility from "@/components/mypage/Facility";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { MemberDto } from "@/types/api/responses/memberDto";
 import memberApi from "@/apis/memberApi";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 function Page() {
   const [memberInfo, setMemberInfo] = useState<MemberDto | null>(null);
@@ -33,7 +34,7 @@ function Page() {
     <div className="min-h-screen bg-white">
       <ScrollToTopOnLoad />
       <CommonHeader title="마이페이지" rightType={RIGHT_ITEM.NONE}>
-        <div className="relative mx-auto w-full max-w-[640px] px-5 pb-10">
+        <PageContainer className="px-5 pb-10">
           {/* 회원 요약 */}
           <div className="flex justify-end pt-4">
             <MemberSummary memberInfo={memberInfo} />
@@ -56,7 +57,7 @@ function Page() {
           <div className="mt-6">
             <Facility />
           </div>
-        </div>
+        </PageContainer>
       </CommonHeader>
     </div>
   );

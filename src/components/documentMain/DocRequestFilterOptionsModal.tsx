@@ -86,7 +86,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
             }
           `}</style>
           <div
-            className="relative mx-auto w-full min-w-[386px] max-w-[640px] transform rounded-t-[20px] bg-white px-[18px] pb-4 pt-8 shadow-lg transition-transform duration-300"
+            className="relative mx-auto w-full min-w-[386px] max-w-container transform rounded-t-[20px] bg-white px-[18px] pb-4 pt-8 shadow-lg transition-transform duration-300 lg:max-w-container-lg"
             style={{
               maxHeight: modalHeight,
               transform: isVisible ? "translateY(0)" : "translateY(100%)",

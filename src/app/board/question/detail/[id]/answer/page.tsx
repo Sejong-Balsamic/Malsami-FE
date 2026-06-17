@@ -15,6 +15,7 @@ import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 import { RIGHT_ITEM } from "@/types/header";
 import CommonTextarea from "@/components/common/CommonTextarea";
+import { TopBarContainer, BottomBarContainer } from "@/components/layout/AppContainer";
 
 interface AnswerPostFormData {
   content: string;
@@ -170,9 +171,9 @@ export default function AnswerPostPage() {
       <ScrollToTopOnLoad />
 
       {/* Fixed Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <CommonHeader title="답변 작성" rightType={RIGHT_ITEM.NONE} />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 */}
       <div className="h-16 w-full" />
@@ -274,7 +275,7 @@ export default function AnswerPostPage() {
               </div>
 
               {/* 완료 버튼 */}
-              <div className="fixed bottom-4 left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-5">
+              <BottomBarContainer className="bottom-4 z-50 px-5">
                 <button
                   type="button"
                   onClick={handleSubmit}
@@ -285,7 +286,7 @@ export default function AnswerPostPage() {
                 >
                   완료
                 </button>
-              </div>
+              </BottomBarContainer>
 
               {/* 하단 완료 버튼 공간 확보 */}
               <div className="h-20" />

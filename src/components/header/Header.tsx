@@ -73,7 +73,7 @@ function Header({
   };
 
   const headerClasses = isFixed
-    ? "fixed top-0 left-1/2 transform -translate-x-1/2 w-full max-w-[640px] z-50 flex h-16 items-center justify-between bg-white px-5"
+    ? "fixed top-0 left-1/2 transform -translate-x-1/2 w-full max-w-container lg:max-w-container-lg z-50 flex h-16 items-center justify-between bg-white px-5"
     : "flex h-16 items-center justify-between bg-white px-5";
 
   return (

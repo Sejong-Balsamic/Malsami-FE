@@ -8,6 +8,7 @@ import Header from "@/components/header/Header";
 import DocumentCardList from "@/components/documentMain/DocumentCardList";
 import CommonPagination from "@/components/common/CommonPagination";
 import DocumentFilteringBottomSheet from "@/components/documentMain/DocumentFilteringBottomSheet";
+import { TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
@@ -187,7 +188,7 @@ export default function DocumentTierPage({ params }: DocumentTierPageProps) {
       {isModalOpen && <AccessRestrictedModal postTier={postTier} closeModal={closeModal} />}
 
       {/* Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <Header
           title={`${TIER_DISPLAY_NAME[postTier.toUpperCase()]} 자료`}
           leftType={LEFT_ITEM.BACK}
@@ -195,7 +196,7 @@ export default function DocumentTierPage({ params }: DocumentTierPageProps) {
           onLeftClick={handleBackClick}
           onRightClick={handleMenuClick}
         />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 (4rem) */}
       <div className="h-16 w-full" />

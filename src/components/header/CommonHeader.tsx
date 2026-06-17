@@ -5,6 +5,7 @@
 import React, { ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/header/Header";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM, RIGHT_ITEM, RightItemType } from "@/types/header";
 
 interface CommonHeaderProps {
@@ -44,8 +45,8 @@ export default function CommonHeader({
 
   return (
     <>
-      {/* fixed 헤더 */}
-      <div className="fixed top-0 z-40 w-full max-w-[640px] bg-white">
+      {/* fixed 헤더 — 컨테이너 폭에 맞춰 중앙 정렬 */}
+      <TopBarContainer className="z-40">
         <Header
           leftType={LEFT_ITEM.BACK}
           rightType={rightType}
@@ -55,13 +56,13 @@ export default function CommonHeader({
           subtitle={subtitle}
           rightButtonRef={rightButtonRef}
         />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 (4rem) */}
-      <div className="h-16 w-full max-w-[640px]" />
+      <div className="h-16 w-full" />
 
       {/* children 이 있으면 그냥 바로 렌더 */}
-      <div className="w-full max-w-[640px] bg-white">{children}</div>
+      <PageContainer className="bg-white">{children}</PageContainer>
     </>
   );
 }

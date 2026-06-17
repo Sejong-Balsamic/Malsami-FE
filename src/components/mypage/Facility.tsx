@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import WarningAlertModal from "@/components/common/modal/WarningAlertModal";
 import useLogout from "@/global/hook/useLogout";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 const SECTION_BORDER = "border-b border-ui-divider";
 const ROW_PADDING = "p-6"; // p-[24px] ➔ p-6 (24px)
@@ -24,7 +25,7 @@ function Facility() {
   };
 
   return (
-    <div className="relative mx-auto w-full max-w-[640px]">
+    <PageContainer>
       <div className={`grid w-full grid-cols-1 ${ROW_GAP} ${SECTION_BORDER} ${ROW_PADDING}`}>
         <button onClick={handleLeave} type="button" className="flex w-full items-center justify-between">
           <span className={TITLE_FONT}>회원탈퇴</span>
@@ -73,7 +74,7 @@ function Facility() {
         onCancel={() => setIsModalOpen(false)}
         onConfirm={handleLogoutClick}
       />
-    </div>
+    </PageContainer>
   );
 }
 

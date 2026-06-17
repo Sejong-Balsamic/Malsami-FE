@@ -131,6 +131,11 @@ const config: Config = {
         xl: "1280px",
         "2xl": "1536px",
       },
+      maxWidth: {
+        // 앱 컨테이너 폭 토큰 (폭 값은 이 한 곳에서만 관리)
+        container: "640px", // 모바일/기본 컨테이너 폭
+        "container-lg": "960px", // PC(lg 이상) 확장 컨테이너 폭
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

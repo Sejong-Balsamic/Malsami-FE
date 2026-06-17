@@ -7,6 +7,7 @@ import QuestionCardList from "@/components/questionMain/QuestionCardList";
 import CommonPagination from "@/components/common/CommonPagination";
 import TwoTabFilter from "@/components/common/TwoTabFilter";
 import QuestionCardListSkeleton from "@/components/common/skeletons/QuestionCardListSkeleton";
+import { TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM } from "@/types/header";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
@@ -85,9 +86,9 @@ export default function BountyQuestionPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <Header title="엽전현상금" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이 스페이서 (4rem) */}
       <div className="h-16 w-full" />

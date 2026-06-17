@@ -9,6 +9,7 @@ import QuestionCardListSkeleton from "@/components/common/skeletons/QuestionCard
 import CommonPagination from "@/components/common/CommonPagination";
 import QuestionFilteringBottomSheet from "@/components/questionMain/QuestionFilteringBottomSheet";
 import ActiveQuestionFilters from "@/components/questionMain/ActiveQuestionFilters";
+import { TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
@@ -141,7 +142,7 @@ export default function MajorQuestionPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <Header
           title="내 전공 질문"
           subtitle={memberFaculty || "학과 정보 로딩중..."}
@@ -150,7 +151,7 @@ export default function MajorQuestionPage() {
           onLeftClick={handleBackClick}
           onRightClick={handleMenuClick}
         />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 (4rem) */}
       <div className="h-16 w-full" />

@@ -12,6 +12,7 @@ import NoticeDetailSkeleton from "@/components/common/skeletons/NoticeDetailSkel
 import useCommonToast from "@/global/hook/useCommonToast";
 import noticePostApi from "@/apis/noticePostApi";
 import { NoticePostDto } from "@/types/api/responses/noticePostDto";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 export default function Page() {
   const router = useRouter();
@@ -68,12 +69,12 @@ export default function Page() {
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
   return (
-    <div className="mx-auto min-h-screen w-full max-w-[640px]">
+    <PageContainer className="min-h-screen">
       <ScrollToTopOnLoad />
       <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
       <div>
         {isLoading ? <NoticeDetailSkeleton /> : noticeDetails && <NoticeDetail noticePostDto={noticeDetails} />}
       </div>
-    </div>
+    </PageContainer>
   );
 }

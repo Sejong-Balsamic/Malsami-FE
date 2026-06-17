@@ -3,10 +3,11 @@
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import Image from "next/image";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 function Page() {
   return (
-    <div className="relative mx-auto w-full max-w-[640px]">
+    <PageContainer>
       <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
       <Image
         src="/image/PaperBG.png"
@@ -19,7 +20,7 @@ function Page() {
         <Image src="/icons/CheonminIcon.svg" alt="icon" width={18} height={18} className="h-[200px] w-[200px]" />
         <span className="font-suit-bold text-xl">개발 중 ~^^</span>
       </div>
-    </div>
+    </PageContainer>
   );
 }
 

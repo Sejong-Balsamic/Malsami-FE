@@ -13,6 +13,7 @@ import QuestionDetail from "@/components/questionDetail/QuestionDetail";
 import QuestionDetailFAB from "@/components/questionDetail/QuestionDetailFAB";
 import CommonContextMenu from "@/components/common/CommonContextMenu";
 import { QuestionDto } from "@/types/api/responses/questionDto";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 
 export default function Page() {
   const router = useRouter();
@@ -91,16 +92,16 @@ export default function Page() {
         <ScrollToTopOnLoad />
 
         {/* 고정 헤더 — PC에서도 컨테이너 폭 안에서만 흰 배경 */}
-        <div className="fixed left-1/2 top-0 z-50 w-full max-w-[640px] -translate-x-1/2 bg-white">
+        <TopBarContainer>
           <CommonHeader title="질문 상세" rightType={RIGHT_ITEM.NONE} />
-        </div>
+        </TopBarContainer>
 
         {/* 본문 컨테이너 — 컨테이너 영역만 흰 배경, 바깥은 회색 */}
-        <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white px-5">
+        <PageContainer className="min-h-screen bg-white px-5">
           {/* 헤더 높이만큼 공백 */}
           <div className="h-16 w-full" />
           <QuestionDetailSkeleton />
-        </div>
+        </PageContainer>
       </div>
     );
   }
@@ -117,7 +118,7 @@ export default function Page() {
       <ScrollToTopOnLoad />
 
       {/* 고정 헤더 — PC에서도 컨테이너 폭 안에서만 흰 배경 */}
-      <div className="fixed left-1/2 top-0 z-50 w-full max-w-[640px] -translate-x-1/2 bg-white">
+      <TopBarContainer>
         <CommonHeader
           title={questionDetails?.questionPost?.subject || "질문 상세"}
           rightType={RIGHT_ITEM.MENU}
@@ -125,10 +126,10 @@ export default function Page() {
           subtitle={questionDetails?.questionPost?.member?.major || "전공 비공개"}
           rightButtonRef={menuButtonRef}
         />
-      </div>
+      </TopBarContainer>
 
       {/* 본문 컨테이너 — 컨테이너 영역만 흰 배경, 바깥은 회색 */}
-      <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white px-5 pb-20">
+      <PageContainer className="min-h-screen bg-white px-5 pb-20">
         {/* 헤더 높이만큼 공백 */}
         <div className="h-16 w-full" />
         {questionDetails && (
@@ -156,7 +157,7 @@ export default function Page() {
           onReport={handleReport}
           onBlock={handleBlock}
         />
-      </div>
+      </PageContainer>
     </div>
   );
 }

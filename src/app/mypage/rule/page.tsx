@@ -4,12 +4,13 @@ import Image from "next/image";
 import useCommonToast from "@/global/hook/useCommonToast";
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 function Page() {
   const { showConfirmToast } = useCommonToast();
 
   return (
-    <div className="relative mx-auto w-full max-w-[640px]">
+    <PageContainer>
       <CommonHeader title="세종말싸미 이용규칙" rightType={RIGHT_ITEM.NONE} />
       <Image
         src="/image/PaperBG.png"
@@ -36,7 +37,7 @@ function Page() {
 
         <span className="font-suit-bold text-xl">개발 중 ~^^</span>
       </div>
-    </div>
+    </PageContainer>
   );
 }
 

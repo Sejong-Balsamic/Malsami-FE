@@ -41,7 +41,7 @@ function CommonNav() {
   };
 
   return (
-    <nav className="fixed bottom-0 left-1/2 z-50 flex h-[70px] w-full max-w-[640px] -translate-x-1/2 transform items-end justify-between bg-white px-9 py-[10px] shadow-[0_-2px_6px_rgba(0,0,0,0.1)]">
+    <nav className="fixed bottom-0 left-1/2 z-50 flex h-[70px] w-full max-w-container -translate-x-1/2 transform items-end justify-between bg-white px-9 py-[10px] shadow-[0_-2px_6px_rgba(0,0,0,0.1)] lg:max-w-container-lg">
       {menuItems.map(item => {
         const isActive = pathname === item.href; // 현재 페이지 여부 확인
 
