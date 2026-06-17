@@ -170,8 +170,8 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                 </button>
               </div>
 
-              {/* 본문 */}
-              <p className="mt-4 line-clamp-1 text-SUIT_14 font-medium leading-[19.6px] text-black">
+              {/* 본문 — 긴 답변도 전체가 보이도록 줄바꿈 보존 및 단어 단위 줄바꿈 */}
+              <p className="mt-4 whitespace-pre-wrap break-words text-SUIT_14 font-medium leading-[19.6px] text-black">
                 {answerPost.content || "내용 없음"}
               </p>
 
