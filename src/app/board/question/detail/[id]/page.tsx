@@ -6,6 +6,7 @@ import { RIGHT_ITEM } from "@/types/header";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
 import { questionPostApi } from "@/apis/questionPostApi";
+import useApiErrorHandler from "@/global/hook/useApiErrorHandler";
 import QuestionDetailSkeleton from "@/components/common/skeletons/QuestionDetailSkeleton";
 import { isSameMemberById } from "@/global/memberUtil";
 import QuestionDetail from "@/components/questionDetail/QuestionDetail";
@@ -15,6 +16,7 @@ import { QuestionDto } from "@/types/api/responses/questionDto";
 
 export default function Page() {
   const router = useRouter();
+  const { handleApiError } = useApiErrorHandler();
 
   // URL 파라미터 가져옴
   const params = useParams();
@@ -66,8 +68,9 @@ export default function Page() {
         } catch (innerError) {
           console.error("문서 상세 정보 가져오기 실패:", innerError);
           if (isMounted && !error) {
-            // 에러가 이미 설정되지 않은 경우만 처리
-            setError(error); // 오류 설정
+            // 공통 에러 핸들러 적용 (뒤로가기 이동 옵션 활성화)
+            const message = handleApiError(innerError, "질문 상세 정보를 가져오는데 실패했습니다.", true);
+            setError(message); // 오류 설정
           }
         } finally {
           if (isMounted) {

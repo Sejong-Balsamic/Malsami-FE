@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import CommonHeader from "@/components/header/CommonHeader";
 
 import { questionPostApi } from "@/apis/questionPostApi";
+import useApiErrorHandler from "@/global/hook/useApiErrorHandler";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 import QuestionSummary from "@/components/questionComment/QuestionSummary";
 import CommentList from "@/components/questionComment/CommentList";
@@ -17,6 +18,7 @@ export default function CommentPage() {
   const params = useParams();
   const postId = Array.isArray(params.id) ? params.id[0] : params.id;
   const { showWarningToast } = useCommonToast();
+  const { handleApiError } = useApiErrorHandler();
 
   const [questionDetails, setQuestionDetails] = useState<QuestionDto | null>(null);
   const [isQuestionsLoading, setIsQuestionsLoading] = useState(true);
@@ -47,8 +49,9 @@ export default function CommentPage() {
         } catch (innerError) {
           console.error("질문 상세 정보 가져오기 실패:", innerError);
           if (isMounted) {
-            setError("데이터를 불러오는데 실패했습니다.");
-            showWarningToast("질문 정보를 불러오는데 실패했습니다.");
+            // 공통 에러 핸들러 적용
+            const message = handleApiError(innerError, "질문 상세 정보를 가져오는데 실패했습니다.");
+            setError(message);
           }
         } finally {
           if (isMounted) {

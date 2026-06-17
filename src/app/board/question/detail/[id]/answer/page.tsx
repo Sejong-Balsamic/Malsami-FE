@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import { isApiError } from "@/apis/apiUtils";
+import useApiErrorHandler from "@/global/hook/useApiErrorHandler";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import { answerPostApi } from "@/apis/answerPostApi";
@@ -43,6 +43,7 @@ export default function AnswerPostPage() {
   const mediaAllowedTypes = ["image/jpeg", "image/png"];
 
   const { showConfirmToast, showWarningToast } = useCommonToast();
+  const { handleApiError } = useApiErrorHandler();
 
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -154,14 +155,8 @@ export default function AnswerPostPage() {
         localStorage.removeItem("answerFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
         router.push(`/board/question/detail/${questionPostId}`); // 작성 완료 후 해당 질문 상세 페이지로 이동
       } catch (error) {
-        // AxiosError 확인
-        if (isApiError(error)) {
-          const errorMessage = error.response?.data?.errorMessage || "오류가 발생했습니다.";
-          showWarningToast(errorMessage);
-        } else {
-          // 예상치 못한 오류 처리
-          showWarningToast("답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
-        }
+        console.error("답변 등록 중 에러 발생:", error);
+        handleApiError(error, "답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
       } finally {
         setisSubmitting(false);
       }
