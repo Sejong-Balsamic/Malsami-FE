@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import LandingHeader from "@/components/header/LandingHeader";
+import { PageContainer } from "@/components/layout/AppContainer";
 import SearchBar from "@/components/common/SearchBar";
 import HotQuestionSection from "@/components/landing/HotQuestionSection";
 import MajorQuestionSection from "@/components/landing/MajorQuestionSection";
@@ -17,11 +18,11 @@ export default function QuestionPage() {
   const [bountyActiveTab, setBountyActiveTab] = useState<"최근순" | "높은순">("최근순");
 
   return (
-    <>
+    <div className="min-h-screen bg-white">
       <LandingHeader contentType="question" />
 
       {/* Main Content */}
-      <main className="px-5">
+      <PageContainer width="wide" as="main" className="px-5">
         {/* 안내글 섹션 - 헤더로부터 40px 아래 */}
         <section aria-label="intro" className="mt-10">
           <div className="text-SUIT_24 font-medium leading-[140%]">
@@ -77,10 +78,10 @@ export default function QuestionPage() {
             onViewAll={() => router.push("/board/question/bounty")}
           />
         </section>
-      </main>
+      </PageContainer>
 
       {/* 플로팅 버튼 (글쓰기) */}
       <UploadQuestionFAB isFABVisible />
-    </>
+    </div>
   );
 }

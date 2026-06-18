@@ -155,8 +155,8 @@ export default function LoginForm({ onShowLoading = () => {}, onShowSuccess, onH
           )}
         </div>
 
-        {/* 로그인 제출 버튼 */}
-        <div className="mb-10 mt-auto">
+        {/* 로그인 제출 버튼 — 모바일: 화면 바닥 밀착(mt-auto), PC 카드: 폼 흐름에 자연 배치 */}
+        <div className="mb-10 mt-auto lg:mb-0 lg:mt-12">
           <button
             type="submit"
             className={`w-full rounded-md py-4 text-SUIT_16 font-extrabold text-white ${
