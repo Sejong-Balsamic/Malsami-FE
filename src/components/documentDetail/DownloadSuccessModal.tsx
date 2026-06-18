@@ -23,9 +23,9 @@ function DownloadSuccessModal({ isOpen, onClose }: ModalProps) {
           backgroundImage: 'url("/image/ModalBG.png")',
         }}
       >
-        <div className="flex h-48 w-[336px] flex-col items-center justify-center rounded-2xl bg-white/50 p-[20px]">
+        <div className="flex h-48 w-[336px] flex-col items-center justify-center rounded-2xl bg-white/50 p-5">
           <h1 className="font-suit-bold pb-[10px] text-[18px]">파일 다운로드</h1>
-          <div className="font-suit-medium w-full border-t-2 border-ui-divider-light pb-[20px] pt-[10px] text-center text-[16px]">
+          <div className="font-suit-medium w-full border-t-2 border-ui-divider-light pb-5 pt-[10px] text-center text-SUIT_16">
             파일이 성공적으로 다운로드되었습니다!
             <br />
             엽전 현상금이 소모되었습니다!

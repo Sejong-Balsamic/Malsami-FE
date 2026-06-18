@@ -21,7 +21,7 @@ export default function ActiveQuestionFilters({
       <div className="mb-6 flex gap-2 overflow-x-auto whitespace-nowrap scrollbar-hide" aria-label="active-filters">
         {/* 초기화 버튼 */}
         <div
-          className="font-suit-medium flex shrink-0 cursor-pointer items-center rounded-full bg-question-main px-3 py-2 text-[12px] text-white hover:opacity-90"
+          className="font-suit-medium flex shrink-0 cursor-pointer items-center rounded-full bg-question-main px-3 py-2 text-SUIT_12 text-white hover:opacity-90"
           role="button"
           tabIndex={0}
           onClick={onReset}

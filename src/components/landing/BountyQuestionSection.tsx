@@ -61,7 +61,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
               className="relative flex items-center justify-center"
             >
               <div
-                className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-[8px] py-[4px] ${
+                className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-2 py-1 ${
                   activeTab === "최근순" ? "bg-tag-preset-question-bg" : "bg-ui-divider-thick"
                 }`}
               >
@@ -82,7 +82,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
               className="relative ml-1 flex items-center justify-center whitespace-nowrap"
             >
               <div
-                className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-[8px] py-[4px] ${
+                className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-2 py-1 ${
                   activeTab === "높은순" ? "bg-tag-preset-question-bg" : "bg-ui-divider-thick"
                 }`}
               >

@@ -6,7 +6,7 @@ import useLogout from "@/global/hook/useLogout";
 import { PageContainer } from "@/components/layout/AppContainer";
 
 const SECTION_BORDER = "border-b border-ui-divider";
-const ROW_PADDING = "p-6"; // p-[24px] ➔ p-6 (24px)
+const ROW_PADDING = "p-6"; // p-6 ➔ p-6 (24px)
 const ROW_GAP = "gap-6";
 const TITLE_FONT = "text-SUIT_16 font-medium";
 

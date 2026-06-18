@@ -126,17 +126,13 @@ function LandingAllDocumentsSection({ onViewAll, onCardClick = undefined }: Land
                       {/* 좋아요 */}
                       <span className="flex items-center gap-1">
                         <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
-                        <span className="text-[12px] font-medium leading-[12px] text-ui-muted">
-                          {document.likeCount || 0}
-                        </span>
+                        <span className="text-SUIT_12 text-ui-muted">{document.likeCount || 0}</span>
                       </span>
 
                       {/* 댓글 */}
                       <span className="ml-2 flex items-center gap-1">
                         <Image src="/icons/newChatBubbleGray.svg" alt="댓글" width={14} height={14} />
-                        <span className="text-[12px] font-medium leading-[12px] text-ui-muted">
-                          {document.commentCount || 0}
-                        </span>
+                        <span className="text-SUIT_12 text-ui-muted">{document.commentCount || 0}</span>
                       </span>
                     </div>
                   </div>

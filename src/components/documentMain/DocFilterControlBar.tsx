@@ -36,10 +36,7 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
             key={filterOptions.sortType}
             label={`${sortTypeLabels[filterOptions.sortType as SortType]} ×`} // 한국어 라벨 사용
             onClick={handleRemoveSortOption}
-            style={{
-              backgroundColor: "#74D7CB",
-              cursor: "pointer",
-            }}
+            className="bg-mypage-teal-light"
           />
         )}
         {/* docType 표시 */}
@@ -49,10 +46,7 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
               key={docTypesTag}
               label={`${DocTypes[docTypesTag]} ×`}
               onClick={() => handleRemoveTag(docTypesTag)}
-              style={{
-                backgroundColor: "#0062D2",
-                cursor: "pointer",
-              }}
+              className="bg-legacy-accept-blue"
             />
           ))}
       </div>

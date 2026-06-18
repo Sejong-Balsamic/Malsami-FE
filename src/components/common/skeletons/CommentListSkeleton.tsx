@@ -19,7 +19,7 @@ export default function CommentListSkeleton() {
                 <div className="flex items-center gap-2">
                   {/* 작성자 태그 (랜덤으로 표시) */}
                   {index === 0 && (
-                    <div className="inline-flex items-center justify-center rounded bg-gray-200 px-[6px] py-[4px]">
+                    <div className="inline-flex items-center justify-center rounded bg-gray-200 px-[6px] py-1">
                       <div className="h-[12px] w-[40px]" />
                     </div>
                   )}

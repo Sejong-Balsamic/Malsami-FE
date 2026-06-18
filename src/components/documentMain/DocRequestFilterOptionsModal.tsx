@@ -139,7 +139,7 @@ const DocRequestFilterOptionsModal: React.FC<DocRequestFilterOptionsModalProps> 
                 <h1 className="font-suit-bold mb-5 text-xl">
                   태그 선택 <span className="font-suit-medium ml-1.5 text-sm text-ui-muted">최대 2개</span>
                 </h1>
-                <div className="mb-[40px] flex flex-wrap justify-between gap-x-[7px] gap-y-[20px]">
+                <div className="mb-10 flex flex-wrap justify-between gap-x-[7px] gap-y-5">
                   {DocTypesKeys.map(docTypeKey => (
                     <button
                       key={docTypeKey}

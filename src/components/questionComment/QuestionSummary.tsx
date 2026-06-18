@@ -52,9 +52,7 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
             </div>
 
             {/* 본문 텍스트 */}
-            <div className="mt-[16px] text-SUIT_16 font-medium leading-[22.4px] text-black">
-              {questionPost?.content}
-            </div>
+            <div className="mt-4 text-SUIT_16 font-medium leading-[22.4px] text-black">{questionPost?.content}</div>
 
             {/* 이미지 및 동영상 */}
             {Array.isArray(questionDto.mediaFiles) && questionDto.mediaFiles.length > 0 && (
@@ -89,7 +87,7 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
                 {questionPost.questionPresetTags.map((tag, index) => (
                   <div
                     key={index}
-                    className="flex h-[28px] w-auto min-w-[69px] flex-shrink-0 items-center justify-center gap-1 rounded-[34px] bg-tag-preset-question-bg px-[12px] py-[8px]"
+                    className="flex h-[28px] w-auto min-w-[69px] flex-shrink-0 items-center justify-center gap-1 rounded-[34px] bg-tag-preset-question-bg px-3 py-2"
                   >
                     <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-tag-preset-question-text">
                       {QuestionPresetTagLabels[tag] || tag}
@@ -105,7 +103,7 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
                 {questionDto.customTags.map((tag, index) => (
                   <div
                     key={index}
-                    className="inline-flex items-center justify-center gap-2.5 rounded-[34px] bg-tag-custom-bg px-[14px] py-[8px]"
+                    className="inline-flex items-center justify-center gap-2.5 rounded-[34px] bg-tag-custom-bg px-[14px] py-2"
                   >
                     <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-tag-custom-text">
                       {tag}

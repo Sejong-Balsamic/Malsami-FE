@@ -74,7 +74,7 @@ export default function CommentInput({ postId, isAuthor, onCommentAdded }: Comme
   };
 
   return (
-    <div className="mx-[20px] mb-4 flex h-[52px] w-auto flex-shrink-0 items-center rounded-[7px] border-2 border-question-main bg-white">
+    <div className="mx-5 mb-4 flex h-[52px] w-auto flex-shrink-0 items-center rounded-[7px] border-2 border-question-main bg-white">
       {/* 익명 체크박스 - 작성자는 익명으로 댓글 작성 불가 */}
       <button
         type="button"

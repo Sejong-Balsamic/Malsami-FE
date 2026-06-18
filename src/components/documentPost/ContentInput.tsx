@@ -44,7 +44,7 @@ function ContentInput({ value, onChange, isPrivate = false, onTogglePrivate = un
                 />
               </button>
               <span
-                className={`font-suit-medium text-[14px] ${isPrivate ? "text-document-main" : "text-ui-muted-soft"}`}
+                className={`font-suit-medium text-SUIT_14 ${isPrivate ? "text-document-main" : "text-ui-muted-soft"}`}
               >
                 익명
               </span>
