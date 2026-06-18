@@ -26,7 +26,7 @@ function Facility() {
 
   return (
     <PageContainer>
-      <div className={`grid w-full grid-cols-1 ${ROW_GAP} ${SECTION_BORDER} ${ROW_PADDING}`}>
+      <div className={`grid w-full grid-cols-1 lg:grid-cols-2 ${ROW_GAP} ${SECTION_BORDER} ${ROW_PADDING}`}>
         <button onClick={handleLeave} type="button" className="flex w-full items-center justify-between">
           <span className={TITLE_FONT}>회원탈퇴</span>
           <Image src="/icons/Move.svg" alt="move" width={7} height={14} />
@@ -36,11 +36,11 @@ function Facility() {
           type="button"
           className="flex w-full items-center justify-between"
         >
-          <span className="font-suit-semibold text-SUIT_18">개인정보 처리방침</span>
+          <span className={TITLE_FONT}>개인정보 처리방침</span>
           <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} />
         </button>
       </div>
-      <div className={`grid w-full grid-cols-1 ${ROW_GAP} ${SECTION_BORDER} ${ROW_PADDING}`}>
+      <div className={`grid w-full grid-cols-1 lg:grid-cols-2 ${ROW_GAP} ${SECTION_BORDER} ${ROW_PADDING}`}>
         <button onClick={() => router.push("/help")} type="button" className="flex w-full items-center justify-between">
           <span className={TITLE_FONT}>세종말싸미 이용도우미</span>
           <Image src="/icons/mypage/Move_gray.svg" alt="Move" width={7} height={14} />
@@ -50,7 +50,7 @@ function Facility() {
           type="button"
           className="flex w-full items-center justify-between"
         >
-          <span className="font-suit-semibold text-SUIT_18">이용규칙</span>
+          <span className={TITLE_FONT}>이용규칙</span>
           <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} />
         </button>
       </div>
@@ -60,7 +60,7 @@ function Facility() {
           type="button"
           className="flex w-full items-center justify-between"
         >
-          <span className="font-suit-semibold text-SUIT_18">공지사항</span>
+          <span className={TITLE_FONT}>공지사항</span>
           <Image src="/icons/mypage/Move_gray.svg" alt="YeopJeon" width={7} height={14} />
         </button>
       </div>

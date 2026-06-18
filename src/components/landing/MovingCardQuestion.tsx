@@ -61,7 +61,7 @@ function MovingCardQuestion({ data = [] }: MovingCardQuestionProps) {
         className="!pl-5 !pr-5 [&_.swiper-wrapper]:!my-3"
       >
         {data.map((questionPost, index) => (
-          <SwiperSlide key={questionPost.questionPostId || questionPost.title || index} className="!w-72">
+          <SwiperSlide key={questionPost.questionPostId || questionPost.title || index} className="!w-72 lg:!w-96">
             <div
               onClick={() => {
                 if (questionPost.questionPostId) {

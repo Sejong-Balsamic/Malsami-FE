@@ -13,7 +13,7 @@ export default function SearchPage() {
   return (
     <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <PageContainer className="min-h-screen min-w-[386px] bg-white">
+      <PageContainer width="wide" className="min-h-screen min-w-[386px] bg-white">
         <CommonHeader title="검색" rightType={RIGHT_ITEM.NONE} />
         <div className="mb-1" />
         <div className="px-2">

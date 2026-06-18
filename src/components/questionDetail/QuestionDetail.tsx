@@ -117,7 +117,9 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
       {/* 글 정보 */}
       <div className="flex w-full flex-col">
         <div className="mt-3">
-          <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">{questionDto.questionPost?.title}</h1>
+          <h1 className="break-words text-SUIT_18 font-semibold leading-[18px] text-black lg:max-w-[70ch]">
+            {questionDto.questionPost?.title}
+          </h1>
 
           {/* 전공 · 조회수 · 작성일 */}
           <div className="mt-2 flex items-center gap-1 text-SUIT_12 font-medium text-ui-muted">
@@ -135,20 +137,20 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
             <span className="text-ui-muted">{formattedDate}</span>
           </div>
 
-          {/* 본문 텍스트 */}
-          <div className="mt-4 text-SUIT_16 font-medium leading-[22.4px] text-black">
+          {/* 본문 텍스트 — PC에서 한 줄이 너무 길어지지 않도록 읽기 폭 제한 + 긴 단어/URL 안전 줄바꿈 */}
+          <div className="mt-4 break-words text-SUIT_16 font-medium leading-[22.4px] text-black lg:max-w-[70ch]">
             {questionDto.questionPost?.content}
           </div>
         </div>
 
-        {/* 이미지 및 동영상 */}
+        {/* 이미지 및 동영상 — 모바일은 가로 스크롤, PC(lg)는 자연스럽게 줄바꿈하며 크게 표시 */}
         {files && files.length > 0 && (
-          <div className="mt-2 overflow-x-auto">
-            <div className="flex gap-3 pb-2.5">
+          <div className="mt-2 overflow-x-auto lg:overflow-x-visible">
+            <div className="flex gap-3 pb-2.5 lg:flex-wrap">
               {files.map((file, index) => (
                 <div
                   key={index}
-                  className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-ui-divider-thick"
+                  className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-ui-divider-thick lg:h-48 lg:w-48"
                 >
                   <Image
                     src={file}

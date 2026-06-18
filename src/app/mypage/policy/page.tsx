@@ -7,7 +7,7 @@ import { PageContainer } from "@/components/layout/AppContainer";
 
 function Page() {
   return (
-    <PageContainer>
+    <PageContainer width="narrow">
       <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
       <Image
         src="/image/PaperBG.png"

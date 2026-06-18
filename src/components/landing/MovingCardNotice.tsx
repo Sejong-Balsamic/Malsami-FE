@@ -62,7 +62,7 @@ function MovingCardNotice({ data = [] }: MovingCardNoticeProps) {
       >
         {data.map((notice, index) => {
           return (
-            <SwiperSlide key={notice.noticePostId || index} className="!w-72">
+            <SwiperSlide key={notice.noticePostId || index} className="!w-72 lg:!w-96">
               <NoticeCard notice={notice} onClick={handleCardClick} />
             </SwiperSlide>
           );

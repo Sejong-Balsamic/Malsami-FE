@@ -58,7 +58,7 @@ function InfoList({ memberDto }: { memberDto: MemberDto | null }) {
       </div>
 
       {/* 내 자료 관련 폴더 */}
-      <div className="relative grid w-full grid-cols-1 gap-6 rounded-xl border border-question-main p-5">
+      <div className="relative grid w-full grid-cols-1 gap-6 rounded-xl border border-question-main p-5 lg:grid-cols-2 lg:gap-x-10">
         <button
           onClick={() => router.push("/mypage/mypost/doc")}
           type="button"
@@ -84,7 +84,7 @@ function InfoList({ memberDto }: { memberDto: MemberDto | null }) {
       </div>
 
       {/* 엽전 사용 내역 */}
-      <div className="relative grid w-full grid-cols-1 grid-rows-2 gap-5 rounded-xl border border-question-main p-5">
+      <div className="relative grid w-full grid-cols-1 grid-rows-2 gap-5 rounded-xl border border-question-main p-5 lg:grid-cols-2 lg:grid-rows-1 lg:gap-x-10">
         <button
           onClick={() => router.push("/mypage/mypurchase")}
           type="button"

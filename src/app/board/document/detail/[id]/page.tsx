@@ -84,7 +84,7 @@ export default function Page() {
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
   return (
-    <PageContainer className="min-h-screen">
+    <PageContainer width="narrow" className="min-h-screen">
       <ScrollToTopOnLoad />
       <CommonHeader title="자료 상세보기" rightType={RIGHT_ITEM.MENU} onRightClick={toggleDrawer} />
       <div>

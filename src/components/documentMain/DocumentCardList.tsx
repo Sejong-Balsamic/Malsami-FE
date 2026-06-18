@@ -35,7 +35,7 @@ export default function DocumentCardList({ data }: DocumentCardListProps) {
     // 모바일: 1열(카드 사이 divider), PC(lg): 2열 그리드(gap)
     <div className="w-full lg:grid lg:grid-cols-2 lg:gap-x-6 lg:gap-y-4">
       {data.map((document, index) => (
-        <div key={document.documentPostId || `document-${index}`}>
+        <div key={document.documentPostId || `document-${index}`} className="lg:flex lg:flex-col">
           <div
             role="button"
             tabIndex={0}
@@ -45,7 +45,7 @@ export default function DocumentCardList({ data }: DocumentCardListProps) {
                 handleCardClick(document.documentPostId || "");
               }
             }}
-            className="cursor-pointer"
+            className="cursor-pointer lg:h-full"
           >
             <DocumentCard
               documentPostId={document.documentPostId || ""}

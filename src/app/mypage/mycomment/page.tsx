@@ -7,7 +7,7 @@ import { PageContainer } from "@/components/layout/AppContainer";
 
 function Page() {
   return (
-    <PageContainer>
+    <PageContainer width="wide">
       <CommonHeader title="내가 작성한 댓글" rightType={RIGHT_ITEM.NONE} />
       <div>
         <Image

@@ -87,12 +87,12 @@ function LandingAllQuestionsSection({ onViewAll, onCardClick = undefined }: Land
         }
         if (questions.length > 0) {
           return (
-            <div className="w-full rounded-lg bg-white shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]">
+            <div className="w-full rounded-lg bg-white shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)] lg:grid lg:grid-cols-2 lg:gap-x-6 lg:gap-y-4 lg:rounded-none lg:bg-transparent lg:shadow-none">
               {questions.map((question, index) => (
                 <button
                   type="button"
                   key={question.questionPostId}
-                  className={`w-full cursor-pointer px-5 py-6 text-left ${index < questions.length - 1 ? "border-b border-ui-divider-thick" : ""}`}
+                  className={`w-full cursor-pointer px-5 py-6 text-left lg:h-full lg:rounded-lg lg:bg-white lg:shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)] ${index < questions.length - 1 ? "border-b border-ui-divider-thick lg:border-b-0" : ""}`}
                   onClick={() => handleCardClick(question.questionPostId as string)}
                 >
                   {/* 상단 부분 - 과목 태그 */}

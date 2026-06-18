@@ -10,7 +10,7 @@ function Page() {
   const { showConfirmToast } = useCommonToast();
 
   return (
-    <PageContainer>
+    <PageContainer width="narrow">
       <CommonHeader title="세종말싸미 이용규칙" rightType={RIGHT_ITEM.NONE} />
       <Image
         src="/image/PaperBG.png"

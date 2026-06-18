@@ -7,7 +7,7 @@ import { PageContainer } from "@/components/layout/AppContainer";
 
 function Page() {
   return (
-    <PageContainer>
+    <PageContainer width="wide">
       <CommonHeader title="내가 구매한 자료" rightType={RIGHT_ITEM.NONE} />
       <div>
         <Image

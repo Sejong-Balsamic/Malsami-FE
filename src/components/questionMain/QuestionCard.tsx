@@ -17,7 +17,7 @@ function QuestionCard({ question }: QuestionCardProps) {
   // 이미지가 없는 경우의 레이아웃
   if (!hasImage) {
     return (
-      <div className="min-h-[120px] w-full bg-white">
+      <div className="flex h-full min-h-[120px] w-full flex-col bg-white">
         {/* 상단: 태그들과 시간 */}
         <div className="flex items-start justify-between">
           {/* 태그 영역 */}
@@ -56,11 +56,11 @@ function QuestionCard({ question }: QuestionCardProps) {
         {/* 본문 - 2줄까지 표시 */}
         <p className="line-clamp-2 text-SUIT_14 font-medium text-ui-body">{question.content}</p>
 
-        {/* 12px 여백 */}
-        <div className="h-3" />
+        {/* 12px 여백 — PC 그리드에서 남은 공간 채워 하단 정보 바닥 정렬 */}
+        <div className="h-3 lg:flex-1" />
 
         {/* 하단: 좋아요와 답변 개수 */}
-        <div className="flex items-center">
+        <div className="mt-auto flex items-center">
           {/* 좋아요 */}
           <div className="flex items-center">
             <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
@@ -79,7 +79,7 @@ function QuestionCard({ question }: QuestionCardProps) {
 
   // 이미지가 있는 경우의 레이아웃
   return (
-    <div className="min-h-[120px] w-full bg-white">
+    <div className="flex h-full min-h-[120px] w-full flex-col bg-white">
       {/* 상단: 태그들과 시간 */}
       <div className="flex items-start justify-between">
         {/* 태그 영역 */}
@@ -123,14 +123,14 @@ function QuestionCard({ question }: QuestionCardProps) {
           <p className="line-clamp-2 text-SUIT_14 font-medium text-ui-body">{question.content}</p>
         </div>
 
-        {/* 오른쪽: 이미지 - 고정 크기 (반응형) */}
+        {/* 오른쪽: 이미지 - 모바일 70px, PC 90px */}
         <div className="flex-shrink-0">
-          <div className="h-[4.375rem] w-[4.375rem] overflow-hidden rounded-lg bg-ui-image-bg">
+          <div className="h-[4.375rem] w-[4.375rem] overflow-hidden rounded-lg bg-ui-image-bg lg:h-[5.625rem] lg:w-[5.625rem]">
             <Image
               src={imageUrl}
               alt="질문 이미지"
-              width={70}
-              height={70}
+              width={90}
+              height={90}
               className="h-full w-full object-cover"
               onError={e => {
                 // 이미지 로드 실패 시 기본 배경색 유지
@@ -141,11 +141,11 @@ function QuestionCard({ question }: QuestionCardProps) {
         </div>
       </div>
 
-      {/* 8px 여백 (카드 아래에서) */}
-      <div className="h-2" />
+      {/* 8px 여백 (카드 아래에서) — PC 그리드에서 남은 공간 채워 하단 정보 바닥 정렬 */}
+      <div className="h-2 lg:flex-1" />
 
       {/* 하단: 좋아요와 답변 개수 */}
-      <div className="flex items-center">
+      <div className="mt-auto flex items-center">
         {/* 좋아요 */}
         <div className="flex items-center">
           <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />

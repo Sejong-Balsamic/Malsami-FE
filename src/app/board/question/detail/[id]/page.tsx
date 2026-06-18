@@ -97,9 +97,9 @@ export default function Page() {
         </TopBarContainer>
 
         {/* 본문 컨테이너 — 컨테이너 영역만 흰 배경, 바깥은 회색 */}
-        <PageContainer className="min-h-screen bg-white px-5">
+        <PageContainer width="narrow" className="min-h-screen bg-white px-5">
           {/* 헤더 높이만큼 공백 */}
-          <div className="h-16 w-full" />
+          <div className="h-16 w-full lg:hidden" />
           <QuestionDetailSkeleton />
         </PageContainer>
       </div>
@@ -129,9 +129,9 @@ export default function Page() {
       </TopBarContainer>
 
       {/* 본문 컨테이너 — 컨테이너 영역만 흰 배경, 바깥은 회색 */}
-      <PageContainer className="min-h-screen bg-white px-5 pb-20">
+      <PageContainer width="narrow" className="min-h-screen bg-white px-5 pb-20">
         {/* 헤더 높이만큼 공백 */}
-        <div className="h-16 w-full" />
+        <div className="h-16 w-full lg:hidden" />
         {questionDetails && (
           <>
             <QuestionDetail

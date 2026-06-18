@@ -27,7 +27,7 @@ export default function QuestionCardList({ data }: QuestionCardListProps) {
     // 모바일: 1열(카드 사이 divider), PC(lg): 2열 그리드(gap)
     <div className="w-full lg:grid lg:grid-cols-2 lg:gap-x-6 lg:gap-y-4">
       {data.map((question, index) => (
-        <div key={question.questionPostId}>
+        <div key={question.questionPostId} className="lg:flex lg:flex-col">
           <div
             role="button"
             tabIndex={0}
@@ -37,7 +37,7 @@ export default function QuestionCardList({ data }: QuestionCardListProps) {
                 handleQuestionClick(question.questionPostId || "");
               }
             }}
-            className="cursor-pointer"
+            className="cursor-pointer lg:h-full"
           >
             <QuestionCard question={question} />
           </div>

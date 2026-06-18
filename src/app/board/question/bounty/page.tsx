@@ -7,7 +7,7 @@ import QuestionCardList from "@/components/questionMain/QuestionCardList";
 import CommonPagination from "@/components/common/CommonPagination";
 import TwoTabFilter from "@/components/common/TwoTabFilter";
 import QuestionCardListSkeleton from "@/components/common/skeletons/QuestionCardListSkeleton";
-import { TopBarContainer } from "@/components/layout/AppContainer";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM } from "@/types/header";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
@@ -91,9 +91,9 @@ export default function BountyQuestionPage() {
       </TopBarContainer>
 
       {/* 헤더 높이 스페이서 (4rem) */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
-      <div className="px-5">
+      <PageContainer width="wide" className="px-5">
         {/* 최근순/높은순 필터링 컴포넌트 */}
         <TwoTabFilter
           firstTab="최근순"
@@ -129,7 +129,7 @@ export default function BountyQuestionPage() {
 
         {/* 61px 하단 여백 (모바일 탭바 고려) */}
         <div className="h-[61px]" />
-      </div>
+      </PageContainer>
     </div>
   );
 }

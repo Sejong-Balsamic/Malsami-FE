@@ -133,8 +133,11 @@ const config: Config = {
       },
       maxWidth: {
         // 앱 컨테이너 폭 토큰 (폭 값은 이 한 곳에서만 관리)
-        container: "640px", // 모바일/기본 컨테이너 폭
-        "container-lg": "960px", // PC(lg 이상) 확장 컨테이너 폭
+        container: "640px", // 모바일/기본 컨테이너 폭 (레거시 — 점진 대체)
+        "container-lg": "960px", // PC(lg 이상) 확장 컨테이너 폭 (레거시 — 점진 대체)
+        // 콘텐츠 성격별 폭 토큰 (통 제거 후 진짜 반응형용)
+        "content-narrow": "720px", // 본문 읽기/폼 등 좁게 유지할 콘텐츠
+        "content-wide": "1200px", // 리스트/그리드/홈 등 넓게 펼칠 콘텐츠
       },
       borderRadius: {
         lg: "var(--radius)",

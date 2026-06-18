@@ -58,8 +58,8 @@ export default function CommonHeader({
         />
       </TopBarContainer>
 
-      {/* 헤더 높이만큼 스페이서 (4rem) */}
-      <div className="h-16 w-full" />
+      {/* 헤더 높이만큼 스페이서 (4rem) — 모바일 전용 (PC는 헤더가 없음) */}
+      <div className="h-16 w-full lg:hidden" />
 
       {/* children 이 있으면 그냥 바로 렌더 */}
       <PageContainer className="bg-white">{children}</PageContainer>

@@ -84,8 +84,8 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
 
   return (
     <div className="flex flex-col justify-center px-5">
-      {/* 교과목명 */}
-      <div className="mt-8 h-6 w-full max-w-container lg:max-w-container-lg">
+      {/* 교과목명 (폭은 상위 PageContainer가 책임지므로 중복 max-w 제거) */}
+      <div className="mt-8 h-6 w-full">
         <div className="flex items-center">
           <div className="font-suit-bold flex h-6 items-center justify-center rounded-xl bg-legacy-teal px-3.5 py-1.5 text-SUIT_12 text-white">
             {documentDto.documentPost?.subject || "과목명 없음"}
@@ -94,16 +94,19 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
       </div>
 
       {/* 글 정보 */}
-      <div className="flex h-auto w-full max-w-container flex-col lg:max-w-container-lg">
+      <div className="flex h-auto w-full flex-col">
         <div className="mt-5">
-          <span className="font-suit-bold text-SUIT_18">{documentDto.documentPost?.title || "제목 없음"}</span>
-          <div className="font-suit-medium mt-2.5 text-SUIT_14 leading-normal text-ui-body-soft">
+          <span className="font-suit-bold block break-words text-SUIT_18 lg:max-w-[70ch]">
+            {documentDto.documentPost?.title || "제목 없음"}
+          </span>
+          {/* 내용 — PC에서 한 줄이 너무 길어지지 않도록 읽기 폭 제한 + 긴 단어/URL 안전 줄바꿈 */}
+          <div className="font-suit-medium mt-2.5 break-words text-SUIT_14 leading-normal text-ui-body-soft lg:max-w-[70ch]">
             {documentDto.documentPost?.content || "내용 없음"}
           </div>
         </div>
         <DownloadFile documentFiles={documentDto.documentFiles || []} /> {/* 기본값 제공 */}
         {/* 카테고리 */}
-        <div className="mt-5 h-6 w-full max-w-container lg:max-w-container-lg">
+        <div className="mt-5 h-6 w-full">
           <div className="flex items-center gap-2.5">
             {documentDto.documentPost?.documentTypes?.map((tag, index) => (
               <div
@@ -116,7 +119,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
           </div>
         </div>
         {/* 작성자 정보 */}
-        <div className="flex h-[72px] w-full max-w-container flex-col lg:max-w-container-lg">
+        <div className="flex h-[72px] w-full flex-col">
           <div className="mt-5 text-right">
             <div>
               <span className="font-suit-medium mb-1 text-SUIT_12">

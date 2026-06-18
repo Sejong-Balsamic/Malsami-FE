@@ -85,7 +85,7 @@ export default function SearchResultPage() {
   return (
     <div className="flex min-h-screen justify-center bg-gray-100">
       <ScrollToTopOnLoad />
-      <PageContainer className="min-h-screen bg-white px-5">
+      <PageContainer width="wide" className="min-h-screen bg-white px-5">
         {/* 헤더 */}
         <SearchResultNav
           searchValue={searchValue}

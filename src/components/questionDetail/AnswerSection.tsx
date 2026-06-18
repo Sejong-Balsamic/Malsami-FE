@@ -170,14 +170,14 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                 </button>
               </div>
 
-              {/* 본문 — 긴 답변도 전체가 보이도록 줄바꿈 보존 및 단어 단위 줄바꿈 */}
-              <p className="mt-4 whitespace-pre-wrap break-words text-SUIT_14 font-medium leading-[19.6px] text-black">
+              {/* 본문 — 긴 답변도 전체가 보이도록 줄바꿈 보존 및 단어 단위 줄바꿈, PC는 읽기 폭 제한 */}
+              <p className="mt-4 whitespace-pre-wrap break-words text-SUIT_14 font-medium leading-[19.6px] text-black lg:max-w-[70ch]">
                 {answerPost.content || "내용 없음"}
               </p>
 
-              {/* 이미지 리스트 */}
+              {/* 이미지 리스트 — 모바일은 가로 스크롤, PC(lg)는 줄바꿈하며 크게 표시 */}
               {answerPost.mediaFiles && answerPost.mediaFiles.length > 0 && (
-                <div className="mt-2 flex gap-2 overflow-x-auto">
+                <div className="mt-2 flex gap-2 overflow-x-auto lg:flex-wrap lg:overflow-x-visible">
                   {answerPost.mediaFiles.map((f, i) => (
                     <Image
                       key={i}
@@ -185,7 +185,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                       alt="ans-img"
                       width={90}
                       height={90}
-                      className="h-[90px] w-[90px] flex-shrink-0 rounded-lg object-cover"
+                      className="h-[90px] w-[90px] flex-shrink-0 rounded-lg object-cover lg:h-40 lg:w-40"
                     />
                   ))}
                 </div>

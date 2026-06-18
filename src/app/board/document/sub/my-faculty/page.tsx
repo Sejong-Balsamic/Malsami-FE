@@ -8,7 +8,7 @@ import DocumentCardList from "@/components/documentMain/DocumentCardList";
 import CommonPagination from "@/components/common/CommonPagination";
 import DocumentFilteringBottomSheet from "@/components/documentMain/DocumentFilteringBottomSheet";
 import BoardSearchBar from "@/components/common/BoardSearchBar";
-import { TopBarContainer } from "@/components/layout/AppContainer";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
@@ -133,10 +133,10 @@ export default function MyFacultyDocumentPage() {
       </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 (4rem) */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
       {/* 메인 콘텐츠 */}
-      <div className="px-5">
+      <PageContainer width="wide" className="px-5">
         {/* 16px 공백 */}
         <div className="h-4" />
 
@@ -172,7 +172,7 @@ export default function MyFacultyDocumentPage() {
 
         {/* 61px 하단 여백 (모바일 탭바 고려) */}
         <div className="h-[61px]" />
-      </div>
+      </PageContainer>
 
       {/* DocumentFilteringBottomSheet */}
       <DocumentFilteringBottomSheet

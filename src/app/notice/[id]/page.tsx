@@ -69,7 +69,7 @@ export default function Page() {
   if (error) return <p>오류가 발생했습니다. 다시 시도해주세요.</p>;
 
   return (
-    <PageContainer className="min-h-screen">
+    <PageContainer width="narrow" className="min-h-screen">
       <ScrollToTopOnLoad />
       <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
       <div>

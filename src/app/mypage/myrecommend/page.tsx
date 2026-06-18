@@ -7,7 +7,7 @@ import { PageContainer } from "@/components/layout/AppContainer";
 
 function Page() {
   return (
-    <PageContainer>
+    <PageContainer width="wide">
       <CommonHeader title="내가 추천한 자료" rightType={RIGHT_ITEM.NONE} />
       {/* 헤더 아래 여백 추가 */}
       <div className="mt-[64px]">

@@ -5,7 +5,7 @@ import { PageContainer } from "@/components/layout/AppContainer";
 
 function Page() {
   return (
-    <PageContainer>
+    <PageContainer width="narrow">
       <CommonHeader title="세종말싸미 이용도우미" rightType={RIGHT_ITEM.NONE} />
       {/* 헤더 여백 추가 */}
       <div className="mt-[64px]">

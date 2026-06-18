@@ -80,7 +80,7 @@ export default function NoticePage() {
   // 로딩 상태 렌더링
   if (isNoticeDataCurrentlyLoading) {
     return (
-      <PageContainer>
+      <PageContainer width="wide">
         <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
         <div className="px-5">
           <NoticeListSkeleton />
@@ -92,7 +92,7 @@ export default function NoticePage() {
   // 에러 상태 렌더링
   if (noticeDataFetchErrorMessage) {
     return (
-      <PageContainer>
+      <PageContainer width="wide">
         <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
         <div className="flex h-[calc(100vh-64px)] flex-col items-center justify-center px-5">
           <p className="mb-4 text-SUIT_18 font-semibold text-black">오류가 발생했습니다</p>
@@ -105,7 +105,7 @@ export default function NoticePage() {
   // 빈 상태 렌더링
   if (!currentNoticePostsPageData?.content || currentNoticePostsPageData.content.length === 0) {
     return (
-      <PageContainer>
+      <PageContainer width="wide">
         <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
         <div className="flex h-[calc(100vh-64px)] flex-col items-center justify-center px-5">
           <p className="mb-4 text-SUIT_18 font-semibold text-black">공지사항이 없습니다</p>
@@ -117,7 +117,7 @@ export default function NoticePage() {
 
   // 메인 렌더링
   return (
-    <PageContainer className="min-h-screen bg-white">
+    <PageContainer width="wide" className="min-h-screen bg-white">
       <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
 
       <div className="px-5">

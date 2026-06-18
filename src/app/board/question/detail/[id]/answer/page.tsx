@@ -176,7 +176,7 @@ export default function AnswerPostPage() {
       </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
       {/* Main Content */}
       <main>

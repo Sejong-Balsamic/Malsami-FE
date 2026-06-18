@@ -96,10 +96,10 @@ export default function CommentPage() {
       </TopBarContainer>
 
       {/* 헤더 높이만큼 공백 */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
       {/* 본문 영역 */}
-      <PageContainer>
+      <PageContainer width="narrow">
         {/* 질문 요약 - 항상 표시 */}
         {isQuestionsLoading ? (
           <QuestionSummarySkeleton />
