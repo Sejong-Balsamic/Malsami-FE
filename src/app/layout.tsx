@@ -1,48 +1,66 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import CommonToast from "@/components/common/CommonToast";
 import FcmInitializer from "@/components/common/FcmInitializer"; // FCM 초기화 컴포넌트
 import { initializeFirebase } from "@/global/firebaseUtil";
 import Providers from "@/app/providers"; // Redux Provider 컴포넌트
+import { SITE_CONFIG } from "@/constants/seo";
 import "./globals.css";
 import ClientLayout from "./ClientLayout"; // 클라이언트용 레이아웃 추가
 
 // Firebase 초기화 실행
 initializeFirebase();
 
+// 파비콘/앱 아이콘은 App Router 컨벤션(src/app/icon.png, src/app/apple-icon.png)으로 자동 처리되므로
+// metadata.icons를 별도로 지정하지 않는다.
 export const metadata: Metadata = {
-  title: "세종말싸미",
-  description: "세종대학생을 위한 세종말싸미입니다.",
-  icons: {
-    icon: "https://i.ibb.co/JQRFwTD/logoicon.png",
-    apple: "https://i.ibb.co/JQRFwTD/logoicon.png",
+  metadataBase: new URL(SITE_CONFIG.url),
+  title: {
+    default: SITE_CONFIG.title,
+    template: `%s | ${SITE_CONFIG.name}`,
+  },
+  description: SITE_CONFIG.description,
+  keywords: [...SITE_CONFIG.keywords],
+  alternates: {
+    canonical: "/",
   },
   openGraph: {
-    title: "세종말싸미",
-    description: "세종대학생을 위한 세종말싸미입니다.",
-    url: "https://test.sejong-malsami.co.kr/",
+    type: "website",
+    siteName: SITE_CONFIG.name,
+    title: SITE_CONFIG.title,
+    description: SITE_CONFIG.description,
+    url: SITE_CONFIG.url,
+    locale: "ko_KR",
     images: [
       {
-        url: "https://i.ibb.co/JQRFwTD/logoicon.png",
+        url: SITE_CONFIG.ogImage,
         width: 1200,
         height: 1200,
-        alt: "세종말싸미 로고",
+        alt: `${SITE_CONFIG.name} 로고`,
       },
     ],
-    type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_CONFIG.title,
+    description: SITE_CONFIG.description,
+    images: [SITE_CONFIG.ogImage],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
-        <meta property="og:title" content="세종말싸미" />
-        <meta property="og:description" content="세종대학생을 위한 세종말싸미입니다." />
-        <meta property="og:image" content="https://i.ibb.co/JQRFwTD/logoicon.png" />
-        <meta property="og:url" content="https://test.sejong-malsami.co.kr/" />
-        <meta property="og:type" content="website" />
-      </head>
       <body>
         <Providers>
           <FcmInitializer />

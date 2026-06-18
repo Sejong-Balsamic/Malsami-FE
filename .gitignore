@@ -59,3 +59,8 @@ tsconfig.tsbuildinfo
 
 # brainstorming visual companion
 .superpowers/
+
+# ====================================================================
+# SUH-DEVOPS-TEMPLATE: Auto-added entries
+# ====================================================================
+/.claude/settings.local.json
