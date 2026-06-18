@@ -11,6 +11,7 @@ import DocumentRequestBoardSection from "@/components/documentMain/DocumentReque
 import TierBoardNavigateSection from "@/components/documentMain/TierBoardNavigateSection";
 import HotDocumentsSection from "@/components/landing/HotDocumentSection";
 import LandingHeader from "@/components/header/LandingHeader";
+import { PageContainer } from "@/components/layout/AppContainer";
 import SearchBar from "@/components/common/SearchBar";
 import Image from "next/image";
 
@@ -59,12 +60,12 @@ export default function DocumentBoardPage() {
   }, []);
 
   return (
-    <>
+    <div className="min-h-screen bg-white">
       {/* Header */}
       <LandingHeader contentType="document" />
 
       {/* Main Content */}
-      <main className="px-5">
+      <PageContainer width="wide" as="main" className="px-5">
         {/* 안내글 섹션 - 헤더로부터 40px 아래 */}
         <section aria-label="intro" className="mt-10">
           <div className="font-suit text-[24px] font-medium leading-[140%]">
@@ -125,10 +126,10 @@ export default function DocumentBoardPage() {
         <section aria-labelledby="document-request-board" className="mb-5">
           <DocumentRequestBoardSection />
         </section>
-      </main>
+      </PageContainer>
 
       {/* 플로팅 버튼 (자료 업로드) */}
       <UploadDocumentFAB isFABVisible={isFABVisible} />
-    </>
+    </div>
   );
 }

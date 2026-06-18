@@ -1,7 +1,7 @@
 # 📚 세종말싸미 프론트엔드 📚
 
 <!-- AUTO-VERSION-SECTION: DO NOT EDIT MANUALLY -->
-## 최신 버전 : v0.1.52 (2026-06-18)
+## 최신 버전 : v0.1.53 (2026-06-18)
 
 [전체 버전 기록 보기](CHANGELOG.md)
 

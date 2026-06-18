@@ -1,14 +1,37 @@
 {
   "metadata": {
-    "lastUpdated": "2026-06-18T07:29:54Z",
-    "currentVersion": "0.1.53",
+    "lastUpdated": "2026-06-18T07:44:06Z",
+    "currentVersion": "0.1.54",
     "projectType": "react",
-    "totalReleases": 18,
+    "totalReleases": 19,
     "projectTypes": [
       "react"
     ]
   },
   "releases": [
+    {
+      "version": "0.1.54",
+      "project_type": "react",
+      "project_types": [
+        "react"
+      ],
+      "date": "2026-06-18",
+      "pr_number": 661,
+      "raw_summary": "## Summary by CodeRabbit\n\n## 릴리스 노트\n\n* **개선**\n  * PC에서 로그인 화면이 가운데 카드로 깔끔하게 표시됩니다\n  * 로그인 화면에서 상단 메뉴가 더 이상 보이지 않습니다\n  * 자료·질문 게시판이 넓은 화면에서도 보기 좋게 정렬됩니다\n  * 글쓰기 화면이 읽기 편한 너비로 정돈되었습니다\n  * 검색 화면에서 양옆 회색 여백이 사라졌습니다",
+      "parsed_changes": {
+        "개선": {
+          "title": "개선",
+          "items": [
+            "PC에서 로그인 화면이 가운데 카드로 깔끔하게 표시됩니다",
+            "로그인 화면에서 상단 메뉴가 더 이상 보이지 않습니다",
+            "자료·질문 게시판이 넓은 화면에서도 보기 좋게 정렬됩니다",
+            "글쓰기 화면이 읽기 편한 너비로 정돈되었습니다",
+            "검색 화면에서 양옆 회색 여백이 사라졌습니다"
+          ]
+        }
+      },
+      "parse_method": "markdown"
+    },
     {
       "version": "0.1.53",
       "project_type": "react",

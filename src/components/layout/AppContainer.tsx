@@ -32,15 +32,20 @@ export type ContentWidth = keyof typeof CONTENT_WIDTH;
 interface PageContainerProps extends ContainerProps {
   // eslint-disable-next-line react/require-default-props
   width?: ContentWidth;
+  // 렌더할 시맨틱 태그 (기본 div). 리스트 본문 등에서 "main" 으로 쓸 수 있다.
+  // eslint-disable-next-line react/require-default-props
+  as?: "div" | "main" | "section";
 }
 
 /**
  * 페이지 본문 컨테이너.
  * 화면 중앙 정렬 + 콘텐츠 성격별 폭. 페이지는 폭을 직접 신경 쓰지 않고 이 컴포넌트로 감싼다.
  * width: "narrow"(본문/폼) | "wide"(리스트/홈) | "legacy"(기존 640/960, 기본값).
+ * as: 시맨틱 태그 지정(div|main|section, 기본 div).
  */
-export function PageContainer({ children, className = "", width = "legacy" }: PageContainerProps) {
-  return <div className={`relative mx-auto w-full ${CONTENT_WIDTH[width]} ${className}`}>{children}</div>;
+export function PageContainer({ children, className = "", width = "legacy", as = "div" }: PageContainerProps) {
+  const Tag = as;
+  return <Tag className={`relative mx-auto w-full ${CONTENT_WIDTH[width]} ${className}`}>{children}</Tag>;
 }
 
 /**

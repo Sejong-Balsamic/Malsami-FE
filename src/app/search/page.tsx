@@ -11,9 +11,9 @@ export default function SearchPage() {
   const router = useRouter();
 
   return (
-    <div className="flex min-h-screen justify-center bg-gray-100">
+    <div className="flex min-h-screen justify-center bg-white">
       <ScrollToTopOnLoad />
-      <PageContainer width="wide" className="min-h-screen min-w-[386px] bg-white">
+      <PageContainer width="wide" className="min-h-screen bg-white">
         <CommonHeader title="검색" rightType={RIGHT_ITEM.NONE} />
         <div className="mb-1" />
         <div className="px-2">

@@ -35,12 +35,16 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-100">
+    <div className="flex min-h-screen flex-col bg-white lg:items-center lg:justify-center lg:bg-gray-100">
       <ScrollToTopOnLoad />
-      <div className="relative flex h-screen w-full max-w-2xl flex-col bg-white">
+      {/*
+        모바일: 풀폭·풀높이 흰 화면.
+        PC(lg+): 회색 배경 중앙에 떠 있는 흰 카드(둥근 모서리·그림자·적당한 폭).
+      */}
+      <div className="relative flex min-h-screen w-full flex-col bg-white lg:min-h-0 lg:w-full lg:max-w-content-narrow lg:rounded-2xl lg:py-10 lg:shadow-xl">
         {/* 로딩/성공 오버레이 - 하나의 컨테이너로 통합 */}
         {overlayState !== "none" && (
-          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white">
+          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-white lg:rounded-2xl">
             {overlayState === "loading" ? (
               <>
                 <LoadingSpinner />
@@ -60,9 +64,12 @@ export default function LoginPage() {
             )}
           </div>
         )}
-        <CommonHeader title="로그인" rightType={RIGHT_ITEM.NONE} />
-        <div className="mt-5 h-full px-5">
-          <div className="flex h-full flex-col">
+        {/* 뒤로가기 헤더는 모바일 전용 — PC 카드에서는 숨긴다 */}
+        <div className="lg:hidden">
+          <CommonHeader title="로그인" rightType={RIGHT_ITEM.NONE} />
+        </div>
+        <div className="mt-5 h-full px-5 lg:mt-0 lg:h-auto lg:px-10">
+          <div className="flex h-full flex-col lg:h-auto">
             {/* 타이틀 */}
             <h1 className="mb-4 text-SUIT_24 font-medium text-black">
               환영합니다!{" "}

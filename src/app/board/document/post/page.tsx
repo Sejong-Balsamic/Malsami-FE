@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import CommonHeader from "@/components/header/CommonHeader";
+import { PageContainer } from "@/components/layout/AppContainer";
 import { RIGHT_ITEM } from "@/types/header";
 import subjects from "@/types/subjects";
 import { DOCUMENT_MEDIA_ALLOWED_TYPES } from "@/types/documentMediaAllowedTypes";
@@ -176,7 +177,7 @@ export default function DocumentPostPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <PageContainer width="narrow" className="flex min-h-screen flex-col bg-white">
       <CommonHeader
         title="자료 작성하기"
         rightType={RIGHT_ITEM.NONE}
@@ -218,6 +219,6 @@ export default function DocumentPostPage() {
           </div>
         </main>
       </div>
-    </div>
+    </PageContainer>
   );
 }

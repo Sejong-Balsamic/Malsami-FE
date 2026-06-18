@@ -83,7 +83,7 @@ export default function SearchResultPage() {
   }, [searchParams]); // searchParams가 변경될 때마다 실행
 
   return (
-    <div className="flex min-h-screen justify-center bg-gray-100">
+    <div className="flex min-h-screen justify-center bg-white">
       <ScrollToTopOnLoad />
       <PageContainer width="wide" className="min-h-screen bg-white px-5">
         {/* 헤더 */}

@@ -6,6 +6,7 @@ import subjects from "@/types/subjects";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
 import useCommonToast from "@/global/hook/useCommonToast";
 import CommonHeader from "@/components/header/CommonHeader";
+import { PageContainer } from "@/components/layout/AppContainer";
 import { RIGHT_ITEM } from "@/types/header";
 import { QuestionPresetTag } from "@/types/api/constants/questionPresetTag";
 import { questionPostApi } from "@/apis/questionPostApi";
@@ -167,7 +168,7 @@ export default function QnaPostPage() {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-white">
+    <PageContainer width="narrow" className="flex min-h-screen flex-col bg-white">
       <CommonHeader
         title="질문 작성하기"
         rightType={RIGHT_ITEM.NONE}
@@ -204,6 +205,6 @@ export default function QnaPostPage() {
           )}
         </div>
       </main>
-    </div>
+    </PageContainer>
   );
 }
