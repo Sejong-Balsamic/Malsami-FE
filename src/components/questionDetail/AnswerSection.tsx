@@ -1,9 +1,10 @@
-"use client";
+// src/components/questionDetail/AnswerSection.tsx
+/* eslint-disable */
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import { formatDateTime } from "@/global/time";
-import getAnswer from "@/apis/question/getAnswer";
+import { answerPostApi } from "@/apis/answerPostApi";
 import likeApi from "@/apis/likeApi";
 import { ContentType } from "@/types/api/constants/contentType";
 import { LikeType } from "@/types/api/constants/likeType";
@@ -77,8 +78,9 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
     const fetchAnswers = async () => {
       try {
         setIsLoading(true);
-        const response = await getAnswer(postId);
-        setAnswers(Array.isArray(response) ? response : []);
+        // 신식 API 패턴(answerPostApi) 사용 — 응답 Dto에서 answerPosts 추출
+        const response = await answerPostApi.getAnswersByQuestion({ questionPostId: postId });
+        setAnswers(Array.isArray(response.answerPosts) ? response.answerPosts : []);
       } catch (fetchError) {
         console.error("답변 불러오기 실패:", fetchError);
         setLoadError("답변을 불러오는 중 오류가 발생했습니다.");
@@ -91,11 +93,11 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
   }, [postId]);
 
   if (isLoading) {
-    return <p className="text-center text-SUIT_14 font-medium text-[#7b7b7c]">답변을 불러오는 중입니다...</p>;
+    return <p className="text-center text-SUIT_14 font-medium text-ui-body-soft">답변을 불러오는 중입니다...</p>;
   }
 
   if (loadError) {
-    return <p className="text-center text-SUIT_14 font-medium text-[#f56565]">{loadError}</p>;
+    return <p className="text-center text-SUIT_14 font-medium text-ui-error">{loadError}</p>;
   }
 
   // 채택된 답변이 있는지 확인
@@ -110,7 +112,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
           <div key={answerPost.answerPostId || index} className="flex">
             {/* 작성자이고, 아직 채택된 답변이 없을 때만 선택 UI 표시 */}
             {isAuthor && !hasChaetaekAnswer && (
-              <div className="mr-[8px] pt-[2px]">
+              <div className="mr-2 pt-0.5">
                 <Image
                   src={
                     selectedAnswerId === answerPost.answerPostId
@@ -127,11 +129,11 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
             )}
             <div className="flex flex-1 flex-col">
               {/* 상단 라인 */}
-              {index !== 0 && <div className="my-4 h-[1px] w-full rounded-[2px] bg-[#EDEDED]" />}
+              {index !== 0 && <div className="my-4 h-px w-full rounded-sm bg-ui-divider-thick" />}
 
               {/* 상단 정보 */}
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-[4px]">
+                <div className="flex items-center gap-1">
                   {/* 채택 태그 */}
                   {answerPost.isChaetaek && <ChaetaekTag />}
 
@@ -168,14 +170,14 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                 </button>
               </div>
 
-              {/* 본문 */}
-              <p className="mt-4 line-clamp-1 text-SUIT_14 font-medium leading-[19.6px] text-black">
+              {/* 본문 — 긴 답변도 전체가 보이도록 줄바꿈 보존 및 단어 단위 줄바꿈, PC는 읽기 폭 제한 */}
+              <p className="mt-4 whitespace-pre-wrap break-words text-SUIT_14 font-medium leading-[19.6px] text-black lg:max-w-[70ch]">
                 {answerPost.content || "내용 없음"}
               </p>
 
-              {/* 이미지 리스트 */}
+              {/* 이미지 리스트 — 모바일은 가로 스크롤, PC(lg)는 줄바꿈하며 크게 표시 */}
               {answerPost.mediaFiles && answerPost.mediaFiles.length > 0 && (
-                <div className="mt-2 flex gap-[8px] overflow-x-auto">
+                <div className="mt-2 flex gap-2 overflow-x-auto lg:flex-wrap lg:overflow-x-visible">
                   {answerPost.mediaFiles.map((f, i) => (
                     <Image
                       key={i}
@@ -183,14 +185,14 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                       alt="ans-img"
                       width={90}
                       height={90}
-                      className="h-[90px] w-[90px] flex-shrink-0 rounded-[8px] object-cover"
+                      className="h-[90px] w-[90px] flex-shrink-0 rounded-lg object-cover lg:h-40 lg:w-40"
                     />
                   ))}
                 </div>
               )}
 
               {/* 좋아요 영역 */}
-              <div className="mt-4 flex items-center gap-[8px]">
+              <div className="mt-4 flex items-center gap-2">
                 <div
                   role="button"
                   tabIndex={0}
@@ -200,7 +202,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                     answerPost.answerPostId &&
                     handleLikeClick(answerPost.answerPostId)
                   }
-                  className="flex cursor-pointer items-center gap-[4px]"
+                  className="flex cursor-pointer items-center gap-1"
                 >
                   <Image
                     src={answerPost.isLiked ? "/icons/newLikeThumbGreen.svg" : "/icons/newLikeThumbGray.svg"}
@@ -209,7 +211,7 @@ function AnswerSection({ postId, isAuthor, selectedAnswerId, onAnswerSelect }: A
                     height={16}
                   />
                   <span
-                    className={`text-[12px] font-medium leading-[100%] ${answerPost.isLiked ? "text-[#00E271]" : "text-ui-count"}`}
+                    className={`text-SUIT_12 font-medium leading-[100%] ${answerPost.isLiked ? "text-question-main" : "text-ui-count"}`}
                   >
                     {answerPost.likeCount || 0}
                   </span>

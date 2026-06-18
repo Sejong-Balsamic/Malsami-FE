@@ -98,7 +98,7 @@ export default function CommentItem({ comment, isQuestionAuthor }: CommentItemPr
           <div className="flex items-center gap-2">
             {/* 작성자 태그 */}
             {isAuthor && (
-              <div className="inline-flex items-center justify-center rounded-[4px] bg-question-main px-[6px] py-[4px]">
+              <div className="inline-flex items-center justify-center rounded bg-question-main px-[6px] py-1">
                 <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-white">
                   작성자
                 </span>

@@ -47,18 +47,18 @@ function DownloadFile({ documentFiles }: DocumentDto) {
         // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
         <div
           key={file.documentFileId} // documentFileId를 key로 사용
-          className="flex h-auto w-auto items-center justify-between rounded-[10px] bg-[#f7f8fb] p-[14px]"
+          className="flex h-auto w-auto items-center justify-between rounded-[10px] bg-ui-tag-bg p-[14px]"
           onClick={() => handleDownloadClick(file)} // 버튼 클릭 시 모달 열기
         >
           <div className="flex flex-col">
-            <div className="font-pretendard-medium text-[12px]">{file.originalFileName}</div>
-            <div className="font-pretendard-medium text-[12px] text-[#737373]">
+            <div className="font-suit-medium text-SUIT_12">{file.originalFileName}</div>
+            <div className="font-suit-medium text-SUIT_12 text-ui-body-soft">
               {formatFileSize(file.fileSize as number)}
             </div>
           </div>
           <div className="flex flex-col items-center justify-center gap-1">
             <Image src="/icons/Download.svg" alt="Download" width={12} height={15} />
-            <div className="font-pretendard-medium text-[12px] text-[#737373]">다운 {file.totalDownloadCount}회</div>
+            <div className="font-suit-medium text-SUIT_12 text-ui-body-soft">다운 {file.totalDownloadCount}회</div>
           </div>
         </div>
       ))}

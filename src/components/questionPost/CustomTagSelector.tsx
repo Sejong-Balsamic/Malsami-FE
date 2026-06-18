@@ -30,7 +30,7 @@ function CustomTagSelector({ tags, onTagsSubmit, onRemoveTag }: CustomTagSelecto
   return (
     <div>
       <h2 className="font-suit-medium text-4 mb-2">자유 태그</h2>
-      <h3 className="font-suit-medium mb-3 text-[14px] text-[#898989]">
+      <h3 className="font-suit-medium mb-3 text-SUIT_14 text-tag-custom-text">
         기본 태그 외에 필요한 태그가 있다면 추가해보세요!
       </h3>
 
@@ -42,7 +42,7 @@ function CustomTagSelector({ tags, onTagsSubmit, onRemoveTag }: CustomTagSelecto
           onChange={handleTagInputChange}
           onKeyDown={handleTagInputKeyDown}
           maxLength={10}
-          className="font-suit-medium w-full rounded-[8px] border-2 border-ui-divider px-4 py-[18px] text-[14px] placeholder-gray-400 transition-colors focus:border-question-main focus:outline-none"
+          className="font-suit-medium w-full rounded-lg border-2 border-ui-divider px-4 py-[18px] text-SUIT_14 placeholder-gray-400 transition-colors focus:border-question-main focus:outline-none"
         />
         <span className="absolute right-3 top-1/2 -translate-y-1/2 transform text-sm text-gray-500">
           {inputValue.length} /10자

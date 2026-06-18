@@ -17,7 +17,7 @@ export default function SearchInputField({
     <div className="flex flex-1 items-center overflow-hidden">
       {/* subject 부분 */}
       {subject && (
-        <div className="mr-2 max-w-[50%] flex-shrink-0 overflow-hidden text-ellipsis whitespace-nowrap rounded bg-[#D5ECFB] px-2 py-[2px] text-sm text-[#0070F3]">
+        <div className="mr-2 max-w-[50%] flex-shrink-0 overflow-hidden text-ellipsis whitespace-nowrap rounded bg-tag-search-bg px-2 py-[2px] text-sm text-tag-search-text">
           {subject}
         </div>
       )}

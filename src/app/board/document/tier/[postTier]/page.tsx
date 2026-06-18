@@ -7,14 +7,15 @@ import Image from "next/image";
 import Header from "@/components/header/Header";
 import DocumentCardList from "@/components/documentMain/DocumentCardList";
 import CommonPagination from "@/components/common/CommonPagination";
-import DocumentFilteringBottomSheet from "@/components/common/DocumentFilteringBottomSheet";
+import DocumentFilteringBottomSheet from "@/components/documentMain/DocumentFilteringBottomSheet";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { setDocumentFilteringOpen } from "@/global/store/bottomSheetSlice";
 import { PostTier } from "@/types/api/constants/postTier";
-import useUserPermissions from "@/global/useUserPermissions";
+import useUserPermissions from "@/global/hook/useUserPermissions";
 
 // 티어 표시 매핑
 const TIER_DISPLAY_NAME: Record<string, string> = {
@@ -52,7 +53,7 @@ function AccessRestrictedModal({ postTier, closeModal }: { postTier: PostTier; c
             height={170}
             className="mb-4 rounded-full"
           />
-          <h1 className="font-pretendard-bold text-lg">게시판 입장 제한</h1>
+          <h1 className="font-suit-bold text-lg">게시판 입장 제한</h1>
           <p className="mt-2 text-sm text-gray-600">
             해당 게시판은 게시판 등급이 <span className="font-bold">{TIER_DISPLAY_NAME[tierUpper]} 이상</span>일
             경우에만 입장이 가능합니다
@@ -187,7 +188,7 @@ export default function DocumentTierPage({ params }: DocumentTierPageProps) {
       {isModalOpen && <AccessRestrictedModal postTier={postTier} closeModal={closeModal} />}
 
       {/* Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <Header
           title={`${TIER_DISPLAY_NAME[postTier.toUpperCase()]} 자료`}
           leftType={LEFT_ITEM.BACK}
@@ -195,13 +196,13 @@ export default function DocumentTierPage({ params }: DocumentTierPageProps) {
           onLeftClick={handleBackClick}
           onRightClick={handleMenuClick}
         />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 (4rem) */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
       {/* 메인 콘텐츠 */}
-      <div className="px-5">
+      <PageContainer width="wide" className="px-5">
         {/* 24px 공백 */}
         <div className="h-6" />
 
@@ -209,13 +210,13 @@ export default function DocumentTierPage({ params }: DocumentTierPageProps) {
         <div className="w-full bg-white">
           {isLoading && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">로딩 중...</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">로딩 중...</span>
             </div>
           )}
           {!isLoading && documentData.length > 0 && <DocumentCardList data={documentData} />}
           {!isLoading && documentData.length === 0 && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">
+              <span className="text-SUIT_14 font-medium text-ui-muted">
                 표시할 {TIER_DISPLAY_NAME[postTier.toUpperCase()]} 자료가 없습니다.
               </span>
             </div>
@@ -234,7 +235,7 @@ export default function DocumentTierPage({ params }: DocumentTierPageProps) {
 
         {/* 61px 하단 여백 (모바일 탭바 고려) */}
         <div className="h-[61px]" />
-      </div>
+      </PageContainer>
 
       {/* DocumentFilteringBottomSheet */}
       <DocumentFilteringBottomSheet
@@ -242,7 +243,6 @@ export default function DocumentTierPage({ params }: DocumentTierPageProps) {
         onConfirm={handleDocumentConfirm}
         currentFiltering={currentFiltering}
         trigger={<div />} // 빈 트리거 (Header의 메뉴 버튼으로 제어)
-        activeColor="#00D1F2" // 파란색 테마
       />
     </div>
   );

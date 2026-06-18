@@ -5,16 +5,19 @@ import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState, useRef } from "react";
-import getQuestionDetails from "@/apis/question/getQuestionDetails";
+import { questionPostApi } from "@/apis/questionPostApi";
+import useApiErrorHandler from "@/global/hook/useApiErrorHandler";
 import QuestionDetailSkeleton from "@/components/common/skeletons/QuestionDetailSkeleton";
 import { isSameMemberById } from "@/global/memberUtil";
 import QuestionDetail from "@/components/questionDetail/QuestionDetail";
 import QuestionDetailFAB from "@/components/questionDetail/QuestionDetailFAB";
 import CommonContextMenu from "@/components/common/CommonContextMenu";
 import { QuestionDto } from "@/types/api/responses/questionDto";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 
 export default function Page() {
   const router = useRouter();
+  const { handleApiError } = useApiErrorHandler();
 
   // URL 파라미터 가져옴
   const params = useParams();
@@ -34,12 +37,10 @@ export default function Page() {
   // 신고/차단 핸들러
   const handleReport = () => {
     // TODO: 신고 기능 구현
-    console.log("신고하기");
   };
 
   const handleBlock = () => {
     // TODO: 차단 기능 구현
-    console.log("차단하기");
   };
 
   // API 호출 (postId 변경 시마다)
@@ -50,7 +51,8 @@ export default function Page() {
       const fetchData = async () => {
         try {
           setIsLoading(true); // 로딩 상태 활성화
-          const data = await getQuestionDetails(postId);
+          // 신식 API 패턴(questionPostApi) 사용 — postId를 Command로 전달
+          const data = await questionPostApi.getQuestionPost({ postId });
 
           if (isMounted) {
             // postId 설정
@@ -65,8 +67,9 @@ export default function Page() {
         } catch (innerError) {
           console.error("문서 상세 정보 가져오기 실패:", innerError);
           if (isMounted && !error) {
-            // 에러가 이미 설정되지 않은 경우만 처리
-            setError(error); // 오류 설정
+            // 공통 에러 핸들러 적용 (뒤로가기 이동 옵션 활성화)
+            const message = handleApiError(innerError, "질문 상세 정보를 가져오는데 실패했습니다.", true);
+            setError(message); // 오류 설정
           }
         } finally {
           if (isMounted) {
@@ -85,23 +88,20 @@ export default function Page() {
   // 로딩 상태 처리
   if (isloading) {
     return (
-      <div className="min-h-screen overflow-x-hidden bg-white">
+      <div className="min-h-screen overflow-x-hidden bg-gray-100">
         <ScrollToTopOnLoad />
 
-        {/* 고정 헤더 */}
-        <div className="fixed left-0 right-0 top-0 z-50 bg-white">
-          <div className="relative mx-auto w-full max-w-[640px]">
-            <CommonHeader title="내 전공 질문" rightType={RIGHT_ITEM.NONE} />
-          </div>
-        </div>
+        {/* 고정 헤더 — PC에서도 컨테이너 폭 안에서만 흰 배경 */}
+        <TopBarContainer>
+          <CommonHeader title="질문 상세" rightType={RIGHT_ITEM.NONE} />
+        </TopBarContainer>
 
-        {/* 헤더 높이만큼 공백 */}
-        <div className="h-16 w-full" />
-
-        {/* 스켈레톤 UI */}
-        <div className="relative mx-auto w-full max-w-[640px] px-5">
+        {/* 본문 컨테이너 — 컨테이너 영역만 흰 배경, 바깥은 회색 */}
+        <PageContainer width="narrow" className="min-h-screen bg-white px-5">
+          {/* 헤더 높이만큼 공백 */}
+          <div className="h-16 w-full lg:hidden" />
           <QuestionDetailSkeleton />
-        </div>
+        </PageContainer>
       </div>
     );
   }
@@ -114,27 +114,24 @@ export default function Page() {
     false;
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-white">
+    <div className="min-h-screen overflow-x-hidden bg-gray-100">
       <ScrollToTopOnLoad />
 
-      {/* 고정 헤더 */}
-      <div className="fixed left-0 right-0 top-0 z-50 bg-white">
-        <div className="relative mx-auto w-full max-w-[640px]">
-          <CommonHeader
-            title="내 전공 질문"
-            rightType={RIGHT_ITEM.MENU}
-            onRightClick={toggleMenu}
-            subtitle={questionDetails?.questionPost?.member?.major || "내 전공"}
-            rightButtonRef={menuButtonRef}
-          />
-        </div>
-      </div>
+      {/* 고정 헤더 — PC에서도 컨테이너 폭 안에서만 흰 배경 */}
+      <TopBarContainer>
+        <CommonHeader
+          title={questionDetails?.questionPost?.subject || "질문 상세"}
+          rightType={RIGHT_ITEM.MENU}
+          onRightClick={toggleMenu}
+          subtitle={questionDetails?.questionPost?.member?.major || "전공 비공개"}
+          rightButtonRef={menuButtonRef}
+        />
+      </TopBarContainer>
 
-      {/* 헤더 높이만큼 공백 */}
-      <div className="h-16 w-full" />
-
-      {/* 본문 영역 */}
-      <div className="relative mx-auto w-full max-w-[640px] px-5 pb-20">
+      {/* 본문 컨테이너 — 컨테이너 영역만 흰 배경, 바깥은 회색 */}
+      <PageContainer width="narrow" className="min-h-screen bg-white px-5 pb-20">
+        {/* 헤더 높이만큼 공백 */}
+        <div className="h-16 w-full lg:hidden" />
         {questionDetails && (
           <>
             <QuestionDetail
@@ -160,7 +157,7 @@ export default function Page() {
           onReport={handleReport}
           onBlock={handleBlock}
         />
-      </div>
+      </PageContainer>
     </div>
   );
 }

@@ -10,6 +10,7 @@ import NoticeCard from "@/components/notice/NoticeCard";
 import PinnedNoticeCard from "@/components/notice/PinnedNoticeCard";
 import CommonPagination from "@/components/common/CommonPagination";
 import NoticeListSkeleton from "@/components/common/skeletons/NoticeListSkeleton";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 export default function NoticePage() {
   // 고정 페이지 크기 - 10개로 고정
@@ -79,44 +80,44 @@ export default function NoticePage() {
   // 로딩 상태 렌더링
   if (isNoticeDataCurrentlyLoading) {
     return (
-      <div className="relative mx-auto w-full max-w-[640px]">
+      <PageContainer width="wide">
         <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
         <div className="px-5">
           <NoticeListSkeleton />
         </div>
-      </div>
+      </PageContainer>
     );
   }
 
   // 에러 상태 렌더링
   if (noticeDataFetchErrorMessage) {
     return (
-      <div className="relative mx-auto w-full max-w-[640px]">
+      <PageContainer width="wide">
         <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
         <div className="flex h-[calc(100vh-64px)] flex-col items-center justify-center px-5">
           <p className="mb-4 text-SUIT_18 font-semibold text-black">오류가 발생했습니다</p>
           <p className="text-center text-SUIT_14 font-medium text-ui-muted">{noticeDataFetchErrorMessage}</p>
         </div>
-      </div>
+      </PageContainer>
     );
   }
 
   // 빈 상태 렌더링
   if (!currentNoticePostsPageData?.content || currentNoticePostsPageData.content.length === 0) {
     return (
-      <div className="relative mx-auto w-full max-w-[640px]">
+      <PageContainer width="wide">
         <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
         <div className="flex h-[calc(100vh-64px)] flex-col items-center justify-center px-5">
           <p className="mb-4 text-SUIT_18 font-semibold text-black">공지사항이 없습니다</p>
           <p className="text-SUIT_14 font-medium text-ui-muted">아직 등록된 공지사항이 없습니다.</p>
         </div>
-      </div>
+      </PageContainer>
     );
   }
 
   // 메인 렌더링
   return (
-    <div className="relative mx-auto min-h-screen w-full max-w-[640px] bg-white">
+    <PageContainer width="wide" className="min-h-screen bg-white">
       <CommonHeader title="공지사항" rightType={RIGHT_ITEM.NONE} />
 
       <div className="px-5">
@@ -156,6 +157,6 @@ export default function NoticePage() {
         {/* 하단 여백 */}
         <div className="h-8" />
       </div>
-    </div>
+    </PageContainer>
   );
 }

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Image from "next/image";
-import { DocFilterOptions } from "@/types/DocFilterOptions";
+import { DocFilterOptions } from "@/types/docFilterOptions";
 import { DocTypes, DocTypesKey } from "@/types/docTypes";
 import { SortType, sortTypeLabels } from "@/types/api/constants/sortType"; // SortType 추가
 import PresetTag from "@/components/common/tags/PresetTag";
@@ -36,10 +36,7 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
             key={filterOptions.sortType}
             label={`${sortTypeLabels[filterOptions.sortType as SortType]} ×`} // 한국어 라벨 사용
             onClick={handleRemoveSortOption}
-            style={{
-              backgroundColor: "#74D7CB",
-              cursor: "pointer",
-            }}
+            className="bg-mypage-teal-light"
           />
         )}
         {/* docType 표시 */}
@@ -49,10 +46,7 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
               key={docTypesTag}
               label={`${DocTypes[docTypesTag]} ×`}
               onClick={() => handleRemoveTag(docTypesTag)}
-              style={{
-                backgroundColor: "#0062D2",
-                cursor: "pointer",
-              }}
+              className="bg-legacy-accept-blue"
             />
           ))}
       </div>
@@ -63,7 +57,7 @@ function DocFilterControlBar({ filterOptions, onFilterChange }: FilterControlBar
           width={16}
           height={16}
           onClick={showModal}
-          style={{ cursor: "pointer" }}
+          className="cursor-pointer"
         />
       </div>
       {isModalOpen && (

@@ -11,7 +11,7 @@ export default function AllDocumentsSectionSkeleton() {
       {Array.from({ length: 3 }, (_, index) => (
         <div
           key={`skeleton-${index}`}
-          className={`animate-pulse px-5 py-6 ${index < 2 ? "border-b border-[#EDEDED]" : ""}`}
+          className={`animate-pulse px-5 py-6 ${index < 2 ? "border-b border-ui-divider-thick" : ""}`}
         >
           {/* 상단 부분 - 과목 태그 */}
           <div className="mb-3">

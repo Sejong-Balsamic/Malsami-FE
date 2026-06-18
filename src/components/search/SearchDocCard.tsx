@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { getDateDiff } from "@/global/time";
-import { DocCardProps } from "@/types/docCard.type";
+import { DocCardProps } from "@/types/docCard";
 import SubjectTag from "@/components/common/tags/SubjectTag";
 import { PostTiers, PostTiersKey, PostTiersKeys } from "@/types/postTiers";
 
@@ -22,7 +22,6 @@ export default function SearchDocCard({
       console.error("Invalid postId:", postId);
       return;
     }
-    console.log("Clicked card postId:", postId);
     router.push(`/board/document/detail/${postId}`);
   };
   return (
@@ -42,13 +41,13 @@ export default function SearchDocCard({
         {/* 왼쪽 텍스트 콘텐츠 */}
         <div className="flex flex-col">
           {/* 제목 */}
-          <p className="font-pretendard-bold mb-1 line-clamp-1 text-sm text-black">{title}</p>
+          <p className="font-suit-bold mb-1 line-clamp-1 text-sm text-black">{title}</p>
           {/* 내용 */}
-          <p className="font-pretendard-medium mb-2 line-clamp-1 text-sm text-[#737373]">{content}</p>
+          <p className="font-suit-medium mb-2 line-clamp-1 text-sm text-ui-body-soft">{content}</p>
           {/* 태그 및 기타 정보 */}
-          <div className="font-pretendard-medium flex flex-wrap items-center text-xs text-[#BCBCBC]">
+          <div className="font-suit-medium flex flex-wrap items-center text-xs text-ui-muted">
             <div className="flex flex-wrap items-center">
-              <span className="font-pretendard-medium text-custom-blue-500 mr-3.5 text-xs">
+              <span className="font-suit-medium text-custom-blue-500 mr-3.5 text-xs">
                 {PostTiersKeys.includes(postTier as PostTiersKey)
                   ? `${PostTiers[postTier as PostTiersKey]} 게시판`
                   : "알 수 없는 게시판"}

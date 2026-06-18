@@ -44,9 +44,9 @@ export default function SearchDocContainer({ data, searchValue, subject }: Searc
           </div>
         ))
       ) : (
-        <p className="font-pretendard-medium text-center text-gray-500">
-          <span className="font-pretendard-bold">{subject} </span>
-          <span className="font-pretendard-bold">{searchValue}</span> 에 대한 결과가 없습니다.
+        <p className="font-suit-medium text-center text-gray-500">
+          <span className="font-suit-bold">{subject} </span>
+          <span className="font-suit-bold">{searchValue}</span> 에 대한 결과가 없습니다.
         </p>
       )}
     </div>

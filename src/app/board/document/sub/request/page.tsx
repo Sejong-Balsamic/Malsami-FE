@@ -11,7 +11,9 @@ import { documentRequestPostApi } from "@/apis/documentRequestPostApi";
 import { DocumentRequestPost } from "@/types/api/entities/postgres/documentRequestPost";
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { setDocumentFilteringOpen } from "@/global/store/bottomSheetSlice";
-import DocumentFilteringBottomSheet from "@/components/common/DocumentFilteringBottomSheet";
+import DocumentFilteringBottomSheet from "@/components/documentMain/DocumentFilteringBottomSheet";
+import BoardSearchBar from "@/components/common/BoardSearchBar";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 
 export default function DocumentRequestPage() {
   const router = useRouter();
@@ -22,6 +24,7 @@ export default function DocumentRequestPage() {
   const [documentData, setDocumentData] = useState<DocumentRequestPost[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
+  const [query, setQuery] = useState<string>("");
 
   // 현재 적용된 필터링 상태
   const [currentFiltering, setCurrentFiltering] = useState<Partial<DocumentCommand>>({
@@ -39,6 +42,7 @@ export default function DocumentRequestPage() {
           pageSize: 10,
           sortType: filtering.sortType || "LATEST",
           documentTypes: filtering.documentTypes,
+          query, // 검색어
         });
 
         if (response && response.documentRequestPostsPage) {
@@ -52,8 +56,14 @@ export default function DocumentRequestPage() {
         setIsLoading(false);
       }
     },
-    [currentFiltering],
+    [currentFiltering, query],
   );
+
+  // 검색 실행 핸들러
+  const handleSearch = async () => {
+    setCurrentPage(0);
+    await fetchDocumentRequests(0);
+  };
 
   // 데이터 로드
   useEffect(() => {
@@ -90,7 +100,7 @@ export default function DocumentRequestPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <Header
           title="자료요청"
           leftType={LEFT_ITEM.BACK}
@@ -98,27 +108,30 @@ export default function DocumentRequestPage() {
           onLeftClick={handleBackClick}
           onRightClick={handleMenuClick}
         />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 (4rem) */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
       {/* 메인 콘텐츠 */}
-      <div className="px-5">
-        {/* 24px 공백 */}
-        <div className="h-6" />
+      <PageContainer width="wide" className="px-5">
+        {/* 16px 공백 */}
+        <div className="h-4" />
+
+        {/* 검색바 */}
+        <BoardSearchBar value={query} onChange={setQuery} onSearch={handleSearch} theme="document" />
 
         {/* 자료요청 리스트 */}
         <div className="w-full bg-white">
           {isLoading && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">로딩 중...</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">로딩 중...</span>
             </div>
           )}
           {!isLoading && documentData.length > 0 && <DocumentRequestCardList data={documentData} />}
           {!isLoading && documentData.length === 0 && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 자료요청이 없습니다.</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">표시할 자료요청이 없습니다.</span>
             </div>
           )}
         </div>
@@ -135,7 +148,7 @@ export default function DocumentRequestPage() {
 
         {/* 61px 하단 여백 (모바일 탭바 고려) */}
         <div className="h-[61px]" />
-      </div>
+      </PageContainer>
 
       {/* DocumentFilteringBottomSheet */}
       <DocumentFilteringBottomSheet
@@ -143,7 +156,6 @@ export default function DocumentRequestPage() {
         onConfirm={handleDocumentConfirm}
         currentFiltering={currentFiltering} // 현재 적용된 필터링 상태 전달
         trigger={<div />} // 빈 트리거 (Header의 메뉴 버튼으로 제어)
-        activeColor="#00D1F2" // 파란색 테마
       />
     </div>
   );

@@ -18,30 +18,27 @@ import Image from "next/image";
 interface FilteringButtonProps {
   type: "refresh" | "submit";
   onClick: () => void;
-  activeColor?: string;
+  // 적용 버튼 단색 배경용 Tailwind bg 클래스 (예: bg-document-main). 없으면 기본 그라디언트 사용
+  activeColorClass?: string;
 }
 
-function FilteringButton({ type, onClick, activeColor }: FilteringButtonProps): JSX.Element {
+function FilteringButton({ type, onClick, activeColorClass }: FilteringButtonProps): JSX.Element {
   const getButtonStyles = () => {
     if (type === "refresh") {
       return {
         backgroundClass: "bg-white border border-ui-divider",
         textClass: "text-ui-muted font-suit-bold text-[18px]",
         text: "초기화",
-        style: {},
       };
     }
 
     // submit 버튼인 경우
-    // 사용자 지정 색상이 있으면 단색 배경, 없으면 기본 그라디언트 사용
-    if (activeColor) {
+    // 사용자 지정 배경 클래스가 있으면 단색 배경, 없으면 기본 그라디언트 사용
+    if (activeColorClass) {
       return {
-        backgroundClass: "",
+        backgroundClass: activeColorClass,
         textClass: "text-white font-suit-bold text-[18px]",
         text: "적용",
-        style: {
-          backgroundColor: activeColor,
-        },
       };
     }
 
@@ -49,7 +46,6 @@ function FilteringButton({ type, onClick, activeColor }: FilteringButtonProps): 
       backgroundClass: "bg-gradient-to-r from-question-main to-[#5ef48c]",
       textClass: "text-white font-suit-bold text-[18px]",
       text: "적용",
-      style: {},
     };
   };
 
@@ -69,7 +65,6 @@ function FilteringButton({ type, onClick, activeColor }: FilteringButtonProps): 
       tabIndex={0}
       onClick={onClick}
       onKeyDown={handleKeyDown}
-      style={buttonStyles.style}
     >
       {type === "refresh" && (
         <Image
@@ -90,7 +85,7 @@ function FilteringButton({ type, onClick, activeColor }: FilteringButtonProps): 
 }
 
 FilteringButton.defaultProps = {
-  activeColor: undefined,
+  activeColorClass: undefined,
 };
 
 export default FilteringButton;

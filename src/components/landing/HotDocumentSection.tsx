@@ -5,7 +5,7 @@ import Image from "next/image";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
 import MovingCardDocument from "@/components/common/MovingCardDocument";
-import MovingCardSkeleton from "@/components/common/MovingCardSkeleton";
+import MovingCardSkeleton from "@/components/landing/MovingCardSkeleton";
 
 interface HotDocumentsSectionProps {
   onViewAll: () => void;
@@ -53,7 +53,6 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
             setDocuments(response.documentPostsPage.content);
           } else {
             // API 응답이 비어있으면 목데이터 사용
-            console.log("주간 인기자료 API 응답이 비어있어 목데이터를 사용합니다.");
             setDocuments(MOCK_WEEKLY_DATA);
           }
         } else {
@@ -67,7 +66,6 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
             setDocuments(response.documentPostsPage.content);
           } else {
             // API 응답이 비어있으면 목데이터 사용
-            console.log("일간 인기자료 API 응답이 비어있어 목데이터를 사용합니다.");
             setDocuments(MOCK_DAILY_DATA);
           }
         }
@@ -75,7 +73,6 @@ export default function HotDocumentsSection({ onViewAll, onTabChange, activeTab 
         console.error("인기 자료를 불러오는데 실패했습니다:", error);
         // API 호출 실패 시 목데이터 사용
         setDocuments(activeTab === "주간" ? MOCK_WEEKLY_DATA : MOCK_DAILY_DATA);
-        console.log("API 호출 실패로 목데이터를 사용합니다.");
       } finally {
         setIsLoading(false);
       }

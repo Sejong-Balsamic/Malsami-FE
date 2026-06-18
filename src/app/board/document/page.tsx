@@ -81,7 +81,7 @@ export default function DocumentBoardPage() {
         <section aria-label="search" className="mt-5">
           <SearchBar
             variant="colored"
-            borderColor="rgb(0, 209, 242)"
+            borderColor="document"
             placeholder="자료를 검색해보세요"
             showLoginCheck
             onSearch={query => {

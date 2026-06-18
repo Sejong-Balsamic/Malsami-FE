@@ -3,13 +3,14 @@
 import CommonHeader from "@/components/header/CommonHeader";
 import { RIGHT_ITEM } from "@/types/header";
 import Image from "next/image";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 function Page() {
   return (
-    <div className="relative mx-auto w-full max-w-[640px]">
+    <PageContainer width="wide">
       <CommonHeader title="내가 추천한 자료" rightType={RIGHT_ITEM.NONE} />
       {/* 헤더 아래 여백 추가 */}
-      <div className="mt-[64px]">
+      <div className="mt-16">
         <Image
           src="/image/PaperBG.png"
           alt="BG"
@@ -19,10 +20,10 @@ function Page() {
         />
         <div className="relative z-20 flex h-[calc(100vh-64px)] flex-col items-center justify-center gap-[30px]">
           <Image src="/icons/CheonminIcon.svg" alt="icon" width={18} height={18} className="h-[200px] w-[200px]" />
-          <span className="font-pretendard-bold text-xl">개발 중 ~^^</span>
+          <span className="font-suit-bold text-xl">개발 중 ~^^</span>
         </div>
       </div>
-    </div>
+    </PageContainer>
   );
 }
 

@@ -15,6 +15,10 @@ export default function LoginPage() {
     setOverlayState("loading");
   };
 
+  const hideOverlay = () => {
+    setOverlayState("none");
+  };
+
   const triggerSuccessOverlay = async () => {
     // 로딩 오버레이를 최소 2초 유지
     await new Promise<void>(resolve => {
@@ -74,7 +78,11 @@ export default function LoginPage() {
               <br />
               비밀번호는 서버에 저장되지 않아요!
             </p>
-            <LoginForm onShowLoading={triggerLoadingOverlay} onShowSuccess={triggerSuccessOverlay} />
+            <LoginForm
+              onShowLoading={triggerLoadingOverlay}
+              onShowSuccess={triggerSuccessOverlay}
+              onHideOverlay={hideOverlay}
+            />
           </div>
         </div>
       </div>

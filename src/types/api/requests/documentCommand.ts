@@ -4,6 +4,7 @@ import { ContentType } from "@/types/api/constants/contentType";
 import { LikeType } from "@/types/api/constants/likeType";
 import { SortType } from "@/types/api/constants/sortType";
 import { PostTier } from "@/types/api/constants/postTier";
+import { DocumentType } from "@/types/api/constants/documentType";
 
 export interface DocumentCommand {
   memberId?: string;
@@ -11,6 +12,7 @@ export interface DocumentCommand {
   content?: string;
   subject?: string;
   faculty?: string;
+  query?: string;
   documentTypes?: DocumentType[];
   attachmentFiles?: File[];
   attendedYear?: number;

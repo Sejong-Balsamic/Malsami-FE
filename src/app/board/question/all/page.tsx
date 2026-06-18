@@ -7,9 +7,10 @@ import Header from "@/components/header/Header";
 import QuestionCardList from "@/components/questionMain/QuestionCardList";
 import QuestionCardListSkeleton from "@/components/common/skeletons/QuestionCardListSkeleton";
 import CommonPagination from "@/components/common/CommonPagination";
-import QuestionFilteringBottomSheet from "@/components/common/QuestionFilteringBottomSheet";
-import ActiveQuestionFilters from "@/components/common/ActiveQuestionFilters";
+import QuestionFilteringBottomSheet from "@/components/questionMain/QuestionFilteringBottomSheet";
+import ActiveQuestionFilters from "@/components/questionMain/ActiveQuestionFilters";
 import QuestionSearchBar from "@/components/search/QuestionSearchBar";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
@@ -126,7 +127,7 @@ export default function AllQuestionPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <Header
           title="질문 게시판"
           leftType={LEFT_ITEM.BACK}
@@ -134,12 +135,12 @@ export default function AllQuestionPage() {
           onLeftClick={handleBackClick}
           onRightClick={handleMenuClick}
         />
-      </div>
+      </TopBarContainer>
       {/* 헤더 높이만큼 스페이서 (4rem) */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
       {/* 메인 콘텐츠 */}
-      <div className="px-5">
+      <PageContainer width="wide" className="px-5">
         {/* 16px 공백 */}
         <div className="h-4" />
 
@@ -168,7 +169,7 @@ export default function AllQuestionPage() {
           {!isLoading && questionData.length > 0 && <QuestionCardList data={questionData} />}
           {!isLoading && questionData.length === 0 && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 질문이 없습니다.</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">표시할 질문이 없습니다.</span>
             </div>
           )}
         </div>
@@ -185,7 +186,7 @@ export default function AllQuestionPage() {
 
         {/* 61px 하단 여백 (모바일 탭바 고려) */}
         <div className="h-[61px]" />
-      </div>
+      </PageContainer>
 
       <QuestionFilteringBottomSheet
         onReset={handleFilterReset}

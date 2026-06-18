@@ -17,7 +17,7 @@ export default function DocumentStudyYearSelector({ year, onYearChange }: Docume
           <select
             value={year}
             onChange={e => onYearChange(Number(e.target.value))}
-            className="font-suit-medium peer appearance-none rounded-[8px] border-2 border-ui-divider bg-transparent px-6 py-[14px] pr-10 text-[14px] text-black transition-colors focus:border-document-main focus:outline-none"
+            className="font-suit-medium peer appearance-none rounded-lg border-2 border-ui-divider bg-transparent px-6 py-[14px] pr-10 text-SUIT_14 text-black transition-colors focus:border-document-main focus:outline-none"
           >
             {docStudyYears.map(y => (
               <option key={y} value={y}>

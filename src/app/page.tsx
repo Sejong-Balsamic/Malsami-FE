@@ -13,6 +13,7 @@ import WelcomeSection from "@/components/landing/WelcomeSection";
 import { memberApi } from "@/apis/memberApi";
 import NoticeSection from "@/components/landing/NoticeSection";
 import LandingWriteFAB from "@/components/common/FABs/LandingWriteFAB";
+import { PageContainer } from "@/components/layout/AppContainer";
 
 export default function LandingPage() {
   const router = useRouter();
@@ -63,7 +64,7 @@ export default function LandingPage() {
       <LandingHeader contentType="document" />
 
       {/* Main Content */}
-      <main className="px-5">
+      <PageContainer width="wide" className="px-5">
         {/* 캐릭터와 인사말 섹션 */}
         <section aria-labelledby="welcome-heading" className="mb-6">
           <WelcomeSection userName={userName} />
@@ -107,7 +108,7 @@ export default function LandingPage() {
             onCardClick={questionId => checkLoginAndNavigate(`/board/question/detail/${questionId}`)}
           />
         </section>
-      </main>
+      </PageContainer>
 
       {/* 플로팅 버튼 (글쓰기) */}
       <LandingWriteFAB />

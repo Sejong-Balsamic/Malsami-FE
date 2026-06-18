@@ -4,7 +4,7 @@ import React from "react";
 
 export default function NoticeCardSkeleton() {
   return (
-    <div className="h-33 flex w-72 animate-pulse flex-col rounded-lg bg-white shadow-card-custom">
+    <div className="flex h-32 w-72 animate-pulse flex-col rounded-lg bg-white shadow-card-custom">
       {/* 상단: 제목 스켈레톤 */}
       <div className="mx-4 mt-4">
         <div className="h-5 w-48 rounded bg-gray-200" />

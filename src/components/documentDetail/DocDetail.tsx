@@ -1,15 +1,16 @@
+// src/components/documentDetail/DocDetail.tsx
 /* eslint-disable */
 
 import { useState } from "react";
 import Image from "next/image";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger } from "@/components/shadcn/drawer";
-import { documentPostApi } from "@/apis/documentPostApi"; // API 호출로 변경
+import { likeApi } from "@/apis/likeApi"; // 통합 좋아요 API 호출로 교체
 import { DocumentCommand } from "@/types/api/requests/documentCommand";
 import { getDateDiff } from "@/global/time";
 import { DocumentDto } from "@/types/api/responses/documentDto";
 import { isSameMemberById } from "@/global/memberUtil";
 import DownloadFile from "@/components/documentDetail/DownloadFile";
-import CommentSection from "@/deprecated/DCommentSection";
+import DocumentCommentSection from "@/components/documentDetail/DocumentCommentSection";
 
 // 한국어 태그 매핑
 const tagMapping: { [key: string]: string } = {
@@ -43,7 +44,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
         contentType: "DOCUMENT",
         likeType: "LIKE",
       };
-      await documentPostApi.documentBoardLike(command); // API 호출
+      await likeApi.documentBoardLike(command); // 통합 좋아요 API 호출로 교체
     } catch (error) {
       console.error("좋아요 업데이트 실패:", error);
       setIsLiked(false);
@@ -64,7 +65,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
         contentType: "DOCUMENT",
         likeType: "DISLIKE",
       };
-      await documentPostApi.documentBoardLike(command); // API 호출
+      await likeApi.documentBoardLike(command); // 통합 좋아요 API 호출로 교체
     } catch (error) {
       console.error("싫어요 업데이트 실패:", error);
       setIsDisliked(false);
@@ -73,70 +74,75 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
   };
 
   const buttonClass = (isActive: boolean) =>
-    isActive ? "border-[#03b89e] text-[#03b89e] cursor-default" : "border-[#e7e7e7] text-[#aaaaaa] cursor-pointer";
+    isActive
+      ? "border-legacy-teal text-legacy-teal cursor-default"
+      : "border-ui-divider-light text-ui-count cursor-pointer";
 
   const incrementCommentCount = () => {
     setCommentCount(prev => (prev !== undefined ? prev + 1 : 1));
   };
 
   return (
-    <div className="flex flex-col justify-center px-[20px]">
-      {/* 교과목명 */}
-      <div className="mt-[30px] h-[26px] w-[336px] max-w-[640px]">
+    <div className="flex flex-col justify-center px-5">
+      {/* 교과목명 (폭은 상위 PageContainer가 책임지므로 중복 max-w 제거) */}
+      <div className="mt-8 h-6 w-full">
         <div className="flex items-center">
-          <div className="font-pretendard-bold flex h-[26px] items-center justify-center rounded-[13px] bg-[#03b89e] px-[14px] py-[6px] text-[12px] text-[#ffffff]">
+          <div className="font-suit-bold flex h-6 items-center justify-center rounded-xl bg-legacy-teal px-3.5 py-1.5 text-SUIT_12 text-white">
             {documentDto.documentPost?.subject || "과목명 없음"}
           </div>
         </div>
       </div>
 
       {/* 글 정보 */}
-      <div className="flex h-auto min-w-[336px] max-w-[640px] flex-col">
-        <div className="mt-[20px]">
-          <span className="font-pretendard-bold text-[18px]">{documentDto.documentPost?.title || "제목 없음"}</span>
-          <div className="font-pretendard-medium mt-[10px] text-[14px] leading-normal text-[#727272]">
+      <div className="flex h-auto w-full flex-col">
+        <div className="mt-5">
+          <span className="font-suit-bold block break-words text-SUIT_18 lg:max-w-[70ch]">
+            {documentDto.documentPost?.title || "제목 없음"}
+          </span>
+          {/* 내용 — PC에서 한 줄이 너무 길어지지 않도록 읽기 폭 제한 + 긴 단어/URL 안전 줄바꿈 */}
+          <div className="font-suit-medium mt-2.5 break-words text-SUIT_14 leading-normal text-ui-body-soft lg:max-w-[70ch]">
             {documentDto.documentPost?.content || "내용 없음"}
           </div>
         </div>
         <DownloadFile documentFiles={documentDto.documentFiles || []} /> {/* 기본값 제공 */}
         {/* 카테고리 */}
-        <div className="mt-[20px] h-[26px] w-[336px] max-w-[640px]">
-          <div className="flex items-center gap-[10px]">
+        <div className="mt-5 h-6 w-full">
+          <div className="flex items-center gap-2.5">
             {documentDto.documentPost?.documentTypes?.map((tag, index) => (
               <div
                 key={index}
-                className="flex h-[25px] w-auto items-center justify-center rounded-[28px] border border-[#e7e7e7] px-[10px]"
+                className="flex h-6 w-auto items-center justify-center rounded-full border border-ui-divider-light px-2.5"
               >
-                <span className="font-pretendard-medium text-[14px] text-[#aaaaaa]">{getKoreanTag(tag)}</span>
+                <span className="font-suit-medium text-SUIT_14 text-ui-count">{getKoreanTag(tag)}</span>
               </div>
             )) || <span>태그 없음</span>}
           </div>
         </div>
         {/* 작성자 정보 */}
-        <div className="flex h-[72px] min-w-[336px] max-w-[640px] flex-col">
-          <div className="mt-[20px] text-right">
+        <div className="flex h-[72px] w-full flex-col">
+          <div className="mt-5 text-right">
             <div>
-              <span className="font-pretendard-medium mb-[4px] text-[12px]">
+              <span className="font-suit-medium mb-1 text-SUIT_12">
                 @{documentDto.documentPost?.member?.uuidNickname || "익명"}
               </span>
             </div>
             <div>
-              <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">
+              <span className="font-suit-medium mr-1 text-SUIT_12 text-ui-muted">
                 {getDateDiff(documentDto.documentPost?.createdDate || "") || "날짜 없음"}
               </span>
-              <span className="font-pretendard-medium mr-[3px] text-[12px] text-[#bdbdbd]">
+              <span className="font-suit-medium mr-1 text-SUIT_12 text-ui-muted">
                 • 조회수 {documentDto.documentPost?.viewCount || 0}
               </span>
             </div>
           </div>
         </div>
-        <div className="flex justify-start border-b-2 py-[30px]">
+        <div className="flex justify-start border-b-2 py-8">
           <div className="flex w-full items-center justify-between">
-            <div className="flex items-center gap-[10px]">
+            <div className="flex items-center gap-2.5">
               {/* 좋아요 */}
               <div
                 onClick={!isLiked ? handleLikeClick : undefined}
-                className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
+                className={`flex h-8 w-[70px] items-center justify-center gap-1 rounded-full border-2 ${buttonClass(
                   isLiked,
                 )}`}
               >
@@ -146,16 +152,14 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
                   width={16}
                   height={16}
                 />
-                <span
-                  className={`font-pretendard-semibold text-[12px] ${isLiked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}
-                >
+                <span className={`font-suit-semibold text-SUIT_12 ${isLiked ? "text-legacy-teal" : "text-ui-count"}`}>
                   {currentLikeCount}
                 </span>
               </div>
               {/* 싫어요 */}
               <div
                 onClick={!isDisliked ? handleDisLikeClick : undefined}
-                className={`flex h-[30px] w-[70px] items-center justify-center gap-[5px] rounded-[28px] border-2 ${buttonClass(
+                className={`flex h-8 w-[70px] items-center justify-center gap-1 rounded-full border-2 ${buttonClass(
                   isDisliked,
                 )}`}
               >
@@ -166,7 +170,7 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
                   height={16}
                 />
                 <span
-                  className={`font-pretendard-semibold text-[12px] ${isDisliked ? "text-[#03b89e]" : "text-[#aaaaaa]"}`}
+                  className={`font-suit-semibold text-SUIT_12 ${isDisliked ? "text-legacy-teal" : "text-ui-count"}`}
                 >
                   {currentDislikeCount}
                 </span>
@@ -175,19 +179,19 @@ function DocDetail({ documentDto }: { documentDto: DocumentDto }) {
             {/* 댓글 */}
             <Drawer>
               <DrawerTrigger asChild>
-                <div className="flex h-[30px] w-[70px] cursor-pointer items-center justify-center gap-[5px] rounded-[28px] border-2 border-[#e7e7e7]">
+                <div className="flex h-8 w-[70px] cursor-pointer items-center justify-center gap-1 rounded-full border-2 border-ui-divider-light">
                   <Image src="/icons/Comment_UnClicked.svg" alt="Comment_UnClicked" width={16} height={16} />
-                  <span className="font-pretendard-semibold text-[12px] text-[#aaaaaa]">{commentCount}</span>
+                  <span className="font-suit-semibold text-SUIT_12 text-ui-count">{commentCount}</span>
                 </div>
               </DrawerTrigger>
-              <DrawerContent className="px-[20px] pb-[20px]">
+              <DrawerContent className="px-5 pb-5">
                 <DrawerHeader className="px-0">
-                  <DrawerTitle className="font-pretendard-bold flex text-[14px] text-[#3c3c3c]">
+                  <DrawerTitle className="font-suit-bold flex text-SUIT_14 text-ui-body">
                     댓글 {commentCount}
                   </DrawerTitle>
                 </DrawerHeader>
-                <div className="max-h-[400px] overflow-y-auto">
-                  <CommentSection
+                <div className="max-h-100 overflow-y-auto">
+                  <DocumentCommentSection
                     postId={documentDto.documentPost?.documentPostId || ""}
                     contentType="DOCUMENT"
                     onCommentAdded={incrementCommentCount}

@@ -49,7 +49,7 @@ function QuestionPostSecondPage({
         {/* 이미지 첨부 */}
         <div className="flex flex-col">
           <h2 className="mb-2 text-SUIT_16 font-medium text-black">이미지</h2>
-          <span className="mr-4 text-SUIT_14 font-medium text-[#898989]">최대 100MB까지 올릴 수 있어요.</span>
+          <span className="mr-4 text-SUIT_14 font-medium text-tag-custom-text">최대 100MB까지 올릴 수 있어요.</span>
         </div>
         <FileUploadInput
           mediaFiles={formData.attachmentFiles}
@@ -66,7 +66,7 @@ function QuestionPostSecondPage({
           type="button"
           onClick={onSubmit}
           disabled={!isTitleAndContentFilled}
-          className={`w-full rounded-[8px] py-4 text-SUIT_18 font-extrabold text-white ${
+          className={`w-full rounded-lg py-4 text-SUIT_18 font-extrabold text-white ${
             isTitleAndContentFilled ? "bg-question-main" : "bg-ui-muted"
           }`}
         >

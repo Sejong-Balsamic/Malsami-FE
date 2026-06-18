@@ -25,7 +25,7 @@ function InfoAlertModal({ isOpen, title, message, confirmLabel = "로그인", on
       />
 
       {/* 모달 박스 */}
-      <div className="relative h-[154px] w-[266px] rounded-[8px] bg-white shadow-[2px_2px_10px_rgba(0,0,0,0.10)]">
+      <div className="relative h-[154px] w-[266px] rounded-lg bg-white shadow-[2px_2px_10px_rgba(0,0,0,0.10)]">
         {/* 제목 */}
         <h2 className="absolute left-1/2 top-[20px] -translate-x-1/2 text-center text-SUIT_16 font-semibold text-black">
           {title}
@@ -40,7 +40,7 @@ function InfoAlertModal({ isOpen, title, message, confirmLabel = "로그인", on
         <button
           type="button"
           onClick={onCancel}
-          className="absolute bottom-[20px] left-[16px] h-[40px] w-[115px] rounded-[8px] bg-ui-disabled text-SUIT_14 font-semibold text-white"
+          className="absolute bottom-[20px] left-[16px] h-[40px] w-[115px] rounded-lg bg-ui-disabled text-SUIT_14 font-semibold text-white"
         >
           취소
         </button>
@@ -49,10 +49,7 @@ function InfoAlertModal({ isOpen, title, message, confirmLabel = "로그인", on
         <button
           type="button"
           onClick={onConfirm}
-          className="absolute bottom-[20px] right-[16px] h-[40px] w-[115px] rounded-[8px] text-SUIT_14 font-semibold text-white"
-          style={{
-            background: "linear-gradient(91deg, #00D1F2 0%, #00E271 100%)",
-          }}
+          className="absolute bottom-[20px] right-[16px] h-[40px] w-[115px] rounded-lg bg-gradient-to-r from-document-main to-question-main text-SUIT_14 font-semibold text-white"
         >
           {confirmLabel}
         </button>

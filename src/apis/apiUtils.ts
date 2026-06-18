@@ -1,4 +1,7 @@
+import axios from "axios";
 import { apiClient } from "./appClient";
+
+// axios.isAxiosError를 직접 쓰지 않도록 래핑하여 export
 
 export interface ApiCommand {
   [key: string]: any; // 모든 API 요청 객체가 이 인터페이스를 만족하도록 설계
@@ -52,3 +55,4 @@ export async function postApiRequest<T extends ApiCommand, R>(url: string, comma
     throw error; // console.error 제거
   }
 }
+export const isApiError = axios.isAxiosError;

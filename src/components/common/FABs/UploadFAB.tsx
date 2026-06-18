@@ -50,31 +50,31 @@ function UploadFAB() {
       <div className="relative">
         <button
           type="button"
-          className="relative z-[70] h-[50px] w-[50px] rounded-full bg-[#03b89e] shadow-lg"
+          className="relative z-[70] h-[50px] w-[50px] rounded-full bg-legacy-teal shadow-lg"
           onClick={toggleDivVisibility}
         >
           <Upload />
         </button>
         {isDivVisible && (
           <div className="absolute bottom-[70px] right-0 z-[65] flex flex-col items-center space-y-[10px]">
-            <div className="flex items-center gap-[10px]">
-              <span className="font-pretendard-medium w-[70px] text-right text-[14px] text-white">질문 올리기</span>
+            <div className="flex items-center gap-2.5">
+              <span className="font-suit-medium w-[70px] text-right text-SUIT_14 text-white">질문 올리기</span>
               <button
                 type="button"
                 className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
                 onClick={handleQuestionClick}
               >
-                <QuestionIcon className="h-[50px] w-[50px] text-[#03b89e]" />
+                <QuestionIcon className="h-[50px] w-[50px] text-legacy-teal" />
               </button>
             </div>
-            <div className="flex items-center gap-[10px]">
-              <span className="font-pretendard-medium w-[70px] text-right text-[14px] text-white">자료 올리기</span>
+            <div className="flex items-center gap-2.5">
+              <span className="font-suit-medium w-[70px] text-right text-SUIT_14 text-white">자료 올리기</span>
               <button
                 type="button"
                 className="flex h-[50px] w-[50px] rounded-full bg-white shadow"
                 onClick={handleDocumentClick}
               >
-                <DocumentIcon className="h-[50px] w-[50px] text-[#03b89e]" />
+                <DocumentIcon className="h-[50px] w-[50px] text-legacy-teal" />
               </button>
             </div>
           </div>

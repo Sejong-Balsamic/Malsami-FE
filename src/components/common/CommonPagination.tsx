@@ -109,13 +109,13 @@ export default function CommonPagination({ currentPage, totalPages, onPageChange
               <button
                 type="button"
                 onClick={() => handlePageClick(pageNumber)}
-                className="hover:text-custom-blue-500 font-suit text-sm font-medium leading-normal text-[#737373] transition-colors"
+                className="hover:text-custom-blue-500 font-suit text-sm font-medium leading-normal text-ui-body-soft transition-colors"
               >
                 {displayPageNumber}
               </button>
 
               {/* 현재 페이지 표시용 밑줄 */}
-              {isCurrentPage && <div className="mt-0.5 h-px w-[14px] rounded-[2px] bg-[#08E4BA]" />}
+              {isCurrentPage && <div className="mt-0.5 h-px w-[14px] rounded-[2px] bg-question-main" />}
             </div>
           );
         })}

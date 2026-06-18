@@ -21,7 +21,7 @@ export default function TitleInput({ value, onChange }: TitleInputProps) {
         value={value}
         onChange={handleChange}
         placeholder="제목을 입력해주세요"
-        className="font-suit-medium w-full rounded-[8px] border-2 border-ui-border px-4 py-[18px] text-base placeholder-gray-400 focus:border-[#00E271] focus:outline-none"
+        className="font-suit-medium w-full rounded-lg border-2 border-ui-border px-4 py-[18px] text-base placeholder-gray-400 focus:border-question-main focus:outline-none"
       />
     </div>
   );

@@ -13,7 +13,7 @@ export default function QuestionCommonInput({
   onChange,
   onKeyDown,
   placeholder,
-  className = "w-full rounded-[8px] border-2 border-ui-divider px-4 py-[18px] text-SUIT_14 font-medium placeholder-ui-muted focus:outline-none focus:border-question-main transition-colors",
+  className = "w-full rounded-lg border-2 border-ui-divider px-4 py-[18px] text-SUIT_14 font-medium placeholder-ui-muted focus:outline-none focus:border-question-main transition-colors",
   name,
 }: QuestionCommonInputProps) {
   return (
@@ -33,6 +33,6 @@ QuestionCommonInput.defaultProps = {
   onKeyDown: undefined,
   placeholder: "",
   className:
-    "w-full rounded-[8px] border-2 border-ui-divider px-4 py-[18px] text-SUIT_14 font-medium placeholder-ui-muted focus:outline-none focus:border-question-main transition-colors",
+    "w-full rounded-lg border-2 border-ui-divider px-4 py-[18px] text-SUIT_14 font-medium placeholder-ui-muted focus:outline-none focus:border-question-main transition-colors",
   name: undefined,
 };

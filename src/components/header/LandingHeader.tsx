@@ -5,6 +5,7 @@
 import React, { ReactNode, useState } from "react";
 import { useRouter } from "next/navigation";
 import Header from "@/components/header/Header";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import CreditModal from "@/components/common/CreditModal";
 
@@ -33,8 +34,8 @@ export default function LandingHeader({ children, contentType }: LandingHeaderPr
   return (
     <>
       <CreditModal isOpen={isModalOpen} onClose={handleCloseModal} />
-      {/* fixed 헤더 */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      {/* fixed 헤더 — 컨테이너 폭에 맞춰 중앙 정렬 */}
+      <TopBarContainer>
         <Header
           leftType={LEFT_ITEM.LOGO}
           rightType={getBellType()}
@@ -42,13 +43,13 @@ export default function LandingHeader({ children, contentType }: LandingHeaderPr
           onRightClick={handleRightClick}
           hasNotification={false}
         />
-      </div>
+      </TopBarContainer>
 
-      {/* 헤더 높이만큼 스페이서 (4rem) */}
-      <div className="h-16 w-full max-w-[640px]" />
+      {/* 헤더 높이만큼 스페이서 (4rem) — 모바일 전용 (PC는 헤더가 없음) */}
+      <div className="h-16 w-full lg:hidden" />
 
       {/* children 렌더 */}
-      <div className="w-full max-w-[640px] bg-white">{children}</div>
+      <PageContainer className="bg-white">{children}</PageContainer>
     </>
   );
 }

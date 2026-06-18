@@ -7,6 +7,7 @@ import QuestionCardList from "@/components/questionMain/QuestionCardList";
 import CommonPagination from "@/components/common/CommonPagination";
 import TwoTabFilter from "@/components/common/TwoTabFilter";
 import QuestionCardListSkeleton from "@/components/common/skeletons/QuestionCardListSkeleton";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM } from "@/types/header";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
@@ -35,9 +36,6 @@ export default function BountyQuestionPage() {
             sortType: "REWARD_YEOPJEON_DESCENDING",
           }),
         ]);
-
-        console.log("엽전현상금 최근순 데이터:", latestResponse);
-        console.log("엽전현상금 높은순 데이터:", highestResponse);
 
         // 현상금이 있는 질문만 필터링
         const latestBountyFiltered = (latestResponse.questionPostsPage?.content || []).filter(
@@ -88,21 +86,21 @@ export default function BountyQuestionPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <Header title="엽전현상금" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이 스페이서 (4rem) */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
-      <div className="px-5">
+      <PageContainer width="wide" className="px-5">
         {/* 최근순/높은순 필터링 컴포넌트 */}
         <TwoTabFilter
           firstTab="최근순"
           secondTab="높은순"
           activeTab={activeTab}
           onTabChange={handleTabChange}
-          activeColor="#00D1F2"
+          activeColor="document"
         />
 
         {/* 24px 공백 */}
@@ -114,7 +112,7 @@ export default function BountyQuestionPage() {
           {!isLoading && currentPageQuestions.length > 0 && <QuestionCardList data={currentPageQuestions} />}
           {!isLoading && currentPageQuestions.length === 0 && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 엽전현상금 질문이 없습니다.</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">표시할 엽전현상금 질문이 없습니다.</span>
             </div>
           )}
         </div>
@@ -131,7 +129,7 @@ export default function BountyQuestionPage() {
 
         {/* 61px 하단 여백 (모바일 탭바 고려) */}
         <div className="h-[61px]" />
-      </div>
+      </PageContainer>
     </div>
   );
 }

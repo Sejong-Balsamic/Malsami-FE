@@ -29,7 +29,7 @@ export default function DocumentPostSecondPage({
           type="button"
           onClick={onSubmit}
           disabled={!isFormValid}
-          className={`w-full rounded-[8px] py-4 text-SUIT_18 font-extrabold text-white ${
+          className={`w-full rounded-lg py-4 text-SUIT_18 font-extrabold text-white ${
             isFormValid ? "bg-document-main" : "bg-ui-muted"
           }`}
         >

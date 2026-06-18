@@ -23,7 +23,7 @@ export default function QuestionSearchBar({ value, onChange, onSearch }: Questio
         value={value}
         onChange={e => onChange(e.target.value)}
         onKeyDown={handleKeyDown}
-        className="font-suit-medium mb-4 w-full border-b-[2px] border-question-main bg-transparent px-4 pb-2 pr-10 text-[16px] placeholder-ui-muted focus:outline-none focus:ring-0"
+        className="font-suit-medium mb-4 w-full border-b-[2px] border-question-main bg-transparent px-4 pb-2 pr-10 text-SUIT_16 placeholder-ui-muted focus:outline-none focus:ring-0"
       />
       <button type="button" aria-label="검색" className="absolute right-4 top-1" onClick={onSearch}>
         <Image src="/icons/SearchGreen.svg" alt="검색" width={20} height={20} className="text-question-main" />

@@ -93,15 +93,15 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
   };
 
   const buttonClass = isLiked
-    ? "border-[#03b89e] text-[#03b89e] cursor-default" // 눌린 상태
-    : "border-[#e7e7e7] text-[#aaaaaa] cursor-pointer"; // 기본 상태
+    ? "border-legacy-teal text-legacy-teal cursor-default" // 눌린 상태
+    : "border-ui-divider-light text-ui-count cursor-pointer"; // 기본 상태
 
   const files = questionDto.mediaFiles?.map(file => file.uploadedImageUrl) as string[];
 
   return (
     <div className="flex flex-col justify-center">
       {/* 태그 영역 (HOT, 교과목명, 현상금) */}
-      <div className="mt-4 flex flex-wrap items-center gap-[4px]">
+      <div className="mt-4 flex flex-wrap items-center gap-1">
         {isHot && <HotTag />}
 
         {/* 채택 태그 */}
@@ -117,10 +117,12 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
       {/* 글 정보 */}
       <div className="flex w-full flex-col">
         <div className="mt-3">
-          <h1 className="text-SUIT_18 font-semibold leading-[18px] text-black">{questionDto.questionPost?.title}</h1>
+          <h1 className="break-words text-SUIT_18 font-semibold leading-[18px] text-black lg:max-w-[70ch]">
+            {questionDto.questionPost?.title}
+          </h1>
 
           {/* 전공 · 조회수 · 작성일 */}
-          <div className="mt-2 flex items-center gap-[4px] text-SUIT_12 font-medium text-ui-muted">
+          <div className="mt-2 flex items-center gap-1 text-SUIT_12 font-medium text-ui-muted">
             {/* 작성자 전공 */}
             <span>{questionDto.questionPost?.member?.major ?? "전공 비공개"}</span>
             {/* 구분 점 */}
@@ -135,20 +137,20 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
             <span className="text-ui-muted">{formattedDate}</span>
           </div>
 
-          {/* 본문 텍스트 */}
-          <div className="mt-[16px] text-SUIT_16 font-medium leading-[22.4px] text-black">
+          {/* 본문 텍스트 — PC에서 한 줄이 너무 길어지지 않도록 읽기 폭 제한 + 긴 단어/URL 안전 줄바꿈 */}
+          <div className="mt-4 break-words text-SUIT_16 font-medium leading-[22.4px] text-black lg:max-w-[70ch]">
             {questionDto.questionPost?.content}
           </div>
         </div>
 
-        {/* 이미지 및 동영상 */}
+        {/* 이미지 및 동영상 — 모바일은 가로 스크롤, PC(lg)는 자연스럽게 줄바꿈하며 크게 표시 */}
         {files && files.length > 0 && (
-          <div className="mt-2 overflow-x-auto">
-            <div className="flex gap-[12px] pb-[10px]">
+          <div className="mt-2 overflow-x-auto lg:overflow-x-visible">
+            <div className="flex gap-3 pb-2.5 lg:flex-wrap">
               {files.map((file, index) => (
                 <div
                   key={index}
-                  className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[8px] bg-[#EDEDED]"
+                  className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-ui-divider-thick lg:h-48 lg:w-48"
                 >
                   <Image
                     src={file}
@@ -169,11 +171,11 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
         )}
 
         {/* 지정태그 */}
-        <div className="mt-3 flex flex-wrap gap-[8px]">
+        <div className="mt-3 flex flex-wrap gap-2">
           {questionDto.questionPost?.questionPresetTags?.map((tag, index) => (
             <div
               key={index}
-              className="flex h-[28px] w-auto min-w-[69px] flex-shrink-0 items-center justify-center gap-[4px] rounded-[34px] bg-tag-preset-question-bg px-[12px] py-[8px]"
+              className="flex h-7 w-auto min-w-[69px] flex-shrink-0 items-center justify-center gap-1 rounded-full bg-tag-preset-question-bg px-3 py-2"
             >
               <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-tag-preset-question-text">
                 {getKoreanTag(tag)}
@@ -184,11 +186,11 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
 
         {/* 커스텀태그 */}
         {questionDto.customTags && questionDto.customTags.length > 0 && (
-          <div className="mt-3 flex flex-wrap gap-[8px]">
+          <div className="mt-3 flex flex-wrap gap-2">
             {questionDto.customTags.map((tag, index) => (
               <div
                 key={index}
-                className="inline-flex items-center justify-center gap-[10px] rounded-[34px] bg-tag-custom-bg px-[14px] py-[8px]"
+                className="inline-flex items-center justify-center gap-2.5 rounded-full bg-tag-custom-bg px-3.5 py-2"
               >
                 <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-tag-custom-text">
                   {tag}
@@ -199,16 +201,16 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
         )}
 
         {/* 얇은 구분선 */}
-        <div className="mt-5 h-[1px] w-full bg-[#D7D7D7]"></div>
+        <div className="mt-5 h-px w-full bg-ui-muted"></div>
 
         {/* 좋아요 및 댓글 액션 */}
-        <div className="mb-[15px] mt-[15px] flex justify-center">
-          <div className="flex w-full max-w-[433px] divide-x divide-transparent">
+        <div className="mb-4 mt-4 flex justify-center">
+          <div className="flex w-full max-w-md divide-x divide-transparent">
             {/* 왼쪽(좋아요) */}
             <div className="flex w-1/2 justify-center">
               <div
                 onClick={!isLiked && !isAuthor ? handleLikeClick : undefined}
-                className={`flex items-center gap-[4px] ${!isLiked && !isAuthor ? "cursor-pointer" : "cursor-default"}`}
+                className={`flex items-center gap-1 ${!isLiked && !isAuthor ? "cursor-pointer" : "cursor-default"}`}
               >
                 <Image
                   src={isLiked ? "/icons/newLikeThumbGreen.svg" : "/icons/newLikeThumbGray.svg"}
@@ -216,7 +218,7 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
                   width={16}
                   height={16}
                 />
-                <span className={`text-SUIT_12 font-medium ${isLiked ? "text-[#03b89e]" : "text-[#ACACAC]"}`}>
+                <span className={`text-SUIT_12 font-medium ${isLiked ? "text-legacy-teal" : "text-ui-count"}`}>
                   {currentLikeCount}
                 </span>
               </div>
@@ -225,13 +227,13 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
             {/* 오른쪽(댓글) */}
             <div className="flex w-1/2 justify-center">
               <div
-                className="flex cursor-pointer items-center gap-[4px]"
+                className="flex cursor-pointer items-center gap-1"
                 onClick={() =>
                   router.push(`/board/question/detail/${questionDto.questionPost?.questionPostId}/comment`)
                 }
               >
                 <Image src="/icons/newChatBubbleGray.svg" alt="Comment_UnClicked" width={16} height={16} />
-                <span className="text-SUIT_12 font-medium text-[#ACACAC]">
+                <span className="text-SUIT_12 font-medium text-ui-count">
                   {questionDto.questionPost?.commentCount || 0}
                 </span>
               </div>
@@ -240,13 +242,13 @@ function QuestionDetail({ questionDto, selectedAnswerId, onAnswerSelect }: Quest
         </div>
 
         {/* 두꺼운 구분선 (전체 가로폭) */}
-        <div className="-mx-5 h-[4px] w-[calc(100%+40px)] rounded-[2px] bg-[#EDEDED]"></div>
+        <div className="-mx-5 h-1 w-[calc(100%+40px)] rounded-sm bg-ui-divider-thick"></div>
       </div>
 
       {/* 답변 섹션 */}
-      <div className="mt-4 flex items-center gap-[8px]">
+      <div className="mt-4 flex items-center gap-2">
         <Image src="/icons/answerBubbleGray.svg" alt="답변" width={16} height={16} />
-        <span className="text-SUIT_14 font-semibold text-[#898989]">
+        <span className="text-SUIT_14 font-semibold text-tag-custom-text">
           답변 {questionDto.questionPost?.answerCount || 0}
         </span>
       </div>

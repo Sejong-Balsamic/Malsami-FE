@@ -17,7 +17,7 @@ export default function AutoCompleteSuggestionList({
           key={term}
           role="presentation"
           onClick={() => onSuggestionClick(term)}
-          className={`font-pretendard-medium flex cursor-pointer justify-between px-6 py-2 text-base ${
+          className={`font-suit-medium flex cursor-pointer justify-between px-6 py-2 text-base ${
             index === activeSuggestionIndex ? "rounded-2xl bg-gray-100" : ""
           }`}
         >

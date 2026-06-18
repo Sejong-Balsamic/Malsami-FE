@@ -6,6 +6,7 @@ import Header from "@/components/header/Header";
 import QuestionCardList from "@/components/questionMain/QuestionCardList";
 import CommonPagination from "@/components/common/CommonPagination";
 import TwoTabFilter from "@/components/common/TwoTabFilter";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM } from "@/types/header";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
@@ -30,9 +31,6 @@ export default function HotQuestionPage() {
           questionPostApi.getWeeklyPopularQuestionPost(),
           questionPostApi.getDailyPopularQuestionPost(),
         ]);
-
-        console.log("주간 인기질문 데이터:", weeklyResponse);
-        console.log("일간 인기질문 데이터:", dailyResponse);
 
         setWeeklyQuestions(weeklyResponse.questionPostsPage?.content || []);
         setDailyQuestions(dailyResponse.questionPostsPage?.content || []);
@@ -75,21 +73,21 @@ export default function HotQuestionPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <Header title="HOT 인기질문" leftType={LEFT_ITEM.BACK} onLeftClick={handleBackClick} />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이 스페이서 (4rem) */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
-      <div className="px-5">
+      <PageContainer width="wide" className="px-5">
         {/* 주간/일간 필터링 컴포넌트 */}
         <TwoTabFilter
           firstTab="주간"
           secondTab="일간"
           activeTab={activeTab}
           onTabChange={handleTabChange}
-          activeColor="#00E8BB"
+          activeColor="question"
         />
 
         {/* 24px 공백 */}
@@ -122,7 +120,7 @@ export default function HotQuestionPage() {
 
         {/* 61px 하단 여백 (모바일 탭바 고려) */}
         <div className="h-[61px]" />
-      </div>
+      </PageContainer>
     </div>
   );
 }

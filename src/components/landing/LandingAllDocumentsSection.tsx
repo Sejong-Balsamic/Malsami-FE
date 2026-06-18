@@ -57,7 +57,7 @@ function LandingAllDocumentsSection({ onViewAll, onCardClick = undefined }: Land
 
   // 데이터가 없는 경우 빈 상태 처리
   const renderEmptyState = () => (
-    <div className="flex h-40 w-full items-center justify-center rounded-lg border border-[#F1F1F1] bg-white p-5 text-[#929292] shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]">
+    <div className="flex h-40 w-full items-center justify-center rounded-lg border border-ui-divider-light bg-white p-5 text-ui-muted-soft shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]">
       표시할 자료가 없습니다.
     </div>
   );
@@ -68,14 +68,14 @@ function LandingAllDocumentsSection({ onViewAll, onCardClick = undefined }: Land
       <div className="mb-4 flex items-center justify-between">
         <div className="flex items-center">
           <Image src="/icons/openFileFolder.svg" alt="자료" width={18} height={18} />
-          <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">전체 자료 게시판</h2>
+          <h2 className="ml-2.5 whitespace-nowrap text-SUIT_18 font-medium">전체 자료 게시판</h2>
         </div>
 
         {/* 전체보기 링크 */}
         <button
           type="button"
           onClick={onViewAll}
-          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
+          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-ui-muted-soft"
         >
           전체보기
         </button>
@@ -88,12 +88,12 @@ function LandingAllDocumentsSection({ onViewAll, onCardClick = undefined }: Land
         }
         if (documents.length > 0) {
           return (
-            <div className="w-full rounded-lg bg-white shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)]">
+            <div className="w-full rounded-lg bg-white shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)] lg:grid lg:grid-cols-2 lg:gap-x-6 lg:gap-y-4 lg:rounded-none lg:bg-transparent lg:shadow-none">
               {documents.map((document, index) => (
                 <button
                   type="button"
                   key={document.documentPostId}
-                  className={`w-full cursor-pointer px-5 py-6 text-left ${index < documents.length - 1 ? "border-b border-[#EDEDED]" : ""}`}
+                  className={`w-full cursor-pointer px-5 py-6 text-left lg:h-full lg:rounded-lg lg:bg-white lg:shadow-[2px_2px_10px_0px_rgba(0,0,0,0.10)] ${index < documents.length - 1 ? "border-b border-ui-divider-thick lg:border-b-0" : ""}`}
                   onClick={() => handleCardClick(document.documentPostId)}
                 >
                   {/* 상단 부분 - 과목 태그 */}
@@ -107,7 +107,7 @@ function LandingAllDocumentsSection({ onViewAll, onCardClick = undefined }: Land
                   </h3>
 
                   {/* 게시물 내용 */}
-                  <p className="mb-4 line-clamp-2 text-SUIT_14 font-medium leading-[22.4px] text-[#616161]">
+                  <p className="mb-4 line-clamp-2 text-SUIT_14 font-medium leading-[22.4px] text-ui-body">
                     {document.content}
                   </p>
 
@@ -122,21 +122,17 @@ function LandingAllDocumentsSection({ onViewAll, onCardClick = undefined }: Land
                     </div>
 
                     {/* 좋아요 및 댓글 */}
-                    <div className="flex items-center gap-[4px]">
+                    <div className="flex items-center gap-1">
                       {/* 좋아요 */}
-                      <span className="flex items-center gap-[4px]">
+                      <span className="flex items-center gap-1">
                         <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
-                        <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">
-                          {document.likeCount || 0}
-                        </span>
+                        <span className="text-SUIT_12 text-ui-muted">{document.likeCount || 0}</span>
                       </span>
 
                       {/* 댓글 */}
-                      <span className="ml-[8px] flex items-center gap-[4px]">
+                      <span className="ml-2 flex items-center gap-1">
                         <Image src="/icons/newChatBubbleGray.svg" alt="댓글" width={14} height={14} />
-                        <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">
-                          {document.commentCount || 0}
-                        </span>
+                        <span className="text-SUIT_12 text-ui-muted">{document.commentCount || 0}</span>
                       </span>
                     </div>
                   </div>

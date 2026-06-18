@@ -23,18 +23,4 @@ export const questionPostApi = {
   getDailyPopularQuestionPost: () => postApiRequest<QuestionCommand, QuestionDto>("/api/question/popular/daily", {}),
 
   getWeeklyPopularQuestionPost: () => postApiRequest<QuestionCommand, QuestionDto>("/api/question/popular/weekly", {}),
-
-  /* ────────────── 좋아요 ────────────── */
-  questionBoardLike: (c: Partial<QuestionCommand>) =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/like", c),
-
-  /* ────────────── 답변 CRUD(컨트롤러 통합) ────────────── */
-  saveAnswerPost: (c: Partial<QuestionCommand>) =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/post", c),
-
-  getAnswersByQuestion: (c: Partial<QuestionCommand>) =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/get/all", c),
-
-  chaetaekAnswerPost: (c: Partial<QuestionCommand>) =>
-    postApiRequest<QuestionCommand, QuestionDto>("/api/question/answer/chaetaek", c),
 };

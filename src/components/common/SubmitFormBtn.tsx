@@ -7,7 +7,7 @@ export default function SubmitFormBtn({ onClick, disabled = false }: SubmitFormB
   return (
     <button
       type="button"
-      className={`font-pretendard-semibold h-10 w-full rounded-[10px] py-[10px] text-base text-white ${
+      className={`font-suit-semibold h-10 w-full rounded-[10px] py-[10px] text-base text-white ${
         disabled ? "cursor-not-allowed bg-gray-300" : "bg-custom-blue-400 hover:bg-custom-blue-500"
       }`}
       onClick={onClick}

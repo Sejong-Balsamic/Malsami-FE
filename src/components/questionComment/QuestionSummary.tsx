@@ -26,7 +26,7 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
       {/* 질문 전체 내용 */}
       <div className="px-5 pt-4">
         {/* 태그 영역 (HOT, 과목, 현상금, 채택) */}
-        <div className="mb-3 flex flex-wrap items-center gap-[4px]">
+        <div className="mb-3 flex flex-wrap items-center gap-1">
           {isHot && <HotTag />}
           {!!questionPost?.chaetaekStatus && <ChaetaekTag />}
           <SubjectTag subjectName={questionPost?.subject} type="question" />
@@ -40,7 +40,7 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
         {isExpanded && (
           <div className="animate-slideDown mt-2">
             {/* 전공 · 조회수 · 작성일 */}
-            <div className="mt-2 flex items-center gap-[4px] text-SUIT_12 font-medium text-ui-muted">
+            <div className="mt-2 flex items-center gap-1 text-SUIT_12 font-medium text-ui-muted">
               <span>{questionPost?.member?.major ?? "전공 비공개"}</span>
               <span className="text-ui-muted">•</span>
               <span className="inline-flex items-center gap-1">
@@ -52,18 +52,16 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
             </div>
 
             {/* 본문 텍스트 */}
-            <div className="mt-[16px] text-SUIT_16 font-medium leading-[22.4px] text-black">
-              {questionPost?.content}
-            </div>
+            <div className="mt-4 text-SUIT_16 font-medium leading-[22.4px] text-black">{questionPost?.content}</div>
 
             {/* 이미지 및 동영상 */}
             {Array.isArray(questionDto.mediaFiles) && questionDto.mediaFiles.length > 0 && (
               <div className="mt-2 overflow-x-auto">
-                <div className="flex gap-[12px] pb-[10px]">
+                <div className="flex gap-3 pb-[10px]">
                   {questionDto.mediaFiles.map((file, index) => (
                     <div
                       key={index}
-                      className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-[8px] bg-[#EDEDED]"
+                      className="flex h-[120px] w-[120px] flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-ui-divider-thick"
                     >
                       <Image
                         src={file.uploadedImageUrl || ""}
@@ -85,11 +83,11 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
 
             {/* 지정태그 */}
             {questionPost?.questionPresetTags && questionPost.questionPresetTags.length > 0 && (
-              <div className="mt-3 flex flex-wrap gap-[8px]">
+              <div className="mt-3 flex flex-wrap gap-2">
                 {questionPost.questionPresetTags.map((tag, index) => (
                   <div
                     key={index}
-                    className="flex h-[28px] w-auto min-w-[69px] flex-shrink-0 items-center justify-center gap-[4px] rounded-[34px] bg-tag-preset-question-bg px-[12px] py-[8px]"
+                    className="flex h-[28px] w-auto min-w-[69px] flex-shrink-0 items-center justify-center gap-1 rounded-[34px] bg-tag-preset-question-bg px-3 py-2"
                   >
                     <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-tag-preset-question-text">
                       {QuestionPresetTagLabels[tag] || tag}
@@ -101,11 +99,11 @@ export default function QuestionSummary({ questionDto, isExpanded, onToggleExpan
 
             {/* 커스텀태그 */}
             {questionDto.customTags && questionDto.customTags.length > 0 && (
-              <div className="mt-3 flex flex-wrap gap-[8px]">
+              <div className="mt-3 flex flex-wrap gap-2">
                 {questionDto.customTags.map((tag, index) => (
                   <div
                     key={index}
-                    className="inline-flex items-center justify-center gap-[10px] rounded-[34px] bg-tag-custom-bg px-[14px] py-[8px]"
+                    className="inline-flex items-center justify-center gap-2.5 rounded-[34px] bg-tag-custom-bg px-[14px] py-2"
                   >
                     <span className="line-clamp-1 overflow-hidden text-ellipsis text-[12px] font-bold leading-[100%] text-tag-custom-text">
                       {tag}

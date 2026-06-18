@@ -6,7 +6,9 @@ import { useDispatch } from "react-redux";
 import Header from "@/components/header/Header";
 import DocumentCardList from "@/components/documentMain/DocumentCardList";
 import CommonPagination from "@/components/common/CommonPagination";
-import DocumentFilteringBottomSheet from "@/components/common/DocumentFilteringBottomSheet";
+import DocumentFilteringBottomSheet from "@/components/documentMain/DocumentFilteringBottomSheet";
+import BoardSearchBar from "@/components/common/BoardSearchBar";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
@@ -24,6 +26,7 @@ export default function MyFacultyDocumentPage() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [totalPages, setTotalPages] = useState<number>(0);
   const [memberFaculty, setMemberFaculty] = useState<string>("");
+  const [query, setQuery] = useState<string>("");
 
   // 현재 적용된 필터링 상태
   const [currentFiltering, setCurrentFiltering] = useState<Partial<DocumentCommand>>({
@@ -58,6 +61,7 @@ export default function MyFacultyDocumentPage() {
           sortType: filtering.sortType || "LATEST",
           documentTypes: filtering.documentTypes,
           faculty: memberFaculty, // 사용자 전공으로 필터링
+          query, // 검색어
         });
 
         if (response && response.documentPostsPage) {
@@ -71,8 +75,14 @@ export default function MyFacultyDocumentPage() {
         setIsLoading(false);
       }
     },
-    [currentFiltering, memberFaculty],
+    [currentFiltering, memberFaculty, query],
   );
+
+  // 검색 실행 핸들러
+  const handleSearch = async () => {
+    setCurrentPage(0);
+    if (memberFaculty) await fetchFacultyDocuments(0);
+  };
 
   // 데이터 로드 (memberFaculty가 설정된 후에만)
   useEffect(() => {
@@ -111,7 +121,7 @@ export default function MyFacultyDocumentPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <Header
           title="내 전공 자료"
           subtitle={memberFaculty || "학과 정보 로딩중..."}
@@ -120,27 +130,30 @@ export default function MyFacultyDocumentPage() {
           onLeftClick={handleBackClick}
           onRightClick={handleMenuClick}
         />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 (4rem) */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
       {/* 메인 콘텐츠 */}
-      <div className="px-5">
-        {/* 24px 공백 */}
-        <div className="h-6" />
+      <PageContainer width="wide" className="px-5">
+        {/* 16px 공백 */}
+        <div className="h-4" />
+
+        {/* 검색바 */}
+        <BoardSearchBar value={query} onChange={setQuery} onSearch={handleSearch} theme="document" />
 
         {/* 자료 리스트 */}
         <div className="w-full bg-white">
           {isLoading && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">로딩 중...</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">로딩 중...</span>
             </div>
           )}
           {!isLoading && documentData.length > 0 && <DocumentCardList data={documentData} />}
           {!isLoading && documentData.length === 0 && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">
+              <span className="text-SUIT_14 font-medium text-ui-muted">
                 {memberFaculty ? `${memberFaculty} 관련 자료가 없습니다.` : "전공 정보를 불러올 수 없습니다."}
               </span>
             </div>
@@ -159,7 +172,7 @@ export default function MyFacultyDocumentPage() {
 
         {/* 61px 하단 여백 (모바일 탭바 고려) */}
         <div className="h-[61px]" />
-      </div>
+      </PageContainer>
 
       {/* DocumentFilteringBottomSheet */}
       <DocumentFilteringBottomSheet

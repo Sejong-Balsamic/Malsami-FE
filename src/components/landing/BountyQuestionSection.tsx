@@ -2,10 +2,10 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-import MovingCardSkeleton from "@/components/common/MovingCardSkeleton";
+import MovingCardSkeleton from "@/components/landing/MovingCardSkeleton";
 import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionPost } from "@/types/api/entities/postgres/questionPost";
-import MovingCardQuestion from "@/components/common/MovingCardQuestion";
+import MovingCardQuestion from "@/components/landing/MovingCardQuestion";
 
 interface BountyQuestionSectionProps {
   onViewAll: () => void;
@@ -49,7 +49,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
         <div className="flex flex-1 flex-wrap items-center">
           <div className="mr-2 flex items-center">
             <Image src="/icons/moneyBag.svg" alt="엽전" width={24} height={24} />
-            <h2 className="ml-[10px] whitespace-nowrap text-SUIT_18 font-medium">엽전 현상금</h2>
+            <h2 className="ml-2.5 whitespace-nowrap text-SUIT_18 font-medium">엽전 현상금</h2>
           </div>
 
           {/* 최근순/높은순 버튼 */}
@@ -61,13 +61,13 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
               className="relative flex items-center justify-center"
             >
               <div
-                className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-[8px] py-[4px] ${
-                  activeTab === "최근순" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
+                className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-2 py-1 ${
+                  activeTab === "최근순" ? "bg-tag-preset-question-bg" : "bg-ui-divider-thick"
                 }`}
               >
                 <span
                   className={`whitespace-nowrap text-[12px] ${
-                    activeTab === "최근순" ? "text-[#00E271]" : "text-[#898989]"
+                    activeTab === "최근순" ? "text-question-main" : "text-tag-custom-text"
                   }`}
                 >
                   최근순
@@ -79,14 +79,16 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
             <button
               type="button"
               onClick={() => onTabChange("높은순")}
-              className="relative ml-[4px] flex items-center justify-center whitespace-nowrap"
+              className="relative ml-1 flex items-center justify-center whitespace-nowrap"
             >
               <div
-                className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-[8px] py-[4px] ${
-                  activeTab === "높은순" ? "bg-[#CAFFE5]" : "bg-[#EDEDED]"
+                className={`flex h-[20px] w-[45px] items-center justify-center whitespace-nowrap rounded-[34px] px-2 py-1 ${
+                  activeTab === "높은순" ? "bg-tag-preset-question-bg" : "bg-ui-divider-thick"
                 }`}
               >
-                <span className={`text-[12px] ${activeTab === "높은순" ? "text-[#00E271]" : "text-[#898989]"}`}>
+                <span
+                  className={`text-[12px] ${activeTab === "높은순" ? "text-question-main" : "text-tag-custom-text"}`}
+                >
                   높은순
                 </span>
               </div>
@@ -98,7 +100,7 @@ export default function BountyQuestionSection({ onViewAll, activeTab, onTabChang
         <button
           type="button"
           onClick={onViewAll}
-          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-[#A7A7A7]"
+          className="ml-2 flex-shrink-0 whitespace-nowrap text-SUIT_14 font-medium text-ui-muted-soft"
         >
           전체보기
         </button>

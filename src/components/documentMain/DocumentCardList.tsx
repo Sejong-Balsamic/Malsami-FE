@@ -32,9 +32,10 @@ export default function DocumentCardList({ data }: DocumentCardListProps) {
   };
 
   return (
-    <div className="w-full">
+    // 모바일: 1열(카드 사이 divider), PC(lg): 2열 그리드(gap)
+    <div className="w-full lg:grid lg:grid-cols-2 lg:gap-x-6 lg:gap-y-4">
       {data.map((document, index) => (
-        <div key={document.documentPostId || `document-${index}`}>
+        <div key={document.documentPostId || `document-${index}`} className="lg:flex lg:flex-col">
           <div
             role="button"
             tabIndex={0}
@@ -44,7 +45,7 @@ export default function DocumentCardList({ data }: DocumentCardListProps) {
                 handleCardClick(document.documentPostId || "");
               }
             }}
-            className="cursor-pointer"
+            className="cursor-pointer lg:h-full"
           >
             <DocumentCard
               documentPostId={document.documentPostId || ""}
@@ -59,13 +60,13 @@ export default function DocumentCardList({ data }: DocumentCardListProps) {
             />
           </div>
 
-          {/* 마지막 카드가 아니면 16px 간격 + 보더 + 16px 간격 */}
+          {/* 마지막 카드가 아니면 구분선 (PC 그리드에서는 숨김) */}
           {index < data.length - 1 && (
-            <>
+            <div className="lg:hidden">
               <div className="h-4" />
               <div className="h-px w-full bg-ui-divider" />
               <div className="h-4" />
-            </>
+            </div>
           )}
         </div>
       ))}

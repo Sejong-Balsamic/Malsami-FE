@@ -10,7 +10,7 @@ export default function QuestionSummarySkeleton() {
     <div className="bg-white">
       <div className="animate-pulse px-5 py-4">
         {/* 태그 영역 (HOT, 과목, 현상금, 채택) */}
-        <div className="mb-3 flex flex-wrap items-center gap-[4px]">
+        <div className="mb-3 flex flex-wrap items-center gap-1">
           {/* 태그들 스켈레톤 */}
           <div className="h-[26px] w-16 rounded-full bg-gray-200" />
           <div className="h-[26px] w-20 rounded-full bg-gray-200" />

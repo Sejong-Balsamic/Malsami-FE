@@ -63,7 +63,7 @@ export default function Card({
       {/* 상단 Row: 순번 + 과목 태그 */}
       <div className="ml-4 mt-4 flex items-start gap-2">
         {/* 순번 */}
-        {number && <span className="text-[18px] font-bold leading-[18px] text-[#1D1E27]">{number}</span>}
+        {number && <span className="text-[18px] font-bold leading-[18px] text-black">{number}</span>}
         {/* 과목 태그 */}
         <SubjectTag subjectName={subject} type={type} />
         {isCurrentlyPopular && <HotTag />}
@@ -83,7 +83,7 @@ export default function Card({
         </div>
 
         {/* 좋아요 수와 답변 수 표시 */}
-        <div className="ml-2 flex flex-shrink-0 items-center gap-[4px]">
+        <div className="ml-2 flex flex-shrink-0 items-center gap-1">
           {/* 좋아요 */}
           <span className="flex items-center gap-1">
             <Image src="/icons/newLikeThumbGray.svg" alt="좋아요" width={14} height={14} />
@@ -94,7 +94,7 @@ export default function Card({
           {answerCount !== undefined && (
             <span className="ml-2 flex items-center gap-1">
               <Image src={getCommentIconPath()} alt="답변" width={14} height={14} />
-              <span className="text-[12px] font-medium leading-[12px] text-[#C5C5C5]">{answerCount}</span>
+              <span className="text-SUIT_12 text-ui-muted">{answerCount}</span>
             </span>
           )}
         </div>

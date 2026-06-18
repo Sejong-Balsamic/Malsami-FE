@@ -53,7 +53,7 @@ export default function DocumentPostFirstPage({
           <button
             type="button"
             onClick={onNextPage}
-            className={`w-full rounded-[8px] py-4 text-SUIT_18 font-extrabold text-white ${
+            className={`w-full rounded-lg py-4 text-SUIT_18 font-extrabold text-white ${
               isCategoryCompleted ? "bg-document-main" : "bg-ui-muted"
             }`}
           >

@@ -2,19 +2,20 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
-import axios from "axios";
+import useApiErrorHandler from "@/global/hook/useApiErrorHandler";
 import ScrollToTopOnLoad from "@/components/common/ScrollToTopOnLoad";
 import LoadingSpinner from "@/components/common/LoadingSpinner";
-import postAnswer from "@/apis/question/postAnswer";
+import { answerPostApi } from "@/apis/answerPostApi";
 import { useDispatch } from "react-redux";
 import useCommonToast from "@/global/hook/useCommonToast";
 import FileUploadInput from "@/components/questionPost/FileUploadInput";
 import QuestionSummary from "@/components/questionComment/QuestionSummary";
 import CommonHeader from "@/components/header/CommonHeader";
-import getQuestionDetails from "@/apis/question/getQuestionDetails";
+import { questionPostApi } from "@/apis/questionPostApi";
 import { QuestionDto } from "@/types/api/responses/questionDto";
 import { RIGHT_ITEM } from "@/types/header";
 import CommonTextarea from "@/components/common/CommonTextarea";
+import { TopBarContainer, BottomBarContainer } from "@/components/layout/AppContainer";
 
 interface AnswerPostFormData {
   content: string;
@@ -43,6 +44,7 @@ export default function AnswerPostPage() {
   const mediaAllowedTypes = ["image/jpeg", "image/png"];
 
   const { showConfirmToast, showWarningToast } = useCommonToast();
+  const { handleApiError } = useApiErrorHandler();
 
   // 입력값 변경 핸들러
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -102,7 +104,8 @@ export default function AnswerPostPage() {
       const fetchData = async () => {
         try {
           setIsQuestionsLoading(true);
-          const data = await getQuestionDetails(questionPostId);
+          // 신식 API 패턴(questionPostApi) 사용
+          const data = await questionPostApi.getQuestionPost({ postId: questionPostId });
 
           if (isMounted) {
             setQuestionDetails({
@@ -142,24 +145,19 @@ export default function AnswerPostPage() {
 
     if (isFormValid) {
       try {
-        await postAnswer({
+        // 신식 API 패턴(answerPostApi) 사용 — 첨부파일은 attachmentFiles 키로 전송
+        await answerPostApi.saveAnswerPost({
           content: formData.content,
           questionPostId,
           isPrivate: formData.isPrivate,
-          mediaFiles: formData.mediaFiles,
-        }); // API 호출
+          attachmentFiles: formData.mediaFiles,
+        });
         showConfirmToast("답변이 성공적으로 등록되었습니다.");
         localStorage.removeItem("answerFormData"); // 로컬 스토리지의 임시저장 데이터 삭제
         router.push(`/board/question/detail/${questionPostId}`); // 작성 완료 후 해당 질문 상세 페이지로 이동
       } catch (error) {
-        // AxiosError 확인
-        if (axios.isAxiosError(error)) {
-          const errorMessage = error.response?.data?.errorMessage || "오류가 발생했습니다.";
-          showWarningToast(errorMessage);
-        } else {
-          // 예상치 못한 오류 처리
-          showWarningToast("답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
-        }
+        console.error("답변 등록 중 에러 발생:", error);
+        handleApiError(error, "답변 등록 중 오류가 발생했습니다. 다시 시도해주세요.");
       } finally {
         setisSubmitting(false);
       }
@@ -173,12 +171,12 @@ export default function AnswerPostPage() {
       <ScrollToTopOnLoad />
 
       {/* Fixed Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <CommonHeader title="답변 작성" rightType={RIGHT_ITEM.NONE} />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
       {/* Main Content */}
       <main>
@@ -277,7 +275,7 @@ export default function AnswerPostPage() {
               </div>
 
               {/* 완료 버튼 */}
-              <div className="fixed bottom-4 left-1/2 z-50 w-full max-w-[640px] -translate-x-1/2 px-5">
+              <BottomBarContainer className="bottom-4 z-50 px-5">
                 <button
                   type="button"
                   onClick={handleSubmit}
@@ -288,7 +286,7 @@ export default function AnswerPostPage() {
                 >
                   완료
                 </button>
-              </div>
+              </BottomBarContainer>
 
               {/* 하단 완료 버튼 공간 확보 */}
               <div className="h-20" />

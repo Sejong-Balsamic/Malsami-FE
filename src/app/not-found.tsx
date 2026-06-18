@@ -33,10 +33,7 @@ export default function NotFound() {
           <button
             type="button"
             onClick={() => router.push("/")}
-            className="h-12 rounded-lg px-6 text-SUIT_14 font-semibold text-white"
-            style={{
-              background: "linear-gradient(91deg, #00D1F2 0%, #00E271 100%)",
-            }}
+            className="h-12 rounded-lg bg-gradient-to-r from-document-main to-question-main px-6 text-SUIT_14 font-semibold text-white"
           >
             홈으로 가기
           </button>

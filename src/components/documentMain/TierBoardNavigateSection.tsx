@@ -1,6 +1,6 @@
 "use client";
 
-import useUserPermissions from "@/global/useUserPermissions";
+import useUserPermissions from "@/global/hook/useUserPermissions";
 import { PostTiersKeys } from "@/types/postTiers";
 import TierBoardNavigateCard from "./TierBoardNavigateCard";
 import TierBoardNavigateCardSkeleton from "./TierBoardNavigateCardSkeleton";

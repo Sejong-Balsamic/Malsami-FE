@@ -44,6 +44,10 @@ const config: Config = {
           // 커스텀태그 색상
           "custom-bg": "#EDEDED", // 커스텀태그 배경색 (회색)
           "custom-text": "#898989", // 커스텀태그 텍스트색 (진한 회색)
+          hot: "#FF6723", // 추가: 핫오렌지 태그색
+          "search-bg": "#D5ECFB", // 추가: 검색 강조태그 배경색
+          "search-text": "#0070F3", // 추가: 검색 강조태그 텍스트색
+          green: "#5ED513", // 추가: 커스텀 그린 태그색
         },
 
         // UI 요소 색상
@@ -52,12 +56,29 @@ const config: Config = {
           "tag-text": "#616161", // 태그 텍스트 색상
           muted: "#C5C5C5", // 흐린 텍스트 색상
           body: "#616161", // 본문 텍스트 색상
+          "body-soft": "#737373", // 본문 보조 회색 (옛 #737373/#727272 통합)
           divider: "#F0F0F0", // 얇은 구분선 색상
           "divider-thick": "#EDEDED", // 두꺼운 구분선 색상 (4px)
+          "divider-light": "#F1F1F1", // 카드 테두리용 옅은 구분선 (옛 #F1F1F1/#EEEEEE/#E7E7E7 통합)
           border: "#E2E2E2", // 테두리 색상
           "image-bg": "#B5B5B5", // 이미지 배경색
           count: "#ACACAC", // 카운터용 회색 (좋아요·댓글·조회수 등)
+          "muted-soft": "#A7A7A7", // 살짝 진한 흐린 회색 (옛 #A7A7A7/#929292/#A4A4A4 통합)
           disabled: "#C5C5C5",
+          error: "#f56565", // 추가: 에러 붉은색
+        },
+
+        // 마이페이지 색상
+        mypage: {
+          teal: "#016C5D", // 추가: 마이페이지 다크틸
+          "teal-light": "#74d7cb", // 추가: 마이페이지 계열 연한 틸
+        },
+
+        // 레거시 색상 (옛 디자인 청록/채택 파랑 — 점진적 통일용 토큰화)
+        legacy: {
+          teal: "#03B89E", // 옛 자료게시판 청록 (체크박스·강조선 등)
+          "teal-sub": "#95E4DA", // 옛 자료게시판 청록 보조
+          "accept-blue": "#0062D2", // 옛 채택/필터 파랑
         },
 
         // Shadcn UI 색상 (유지)
@@ -109,6 +130,14 @@ const config: Config = {
         lg: "1024px",
         xl: "1280px",
         "2xl": "1536px",
+      },
+      maxWidth: {
+        // 앱 컨테이너 폭 토큰 (폭 값은 이 한 곳에서만 관리)
+        container: "640px", // 모바일/기본 컨테이너 폭 (레거시 — 점진 대체)
+        "container-lg": "960px", // PC(lg 이상) 확장 컨테이너 폭 (레거시 — 점진 대체)
+        // 콘텐츠 성격별 폭 토큰 (통 제거 후 진짜 반응형용)
+        "content-narrow": "720px", // 본문 읽기/폼 등 좁게 유지할 콘텐츠
+        "content-wide": "1200px", // 리스트/그리드/홈 등 넓게 펼칠 콘텐츠
       },
       borderRadius: {
         lg: "var(--radius)",
@@ -167,6 +196,27 @@ const config: Config = {
           "0%": { transform: "translateY(20px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
+        tossFadeIn: {
+          "0%": { opacity: "0", transform: "translateY(8px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        tossPopIn: {
+          "0%": { opacity: "0", transform: "scale(0.94)" },
+          "60%": { opacity: "1", transform: "scale(1.01)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+        tossSlideUp: {
+          "0%": { opacity: "0", transform: "translateY(16px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+        tossSheetUp: {
+          "0%": { transform: "translateY(100%)" },
+          "100%": { transform: "translateY(0)" },
+        },
+      },
+      transitionTimingFunction: {
+        toss: "cubic-bezier(0.22, 1, 0.36, 1)",
+        "toss-spring": "cubic-bezier(0.34, 1.56, 0.64, 1)",
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
@@ -177,6 +227,10 @@ const config: Config = {
         scaleIn: "scaleIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
         popIn: "popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55)",
         slideInUp: "slideInUp 0.5s ease-out",
+        "toss-fade-in": "tossFadeIn 0.3s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "toss-pop-in": "tossPopIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both",
+        "toss-slide-up": "tossSlideUp 0.35s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "toss-sheet-up": "tossSheetUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) both",
       },
       animationDelay: {
         "200": "200ms",

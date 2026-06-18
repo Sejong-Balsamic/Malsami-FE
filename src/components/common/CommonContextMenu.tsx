@@ -116,7 +116,7 @@ export default function CommonContextMenu({ isOpen, onClose, triggerRef, onRepor
       }}
     >
       <div
-        className={`h-[88px] w-[157px] rounded-[8px] bg-white shadow-[2px_2px_10px_0_rgba(0,0,0,0.10)] duration-200 animate-in fade-in-0 zoom-in-95 ${
+        className={`h-[88px] w-[157px] rounded-lg bg-white shadow-[2px_2px_10px_0_rgba(0,0,0,0.10)] duration-200 animate-in fade-in-0 zoom-in-95 ${
           position.showAbove ? "slide-in-from-bottom-2" : "slide-in-from-top-2"
         }`}
       >

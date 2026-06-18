@@ -6,7 +6,8 @@ import { useDispatch } from "react-redux";
 import Header from "@/components/header/Header";
 import DocumentCardList from "@/components/documentMain/DocumentCardList";
 import CommonPagination from "@/components/common/CommonPagination";
-import DocumentFilteringBottomSheet from "@/components/common/DocumentFilteringBottomSheet";
+import DocumentFilteringBottomSheet from "@/components/documentMain/DocumentFilteringBottomSheet";
+import { PageContainer, TopBarContainer } from "@/components/layout/AppContainer";
 import { LEFT_ITEM, RIGHT_ITEM } from "@/types/header";
 import { documentPostApi } from "@/apis/documentPostApi";
 import { DocumentPost } from "@/types/api/entities/postgres/documentPost";
@@ -92,7 +93,7 @@ export default function HotDownloadPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
-      <div className="fixed top-0 z-50 w-full max-w-[640px] bg-white">
+      <TopBarContainer>
         <Header
           title="인기 다운로드"
           leftType={LEFT_ITEM.BACK}
@@ -100,13 +101,13 @@ export default function HotDownloadPage() {
           onLeftClick={handleBackClick}
           onRightClick={handleMenuClick}
         />
-      </div>
+      </TopBarContainer>
 
       {/* 헤더 높이만큼 스페이서 (4rem) */}
-      <div className="h-16 w-full" />
+      <div className="h-16 w-full lg:hidden" />
 
       {/* 메인 콘텐츠 */}
-      <div className="px-5">
+      <PageContainer width="wide" className="px-5">
         {/* 24px 공백 */}
         <div className="h-6" />
 
@@ -114,13 +115,13 @@ export default function HotDownloadPage() {
         <div className="w-full bg-white">
           {isLoading && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">로딩 중...</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">로딩 중...</span>
             </div>
           )}
           {!isLoading && documentData.length > 0 && <DocumentCardList data={documentData} />}
           {!isLoading && documentData.length === 0 && (
             <div className="flex h-40 items-center justify-center">
-              <span className="text-SUIT_14 font-medium text-[#C5C5C5]">표시할 인기 다운로드 자료가 없습니다.</span>
+              <span className="text-SUIT_14 font-medium text-ui-muted">표시할 인기 다운로드 자료가 없습니다.</span>
             </div>
           )}
         </div>
@@ -137,7 +138,7 @@ export default function HotDownloadPage() {
 
         {/* 61px 하단 여백 (모바일 탭바 고려) */}
         <div className="h-[61px]" />
-      </div>
+      </PageContainer>
 
       {/* DocumentFilteringBottomSheet */}
       <DocumentFilteringBottomSheet
@@ -145,7 +146,6 @@ export default function HotDownloadPage() {
         onConfirm={handleDocumentConfirm}
         currentFiltering={currentFiltering}
         trigger={<div />} // 빈 트리거 (Header의 메뉴 버튼으로 제어)
-        activeColor="#00D1F2" // 파란색 테마
       />
     </div>
   );
